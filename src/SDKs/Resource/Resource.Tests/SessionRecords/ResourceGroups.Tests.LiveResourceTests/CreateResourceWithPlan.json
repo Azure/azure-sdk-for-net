@@ -1,83 +1,32 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/providers/SuccessBricks.ClearDB?api-version=2017-05-10",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "2f6beb12-7b56-4168-9d65-2d7bdc9a3ec8"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/providers/SuccessBricks.ClearDB\",\r\n  \"namespace\": \"SuccessBricks.ClearDB\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"databases\",\r\n      \"locations\": [\r\n        \"Brazil South\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US\",\r\n        \"South Central US\",\r\n        \"Canada Central\",\r\n        \"Canada East\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters\",\r\n      \"locations\": [\r\n        \"Brazil South\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US\",\r\n        \"South Central US\",\r\n        \"Canada Central\",\r\n        \"Canada East\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 27 Jul 2016 01:11:25 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
-        ],
-        "x-ms-request-id": [
-          "3b5246e4-6305-4a89-9552-efec3d05b52c"
-        ],
-        "x-ms-correlation-request-id": [
-          "3b5246e4-6305-4a89-9552-efec3d05b52c"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160727T011125Z:3b5246e4-6305-4a89-9552-efec3d05b52c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg6499?api-version=2017-05-10",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourcegroups/csmrg3733?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Jlc291cmNlZ3JvdXBzL2NzbXJnMzczMz9hcGktdmVyc2lvbj0yMDE4LTA1LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"central us\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "38"
+          "32"
         ],
         "x-ms-client-request-id": [
-          "884c013f-80f3-4e5f-9d10-78c8e7ea7263"
+          "a1847aa5-8ced-4248-b697-5179679823ca"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg6499\",\r\n  \"name\": \"csmrg6499\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/csmrg3733\",\r\n  \"name\": \"csmrg3733\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "179"
+          "174"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -89,166 +38,160 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 27 Jul 2016 01:11:25 GMT"
+          "Fri, 08 Jun 2018 19:49:53 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1199"
         ],
         "x-ms-request-id": [
-          "a988aaa9-3f1d-42e7-9549-687aa5563cce"
+          "08807c5a-99b7-4823-a75a-505e8bec30e2"
         ],
         "x-ms-correlation-request-id": [
-          "a988aaa9-3f1d-42e7-9549-687aa5563cce"
+          "08807c5a-99b7-4823-a75a-505e8bec30e2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160727T011126Z:a988aaa9-3f1d-42e7-9549-687aa5563cce"
+          "WESTUS2:20180608T194953Z:08807c5a-99b7-4823-a75a-505e8bec30e2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg6499/providers/SuccessBricks.ClearDB//databases/csmr8260?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourcegroups/csmrg3733/providers/Sendgrid.Email//accounts/csmr178?api-version=2015-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Jlc291cmNlZ3JvdXBzL2NzbXJnMzczMy9wcm92aWRlcnMvU2VuZGdyaWQuRW1haWwvL2FjY291bnRzL2NzbXIxNzg/YXBpLXZlcnNpb249MjAxNS0wMS0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"plan\": {\r\n    \"name\": \"Free\"\r\n  },\r\n  \"location\": \"Canada East\",\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"plan\": {\r\n    \"name\": \"free\",\r\n    \"publisher\": \"Sendgrid\",\r\n    \"product\": \"sendgrid_azure\",\r\n    \"promotionCode\": \"\"\r\n  },\r\n  \"properties\": {\r\n    \"password\": \"p@ss4931\",\r\n    \"acceptMarketingEmails\": false,\r\n    \"email\": \"tiano@email.com\"\r\n  },\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "122"
+          "333"
         ],
         "x-ms-client-request-id": [
-          "8bc20b41-67cb-417b-ac2f-e1a3c079c367"
+          "3bb71596-59ec-4cba-abba-b3d4692c30d4"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"csmr8260\",\r\n  \"location\": \"Canada East\",\r\n  \"plan\": {\r\n    \"name\": \"Free\"\r\n  },\r\n  \"properties\": {\r\n    \"status\": \"Started\",\r\n    \"hostname\": \"ca-cdbr-azure-east-a.cloudapp.net\",\r\n    \"username\": \"bdac44e8c052f3\",\r\n    \"password\": \"a01c591d\",\r\n    \"name\": \"csmr8260\",\r\n    \"connectionString\": \"Database=csmr8260;Data Source=ca-cdbr-azure-east-a.cloudapp.net;User Id=bdac44e8c052f3;Password=a01c591d\",\r\n    \"connectionUrl\": \"mysql://bdac44e8c052f3:a01c591d@ca-cdbr-azure-east-a.cloudapp.net/csmr8260\"\r\n  },\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  },\r\n  \"resourceGroup\": \"csmrg6499\"\r\n}",
+      "ResponseBody": "{\r\n  \"plan\": {\r\n    \"name\": \"free\",\r\n    \"publisher\": \"Sendgrid\",\r\n    \"product\": \"sendgrid_azure\",\r\n    \"promotionCode\": \"\"\r\n  },\r\n  \"properties\": {\r\n    \"email\": \"tiano@email.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"status\": \"Running\",\r\n    \"username\": \"azure_f0c395cd7d337bef276f48552150205a@azure.com\",\r\n    \"smtpServer\": \"smtp.sendgrid.net\",\r\n    \"planLabel\": \"Free\"\r\n  },\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "356"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
-          "-1"
+          "0"
         ],
         "Cache-Control": [
-          "no-cache"
-        ],
-        "Connection": [
-          "close"
+          "must-revalidate, no-cache"
         ],
         "Date": [
-          "Wed, 27 Jul 2016 01:12:08 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
+          "Fri, 08 Jun 2018 19:50:05 GMT"
         ],
         "Server": [
-          "Apache/2.2.22",
-          "(Win32)",
-          "mod_ssl/2.2.22",
-          "OpenSSL/0.9.8t",
-          "PHP/5.3.10"
+          "nginx"
+        ],
+        "Set-Cookie": [
+          "sendgrid_frontend=a945067376ee56fac0472fa238da1b22:b44246c100e67cb75d7b69f9388d00d10185319f; expires=Sun, 08-Jul-2018 19:49:57 GMT; path=/; httponly"
         ],
         "Vary": [
           "Accept-Encoding"
         ],
-        "X-Powered-By": [
-          "PHP/5.3.10"
+        "x-ms-correlation-request-id": [
+          "df293ae6-bcc7-4f91-b1b6-d8dc61463a5d"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1198"
         ],
-        "x-ms-request-id": [
-          "029eb374-d964-43c7-897d-7d25b2a828aa"
-        ],
-        "x-ms-correlation-request-id": [
-          "029eb374-d964-43c7-897d-7d25b2a828aa"
+        "X-Ms-Request-Id": [
+          "5b1adde5b58d70-43175005"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160727T011208Z:029eb374-d964-43c7-897d-7d25b2a828aa"
+          "WESTUS2:20180608T195006Z:df293ae6-bcc7-4f91-b1b6-d8dc61463a5d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
-      "StatusCode": 200
+      "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg6499/providers/SuccessBricks.ClearDB//databases/csmr8260?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourcegroups/csmrg3733/providers/Sendgrid.Email//accounts/csmr178?api-version=2015-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Jlc291cmNlZ3JvdXBzL2NzbXJnMzczMy9wcm92aWRlcnMvU2VuZGdyaWQuRW1haWwvL2FjY291bnRzL2NzbXIxNzg/YXBpLXZlcnNpb249MjAxNS0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4b1a2a2c-b027-4ab7-98d1-290b9729a511"
+          "a2c02a3a-fa98-411f-891f-d08ad2022523"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg6499/providers/SuccessBricks.ClearDB/databases/csmr8260\",\r\n  \"name\": \"csmr8260\",\r\n  \"type\": \"SuccessBricks.ClearDB/database\",\r\n  \"location\": \"Canada East\",\r\n  \"plan\": {\r\n    \"name\": \"Free\"\r\n  },\r\n  \"properties\": {\r\n    \"hostname\": \"ca-cdbr-azure-east-a.cloudapp.net\",\r\n    \"name\": \"csmr8260\",\r\n    \"id\": \"E2C1C2C26E87612E66994745ED401E0C\",\r\n    \"size_mb\": 0,\r\n    \"max_size_mb\": \"20\",\r\n    \"port\": 3306,\r\n    \"status\": {\r\n      \"name\": \"Healthy\",\r\n      \"message\": \"Database is healthy and ready for use.\",\r\n      \"level\": \"Info\"\r\n    }\r\n  },\r\n  \"tags\": {}\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/csmrg3733/providers/Sendgrid.Email/accounts/csmr178\",\r\n  \"name\": \"csmr178\",\r\n  \"type\": \"Sendgrid.Email/accounts\",\r\n  \"location\": \"centralus\",\r\n  \"subscriptionId\": \"fb3a3d6b-44c8-44f5-88c9-b20917c9b96b\",\r\n  \"resourceGroup\": \"csmrg3733\",\r\n  \"plan\": {\r\n    \"name\": \"free\",\r\n    \"publisher\": \"Sendgrid\",\r\n    \"product\": \"sendgrid_azure\",\r\n    \"promotionCode\": \"\"\r\n  },\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  },\r\n  \"properties\": {\r\n    \"status\": \"Running\",\r\n    \"username\": \"azure_f0c395cd7d337bef276f48552150205a@azure.com\",\r\n    \"smtpServer\": \"smtp.sendgrid.net\",\r\n    \"email\": \"tiano@email.com\",\r\n    \"planLabel\": \"Free\",\r\n    \"isFromPortalV1\": false,\r\n    \"firstName\": \"Sender\",\r\n    \"lastName\": \"Whiz\",\r\n    \"company\": \"Company\",\r\n    \"website\": \"http://Website\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
-          "-1"
+          "0"
         ],
         "Cache-Control": [
-          "no-cache"
-        ],
-        "Connection": [
-          "close"
+          "must-revalidate, no-cache"
         ],
         "Date": [
-          "Wed, 27 Jul 2016 01:12:10 GMT"
+          "Fri, 08 Jun 2018 19:50:05 GMT"
         ],
-        "Pragma": [
-          "no-cache"
+        "Transfer-Encoding": [
+          "chunked"
         ],
         "Server": [
-          "Apache/2.2.22",
-          "(Win32)",
-          "mod_ssl/2.2.22",
-          "OpenSSL/0.9.8t",
-          "PHP/5.3.10"
+          "nginx"
         ],
         "Vary": [
+          "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "x-cleardb-enumeration-type": [
-          "get/resource"
-        ],
-        "X-Powered-By": [
-          "PHP/5.3.10"
+        "x-ms-correlation-request-id": [
+          "4cc5b116-d56d-4fdc-b9fb-74d4b3131a89"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14988"
+          "14999"
         ],
-        "x-ms-request-id": [
-          "2f6f4233-1c04-4a51-8d00-dad28e0d16d5"
-        ],
-        "x-ms-correlation-request-id": [
-          "2f6f4233-1c04-4a51-8d00-dad28e0d16d5"
+        "X-Ms-Request-Id": [
+          "5b1addee85e040-24761613"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160727T011210Z:2f6f4233-1c04-4a51-8d00-dad28e0d16d5"
+          "WESTUS2:20180608T195006Z:4cc5b116-d56d-4fdc-b9fb-74d4b3131a89"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -256,11 +199,12 @@
   ],
   "Names": {
     "CreateResourceWithPlan": [
-      "csmrg6499",
-      "csmr8260"
+      "csmrg3733",
+      "csmr178",
+      "p@ss4931"
     ]
   },
   "Variables": {
-    "SubscriptionId": "89ec4d1d-dcc7-4a3f-a701-0a5d074c8505"
+    "SubscriptionId": "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b"
   }
 }

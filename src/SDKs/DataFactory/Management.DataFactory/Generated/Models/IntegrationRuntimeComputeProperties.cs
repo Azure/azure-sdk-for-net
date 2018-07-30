@@ -117,10 +117,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "NumberOfNodes", 1);
             }
-            if (MaxParallelExecutionsPerNode > 8)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxParallelExecutionsPerNode", 8);
-            }
             if (MaxParallelExecutionsPerNode < 1)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxParallelExecutionsPerNode", 1);

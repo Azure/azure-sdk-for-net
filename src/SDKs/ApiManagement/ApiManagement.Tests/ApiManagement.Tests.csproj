@@ -8,9 +8,9 @@
     <AssemblyName>ApiManagementManagement.Tests</AssemblyName>    
   </PropertyGroup>
 
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.ApiManagement" Version="2.1.0-ForTest" />-->

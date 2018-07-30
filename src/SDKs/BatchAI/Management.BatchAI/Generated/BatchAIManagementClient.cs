@@ -79,14 +79,19 @@ namespace Microsoft.Azure.Management.BatchAI
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IUsageOperations.
+        /// Gets the IUsagesOperations.
         /// </summary>
-        public virtual IUsageOperations Usage { get; private set; }
+        public virtual IUsagesOperations Usages { get; private set; }
 
         /// <summary>
-        /// Gets the IClustersOperations.
+        /// Gets the IWorkspacesOperations.
         /// </summary>
-        public virtual IClustersOperations Clusters { get; private set; }
+        public virtual IWorkspacesOperations Workspaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IExperimentsOperations.
+        /// </summary>
+        public virtual IExperimentsOperations Experiments { get; private set; }
 
         /// <summary>
         /// Gets the IJobsOperations.
@@ -97,6 +102,11 @@ namespace Microsoft.Azure.Management.BatchAI
         /// Gets the IFileServersOperations.
         /// </summary>
         public virtual IFileServersOperations FileServers { get; private set; }
+
+        /// <summary>
+        /// Gets the IClustersOperations.
+        /// </summary>
+        public virtual IClustersOperations Clusters { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the BatchAIManagementClient class.
@@ -300,12 +310,14 @@ namespace Microsoft.Azure.Management.BatchAI
         private void Initialize()
         {
             Operations = new Operations(this);
-            Usage = new UsageOperations(this);
-            Clusters = new ClustersOperations(this);
+            Usages = new UsagesOperations(this);
+            Workspaces = new WorkspacesOperations(this);
+            Experiments = new ExperimentsOperations(this);
             Jobs = new JobsOperations(this);
             FileServers = new FileServersOperations(this);
+            Clusters = new ClustersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-03-01";
+            ApiVersion = "2018-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

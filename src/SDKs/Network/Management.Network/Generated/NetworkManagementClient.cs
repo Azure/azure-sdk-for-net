@@ -73,6 +73,11 @@ namespace Microsoft.Azure.Management.Network
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IAzureFirewallsOperations.
+        /// </summary>
+        public virtual IAzureFirewallsOperations AzureFirewalls { get; private set; }
+
+        /// <summary>
         /// Gets the IApplicationGatewaysOperations.
         /// </summary>
         public virtual IApplicationGatewaysOperations ApplicationGateways { get; private set; }
@@ -278,6 +283,41 @@ namespace Microsoft.Azure.Management.Network
         public virtual ILocalNetworkGatewaysOperations LocalNetworkGateways { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualWANsOperations.
+        /// </summary>
+        public virtual IVirtualWANsOperations VirtualWANs { get; private set; }
+
+        /// <summary>
+        /// Gets the IVpnSitesOperations.
+        /// </summary>
+        public virtual IVpnSitesOperations VpnSites { get; private set; }
+
+        /// <summary>
+        /// Gets the IVpnSitesConfigurationOperations.
+        /// </summary>
+        public virtual IVpnSitesConfigurationOperations VpnSitesConfiguration { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualHubsOperations.
+        /// </summary>
+        public virtual IVirtualHubsOperations VirtualHubs { get; private set; }
+
+        /// <summary>
+        /// Gets the IHubVirtualNetworkConnectionsOperations.
+        /// </summary>
+        public virtual IHubVirtualNetworkConnectionsOperations HubVirtualNetworkConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IVpnGatewaysOperations.
+        /// </summary>
+        public virtual IVpnGatewaysOperations VpnGateways { get; private set; }
+
+        /// <summary>
+        /// Gets the IVpnConnectionsOperations.
+        /// </summary>
+        public virtual IVpnConnectionsOperations VpnConnections { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -478,6 +518,7 @@ namespace Microsoft.Azure.Management.Network
         /// </summary>
         private void Initialize()
         {
+            AzureFirewalls = new AzureFirewallsOperations(this);
             ApplicationGateways = new ApplicationGatewaysOperations(this);
             ApplicationSecurityGroups = new ApplicationSecurityGroupsOperations(this);
             DdosProtectionPlans = new DdosProtectionPlansOperations(this);
@@ -519,6 +560,13 @@ namespace Microsoft.Azure.Management.Network
             VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
             VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
             LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
+            VirtualWANs = new VirtualWANsOperations(this);
+            VpnSites = new VpnSitesOperations(this);
+            VpnSitesConfiguration = new VpnSitesConfigurationOperations(this);
+            VirtualHubs = new VirtualHubsOperations(this);
+            HubVirtualNetworkConnections = new HubVirtualNetworkConnectionsOperations(this);
+            VpnGateways = new VpnGatewaysOperations(this);
+            VpnConnections = new VpnConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -599,7 +647,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-05-01";
+            string apiVersion = "2018-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

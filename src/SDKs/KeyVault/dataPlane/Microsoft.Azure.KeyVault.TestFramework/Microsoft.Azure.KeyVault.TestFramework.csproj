@@ -4,11 +4,11 @@
     <Description>Microsoft Azure Key Vault Test Framework</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Test Framework</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.KeyVault.TestFramework</AssemblyName>    
-    <VersionPrefix>2.0.2-preview</VersionPrefix>    
+    <VersionPrefix>3.0.0-alpha</VersionPrefix>    
   </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  <!-- <PropertyGroup> -->
+    <!-- <TargetFrameworks>netcoreapp1.1</TargetFrameworks> -->
+  <!-- </PropertyGroup> -->
 
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.KeyVault\Microsoft.Azure.KeyVault.csproj" />

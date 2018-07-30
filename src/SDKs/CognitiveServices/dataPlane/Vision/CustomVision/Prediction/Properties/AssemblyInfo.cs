@@ -8,8 +8,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Cognitive Services CustomVision Prediction SDK")]
 [assembly: AssemblyDescription("This client library provides access to the Microsoft Cognitive Services CustomVision Prediction APIs.")]
 
-[assembly: AssemblyVersion("0.10.0")]
-[assembly: AssemblyFileVersion("0.10.0")]
+[assembly: AssemblyVersion("0.11.0.0")]
+[assembly: AssemblyFileVersion("0.11.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]

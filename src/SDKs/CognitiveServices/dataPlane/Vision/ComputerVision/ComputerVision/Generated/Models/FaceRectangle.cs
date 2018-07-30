@@ -37,7 +37,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// face.</param>
         /// <param name="height">Height measured from the top-left point of the
         /// face.</param>
-        public FaceRectangle(int? left = default(int?), int? top = default(int?), int? width = default(int?), int? height = default(int?))
+        public FaceRectangle(int left = default(int), int top = default(int), int width = default(int), int height = default(int))
         {
             Left = left;
             Top = top;
@@ -55,25 +55,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Gets or sets x-coordinate of the top left point of the face.
         /// </summary>
         [JsonProperty(PropertyName = "left")]
-        public int? Left { get; set; }
+        public int Left { get; set; }
 
         /// <summary>
         /// Gets or sets y-coordinate of the top left point of the face.
         /// </summary>
         [JsonProperty(PropertyName = "top")]
-        public int? Top { get; set; }
+        public int Top { get; set; }
 
         /// <summary>
         /// Gets or sets width measured from the top-left point of the face.
         /// </summary>
         [JsonProperty(PropertyName = "width")]
-        public int? Width { get; set; }
+        public int Width { get; set; }
 
         /// <summary>
         /// Gets or sets height measured from the top-left point of the face.
         /// </summary>
         [JsonProperty(PropertyName = "height")]
-        public int? Height { get; set; }
+        public int Height { get; set; }
 
     }
 }

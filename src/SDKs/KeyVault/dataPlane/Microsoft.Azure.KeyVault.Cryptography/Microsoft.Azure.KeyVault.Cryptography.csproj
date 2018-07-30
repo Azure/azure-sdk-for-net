@@ -4,9 +4,16 @@
     <PackageId>Microsoft.Azure.KeyVault.Cryptography</PackageId>
     <Description>Microsoft Azure Key Vault Cryptography Class Library</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Cryptography</AssemblyTitle>
-    <VersionPrefix>2.0.5</VersionPrefix>
+    <VersionPrefix>3.0.0</VersionPrefix>
     <AssemblyName>Microsoft.Azure.KeyVault.Cryptography</AssemblyName>
-    <PackageTags>Microsoft Azure key vault cryptography</PackageTags>    
+    <PackageTags>Microsoft Azure Key Vault Cryptography</PackageTags>    
+    <PackageReleaseNotes>
+      <![CDATA[
+        * Adding support for eliptical curve keys.
+          * supported curves: P-256, P-384, P-521, P256K
+          * supported algorithms: ES256, ES384, ES512, ES256K
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
@@ -34,12 +41,13 @@
   </PropertyGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="System.Diagnostics.Tools" Version="4.0.1" />
-    <PackageReference Include="System.Linq" Version="4.1.0" />
-    <PackageReference Include="System.Globalization" Version="4.0.11" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.1.0" />
-    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.0.0" />
-    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.2.0" />
+    <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
+    <PackageReference Include="System.Linq" Version="4.3.0" />
+    <PackageReference Include="System.Globalization" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.Cng" Version="4.3.0" />
   </ItemGroup>
 
 </Project>

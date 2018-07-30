@@ -24,52 +24,6 @@ namespace Microsoft.Azure.Management.Compute
     public static partial class VirtualMachinesOperationsExtensions
     {
             /// <summary>
-            /// The operation to get all extensions of a Virtual Machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine containing the extension.
-            /// </param>
-            /// <param name='expand'>
-            /// The expand expression to apply on the operation.
-            /// </param>
-            public static VirtualMachineExtensionsListResult GetExtensions(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, string expand = default(string))
-            {
-                return operations.GetExtensionsAsync(resourceGroupName, vmName, expand).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to get all extensions of a Virtual Machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine containing the extension.
-            /// </param>
-            /// <param name='expand'>
-            /// The expand expression to apply on the operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VirtualMachineExtensionsListResult> GetExtensionsAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetExtensionsWithHttpMessagesAsync(resourceGroupName, vmName, expand, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Captures the VM by copying virtual hard disks of the VM and outputs a
             /// template that can be used to create similar VMs.
             /// </summary>
@@ -763,7 +717,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='parameters'>
             /// Parameters supplied to the Run command operation.
             /// </param>
-            public static IList<InstanceViewStatus> RunCommand(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, RunCommandInput parameters)
+            public static RunCommandResult RunCommand(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, RunCommandInput parameters)
             {
                 return operations.RunCommandAsync(resourceGroupName, vmName, parameters).GetAwaiter().GetResult();
             }
@@ -786,7 +740,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<InstanceViewStatus>> RunCommandAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, RunCommandInput parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RunCommandResult> RunCommandAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, RunCommandInput parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RunCommandWithHttpMessagesAsync(resourceGroupName, vmName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1253,7 +1207,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='parameters'>
             /// Parameters supplied to the Run command operation.
             /// </param>
-            public static IList<InstanceViewStatus> BeginRunCommand(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, RunCommandInput parameters)
+            public static RunCommandResult BeginRunCommand(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, RunCommandInput parameters)
             {
                 return operations.BeginRunCommandAsync(resourceGroupName, vmName, parameters).GetAwaiter().GetResult();
             }
@@ -1276,7 +1230,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<InstanceViewStatus>> BeginRunCommandAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, RunCommandInput parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RunCommandResult> BeginRunCommandAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, RunCommandInput parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginRunCommandWithHttpMessagesAsync(resourceGroupName, vmName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

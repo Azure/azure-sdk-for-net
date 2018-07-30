@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="defaultKey">Default content key for an encryption
         /// scheme</param>
-        /// <param name="keyToTrackMappings">Representing tracks needs
-        /// sepearete content key</param>
+        /// <param name="keyToTrackMappings">Representing tracks needs separate
+        /// content key</param>
         public StreamingPolicyContentKeys(DefaultKey defaultKey = default(DefaultKey), IList<StreamingPolicyContentKey> keyToTrackMappings = default(IList<StreamingPolicyContentKey>))
         {
             DefaultKey = defaultKey;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Media.Models
         public DefaultKey DefaultKey { get; set; }
 
         /// <summary>
-        /// Gets or sets representing tracks needs sepearete content key
+        /// Gets or sets representing tracks needs separate content key
         /// </summary>
         [JsonProperty(PropertyName = "keyToTrackMappings")]
         public IList<StreamingPolicyContentKey> KeyToTrackMappings { get; set; }

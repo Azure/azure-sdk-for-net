@@ -12,8 +12,6 @@ namespace HttpRecorder.Tests
 {
     public class RecordedDelegatingHandler : DelegatingHandler
     {
-        private HttpResponseMessage _response;
-
         public RecordedDelegatingHandler()
         {
             StatusCodeToReturn = HttpStatusCode.Created;
@@ -22,20 +20,22 @@ namespace HttpRecorder.Tests
         public RecordedDelegatingHandler(HttpResponseMessage response)
         {
             StatusCodeToReturn = HttpStatusCode.Created;
-            _response = response;
+            Response = response;
         }
 
         public HttpStatusCode StatusCodeToReturn { get; set; }
 
-        public string Request { get; private set; }
+        public string Request { get; protected set; }
 
-        public HttpRequestHeaders RequestHeaders { get; private set; }
+        protected HttpResponseMessage Response { get; set; }
 
-        public HttpContentHeaders ContentHeaders { get; private set; }
+        public HttpRequestHeaders RequestHeaders { get; protected set; }
 
-        public HttpMethod Method { get; private set; }
+        public HttpContentHeaders ContentHeaders { get; protected set; }
 
-        public Uri Uri { get; private set; }
+        public HttpMethod Method { get; protected set; }
+
+        public Uri Uri { get; protected set; }
 
         public bool IsPassThrough { get; set; }
 
@@ -65,17 +65,17 @@ namespace HttpRecorder.Tests
             }
             else
             {
-                if (_response != null)
+                if (Response != null)
                 {
-                    HttpResponseMessage response = new HttpResponseMessage(_response.StatusCode);
+                    HttpResponseMessage response = new HttpResponseMessage(Response.StatusCode);
                     response.RequestMessage = new HttpRequestMessage(request.Method, request.RequestUri);
                     foreach (var header in request.Headers)
                     {
                         response.RequestMessage.Headers.Add(header.Key, header.Value);
                     }
                     response.RequestMessage.Content = request.Content;
-                    response.Content = _response.Content;
-                    foreach (var h in _response.Headers)
+                    response.Content = Response.Content;
+                    foreach (var h in Response.Headers)
                     {
                         response.Headers.Add(h.Key, h.Value);
                     }

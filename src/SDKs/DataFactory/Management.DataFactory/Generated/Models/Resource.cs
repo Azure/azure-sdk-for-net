@@ -38,13 +38,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="type">The resource type.</param>
         /// <param name="location">The resource location.</param>
         /// <param name="tags">The resource tags.</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="eTag">Etag identifies change in the resource.</param>
+        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string eTag = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
             Tags = tags;
+            ETag = eTag;
             CustomInit();
         }
 
@@ -82,6 +84,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets etag identifies change in the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "eTag")]
+        public string ETag { get; private set; }
 
     }
 }

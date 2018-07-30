@@ -22,10 +22,8 @@ namespace Reservations.Tests.ScenarioTests
         
         string ReservationOrderId = Common.ReservationOrderId;
         string ReservationId = Common.ReservationId;
-        //string SplitReservationId1 = Common.SplitReservationId1;
-        //string SplitReservationId2 = Common.SplitReservationId2;
 
-        public void ValidateReservation(ReservationResponse Reservation)
+        internal void ValidateReservation(ReservationResponse Reservation)
         {
             Assert.NotNull(Reservation);
             Assert.NotNull(Reservation.Id);
@@ -34,6 +32,10 @@ namespace Reservations.Tests.ScenarioTests
             Assert.NotNull(Reservation.Properties);
             Assert.NotNull(Reservation.Sku);
             Assert.NotNull(Reservation.Type);
+
+            Assert.NotNull(Reservation.Properties.InstanceFlexibility);
+            Assert.NotNull(Reservation.Properties.ReservedResourceType);
+            Assert.NotNull(Reservation.Properties.SkuDescription);
         }
 
         [Fact]
@@ -61,7 +63,7 @@ namespace Reservations.Tests.ScenarioTests
 
                 // Begin split test
                 SplitRequest Split = new SplitRequest(
-                        new List<int?>() { 2, 3 },
+                        new List<int?>() { 1, 1 },
                         CreateResourceId(ReservationOrderId, ReservationId)
                 );
                 var splitResponse = reservationsClient.Reservation.Split(ReservationOrderId, Split);
@@ -153,7 +155,7 @@ namespace Reservations.Tests.ScenarioTests
                 Assert.NotNull(validReservation);
 
                 ReservationId = validReservation.Id.Split('/')[6];
-                Patch Patch = new Patch("Shared");
+                Patch Patch = new Patch(AppliedScopeType.Shared, null, InstanceFlexibility.On);
                 var reservation = reservationsClient.Reservation.Update(ReservationOrderId, ReservationId, Patch);
                 ValidateReservation(reservation);
             }
@@ -181,7 +183,7 @@ namespace Reservations.Tests.ScenarioTests
                 Assert.NotNull(validReservation);
 
                 ReservationId = validReservation.Id.Split('/')[6];
-                Patch Patch = new Patch("Single", new List<string>() { "/subscriptions/98df3792-7962-4f18-8be2-d5576f122de3" });
+                Patch Patch = new Patch(AppliedScopeType.Single, new List<string>() { $"/subscriptions/{Common.SubscriptionId}" }, InstanceFlexibility.On);
                 var reservation = reservationsClient.Reservation.Update(ReservationOrderId, ReservationId, Patch);
                 ValidateReservation(reservation);
             }

@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="state">Integration runtime state, only valid for
         /// managed dedicated integration runtime. Possible values include:
         /// 'Initial', 'Stopped', 'Started', 'Starting', 'Stopping',
-        /// 'NeedRegistration', 'Online', 'Limited', 'Offline'</param>
+        /// 'NeedRegistration', 'Online', 'Limited', 'Offline',
+        /// 'AccessDenied'</param>
         /// <param name="computeProperties">The compute resource for managed
         /// integration runtime.</param>
         /// <param name="ssisProperties">SSIS properties for managed
@@ -65,7 +66,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets integration runtime state, only valid for managed dedicated
         /// integration runtime. Possible values include: 'Initial', 'Stopped',
         /// 'Started', 'Starting', 'Stopping', 'NeedRegistration', 'Online',
-        /// 'Limited', 'Offline'
+        /// 'Limited', 'Offline', 'AccessDenied'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; private set; }

@@ -22,8 +22,7 @@ namespace Microsoft.Azure.Management.BatchAI
     public static partial class ClustersOperationsExtensions
     {
             /// <summary>
-            /// Adds a cluster. A cluster is a collection of compute nodes. Multiple jobs
-            /// can be run on the same cluster.
+            /// Creates a Cluster in the given Workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -31,22 +30,26 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
             /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
+            /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster within the specified resource group. Cluster names
             /// can only contain a combination of alphanumeric characters along with dash
             /// (-) and underscore (_). The name must be from 1 through 64 characters long.
             /// </param>
             /// <param name='parameters'>
-            /// The parameters to provide for cluster creation.
+            /// The parameters to provide for the Cluster creation.
             /// </param>
-            public static Cluster Create(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterCreateParameters parameters)
+            public static Cluster Create(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName, ClusterCreateParameters parameters)
             {
-                return operations.CreateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, workspaceName, clusterName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Adds a cluster. A cluster is a collection of compute nodes. Multiple jobs
-            /// can be run on the same cluster.
+            /// Creates a Cluster in the given Workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -54,27 +57,32 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
             /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
+            /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster within the specified resource group. Cluster names
             /// can only contain a combination of alphanumeric characters along with dash
             /// (-) and underscore (_). The name must be from 1 through 64 characters long.
             /// </param>
             /// <param name='parameters'>
-            /// The parameters to provide for cluster creation.
+            /// The parameters to provide for the Cluster creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> CreateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> CreateAsync(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName, ClusterCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, workspaceName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Update the properties of a given cluster.
+            /// Updates properties of a Cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -82,21 +90,27 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
             /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
+            /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster within the specified resource group. Cluster names
             /// can only contain a combination of alphanumeric characters along with dash
             /// (-) and underscore (_). The name must be from 1 through 64 characters long.
             /// </param>
-            /// <param name='parameters'>
-            /// Additional parameters for cluster update.
+            /// <param name='scaleSettings'>
+            /// Scale settings. Desired scale settings for the cluster. Batch AI service
+            /// supports manual and auto scale clusters.
             /// </param>
-            public static Cluster Update(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdateParameters parameters)
+            public static Cluster Update(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName, ScaleSettings scaleSettings = default(ScaleSettings))
             {
-                return operations.UpdateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, workspaceName, clusterName, scaleSettings).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Update the properties of a given cluster.
+            /// Updates properties of a Cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -104,20 +118,26 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
             /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
+            /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster within the specified resource group. Cluster names
             /// can only contain a combination of alphanumeric characters along with dash
             /// (-) and underscore (_). The name must be from 1 through 64 characters long.
             /// </param>
-            /// <param name='parameters'>
-            /// Additional parameters for cluster update.
+            /// <param name='scaleSettings'>
+            /// Scale settings. Desired scale settings for the cluster. Batch AI service
+            /// supports manual and auto scale clusters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> UpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> UpdateAsync(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName, ScaleSettings scaleSettings = default(ScaleSettings), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, clusterName, scaleSettings, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -132,14 +152,19 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
             /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
+            /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster within the specified resource group. Cluster names
             /// can only contain a combination of alphanumeric characters along with dash
             /// (-) and underscore (_). The name must be from 1 through 64 characters long.
             /// </param>
-            public static void Delete(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            public static void Delete(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName)
             {
-                operations.DeleteAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, workspaceName, clusterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -151,46 +176,10 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
             /// </param>
-            /// <param name='clusterName'>
-            /// The name of the cluster within the specified resource group. Cluster names
-            /// can only contain a combination of alphanumeric characters along with dash
-            /// (-) and underscore (_). The name must be from 1 through 64 characters long.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets information about the specified Cluster.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='clusterName'>
-            /// The name of the cluster within the specified resource group. Cluster names
-            /// can only contain a combination of alphanumeric characters along with dash
-            /// (-) and underscore (_). The name must be from 1 through 64 characters long.
-            /// </param>
-            public static Cluster Get(this IClustersOperations operations, string resourceGroupName, string clusterName)
-            {
-                return operations.GetAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets information about the specified Cluster.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster within the specified resource group. Cluster names
@@ -200,41 +189,102 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> GetAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets information about a Cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster within the specified resource group. Cluster names
+            /// can only contain a combination of alphanumeric characters along with dash
+            /// (-) and underscore (_). The name must be from 1 through 64 characters long.
+            /// </param>
+            public static Cluster Get(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName)
+            {
+                return operations.GetAsync(resourceGroupName, workspaceName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about a Cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster within the specified resource group. Cluster names
+            /// can only contain a combination of alphanumeric characters along with dash
+            /// (-) and underscore (_). The name must be from 1 through 64 characters long.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Cluster> GetAsync(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, clusterName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Get the IP address, port of all the compute nodes in the cluster.
+            /// Get the IP address, port of all the compute nodes in the Cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster within the specified resource group. Cluster names
             /// can only contain a combination of alphanumeric characters along with dash
             /// (-) and underscore (_). The name must be from 1 through 64 characters long.
             /// </param>
-            public static IPage<RemoteLoginInformation> ListRemoteLoginInformation(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            public static IPage<RemoteLoginInformation> ListRemoteLoginInformation(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName)
             {
-                return operations.ListRemoteLoginInformationAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                return operations.ListRemoteLoginInformationAsync(resourceGroupName, workspaceName, clusterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get the IP address, port of all the compute nodes in the cluster.
+            /// Get the IP address, port of all the compute nodes in the Cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster within the specified resource group. Cluster names
@@ -244,51 +294,66 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RemoteLoginInformation>> ListRemoteLoginInformationAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RemoteLoginInformation>> ListRemoteLoginInformationAsync(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListRemoteLoginInformationWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListRemoteLoginInformationWithHttpMessagesAsync(resourceGroupName, workspaceName, clusterName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets information about the Clusters associated with the subscription.
+            /// Gets information about Clusters associated with the given Workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='clustersListOptions'>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
+            /// </param>
+            /// <param name='clustersListByWorkspaceOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<Cluster> List(this IClustersOperations operations, ClustersListOptions clustersListOptions = default(ClustersListOptions))
+            public static IPage<Cluster> ListByWorkspace(this IClustersOperations operations, string resourceGroupName, string workspaceName, ClustersListByWorkspaceOptions clustersListByWorkspaceOptions = default(ClustersListByWorkspaceOptions))
             {
-                return operations.ListAsync(clustersListOptions).GetAwaiter().GetResult();
+                return operations.ListByWorkspaceAsync(resourceGroupName, workspaceName, clustersListByWorkspaceOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets information about the Clusters associated with the subscription.
+            /// Gets information about Clusters associated with the given Workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='clustersListOptions'>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
+            /// </param>
+            /// <param name='clustersListByWorkspaceOptions'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Cluster>> ListAsync(this IClustersOperations operations, ClustersListOptions clustersListOptions = default(ClustersListOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Cluster>> ListByWorkspaceAsync(this IClustersOperations operations, string resourceGroupName, string workspaceName, ClustersListByWorkspaceOptions clustersListByWorkspaceOptions = default(ClustersListByWorkspaceOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(clustersListOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByWorkspaceWithHttpMessagesAsync(resourceGroupName, workspaceName, clustersListByWorkspaceOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets information about the Clusters associated within the specified
-            /// resource group.
+            /// Creates a Cluster in the given Workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -296,47 +361,10 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
             /// </param>
-            /// <param name='clustersListByResourceGroupOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            public static IPage<Cluster> ListByResourceGroup(this IClustersOperations operations, string resourceGroupName, ClustersListByResourceGroupOptions clustersListByResourceGroupOptions = default(ClustersListByResourceGroupOptions))
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName, clustersListByResourceGroupOptions).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets information about the Clusters associated within the specified
-            /// resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='clustersListByResourceGroupOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Cluster>> ListByResourceGroupAsync(this IClustersOperations operations, string resourceGroupName, ClustersListByResourceGroupOptions clustersListByResourceGroupOptions = default(ClustersListByResourceGroupOptions), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, clustersListByResourceGroupOptions, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Adds a cluster. A cluster is a collection of compute nodes. Multiple jobs
-            /// can be run on the same cluster.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster within the specified resource group. Cluster names
@@ -344,16 +372,15 @@ namespace Microsoft.Azure.Management.BatchAI
             /// (-) and underscore (_). The name must be from 1 through 64 characters long.
             /// </param>
             /// <param name='parameters'>
-            /// The parameters to provide for cluster creation.
+            /// The parameters to provide for the Cluster creation.
             /// </param>
-            public static Cluster BeginCreate(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterCreateParameters parameters)
+            public static Cluster BeginCreate(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName, ClusterCreateParameters parameters)
             {
-                return operations.BeginCreateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateAsync(resourceGroupName, workspaceName, clusterName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Adds a cluster. A cluster is a collection of compute nodes. Multiple jobs
-            /// can be run on the same cluster.
+            /// Creates a Cluster in the given Workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -361,20 +388,25 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
             /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
+            /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster within the specified resource group. Cluster names
             /// can only contain a combination of alphanumeric characters along with dash
             /// (-) and underscore (_). The name must be from 1 through 64 characters long.
             /// </param>
             /// <param name='parameters'>
-            /// The parameters to provide for cluster creation.
+            /// The parameters to provide for the Cluster creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> BeginCreateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> BeginCreateAsync(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName, ClusterCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, workspaceName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -389,14 +421,19 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
             /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
+            /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster within the specified resource group. Cluster names
             /// can only contain a combination of alphanumeric characters along with dash
             /// (-) and underscore (_). The name must be from 1 through 64 characters long.
             /// </param>
-            public static void BeginDelete(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            public static void BeginDelete(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, workspaceName, clusterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -408,6 +445,11 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
             /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace. Workspace names can only contain a combination
+            /// of alphanumeric characters along with dash (-) and underscore (_). The name
+            /// must be from 1 through 64 characters long.
+            /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster within the specified resource group. Cluster names
             /// can only contain a combination of alphanumeric characters along with dash
@@ -416,13 +458,13 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IClustersOperations operations, string resourceGroupName, string workspaceName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Get the IP address, port of all the compute nodes in the cluster.
+            /// Get the IP address, port of all the compute nodes in the Cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -436,7 +478,7 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Get the IP address, port of all the compute nodes in the cluster.
+            /// Get the IP address, port of all the compute nodes in the Cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -456,7 +498,7 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Gets information about the Clusters associated with the subscription.
+            /// Gets information about Clusters associated with the given Workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -464,13 +506,13 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Cluster> ListNext(this IClustersOperations operations, string nextPageLink)
+            public static IPage<Cluster> ListByWorkspaceNext(this IClustersOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByWorkspaceNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets information about the Clusters associated with the subscription.
+            /// Gets information about Clusters associated with the given Workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -481,45 +523,9 @@ namespace Microsoft.Azure.Management.BatchAI
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Cluster>> ListNextAsync(this IClustersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Cluster>> ListByWorkspaceNextAsync(this IClustersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets information about the Clusters associated within the specified
-            /// resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Cluster> ListByResourceGroupNext(this IClustersOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets information about the Clusters associated within the specified
-            /// resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Cluster>> ListByResourceGroupNextAsync(this IClustersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByWorkspaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

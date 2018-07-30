@@ -64,8 +64,27 @@ namespace Compute.Tests
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
             }
+        }
 
-            
+        /// <summary>
+        /// TODO: StandardSSD is currently in preview and is available only in a few regions. Once it goes GA, it can be tested in 
+        /// the default test location.
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_ManagedDisks_StandardSSD")]
+        public void TestVMScenarioOperations_ManagedDisks_StandardSSD()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks_StandardSSD", hasManagedDisks: true,
+                    storageAccountType: StorageAccountTypes.StandardSSDLRS);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
         }
 
         /// <summary>
@@ -87,8 +106,8 @@ namespace Compute.Tests
             }
         }
 
-        private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = VirtualMachineSizeTypes.StandardA0,
-            string storageAccountType = StorageAccountTypes.StandardLRS, bool? writeAcceleratorEnabled = null, bool callUpdateVM = false)
+        private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A0",
+            string storageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null, bool callUpdateVM = false)
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {

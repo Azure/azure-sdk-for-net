@@ -49,14 +49,14 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// Gets or sets the status of the Operations Management Suite (OMS) on
         /// the HDInsight cluster.
         /// </summary>
-        [JsonProperty(PropertyName = "ClusterMonitoringEnabled")]
+        [JsonProperty(PropertyName = "clusterMonitoringEnabled")]
         public bool? ClusterMonitoringEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets the workspace ID of the Operations Management Suite
         /// (OMS) on the HDInsight cluster.
         /// </summary>
-        [JsonProperty(PropertyName = "WorkspaceId")]
+        [JsonProperty(PropertyName = "workspaceId")]
         public string WorkspaceId { get; set; }
 
     }

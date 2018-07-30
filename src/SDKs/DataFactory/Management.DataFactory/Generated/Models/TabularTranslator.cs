@@ -33,12 +33,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="columnMappings">Column mappings. Type: string (or
-        /// Expression with resultType string).</param>
-        public TabularTranslator(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object columnMappings = default(object))
+        /// <param name="columnMappings">Column mappings. Example: "UserId:
+        /// MyUserId, Group: MyGroup, Name: MyName" Type: string (or Expression
+        /// with resultType string).</param>
+        /// <param name="schemaMapping">The schema mapping to map between
+        /// tabular data and hierarchical data. Example: {"Column1":
+        /// "$.Column1", "Column2": "$.Column2.Property1", "Column3":
+        /// "$.Column2.Property2"}. Type: object (or Expression with resultType
+        /// object).</param>
+        public TabularTranslator(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object columnMappings = default(object), object schemaMapping = default(object))
             : base(additionalProperties)
         {
             ColumnMappings = columnMappings;
+            SchemaMapping = schemaMapping;
             CustomInit();
         }
 
@@ -48,11 +55,21 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets column mappings. Type: string (or Expression with
-        /// resultType string).
+        /// Gets or sets column mappings. Example: "UserId: MyUserId, Group:
+        /// MyGroup, Name: MyName" Type: string (or Expression with resultType
+        /// string).
         /// </summary>
         [JsonProperty(PropertyName = "columnMappings")]
         public object ColumnMappings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the schema mapping to map between tabular data and
+        /// hierarchical data. Example: {"Column1": "$.Column1", "Column2":
+        /// "$.Column2.Property1", "Column3": "$.Column2.Property2"}. Type:
+        /// object (or Expression with resultType object).
+        /// </summary>
+        [JsonProperty(PropertyName = "schemaMapping")]
+        public object SchemaMapping { get; set; }
 
     }
 }

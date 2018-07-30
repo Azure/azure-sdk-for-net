@@ -53,7 +53,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 if ( digest.Length != 32 )
                     throw new ArgumentOutOfRangeException( "digest", "The digest must be 32 bytes for SHA-256" );
 
-#if NET45
+#if FullNetFx
                 if ( _key is RSACryptoServiceProvider )
                 {
                     return ((RSACryptoServiceProvider)_key).SignHash( digest, OID_OIWSEC_SHA256 );
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                     throw new ArgumentNullException( "signature" );
 
 
-#if NET45
+#if FullNetFx
                 if ( _key is RSACryptoServiceProvider )
                 {
                     return ((RSACryptoServiceProvider)_key).VerifyHash( digest, OID_OIWSEC_SHA256, signature );

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// job.</param>
         /// <param name="runOn">Gets or sets the runOn which specifies the
         /// group name where the job is to be executed.</param>
-        public JobCreateParameters(RunbookAssociationProperty runbook, IDictionary<string, string> parameters = default(IDictionary<string, string>), string runOn = default(string))
+        public JobCreateParameters(RunbookAssociationProperty runbook = default(RunbookAssociationProperty), IDictionary<string, string> parameters = default(IDictionary<string, string>), string runOn = default(string))
         {
             Runbook = runbook;
             Parameters = parameters;
@@ -71,18 +71,5 @@ namespace Microsoft.Azure.Management.Automation.Models
         [JsonProperty(PropertyName = "properties.runOn")]
         public string RunOn { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Runbook == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Runbook");
-            }
-        }
     }
 }

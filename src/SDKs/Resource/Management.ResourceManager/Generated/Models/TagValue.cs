@@ -10,13 +10,15 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Tag information.
     /// </summary>
-    public partial class TagValue
+    public partial class TagValue : IResource
     {
         /// <summary>
         /// Initializes a new instance of the TagValue class.
@@ -46,10 +48,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the tag ID.
+        /// Gets the tag ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the tag value.

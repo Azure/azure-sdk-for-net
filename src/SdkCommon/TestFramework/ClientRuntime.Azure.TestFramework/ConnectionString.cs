@@ -281,7 +281,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 NormalizeKeyValuePairs();
             }
         }
-        
+
         /// <summary>
         /// Returns value for the key set in the connection string
         /// </summary>
@@ -290,6 +290,28 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         internal string GetValue(string keyName)
         {
             return KeyValuePairs[keyName];
+        }
+
+        /// <summary>
+        /// Return value for the key set in the connection string
+        /// </summary>
+        /// <typeparam name="T">Datatype of the value that you want it to be returned. Will return default value of data type if exception occurs</typeparam>
+        /// <param name="keyName">KeyName</param>
+        /// <returns></returns>
+        public T GetValue<T>(string keyName)
+        {
+            Type tType = typeof(T);
+            T returnValue = default(T);
+            object changedValue = null;
+            try
+            {
+                string keyValue = GetValue(keyName);
+                changedValue = Convert.ChangeType(keyValue, tType);
+                returnValue = (T)changedValue;
+            }
+            catch { }
+
+            return returnValue;
         }
 
         /// <summary>

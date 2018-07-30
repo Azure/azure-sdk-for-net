@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         // HttpClient is intended to be instantiated once and re-used throughout the life of an application. 
         private static readonly HttpClient DefaultHttpClient = new HttpClient();
 
-        // Default Azure VM MSI endpoint
-        private const string AzureVmMsiEndpoint = "http://localhost:50342/oauth2/token";
+        // Azure Instance Metadata Service (IDMS) endpoint
+        private const string AzureVmIdmsEndpoint = "http://169.254.169.254/metadata/identity/oauth2/token";
 
         internal MsiAccessTokenProvider()
         {
@@ -41,12 +41,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 string msiSecret = Environment.GetEnvironmentVariable("MSI_SECRET");
                 var isAppServicesMsiAvailable = !string.IsNullOrWhiteSpace(msiEndpoint) && !string.IsNullOrWhiteSpace(msiSecret);
 
-                string authorityParameter = string.IsNullOrEmpty(authority) ? string.Empty : $"&authority={authority}";
-
                 // Craft request as per the MSI protocol
                 var requestUrl = isAppServicesMsiAvailable
                     ? $"{msiEndpoint}?resource={resource}&api-version=2017-09-01"
-                    : $"{AzureVmMsiEndpoint}?resource={resource}{authorityParameter}";
+                    : $"{AzureVmIdmsEndpoint}?resource={resource}&api-version=2018-02-01";
 
                 // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpclient. 
                 HttpClient httpClient = _httpClient ?? DefaultHttpClient;
@@ -61,7 +59,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 {
                     request.Headers.Add("Metadata", "true");
                 }
-                
+
                 HttpResponseMessage response = await httpClient.SendAsync(request).ConfigureAwait(false);
 
                 // If the response is successful, it should have JSON response with an access_token field

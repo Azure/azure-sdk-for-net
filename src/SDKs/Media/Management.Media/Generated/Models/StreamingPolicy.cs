@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// CommonEncryptionCenc</param>
         /// <param name="commonEncryptionCbcs">Configuration of
         /// CommonEncryptionCbcs</param>
-        /// <param name="noEncryption">Configuations of NoEncryption</param>
+        /// <param name="noEncryption">Configurations of NoEncryption</param>
         public StreamingPolicy(string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), string defaultContentKeyPolicyName = default(string), EnvelopeEncryption envelopeEncryption = default(EnvelopeEncryption), CommonEncryptionCenc commonEncryptionCenc = default(CommonEncryptionCenc), CommonEncryptionCbcs commonEncryptionCbcs = default(CommonEncryptionCbcs), NoEncryption noEncryption = default(NoEncryption))
             : base(id, name, type)
         {
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Media.Models
         public CommonEncryptionCbcs CommonEncryptionCbcs { get; set; }
 
         /// <summary>
-        /// Gets or sets configuations of NoEncryption
+        /// Gets or sets configurations of NoEncryption
         /// </summary>
         [JsonProperty(PropertyName = "properties.noEncryption")]
         public NoEncryption NoEncryption { get; set; }

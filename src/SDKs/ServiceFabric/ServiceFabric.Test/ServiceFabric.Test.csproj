@@ -6,9 +6,9 @@
     <AssemblyName>ServiceFabric.Test</AssemblyName>
     <VersionPrefix>1.1.0</VersionPrefix>    
   </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  <!-- <PropertyGroup> -->
+    <!-- <TargetFrameworks>netcoreapp1.1</TargetFrameworks> -->
+  <!-- </PropertyGroup> -->
   
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.ServiceFabric" Version="1.0.0-preview" />-->

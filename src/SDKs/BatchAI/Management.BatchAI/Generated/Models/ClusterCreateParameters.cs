@@ -13,12 +13,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Parameters supplied to the Create operation.
+    /// Cluster creation operation.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ClusterCreateParameters
@@ -34,26 +32,15 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
         /// </summary>
-        /// <param name="location">The region in which to create the
-        /// cluster.</param>
-        /// <param name="vmSize">The size of the virtual machines in the
-        /// cluster.</param>
-        /// <param name="userAccountSettings">Settings for user account that
-        /// will be created on all compute nodes of the cluster.</param>
-        /// <param name="tags">The user specified tags associated with the
-        /// Cluster.</param>
-        /// <param name="vmPriority">dedicated or lowpriority.</param>
-        /// <param name="scaleSettings">Desired scale for the cluster.</param>
-        /// <param name="virtualMachineConfiguration">Settings for OS image and
-        /// mounted data volumes.</param>
-        /// <param name="nodeSetup">Setup to be done on all compute nodes in
-        /// the cluster.</param>
-        /// <param name="subnet">Specifies the identifier of the subnet.
-        /// </param>
-        public ClusterCreateParameters(string location, string vmSize, UserAccountSettings userAccountSettings, IDictionary<string, string> tags = default(IDictionary<string, string>), VmPriority? vmPriority = default(VmPriority?), ScaleSettings scaleSettings = default(ScaleSettings), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), NodeSetup nodeSetup = default(NodeSetup), ResourceId subnet = default(ResourceId))
+        /// <param name="vmSize">VM size.</param>
+        /// <param name="userAccountSettings">User account settings.</param>
+        /// <param name="vmPriority">VM priority.</param>
+        /// <param name="scaleSettings">Scale settings.</param>
+        /// <param name="virtualMachineConfiguration">VM configuration.</param>
+        /// <param name="nodeSetup">Node setup.</param>
+        /// <param name="subnet">Subnet.</param>
+        public ClusterCreateParameters(string vmSize, UserAccountSettings userAccountSettings, VmPriority? vmPriority = default(VmPriority?), ScaleSettings scaleSettings = default(ScaleSettings), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), NodeSetup nodeSetup = default(NodeSetup), ResourceId subnet = default(ResourceId))
         {
-            Location = location;
-            Tags = tags;
             VmSize = vmSize;
             VmPriority = vmPriority;
             ScaleSettings = scaleSettings;
@@ -70,70 +57,77 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the region in which to create the cluster.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user specified tags associated with the Cluster.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size of the virtual machines in the cluster.
+        /// Gets or sets VM size.
         /// </summary>
         /// <remarks>
-        /// All virtual machines in a cluster are the same size. For
-        /// information about available VM sizes for clusters using images from
-        /// the Virtual Machines Marketplace (see Sizes for Virtual Machines
-        /// (Linux) or Sizes for Virtual Machines (Windows). Batch AI service
-        /// supports all Azure VM sizes except STANDARD_A0 and those with
-        /// premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2
+        /// The size of the virtual machines in the cluster. All nodes in a
+        /// cluster have the same VM size. For information about available VM
+        /// sizes for clusters using images from the Virtual Machines
+        /// Marketplace see Sizes for Virtual Machines (Linux). Batch AI
+        /// service supports all Azure VM sizes except STANDARD_A0 and those
+        /// with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2
         /// series).
         /// </remarks>
         [JsonProperty(PropertyName = "properties.vmSize")]
         public string VmSize { get; set; }
 
         /// <summary>
-        /// Gets or sets dedicated or lowpriority.
+        /// Gets or sets VM priority.
         /// </summary>
         /// <remarks>
-        /// Default is dedicated. Possible values include: 'dedicated',
-        /// 'lowpriority'
+        /// VM priority. Allowed values are: dedicated (default) and
+        /// lowpriority. Possible values include: 'dedicated', 'lowpriority'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.vmPriority")]
         public VmPriority? VmPriority { get; set; }
 
         /// <summary>
-        /// Gets or sets desired scale for the cluster.
+        /// Gets or sets scale settings.
         /// </summary>
+        /// <remarks>
+        /// Scale settings for the cluster. Batch AI service supports manual
+        /// and auto scale clusters.
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.scaleSettings")]
         public ScaleSettings ScaleSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets settings for OS image and mounted data volumes.
+        /// Gets or sets VM configuration.
         /// </summary>
+        /// <remarks>
+        /// OS image configuration for cluster nodes. All nodes in a cluster
+        /// have the same OS image.
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.virtualMachineConfiguration")]
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets setup to be done on all compute nodes in the cluster.
+        /// Gets or sets node setup.
         /// </summary>
+        /// <remarks>
+        /// Setup to be performed on each compute node in the cluster.
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.nodeSetup")]
         public NodeSetup NodeSetup { get; set; }
 
         /// <summary>
-        /// Gets or sets settings for user account that will be created on all
-        /// compute nodes of the cluster.
+        /// Gets or sets user account settings.
         /// </summary>
+        /// <remarks>
+        /// Settings for an administrator user account that will be created on
+        /// each compute node in the cluster.
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.userAccountSettings")]
         public UserAccountSettings UserAccountSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the identifier of the subnet.
+        /// Gets or sets subnet.
         /// </summary>
+        /// <remarks>
+        /// Existing virtual network subnet to put the cluster nodes in. Note,
+        /// if a File Server mount configured in node setup, the File Server's
+        /// subnet will be used automatically.
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.subnet")]
         public ResourceId Subnet { get; set; }
 
@@ -145,10 +139,6 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
             if (VmSize == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "VmSize");

@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/RSG/providers/Microsoft.Security/locations/centralus/alerts/2518710774294070750_FFF23C70-80EF-4A8B-9122-507B0EA8DFFF?api-version=2015-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Jlc291cmNlR3JvdXBzL1JTRy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5L2xvY2F0aW9ucy9jZW50cmFsdXMvYWxlcnRzLzI1MTg3MTA3NzQyOTQwNzA3NTBfRkZGMjNDNzAtODBFRi00QThCLTkxMjItNTA3QjBFQThERkZGP2FwaS12ZXJzaW9uPTIwMTUtMDYtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7e1120d5-9ba6-4617-b125-aebfc570e2b2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/RSG/providers/Microsoft.Security/locations/centralus/alerts/2518710774294070750_FFF23C70-80EF-4A8B-9122-507B0EA8DFFF\",\r\n  \"name\": \"2518710774294070750_FFF23C70-80EF-4A8B-9122-507B0EA8DFFF\",\r\n  \"type\": \"Microsoft.Security/Locations/alerts\",\r\n  \"properties\": {\r\n    \"vendorName\": \"Microsoft\",\r\n    \"alertDisplayName\": \"PREVIEW - Vulnerability scanner detected\",\r\n    \"alertName\": \"APPS_WpScanner\",\r\n    \"detectedTimeUtc\": \"2018-07-10T11:49:30.5929249Z\",\r\n    \"description\": \"Azure App Services activity log indicates a possible vulnerability scanner usage on your App Service resource.\\r\\nThe suspicious activity detected resembles that of tools targeting WordPress applications.\",\r\n    \"remediationSteps\": \"1. If WordPress is installed, make sure that the application is up to date and automatic updates are enabled.\\r\\n2. If only specific IPs should access to the web application, use IP Restrictions (https://docs.microsoft.com/en-us/azure/app-service/app-service-ip-restrictions).\",\r\n    \"actionTaken\": \"Undefined\",\r\n    \"reportedSeverity\": \"High\",\r\n    \"compromisedEntity\": \"testSite1\",\r\n    \"associatedResource\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/RSG/providers/Microsoft.Web/sites/testSite1\",\r\n    \"subscriptionId\": \"487bb485-b5b0-471e-9c0d-10717612f869\",\r\n    \"instanceId\": \"fff23c70-80ef-4a8b-9122-507b0ea8dfff\",\r\n    \"extendedProperties\": {\r\n      \"sample User Agents\": \"WPScan+v2.9.3+(http://wpscan.org)\",\r\n      \"last Event Time\": \"6/23/2018 12:18:58 AM\",\r\n      \"sample URIs\": \"/wp-config.php.original, /wp-includes/css/editor.min.css, /wp-includes/js/wp-emoji.js, /wp-config.old, /xmlrpc.php, /wp-admin/css/wp-admin-rtl.css, /#wp-config.php#, /wp-includes/js/tinymce/plugins/wplink/plugin.js, /wp-includes/js/tinymce/plugins/wordpress/editor_plugin.js, /wp-admin/js/post.js\",\r\n      \"sample Referer\": \"https://www.stone.com.br/\",\r\n      \"resourceType\": \"App Service\",\r\n      \"end Time UTC\": \"2018-07-10T11:54:30.5929249Z\"\r\n    },\r\n    \"state\": \"Dismissed\",\r\n    \"reportedTimeUtc\": \"2018-07-10T16:31:52.4195616Z\",\r\n    \"confidenceReasons\": [],\r\n    \"canBeInvestigated\": true,\r\n    \"entities\": []\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 22 Jul 2018 12:52:50 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "70061a18-461f-43fb-ba85-48c35707e7ec"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-correlation-request-id": [
+          "2c53d420-45f7-498c-8bb1-34a7eb9cd7f8"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20180722T125251Z:2c53d420-45f7-498c-8bb1-34a7eb9cd7f8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+  }
+}

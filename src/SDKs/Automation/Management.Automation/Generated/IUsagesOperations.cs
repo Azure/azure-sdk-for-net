@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.Automation
         /// <see href="http://aka.ms/azureautomationsdk/usageoperations" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

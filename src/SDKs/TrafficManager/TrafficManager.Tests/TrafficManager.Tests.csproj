@@ -6,12 +6,10 @@
     <AssemblyName>TrafficManager.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>    
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
-  </ItemGroup>
+  </PropertyGroup>-->
+
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.TrafficManager" Version="2.2.0-preview" />-->    
     <ProjectReference Include="..\Management.TrafficManager\Microsoft.Azure.Management.TrafficManager.csproj" />

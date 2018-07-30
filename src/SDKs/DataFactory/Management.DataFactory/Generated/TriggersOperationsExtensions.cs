@@ -136,9 +136,14 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='triggerName'>
             /// The trigger name.
             /// </param>
-            public static TriggerResource Get(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName)
+            /// <param name='ifNoneMatch'>
+            /// ETag of the trigger entity. Should only be specified for get. If the ETag
+            /// matches the existing entity tag, or if * was provided, then no content will
+            /// be returned.
+            /// </param>
+            public static TriggerResource Get(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName, string ifNoneMatch = default(string))
             {
-                return operations.GetAsync(resourceGroupName, factoryName, triggerName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, factoryName, triggerName, ifNoneMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -156,12 +161,17 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='triggerName'>
             /// The trigger name.
             /// </param>
+            /// <param name='ifNoneMatch'>
+            /// ETag of the trigger entity. Should only be specified for get. If the ETag
+            /// matches the existing entity tag, or if * was provided, then no content will
+            /// be returned.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TriggerResource> GetAsync(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TriggerResource> GetAsync(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName, string ifNoneMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, factoryName, triggerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, factoryName, triggerName, ifNoneMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -297,64 +307,6 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
-            /// List trigger runs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='factoryName'>
-            /// The factory name.
-            /// </param>
-            /// <param name='triggerName'>
-            /// The trigger name.
-            /// </param>
-            /// <param name='startTime'>
-            /// Start time for trigger runs.
-            /// </param>
-            /// <param name='endTime'>
-            /// End time for trigger runs.
-            /// </param>
-            public static IPage<TriggerRun> ListRuns(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName, System.DateTime startTime, System.DateTime endTime)
-            {
-                return operations.ListRunsAsync(resourceGroupName, factoryName, triggerName, startTime, endTime).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List trigger runs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='factoryName'>
-            /// The factory name.
-            /// </param>
-            /// <param name='triggerName'>
-            /// The trigger name.
-            /// </param>
-            /// <param name='startTime'>
-            /// Start time for trigger runs.
-            /// </param>
-            /// <param name='endTime'>
-            /// End time for trigger runs.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<TriggerRun>> ListRunsAsync(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName, System.DateTime startTime, System.DateTime endTime, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListRunsWithHttpMessagesAsync(resourceGroupName, factoryName, triggerName, startTime, endTime, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Starts a trigger.
             /// </summary>
             /// <param name='operations'>
@@ -469,40 +421,6 @@ namespace Microsoft.Azure.Management.DataFactory
             public static async Task<IPage<TriggerResource>> ListByFactoryNextAsync(this ITriggersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByFactoryNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List trigger runs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<TriggerRun> ListRunsNext(this ITriggersOperations operations, string nextPageLink)
-            {
-                return operations.ListRunsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List trigger runs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<TriggerRun>> ListRunsNextAsync(this ITriggersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListRunsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

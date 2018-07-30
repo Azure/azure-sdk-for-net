@@ -6,9 +6,9 @@
     <AssemblyName>OperationalInsights.Test</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>    
   </PropertyGroup>  
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  <!-- <PropertyGroup> -->
+    <!-- <TargetFrameworks>netcoreapp1.1</TargetFrameworks> -->
+  <!-- </PropertyGroup> -->
 
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.OperationalInsights" Version="0.18.0-preview" />-->

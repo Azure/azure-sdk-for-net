@@ -30,12 +30,31 @@ namespace Reservations.Tests.ScenarioTests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var catalog = reservationsClient.GetCatalog(SubscriptionId);
+                var catalog = reservationsClient.GetCatalog(SubscriptionId, ReservedResourceType.VirtualMachines, "westus");
                 Assert.True(catalog.All(x =>
                     x.ResourceType != null &&
                     x.Name != null &&
-                    x.Tier != null &&
-                    x.Size != null
+                    x.SkuProperties != null &&
+                    x.Locations != null &&
+                    x.Terms != null
+                ));
+
+                catalog = reservationsClient.GetCatalog(SubscriptionId, ReservedResourceType.SqlDatabases, "southeastasia");
+                Assert.True(catalog.All(x =>
+                    x.ResourceType != null &&
+                    x.Name != null &&
+                    x.SkuProperties != null &&
+                    x.Locations != null &&
+                    x.Terms != null
+                ));
+
+                catalog = reservationsClient.GetCatalog(SubscriptionId, ReservedResourceType.SuseLinux);
+                Assert.True(catalog.All(x =>
+                    x.ResourceType != null &&
+                    x.Name != null &&
+                    x.SkuProperties != null &&
+                    x.Locations == null &&
+                    x.Terms != null
                 ));
             }
         }

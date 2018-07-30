@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the ScheduleUpdateParameters class.
         /// </summary>
-        /// <param name="name">Gets or sets the name of the schedule.</param>
+        /// <param name="name">Gets or sets the name of the Schedule.</param>
         /// <param name="description">Gets or sets the description of the
         /// schedule.</param>
         /// <param name="isEnabled">Gets or sets a value indicating whether
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the schedule.
+        /// Gets or sets the name of the Schedule.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

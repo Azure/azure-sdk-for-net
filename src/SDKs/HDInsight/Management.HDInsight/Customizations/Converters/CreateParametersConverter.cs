@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.HDInsight
     using Microsoft.Azure.Management.HDInsight.Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public static class CreateParametersConverter
     {
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.Management.HDInsight
             return extendedParams;
         }
 
-        internal static string GetNodeSize(ClusterCreateParameters createProperties, ClusterNodeType nodeType)
+        public static string GetNodeSize(ClusterCreateParameters createProperties, ClusterNodeType nodeType)
         {
             switch (nodeType)
             {
@@ -288,9 +289,9 @@ namespace Microsoft.Azure.Management.HDInsight
             Role zookeeperNode = GetRole(osProfile, vnetProfile, ClusterNodeType.ZookeeperNode, zookeeperNodeScriptActions, 3, zookeeperNodeSize);
             roles.Add(zookeeperNode);
 
-            //RServer clusters contain an additional edge node. Return here for all other types.
-            if (!createProperties.ClusterType.Equals("RServer", StringComparison.OrdinalIgnoreCase))
-            {
+            //RServer & MLServices clusters contain an additional edge node. Return here for all other types.
+            if (!new[] { "RServer", "MLServices" }.Contains(createProperties.ClusterType, StringComparer.OrdinalIgnoreCase))
+                {
                 return roles;
             }
 

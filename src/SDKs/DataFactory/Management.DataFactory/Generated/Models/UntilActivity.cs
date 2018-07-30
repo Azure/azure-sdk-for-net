@@ -46,6 +46,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
+        /// <param name="userProperties">Activity user properties.</param>
         /// <param name="timeout">Specifies the timeout for the activity to
         /// run. If there is no value specified, it takes the value of
         /// TimeSpan.FromDays(7) which is 1 week as default. Type: string (or
@@ -53,8 +54,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). Type: string
         /// (or Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        public UntilActivity(string name, Expression expression, IList<Activity> activities, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), object timeout = default(object))
-            : base(name, additionalProperties, description, dependsOn)
+        public UntilActivity(string name, Expression expression, IList<Activity> activities, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), object timeout = default(object))
+            : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             Expression = expression;
             Timeout = timeout;

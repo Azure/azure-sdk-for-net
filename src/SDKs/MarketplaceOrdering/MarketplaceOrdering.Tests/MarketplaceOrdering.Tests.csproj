@@ -7,9 +7,9 @@
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>MarketplaceOrdering.Tests</AssemblyName>    
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\Management.MarketplaceOrdering\Microsoft.Azure.Management.MarketplaceOrdering.csproj" />

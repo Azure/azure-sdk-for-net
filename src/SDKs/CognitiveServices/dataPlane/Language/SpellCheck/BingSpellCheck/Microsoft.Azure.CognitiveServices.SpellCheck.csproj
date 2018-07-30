@@ -3,10 +3,17 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Language.SpellCheck</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services SpellCheck API.</Description>
-    <VersionPrefix>2.0.0</VersionPrefix>
+    <Version>3.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Language.SpellCheck</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;SpellCheck API;REST HTTPclient;SpellCheckSDK;netcore451511</PackageTags>
-    <PackageReleaseNotes>This is a public release of the Cognitive Services SpellCheck SDK. Included with this release is support for SpellCheck API.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+    <![CDATA[
+    This is a public release of the Cognitive Services SpellCheck SDK.
+    
+    Changes in this release:
+    1. Support customizing service endpoints.
+    ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

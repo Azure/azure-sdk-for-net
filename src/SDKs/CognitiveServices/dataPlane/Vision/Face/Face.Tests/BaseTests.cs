@@ -15,11 +15,11 @@ namespace FaceSDK.Tests
             FaceSubscriptionKey = "";
         }
 
-        protected IFaceAPI GetFaceClient(DelegatingHandler handler)
+        protected IFaceClient GetFaceClient(DelegatingHandler handler)
         {
-            IFaceAPI client = new FaceAPI(new ApiKeyServiceClientCredentials(FaceSubscriptionKey), handlers: handler)
+            IFaceClient client = new FaceClient(new ApiKeyServiceClientCredentials(FaceSubscriptionKey), handlers: handler)
             {
-                AzureRegion = Face.AzureRegions.Westus
+                Endpoint = "https://westus.api.cognitive.microsoft.com"
             };
 
             return client;

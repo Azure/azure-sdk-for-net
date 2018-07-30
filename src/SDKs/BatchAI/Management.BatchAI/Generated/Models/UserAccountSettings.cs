@@ -31,13 +31,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the UserAccountSettings class.
         /// </summary>
-        /// <param name="adminUserName">Specifies the name of the administrator
-        /// account.</param>
-        /// <param name="adminUserSshPublicKey">SSH public keys used to
-        /// authenticate with linux based VMs. This does not get returned in a
-        /// GET response body.</param>
-        /// <param name="adminUserPassword">Admin user Password (linux only).
-        /// This does not get returned in a GET response body.</param>
+        /// <param name="adminUserName">User name.</param>
+        /// <param name="adminUserSshPublicKey">SSH public key.</param>
+        /// <param name="adminUserPassword">Password.</param>
         public UserAccountSettings(string adminUserName, string adminUserSshPublicKey = default(string), string adminUserPassword = default(string))
         {
             AdminUserName = adminUserName;
@@ -52,22 +48,30 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the name of the administrator account.
+        /// Gets or sets user name.
         /// </summary>
+        /// <remarks>
+        /// Name of the administrator user account which can be used to SSH to
+        /// nodes.
+        /// </remarks>
         [JsonProperty(PropertyName = "adminUserName")]
         public string AdminUserName { get; set; }
 
         /// <summary>
-        /// Gets or sets SSH public keys used to authenticate with linux based
-        /// VMs. This does not get returned in a GET response body.
+        /// Gets or sets SSH public key.
         /// </summary>
+        /// <remarks>
+        /// SSH public key of the administrator user account.
+        /// </remarks>
         [JsonProperty(PropertyName = "adminUserSshPublicKey")]
         public string AdminUserSshPublicKey { get; set; }
 
         /// <summary>
-        /// Gets or sets admin user Password (linux only). This does not get
-        /// returned in a GET response body.
+        /// Gets or sets password.
         /// </summary>
+        /// <remarks>
+        /// Password of the administrator user account.
+        /// </remarks>
         [JsonProperty(PropertyName = "adminUserPassword")]
         public string AdminUserPassword { get; set; }
 

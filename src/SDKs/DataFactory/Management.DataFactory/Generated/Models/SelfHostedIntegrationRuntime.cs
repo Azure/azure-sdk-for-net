@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="description">Integration runtime description.</param>
-        public SelfHostedIntegrationRuntime(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), LinkedIntegrationRuntimeProperties linkedInfo = default(LinkedIntegrationRuntimeProperties))
+        public SelfHostedIntegrationRuntime(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), LinkedIntegrationRuntimeType linkedInfo = default(LinkedIntegrationRuntimeType))
             : base(additionalProperties, description)
         {
             LinkedInfo = linkedInfo;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.linkedInfo")]
-        public LinkedIntegrationRuntimeProperties LinkedInfo { get; set; }
+        public LinkedIntegrationRuntimeType LinkedInfo { get; set; }
 
     }
 }

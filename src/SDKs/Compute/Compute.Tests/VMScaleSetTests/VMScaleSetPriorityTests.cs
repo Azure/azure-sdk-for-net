@@ -117,7 +117,7 @@ namespace Compute.Tests
                 var listSkusResponse = m_CrpClient.VirtualMachineScaleSets.ListSkus(rgName, vmssName);
                 Assert.NotNull(listSkusResponse);
                 Assert.False(listSkusResponse.Count() == 0);
-                Assert.Same(inputVMScaleSet.VirtualMachineProfile.Priority, priority);
+                Assert.Same(inputVMScaleSet.VirtualMachineProfile.Priority.ToString(), priority);
 
                 m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
             }
@@ -197,7 +197,7 @@ namespace Compute.Tests
                 {
                     vmScaleSet.Overprovision = true;
                     vmScaleSet.VirtualMachineProfile.Priority = VirtualMachinePriorityTypes.Low;
-                    vmScaleSet.VirtualMachineProfile.EvictionPolicy = evictionPolicy;
+                    if (evictionPolicy != null) vmScaleSet.VirtualMachineProfile.EvictionPolicy = evictionPolicy;
                     vmScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardA1;
                     vmScaleSet.Sku.Tier = "Standard";
                     vmScaleSet.Sku.Capacity = 2;
@@ -207,7 +207,7 @@ namespace Compute.Tests
 
             evictionPolicy = evictionPolicy ?? VirtualMachineEvictionPolicyTypes.Deallocate;
 
-            Assert.Equal(getResponse.VirtualMachineProfile.EvictionPolicy, evictionPolicy);
+            Assert.Equal(getResponse.VirtualMachineProfile.EvictionPolicy.ToString(), evictionPolicy);
 
             m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
         }

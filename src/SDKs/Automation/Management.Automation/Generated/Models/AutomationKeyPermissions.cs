@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public static class AutomationKeyPermissions
     {
+        public const string Read = "Read";
         public const string Full = "Full";
     }
 }

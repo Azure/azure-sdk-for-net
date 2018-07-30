@@ -42,6 +42,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
+        /// <param name="userProperties">Activity user properties.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
         /// <param name="globalParameters">Key,Value pairs to be passed to the
@@ -59,8 +60,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// objects specifying the input Blob locations.. This information will
         /// be passed in the WebServiceInputs property of the Azure ML batch
         /// execution request.</param>
-        public AzureMLBatchExecutionActivity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IDictionary<string, object> globalParameters = default(IDictionary<string, object>), IDictionary<string, AzureMLWebServiceFile> webServiceOutputs = default(IDictionary<string, AzureMLWebServiceFile>), IDictionary<string, AzureMLWebServiceFile> webServiceInputs = default(IDictionary<string, AzureMLWebServiceFile>))
-            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
+        public AzureMLBatchExecutionActivity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IDictionary<string, object> globalParameters = default(IDictionary<string, object>), IDictionary<string, AzureMLWebServiceFile> webServiceOutputs = default(IDictionary<string, AzureMLWebServiceFile>), IDictionary<string, AzureMLWebServiceFile> webServiceInputs = default(IDictionary<string, AzureMLWebServiceFile>))
+            : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             GlobalParameters = globalParameters;
             WebServiceOutputs = webServiceOutputs;

@@ -21,6 +21,7 @@ namespace BatchAI.Tests
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
+            string workspaceName = "testclustercreationanddeletion_testworkspace";
             string clusterName = "testclustercreationanddeletion_testcluster";
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -46,14 +47,20 @@ namespace BatchAI.Tests
                         AdminUserName = Helpers.ADMIN_USER_NAME,
                         AdminUserPassword = Helpers.ADMIN_USER_PASSWORD,
                     },
+                };
+
+                var workspaceCreateParams = new WorkspaceCreateParameters()
+                {
                     Location = Helpers.LOCATION,
                 };
 
-                Cluster cluster = client.Clusters.Create(rgName, clusterName, createParams);
+                Workspace workspace = client.Workspaces.Create(rgName, workspaceName, workspaceCreateParams);
+
+                Cluster cluster = client.Clusters.Create(rgName, workspaceName, clusterName, createParams);
 
                 Helpers.VerifyClusterProperties(clusterName, createParams, cluster);
 
-                client.Clusters.Delete(rgName, clusterName);
+                client.Clusters.Delete(rgName, workspaceName, clusterName);
 
             }
 

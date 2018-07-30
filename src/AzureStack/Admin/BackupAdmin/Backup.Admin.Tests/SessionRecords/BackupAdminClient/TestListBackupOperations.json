@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Backup.Admin/operations?api-version=2016-05-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmFja3VwLkFkbWluL29wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "14cb395f-7882-43a1-8c96-8ee2807569ae"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient/0.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.Backup.Admin/backupLocations/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Backup Resource Provider.\",\r\n        \"resource\": \"Backup location\",\r\n        \"operation\": \"Returns backup locations\",\r\n        \"description\": \"Location where backups are saved.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Backup.Admin/backupLocations/createBackup/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Backup Resource Provider.\",\r\n        \"resource\": \"Backup\",\r\n        \"operation\": \"Create a new backup\",\r\n        \"description\": \"Create a new backup.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Backup.Admin/backupLocations/backups/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Backup Resource Provider.\",\r\n        \"resource\": \"Backup\",\r\n        \"operation\": \"Get a backup\",\r\n        \"description\": \"Gets the backups.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Backup.Admin/backupLocations/backups/restore/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Backup Resource Provider.\",\r\n        \"resource\": \"Backup\",\r\n        \"operation\": \"Restore a backup.\",\r\n        \"description\": \"Restore a previous backup.\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Backup.Admin/generateBackupEncryptionKey/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Backup Resource Provider.\",\r\n        \"resource\": \"\",\r\n        \"operation\": \"Generate a backup encryption key\",\r\n        \"description\": \"Genenrate a backup encryption key\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1142"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 22 Jun 2018 08:04:21 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvOSnL9jax0wtdYOZDdiHuxRI+5q603GAcQwZOuNgzkw0odsHATa48uqFpkERLC6y0CnKwOx+pehRCK4tz/99zSiMXWs9+hRj9qf0WkLtsCjGZ6DI/TvLOFFoA2AVTxK7nj26J+3+sk1wd/gR0LJhv"
+        ],
+        "x-ms-correlation-request-id": [
+          "ca5c0b6f-0ea0-41ab-817e-decf1f072512"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14977"
+        ],
+        "x-ms-request-id": [
+          "ca5c0b6f-0ea0-41ab-817e-decf1f072512"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180622T080422Z:ca5c0b6f-0ea0-41ab-817e-decf1f072512"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "220ed68a-f33e-4174-bd1c-b3856c64f172"
+  }
+}
