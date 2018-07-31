@@ -28,7 +28,6 @@
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.17.2, 4.0.0)" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.4.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="[5.2.2, 6.0.0)" />
-    <PackageReference Include="System.Runtime.Serialization.Xml" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup Label="SourceLink to embed PDBs with the assembly">
