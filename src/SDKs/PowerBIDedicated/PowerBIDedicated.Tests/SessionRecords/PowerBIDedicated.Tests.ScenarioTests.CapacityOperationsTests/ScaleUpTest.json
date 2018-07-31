@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "48de2545-b6f7-495d-872e-4b5fb21350d0"
+          "afcbe6a2-22e0-4471-a2e6-b93050634ad9"
         ],
         "accept-language": [
           "en-US"
@@ -22,22 +22,22 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:48:45 GMT"
+          "Tue, 31 Jul 2018 18:10:18 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
+          "14999"
         ],
         "x-ms-request-id": [
-          "cdcfe0e4-5523-47f6-8a81-3b628a0ffbcd"
+          "991943a4-325c-4267-920f-dbd1cf655442"
         ],
         "x-ms-correlation-request-id": [
-          "cdcfe0e4-5523-47f6-8a81-3b628a0ffbcd"
+          "991943a4-325c-4267-920f-dbd1cf655442"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T094846Z:cdcfe0e4-5523-47f6-8a81-3b628a0ffbcd"
+          "NORTHEUROPE:20180731T181018Z:991943a4-325c-4267-920f-dbd1cf655442"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -65,7 +65,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A1\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "14e291fa-7e26-41b0-b84a-81c33d4274af"
+          "fa800b0d-2884-40fe-aa70-e5c87b289c69"
         ],
         "accept-language": [
           "en-US"
@@ -86,13 +86,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:48:51 GMT"
+          "Tue, 31 Jul 2018 18:10:25 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/E0199620-F0F0-4CAE-A75D-344357A2A5E0?api-version=2017-01-01-preview"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -101,13 +101,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/E0199620-F0F0-4CAE-A75D-344357A2A5E0?api-version=2017-01-01-preview"
         ],
         "x-ms-request-id": [
-          "8d43ce09-082c-451a-9d00-8518fc7655e8"
+          "41732414-2e4f-4845-9f33-0077cfa8507f"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:48:47 AM"
+          "7/31/2018 6:10:20 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -125,10 +125,10 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "58264a62-87ea-4fca-a480-a8bfe16f819f"
+          "eb78228e-3cdb-4aa8-9bbe-7a1449ecad7e"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T094851Z:58264a62-87ea-4fca-a480-a8bfe16f819f"
+          "NORTHEUROPE:20180731T181025Z:eb78228e-3cdb-4aa8-9bbe-7a1449ecad7e"
         ],
         "Content-Length": [
           "468"
@@ -144,8 +144,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8xQzNFQjhFNy1GQTQwLTQxMUUtQTQ4Mi0yREFEQ0IwQTNFQ0E/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/E0199620-F0F0-4CAE-A75D-344357A2A5E0?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy9FMDE5OTYyMC1GMEYwLTRDQUUtQTc1RC0zNDQzNTdBMkE1RTA/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -159,7 +159,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:49:22 GMT"
+          "Tue, 31 Jul 2018 18:10:55 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -183,19 +183,19 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "5af984b4-7725-4295-a687-bc46c20098b5"
+          "7de867c7-9bbf-4a40-a242-b5df1bd21736"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:49:22 AM"
+          "7/31/2018 6:10:55 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "2b033eb5-412f-45de-b6ac-d0efda3e5b06"
+          "44b66eb2-a7eb-4256-a494-a6b3a74e08c0"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T094922Z:2b033eb5-412f-45de-b6ac-d0efda3e5b06"
+          "NORTHEUROPE:20180731T181056Z:44b66eb2-a7eb-4256-a494-a6b3a74e08c0"
         ],
         "Content-Length": [
           "252"
@@ -207,12 +207,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA\",\r\n  \"name\": \"1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2018-07-30T09:48:49.33Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/E0199620-F0F0-4CAE-A75D-344357A2A5E0\",\r\n  \"name\": \"E0199620-F0F0-4CAE-A75D-344357A2A5E0\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2018-07-31T18:10:22.61Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8xQzNFQjhFNy1GQTQwLTQxMUUtQTQ4Mi0yREFEQ0IwQTNFQ0E/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/E0199620-F0F0-4CAE-A75D-344357A2A5E0?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy9FMDE5OTYyMC1GMEYwLTRDQUUtQTc1RC0zNDQzNTdBMkE1RTA/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -226,7 +226,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:49:51 GMT"
+          "Tue, 31 Jul 2018 18:11:25 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -250,19 +250,19 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "5a1d8c1d-2e22-471e-ae9d-062f05fb48db"
+          "7aa9edd4-062d-4935-87f2-f19789fb2285"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:49:52 AM"
+          "7/31/2018 6:11:26 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14988"
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "ce4763e3-8235-491a-b435-e245ec99768c"
+          "72ff1924-1755-4e7e-9f6a-489b8c2f33cc"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T094952Z:ce4763e3-8235-491a-b435-e245ec99768c"
+          "NORTHEUROPE:20180731T181126Z:72ff1924-1755-4e7e-9f6a-489b8c2f33cc"
         ],
         "Content-Length": [
           "252"
@@ -274,12 +274,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA\",\r\n  \"name\": \"1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2018-07-30T09:48:49.33Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/E0199620-F0F0-4CAE-A75D-344357A2A5E0\",\r\n  \"name\": \"E0199620-F0F0-4CAE-A75D-344357A2A5E0\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2018-07-31T18:10:22.61Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8xQzNFQjhFNy1GQTQwLTQxMUUtQTQ4Mi0yREFEQ0IwQTNFQ0E/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/E0199620-F0F0-4CAE-A75D-344357A2A5E0?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy9FMDE5OTYyMC1GMEYwLTRDQUUtQTc1RC0zNDQzNTdBMkE1RTA/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -293,7 +293,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:50:23 GMT"
+          "Tue, 31 Jul 2018 18:11:56 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -317,19 +317,19 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "4bdc1667-fa4c-476b-9d44-aebef16630e3"
+          "ecee3cc8-7af5-4934-a3ff-3826bb05db31"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:50:23 AM"
+          "7/31/2018 6:11:56 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14987"
+          "14996"
         ],
         "x-ms-correlation-request-id": [
-          "d0d0ac53-dce9-4e16-b09c-6a2024ab370e"
+          "657243ef-4e4f-493d-b871-752ddcd4873e"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095023Z:d0d0ac53-dce9-4e16-b09c-6a2024ab370e"
+          "NORTHEUROPE:20180731T181156Z:657243ef-4e4f-493d-b871-752ddcd4873e"
         ],
         "Content-Length": [
           "252"
@@ -341,12 +341,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA\",\r\n  \"name\": \"1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2018-07-30T09:48:49.33Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/E0199620-F0F0-4CAE-A75D-344357A2A5E0\",\r\n  \"name\": \"E0199620-F0F0-4CAE-A75D-344357A2A5E0\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2018-07-31T18:10:22.61Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8xQzNFQjhFNy1GQTQwLTQxMUUtQTQ4Mi0yREFEQ0IwQTNFQ0E/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/E0199620-F0F0-4CAE-A75D-344357A2A5E0?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy9FMDE5OTYyMC1GMEYwLTRDQUUtQTc1RC0zNDQzNTdBMkE1RTA/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -360,7 +360,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:50:53 GMT"
+          "Tue, 31 Jul 2018 18:12:26 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -384,19 +384,19 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "6aa85497-5cf2-4902-a6f1-cef440d07df0"
+          "d02a9fdd-4e4d-4cc2-8eb7-09a55a4450f2"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:50:53 AM"
+          "7/31/2018 6:12:27 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14986"
+          "14995"
         ],
         "x-ms-correlation-request-id": [
-          "4de1ca98-2527-4277-8a03-97b16b1e8b30"
+          "00c4d8af-24d8-498f-981f-c9516c945c99"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095053Z:4de1ca98-2527-4277-8a03-97b16b1e8b30"
+          "NORTHEUROPE:20180731T181227Z:00c4d8af-24d8-498f-981f-c9516c945c99"
         ],
         "Content-Length": [
           "290"
@@ -408,7 +408,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA\",\r\n  \"name\": \"1C3EB8E7-FA40-411E-A482-2DADCB0A3ECA\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-30T09:48:49.33Z\",\r\n  \"endTime\": \"2018-07-30T09:50:46.267Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/E0199620-F0F0-4CAE-A75D-344357A2A5E0\",\r\n  \"name\": \"E0199620-F0F0-4CAE-A75D-344357A2A5E0\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-31T18:10:22.61Z\",\r\n  \"endTime\": \"2018-07-31T18:12:09.97Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -427,7 +427,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:50:53 GMT"
+          "Tue, 31 Jul 2018 18:12:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -439,10 +439,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "5a254b04-f66b-442b-a5ee-fa6bc06711af"
+          "40fb8311-b3a9-4d9b-a548-814ee83882a2"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:50:53 AM"
+          "7/31/2018 6:12:27 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -457,13 +457,13 @@
           "script-src 'self'"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14985"
+          "14994"
         ],
         "x-ms-correlation-request-id": [
-          "0b836a80-79b1-410c-8d95-681ee1e5e4de"
+          "dcc54ac8-172d-4b76-bb47-b689b1dcbc8d"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095053Z:0b836a80-79b1-410c-8d95-681ee1e5e4de"
+          "NORTHEUROPE:20180731T181227Z:dcc54ac8-172d-4b76-bb47-b689b1dcbc8d"
         ],
         "Content-Length": [
           "482"
@@ -485,7 +485,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cf156a32-a2e9-49bf-860f-b017823fcd69"
+          "29347f03-ecd5-42f3-9035-4f275cfc4db0"
         ],
         "accept-language": [
           "en-US"
@@ -500,7 +500,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:50:53 GMT"
+          "Tue, 31 Jul 2018 18:12:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -512,10 +512,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "ce64e1c0-3581-42ac-9ee6-895b3481b392"
+          "48cc53e8-122a-4396-8e27-42cdd393b1a1"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:50:54 AM"
+          "7/31/2018 6:12:27 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -530,13 +530,13 @@
           "script-src 'self'"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14984"
+          "14993"
         ],
         "x-ms-correlation-request-id": [
-          "29ecd3dc-9471-4d05-a177-0deadd5b7511"
+          "2ff6c342-1e2c-47c6-b603-f695ff32b47f"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095054Z:29ecd3dc-9471-4d05-a177-0deadd5b7511"
+          "NORTHEUROPE:20180731T181227Z:2ff6c342-1e2c-47c6-b603-f695ff32b47f"
         ],
         "Content-Length": [
           "482"
@@ -567,7 +567,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:52:58 GMT"
+          "Tue, 31 Jul 2018 18:14:31 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -579,10 +579,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "bc7ff48a-f996-4731-9ce7-c06912d71616"
+          "55e8d7f9-dfb7-467c-bb04-def1b17ae919"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:52:58 AM"
+          "7/31/2018 6:14:31 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -597,13 +597,13 @@
           "script-src 'self'"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14978"
+          "14987"
         ],
         "x-ms-correlation-request-id": [
-          "1d672707-c92b-4cbd-bd02-871279575b83"
+          "f196a0fe-fa02-4466-998f-bf2c3984a826"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095258Z:1d672707-c92b-4cbd-bd02-871279575b83"
+          "NORTHEUROPE:20180731T181431Z:f196a0fe-fa02-4466-998f-bf2c3984a826"
         ],
         "Content-Length": [
           "482"
@@ -625,7 +625,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "358e1dcb-0531-45b3-bf5d-ba3eb84782de"
+          "d9ebc642-88dc-4624-a356-da3ad33ae6a1"
         ],
         "accept-language": [
           "en-US"
@@ -640,7 +640,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:53:29 GMT"
+          "Tue, 31 Jul 2018 18:15:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -652,10 +652,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "4770228f-e43e-4079-b6c1-909b685c833b"
+          "5e64c257-6d23-4828-a939-4ec585b01c04"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:53:30 AM"
+          "7/31/2018 6:15:03 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -670,13 +670,13 @@
           "script-src 'self'"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14975"
+          "14984"
         ],
         "x-ms-correlation-request-id": [
-          "73a40384-2a0e-44b2-902e-9ee4c213ddfe"
+          "7129cbd2-4086-449c-a130-1f130fc0a42d"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095330Z:73a40384-2a0e-44b2-902e-9ee4c213ddfe"
+          "NORTHEUROPE:20180731T181503Z:7129cbd2-4086-449c-a130-1f130fc0a42d"
         ],
         "Content-Length": [
           "476"
@@ -698,7 +698,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "22b65ae0-6f22-49d0-a9d3-66e8b185f0ea"
+          "dbfee820-8721-49e8-abf1-2e4409cbeb28"
         ],
         "accept-language": [
           "en-US"
@@ -713,7 +713,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:53:30 GMT"
+          "Tue, 31 Jul 2018 18:15:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -725,10 +725,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "326c1198-94ef-4633-9070-6f361bec3c4e"
+          "be1249ee-4c75-48ae-b5c5-552bfaf819a9"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:53:31 AM"
+          "7/31/2018 6:15:04 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -743,13 +743,13 @@
           "script-src 'self'"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14974"
+          "14983"
         ],
         "x-ms-correlation-request-id": [
-          "cb19667a-caab-4cd7-a07a-b6047a497a97"
+          "e60873c8-0e90-497a-9a02-a00afbb01829"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095331Z:cb19667a-caab-4cd7-a07a-b6047a497a97"
+          "NORTHEUROPE:20180731T181505Z:e60873c8-0e90-497a-9a02-a00afbb01829"
         ],
         "Content-Length": [
           "476"
@@ -771,7 +771,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "73a7f282-8f61-47fd-b95b-a7812f8601bd"
+          "ca9dd937-e63a-4731-b35c-5642311929da"
         ],
         "accept-language": [
           "en-US"
@@ -786,7 +786,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:50:53 GMT"
+          "Tue, 31 Jul 2018 18:12:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -810,19 +810,19 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "30926620-f897-4f91-b30a-9fac92d12620"
+          "0fc40c33-9bb9-4913-84de-846406ecd62d"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:50:54 AM"
+          "7/31/2018 6:12:27 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14983"
+          "14992"
         ],
         "x-ms-correlation-request-id": [
-          "cf7fd76c-8d6d-499e-a0b0-d53da541d0f3"
+          "bcac074a-82c6-46e7-bfab-12428a832117"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095054Z:cf7fd76c-8d6d-499e-a0b0-d53da541d0f3"
+          "NORTHEUROPE:20180731T181228Z:bcac074a-82c6-46e7-bfab-12428a832117"
         ],
         "Content-Length": [
           "593"
@@ -844,7 +844,7 @@
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"A2\",\r\n    \"tier\": \"PBIE_Azure\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b8fa8472-f1ff-46aa-9f7b-7a55fe64fcd9"
+          "281c8018-2792-4021-bd50-6be100ddd5a7"
         ],
         "accept-language": [
           "en-US"
@@ -865,13 +865,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:50:55 GMT"
+          "Tue, 31 Jul 2018 18:12:29 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/4FDA5FEB-97D5-445E-8F27-A61106A78E81?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/50709958-9094-4454-B6F5-07E7391F4AB1?api-version=2017-01-01-preview"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -880,13 +880,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/4FDA5FEB-97D5-445E-8F27-A61106A78E81?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/50709958-9094-4454-B6F5-07E7391F4AB1?api-version=2017-01-01-preview"
         ],
         "x-ms-request-id": [
-          "305b9e4a-f5df-40a5-833e-26c48e39dbe0"
+          "750bd3e0-761b-4966-a867-9f3f27d7e836"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:50:55 AM"
+          "7/31/2018 6:12:28 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -904,10 +904,10 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "8ffe8a1e-f4ed-4b7e-b66a-34ffc8ae744d"
+          "d1879f0a-88dd-4fc0-946b-52b8c3f869cc"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095056Z:8ffe8a1e-f4ed-4b7e-b66a-34ffc8ae744d"
+          "NORTHEUROPE:20180731T181229Z:d1879f0a-88dd-4fc0-946b-52b8c3f869cc"
         ],
         "Content-Length": [
           "482"
@@ -929,7 +929,7 @@
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"A1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "da497c19-576c-4255-b89d-450adf2c0599"
+          "545b9805-2d87-454d-8a8a-cf447aad161d"
         ],
         "accept-language": [
           "en-US"
@@ -950,7 +950,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:53:30 GMT"
+          "Tue, 31 Jul 2018 18:15:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -962,10 +962,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "ca8acc5e-62a0-4281-8877-4ec8f279bcac"
+          "dbf00550-9a00-4e3d-8629-0b5840264215"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:53:30 AM"
+          "7/31/2018 6:15:04 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -983,10 +983,10 @@
           "1196"
         ],
         "x-ms-correlation-request-id": [
-          "590f1e9b-2af3-4612-8b33-0cc528727e75"
+          "087603e4-c53e-4949-9f11-0d65c11daa27"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095331Z:590f1e9b-2af3-4612-8b33-0cc528727e75"
+          "NORTHEUROPE:20180731T181504Z:087603e4-c53e-4949-9f11-0d65c11daa27"
         ],
         "Content-Length": [
           "320"
@@ -1002,8 +1002,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/4FDA5FEB-97D5-445E-8F27-A61106A78E81?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy80RkRBNUZFQi05N0Q1LTQ0NUUtOEYyNy1BNjExMDZBNzhFODE/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/50709958-9094-4454-B6F5-07E7391F4AB1?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy81MDcwOTk1OC05MDk0LTQ0NTQtQjZGNS0wN0U3MzkxRjRBQjE/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1017,7 +1017,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:51:25 GMT"
+          "Tue, 31 Jul 2018 18:12:59 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1041,19 +1041,19 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "c0e88514-be00-480e-8014-34c7f53821cf"
+          "bbb69a88-0f50-40bc-82a3-dd7d646a7954"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:51:26 AM"
+          "7/31/2018 6:13:00 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14982"
+          "14991"
         ],
         "x-ms-correlation-request-id": [
-          "26335d02-dbfe-46a3-a0aa-887c8a7ed37e"
+          "d9f69614-864c-48c2-8768-345f9800f9ab"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095126Z:26335d02-dbfe-46a3-a0aa-887c8a7ed37e"
+          "NORTHEUROPE:20180731T181300Z:d9f69614-864c-48c2-8768-345f9800f9ab"
         ],
         "Content-Length": [
           "247"
@@ -1065,12 +1065,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/4FDA5FEB-97D5-445E-8F27-A61106A78E81\",\r\n  \"name\": \"4FDA5FEB-97D5-445E-8F27-A61106A78E81\",\r\n  \"status\": \"Scaling\",\r\n  \"startTime\": \"2018-07-30T09:50:55.25Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/50709958-9094-4454-B6F5-07E7391F4AB1\",\r\n  \"name\": \"50709958-9094-4454-B6F5-07E7391F4AB1\",\r\n  \"status\": \"Scaling\",\r\n  \"startTime\": \"2018-07-31T18:12:28.983Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/4FDA5FEB-97D5-445E-8F27-A61106A78E81?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy80RkRBNUZFQi05N0Q1LTQ0NUUtOEYyNy1BNjExMDZBNzhFODE/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/50709958-9094-4454-B6F5-07E7391F4AB1?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy81MDcwOTk1OC05MDk0LTQ0NTQtQjZGNS0wN0U3MzkxRjRBQjE/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1084,7 +1084,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:51:57 GMT"
+          "Tue, 31 Jul 2018 18:13:29 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1108,19 +1108,19 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "153c8fbf-7726-464f-8057-aad36d9b6b0b"
+          "6782510f-4e95-41aa-bd1e-dba9d74380aa"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:51:56 AM"
+          "7/31/2018 6:13:30 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14981"
+          "14990"
         ],
         "x-ms-correlation-request-id": [
-          "f5a9cef2-46d8-4b52-ad2a-e5279d649f4d"
+          "407e2bf0-77c9-4c44-a265-bbac892b8428"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095157Z:f5a9cef2-46d8-4b52-ad2a-e5279d649f4d"
+          "NORTHEUROPE:20180731T181330Z:407e2bf0-77c9-4c44-a265-bbac892b8428"
         ],
         "Content-Length": [
           "247"
@@ -1132,12 +1132,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/4FDA5FEB-97D5-445E-8F27-A61106A78E81\",\r\n  \"name\": \"4FDA5FEB-97D5-445E-8F27-A61106A78E81\",\r\n  \"status\": \"Scaling\",\r\n  \"startTime\": \"2018-07-30T09:50:55.25Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/50709958-9094-4454-B6F5-07E7391F4AB1\",\r\n  \"name\": \"50709958-9094-4454-B6F5-07E7391F4AB1\",\r\n  \"status\": \"Scaling\",\r\n  \"startTime\": \"2018-07-31T18:12:28.983Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/4FDA5FEB-97D5-445E-8F27-A61106A78E81?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy80RkRBNUZFQi05N0Q1LTQ0NUUtOEYyNy1BNjExMDZBNzhFODE/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/50709958-9094-4454-B6F5-07E7391F4AB1?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy81MDcwOTk1OC05MDk0LTQ0NTQtQjZGNS0wN0U3MzkxRjRBQjE/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1151,7 +1151,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:52:27 GMT"
+          "Tue, 31 Jul 2018 18:13:59 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1175,19 +1175,19 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "71509e38-d573-4ee0-b7c5-f73434e53af7"
+          "4ef01411-31f4-46e3-b716-ea27d33de0b1"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:52:27 AM"
+          "7/31/2018 6:14:00 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14980"
+          "14989"
         ],
         "x-ms-correlation-request-id": [
-          "c0fc4cd2-46d5-40c4-8b22-193cdc651c5f"
+          "e5b5ee95-c2ed-4717-9daf-a7fdd907aa3b"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095227Z:c0fc4cd2-46d5-40c4-8b22-193cdc651c5f"
+          "NORTHEUROPE:20180731T181400Z:e5b5ee95-c2ed-4717-9daf-a7fdd907aa3b"
         ],
         "Content-Length": [
           "247"
@@ -1199,12 +1199,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/4FDA5FEB-97D5-445E-8F27-A61106A78E81\",\r\n  \"name\": \"4FDA5FEB-97D5-445E-8F27-A61106A78E81\",\r\n  \"status\": \"Scaling\",\r\n  \"startTime\": \"2018-07-30T09:50:55.25Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/50709958-9094-4454-B6F5-07E7391F4AB1\",\r\n  \"name\": \"50709958-9094-4454-B6F5-07E7391F4AB1\",\r\n  \"status\": \"Scaling\",\r\n  \"startTime\": \"2018-07-31T18:12:28.983Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/4FDA5FEB-97D5-445E-8F27-A61106A78E81?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy80RkRBNUZFQi05N0Q1LTQ0NUUtOEYyNy1BNjExMDZBNzhFODE/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/50709958-9094-4454-B6F5-07E7391F4AB1?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy81MDcwOTk1OC05MDk0LTQ0NTQtQjZGNS0wN0U3MzkxRjRBQjE/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1218,7 +1218,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:52:57 GMT"
+          "Tue, 31 Jul 2018 18:14:30 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1242,19 +1242,19 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "28fde8d9-1052-4e7b-87bc-a30cbdd9c349"
+          "32a492be-5a66-42b4-912f-6cb5d10a01da"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:52:57 AM"
+          "7/31/2018 6:14:31 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14979"
+          "14988"
         ],
         "x-ms-correlation-request-id": [
-          "c3f42017-3770-451b-a47d-c92024fc5105"
+          "f2c2feb2-00bb-4059-8dd3-ce4a9d65d609"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095257Z:c3f42017-3770-451b-a47d-c92024fc5105"
+          "NORTHEUROPE:20180731T181431Z:f2c2feb2-00bb-4059-8dd3-ce4a9d65d609"
         ],
         "Content-Length": [
           "290"
@@ -1266,7 +1266,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/4FDA5FEB-97D5-445E-8F27-A61106A78E81\",\r\n  \"name\": \"4FDA5FEB-97D5-445E-8F27-A61106A78E81\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-30T09:50:55.25Z\",\r\n  \"endTime\": \"2018-07-30T09:52:54.86Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/50709958-9094-4454-B6F5-07E7391F4AB1\",\r\n  \"name\": \"50709958-9094-4454-B6F5-07E7391F4AB1\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-31T18:12:28.983Z\",\r\n  \"endTime\": \"2018-07-31T18:14:29.263Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1276,7 +1276,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "00ca3ed3-033a-46bd-9881-c9dc7f535eb3"
+          "edb39e4e-7f47-4e7a-9e5c-2743de7685ea"
         ],
         "accept-language": [
           "en-US"
@@ -1291,13 +1291,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:52:59 GMT"
+          "Tue, 31 Jul 2018 18:14:32 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/026CA7A0-9695-4298-A839-64F66E701304?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/0AE2D8EA-0AE4-4DEB-8AE1-20B4AE97D1E2?api-version=2017-01-01-preview"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1306,13 +1306,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/026CA7A0-9695-4298-A839-64F66E701304?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/0AE2D8EA-0AE4-4DEB-8AE1-20B4AE97D1E2?api-version=2017-01-01-preview"
         ],
         "x-ms-request-id": [
-          "3fcad2e2-8459-4b0a-9702-fcd75d03a997"
+          "faf61cb6-ba16-4af9-b155-63865339a1c5"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:52:58 AM"
+          "7/31/2018 6:14:31 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -1330,10 +1330,10 @@
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "c5a72aff-bf58-407d-a3fe-92c42b64f161"
+          "99f1b434-97a9-4d09-a427-5215c48473ad"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095259Z:c5a72aff-bf58-407d-a3fe-92c42b64f161"
+          "NORTHEUROPE:20180731T181432Z:99f1b434-97a9-4d09-a427-5215c48473ad"
         ],
         "Content-Length": [
           "0"
@@ -1346,8 +1346,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/026CA7A0-9695-4298-A839-64F66E701304?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8wMjZDQTdBMC05Njk1LTQyOTgtQTgzOS02NEY2NkU3MDEzMDQ/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/0AE2D8EA-0AE4-4DEB-8AE1-20B4AE97D1E2?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8wQUUyRDhFQS0wQUU0LTRERUItOEFFMS0yMEI0QUU5N0QxRTI/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1361,7 +1361,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:53:29 GMT"
+          "Tue, 31 Jul 2018 18:15:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1385,19 +1385,19 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "c6ecb7f3-4f04-4914-8500-43147618a554"
+          "376e2cc7-03a2-46db-a1a5-62c7b1048a6f"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:53:29 AM"
+          "7/31/2018 6:15:02 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14977"
+          "14986"
         ],
         "x-ms-correlation-request-id": [
-          "264f7b7e-7b93-4162-b689-b2a3ac9fa6ad"
+          "efeb3ea7-2143-4b4a-b124-a0378bc960d0"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095329Z:264f7b7e-7b93-4162-b689-b2a3ac9fa6ad"
+          "NORTHEUROPE:20180731T181503Z:efeb3ea7-2143-4b4a-b124-a0378bc960d0"
         ],
         "Content-Length": [
           "290"
@@ -1409,12 +1409,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/026CA7A0-9695-4298-A839-64F66E701304\",\r\n  \"name\": \"026CA7A0-9695-4298-A839-64F66E701304\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-30T09:52:58.753Z\",\r\n  \"endTime\": \"2018-07-30T09:53:01.487Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/0AE2D8EA-0AE4-4DEB-8AE1-20B4AE97D1E2\",\r\n  \"name\": \"0AE2D8EA-0AE4-4DEB-8AE1-20B4AE97D1E2\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-31T18:14:31.86Z\",\r\n  \"endTime\": \"2018-07-31T18:14:34.31Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/026CA7A0-9695-4298-A839-64F66E701304?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25yZXN1bHRzLzAyNkNBN0EwLTk2OTUtNDI5OC1BODM5LTY0RjY2RTcwMTMwND9hcGktdmVyc2lvbj0yMDE3LTAxLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/0AE2D8EA-0AE4-4DEB-8AE1-20B4AE97D1E2?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25yZXN1bHRzLzBBRTJEOEVBLTBBRTQtNERFQi04QUUxLTIwQjRBRTk3RDFFMj9hcGktdmVyc2lvbj0yMDE3LTAxLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1428,7 +1428,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:53:29 GMT"
+          "Tue, 31 Jul 2018 18:15:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1452,19 +1452,19 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "2f15fbd0-48c8-4133-a250-e75ec747b24e"
+          "f9e28978-b249-45e8-b11d-a6aa5d6168aa"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:53:30 AM"
+          "7/31/2018 6:15:03 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14976"
+          "14985"
         ],
         "x-ms-correlation-request-id": [
-          "780eb929-5cf7-4b1a-bafa-9be054c757ae"
+          "8e96d0fb-3d00-4202-a2c8-16efbf804785"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095330Z:780eb929-5cf7-4b1a-bafa-9be054c757ae"
+          "NORTHEUROPE:20180731T181503Z:8e96d0fb-3d00-4202-a2c8-16efbf804785"
         ],
         "Content-Length": [
           "0"
@@ -1483,7 +1483,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5f2d0aad-1e39-42b0-9dee-9c2e1f7e439a"
+          "f4fb7ab9-1bd7-4466-8fa4-a6c1f11ed08a"
         ],
         "accept-language": [
           "en-US"
@@ -1498,13 +1498,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:53:32 GMT"
+          "Tue, 31 Jul 2018 18:15:05 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/015354EF-652C-48E0-83B3-4AC796ADF645?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/B03FF6B5-4E5A-4E8B-94AC-2D36F1552AB3?api-version=2017-01-01-preview"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1513,13 +1513,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/015354EF-652C-48E0-83B3-4AC796ADF645?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/B03FF6B5-4E5A-4E8B-94AC-2D36F1552AB3?api-version=2017-01-01-preview"
         ],
         "x-ms-request-id": [
-          "b0898869-dac9-43ae-8ad5-38c2ec5bd903"
+          "88ccfe69-ea2d-4447-97e2-5063b8989022"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:53:32 AM"
+          "7/31/2018 6:15:05 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -1537,10 +1537,10 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "0464ba3d-1df0-492d-897b-6484a492347a"
+          "dc3b8d99-27ea-4692-9633-4804ff629566"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095332Z:0464ba3d-1df0-492d-897b-6484a492347a"
+          "NORTHEUROPE:20180731T181506Z:dc3b8d99-27ea-4692-9633-4804ff629566"
         ],
         "Content-Length": [
           "0"
@@ -1553,8 +1553,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/015354EF-652C-48E0-83B3-4AC796ADF645?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8wMTUzNTRFRi02NTJDLTQ4RTAtODNCMy00QUM3OTZBREY2NDU/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/B03FF6B5-4E5A-4E8B-94AC-2D36F1552AB3?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy9CMDNGRjZCNS00RTVBLTRFOEItOTRBQy0yRDM2RjE1NTJBQjM/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1568,7 +1568,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:54:03 GMT"
+          "Tue, 31 Jul 2018 18:15:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1592,19 +1592,19 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "90187bf9-58c2-453b-b2fd-4d21233900d1"
+          "ffed9318-40cc-4b0d-8f1c-79d184d21eb4"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:54:03 AM"
+          "7/31/2018 6:15:36 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14973"
+          "14982"
         ],
         "x-ms-correlation-request-id": [
-          "aa7168d0-5002-47ef-bf38-737d58222d09"
+          "14846ec3-ff2f-4ace-971f-f63d3aaa9679"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095403Z:aa7168d0-5002-47ef-bf38-737d58222d09"
+          "NORTHEUROPE:20180731T181536Z:14846ec3-ff2f-4ace-971f-f63d3aaa9679"
         ],
         "Content-Length": [
           "290"
@@ -1616,12 +1616,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/015354EF-652C-48E0-83B3-4AC796ADF645\",\r\n  \"name\": \"015354EF-652C-48E0-83B3-4AC796ADF645\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-30T09:53:32.033Z\",\r\n  \"endTime\": \"2018-07-30T09:53:32.8Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/B03FF6B5-4E5A-4E8B-94AC-2D36F1552AB3\",\r\n  \"name\": \"B03FF6B5-4E5A-4E8B-94AC-2D36F1552AB3\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-07-31T18:15:05.453Z\",\r\n  \"endTime\": \"2018-07-31T18:15:06.187Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/015354EF-652C-48E0-83B3-4AC796ADF645?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25yZXN1bHRzLzAxNTM1NEVGLTY1MkMtNDhFMC04M0IzLTRBQzc5NkFERjY0NT9hcGktdmVyc2lvbj0yMDE3LTAxLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/B03FF6B5-4E5A-4E8B-94AC-2D36F1552AB3?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25yZXN1bHRzL0IwM0ZGNkI1LTRFNUEtNEU4Qi05NEFDLTJEMzZGMTU1MkFCMz9hcGktdmVyc2lvbj0yMDE3LTAxLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1635,7 +1635,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 09:54:03 GMT"
+          "Tue, 31 Jul 2018 18:15:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1659,19 +1659,19 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "65f589ab-2dd1-41e4-bcca-28f4d2443658"
+          "381a5f63-a0a5-4903-8795-00e827ee0f0a"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 9:54:03 AM"
+          "7/31/2018 6:15:36 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14972"
+          "14981"
         ],
         "x-ms-correlation-request-id": [
-          "87851ff3-f023-4e4c-aebd-4bed366941fa"
+          "8271001c-99c7-4d41-870d-72ed6b948270"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T095403Z:87851ff3-f023-4e4c-aebd-4bed366941fa"
+          "NORTHEUROPE:20180731T181536Z:8271001c-99c7-4d41-870d-72ed6b948270"
         ],
         "Expires": [
           "-1"

@@ -2,7 +2,7 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />  
   <PropertyGroup>
     <PackageId>PowerBIDedicated.Tests</PackageId>
-    <VersionPrefix>0.9.0-preview</VersionPrefix>
+    <VersionPrefix>0.10.0-preview</VersionPrefix>
     <Description>PowerBIDedicated.Tests Class Library</Description>
     <AssemblyName>PowerBIDedicated.Tests</AssemblyName>
   </PropertyGroup>
