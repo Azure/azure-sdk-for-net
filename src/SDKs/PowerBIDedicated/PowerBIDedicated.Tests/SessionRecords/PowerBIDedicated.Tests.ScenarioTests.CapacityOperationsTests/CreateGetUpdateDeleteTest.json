@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -93,7 +93,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0"
         ]
       },
       "ResponseHeaders": {
@@ -160,7 +160,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -227,7 +227,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0"
         ]
       },
       "ResponseHeaders": {
@@ -294,7 +294,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -361,7 +361,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -434,7 +434,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -507,7 +507,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -580,7 +580,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -659,7 +659,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -738,7 +738,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -805,7 +805,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -872,7 +872,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -939,7 +939,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1006,7 +1006,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1073,7 +1073,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1146,7 +1146,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1219,7 +1219,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1292,7 +1292,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1365,7 +1365,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1438,7 +1438,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1511,7 +1511,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1584,7 +1584,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1654,7 +1654,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1721,7 +1721,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1791,7 +1791,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1861,7 +1861,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1928,7 +1928,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1995,7 +1995,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2062,7 +2062,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2129,7 +2129,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2196,7 +2196,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2266,7 +2266,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2342,7 +2342,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2388,7 +2388,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2455,7 +2455,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2522,7 +2522,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2592,7 +2592,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2659,7 +2659,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
