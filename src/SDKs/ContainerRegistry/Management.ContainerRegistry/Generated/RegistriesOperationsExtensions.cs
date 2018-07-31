@@ -22,6 +22,53 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     public static partial class RegistriesOperationsExtensions
     {
             /// <summary>
+            /// Copies an image to this container registry from the specified container
+            /// registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters specifying the image to copy and the source container
+            /// registry.
+            /// </param>
+            public static void ImportImage(this IRegistriesOperations operations, string resourceGroupName, string registryName, ImportImageParameters parameters)
+            {
+                operations.ImportImageAsync(resourceGroupName, registryName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Copies an image to this container registry from the specified container
+            /// registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters specifying the image to copy and the source container
+            /// registry.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ImportImageAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, ImportImageParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ImportImageWithHttpMessagesAsync(resourceGroupName, registryName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Checks whether the container registry name is available for use. The name
             /// must contain only alphanumeric characters, be globally unique, and between
             /// 5 and 50 characters in length.
@@ -421,6 +468,233 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             }
 
             /// <summary>
+            /// Lists the policies for the specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            public static RegistryPolicies ListPolicies(this IRegistriesOperations operations, string resourceGroupName, string registryName)
+            {
+                return operations.ListPoliciesAsync(resourceGroupName, registryName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the policies for the specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RegistryPolicies> ListPoliciesAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPoliciesWithHttpMessagesAsync(resourceGroupName, registryName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the policies for the specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='quarantinePolicy'>
+            /// An object that represents quarantine policy for a container registry.
+            /// </param>
+            /// <param name='trustPolicy'>
+            /// An object that represents content trust policy for a container registry.
+            /// </param>
+            public static RegistryPolicies UpdatePolicies(this IRegistriesOperations operations, string resourceGroupName, string registryName, QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy))
+            {
+                return operations.UpdatePoliciesAsync(resourceGroupName, registryName, quarantinePolicy, trustPolicy).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the policies for the specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='quarantinePolicy'>
+            /// An object that represents quarantine policy for a container registry.
+            /// </param>
+            /// <param name='trustPolicy'>
+            /// An object that represents content trust policy for a container registry.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RegistryPolicies> UpdatePoliciesAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdatePoliciesWithHttpMessagesAsync(resourceGroupName, registryName, quarantinePolicy, trustPolicy, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates a new build based on the request parameters and add it to the build
+            /// queue.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='buildRequest'>
+            /// The parameters of a build that needs to queued.
+            /// </param>
+            public static Build QueueBuild(this IRegistriesOperations operations, string resourceGroupName, string registryName, QueueBuildRequest buildRequest)
+            {
+                return operations.QueueBuildAsync(resourceGroupName, registryName, buildRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a new build based on the request parameters and add it to the build
+            /// queue.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='buildRequest'>
+            /// The parameters of a build that needs to queued.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Build> QueueBuildAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, QueueBuildRequest buildRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.QueueBuildWithHttpMessagesAsync(resourceGroupName, registryName, buildRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the upload location for the user to be able to upload the source.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            public static SourceUploadDefinition GetBuildSourceUploadUrl(this IRegistriesOperations operations, string resourceGroupName, string registryName)
+            {
+                return operations.GetBuildSourceUploadUrlAsync(resourceGroupName, registryName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the upload location for the user to be able to upload the source.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SourceUploadDefinition> GetBuildSourceUploadUrlAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetBuildSourceUploadUrlWithHttpMessagesAsync(resourceGroupName, registryName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Copies an image to this container registry from the specified container
+            /// registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters specifying the image to copy and the source container
+            /// registry.
+            /// </param>
+            public static void BeginImportImage(this IRegistriesOperations operations, string resourceGroupName, string registryName, ImportImageParameters parameters)
+            {
+                operations.BeginImportImageAsync(resourceGroupName, registryName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Copies an image to this container registry from the specified container
+            /// registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters specifying the image to copy and the source container
+            /// registry.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginImportImageAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, ImportImageParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginImportImageWithHttpMessagesAsync(resourceGroupName, registryName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Creates a container registry with the specified parameters.
             /// </summary>
             /// <param name='operations'>
@@ -544,6 +818,106 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             public static async Task<Registry> BeginUpdateAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, RegistryUpdateParameters registryUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, registryName, registryUpdateParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the policies for the specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='quarantinePolicy'>
+            /// An object that represents quarantine policy for a container registry.
+            /// </param>
+            /// <param name='trustPolicy'>
+            /// An object that represents content trust policy for a container registry.
+            /// </param>
+            public static RegistryPolicies BeginUpdatePolicies(this IRegistriesOperations operations, string resourceGroupName, string registryName, QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy))
+            {
+                return operations.BeginUpdatePoliciesAsync(resourceGroupName, registryName, quarantinePolicy, trustPolicy).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the policies for the specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='quarantinePolicy'>
+            /// An object that represents quarantine policy for a container registry.
+            /// </param>
+            /// <param name='trustPolicy'>
+            /// An object that represents content trust policy for a container registry.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RegistryPolicies> BeginUpdatePoliciesAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdatePoliciesWithHttpMessagesAsync(resourceGroupName, registryName, quarantinePolicy, trustPolicy, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates a new build based on the request parameters and add it to the build
+            /// queue.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='buildRequest'>
+            /// The parameters of a build that needs to queued.
+            /// </param>
+            public static Build BeginQueueBuild(this IRegistriesOperations operations, string resourceGroupName, string registryName, QueueBuildRequest buildRequest)
+            {
+                return operations.BeginQueueBuildAsync(resourceGroupName, registryName, buildRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a new build based on the request parameters and add it to the build
+            /// queue.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='buildRequest'>
+            /// The parameters of a build that needs to queued.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Build> BeginQueueBuildAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, QueueBuildRequest buildRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginQueueBuildWithHttpMessagesAsync(resourceGroupName, registryName, buildRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

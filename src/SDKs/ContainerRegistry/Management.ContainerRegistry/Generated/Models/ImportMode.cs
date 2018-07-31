@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for WebhookAction.
+    /// Defines values for ImportMode.
     /// </summary>
-    public static class WebhookAction
+    public static class ImportMode
     {
-        public const string Push = "push";
-        public const string Delete = "delete";
-        public const string Quarantine = "quarantine";
+        public const string NoForce = "NoForce";
+        public const string Force = "Force";
     }
 }

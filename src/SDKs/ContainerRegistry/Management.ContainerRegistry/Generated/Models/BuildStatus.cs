@@ -12,12 +12,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for WebhookAction.
+    /// Defines values for BuildStatus.
     /// </summary>
-    public static class WebhookAction
+    public static class BuildStatus
     {
-        public const string Push = "push";
-        public const string Delete = "delete";
-        public const string Quarantine = "quarantine";
+        public const string Queued = "Queued";
+        public const string Started = "Started";
+        public const string Running = "Running";
+        public const string Succeeded = "Succeeded";
+        public const string Failed = "Failed";
+        public const string Canceled = "Canceled";
+        public const string Error = "Error";
+        public const string Timeout = "Timeout";
     }
 }

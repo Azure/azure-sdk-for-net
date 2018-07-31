@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for WebhookAction.
+    /// Defines values for OsType.
     /// </summary>
-    public static class WebhookAction
+    public static class OsType
     {
-        public const string Push = "push";
-        public const string Delete = "delete";
-        public const string Quarantine = "quarantine";
+        public const string Windows = "Windows";
+        public const string Linux = "Linux";
     }
 }
