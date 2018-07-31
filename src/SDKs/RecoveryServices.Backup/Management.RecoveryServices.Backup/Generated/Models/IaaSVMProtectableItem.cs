@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Protected', 'ProtectionFailed'</param>
         /// <param name="virtualMachineId">Fully qualified ARM ID of the
         /// virtual machine.</param>
-        public IaaSVMProtectableItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), string protectionState = default(string), string virtualMachineId = default(string))
+        public IaaSVMProtectableItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), ProtectionStatus? protectionState = default(ProtectionStatus?), string virtualMachineId = default(string))
             : base(backupManagementType, workloadType, friendlyName, protectionState)
         {
             VirtualMachineId = virtualMachineId;

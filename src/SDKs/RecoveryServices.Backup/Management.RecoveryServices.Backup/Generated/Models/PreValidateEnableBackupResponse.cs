@@ -38,11 +38,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="recommendation">Recommended action for user</param>
         /// <param name="containerName">Specifies the product specific
         /// container name. E.g. iaasvmcontainer;iaasvmcontainer;rgname;vmname.
-        /// This is required for portal</param>
+        /// This is required
+        /// for portal</param>
         /// <param name="protectedItemName">Specifies the product specific ds
         /// name. E.g. vm;iaasvmcontainer;rgname;vmname. This is required for
         /// portal</param>
-        public PreValidateEnableBackupResponse(string status = default(string), string errorCode = default(string), string errorMessage = default(string), string recommendation = default(string), string containerName = default(string), string protectedItemName = default(string))
+        public PreValidateEnableBackupResponse(ValidationStatus? status = default(ValidationStatus?), string errorCode = default(string), string errorMessage = default(string), string recommendation = default(string), string containerName = default(string), string protectedItemName = default(string))
         {
             Status = status;
             ErrorCode = errorCode;
@@ -63,7 +64,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
+        public ValidationStatus? Status { get; set; }
 
         /// <summary>
         /// Gets or sets response error code
@@ -85,8 +86,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets or sets specifies the product specific container name. E.g.
-        /// iaasvmcontainer;iaasvmcontainer;rgname;vmname. This is required for
-        /// portal
+        /// iaasvmcontainer;iaasvmcontainer;rgname;vmname. This is required
+        /// for portal
         /// </summary>
         [JsonProperty(PropertyName = "containerName")]
         public string ContainerName { get; set; }

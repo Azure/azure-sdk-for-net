@@ -10,15 +10,100 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for RecoveryType.
     /// </summary>
-    public static class RecoveryType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(RecoveryTypeConverter))]
+    public struct RecoveryType : System.IEquatable<RecoveryType>
     {
-        public const string Invalid = "Invalid";
-        public const string OriginalLocation = "OriginalLocation";
-        public const string AlternateLocation = "AlternateLocation";
-        public const string RestoreDisks = "RestoreDisks";
+        private RecoveryType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly RecoveryType Invalid = "Invalid";
+
+        public static readonly RecoveryType OriginalLocation = "OriginalLocation";
+
+        public static readonly RecoveryType AlternateLocation = "AlternateLocation";
+
+        public static readonly RecoveryType RestoreDisks = "RestoreDisks";
+
+
+        /// <summary>
+        /// Underlying value of enum RecoveryType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for RecoveryType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type RecoveryType
+        /// </summary>
+        public bool Equals(RecoveryType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to RecoveryType
+        /// </summary>
+        public static implicit operator RecoveryType(string value)
+        {
+            return new RecoveryType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert RecoveryType to string
+        /// </summary>
+        public static implicit operator string(RecoveryType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum RecoveryType
+        /// </summary>
+        public static bool operator == (RecoveryType e1, RecoveryType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum RecoveryType
+        /// </summary>
+        public static bool operator != (RecoveryType e1, RecoveryType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for RecoveryType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is RecoveryType && Equals((RecoveryType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode RecoveryType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

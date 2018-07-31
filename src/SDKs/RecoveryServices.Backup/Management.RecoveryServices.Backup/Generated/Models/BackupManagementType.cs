@@ -10,20 +10,110 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for BackupManagementType.
     /// </summary>
-    public static class BackupManagementType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(BackupManagementTypeConverter))]
+    public struct BackupManagementType : System.IEquatable<BackupManagementType>
     {
-        public const string Invalid = "Invalid";
-        public const string AzureIaasVM = "AzureIaasVM";
-        public const string MAB = "MAB";
-        public const string DPM = "DPM";
-        public const string AzureBackupServer = "AzureBackupServer";
-        public const string AzureSql = "AzureSql";
-        public const string AzureStorage = "AzureStorage";
-        public const string AzureWorkload = "AzureWorkload";
-        public const string DefaultBackup = "DefaultBackup";
+        private BackupManagementType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly BackupManagementType Invalid = "Invalid";
+
+        public static readonly BackupManagementType AzureIaasVM = "AzureIaasVM";
+
+        public static readonly BackupManagementType MAB = "MAB";
+
+        public static readonly BackupManagementType DPM = "DPM";
+
+        public static readonly BackupManagementType AzureBackupServer = "AzureBackupServer";
+
+        public static readonly BackupManagementType AzureSql = "AzureSql";
+
+        public static readonly BackupManagementType AzureStorage = "AzureStorage";
+
+        public static readonly BackupManagementType AzureWorkload = "AzureWorkload";
+
+        public static readonly BackupManagementType DefaultBackup = "DefaultBackup";
+
+
+        /// <summary>
+        /// Underlying value of enum BackupManagementType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for BackupManagementType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type BackupManagementType
+        /// </summary>
+        public bool Equals(BackupManagementType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to BackupManagementType
+        /// </summary>
+        public static implicit operator BackupManagementType(string value)
+        {
+            return new BackupManagementType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert BackupManagementType to string
+        /// </summary>
+        public static implicit operator string(BackupManagementType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum BackupManagementType
+        /// </summary>
+        public static bool operator == (BackupManagementType e1, BackupManagementType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum BackupManagementType
+        /// </summary>
+        public static bool operator != (BackupManagementType e1, BackupManagementType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for BackupManagementType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is BackupManagementType && Equals((BackupManagementType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode BackupManagementType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

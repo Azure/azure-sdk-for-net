@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// which Target DataBase resides</param>
         /// <param name="databaseName">Database name InstanceName/DataBaseName
         /// for SQL or System/DbName for SAP Hana</param>
-        public TargetRestoreInfo(string overwriteOption = default(string), string containerId = default(string), string databaseName = default(string))
+        public TargetRestoreInfo(OverwriteOptions? overwriteOption = default(OverwriteOptions?), string containerId = default(string), string databaseName = default(string))
         {
             OverwriteOption = overwriteOption;
             ContainerId = containerId;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Possible values include: 'Invalid', 'FailOnConflict', 'Overwrite'
         /// </summary>
         [JsonProperty(PropertyName = "overwriteOption")]
-        public string OverwriteOption { get; set; }
+        public OverwriteOptions? OverwriteOption { get; set; }
 
         /// <summary>
         /// Gets or sets resource Id name of the container in which Target

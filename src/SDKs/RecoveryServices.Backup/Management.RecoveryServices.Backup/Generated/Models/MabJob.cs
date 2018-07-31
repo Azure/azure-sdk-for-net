@@ -52,9 +52,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'IaasVMServiceContainer', 'DPMContainer',
         /// 'AzureBackupServerContainer', 'MABContainer', 'Cluster',
         /// 'AzureSqlContainer', 'Windows', 'VCenter', 'VMAppContainer',
-        /// 'SQLAGWorkLoadContainer', 'StorageContainer', 'GenericContainer',
-        /// 'SqlCluster', 'ExchangeDAG', 'SharepointFarm', 'HyperVCluster',
-        /// 'WindowsClient'</param>
+        /// 'SQLAGWorkLoadContainer', 'StorageContainer',
+        /// 'GenericContainer'</param>
         /// <param name="workloadType">Workload type of backup item. Possible
         /// values include: 'Invalid', 'VM', 'FileFolder', 'AzureSqlDb',
         /// 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM', 'SystemState',
@@ -63,7 +62,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="errorDetails">The errors.</param>
         /// <param name="extendedInfo">Additional information on the
         /// job.</param>
-        public MabJob(string entityFriendlyName = default(string), string backupManagementType = default(string), string operation = default(string), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string activityId = default(string), System.TimeSpan? duration = default(System.TimeSpan?), IList<JobSupportedAction?> actionsInfo = default(IList<JobSupportedAction?>), string mabServerName = default(string), string mabServerType = default(string), string workloadType = default(string), IList<MabErrorInfo> errorDetails = default(IList<MabErrorInfo>), MabJobExtendedInfo extendedInfo = default(MabJobExtendedInfo))
+        public MabJob(string entityFriendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string operation = default(string), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string activityId = default(string), System.TimeSpan? duration = default(System.TimeSpan?), IList<JobSupportedAction?> actionsInfo = default(IList<JobSupportedAction?>), string mabServerName = default(string), MabServerType? mabServerType = default(MabServerType?), WorkloadType? workloadType = default(WorkloadType?), IList<MabErrorInfo> errorDetails = default(IList<MabErrorInfo>), MabJobExtendedInfo extendedInfo = default(MabJobExtendedInfo))
             : base(entityFriendlyName, backupManagementType, operation, status, startTime, endTime, activityId)
         {
             Duration = duration;
@@ -106,11 +105,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DPMContainer', 'AzureBackupServerContainer', 'MABContainer',
         /// 'Cluster', 'AzureSqlContainer', 'Windows', 'VCenter',
         /// 'VMAppContainer', 'SQLAGWorkLoadContainer', 'StorageContainer',
-        /// 'GenericContainer', 'SqlCluster', 'ExchangeDAG', 'SharepointFarm',
-        /// 'HyperVCluster', 'WindowsClient'
+        /// 'GenericContainer'
         /// </summary>
         [JsonProperty(PropertyName = "mabServerType")]
-        public string MabServerType { get; set; }
+        public MabServerType? MabServerType { get; set; }
 
         /// <summary>
         /// Gets or sets workload type of backup item. Possible values include:
@@ -120,7 +118,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'SAPHanaDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "workloadType")]
-        public string WorkloadType { get; set; }
+        public WorkloadType? WorkloadType { get; set; }
 
         /// <summary>
         /// Gets or sets the errors.

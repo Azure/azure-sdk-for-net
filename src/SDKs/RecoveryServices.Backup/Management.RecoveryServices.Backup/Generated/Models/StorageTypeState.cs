@@ -10,14 +10,98 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for StorageTypeState.
     /// </summary>
-    public static class StorageTypeState
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(StorageTypeStateConverter))]
+    public struct StorageTypeState : System.IEquatable<StorageTypeState>
     {
-        public const string Invalid = "Invalid";
-        public const string Locked = "Locked";
-        public const string Unlocked = "Unlocked";
+        private StorageTypeState(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly StorageTypeState Invalid = "Invalid";
+
+        public static readonly StorageTypeState Locked = "Locked";
+
+        public static readonly StorageTypeState Unlocked = "Unlocked";
+
+
+        /// <summary>
+        /// Underlying value of enum StorageTypeState
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for StorageTypeState
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type StorageTypeState
+        /// </summary>
+        public bool Equals(StorageTypeState e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to StorageTypeState
+        /// </summary>
+        public static implicit operator StorageTypeState(string value)
+        {
+            return new StorageTypeState(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert StorageTypeState to string
+        /// </summary>
+        public static implicit operator string(StorageTypeState e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum StorageTypeState
+        /// </summary>
+        public static bool operator == (StorageTypeState e1, StorageTypeState e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum StorageTypeState
+        /// </summary>
+        public static bool operator != (StorageTypeState e1, StorageTypeState e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for StorageTypeState
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is StorageTypeState && Equals((StorageTypeState)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode StorageTypeState
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

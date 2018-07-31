@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Unlocked'</param>
         /// <param name="enhancedSecurityState">Enabled or Disabled. Possible
         /// values include: 'Invalid', 'Enabled', 'Disabled'</param>
-        public BackupResourceVaultConfig(string storageModelType = default(string), string storageType = default(string), string storageTypeState = default(string), string enhancedSecurityState = default(string))
+        public BackupResourceVaultConfig(StorageType? storageModelType = default(StorageType?), StorageType? storageType = default(StorageType?), StorageTypeState? storageTypeState = default(StorageTypeState?), EnhancedSecurityState? enhancedSecurityState = default(EnhancedSecurityState?))
         {
             StorageModelType = storageModelType;
             StorageType = storageType;
@@ -58,14 +58,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'GeoRedundant', 'LocallyRedundant'
         /// </summary>
         [JsonProperty(PropertyName = "storageModelType")]
-        public string StorageModelType { get; set; }
+        public StorageType? StorageModelType { get; set; }
 
         /// <summary>
         /// Gets or sets storage type. Possible values include: 'Invalid',
         /// 'GeoRedundant', 'LocallyRedundant'
         /// </summary>
         [JsonProperty(PropertyName = "storageType")]
-        public string StorageType { get; set; }
+        public StorageType? StorageType { get; set; }
 
         /// <summary>
         /// Gets or sets locked or Unlocked. Once a machine is registered
@@ -73,14 +73,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// values include: 'Invalid', 'Locked', 'Unlocked'
         /// </summary>
         [JsonProperty(PropertyName = "storageTypeState")]
-        public string StorageTypeState { get; set; }
+        public StorageTypeState? StorageTypeState { get; set; }
 
         /// <summary>
         /// Gets or sets enabled or Disabled. Possible values include:
         /// 'Invalid', 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "enhancedSecurityState")]
-        public string EnhancedSecurityState { get; set; }
+        public EnhancedSecurityState? EnhancedSecurityState { get; set; }
 
     }
 }

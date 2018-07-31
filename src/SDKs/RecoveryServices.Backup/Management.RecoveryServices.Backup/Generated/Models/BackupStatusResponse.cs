@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// for protection</param>
         /// <param name="registrationStatus">Container registration
         /// status</param>
-        public BackupStatusResponse(string protectionStatus = default(string), string vaultId = default(string), string fabricName = default(string), string containerName = default(string), string protectedItemName = default(string), string errorCode = default(string), string errorMessage = default(string), string policyName = default(string), string registrationStatus = default(string))
+        public BackupStatusResponse(ProtectionStatus? protectionStatus = default(ProtectionStatus?), string vaultId = default(string), FabricName? fabricName = default(FabricName?), string containerName = default(string), string protectedItemName = default(string), string errorCode = default(string), string errorMessage = default(string), string policyName = default(string), string registrationStatus = default(string))
         {
             ProtectionStatus = protectionStatus;
             VaultId = vaultId;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Protected', 'ProtectionFailed'
         /// </summary>
         [JsonProperty(PropertyName = "protectionStatus")]
-        public string ProtectionStatus { get; set; }
+        public ProtectionStatus? ProtectionStatus { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the arm resource id of the vault
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// values include: 'Invalid', 'Azure'
         /// </summary>
         [JsonProperty(PropertyName = "fabricName")]
-        public string FabricName { get; set; }
+        public FabricName? FabricName { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the product specific container name. E.g.

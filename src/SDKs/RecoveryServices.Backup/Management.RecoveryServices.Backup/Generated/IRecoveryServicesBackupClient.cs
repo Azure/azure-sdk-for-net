@@ -114,6 +114,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         IBackupUsageSummariesOperations BackupUsageSummaries { get; }
 
         /// <summary>
+        /// Gets the IOperationOperations.
+        /// </summary>
+        IOperationOperations Operation { get; }
+
+        /// <summary>
         /// Gets the IBackupResourceVaultConfigsOperations.
         /// </summary>
         IBackupResourceVaultConfigsOperations BackupResourceVaultConfigs { get; }

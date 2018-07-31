@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="friendlyName">Friendly name of protected item</param>
         /// <param name="fabricName">Name of the fabric.</param>
         /// <param name="backupSetName">Name of the backup set.</param>
-        public ProtectedItemQueryObject(string healthState = default(string), string backupManagementType = default(string), string itemType = default(string), string policyName = default(string), string containerName = default(string), string backupEngineName = default(string), string friendlyName = default(string), string fabricName = default(string), string backupSetName = default(string))
+        public ProtectedItemQueryObject(HealthState? healthState = default(HealthState?), BackupManagementType? backupManagementType = default(BackupManagementType?), DataSourceType? itemType = default(DataSourceType?), string policyName = default(string), string containerName = default(string), string backupEngineName = default(string), string friendlyName = default(string), string fabricName = default(string), string backupSetName = default(string))
         {
             HealthState = healthState;
             BackupManagementType = backupManagementType;
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// include: 'Passed', 'ActionRequired', 'ActionSuggested', 'Invalid'
         /// </summary>
         [JsonProperty(PropertyName = "healthState")]
-        public string HealthState { get; set; }
+        public HealthState? HealthState { get; set; }
 
         /// <summary>
         /// Gets or sets backup management type for the backed up item.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public string BackupManagementType { get; set; }
+        public BackupManagementType? BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets type of workload this item represents. Possible values
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'SAPHanaDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "itemType")]
-        public string ItemType { get; set; }
+        public DataSourceType? ItemType { get; set; }
 
         /// <summary>
         /// Gets or sets backup policy name associated with the backup item.

@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// number of DB's present</param>
         /// <param name="subWorkloadItemCount">For instance or AG, indicates
         /// number of DB's to be protected</param>
-        public AzureVmWorkloadItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), string protectionState = default(string), string parentName = default(string), string serverName = default(string), bool? isAutoProtectable = default(bool?), int? subinquireditemcount = default(int?), int? subWorkloadItemCount = default(int?))
+        public AzureVmWorkloadItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), ProtectionStatus? protectionState = default(ProtectionStatus?), string parentName = default(string), string serverName = default(string), bool? isAutoProtectable = default(bool?), int? subinquireditemcount = default(int?), int? subWorkloadItemCount = default(int?))
             : base(backupManagementType, workloadType, friendlyName, protectionState)
         {
             ParentName = parentName;

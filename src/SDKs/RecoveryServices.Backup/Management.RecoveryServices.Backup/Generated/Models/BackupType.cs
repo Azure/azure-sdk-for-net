@@ -10,16 +10,102 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for BackupType.
     /// </summary>
-    public static class BackupType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(BackupTypeConverter))]
+    public struct BackupType : System.IEquatable<BackupType>
     {
-        public const string Invalid = "Invalid";
-        public const string Full = "Full";
-        public const string Differential = "Differential";
-        public const string Log = "Log";
-        public const string CopyOnlyFull = "CopyOnlyFull";
+        private BackupType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly BackupType Invalid = "Invalid";
+
+        public static readonly BackupType Full = "Full";
+
+        public static readonly BackupType Differential = "Differential";
+
+        public static readonly BackupType Log = "Log";
+
+        public static readonly BackupType CopyOnlyFull = "CopyOnlyFull";
+
+
+        /// <summary>
+        /// Underlying value of enum BackupType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for BackupType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type BackupType
+        /// </summary>
+        public bool Equals(BackupType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to BackupType
+        /// </summary>
+        public static implicit operator BackupType(string value)
+        {
+            return new BackupType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert BackupType to string
+        /// </summary>
+        public static implicit operator string(BackupType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum BackupType
+        /// </summary>
+        public static bool operator == (BackupType e1, BackupType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum BackupType
+        /// </summary>
+        public static bool operator != (BackupType e1, BackupType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for BackupType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is BackupType && Equals((BackupType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode BackupType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

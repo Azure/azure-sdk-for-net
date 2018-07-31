@@ -10,14 +10,98 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for RestoreRequestType.
     /// </summary>
-    public static class RestoreRequestType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(RestoreRequestTypeConverter))]
+    public struct RestoreRequestType : System.IEquatable<RestoreRequestType>
     {
-        public const string Invalid = "Invalid";
-        public const string FullShareRestore = "FullShareRestore";
-        public const string ItemLevelRestore = "ItemLevelRestore";
+        private RestoreRequestType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly RestoreRequestType Invalid = "Invalid";
+
+        public static readonly RestoreRequestType FullShareRestore = "FullShareRestore";
+
+        public static readonly RestoreRequestType ItemLevelRestore = "ItemLevelRestore";
+
+
+        /// <summary>
+        /// Underlying value of enum RestoreRequestType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for RestoreRequestType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type RestoreRequestType
+        /// </summary>
+        public bool Equals(RestoreRequestType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to RestoreRequestType
+        /// </summary>
+        public static implicit operator RestoreRequestType(string value)
+        {
+            return new RestoreRequestType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert RestoreRequestType to string
+        /// </summary>
+        public static implicit operator string(RestoreRequestType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum RestoreRequestType
+        /// </summary>
+        public static bool operator == (RestoreRequestType e1, RestoreRequestType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum RestoreRequestType
+        /// </summary>
+        public static bool operator != (RestoreRequestType e1, RestoreRequestType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for RestoreRequestType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is RestoreRequestType && Equals((RestoreRequestType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode RestoreRequestType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

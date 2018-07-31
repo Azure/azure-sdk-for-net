@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// represents a Classic or an Azure Resource Manager VM.</param>
         /// <param name="resourceGroup">Resource group name of Recovery
         /// Services Vault.</param>
-        public AzureIaaSClassicComputeVMContainer(string friendlyName = default(string), string backupManagementType = default(string), string registrationStatus = default(string), string healthStatus = default(string), string virtualMachineId = default(string), string virtualMachineVersion = default(string), string resourceGroup = default(string))
+        public AzureIaaSClassicComputeVMContainer(string friendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string registrationStatus = default(string), string healthStatus = default(string), string virtualMachineId = default(string), string virtualMachineVersion = default(string), string resourceGroup = default(string))
             : base(friendlyName, backupManagementType, registrationStatus, healthStatus, virtualMachineId, virtualMachineVersion, resourceGroup)
         {
             CustomInit();

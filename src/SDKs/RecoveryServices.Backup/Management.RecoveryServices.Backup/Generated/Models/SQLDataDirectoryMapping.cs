@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// path</param>
         /// <param name="sourcePath">Restore source path</param>
         /// <param name="targetPath">Target path</param>
-        public SQLDataDirectoryMapping(string mappingType = default(string), string sourceLogicalName = default(string), string sourcePath = default(string), string targetPath = default(string))
+        public SQLDataDirectoryMapping(SQLDataDirectoryType? mappingType = default(SQLDataDirectoryType?), string sourceLogicalName = default(string), string sourcePath = default(string), string targetPath = default(string))
         {
             MappingType = mappingType;
             SourceLogicalName = sourceLogicalName;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// include: 'Invalid', 'Data', 'Log'
         /// </summary>
         [JsonProperty(PropertyName = "mappingType")]
-        public string MappingType { get; set; }
+        public SQLDataDirectoryType? MappingType { get; set; }
 
         /// <summary>
         /// Gets or sets restore source logical name path

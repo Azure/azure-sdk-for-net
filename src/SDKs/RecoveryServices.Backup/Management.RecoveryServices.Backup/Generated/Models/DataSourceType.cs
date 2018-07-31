@@ -10,25 +10,120 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for DataSourceType.
     /// </summary>
-    public static class DataSourceType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(DataSourceTypeConverter))]
+    public struct DataSourceType : System.IEquatable<DataSourceType>
     {
-        public const string Invalid = "Invalid";
-        public const string VM = "VM";
-        public const string FileFolder = "FileFolder";
-        public const string AzureSqlDb = "AzureSqlDb";
-        public const string SQLDB = "SQLDB";
-        public const string Exchange = "Exchange";
-        public const string Sharepoint = "Sharepoint";
-        public const string VMwareVM = "VMwareVM";
-        public const string SystemState = "SystemState";
-        public const string Client = "Client";
-        public const string GenericDataSource = "GenericDataSource";
-        public const string SQLDataBase = "SQLDataBase";
-        public const string AzureFileShare = "AzureFileShare";
-        public const string SAPHanaDatabase = "SAPHanaDatabase";
+        private DataSourceType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly DataSourceType Invalid = "Invalid";
+
+        public static readonly DataSourceType VM = "VM";
+
+        public static readonly DataSourceType FileFolder = "FileFolder";
+
+        public static readonly DataSourceType AzureSqlDb = "AzureSqlDb";
+
+        public static readonly DataSourceType SQLDB = "SQLDB";
+
+        public static readonly DataSourceType Exchange = "Exchange";
+
+        public static readonly DataSourceType Sharepoint = "Sharepoint";
+
+        public static readonly DataSourceType VMwareVM = "VMwareVM";
+
+        public static readonly DataSourceType SystemState = "SystemState";
+
+        public static readonly DataSourceType Client = "Client";
+
+        public static readonly DataSourceType GenericDataSource = "GenericDataSource";
+
+        public static readonly DataSourceType SQLDataBase = "SQLDataBase";
+
+        public static readonly DataSourceType AzureFileShare = "AzureFileShare";
+
+        public static readonly DataSourceType SAPHanaDatabase = "SAPHanaDatabase";
+
+
+        /// <summary>
+        /// Underlying value of enum DataSourceType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for DataSourceType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type DataSourceType
+        /// </summary>
+        public bool Equals(DataSourceType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to DataSourceType
+        /// </summary>
+        public static implicit operator DataSourceType(string value)
+        {
+            return new DataSourceType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert DataSourceType to string
+        /// </summary>
+        public static implicit operator string(DataSourceType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum DataSourceType
+        /// </summary>
+        public static bool operator == (DataSourceType e1, DataSourceType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum DataSourceType
+        /// </summary>
+        public static bool operator != (DataSourceType e1, DataSourceType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for DataSourceType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is DataSourceType && Equals((DataSourceType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode DataSourceType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Possible values include: 'Invalid',
         /// 'BackupProtectedItemCountSummary',
         /// 'BackupProtectionContainerCountSummary'</param>
-        public BMSBackupSummariesQueryObject(string type = default(string))
+        public BMSBackupSummariesQueryObject(Type? type = default(Type?))
         {
             Type = type;
             CustomInit();
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'BackupProtectionContainerCountSummary'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public Type? Type { get; set; }
 
     }
 }

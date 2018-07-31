@@ -10,14 +10,98 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for EnhancedSecurityState.
     /// </summary>
-    public static class EnhancedSecurityState
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(EnhancedSecurityStateConverter))]
+    public struct EnhancedSecurityState : System.IEquatable<EnhancedSecurityState>
     {
-        public const string Invalid = "Invalid";
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
+        private EnhancedSecurityState(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly EnhancedSecurityState Invalid = "Invalid";
+
+        public static readonly EnhancedSecurityState Enabled = "Enabled";
+
+        public static readonly EnhancedSecurityState Disabled = "Disabled";
+
+
+        /// <summary>
+        /// Underlying value of enum EnhancedSecurityState
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for EnhancedSecurityState
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type EnhancedSecurityState
+        /// </summary>
+        public bool Equals(EnhancedSecurityState e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to EnhancedSecurityState
+        /// </summary>
+        public static implicit operator EnhancedSecurityState(string value)
+        {
+            return new EnhancedSecurityState(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert EnhancedSecurityState to string
+        /// </summary>
+        public static implicit operator string(EnhancedSecurityState e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum EnhancedSecurityState
+        /// </summary>
+        public static bool operator == (EnhancedSecurityState e1, EnhancedSecurityState e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum EnhancedSecurityState
+        /// </summary>
+        public static bool operator != (EnhancedSecurityState e1, EnhancedSecurityState e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for EnhancedSecurityState
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is EnhancedSecurityState && Equals((EnhancedSecurityState)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode EnhancedSecurityState
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

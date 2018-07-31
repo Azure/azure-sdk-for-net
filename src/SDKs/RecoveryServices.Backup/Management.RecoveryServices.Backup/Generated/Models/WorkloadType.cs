@@ -10,25 +10,120 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for WorkloadType.
     /// </summary>
-    public static class WorkloadType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(WorkloadTypeConverter))]
+    public struct WorkloadType : System.IEquatable<WorkloadType>
     {
-        public const string Invalid = "Invalid";
-        public const string VM = "VM";
-        public const string FileFolder = "FileFolder";
-        public const string AzureSqlDb = "AzureSqlDb";
-        public const string SQLDB = "SQLDB";
-        public const string Exchange = "Exchange";
-        public const string Sharepoint = "Sharepoint";
-        public const string VMwareVM = "VMwareVM";
-        public const string SystemState = "SystemState";
-        public const string Client = "Client";
-        public const string GenericDataSource = "GenericDataSource";
-        public const string SQLDataBase = "SQLDataBase";
-        public const string AzureFileShare = "AzureFileShare";
-        public const string SAPHanaDatabase = "SAPHanaDatabase";
+        private WorkloadType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly WorkloadType Invalid = "Invalid";
+
+        public static readonly WorkloadType VM = "VM";
+
+        public static readonly WorkloadType FileFolder = "FileFolder";
+
+        public static readonly WorkloadType AzureSqlDb = "AzureSqlDb";
+
+        public static readonly WorkloadType SQLDB = "SQLDB";
+
+        public static readonly WorkloadType Exchange = "Exchange";
+
+        public static readonly WorkloadType Sharepoint = "Sharepoint";
+
+        public static readonly WorkloadType VMwareVM = "VMwareVM";
+
+        public static readonly WorkloadType SystemState = "SystemState";
+
+        public static readonly WorkloadType Client = "Client";
+
+        public static readonly WorkloadType GenericDataSource = "GenericDataSource";
+
+        public static readonly WorkloadType SQLDataBase = "SQLDataBase";
+
+        public static readonly WorkloadType AzureFileShare = "AzureFileShare";
+
+        public static readonly WorkloadType SAPHanaDatabase = "SAPHanaDatabase";
+
+
+        /// <summary>
+        /// Underlying value of enum WorkloadType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for WorkloadType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type WorkloadType
+        /// </summary>
+        public bool Equals(WorkloadType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to WorkloadType
+        /// </summary>
+        public static implicit operator WorkloadType(string value)
+        {
+            return new WorkloadType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert WorkloadType to string
+        /// </summary>
+        public static implicit operator string(WorkloadType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum WorkloadType
+        /// </summary>
+        public static bool operator == (WorkloadType e1, WorkloadType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum WorkloadType
+        /// </summary>
+        public static bool operator != (WorkloadType e1, WorkloadType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for WorkloadType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is WorkloadType && Equals((WorkloadType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode WorkloadType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

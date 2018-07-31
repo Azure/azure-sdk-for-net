@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'FullAndDifferential', 'All'</param>
         /// <param name="extendedInfo">In Get Recovery Point, it tells whether
         /// extended information about recovery point is asked.</param>
-        public BMSRPQueryObject(System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string restorePointQueryType = default(string), bool? extendedInfo = default(bool?))
+        public BMSRPQueryObject(System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), RestorePointQueryType? restorePointQueryType = default(RestorePointQueryType?), bool? extendedInfo = default(bool?))
         {
             StartDate = startDate;
             EndDate = endDate;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Full', 'Log', 'Differential', 'FullAndDifferential', 'All'
         /// </summary>
         [JsonProperty(PropertyName = "restorePointQueryType")]
-        public string RestorePointQueryType { get; set; }
+        public RestorePointQueryType? RestorePointQueryType { get; set; }
 
         /// <summary>
         /// Gets or sets in Get Recovery Point, it tells whether extended

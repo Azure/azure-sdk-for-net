@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="friendlyName">Friendly name of the backup
         /// engine.</param>
         /// <param name="expand">Attribute to add extended info.</param>
-        public BMSBackupEnginesQueryObject(string backupManagementType = default(string), string friendlyName = default(string), string expand = default(string))
+        public BMSBackupEnginesQueryObject(BackupManagementType? backupManagementType = default(BackupManagementType?), string friendlyName = default(string), string expand = default(string))
         {
             BackupManagementType = backupManagementType;
             FriendlyName = friendlyName;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public string BackupManagementType { get; set; }
+        public BackupManagementType? BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets friendly name of the backup engine.

@@ -25,8 +25,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     {
         /// <summary>
         /// Provides the details of the backup policies associated to Recovery
-        /// Services Vault. This is an asynchronous operation. Status of the
-        /// operation can be fetched using GetPolicyOperationResult API.
+        /// Services Vault. This is an asynchronous
+        /// operation. Status of the operation can be fetched using
+        /// GetPolicyOperationResult API.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -56,8 +57,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<AzureOperationResponse<ProtectionPolicyResource>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or modifies a backup policy. This is an asynchronous
-        /// operation. Status of the operation can be fetched using
-        /// GetPolicyOperationResult API.
+        /// operation. Status of the operation can be fetched
+        /// using GetPolicyOperationResult API.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -90,8 +91,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<AzureOperationResponse<ProtectionPolicyResource>> CreateOrUpdateWithHttpMessagesAsync(string vaultName, string resourceGroupName, string policyName, ProtectionPolicyResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes specified backup policy from your Recovery Services Vault.
-        /// This is an asynchronous operation. Status of the operation can be
-        /// fetched using GetPolicyOperationResult API.
+        /// This is an asynchronous operation. Status of the
+        /// operation can be fetched using GetPolicyOperationResult API.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.

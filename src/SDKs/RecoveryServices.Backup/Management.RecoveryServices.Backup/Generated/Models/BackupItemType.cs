@@ -10,25 +10,120 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for BackupItemType.
     /// </summary>
-    public static class BackupItemType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(BackupItemTypeConverter))]
+    public struct BackupItemType : System.IEquatable<BackupItemType>
     {
-        public const string Invalid = "Invalid";
-        public const string VM = "VM";
-        public const string FileFolder = "FileFolder";
-        public const string AzureSqlDb = "AzureSqlDb";
-        public const string SQLDB = "SQLDB";
-        public const string Exchange = "Exchange";
-        public const string Sharepoint = "Sharepoint";
-        public const string VMwareVM = "VMwareVM";
-        public const string SystemState = "SystemState";
-        public const string Client = "Client";
-        public const string GenericDataSource = "GenericDataSource";
-        public const string SQLDataBase = "SQLDataBase";
-        public const string AzureFileShare = "AzureFileShare";
-        public const string SAPHanaDatabase = "SAPHanaDatabase";
+        private BackupItemType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly BackupItemType Invalid = "Invalid";
+
+        public static readonly BackupItemType VM = "VM";
+
+        public static readonly BackupItemType FileFolder = "FileFolder";
+
+        public static readonly BackupItemType AzureSqlDb = "AzureSqlDb";
+
+        public static readonly BackupItemType SQLDB = "SQLDB";
+
+        public static readonly BackupItemType Exchange = "Exchange";
+
+        public static readonly BackupItemType Sharepoint = "Sharepoint";
+
+        public static readonly BackupItemType VMwareVM = "VMwareVM";
+
+        public static readonly BackupItemType SystemState = "SystemState";
+
+        public static readonly BackupItemType Client = "Client";
+
+        public static readonly BackupItemType GenericDataSource = "GenericDataSource";
+
+        public static readonly BackupItemType SQLDataBase = "SQLDataBase";
+
+        public static readonly BackupItemType AzureFileShare = "AzureFileShare";
+
+        public static readonly BackupItemType SAPHanaDatabase = "SAPHanaDatabase";
+
+
+        /// <summary>
+        /// Underlying value of enum BackupItemType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for BackupItemType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type BackupItemType
+        /// </summary>
+        public bool Equals(BackupItemType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to BackupItemType
+        /// </summary>
+        public static implicit operator BackupItemType(string value)
+        {
+            return new BackupItemType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert BackupItemType to string
+        /// </summary>
+        public static implicit operator string(BackupItemType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum BackupItemType
+        /// </summary>
+        public static bool operator == (BackupItemType e1, BackupItemType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum BackupItemType
+        /// </summary>
+        public static bool operator != (BackupItemType e1, BackupItemType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for BackupItemType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is BackupItemType && Equals((BackupItemType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode BackupItemType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

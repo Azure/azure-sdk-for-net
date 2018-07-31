@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// on this backup item.</param>
         /// <param name="extendedInfo">Additional information with this backup
         /// item.</param>
-        public AzureFileshareProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), string friendlyName = default(string), string protectionStatus = default(string), string protectionState = default(string), string healthStatus = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), AzureFileshareProtectedItemExtendedInfo extendedInfo = default(AzureFileshareProtectedItemExtendedInfo))
+        public AzureFileshareProtectedItem(BackupManagementType? backupManagementType = default(BackupManagementType?), DataSourceType? workloadType = default(DataSourceType?), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), CreateMode? createMode = default(CreateMode?), string friendlyName = default(string), string protectionStatus = default(string), ProtectionState? protectionState = default(ProtectionState?), HealthStatus? healthStatus = default(HealthStatus?), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), AzureFileshareProtectedItemExtendedInfo extendedInfo = default(AzureFileshareProtectedItemExtendedInfo))
             : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode)
         {
             FriendlyName = friendlyName;
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionStopped', 'ProtectionPaused'
         /// </summary>
         [JsonProperty(PropertyName = "protectionState")]
-        public string ProtectionState { get; set; }
+        public ProtectionState? ProtectionState { get; set; }
 
         /// <summary>
         /// Gets or sets backups running status for this backup item. Possible
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Invalid'
         /// </summary>
         [JsonProperty(PropertyName = "healthStatus")]
-        public string HealthStatus { get; set; }
+        public HealthStatus? HealthStatus { get; set; }
 
         /// <summary>
         /// Gets or sets last backup operation status. Possible values:

@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// container to which this protectable item belongs.</param>
         /// <param name="azureFileShareType">File Share type XSync or XSMB.
         /// Possible values include: 'Invalid', 'XSMB', 'XSync'</param>
-        public AzureFileShareProtectableItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), string protectionState = default(string), string parentContainerFabricId = default(string), string parentContainerFriendlyName = default(string), string azureFileShareType = default(string))
+        public AzureFileShareProtectableItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), ProtectionStatus? protectionState = default(ProtectionStatus?), string parentContainerFabricId = default(string), string parentContainerFriendlyName = default(string), AzureFileShareType? azureFileShareType = default(AzureFileShareType?))
             : base(backupManagementType, workloadType, friendlyName, protectionState)
         {
             ParentContainerFabricId = parentContainerFabricId;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// include: 'Invalid', 'XSMB', 'XSync'
         /// </summary>
         [JsonProperty(PropertyName = "azureFileShareType")]
-        public string AzureFileShareType { get; set; }
+        public AzureFileShareType? AzureFileShareType { get; set; }
 
     }
 }

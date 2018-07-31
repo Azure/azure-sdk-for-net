@@ -10,31 +10,122 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for MabServerType.
     /// </summary>
-    public static class MabServerType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(MabServerTypeConverter))]
+    public struct MabServerType : System.IEquatable<MabServerType>
     {
-        public const string Invalid = "Invalid";
-        public const string Unknown = "Unknown";
-        public const string IaasVMContainer = "IaasVMContainer";
-        public const string IaasVMServiceContainer = "IaasVMServiceContainer";
-        public const string DPMContainer = "DPMContainer";
-        public const string AzureBackupServerContainer = "AzureBackupServerContainer";
-        public const string MABContainer = "MABContainer";
-        public const string Cluster = "Cluster";
-        public const string AzureSqlContainer = "AzureSqlContainer";
-        public const string Windows = "Windows";
-        public const string VCenter = "VCenter";
-        public const string VMAppContainer = "VMAppContainer";
-        public const string SQLAGWorkLoadContainer = "SQLAGWorkLoadContainer";
-        public const string StorageContainer = "StorageContainer";
-        public const string GenericContainer = "GenericContainer";
-        public const string SqlCluster = "SqlCluster";
-        public const string ExchangeDAG = "ExchangeDAG";
-        public const string SharepointFarm = "SharepointFarm";
-        public const string HyperVCluster = "HyperVCluster";
-        public const string WindowsClient = "WindowsClient";
+        private MabServerType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly MabServerType Invalid = "Invalid";
+
+        public static readonly MabServerType Unknown = "Unknown";
+
+        public static readonly MabServerType IaasVMContainer = "IaasVMContainer";
+
+        public static readonly MabServerType IaasVMServiceContainer = "IaasVMServiceContainer";
+
+        public static readonly MabServerType DPMContainer = "DPMContainer";
+
+        public static readonly MabServerType AzureBackupServerContainer = "AzureBackupServerContainer";
+
+        public static readonly MabServerType MABContainer = "MABContainer";
+
+        public static readonly MabServerType Cluster = "Cluster";
+
+        public static readonly MabServerType AzureSqlContainer = "AzureSqlContainer";
+
+        public static readonly MabServerType Windows = "Windows";
+
+        public static readonly MabServerType VCenter = "VCenter";
+
+        public static readonly MabServerType VMAppContainer = "VMAppContainer";
+
+        public static readonly MabServerType SQLAGWorkLoadContainer = "SQLAGWorkLoadContainer";
+
+        public static readonly MabServerType StorageContainer = "StorageContainer";
+
+        public static readonly MabServerType GenericContainer = "GenericContainer";
+
+
+        /// <summary>
+        /// Underlying value of enum MabServerType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for MabServerType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type MabServerType
+        /// </summary>
+        public bool Equals(MabServerType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to MabServerType
+        /// </summary>
+        public static implicit operator MabServerType(string value)
+        {
+            return new MabServerType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert MabServerType to string
+        /// </summary>
+        public static implicit operator string(MabServerType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum MabServerType
+        /// </summary>
+        public static bool operator == (MabServerType e1, MabServerType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum MabServerType
+        /// </summary>
+        public static bool operator != (MabServerType e1, MabServerType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for MabServerType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is MabServerType && Equals((MabServerType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode MabServerType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

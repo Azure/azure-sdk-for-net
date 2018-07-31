@@ -10,31 +10,122 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ContainerType.
     /// </summary>
-    public static class ContainerType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ContainerTypeConverter))]
+    public struct ContainerType : System.IEquatable<ContainerType>
     {
-        public const string Invalid = "Invalid";
-        public const string Unknown = "Unknown";
-        public const string IaasVMContainer = "IaasVMContainer";
-        public const string IaasVMServiceContainer = "IaasVMServiceContainer";
-        public const string DPMContainer = "DPMContainer";
-        public const string AzureBackupServerContainer = "AzureBackupServerContainer";
-        public const string MABContainer = "MABContainer";
-        public const string Cluster = "Cluster";
-        public const string AzureSqlContainer = "AzureSqlContainer";
-        public const string Windows = "Windows";
-        public const string VCenter = "VCenter";
-        public const string VMAppContainer = "VMAppContainer";
-        public const string SQLAGWorkLoadContainer = "SQLAGWorkLoadContainer";
-        public const string StorageContainer = "StorageContainer";
-        public const string GenericContainer = "GenericContainer";
-        public const string SqlCluster = "SqlCluster";
-        public const string ExchangeDAG = "ExchangeDAG";
-        public const string SharepointFarm = "SharepointFarm";
-        public const string HyperVCluster = "HyperVCluster";
-        public const string WindowsClient = "WindowsClient";
+        private ContainerType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly ContainerType Invalid = "Invalid";
+
+        public static readonly ContainerType Unknown = "Unknown";
+
+        public static readonly ContainerType IaasVMContainer = "IaasVMContainer";
+
+        public static readonly ContainerType IaasVMServiceContainer = "IaasVMServiceContainer";
+
+        public static readonly ContainerType DPMContainer = "DPMContainer";
+
+        public static readonly ContainerType AzureBackupServerContainer = "AzureBackupServerContainer";
+
+        public static readonly ContainerType MABContainer = "MABContainer";
+
+        public static readonly ContainerType Cluster = "Cluster";
+
+        public static readonly ContainerType AzureSqlContainer = "AzureSqlContainer";
+
+        public static readonly ContainerType Windows = "Windows";
+
+        public static readonly ContainerType VCenter = "VCenter";
+
+        public static readonly ContainerType VMAppContainer = "VMAppContainer";
+
+        public static readonly ContainerType SQLAGWorkLoadContainer = "SQLAGWorkLoadContainer";
+
+        public static readonly ContainerType StorageContainer = "StorageContainer";
+
+        public static readonly ContainerType GenericContainer = "GenericContainer";
+
+
+        /// <summary>
+        /// Underlying value of enum ContainerType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for ContainerType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type ContainerType
+        /// </summary>
+        public bool Equals(ContainerType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to ContainerType
+        /// </summary>
+        public static implicit operator ContainerType(string value)
+        {
+            return new ContainerType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert ContainerType to string
+        /// </summary>
+        public static implicit operator string(ContainerType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum ContainerType
+        /// </summary>
+        public static bool operator == (ContainerType e1, ContainerType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum ContainerType
+        /// </summary>
+        public static bool operator != (ContainerType e1, ContainerType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ContainerType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ContainerType && Equals((ContainerType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ContainerType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

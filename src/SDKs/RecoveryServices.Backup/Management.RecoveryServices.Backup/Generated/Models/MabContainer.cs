@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// container.</param>
         /// <param name="containerHealthState">Health state of mab
         /// container.</param>
-        public MabContainer(string friendlyName = default(string), string backupManagementType = default(string), string registrationStatus = default(string), string healthStatus = default(string), bool? canReRegister = default(bool?), long? containerId = default(long?), long? protectedItemCount = default(long?), string agentVersion = default(string), MabContainerExtendedInfo extendedInfo = default(MabContainerExtendedInfo), IList<MABContainerHealthDetails> mabContainerHealthDetails = default(IList<MABContainerHealthDetails>), string containerHealthState = default(string))
+        public MabContainer(string friendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string registrationStatus = default(string), string healthStatus = default(string), bool? canReRegister = default(bool?), long? containerId = default(long?), long? protectedItemCount = default(long?), string agentVersion = default(string), MabContainerExtendedInfo extendedInfo = default(MabContainerExtendedInfo), IList<MABContainerHealthDetails> mabContainerHealthDetails = default(IList<MABContainerHealthDetails>), string containerHealthState = default(string))
             : base(friendlyName, backupManagementType, registrationStatus, healthStatus)
         {
             CanReRegister = canReRegister;

@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
         /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
         /// 'AzureFileShare', 'SAPHanaDatabase'</param>
-        public AzureVMAppContainerProtectionContainer(string friendlyName = default(string), string backupManagementType = default(string), string registrationStatus = default(string), string healthStatus = default(string), string sourceResourceId = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), AzureWorkloadContainerExtendedInfo extendedInfo = default(AzureWorkloadContainerExtendedInfo), string workloadType = default(string))
+        public AzureVMAppContainerProtectionContainer(string friendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string registrationStatus = default(string), string healthStatus = default(string), string sourceResourceId = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), AzureWorkloadContainerExtendedInfo extendedInfo = default(AzureWorkloadContainerExtendedInfo), WorkloadType? workloadType = default(WorkloadType?))
             : base(friendlyName, backupManagementType, registrationStatus, healthStatus, sourceResourceId, lastUpdatedTime, extendedInfo, workloadType)
         {
             CustomInit();

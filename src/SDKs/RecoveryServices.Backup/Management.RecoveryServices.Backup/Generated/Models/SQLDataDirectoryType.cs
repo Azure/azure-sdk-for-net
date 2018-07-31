@@ -10,14 +10,98 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for SQLDataDirectoryType.
     /// </summary>
-    public static class SQLDataDirectoryType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(SQLDataDirectoryTypeConverter))]
+    public struct SQLDataDirectoryType : System.IEquatable<SQLDataDirectoryType>
     {
-        public const string Invalid = "Invalid";
-        public const string Data = "Data";
-        public const string Log = "Log";
+        private SQLDataDirectoryType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly SQLDataDirectoryType Invalid = "Invalid";
+
+        public static readonly SQLDataDirectoryType Data = "Data";
+
+        public static readonly SQLDataDirectoryType Log = "Log";
+
+
+        /// <summary>
+        /// Underlying value of enum SQLDataDirectoryType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for SQLDataDirectoryType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type SQLDataDirectoryType
+        /// </summary>
+        public bool Equals(SQLDataDirectoryType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to SQLDataDirectoryType
+        /// </summary>
+        public static implicit operator SQLDataDirectoryType(string value)
+        {
+            return new SQLDataDirectoryType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert SQLDataDirectoryType to string
+        /// </summary>
+        public static implicit operator string(SQLDataDirectoryType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum SQLDataDirectoryType
+        /// </summary>
+        public static bool operator == (SQLDataDirectoryType e1, SQLDataDirectoryType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum SQLDataDirectoryType
+        /// </summary>
+        public static bool operator != (SQLDataDirectoryType e1, SQLDataDirectoryType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for SQLDataDirectoryType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is SQLDataDirectoryType && Equals((SQLDataDirectoryType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode SQLDataDirectoryType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

@@ -10,16 +10,102 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for CopyOptions.
     /// </summary>
-    public static class CopyOptions
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(CopyOptionsConverter))]
+    public struct CopyOptions : System.IEquatable<CopyOptions>
     {
-        public const string Invalid = "Invalid";
-        public const string CreateCopy = "CreateCopy";
-        public const string Skip = "Skip";
-        public const string Overwrite = "Overwrite";
-        public const string FailOnConflict = "FailOnConflict";
+        private CopyOptions(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly CopyOptions Invalid = "Invalid";
+
+        public static readonly CopyOptions CreateCopy = "CreateCopy";
+
+        public static readonly CopyOptions Skip = "Skip";
+
+        public static readonly CopyOptions Overwrite = "Overwrite";
+
+        public static readonly CopyOptions FailOnConflict = "FailOnConflict";
+
+
+        /// <summary>
+        /// Underlying value of enum CopyOptions
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for CopyOptions
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type CopyOptions
+        /// </summary>
+        public bool Equals(CopyOptions e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to CopyOptions
+        /// </summary>
+        public static implicit operator CopyOptions(string value)
+        {
+            return new CopyOptions(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert CopyOptions to string
+        /// </summary>
+        public static implicit operator string(CopyOptions e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum CopyOptions
+        /// </summary>
+        public static bool operator == (CopyOptions e1, CopyOptions e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum CopyOptions
+        /// </summary>
+        public static bool operator != (CopyOptions e1, CopyOptions e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for CopyOptions
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is CopyOptions && Equals((CopyOptions)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode CopyOptions
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

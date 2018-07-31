@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="startTime">The start time.</param>
         /// <param name="endTime">The end time.</param>
         /// <param name="activityId">ActivityId of job.</param>
-        public Job(string entityFriendlyName = default(string), string backupManagementType = default(string), string operation = default(string), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string activityId = default(string))
+        public Job(string entityFriendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string operation = default(string), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string activityId = default(string))
         {
             EntityFriendlyName = entityFriendlyName;
             BackupManagementType = backupManagementType;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public string BackupManagementType { get; set; }
+        public BackupManagementType? BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets the operation name.

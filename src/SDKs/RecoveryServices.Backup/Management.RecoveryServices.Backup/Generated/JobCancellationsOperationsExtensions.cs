@@ -23,7 +23,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     {
             /// <summary>
             /// Cancels a job. This is an asynchronous operation. To know the status of the
-            /// cancellation, call GetCancelOperationResult API.
+            /// cancellation, call
+            /// GetCancelOperationResult API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -45,7 +46,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
             /// <summary>
             /// Cancels a job. This is an asynchronous operation. To know the status of the
-            /// cancellation, call GetCancelOperationResult API.
+            /// cancellation, call
+            /// GetCancelOperationResult API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="restoreFileSpecs">List of Source Files/Folders(which
         /// need to recover) and TargetFolderPath details</param>
         /// <param name="targetDetails">Target File Share Details</param>
-        public AzureFileShareRestoreRequest(string recoveryType = default(string), string sourceResourceId = default(string), string copyOptions = default(string), string restoreRequestType = default(string), IList<RestoreFileSpecs> restoreFileSpecs = default(IList<RestoreFileSpecs>), TargetAFSRestoreInfo targetDetails = default(TargetAFSRestoreInfo))
+        public AzureFileShareRestoreRequest(RecoveryType? recoveryType = default(RecoveryType?), string sourceResourceId = default(string), CopyOptions? copyOptions = default(CopyOptions?), RestoreRequestType? restoreRequestType = default(RestoreRequestType?), IList<RestoreFileSpecs> restoreFileSpecs = default(IList<RestoreFileSpecs>), TargetAFSRestoreInfo targetDetails = default(TargetAFSRestoreInfo))
         {
             RecoveryType = recoveryType;
             SourceResourceId = sourceResourceId;
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Invalid', 'OriginalLocation', 'AlternateLocation', 'RestoreDisks'
         /// </summary>
         [JsonProperty(PropertyName = "recoveryType")]
-        public string RecoveryType { get; set; }
+        public RecoveryType? RecoveryType { get; set; }
 
         /// <summary>
         /// Gets or sets source storage account ARM Id
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'FailOnConflict'
         /// </summary>
         [JsonProperty(PropertyName = "copyOptions")]
-        public string CopyOptions { get; set; }
+        public CopyOptions? CopyOptions { get; set; }
 
         /// <summary>
         /// Gets or sets restore Type (FullShareRestore or ItemLevelRestore).
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ItemLevelRestore'
         /// </summary>
         [JsonProperty(PropertyName = "restoreRequestType")]
-        public string RestoreRequestType { get; set; }
+        public RestoreRequestType? RestoreRequestType { get; set; }
 
         /// <summary>
         /// Gets or sets list of Source Files/Folders(which need to recover)

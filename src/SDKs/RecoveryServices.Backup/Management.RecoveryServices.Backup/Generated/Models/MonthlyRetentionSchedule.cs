@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// policy.</param>
         /// <param name="retentionDuration">Retention duration of retention
         /// Policy.</param>
-        public MonthlyRetentionSchedule(string retentionScheduleFormatType = default(string), DailyRetentionFormat retentionScheduleDaily = default(DailyRetentionFormat), WeeklyRetentionFormat retentionScheduleWeekly = default(WeeklyRetentionFormat), IList<System.DateTime?> retentionTimes = default(IList<System.DateTime?>), RetentionDuration retentionDuration = default(RetentionDuration))
+        public MonthlyRetentionSchedule(RetentionScheduleFormat? retentionScheduleFormatType = default(RetentionScheduleFormat?), DailyRetentionFormat retentionScheduleDaily = default(DailyRetentionFormat), WeeklyRetentionFormat retentionScheduleWeekly = default(WeeklyRetentionFormat), IList<System.DateTime?> retentionTimes = default(IList<System.DateTime?>), RetentionDuration retentionDuration = default(RetentionDuration))
         {
             RetentionScheduleFormatType = retentionScheduleFormatType;
             RetentionScheduleDaily = retentionScheduleDaily;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// policy. Possible values include: 'Invalid', 'Daily', 'Weekly'
         /// </summary>
         [JsonProperty(PropertyName = "retentionScheduleFormatType")]
-        public string RetentionScheduleFormatType { get; set; }
+        public RetentionScheduleFormat? RetentionScheduleFormatType { get; set; }
 
         /// <summary>
         /// Gets or sets daily retention format for monthly retention policy.

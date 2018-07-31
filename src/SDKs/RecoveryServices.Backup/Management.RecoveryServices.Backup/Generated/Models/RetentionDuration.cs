@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="durationType">Retention duration type of retention
         /// policy. Possible values include: 'Invalid', 'Days', 'Weeks',
         /// 'Months', 'Years'</param>
-        public RetentionDuration(int? count = default(int?), string durationType = default(string))
+        public RetentionDuration(int? count = default(int?), RetentionDurationType? durationType = default(RetentionDurationType?))
         {
             Count = count;
             DurationType = durationType;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// values include: 'Invalid', 'Days', 'Weeks', 'Months', 'Years'
         /// </summary>
         [JsonProperty(PropertyName = "durationType")]
-        public string DurationType { get; set; }
+        public RetentionDurationType? DurationType { get; set; }
 
     }
 }

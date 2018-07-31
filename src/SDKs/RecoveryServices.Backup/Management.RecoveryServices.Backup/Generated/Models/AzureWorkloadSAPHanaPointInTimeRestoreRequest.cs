@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// which workload that was running is being recovered.</param>
         /// <param name="propertyBag">Workload specific property bag.</param>
         /// <param name="pointInTime">PointInTime value</param>
-        public AzureWorkloadSAPHanaPointInTimeRestoreRequest(TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), System.DateTime? pointInTime = default(System.DateTime?))
+        public AzureWorkloadSAPHanaPointInTimeRestoreRequest(TargetRestoreInfo targetInfo = default(TargetRestoreInfo), RecoveryType? recoveryType = default(RecoveryType?), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), System.DateTime? pointInTime = default(System.DateTime?))
             : base(targetInfo, recoveryType, sourceResourceId, propertyBag)
         {
             PointInTime = pointInTime;

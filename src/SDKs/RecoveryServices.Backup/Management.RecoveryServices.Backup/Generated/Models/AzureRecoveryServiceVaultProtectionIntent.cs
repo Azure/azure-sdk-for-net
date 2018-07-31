@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="protectionState">Backup state of this backup item.
         /// Possible values include: 'Invalid', 'NotProtected', 'Protecting',
         /// 'Protected', 'ProtectionFailed'</param>
-        public AzureRecoveryServiceVaultProtectionIntent(string backupManagementType = default(string), string sourceResourceId = default(string), string itemId = default(string), string policyId = default(string), string protectionState = default(string))
+        public AzureRecoveryServiceVaultProtectionIntent(BackupManagementType? backupManagementType = default(BackupManagementType?), string sourceResourceId = default(string), string itemId = default(string), string policyId = default(string), ProtectionStatus? protectionState = default(ProtectionStatus?))
             : base(backupManagementType, sourceResourceId, itemId, policyId, protectionState)
         {
             CustomInit();

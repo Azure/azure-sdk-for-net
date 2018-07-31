@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="sourceResourceId">Fully qualified ARM ID of the VM on
         /// which workload that was running is being recovered.</param>
         /// <param name="propertyBag">Workload specific property bag.</param>
-        public AzureWorkloadSAPHanaRestoreRequest(TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>))
+        public AzureWorkloadSAPHanaRestoreRequest(TargetRestoreInfo targetInfo = default(TargetRestoreInfo), RecoveryType? recoveryType = default(RecoveryType?), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>))
         {
             TargetInfo = targetInfo;
             RecoveryType = recoveryType;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'RestoreDisks'
         /// </summary>
         [JsonProperty(PropertyName = "recoveryType")]
-        public string RecoveryType { get; set; }
+        public RecoveryType? RecoveryType { get; set; }
 
         /// <summary>
         /// Gets or sets fully qualified ARM ID of the VM on which workload

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// setting</param>
         /// <param name="recoveryPointExpiryTimeInUTC">Backup copy will expire
         /// after the time specified (UTC).</param>
-        public AzureWorkloadBackupRequest(string backupType = default(string), bool? enableCompression = default(bool?), System.DateTime? recoveryPointExpiryTimeInUTC = default(System.DateTime?))
+        public AzureWorkloadBackupRequest(BackupType? backupType = default(BackupType?), bool? enableCompression = default(bool?), System.DateTime? recoveryPointExpiryTimeInUTC = default(System.DateTime?))
         {
             BackupType = backupType;
             EnableCompression = enableCompression;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Differential', 'Log', 'CopyOnlyFull'
         /// </summary>
         [JsonProperty(PropertyName = "backupType")]
-        public string BackupType { get; set; }
+        public BackupType? BackupType { get; set; }
 
         /// <summary>
         /// Gets or sets bool for Compression setting

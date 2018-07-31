@@ -10,16 +10,102 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ProtectionStatus.
     /// </summary>
-    public static class ProtectionStatus
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ProtectionStatusConverter))]
+    public struct ProtectionStatus : System.IEquatable<ProtectionStatus>
     {
-        public const string Invalid = "Invalid";
-        public const string NotProtected = "NotProtected";
-        public const string Protecting = "Protecting";
-        public const string Protected = "Protected";
-        public const string ProtectionFailed = "ProtectionFailed";
+        private ProtectionStatus(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly ProtectionStatus Invalid = "Invalid";
+
+        public static readonly ProtectionStatus NotProtected = "NotProtected";
+
+        public static readonly ProtectionStatus Protecting = "Protecting";
+
+        public static readonly ProtectionStatus Protected = "Protected";
+
+        public static readonly ProtectionStatus ProtectionFailed = "ProtectionFailed";
+
+
+        /// <summary>
+        /// Underlying value of enum ProtectionStatus
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for ProtectionStatus
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type ProtectionStatus
+        /// </summary>
+        public bool Equals(ProtectionStatus e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to ProtectionStatus
+        /// </summary>
+        public static implicit operator ProtectionStatus(string value)
+        {
+            return new ProtectionStatus(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert ProtectionStatus to string
+        /// </summary>
+        public static implicit operator string(ProtectionStatus e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum ProtectionStatus
+        /// </summary>
+        public static bool operator == (ProtectionStatus e1, ProtectionStatus e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum ProtectionStatus
+        /// </summary>
+        public static bool operator != (ProtectionStatus e1, ProtectionStatus e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ProtectionStatus
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ProtectionStatus && Equals((ProtectionStatus)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ProtectionStatus
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

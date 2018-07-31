@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// operation.</param>
         /// <param name="properties">Additional information associated with
         /// this operation.</param>
-        public OperationStatus(string id = default(string), string name = default(string), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), OperationStatusError error = default(OperationStatusError), OperationStatusExtendedInfo properties = default(OperationStatusExtendedInfo))
+        public OperationStatus(string id = default(string), string name = default(string), OperationStatusValues? status = default(OperationStatusValues?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), OperationStatusError error = default(OperationStatusError), OperationStatusExtendedInfo properties = default(OperationStatusExtendedInfo))
         {
             Id = id;
             Name = name;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'InProgress', 'Succeeded', 'Failed', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
+        public OperationStatusValues? Status { get; set; }
 
         /// <summary>
         /// Gets or sets operation start time. Format: ISO-8601.

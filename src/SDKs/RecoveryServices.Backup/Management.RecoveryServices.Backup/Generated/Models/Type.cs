@@ -10,14 +10,98 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for Type.
     /// </summary>
-    public static class Type
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(TypeConverter))]
+    public struct Type : System.IEquatable<Type>
     {
-        public const string Invalid = "Invalid";
-        public const string BackupProtectedItemCountSummary = "BackupProtectedItemCountSummary";
-        public const string BackupProtectionContainerCountSummary = "BackupProtectionContainerCountSummary";
+        private Type(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly Type Invalid = "Invalid";
+
+        public static readonly Type BackupProtectedItemCountSummary = "BackupProtectedItemCountSummary";
+
+        public static readonly Type BackupProtectionContainerCountSummary = "BackupProtectionContainerCountSummary";
+
+
+        /// <summary>
+        /// Underlying value of enum Type
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for Type
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type Type
+        /// </summary>
+        public bool Equals(Type e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to Type
+        /// </summary>
+        public static implicit operator Type(string value)
+        {
+            return new Type(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert Type to string
+        /// </summary>
+        public static implicit operator string(Type e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum Type
+        /// </summary>
+        public static bool operator == (Type e1, Type e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum Type
+        /// </summary>
+        public static bool operator != (Type e1, Type e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for Type
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is Type && Equals((Type)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode Type
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

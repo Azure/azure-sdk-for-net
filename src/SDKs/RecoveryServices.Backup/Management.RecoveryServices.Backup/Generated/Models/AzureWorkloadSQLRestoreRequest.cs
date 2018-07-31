@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="targetInfo">Details of target database</param>
         /// <param name="alternateDirectoryPaths">Data directory
         /// details</param>
-        public AzureWorkloadSQLRestoreRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), bool? shouldUseAlternateTargetLocation = default(bool?), bool? isNonRecoverable = default(bool?), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), IList<SQLDataDirectoryMapping> alternateDirectoryPaths = default(IList<SQLDataDirectoryMapping>))
+        public AzureWorkloadSQLRestoreRequest(RecoveryType? recoveryType = default(RecoveryType?), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), bool? shouldUseAlternateTargetLocation = default(bool?), bool? isNonRecoverable = default(bool?), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), IList<SQLDataDirectoryMapping> alternateDirectoryPaths = default(IList<SQLDataDirectoryMapping>))
             : base(recoveryType, sourceResourceId, propertyBag)
         {
             ShouldUseAlternateTargetLocation = shouldUseAlternateTargetLocation;

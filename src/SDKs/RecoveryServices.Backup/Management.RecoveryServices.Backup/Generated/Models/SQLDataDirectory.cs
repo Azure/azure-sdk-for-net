@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// include: 'Invalid', 'Data', 'Log'</param>
         /// <param name="path">File path</param>
         /// <param name="logicalName">Logical name of the file</param>
-        public SQLDataDirectory(string type = default(string), string path = default(string), string logicalName = default(string))
+        public SQLDataDirectory(SQLDataDirectoryType? type = default(SQLDataDirectoryType?), string path = default(string), string logicalName = default(string))
         {
             Type = type;
             Path = path;
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// include: 'Invalid', 'Data', 'Log'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public SQLDataDirectoryType? Type { get; set; }
 
         /// <summary>
         /// Gets or sets file path

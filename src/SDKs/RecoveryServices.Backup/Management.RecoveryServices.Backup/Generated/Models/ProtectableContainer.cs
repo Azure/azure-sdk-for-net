@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// container.</param>
         /// <param name="containerId">Fabric Id of the container such as ARM
         /// Id.</param>
-        public ProtectableContainer(string friendlyName = default(string), string backupManagementType = default(string), string healthStatus = default(string), string containerId = default(string))
+        public ProtectableContainer(string friendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string healthStatus = default(string), string containerId = default(string))
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public string BackupManagementType { get; set; }
+        public BackupManagementType? BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets status of health of the container.

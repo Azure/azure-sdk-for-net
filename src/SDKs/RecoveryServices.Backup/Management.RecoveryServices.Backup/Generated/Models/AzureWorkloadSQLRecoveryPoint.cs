@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// When a specific recovery point is accessed using GetRecoveryPoint
         /// Or when ListRecoveryPoints is called for Log RP only with
         /// ExtendedInfo query filter</param>
-        public AzureWorkloadSQLRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), string type = default(string), AzureWorkloadSQLRecoveryPointExtendedInfo extendedInfo = default(AzureWorkloadSQLRecoveryPointExtendedInfo))
+        public AzureWorkloadSQLRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), RestorePointType? type = default(RestorePointType?), AzureWorkloadSQLRecoveryPointExtendedInfo extendedInfo = default(AzureWorkloadSQLRecoveryPointExtendedInfo))
             : base(recoveryPointTimeInUTC, type)
         {
             ExtendedInfo = extendedInfo;

@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="currentValue">Current value of usage.</param>
         /// <param name="limit">Limit of usage.</param>
         /// <param name="name">Name of usage.</param>
-        public BackupManagementUsage(string unit = default(string), string quotaPeriod = default(string), System.DateTime? nextResetTime = default(System.DateTime?), long? currentValue = default(long?), long? limit = default(long?), NameInfo name = default(NameInfo))
+        public BackupManagementUsage(UsagesUnit? unit = default(UsagesUnit?), string quotaPeriod = default(string), System.DateTime? nextResetTime = default(System.DateTime?), long? currentValue = default(long?), long? limit = default(long?), NameInfo name = default(NameInfo))
         {
             Unit = unit;
             QuotaPeriod = quotaPeriod;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Bytes', 'Seconds', 'Percent', 'CountPerSecond', 'BytesPerSecond'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public string Unit { get; set; }
+        public UsagesUnit? Unit { get; set; }
 
         /// <summary>
         /// Gets or sets quota period of usage.

@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// is scheduled for deferred delete</param>
         /// <param name="extendedInfo">Extended info of the backup
         /// item.</param>
-        public DPMProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), string friendlyName = default(string), string backupEngineName = default(string), string protectionState = default(string), bool? isScheduledForDeferredDelete = default(bool?), DPMProtectedItemExtendedInfo extendedInfo = default(DPMProtectedItemExtendedInfo))
+        public DPMProtectedItem(BackupManagementType? backupManagementType = default(BackupManagementType?), DataSourceType? workloadType = default(DataSourceType?), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), CreateMode? createMode = default(CreateMode?), string friendlyName = default(string), string backupEngineName = default(string), ProtectedItemState? protectionState = default(ProtectedItemState?), bool? isScheduledForDeferredDelete = default(bool?), DPMProtectedItemExtendedInfo extendedInfo = default(DPMProtectedItemExtendedInfo))
             : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode)
         {
             FriendlyName = friendlyName;
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionStopped', 'ProtectionPaused'
         /// </summary>
         [JsonProperty(PropertyName = "protectionState")]
-        public string ProtectionState { get; set; }
+        public ProtectedItemState? ProtectionState { get; set; }
 
         /// <summary>
         /// Gets or sets to check if backup item is scheduled for deferred

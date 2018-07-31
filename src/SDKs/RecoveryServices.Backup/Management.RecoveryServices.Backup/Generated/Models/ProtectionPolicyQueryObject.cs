@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
         /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
         /// 'AzureFileShare', 'SAPHanaDatabase'</param>
-        public ProtectionPolicyQueryObject(string backupManagementType = default(string), string fabricName = default(string), string workloadType = default(string))
+        public ProtectionPolicyQueryObject(BackupManagementType? backupManagementType = default(BackupManagementType?), string fabricName = default(string), WorkloadType? workloadType = default(WorkloadType?))
         {
             BackupManagementType = backupManagementType;
             FabricName = fabricName;
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public string BackupManagementType { get; set; }
+        public BackupManagementType? BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets fabric name for filter
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'SAPHanaDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "workloadType")]
-        public string WorkloadType { get; set; }
+        public WorkloadType? WorkloadType { get; set; }
 
     }
 }

@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="protectionState">Backup state of this backup item.
         /// Possible values include: 'Invalid', 'NotProtected', 'Protecting',
         /// 'Protected', 'ProtectionFailed'</param>
-        public ProtectionIntent(string backupManagementType = default(string), string sourceResourceId = default(string), string itemId = default(string), string policyId = default(string), string protectionState = default(string))
+        public ProtectionIntent(BackupManagementType? backupManagementType = default(BackupManagementType?), string sourceResourceId = default(string), string itemId = default(string), string policyId = default(string), ProtectionStatus? protectionState = default(ProtectionStatus?))
         {
             BackupManagementType = backupManagementType;
             SourceResourceId = sourceResourceId;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public string BackupManagementType { get; set; }
+        public BackupManagementType? BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets ARM ID of the resource to be backed up.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionFailed'
         /// </summary>
         [JsonProperty(PropertyName = "protectionState")]
-        public string ProtectionState { get; set; }
+        public ProtectionStatus? ProtectionState { get; set; }
 
     }
 }

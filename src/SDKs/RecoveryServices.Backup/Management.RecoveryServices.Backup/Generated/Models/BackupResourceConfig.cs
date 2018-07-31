@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// is registered against a resource, the storageTypeState is always
         /// Locked. Possible values include: 'Invalid', 'Locked',
         /// 'Unlocked'</param>
-        public BackupResourceConfig(string storageModelType = default(string), string storageType = default(string), string storageTypeState = default(string))
+        public BackupResourceConfig(StorageType? storageModelType = default(StorageType?), StorageType? storageType = default(StorageType?), StorageTypeState? storageTypeState = default(StorageTypeState?))
         {
             StorageModelType = storageModelType;
             StorageType = storageType;
@@ -55,14 +55,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'GeoRedundant', 'LocallyRedundant'
         /// </summary>
         [JsonProperty(PropertyName = "storageModelType")]
-        public string StorageModelType { get; set; }
+        public StorageType? StorageModelType { get; set; }
 
         /// <summary>
         /// Gets or sets storage type. Possible values include: 'Invalid',
         /// 'GeoRedundant', 'LocallyRedundant'
         /// </summary>
         [JsonProperty(PropertyName = "storageType")]
-        public string StorageType { get; set; }
+        public StorageType? StorageType { get; set; }
 
         /// <summary>
         /// Gets or sets locked or Unlocked. Once a machine is registered
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// values include: 'Invalid', 'Locked', 'Unlocked'
         /// </summary>
         [JsonProperty(PropertyName = "storageTypeState")]
-        public string StorageTypeState { get; set; }
+        public StorageTypeState? StorageTypeState { get; set; }
 
     }
 }

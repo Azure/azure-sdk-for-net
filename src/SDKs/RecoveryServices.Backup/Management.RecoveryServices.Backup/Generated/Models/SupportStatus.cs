@@ -10,16 +10,102 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for SupportStatus.
     /// </summary>
-    public static class SupportStatus
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(SupportStatusConverter))]
+    public struct SupportStatus : System.IEquatable<SupportStatus>
     {
-        public const string Invalid = "Invalid";
-        public const string Supported = "Supported";
-        public const string DefaultOFF = "DefaultOFF";
-        public const string DefaultON = "DefaultON";
-        public const string NotSupported = "NotSupported";
+        private SupportStatus(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly SupportStatus Invalid = "Invalid";
+
+        public static readonly SupportStatus Supported = "Supported";
+
+        public static readonly SupportStatus DefaultOFF = "DefaultOFF";
+
+        public static readonly SupportStatus DefaultON = "DefaultON";
+
+        public static readonly SupportStatus NotSupported = "NotSupported";
+
+
+        /// <summary>
+        /// Underlying value of enum SupportStatus
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for SupportStatus
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type SupportStatus
+        /// </summary>
+        public bool Equals(SupportStatus e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to SupportStatus
+        /// </summary>
+        public static implicit operator SupportStatus(string value)
+        {
+            return new SupportStatus(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert SupportStatus to string
+        /// </summary>
+        public static implicit operator string(SupportStatus e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum SupportStatus
+        /// </summary>
+        public static bool operator == (SupportStatus e1, SupportStatus e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum SupportStatus
+        /// </summary>
+        public static bool operator != (SupportStatus e1, SupportStatus e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for SupportStatus
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is SupportStatus && Equals((SupportStatus)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode SupportStatus
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="protectionState">State of the back up item. Possible
         /// values include: 'Invalid', 'NotProtected', 'Protecting',
         /// 'Protected', 'ProtectionFailed'</param>
-        public WorkloadItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), string protectionState = default(string))
+        public WorkloadItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), ProtectionStatus? protectionState = default(ProtectionStatus?))
         {
             BackupManagementType = backupManagementType;
             WorkloadType = workloadType;
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionFailed'
         /// </summary>
         [JsonProperty(PropertyName = "protectionState")]
-        public string ProtectionState { get; set; }
+        public ProtectionStatus? ProtectionState { get; set; }
 
     }
 }

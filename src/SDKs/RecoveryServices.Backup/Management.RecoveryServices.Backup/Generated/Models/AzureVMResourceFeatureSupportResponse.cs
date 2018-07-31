@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="supportStatus">Support status of feature. Possible
         /// values include: 'Invalid', 'Supported', 'DefaultOFF', 'DefaultON',
         /// 'NotSupported'</param>
-        public AzureVMResourceFeatureSupportResponse(string supportStatus = default(string))
+        public AzureVMResourceFeatureSupportResponse(SupportStatus? supportStatus = default(SupportStatus?))
         {
             SupportStatus = supportStatus;
             CustomInit();
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Invalid', 'Supported', 'DefaultOFF', 'DefaultON', 'NotSupported'
         /// </summary>
         [JsonProperty(PropertyName = "supportStatus")]
-        public string SupportStatus { get; set; }
+        public SupportStatus? SupportStatus { get; set; }
 
     }
 }

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -39,15 +38,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'IaasVMServiceContainer', 'DPMContainer',
         /// 'AzureBackupServerContainer', 'MABContainer', 'Cluster',
         /// 'AzureSqlContainer', 'Windows', 'VCenter', 'VMAppContainer',
-        /// 'SQLAGWorkLoadContainer', 'StorageContainer', 'GenericContainer',
-        /// 'SqlCluster', 'ExchangeDAG', 'SharepointFarm', 'HyperVCluster',
-        /// 'WindowsClient'</param>
+        /// 'SQLAGWorkLoadContainer', 'StorageContainer',
+        /// 'GenericContainer'</param>
         /// <param name="backupEngineName">Backup engine name</param>
         /// <param name="fabricName">Fabric name for filter</param>
         /// <param name="status">Status of registration of this container with
         /// the Recovery Services Vault.</param>
         /// <param name="friendlyName">Friendly name of this container.</param>
-        public BMSContainerQueryObject(string backupManagementType, string containerType = default(string), string backupEngineName = default(string), string fabricName = default(string), string status = default(string), string friendlyName = default(string))
+        public BMSContainerQueryObject(BackupManagementType backupManagementType, ContainerType? containerType = default(ContainerType?), string backupEngineName = default(string), string fabricName = default(string), string status = default(string), string friendlyName = default(string))
         {
             BackupManagementType = backupManagementType;
             ContainerType = containerType;
@@ -70,7 +68,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public string BackupManagementType { get; set; }
+        public BackupManagementType BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets type of container for filter. Possible values include:
@@ -78,11 +76,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DPMContainer', 'AzureBackupServerContainer', 'MABContainer',
         /// 'Cluster', 'AzureSqlContainer', 'Windows', 'VCenter',
         /// 'VMAppContainer', 'SQLAGWorkLoadContainer', 'StorageContainer',
-        /// 'GenericContainer', 'SqlCluster', 'ExchangeDAG', 'SharepointFarm',
-        /// 'HyperVCluster', 'WindowsClient'
+        /// 'GenericContainer'
         /// </summary>
         [JsonProperty(PropertyName = "containerType")]
-        public string ContainerType { get; set; }
+        public ContainerType? ContainerType { get; set; }
 
         /// <summary>
         /// Gets or sets backup engine name
@@ -112,15 +109,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (BackupManagementType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "BackupManagementType");
-            }
         }
     }
 }

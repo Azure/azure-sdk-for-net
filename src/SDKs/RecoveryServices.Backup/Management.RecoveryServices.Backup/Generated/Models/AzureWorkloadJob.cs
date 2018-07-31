@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// job.</param>
         /// <param name="extendedInfo">Additional information about the
         /// job.</param>
-        public AzureWorkloadJob(string entityFriendlyName = default(string), string backupManagementType = default(string), string operation = default(string), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string activityId = default(string), string workloadType = default(string), System.TimeSpan? duration = default(System.TimeSpan?), IList<JobSupportedAction?> actionsInfo = default(IList<JobSupportedAction?>), IList<AzureWorkloadErrorInfo> errorDetails = default(IList<AzureWorkloadErrorInfo>), AzureWorkloadJobExtendedInfo extendedInfo = default(AzureWorkloadJobExtendedInfo))
+        public AzureWorkloadJob(string entityFriendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string operation = default(string), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string activityId = default(string), string workloadType = default(string), System.TimeSpan? duration = default(System.TimeSpan?), IList<JobSupportedAction?> actionsInfo = default(IList<JobSupportedAction?>), IList<AzureWorkloadErrorInfo> errorDetails = default(IList<AzureWorkloadErrorInfo>), AzureWorkloadJobExtendedInfo extendedInfo = default(AzureWorkloadJobExtendedInfo))
             : base(entityFriendlyName, backupManagementType, operation, status, startTime, endTime, activityId)
         {
             WorkloadType = workloadType;
