@@ -47,7 +47,12 @@ namespace Microsoft.Azure.Search
             Initialize(searchServiceName, credentials);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the credentials used to authenticate to an Azure Search service. This can be either a query API key or an admin API key.
+        /// </summary>
+        /// <remarks>
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Search.
+        /// </remarks>
         public SearchCredentials SearchCredentials => (SearchCredentials)Credentials;
 
         private void Initialize(string searchServiceName, SearchCredentials credentials)
