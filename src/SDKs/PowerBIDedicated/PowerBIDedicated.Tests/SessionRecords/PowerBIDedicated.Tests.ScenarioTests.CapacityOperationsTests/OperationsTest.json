@@ -7,14 +7,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6cfb4a17-2ab8-4135-9c6c-c04131766f76"
+          "a83d5bf1-9fb0-4ac4-9ef3-0abe2023552e"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -22,7 +22,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 10:07:01 GMT"
+          "Wed, 01 Aug 2018 08:38:40 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -34,10 +34,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f42d3cfb-ddc8-4d12-9a7e-bc0582f07eb0"
+          "635b8dad-9dd1-4580-997f-484a1f41e99f"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 10:07:01 AM"
+          "8/1/2018 8:38:40 AM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -52,13 +52,13 @@
           "script-src 'self'"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14999"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "8f751a44-f23c-4bb7-a482-5da03049b15c"
+          "a2fcb0c9-3236-4af9-9723-e7906a14f874"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T100701Z:8f751a44-f23c-4bb7-a482-5da03049b15c"
+          "NORTHEUROPE:20180801T083840Z:a2fcb0c9-3236-4af9-9723-e7906a14f874"
         ],
         "Content-Length": [
           "15414"
@@ -80,14 +80,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0a72c82c-bb6d-4b8f-8d1d-0a9751b38b2f"
+          "492506b8-bf6f-49aa-b650-4a304105c296"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.02",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -95,7 +95,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 10:07:01 GMT"
+          "Wed, 01 Aug 2018 08:38:40 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -107,10 +107,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "6d43c475-4d57-4e18-acad-28cc6dcf6b90"
+          "c030daf8-1f55-4a7b-8c1d-a2306c70b545"
         ],
         "x-ms-current-utc-date": [
-          "7/30/2018 10:07:02 AM"
+          "8/1/2018 8:38:41 AM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -125,13 +125,13 @@
           "script-src 'self'"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14998"
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "61307e10-af0a-43a1-9e97-0884f7856df5"
+          "e87306c4-d9f0-4333-8c7c-d44199750d62"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180730T100702Z:61307e10-af0a-43a1-9e97-0884f7856df5"
+          "NORTHEUROPE:20180801T083841Z:e87306c4-d9f0-4333-8c7c-d44199750d62"
         ],
         "Content-Length": [
           "15414"
