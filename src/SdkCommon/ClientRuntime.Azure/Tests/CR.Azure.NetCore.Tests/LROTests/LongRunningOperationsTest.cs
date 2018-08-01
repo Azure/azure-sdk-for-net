@@ -654,6 +654,20 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         }
 
         [Fact]
+        public void TestDeleteWithLocation200NullProvisioningState()
+        {
+            string DeleteOriginalResourceRequestUrl = @"https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redist";
+            string Delete201_LocationHeaderUrl = @"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/RedisCreateUpdate2536/providers/Microsoft.Cache/redis/RedisCreateUpdate9076?api-version=2017-10-01";
+
+            var handler = new PlaybackTestHandler(LROOpertionTestResponses.Location200WithNullProviState());
+            var fakeClient = GetClient(handler);
+            fakeClient.RedisOperations.Delete("rg", "redist", "1234");
+
+            VerifyHttpMethod("DELETE", handler, requestIndex: 0);
+            Assert.Equal(1, handler.Requests.Count);
+        }
+
+        [Fact]
         public void TestDeleteWithMissingProvisioningState()
         {
             string DeleteOriginalResourceRequestUrl = @"https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redist";
@@ -798,7 +812,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             fakeClient.LongRunningOperationRetryTimeout = 1;    // Set LRO retry time out to 1, so that Retry-After can be set during test mode
             var before = DateTime.Now;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-            Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(7));
+            Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(6));
         }
 
         /// <summary>

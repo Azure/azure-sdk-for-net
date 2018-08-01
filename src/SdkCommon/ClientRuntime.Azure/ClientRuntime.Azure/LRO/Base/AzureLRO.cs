@@ -237,19 +237,31 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 {
                     CurrentPollingState.Status = AzureAsyncOperation.InProgressStatus;
                 }
-                else if (IsCheckingProvisioningStateApplicable() == true) //Each verb can decide if Provisioning state is applicable and if it needs to be checked
-                {
-                    CurrentPollingState.Status = GetProvisioningStateFromRawBody();                   
-                }
                 else
+                {
+                    CurrentPollingState.Status = CurrentPollingState.GetProvisioningStateFromBody(CurrentPollingState.RawBody, CurrentPollingState.CurrentStatusCode, () => IsCheckingProvisioningStateApplicable());
+                }
+
+                if (string.IsNullOrEmpty(CurrentPollingState.Status))
                 {
                     throw new CloudException("The response from long running operation does not have a valid status code.");
                 }
+
+                #region old code
+                //else if (IsCheckingProvisioningStateApplicable() == true) //Each verb can decide if Provisioning state is applicable and if it needs to be checked
+                //{
+                //    CurrentPollingState.Status = GetProvisioningStateFromRawBody();                   
+                //}
+                //else
+                //{
+                //    throw new CloudException("The response from long running operation does not have a valid status code.");
+                //}
+                #endregion
             }
             #endregion
         }
 
-        internal string GetProvisioningStateFromRawBody()
+        string GetPSFromRawBody()
         {
             string provisioningState = string.Empty;
 
