@@ -133,8 +133,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 signature.Append(canonicalHeader).Append(':').Append(value).Append('\n');
             }
 
-            // We temporary change client side auth code generator to bypass server bug 4092533
-            signature.Append('/').Append(AccountName).Append('/').Append(httpRequest.RequestUri.AbsolutePath.TrimStart('/').Replace("%5C", "/").Replace("%2F", "/"));
+            signature.Append('/').Append(AccountName).Append('/').Append(httpRequest.RequestUri.AbsolutePath.TrimStart('/'));
             if (!string.IsNullOrEmpty(httpRequest.RequestUri.Query))
             {
 #if FullNetFx
