@@ -1,34 +1,18 @@
 ﻿Installing AutoRest version: latest
-
-> autorest@2.0.4280 preinstall C:\Users\nateko.REDMOND\AppData\Roaming\npm\node_modules\.staging\autorest-7060ccfa
-> node ./preinstall-check
-
-C:\Users\nateko.REDMOND\AppData\Roaming\npm\autorest -> C:\Users\nateko.REDMOND\AppData\Roaming\npm\node_modules\autorest\dist\app.js
-C:\Users\nateko.REDMOND\AppData\Roaming\npm
-`-- autorest@2.0.4280 
-
-
 AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/search/data-plane/Microsoft.Azure.Search.Data/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\ac-sdk\azure-sdk-for-net\src\SDKs
-AutoRest code generation utility [version: 2.0.4280; node: v7.10.1]
-(C) 2018 Microsoft Corporation.
-https://aka.ms/autorest
-   Loading AutoRest core      'C:\Users\nateko.REDMOND\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist' (2.0.4280)
-   Loading AutoRest extension '@microsoft.azure/autorest.csharp' (~2.2.51->2.2.57)
-   Loading AutoRest extension '@microsoft.azure/autorest.modeler' (2.3.43->2.3.43)
-
-2018-06-22 23:11:13 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/search/data-plane/Microsoft.Azure.Search.Data/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=F:\sdkfornet3\src\SDKs
+2018-07-30 22:07:29 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      37ca9e71d6c89b46ab990eb064ddb70308fd5824
+Commit:      6e812bd412587c324ae888a4d672f0f2cefd3a5f
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\nateko.REDMOND\AppData\Roaming\npm  `-- autorest@2.0.4280
+Bootstrapper version:    autorest@2.0.4283
 
 
 Latest installed version:    
