@@ -48,10 +48,9 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             //TODO: Disabled for now because the swagger spec does not accurately reflect all properties returned by the server
             //SetDeserializationSettings(client);
 
-            //Set up some common stuff like a retry policy
-            if (addDefaultRetryPolicy)
+            if (!addDefaultRetryPolicy)
             {
-                client.CustomBehaviors.Add(RetryPolicyProvider.LinearRetryProvider(TimeSpan.FromSeconds(3), 5));
+                client.CustomBehaviors = client.CustomBehaviors.Where(behavior => !(behavior is RetryPolicyProvider)).ToList();
             }
 
             return client;

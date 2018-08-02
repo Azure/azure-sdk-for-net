@@ -31,10 +31,7 @@
         public RetryPolicyUnitTests(ITestOutputHelper testOutputHelper)
         {
             this.testOutputHelper = testOutputHelper;
-            this.credentials = new Microsoft.Azure.Batch.Auth.BatchSharedKeyCredentials(
-                ClientUnitTestCommon.DummyBaseUrl,
-                ClientUnitTestCommon.DummyAccountName,
-                ClientUnitTestCommon.DummyAccountKey);
+            this.credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
         }
 
         #region Built in Retry Policy Tests
@@ -64,7 +61,7 @@
             RetryDecision retryDecision = await linearRetry.ShouldRetryAsync(timeoutException, new OperationContext());
 
             Assert.Equal(interval, retryDecision.RetryDelay);
-            Assert.Equal(true, retryDecision.ShouldRetry);
+            Assert.True(retryDecision.ShouldRetry);
         }
 
         [Fact]
@@ -81,7 +78,7 @@
             RetryDecision retryDecision = await linearRetry.ShouldRetryAsync(batchException, new OperationContext());
 
             Assert.Equal(interval, retryDecision.RetryDelay);
-            Assert.Equal(true, retryDecision.ShouldRetry);
+            Assert.True(retryDecision.ShouldRetry);
         }
 
         [Fact]
@@ -175,7 +172,7 @@
             RetryDecision retryDecision = await exponentialRetry.ShouldRetryAsync(timeoutException, context);
 
             Assert.Equal(interval, retryDecision.RetryDelay);
-            Assert.Equal(true, retryDecision.ShouldRetry);
+            Assert.True(retryDecision.ShouldRetry);
         }
 
         [Fact]
@@ -195,7 +192,7 @@
             RetryDecision retryDecision = await exponentialRetry.ShouldRetryAsync(batchException, context);
 
             Assert.Equal(interval, retryDecision.RetryDelay);
-            Assert.Equal(true, retryDecision.ShouldRetry);
+            Assert.True(retryDecision.ShouldRetry);
         }
 
         [Fact]

@@ -32,44 +32,22 @@ namespace Microsoft.Azure.Batch
         public BatchClientDisposableStateBox(BatchClient parentBatchClient)
         {
             this._parentBatchClient = parentBatchClient;
-
             this._applicationOperations = new Lazy<ApplicationOperations>(() => new ApplicationOperations(this._parentBatchClient, this.CustomBehaviors));
             this._certificateOperations = new Lazy<CertificateOperations>(() => new CertificateOperations(this._parentBatchClient, this.CustomBehaviors));
             this._jobOperations = new Lazy<JobOperations>(() => new JobOperations(this._parentBatchClient, this.CustomBehaviors));
             this._jobScheduleOperations = new Lazy<JobScheduleOperations>(() => new JobScheduleOperations(this._parentBatchClient, this.CustomBehaviors));
             this._poolOperations = new Lazy<PoolOperations>(() => new PoolOperations(this._parentBatchClient, this.CustomBehaviors));
             this._utilities = new Lazy<Utilities>(() => new Utilities(this._parentBatchClient, this.CustomBehaviors));
+
+            this.CustomBehaviors = new List<BatchClientBehavior>();
         }
 
-        public ApplicationOperations ApplicationOperations
-        {
-            get { return this._applicationOperations.Value; }
-        }
-
-        public CertificateOperations CertificateOperations
-        {
-            get { return this._certificateOperations.Value; }
-        }
-
-        public JobOperations JobOperations
-        {
-            get { return this._jobOperations.Value; }
-        }
-
-        public JobScheduleOperations JobScheduleOperations
-        {
-            get { return this._jobScheduleOperations.Value; }
-        }
-
-        public PoolOperations PoolOperations
-        {
-            get { return this._poolOperations.Value; }
-        }
-
-        public Utilities Utilities
-        {
-            get { return this._utilities.Value; }
-        }
+        public ApplicationOperations ApplicationOperations => this._applicationOperations.Value;
+        public CertificateOperations CertificateOperations => this._certificateOperations.Value;
+        public JobOperations JobOperations => this._jobOperations.Value;
+        public JobScheduleOperations JobScheduleOperations => this._jobScheduleOperations.Value;
+        public PoolOperations PoolOperations => this._poolOperations.Value;
+        public Utilities Utilities => this._utilities.Value;
     }
 
     /// <summary>
@@ -79,7 +57,7 @@ namespace Microsoft.Azure.Batch
     {
         private BatchClientDisposableStateBox _disposableStateBox;  // null state box signals that the instance is closed
         private bool _disposed = false;  // used for dispose pattern
-        private object _closeLocker = new object();
+        private readonly object _closeLocker = new object();
 
 #region // constructors
 
@@ -87,12 +65,10 @@ namespace Microsoft.Azure.Batch
         {
             _disposableStateBox = new BatchClientDisposableStateBox(this);
 
-            // prepopulate the custom behaviors
-            _disposableStateBox.CustomBehaviors = new List<BatchClientBehavior>();
-
             //
             // Add custom behaviors which are by default on every batch client
             //
+            this.CustomBehaviors.Add(RetryPolicyProvider.ExponentialRetryProvider(TimeSpan.FromSeconds(1), 6));
 
             //Add default AddTaskResultHandler
             this.CustomBehaviors.Add(new AddTaskCollectionResultHandler(AddTaskCollectionResultHandler.DefaultAddTaskCollectionResultHandler));
@@ -156,51 +132,33 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets an <see cref="ApplicationOperations"/> for performing application-related operations on the associated account.
         /// </summary>
-        public ApplicationOperations ApplicationOperations
-        {
-            get { return GetStateThrowIfNotOpen().ApplicationOperations; }
-        }
+        public ApplicationOperations ApplicationOperations => GetStateThrowIfNotOpen().ApplicationOperations;
 
         /// <summary>
         /// Gets a <see cref="CertificateOperations"/> for performing certificate-related operations on the associated account.
         /// </summary>
-        public CertificateOperations CertificateOperations
-        {
-            get { return GetStateThrowIfNotOpen().CertificateOperations; }
-        }
+        public CertificateOperations CertificateOperations => GetStateThrowIfNotOpen().CertificateOperations;
 
         /// <summary>
         /// Gets a <see cref="JobOperations"/> for performing job-related operations on the associated account.
         /// </summary>
-        public JobOperations JobOperations 
-        {
-            get { return GetStateThrowIfNotOpen().JobOperations; }
-        }
+        public JobOperations JobOperations => GetStateThrowIfNotOpen().JobOperations;
 
         /// <summary>
         /// Gets a <see cref="JobScheduleOperations"/> for performing job schedule-related operations on the associated account.
         /// </summary>
-        public JobScheduleOperations JobScheduleOperations
-        {
-            get { return GetStateThrowIfNotOpen().JobScheduleOperations; }
-        }
+        public JobScheduleOperations JobScheduleOperations => GetStateThrowIfNotOpen().JobScheduleOperations;
 
         /// <summary>
         /// Gets a <see cref="PoolOperations"/> for performing pool-related operations on the associated account.
         /// </summary>
-        public PoolOperations PoolOperations
-        {
-            get { return GetStateThrowIfNotOpen().PoolOperations; }
-        }
+        public PoolOperations PoolOperations => GetStateThrowIfNotOpen().PoolOperations;
 
         /// <summary>
         /// Gets a <see cref="Utilities"/> object containing utility methods for orchestrating multiple Batch operations.
         /// </summary>
-        public Utilities Utilities
-        {
-            get { return GetStateThrowIfNotOpen().Utilities; }
-        }
-        
+        public Utilities Utilities => GetStateThrowIfNotOpen().Utilities;
+
         /// <summary>
         /// Creates an instance of <see cref="BatchClient"/> associated with the specified credentials.
         /// </summary>
