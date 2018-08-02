@@ -16,6 +16,8 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Fakes
             NumberOfTimesToFail = int.MaxValue;
         }
 
+        public System.Action<HttpResponseMessage> TweakResponse { get; set; }
+
         public int NumberOfTimesToFail { get; set; }
 
         public int NumberOfTimesFailedSoFar { get; private set; }
@@ -29,6 +31,10 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Fakes
             if (NumberOfTimesToFail > NumberOfTimesFailedSoFar)
             {
                 response = new HttpResponseMessage(StatusCodeToReturn);
+                if (TweakResponse != null)
+                {
+                    TweakResponse(response);
+                }
                 NumberOfTimesFailedSoFar++;
             }
 

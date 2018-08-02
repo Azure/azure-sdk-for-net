@@ -196,7 +196,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageDescription> DescribeImageAsync(this IComputerVisionClient operations, string url, string maxCandidates = "1", string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageDescription> DescribeImageAsync(this IComputerVisionClient operations, string url, int? maxCandidates = 1, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DescribeImageWithHttpMessagesAsync(url, maxCandidates, language, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -351,7 +351,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// A string indicating which domain-specific details to return. Multiple
             /// values should be comma-separated. Valid visual feature types
             /// include:Celebrities - identifies celebrities if detected in the image.
-            /// Possible values include: 'Celebrities', 'Landmarks'
             /// </param>
             /// <param name='language'>
             /// The desired language for output generation. If this parameter is not
@@ -363,7 +362,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageAnalysis> AnalyzeImageInStreamAsync(this IComputerVisionClient operations, Stream image, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), string details = default(string), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageAnalysis> AnalyzeImageInStreamAsync(this IComputerVisionClient operations, Stream image, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AnalyzeImageInStreamWithHttpMessagesAsync(image, visualFeatures, details, language, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -475,7 +474,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageDescription> DescribeImageInStreamAsync(this IComputerVisionClient operations, Stream image, string maxCandidates = "1", string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageDescription> DescribeImageInStreamAsync(this IComputerVisionClient operations, Stream image, int? maxCandidates = 1, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DescribeImageInStreamWithHttpMessagesAsync(image, maxCandidates, language, null, cancellationToken).ConfigureAwait(false))
                 {

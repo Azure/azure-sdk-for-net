@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.Test.HttpRecorder;
-using Vision = Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 
 namespace ComputerVisionSDK.Tests
 {
@@ -59,7 +58,10 @@ namespace ComputerVisionSDK.Tests
 
         protected IComputerVisionClient GetComputerVisionClient(DelegatingHandler handler)
         {
-            IComputerVisionClient client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(ComputerVisionSubscriptionKey), handlers: handler);
+            IComputerVisionClient client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(ComputerVisionSubscriptionKey), handlers: handler)
+            {
+                Endpoint = "https://westus.api.cognitive.microsoft.com"
+            };
 
             return client;
         }
