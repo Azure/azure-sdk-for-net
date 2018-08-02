@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -31,6 +30,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management;
 using Microsoft.WindowsAzure.Management.Models;
@@ -38,22 +38,18 @@ using Microsoft.WindowsAzure.Management.Models;
 namespace Microsoft.WindowsAzure.Management
 {
     /// <summary>
-    /// You can use management certificates, which are also known as
-    /// subscription certificates, to authenticate clients attempting to
-    /// connect to resources associated with your Azure subscription.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154124.aspx for
-    /// more information)
+    /// Operations for managing service principals for your subscription.
     /// </summary>
-    internal partial class ManagementCertificateOperations : IServiceOperations<ManagementClient>, IManagementCertificateOperations
+    internal partial class SubscriptionServicePrincipalOperations : IServiceOperations<ManagementClient>, ISubscriptionServicePrincipalOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ManagementCertificateOperations
-        /// class.
+        /// Initializes a new instance of the
+        /// SubscriptionServicePrincipalOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ManagementCertificateOperations(ManagementClient client)
+        internal SubscriptionServicePrincipalOperations(ManagementClient client)
         {
             this._client = client;
         }
@@ -70,16 +66,11 @@ namespace Microsoft.WindowsAzure.Management
         }
         
         /// <summary>
-        /// The Create Management Certificate operation adds a certificate to
-        /// the list of management certificates. Management certificates,
-        /// which are also known as subscription certificates, authenticate
-        /// clients attempting to connect to resources associated with your
-        /// Azure subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154123.aspx
-        /// for more information)
+        /// The Create Service principal operation adds a new service principal
+        /// in the subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Management Certificate
+        /// Required. Parameters supplied to the Create Service Principal
         /// operation.
         /// </param>
         /// <param name='cancellationToken'>
@@ -89,12 +80,24 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> CreateAsync(ManagementCertificateCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> CreateAsync(SubscriptionServicePrincipalCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Description != null && parameters.Description.Length > 256)
+            {
+                throw new ArgumentOutOfRangeException("parameters.Description");
+            }
+            if (parameters.ServicePrincipalId == null)
+            {
+                throw new ArgumentNullException("parameters.ServicePrincipalId");
+            }
+            if (parameters.ServicePrincipalId.Length > 256)
+            {
+                throw new ArgumentOutOfRangeException("parameters.ServicePrincipalId");
             }
             
             // Tracing
@@ -115,7 +118,7 @@ namespace Microsoft.WindowsAzure.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/certificates";
+            url = url + "/servicePrincipals";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -148,28 +151,42 @@ namespace Microsoft.WindowsAzure.Management
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement subscriptionCertificateElement = new XElement(XName.Get("SubscriptionCertificate", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(subscriptionCertificateElement);
+                XElement servicePrincipalElement = new XElement(XName.Get("ServicePrincipal", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(servicePrincipalElement);
                 
-                if (parameters.PublicKey != null)
+                XElement servicePrincipalIdElement = new XElement(XName.Get("ServicePrincipalId", "http://schemas.microsoft.com/windowsazure"));
+                servicePrincipalIdElement.Value = parameters.ServicePrincipalId;
+                servicePrincipalElement.Add(servicePrincipalIdElement);
+                
+                if (parameters.Description != null)
                 {
-                    XElement subscriptionCertificatePublicKeyElement = new XElement(XName.Get("SubscriptionCertificatePublicKey", "http://schemas.microsoft.com/windowsazure"));
-                    subscriptionCertificatePublicKeyElement.Value = Convert.ToBase64String(parameters.PublicKey);
-                    subscriptionCertificateElement.Add(subscriptionCertificatePublicKeyElement);
+                    XElement descriptionElement = new XElement(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                    descriptionElement.Value = parameters.Description;
+                    servicePrincipalElement.Add(descriptionElement);
                 }
                 
-                if (parameters.Thumbprint != null)
+                if (parameters.ExtendedProperties != null)
                 {
-                    XElement subscriptionCertificateThumbprintElement = new XElement(XName.Get("SubscriptionCertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
-                    subscriptionCertificateThumbprintElement.Value = parameters.Thumbprint;
-                    subscriptionCertificateElement.Add(subscriptionCertificateThumbprintElement);
-                }
-                
-                if (parameters.Data != null)
-                {
-                    XElement subscriptionCertificateDataElement = new XElement(XName.Get("SubscriptionCertificateData", "http://schemas.microsoft.com/windowsazure"));
-                    subscriptionCertificateDataElement.Value = Convert.ToBase64String(parameters.Data);
-                    subscriptionCertificateElement.Add(subscriptionCertificateDataElement);
+                    if (parameters.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)parameters.ExtendedProperties).IsInitialized)
+                    {
+                        XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                        {
+                            string extendedPropertiesKey = pair.Key;
+                            string extendedPropertiesValue = pair.Value;
+                            XElement extendedPropertiesElement = new XElement(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesDictionaryElement.Add(extendedPropertiesElement);
+                            
+                            XElement extendedPropertiesKeyElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesKeyElement.Value = extendedPropertiesKey;
+                            extendedPropertiesElement.Add(extendedPropertiesKeyElement);
+                            
+                            XElement extendedPropertiesValueElement = new XElement(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesValueElement.Value = extendedPropertiesValue;
+                            extendedPropertiesElement.Add(extendedPropertiesValueElement);
+                        }
+                        servicePrincipalElement.Add(extendedPropertiesDictionaryElement);
+                    }
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -191,7 +208,7 @@ namespace Microsoft.WindowsAzure.Management
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -236,16 +253,12 @@ namespace Microsoft.WindowsAzure.Management
         }
         
         /// <summary>
-        /// The Delete Management Certificate operation deletes a certificate
-        /// from the list of management certificates. Management certificates,
-        /// which are also known as subscription certificates, authenticate
-        /// clients attempting to connect to resources associated with your
-        /// Azure subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154127.aspx
-        /// for more information)
+        /// The Delete Service Principal operation deletes the service
+        /// principalwith specified servicePrincipalId, if it exists in the
+        /// subscription.
         /// </summary>
-        /// <param name='thumbprint'>
-        /// Required. The thumbprint value of the certificate to delete.
+        /// <param name='servicePrincipalId'>
+        /// Required. The Id of the service principal.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -254,12 +267,12 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> DeleteAsync(string thumbprint, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string servicePrincipalId, CancellationToken cancellationToken)
         {
             // Validate
-            if (thumbprint == null)
+            if (servicePrincipalId == null)
             {
-                throw new ArgumentNullException("thumbprint");
+                throw new ArgumentNullException("servicePrincipalId");
             }
             
             // Tracing
@@ -269,7 +282,7 @@ namespace Microsoft.WindowsAzure.Management
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("thumbprint", thumbprint);
+                tracingParameters.Add("servicePrincipalId", servicePrincipalId);
                 TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
@@ -280,8 +293,8 @@ namespace Microsoft.WindowsAzure.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/certificates/";
-            url = url + Uri.EscapeDataString(thumbprint);
+            url = url + "/servicePrincipals/";
+            url = url + Uri.EscapeDataString(servicePrincipalId);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -325,7 +338,7 @@ namespace Microsoft.WindowsAzure.Management
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NotFound)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -370,30 +383,25 @@ namespace Microsoft.WindowsAzure.Management
         }
         
         /// <summary>
-        /// The Get Management Certificate operation retrieves information
-        /// about the management certificate with the specified thumbprint.
-        /// Management certificates, which are also known as subscription
-        /// certificates, authenticate clients attempting to connect to
-        /// resources associated with your Azure subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154131.aspx
-        /// for more information)
+        /// The Get Service Principal operation retrieves the service
+        /// principalwith the specified servicePrincipalId, if it exists in
+        /// the subscription.
         /// </summary>
-        /// <param name='thumbprint'>
-        /// Required. The thumbprint value of the certificate to retrieve
-        /// information about.
+        /// <param name='servicePrincipalId'>
+        /// Required. The Id of the service principal.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Management Certificate operation response.
+        /// The Get Service Principal operation response.
         /// </returns>
-        public async Task<ManagementCertificateGetResponse> GetAsync(string thumbprint, CancellationToken cancellationToken)
+        public async Task<SubscriptionServicePrincipalGetResponse> GetAsync(string servicePrincipalId, CancellationToken cancellationToken)
         {
             // Validate
-            if (thumbprint == null)
+            if (servicePrincipalId == null)
             {
-                throw new ArgumentNullException("thumbprint");
+                throw new ArgumentNullException("servicePrincipalId");
             }
             
             // Tracing
@@ -403,7 +411,7 @@ namespace Microsoft.WindowsAzure.Management
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("thumbprint", thumbprint);
+                tracingParameters.Add("servicePrincipalId", servicePrincipalId);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
@@ -414,8 +422,8 @@ namespace Microsoft.WindowsAzure.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/certificates/";
-            url = url + Uri.EscapeDataString(thumbprint);
+            url = url + "/servicePrincipals/";
+            url = url + Uri.EscapeDataString(servicePrincipalId);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -471,44 +479,41 @@ namespace Microsoft.WindowsAzure.Management
                     }
                     
                     // Create Result
-                    ManagementCertificateGetResponse result = null;
+                    SubscriptionServicePrincipalGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ManagementCertificateGetResponse();
+                        result = new SubscriptionServicePrincipalGetResponse();
                         XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement subscriptionCertificateElement = responseDoc.Element(XName.Get("SubscriptionCertificate", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionCertificateElement != null)
+                        XElement servicePrincipalElement = responseDoc.Element(XName.Get("ServicePrincipal", "http://schemas.microsoft.com/windowsazure"));
+                        if (servicePrincipalElement != null)
                         {
-                            XElement subscriptionCertificatePublicKeyElement = subscriptionCertificateElement.Element(XName.Get("SubscriptionCertificatePublicKey", "http://schemas.microsoft.com/windowsazure"));
-                            if (subscriptionCertificatePublicKeyElement != null)
+                            XElement servicePrincipalIdElement = servicePrincipalElement.Element(XName.Get("ServicePrincipalId", "http://schemas.microsoft.com/windowsazure"));
+                            if (servicePrincipalIdElement != null)
                             {
-                                byte[] subscriptionCertificatePublicKeyInstance = Convert.FromBase64String(subscriptionCertificatePublicKeyElement.Value);
-                                result.PublicKey = subscriptionCertificatePublicKeyInstance;
+                                string servicePrincipalIdInstance = servicePrincipalIdElement.Value;
+                                result.ServicePrincipalId = servicePrincipalIdInstance;
                             }
                             
-                            XElement subscriptionCertificateThumbprintElement = subscriptionCertificateElement.Element(XName.Get("SubscriptionCertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
-                            if (subscriptionCertificateThumbprintElement != null)
+                            XElement descriptionElement = servicePrincipalElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                            if (descriptionElement != null)
                             {
-                                string subscriptionCertificateThumbprintInstance = subscriptionCertificateThumbprintElement.Value;
-                                result.Thumbprint = subscriptionCertificateThumbprintInstance;
+                                string descriptionInstance = descriptionElement.Value;
+                                result.Description = descriptionInstance;
                             }
                             
-                            XElement subscriptionCertificateDataElement = subscriptionCertificateElement.Element(XName.Get("SubscriptionCertificateData", "http://schemas.microsoft.com/windowsazure"));
-                            if (subscriptionCertificateDataElement != null)
+                            XElement extendedPropertiesSequenceElement = servicePrincipalElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
+                            if (extendedPropertiesSequenceElement != null)
                             {
-                                byte[] subscriptionCertificateDataInstance = Convert.FromBase64String(subscriptionCertificateDataElement.Value);
-                                result.Data = subscriptionCertificateDataInstance;
-                            }
-                            
-                            XElement createdElement = subscriptionCertificateElement.Element(XName.Get("Created", "http://schemas.microsoft.com/windowsazure"));
-                            if (createdElement != null)
-                            {
-                                DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
-                                result.Created = createdInstance;
+                                foreach (XElement extendedPropertiesElement in extendedPropertiesSequenceElement.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
+                                    string extendedPropertiesValue = extendedPropertiesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
+                                    result.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
+                                }
                             }
                         }
                         
@@ -543,22 +548,16 @@ namespace Microsoft.WindowsAzure.Management
         }
         
         /// <summary>
-        /// The List Management Certificates operation lists and returns basic
-        /// information about all of the management certificates associated
-        /// with the specified subscription. Management certificates, which
-        /// are also known as subscription certificates, authenticate clients
-        /// attempting to connect to resources associated with your Azure
-        /// subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154105.aspx
-        /// for more information)
+        /// The List Service Principal operation retrieves all the service
+        /// principalsexisting in the current subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The List Management Certificates operation response.
+        /// The List Service Principal operation response.
         /// </returns>
-        public async Task<ManagementCertificateListResponse> ListAsync(CancellationToken cancellationToken)
+        public async Task<SubscriptionServicePrincipalListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -579,7 +578,7 @@ namespace Microsoft.WindowsAzure.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/certificates";
+            url = url + "/servicePrincipals";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -635,49 +634,46 @@ namespace Microsoft.WindowsAzure.Management
                     }
                     
                     // Create Result
-                    ManagementCertificateListResponse result = null;
+                    SubscriptionServicePrincipalListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ManagementCertificateListResponse();
+                        result = new SubscriptionServicePrincipalListResponse();
                         XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement subscriptionCertificatesSequenceElement = responseDoc.Element(XName.Get("SubscriptionCertificates", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionCertificatesSequenceElement != null)
+                        XElement servicePrincipalsSequenceElement = responseDoc.Element(XName.Get("ServicePrincipals", "http://schemas.microsoft.com/windowsazure"));
+                        if (servicePrincipalsSequenceElement != null)
                         {
-                            foreach (XElement subscriptionCertificatesElement in subscriptionCertificatesSequenceElement.Elements(XName.Get("SubscriptionCertificate", "http://schemas.microsoft.com/windowsazure")))
+                            foreach (XElement servicePrincipalsElement in servicePrincipalsSequenceElement.Elements(XName.Get("ServicePrincipal", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                ManagementCertificateListResponse.SubscriptionCertificate subscriptionCertificateInstance = new ManagementCertificateListResponse.SubscriptionCertificate();
-                                result.SubscriptionCertificates.Add(subscriptionCertificateInstance);
+                                SubscriptionServicePrincipalListResponse.ServicePrincipal servicePrincipalInstance = new SubscriptionServicePrincipalListResponse.ServicePrincipal();
+                                result.ServicePrincipals.Add(servicePrincipalInstance);
                                 
-                                XElement subscriptionCertificatePublicKeyElement = subscriptionCertificatesElement.Element(XName.Get("SubscriptionCertificatePublicKey", "http://schemas.microsoft.com/windowsazure"));
-                                if (subscriptionCertificatePublicKeyElement != null)
+                                XElement servicePrincipalIdElement = servicePrincipalsElement.Element(XName.Get("ServicePrincipalId", "http://schemas.microsoft.com/windowsazure"));
+                                if (servicePrincipalIdElement != null)
                                 {
-                                    byte[] subscriptionCertificatePublicKeyInstance = Convert.FromBase64String(subscriptionCertificatePublicKeyElement.Value);
-                                    subscriptionCertificateInstance.PublicKey = subscriptionCertificatePublicKeyInstance;
+                                    string servicePrincipalIdInstance = servicePrincipalIdElement.Value;
+                                    servicePrincipalInstance.ServicePrincipalId = servicePrincipalIdInstance;
                                 }
                                 
-                                XElement subscriptionCertificateThumbprintElement = subscriptionCertificatesElement.Element(XName.Get("SubscriptionCertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
-                                if (subscriptionCertificateThumbprintElement != null)
+                                XElement descriptionElement = servicePrincipalsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                                if (descriptionElement != null)
                                 {
-                                    string subscriptionCertificateThumbprintInstance = subscriptionCertificateThumbprintElement.Value;
-                                    subscriptionCertificateInstance.Thumbprint = subscriptionCertificateThumbprintInstance;
+                                    string descriptionInstance = descriptionElement.Value;
+                                    servicePrincipalInstance.Description = descriptionInstance;
                                 }
                                 
-                                XElement subscriptionCertificateDataElement = subscriptionCertificatesElement.Element(XName.Get("SubscriptionCertificateData", "http://schemas.microsoft.com/windowsazure"));
-                                if (subscriptionCertificateDataElement != null)
+                                XElement extendedPropertiesSequenceElement = servicePrincipalsElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
+                                if (extendedPropertiesSequenceElement != null)
                                 {
-                                    byte[] subscriptionCertificateDataInstance = Convert.FromBase64String(subscriptionCertificateDataElement.Value);
-                                    subscriptionCertificateInstance.Data = subscriptionCertificateDataInstance;
-                                }
-                                
-                                XElement createdElement = subscriptionCertificatesElement.Element(XName.Get("Created", "http://schemas.microsoft.com/windowsazure"));
-                                if (createdElement != null)
-                                {
-                                    DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
-                                    subscriptionCertificateInstance.Created = createdInstance;
+                                    foreach (XElement extendedPropertiesElement in extendedPropertiesSequenceElement.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
+                                        string extendedPropertiesValue = extendedPropertiesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
+                                        servicePrincipalInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
+                                    }
                                 }
                             }
                         }

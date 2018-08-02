@@ -160,6 +160,16 @@ namespace Microsoft.WindowsAzure.Management
             get { return this._subscriptions; }
         }
         
+        private ISubscriptionServicePrincipalOperations _subscriptionServicePrincipals;
+        
+        /// <summary>
+        /// Operations for managing service principals for your subscription.
+        /// </summary>
+        public virtual ISubscriptionServicePrincipalOperations SubscriptionServicePrincipals
+        {
+            get { return this._subscriptionServicePrincipals; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ManagementClient class.
         /// </summary>
@@ -171,7 +181,8 @@ namespace Microsoft.WindowsAzure.Management
             this._managementCertificates = new ManagementCertificateOperations(this);
             this._roleSizes = new RoleSizeOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
-            this._apiVersion = "2014-10-01";
+            this._subscriptionServicePrincipals = new SubscriptionServicePrincipalOperations(this);
+            this._apiVersion = "2018-06-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -196,6 +207,7 @@ namespace Microsoft.WindowsAzure.Management
             {
                 throw new ArgumentNullException("credentials");
             }
+
             if (baseUri == null)
             {
                 throw new ArgumentNullException("baseUri");
@@ -241,7 +253,8 @@ namespace Microsoft.WindowsAzure.Management
             this._managementCertificates = new ManagementCertificateOperations(this);
             this._roleSizes = new RoleSizeOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
-            this._apiVersion = "2014-10-01";
+            this._subscriptionServicePrincipals = new SubscriptionServicePrincipalOperations(this);
+            this._apiVersion = "2018-06-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -405,7 +418,7 @@ namespace Microsoft.WindowsAzure.Management
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2018-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
