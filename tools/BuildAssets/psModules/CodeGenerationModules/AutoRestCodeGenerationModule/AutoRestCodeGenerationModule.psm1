@@ -8,7 +8,6 @@
 $errorStream = New-Object -TypeName "System.Text.StringBuilder";
 $outputStream = New-Object -TypeName "System.Text.StringBuilder";
 
-
 function Get-SdkRepoRootDirectory {
     param(
         [string] $scriptPath
@@ -187,7 +186,7 @@ param(
     }
     
     Try {
-        Start-MetadataGeneration -AutoRestVersion $AutoRestVersion -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch
+        Start-MetadataGeneration -AutoRestVersion $AutoRestVersion -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -AutoRestCommandExecuted "$cmd $args" -configFileLocation $configFile -SpecsRepoName $SpecsRepoName
     }
     Catch [System.Exception] {
         Write-ErrorLog $_.Exception.ToString()
@@ -202,21 +201,29 @@ function Start-MetadataGeneration {
         [Parameter(Mandatory = $true)]
         [string] $SpecsRepoFork,
         [Parameter(Mandatory = $true)]
-        [string] $SpecsRepoBranch
+        [string] $SpecsRepoBranch,
+        [Parameter(Mandatory = $true)]
+        [string] $SpecsRepoName,
+        [Parameter(Mandatory = $true)]
+        [string] $AutoRestCommandExecuted,
+        [Parameter(Mandatory = $true)]
+        [string] $configFileLocation
     )
     
     Write-InfoLog $([DateTime]::UtcNow.ToString('u').Replace('Z',' UTC')) 
 
-    Write-InfoLog "" 
-    Write-InfoLog "1) azure-rest-api-specs repository information" 
+    Write-InfoLog "Azure-rest-api-specs repository information" 
     Write-InfoLog "GitHub fork: $SpecsRepoFork" 
     Write-InfoLog "Branch:      $SpecsRepoBranch" 
-    
+    $commitId = ""
+    $ver=""
+
     Try
     {
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-        $op = (Invoke-RestMethod "https://api.github.com/repos/$($SpecsRepoFork)/azure-rest-api-specs/branches/$($SpecsRepoBranch)").commit.sha | Out-String
-        Write-InfoLog "Commit:      $op" 
+        $commitId = (Invoke-RestMethod "https://api.github.com/repos/$($SpecsRepoFork)/azure-rest-api-specs/branches/$($SpecsRepoBranch)").commit.sha | Out-String
+        $commitId = $commitId.Trim()
+        Write-InfoLog "Commit:      $commitId"
     }
     Catch [System.Exception]
     {
@@ -224,36 +231,58 @@ function Start-MetadataGeneration {
         throw $_
     }
 
-    Write-InfoLog "" 
-    Write-InfoLog "2) AutoRest information" 
+    Write-InfoLog "AutoRest information" 
     Write-InfoLog "Requested version: $AutoRestVersion" 
     
     Try
     {
-        $op = $((npm list -g autorest) | Out-String).Replace("`n", " ").Replace("`r"," ").Trim()
-        $tokens = $op.Split(" ")
+        $ver = $((npm list -g autorest) | Out-String).Replace("`n", " ").Replace("`r"," ").Trim()
+        $tokens = $ver.Split(" ")
         if($tokens.Length -gt 1)
         {
-            $op = $tokens[$tokens.Length-1]
+            $ver = $tokens[$tokens.Length-1]
         }
-        Write-InfoLog "Bootstrapper version:    $op" 
+        Write-InfoLog "Bootstrapper version:    $ver" 
         Write-InfoLog "`n" 
+        $ver = $ver.Trim()
     }
     Catch{}
-    Try
+    # collected all the metadata, now inject it into the SdkInfo_*.cs file
+
+    $invokingScriptPath = $(Get-InvokingScriptPath($PSScriptRoot))
+    $sdkInfoFile = $(Get-ChildItem -Path $invokingScriptPath -Filter "SdkInfo_*.cs" -Recurse -File).FullName
+    if($sdkInfoFile -and (Test-Path -Path $sdkInfoFile))
     {
-        $op = (autorest --list-installed | Where {$_ -like "*Latest Core Installed*"}).Split()[-1] | Out-String
-        $op = $op.Replace("`n", " ").Replace("`r"," ").Trim()
-        Write-InfoLog "Latest installed version:    $op" 
+        $metadataTemplate = Get-Content "$PSScriptRoot\MetadataFieldsTemplate.txt" -Raw
+        $metadataTemplate = 
+            $metadataTemplate.Replace("{{GithubRepoName}}", $specsRepoName).Replace("{{GithubBranchName}}", $specsRepoBranch).Replace("{{GithubForkName}}", $specsRepoFork).Replace("{{GithubCommidId}}", $commitId).Replace("{{AutoRestVersion}}", $AutoRestVersion).Replace("{{AutoRestCmdExecuted}}", $AutoRestCommandExecuted).Replace("{{AutoRestBootStrapperVersion}}", $ver).Replace("{{CodeGenerationErrors}}", "")
+        $metadataTemplate= $metadataTemplate.TrimEnd()
+        $metadataTemplate = $metadataTemplate.Replace('\', '\\')
+        $sdkInfo = Get-Content $sdkInfoFile -Raw
+        
+        if($sdkInfo -cmatch '(.*)\/\/ BEGIN: Code Generation Metadata Section(\n|.)*\/\/ END: Code Generation Metadata Section')
+        {
+            # Find the regex match and replace it with the new metadata
+            $sdkInfo = $sdkInfo -creplace '(.*)\/\/ BEGIN: Code Generation Metadata Section(\n|.)*\/\/ END: Code Generation Metadata Section', $metadataTemplate
+        }
+        else 
+        {
+            # If there is no regex match, we need to insert it for the first time
+            # We need to find the third } which is where we now insert the template
+            $tokenNum = 0
+            $substr = $sdkInfo
+            $subIndex = 0
+            while($tokenNum -lt 4)
+            {
+                $i= $substr.IndexOf("}");
+                $subIndex = $subIndex + $i
+                $substr = $substr.Substring($i+1, $substr.Length-1-$i)
+                $tokenNum = $tokenNum +1
+            }
+            $sdkInfo = $sdkInfo.Insert($subIndex +1, $metadataTemplate)
+        }
+        Set-Content -Path $sdkInfoFile -Value $sdkInfo.Trim()
     }
-    Catch{}
-    Try
-    {
-        $op = (autorest --list-installed | Where {$_ -like "*@microsoft.azure/autorest-core*"} | Select -Last 1).Split('|')[3] | Out-String
-        $op = $op.Replace("`n", " ").Replace("`r"," ").Trim()
-        Write-InfoLog "Latest installed version:    $op" 
-    }
-    Catch{}
 }
 
 function Get-ErrorStream {
@@ -523,8 +552,22 @@ function Start-CodeGeneration {
         Write-ErrorLog $_.ToString() 
     }
     finally {
-        Get-OutputStream | Out-File -FilePath $logFile -Encoding utf8 | Out-Null
-        Get-ErrorStream | Out-File -FilePath $logFile -Append -Encoding utf8 | Out-Null
+        $errors = Get-ErrorStream
+        if(-not [string]::IsNullOrWhiteSpace($errors))
+        {
+            $errors | Out-File -FilePath $logFile -Append -Encoding utf8 | Out-Null
+            $invokingScriptPath = $(Get-InvokingScriptPath($PSScriptRoot))
+            $sdkInfoFile = $(Get-ChildItem -Path $invokingScriptPath -Filter "SdkInfo_*.cs" -Recurse -File).FullName
+            if($sdkInfoFile -and (Test-Path -Path $sdkInfoFile))
+            {
+                $sdkInfo = Get-Content -Raw $sdkInfoFile
+                $sdkInfo = $sdkInfo.Replace('public static readonly String CodeGenerationErrors = "";',
+                                    'public static readonly String CodeGenerationErrors = "'+$errors.Trim()+'"')
+
+                Set-Content -Path $sdkInfoFile -Value $sdkInfo
+            }
+        }
+        
         Clear-OutputStreams
         Write-Host "Log file can be found at location $logFile"
     }
