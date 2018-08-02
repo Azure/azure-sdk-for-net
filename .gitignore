@@ -143,8 +143,3 @@ build.out
 csx/
 *.GhostDoc.xml
 pingme.txt
-/src/PowerBIDedicatedApp
-/src/SDKs/---PowerBIDedicated
-/src/SDKs/AnalysisServices
-/src/SDKs/AnalysisServices - orig
-/src/SDKs
