@@ -23,3 +23,4 @@ tasks/net46/System.IO.Compression.dll
 tasks/net46/Newtonsoft.Json.dll
 psModules/CodeGenerationModules/generateDotNetSdkCode.psm1
 psModules/CodeGenerationModules/AutoRestCodeGenerationModule/AutoRestCodeGenerationModule.psm1
+psModules/CodeGenerationModules/AutoRestCodeGenerationModule/MetadataFieldsTemplate.txt
