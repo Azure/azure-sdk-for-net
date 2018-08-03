@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Management.Automation;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Xunit;
 
@@ -30,6 +31,20 @@ namespace PSCmdLets.Tests
                     Assert.True(Directory.Exists(genDir));
                     Assert.NotEmpty(Directory.GetFiles(genDir));
                     Assert.True(Directory.Exists(metadataDir));
+                    // Check if metadata correctly generated
+                    var sdkInfoFile = (new Uri(Path.Combine(genDir, "SdkInfo_ComputeManagementClient.cs"))).AbsolutePath;
+                    Assert.True(File.Exists(sdkInfoFile));
+                    String txt = File.ReadAllText(sdkInfoFile);
+                    var regex = new Regex(@"(.*)\/\/ BEGIN: Code Generation Metadata Section(?<metadata>\n|.)*\/\/ END: Code Generation Metadata Section");
+                    var match = regex.Match(txt);
+                    Assert.True(match.Success);
+                    Assert.NotEmpty(match.Groups[0].Captures);
+                    var metadataTxt = match.Groups[0].Captures[0].Value;
+                    Assert.NotEmpty(metadataTxt);
+                    Assert.Contains("public static readonly String GithubForkName = \"Azure\";", metadataTxt);
+                    Assert.Contains("public static readonly String GithubBranchName = \"master\";", metadataTxt);
+                    Assert.Contains("public static readonly String CodeGenerationErrors = \"\";", metadataTxt);
+                    Assert.Contains("public static readonly String GithubRepoName = \"azure-rest-api-specs\";", metadataTxt);
                 }
             }
             finally
