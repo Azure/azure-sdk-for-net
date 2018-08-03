@@ -45,7 +45,90 @@ namespace Microsoft.Azure.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<long?>> CountWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<long?>> CountWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
+        /// <summary>
+        /// Searches for documents in the Azure Search index.
+        /// </summary>
+        /// <param name='searchText'>
+        /// A full-text search query expression; Use null or "*" to match all
+        /// documents.
+        /// </param>
+        /// <param name='accept'>
+        /// </param>
+        /// <param name='searchParameters'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DocumentSearchResultProxy>> SearchGetWithHttpMessagesAsync(string searchText = default(string), string accept = default(string), SearchParameters searchParameters = default(SearchParameters), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
+        /// <summary>
+        /// Searches for documents in the Azure Search index.
+        /// </summary>
+        /// <param name='searchRequest'>
+        /// The definition of the Search request.
+        /// </param>
+        /// <param name='accept'>
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DocumentSearchResultProxy>> SearchPostWithHttpMessagesAsync(SearchParametersPayload searchRequest, string accept = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
+        /// <summary>
+        /// Sends a batch of upload, merge, and/or delete actions to the Azure
+        /// Search index.
+        /// </summary>
+        /// <param name='indexBatch'>
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DocumentIndexResult>> DocumentIndexPostWithHttpMessagesAsync(IndexBatch indexBatch, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and
         /// matching terms in the Azure Search index.
@@ -78,7 +161,7 @@ namespace Microsoft.Azure.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AutocompleteResult>> AutocompleteGetWithHttpMessagesAsync(string searchText, string suggesterName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AutocompleteParameters autocompleteParameters = default(AutocompleteParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AutocompleteResult>> AutocompleteGetWithHttpMessagesAsync(string searchText, string suggesterName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AutocompleteParameters autocompleteParameters = default(AutocompleteParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and
         /// matching terms in the Azure Search index.
@@ -104,6 +187,6 @@ namespace Microsoft.Azure.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AutocompleteResult>> AutocompletePostWithHttpMessagesAsync(AutocompleteRequest autocompleteRequest, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AutocompleteResult>> AutocompletePostWithHttpMessagesAsync(AutocompleteRequest autocompleteRequest, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
     }
 }
