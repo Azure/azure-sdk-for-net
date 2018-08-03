@@ -152,17 +152,15 @@ namespace Microsoft.Rest.Azure
         public string GetProvisioningStateFromBody(JObject body, HttpStatusCode statusCode, Func<bool> checkProvisioningState)
         {
             string localStatus = string.Empty;
-
             if (checkProvisioningState())
             {
-                localStatus = GetProvisioningStateFromBody(body, statusCode);
+                //localStatus = GetProvisioningStateFromBody(body, statusCode);
+                localStatus = ((string)body?["properties"]?["provisioningState"])?.Trim();
 
-                //localStatus = ((string)body?["properties"]?["provisioningState"])?.Trim();
-
-                //if(string.IsNullOrEmpty(localStatus))
-                //{
-                //    localStatus = AzureAsyncOperation.SuccessStatus;
-                //}
+                if (string.IsNullOrEmpty(localStatus))
+                {
+                    localStatus = AzureAsyncOperation.SuccessStatus;
+                }
             }
 
             return localStatus;
