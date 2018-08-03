@@ -3,6 +3,8 @@
 ## Current version
 
 ###  Feature Additions
+* Added support for AzureBlob AAD Authentication
+* Added support for AzureStorage 2 new Linked Service type: AzureBlobStorage, AzureTableStorage
 
 ## Version 2.0.0
 

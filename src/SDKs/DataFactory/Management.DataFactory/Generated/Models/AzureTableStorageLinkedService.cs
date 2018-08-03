@@ -18,22 +18,24 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// The storage account linked service.
+    /// The azure table storage linked service.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureStorage")]
+    [Newtonsoft.Json.JsonObject("AzureTableStorage")]
     [Rest.Serialization.JsonTransformation]
-    public partial class AzureStorageLinkedService : LinkedService
+    public partial class AzureTableStorageLinkedService : LinkedService
     {
         /// <summary>
-        /// Initializes a new instance of the AzureStorageLinkedService class.
+        /// Initializes a new instance of the AzureTableStorageLinkedService
+        /// class.
         /// </summary>
-        public AzureStorageLinkedService()
+        public AzureTableStorageLinkedService()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureStorageLinkedService class.
+        /// Initializes a new instance of the AzureTableStorageLinkedService
+        /// class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
@@ -51,7 +53,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), SecretBase sasUri = default(SecretBase), string encryptedCredential = default(string))
+        public AzureTableStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), SecretBase sasUri = default(SecretBase), string encryptedCredential = default(string))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
