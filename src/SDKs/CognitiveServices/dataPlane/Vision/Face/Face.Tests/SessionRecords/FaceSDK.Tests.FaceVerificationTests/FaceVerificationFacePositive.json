@@ -11,7 +11,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/3.0.0-preview"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.2.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -25,7 +25,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 02 Aug 2018 04:52:32 GMT"
+          "Fri, 03 Aug 2018 02:42:24 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -37,7 +37,7 @@
           "ASP.NET"
         ],
         "apim-request-id": [
-          "c4e7705c-8388-43ff-8e40-40cab39cc553"
+          "cac931d1-fc18-46e1-974e-daef80967746"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -55,7 +55,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"4e0b6621-476c-4314-87df-bc968bc7d35d\",\r\n    \"faceRectangle\": {\r\n      \"top\": 139,\r\n      \"left\": 245,\r\n      \"width\": 129,\r\n      \"height\": 129\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"558f773d-49e7-48ab-bac9-ca82f782376c\",\r\n    \"faceRectangle\": {\r\n      \"top\": 139,\r\n      \"left\": 245,\r\n      \"width\": 129,\r\n      \"height\": 129\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
@@ -69,7 +69,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/3.0.0-preview"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.2.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -83,7 +83,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 02 Aug 2018 04:52:32 GMT"
+          "Fri, 03 Aug 2018 02:42:24 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -95,7 +95,7 @@
           "ASP.NET"
         ],
         "apim-request-id": [
-          "f355a811-931d-47f7-a40d-4aaf53ab73eb"
+          "de6e036c-255d-4d63-b824-c3e17c3839be"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -113,21 +113,21 @@
           "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"b163592d-ed8f-4c86-a93d-906485f442b2\",\r\n    \"faceRectangle\": {\r\n      \"top\": 179,\r\n      \"left\": 207,\r\n      \"width\": 234,\r\n      \"height\": 234\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"9cc1c4e6-21bb-43cf-91bd-238a10daecb0\",\r\n    \"faceRectangle\": {\r\n      \"top\": 179,\r\n      \"left\": 207,\r\n      \"width\": 234,\r\n      \"height\": 234\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
       "RequestUri": "/face/v1.0/verify",
       "EncodedRequestUri": "L2ZhY2UvdjEuMC92ZXJpZnk=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"faceId1\": \"4e0b6621-476c-4314-87df-bc968bc7d35d\",\r\n  \"faceId2\": \"b163592d-ed8f-4c86-a93d-906485f442b2\"\r\n}",
+      "RequestBody": "{\r\n  \"faceId1\": \"558f773d-49e7-48ab-bac9-ca82f782376c\",\r\n  \"faceId2\": \"9cc1c4e6-21bb-43cf-91bd-238a10daecb0\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/3.0.0-preview"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.2.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -141,7 +141,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 02 Aug 2018 04:52:32 GMT"
+          "Fri, 03 Aug 2018 02:42:25 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -153,7 +153,7 @@
           "ASP.NET"
         ],
         "apim-request-id": [
-          "efa6a039-021c-4fc4-9711-cece419bbe5a"
+          "14a1ec03-43e8-4906-b48c-653a9293f000"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

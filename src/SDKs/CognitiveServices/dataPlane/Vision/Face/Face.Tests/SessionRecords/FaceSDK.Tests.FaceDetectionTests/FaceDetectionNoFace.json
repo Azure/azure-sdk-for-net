@@ -11,7 +11,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/3.0.0-preview"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.2.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -25,7 +25,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 02 Aug 2018 04:51:05 GMT"
+          "Fri, 03 Aug 2018 02:40:37 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -37,7 +37,7 @@
           "ASP.NET"
         ],
         "apim-request-id": [
-          "10734513-aa54-48f2-86da-99187f09a4d3"
+          "94c99a10-cfdd-4d3b-b87d-5ab80e1c0833"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
