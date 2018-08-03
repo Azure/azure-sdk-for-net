@@ -15,24 +15,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     using System.Linq;
 
     /// <summary>
-    /// Request to update person face data.
+    /// Request to update face data.
     /// </summary>
-    public partial class UpdatePersonFaceRequest
+    public partial class UpdateFaceRequest
     {
         /// <summary>
-        /// Initializes a new instance of the UpdatePersonFaceRequest class.
+        /// Initializes a new instance of the UpdateFaceRequest class.
         /// </summary>
-        public UpdatePersonFaceRequest()
+        public UpdateFaceRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the UpdatePersonFaceRequest class.
+        /// Initializes a new instance of the UpdateFaceRequest class.
         /// </summary>
         /// <param name="userData">User-provided data attached to the face. The
         /// size limit is 1KB.</param>
-        public UpdatePersonFaceRequest(string userData = default(string))
+        public UpdateFaceRequest(string userData = default(string))
         {
             UserData = userData;
             CustomInit();

@@ -15,31 +15,31 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     using System.Linq;
 
     /// <summary>
-    /// Person group object.
+    /// Large person group object.
     /// </summary>
-    public partial class PersonGroup : NameAndUserDataContract
+    public partial class LargePersonGroup : NameAndUserDataContract
     {
         /// <summary>
-        /// Initializes a new instance of the PersonGroup class.
+        /// Initializes a new instance of the LargePersonGroup class.
         /// </summary>
-        public PersonGroup()
+        public LargePersonGroup()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PersonGroup class.
+        /// Initializes a new instance of the LargePersonGroup class.
         /// </summary>
-        /// <param name="personGroupId">PersonGroupId of the target person
-        /// group.</param>
+        /// <param name="largePersonGroupId">LargePersonGroupId of the target
+        /// large person groups</param>
         /// <param name="name">User defined name, maximum length is
         /// 128.</param>
         /// <param name="userData">User specified data. Length should not
         /// exceed 16KB.</param>
-        public PersonGroup(string personGroupId, string name = default(string), string userData = default(string))
+        public LargePersonGroup(string largePersonGroupId, string name = default(string), string userData = default(string))
             : base(name, userData)
         {
-            PersonGroupId = personGroupId;
+            LargePersonGroupId = largePersonGroupId;
             CustomInit();
         }
 
@@ -49,10 +49,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets personGroupId of the target person group.
+        /// Gets or sets largePersonGroupId of the target large person groups
         /// </summary>
-        [JsonProperty(PropertyName = "personGroupId")]
-        public string PersonGroupId { get; set; }
+        [JsonProperty(PropertyName = "largePersonGroupId")]
+        public string LargePersonGroupId { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -63,19 +63,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         public override void Validate()
         {
             base.Validate();
-            if (PersonGroupId == null)
+            if (LargePersonGroupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PersonGroupId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "LargePersonGroupId");
             }
-            if (PersonGroupId != null)
+            if (LargePersonGroupId != null)
             {
-                if (PersonGroupId.Length > 64)
+                if (LargePersonGroupId.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "PersonGroupId", 64);
+                    throw new ValidationException(ValidationRules.MaxLength, "LargePersonGroupId", 64);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(PersonGroupId, "^[a-z0-9-_]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(LargePersonGroupId, "^[a-z0-9-_]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "PersonGroupId", "^[a-z0-9-_]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "LargePersonGroupId", "^[a-z0-9-_]+$");
                 }
             }
         }

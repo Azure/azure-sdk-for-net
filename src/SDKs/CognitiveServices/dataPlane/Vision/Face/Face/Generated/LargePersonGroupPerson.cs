@@ -23,12 +23,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     using System.Threading.Tasks;
 
     /// <summary>
-    /// FaceListOperations operations.
+    /// LargePersonGroupPerson operations.
     /// </summary>
-    public partial class FaceListOperations : IServiceOperations<FaceClient>, IFaceListOperations
+    public partial class LargePersonGroupPerson : IServiceOperations<FaceClient>, ILargePersonGroupPerson
     {
         /// <summary>
-        /// Initializes a new instance of the FaceListOperations class.
+        /// Initializes a new instance of the LargePersonGroupPerson class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public FaceListOperations(FaceClient client)
+        public LargePersonGroupPerson(FaceClient client)
         {
             if (client == null)
             {
@@ -51,11 +51,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         public FaceClient Client { get; private set; }
 
         /// <summary>
-        /// Create an empty face list. Up to 64 face lists are allowed to exist in one
-        /// subscription.
+        /// Create a new person in a specified large person group.
         /// </summary>
-        /// <param name='faceListId'>
-        /// Id referencing a particular face list.
+        /// <param name='largePersonGroupId'>
+        /// Id referencing a particular large person group.
         /// </param>
         /// <param name='name'>
         /// User defined name, maximum length is 128.
@@ -72,6 +71,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="APIErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -81,25 +83,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> CreateWithHttpMessagesAsync(string faceListId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Person>> CreateWithHttpMessagesAsync(string largePersonGroupId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (faceListId == null)
+            if (largePersonGroupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "largePersonGroupId");
             }
-            if (faceListId != null)
+            if (largePersonGroupId != null)
             {
-                if (faceListId.Length > 64)
+                if (largePersonGroupId.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "faceListId", 64);
+                    throw new ValidationException(ValidationRules.MaxLength, "largePersonGroupId", 64);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(faceListId, "^[a-z0-9-_]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
                 }
             }
             if (name != null)
@@ -129,20 +131,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("faceListId", faceListId);
+                tracingParameters.Add("largePersonGroupId", largePersonGroupId);
                 tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "largepersongroups/{largePersonGroupId}/persons";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
+            _url = _url.Replace("{largePersonGroupId}", System.Uri.EscapeDataString(largePersonGroupId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
 
@@ -217,9 +219,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse();
+            var _result = new HttpOperationResponse<Person>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Person>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -228,10 +248,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Retrieve a face list's information.
+        /// List all persons in a large person group, and retrieve person information
+        /// (including personId, name, userData and persistedFaceIds of registered
+        /// faces of the person).
         /// </summary>
-        /// <param name='faceListId'>
-        /// Id referencing a particular face list.
+        /// <param name='largePersonGroupId'>
+        /// Id referencing a particular large person group.
+        /// </param>
+        /// <param name='start'>
+        /// Starting person id to return (used to list a range of persons).
+        /// </param>
+        /// <param name='top'>
+        /// Number of persons to return starting with the person id indicated by the
+        /// 'start' parameter.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -254,26 +283,34 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<FaceList>> GetWithHttpMessagesAsync(string faceListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<Person>>> ListWithHttpMessagesAsync(string largePersonGroupId, string start = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (faceListId == null)
+            if (largePersonGroupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "largePersonGroupId");
             }
-            if (faceListId != null)
+            if (largePersonGroupId != null)
             {
-                if (faceListId.Length > 64)
+                if (largePersonGroupId.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "faceListId", 64);
+                    throw new ValidationException(ValidationRules.MaxLength, "largePersonGroupId", 64);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(faceListId, "^[a-z0-9-_]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
                 }
+            }
+            if (top > 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 1000);
+            }
+            if (top < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -282,15 +319,30 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("faceListId", faceListId);
+                tracingParameters.Add("largePersonGroupId", largePersonGroupId);
+                tracingParameters.Add("start", start);
+                tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "largepersongroups/{largePersonGroupId}/persons";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
+            _url = _url.Replace("{largePersonGroupId}", System.Uri.EscapeDataString(largePersonGroupId));
+            List<string> _queryParameters = new List<string>();
+            if (start != null)
+            {
+                _queryParameters.Add(string.Format("start={0}", System.Uri.EscapeDataString(start)));
+            }
+            if (top != null)
+            {
+                _queryParameters.Add(string.Format("top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -363,7 +415,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<FaceList>();
+            var _result = new HttpOperationResponse<IList<Person>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -372,7 +424,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FaceList>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<Person>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -392,10 +444,332 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Update information of a face list.
+        /// Delete an existing person from a large person group. All stored person
+        /// data, and face features in the person entry will be deleted.
         /// </summary>
-        /// <param name='faceListId'>
-        /// Id referencing a particular face list.
+        /// <param name='largePersonGroupId'>
+        /// Id referencing a particular large person group.
+        /// </param>
+        /// <param name='personId'>
+        /// Id referencing a particular person.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string largePersonGroupId, System.Guid personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
+            if (largePersonGroupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "largePersonGroupId");
+            }
+            if (largePersonGroupId != null)
+            {
+                if (largePersonGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "largePersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("largePersonGroupId", largePersonGroupId);
+                tracingParameters.Add("personId", personId);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "largepersongroups/{largePersonGroupId}/persons/{personId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
+            _url = _url.Replace("{largePersonGroupId}", System.Uri.EscapeDataString(largePersonGroupId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieve a person's information, including registered persisted faces, name
+        /// and userData.
+        /// </summary>
+        /// <param name='largePersonGroupId'>
+        /// Id referencing a particular large person group.
+        /// </param>
+        /// <param name='personId'>
+        /// Id referencing a particular person.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<Person>> GetWithHttpMessagesAsync(string largePersonGroupId, System.Guid personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
+            if (largePersonGroupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "largePersonGroupId");
+            }
+            if (largePersonGroupId != null)
+            {
+                if (largePersonGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "largePersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("largePersonGroupId", largePersonGroupId);
+                tracingParameters.Add("personId", personId);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "largepersongroups/{largePersonGroupId}/persons/{personId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
+            _url = _url.Replace("{largePersonGroupId}", System.Uri.EscapeDataString(largePersonGroupId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<Person>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Person>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Update name or userData of a person.
+        /// </summary>
+        /// <param name='largePersonGroupId'>
+        /// Id referencing a particular large person group.
+        /// </param>
+        /// <param name='personId'>
+        /// Id referencing a particular person.
         /// </param>
         /// <param name='name'>
         /// User defined name, maximum length is 128.
@@ -421,25 +795,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> UpdateWithHttpMessagesAsync(string faceListId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdateWithHttpMessagesAsync(string largePersonGroupId, System.Guid personId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (faceListId == null)
+            if (largePersonGroupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "largePersonGroupId");
             }
-            if (faceListId != null)
+            if (largePersonGroupId != null)
             {
-                if (faceListId.Length > 64)
+                if (largePersonGroupId.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "faceListId", 64);
+                    throw new ValidationException(ValidationRules.MaxLength, "largePersonGroupId", 64);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(faceListId, "^[a-z0-9-_]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
                 }
             }
             if (name != null)
@@ -469,16 +843,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("faceListId", faceListId);
+                tracingParameters.Add("largePersonGroupId", largePersonGroupId);
+                tracingParameters.Add("personId", personId);
                 tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "largepersongroups/{largePersonGroupId}/persons/{personId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
+            _url = _url.Replace("{largePersonGroupId}", System.Uri.EscapeDataString(largePersonGroupId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -568,300 +944,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Delete an existing face list according to faceListId. Persisted face images
-        /// in the face list will also be deleted.
+        /// Delete a face from a person. Relative feature for the persisted face will
+        /// also be deleted.
         /// </summary>
-        /// <param name='faceListId'>
-        /// Id referencing a particular face list.
+        /// <param name='largePersonGroupId'>
+        /// Id referencing a particular large person group.
         /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="APIErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string faceListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.Endpoint == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
-            }
-            if (faceListId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
-            }
-            if (faceListId != null)
-            {
-                if (faceListId.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "faceListId", 64);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(faceListId, "^[a-z0-9-_]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
-                }
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("faceListId", faceListId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
-            _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("DELETE");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new HttpOperationResponse();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieve information about all existing face lists. Only faceListId, name
-        /// and userData will be returned.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="APIErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<HttpOperationResponse<IList<FaceList>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.Endpoint == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists";
-            _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new HttpOperationResponse<IList<FaceList>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<FaceList>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Delete an existing face from a face list (given by a persisitedFaceId and a
-        /// faceListId). Persisted image related to the face will also be deleted.
-        /// </summary>
-        /// <param name='faceListId'>
-        /// Id referencing a particular face list.
+        /// <param name='personId'>
+        /// Id referencing a particular person.
         /// </param>
         /// <param name='persistedFaceId'>
         /// Id referencing a particular persistedFaceId of an existing face.
@@ -884,25 +974,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteFaceWithHttpMessagesAsync(string faceListId, System.Guid persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteFaceWithHttpMessagesAsync(string largePersonGroupId, System.Guid personId, System.Guid persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (faceListId == null)
+            if (largePersonGroupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "largePersonGroupId");
             }
-            if (faceListId != null)
+            if (largePersonGroupId != null)
             {
-                if (faceListId.Length > 64)
+                if (largePersonGroupId.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "faceListId", 64);
+                    throw new ValidationException(ValidationRules.MaxLength, "largePersonGroupId", 64);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(faceListId, "^[a-z0-9-_]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
                 }
             }
             // Tracing
@@ -912,16 +1002,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("faceListId", faceListId);
+                tracingParameters.Add("largePersonGroupId", largePersonGroupId);
+                tracingParameters.Add("personId", personId);
                 tracingParameters.Add("persistedFaceId", persistedFaceId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteFace", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedfaces/{persistedFaceId}";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "largepersongroups/{largePersonGroupId}/persons/{personId}/persistedfaces/{persistedFaceId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
+            _url = _url.Replace("{largePersonGroupId}", System.Uri.EscapeDataString(largePersonGroupId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(persistedFaceId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -1006,12 +1098,364 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Add a face to a face list. The input face is specified as an image with a
-        /// targetFace rectangle. It returns a persistedFaceId representing the added
-        /// face, and persistedFaceId will not expire.
+        /// Retrieve information about a persisted face (specified by persistedFaceId,
+        /// personId and its belonging largePersonGroupId).
         /// </summary>
-        /// <param name='faceListId'>
-        /// Id referencing a particular face list.
+        /// <param name='largePersonGroupId'>
+        /// Id referencing a particular large person group.
+        /// </param>
+        /// <param name='personId'>
+        /// Id referencing a particular person.
+        /// </param>
+        /// <param name='persistedFaceId'>
+        /// Id referencing a particular persistedFaceId of an existing face.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<PersistedFace>> GetFaceWithHttpMessagesAsync(string largePersonGroupId, System.Guid personId, System.Guid persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
+            if (largePersonGroupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "largePersonGroupId");
+            }
+            if (largePersonGroupId != null)
+            {
+                if (largePersonGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "largePersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("largePersonGroupId", largePersonGroupId);
+                tracingParameters.Add("personId", personId);
+                tracingParameters.Add("persistedFaceId", persistedFaceId);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetFace", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "largepersongroups/{largePersonGroupId}/persons/{personId}/persistedfaces/{persistedFaceId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
+            _url = _url.Replace("{largePersonGroupId}", System.Uri.EscapeDataString(largePersonGroupId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(persistedFaceId, Client.SerializationSettings).Trim('"')));
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<PersistedFace>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PersistedFace>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Update a person persisted face's userData field.
+        /// </summary>
+        /// <param name='largePersonGroupId'>
+        /// Id referencing a particular large person group.
+        /// </param>
+        /// <param name='personId'>
+        /// Id referencing a particular person.
+        /// </param>
+        /// <param name='persistedFaceId'>
+        /// Id referencing a particular persistedFaceId of an existing face.
+        /// </param>
+        /// <param name='userData'>
+        /// User-provided data attached to the face. The size limit is 1KB.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse> UpdateFaceWithHttpMessagesAsync(string largePersonGroupId, System.Guid personId, System.Guid persistedFaceId, string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
+            if (largePersonGroupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "largePersonGroupId");
+            }
+            if (largePersonGroupId != null)
+            {
+                if (largePersonGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "largePersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (userData != null)
+            {
+                if (userData.Length > 1024)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "userData", 1024);
+                }
+            }
+            UpdateFaceRequest body = new UpdateFaceRequest();
+            if (userData != null)
+            {
+                body.UserData = userData;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("largePersonGroupId", largePersonGroupId);
+                tracingParameters.Add("personId", personId);
+                tracingParameters.Add("persistedFaceId", persistedFaceId);
+                tracingParameters.Add("body", body);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateFace", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "largepersongroups/{largePersonGroupId}/persons/{personId}/persistedfaces/{persistedFaceId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
+            _url = _url.Replace("{largePersonGroupId}", System.Uri.EscapeDataString(largePersonGroupId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(persistedFaceId, Client.SerializationSettings).Trim('"')));
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(body != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Add a representative face to a person for identification. The input face is
+        /// specified as an image with a targetFace rectangle.
+        /// </summary>
+        /// <param name='largePersonGroupId'>
+        /// Id referencing a particular large person group.
+        /// </param>
+        /// <param name='personId'>
+        /// Id referencing a particular person.
         /// </param>
         /// <param name='url'>
         /// Publicly reachable URL of an image
@@ -1048,25 +1492,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PersistedFace>> AddFaceFromUrlWithHttpMessagesAsync(string faceListId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersistedFace>> AddFaceFromUrlWithHttpMessagesAsync(string largePersonGroupId, System.Guid personId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (faceListId == null)
+            if (largePersonGroupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "largePersonGroupId");
             }
-            if (faceListId != null)
+            if (largePersonGroupId != null)
             {
-                if (faceListId.Length > 64)
+                if (largePersonGroupId.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "faceListId", 64);
+                    throw new ValidationException(ValidationRules.MaxLength, "largePersonGroupId", 64);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(faceListId, "^[a-z0-9-_]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
                 }
             }
             if (userData != null)
@@ -1092,7 +1536,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("faceListId", faceListId);
+                tracingParameters.Add("largePersonGroupId", largePersonGroupId);
+                tracingParameters.Add("personId", personId);
                 tracingParameters.Add("userData", userData);
                 tracingParameters.Add("targetFace", targetFace);
                 tracingParameters.Add("imageUrl", imageUrl);
@@ -1101,9 +1546,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedfaces";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "largepersongroups/{largePersonGroupId}/persons/{personId}/persistedfaces";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
+            _url = _url.Replace("{largePersonGroupId}", System.Uri.EscapeDataString(largePersonGroupId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (userData != null)
             {
@@ -1224,12 +1670,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Add a face to a face list. The input face is specified as an image with a
-        /// targetFace rectangle. It returns a persistedFaceId representing the added
-        /// face, and persistedFaceId will not expire.
+        /// Add a representative face to a person for identification. The input face is
+        /// specified as an image with a targetFace rectangle.
         /// </summary>
-        /// <param name='faceListId'>
-        /// Id referencing a particular face list.
+        /// <param name='largePersonGroupId'>
+        /// Id referencing a particular large person group.
+        /// </param>
+        /// <param name='personId'>
+        /// Id referencing a particular person.
         /// </param>
         /// <param name='image'>
         /// An image stream.
@@ -1266,25 +1714,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PersistedFace>> AddFaceFromStreamWithHttpMessagesAsync(string faceListId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersistedFace>> AddFaceFromStreamWithHttpMessagesAsync(string largePersonGroupId, System.Guid personId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (faceListId == null)
+            if (largePersonGroupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "largePersonGroupId");
             }
-            if (faceListId != null)
+            if (largePersonGroupId != null)
             {
-                if (faceListId.Length > 64)
+                if (largePersonGroupId.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "faceListId", 64);
+                    throw new ValidationException(ValidationRules.MaxLength, "largePersonGroupId", 64);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(faceListId, "^[a-z0-9-_]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
                 }
             }
             if (userData != null)
@@ -1305,7 +1753,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("faceListId", faceListId);
+                tracingParameters.Add("largePersonGroupId", largePersonGroupId);
+                tracingParameters.Add("personId", personId);
                 tracingParameters.Add("userData", userData);
                 tracingParameters.Add("targetFace", targetFace);
                 tracingParameters.Add("image", image);
@@ -1314,9 +1763,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedfaces";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "largepersongroups/{largePersonGroupId}/persons/{personId}/persistedfaces";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
+            _url = _url.Replace("{largePersonGroupId}", System.Uri.EscapeDataString(largePersonGroupId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (userData != null)
             {

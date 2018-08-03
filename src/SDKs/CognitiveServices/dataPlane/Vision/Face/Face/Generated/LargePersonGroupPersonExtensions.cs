@@ -18,18 +18,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for PersonGroupPerson.
+    /// Extension methods for LargePersonGroupPerson.
     /// </summary>
-    public static partial class PersonGroupPersonExtensions
+    public static partial class LargePersonGroupPersonExtensions
     {
             /// <summary>
-            /// Create a new person in a specified person group.
+            /// Create a new person in a specified large person group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='personGroupId'>
-            /// Id referencing a particular person group.
+            /// <param name='largePersonGroupId'>
+            /// Id referencing a particular large person group.
             /// </param>
             /// <param name='name'>
             /// User defined name, maximum length is 128.
@@ -40,24 +40,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Person> CreateAsync(this IPersonGroupPerson operations, string personGroupId, string name = default(string), string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Person> CreateAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, string name = default(string), string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(personGroupId, name, userData, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(largePersonGroupId, name, userData, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// List all persons in a person group, and retrieve person information
+            /// List all persons in a large person group, and retrieve person information
             /// (including personId, name, userData and persistedFaceIds of registered
             /// faces of the person).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='personGroupId'>
-            /// Id referencing a particular person group.
+            /// <param name='largePersonGroupId'>
+            /// Id referencing a particular large person group.
             /// </param>
             /// <param name='start'>
             /// Starting person id to return (used to list a range of persons).
@@ -69,23 +69,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Person>> ListAsync(this IPersonGroupPerson operations, string personGroupId, string start = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<Person>> ListAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, string start = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(personGroupId, start, top, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(largePersonGroupId, start, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Delete an existing person from a person group. All stored person data, and
-            /// face features in the person entry will be deleted.
+            /// Delete an existing person from a large person group. All stored person
+            /// data, and face features in the person entry will be deleted.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='personGroupId'>
-            /// Id referencing a particular person group.
+            /// <param name='largePersonGroupId'>
+            /// Id referencing a particular large person group.
             /// </param>
             /// <param name='personId'>
             /// Id referencing a particular person.
@@ -93,9 +93,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IPersonGroupPerson operations, string personGroupId, System.Guid personId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, System.Guid personId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(personGroupId, personId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(largePersonGroupId, personId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -105,8 +105,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='personGroupId'>
-            /// Id referencing a particular person group.
+            /// <param name='largePersonGroupId'>
+            /// Id referencing a particular large person group.
             /// </param>
             /// <param name='personId'>
             /// Id referencing a particular person.
@@ -114,9 +114,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Person> GetAsync(this IPersonGroupPerson operations, string personGroupId, System.Guid personId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Person> GetAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, System.Guid personId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(personGroupId, personId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(largePersonGroupId, personId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -128,8 +128,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='personGroupId'>
-            /// Id referencing a particular person group.
+            /// <param name='largePersonGroupId'>
+            /// Id referencing a particular large person group.
             /// </param>
             /// <param name='personId'>
             /// Id referencing a particular person.
@@ -143,9 +143,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IPersonGroupPerson operations, string personGroupId, System.Guid personId, string name = default(string), string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, System.Guid personId, string name = default(string), string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(personGroupId, personId, name, userData, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateWithHttpMessagesAsync(largePersonGroupId, personId, name, userData, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -155,8 +155,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='personGroupId'>
-            /// Id referencing a particular person group.
+            /// <param name='largePersonGroupId'>
+            /// Id referencing a particular large person group.
             /// </param>
             /// <param name='personId'>
             /// Id referencing a particular person.
@@ -167,20 +167,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteFaceAsync(this IPersonGroupPerson operations, string personGroupId, System.Guid personId, System.Guid persistedFaceId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteFaceAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, System.Guid personId, System.Guid persistedFaceId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteFaceWithHttpMessagesAsync(personGroupId, personId, persistedFaceId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteFaceWithHttpMessagesAsync(largePersonGroupId, personId, persistedFaceId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
             /// Retrieve information about a persisted face (specified by persistedFaceId,
-            /// personId and its belonging personGroupId).
+            /// personId and its belonging largePersonGroupId).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='personGroupId'>
-            /// Id referencing a particular person group.
+            /// <param name='largePersonGroupId'>
+            /// Id referencing a particular large person group.
             /// </param>
             /// <param name='personId'>
             /// Id referencing a particular person.
@@ -191,9 +191,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PersistedFace> GetFaceAsync(this IPersonGroupPerson operations, string personGroupId, System.Guid personId, System.Guid persistedFaceId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PersistedFace> GetFaceAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, System.Guid personId, System.Guid persistedFaceId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetFaceWithHttpMessagesAsync(personGroupId, personId, persistedFaceId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetFaceWithHttpMessagesAsync(largePersonGroupId, personId, persistedFaceId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -205,8 +205,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='personGroupId'>
-            /// Id referencing a particular person group.
+            /// <param name='largePersonGroupId'>
+            /// Id referencing a particular large person group.
             /// </param>
             /// <param name='personId'>
             /// Id referencing a particular person.
@@ -220,9 +220,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateFaceAsync(this IPersonGroupPerson operations, string personGroupId, System.Guid personId, System.Guid persistedFaceId, string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateFaceAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, System.Guid personId, System.Guid persistedFaceId, string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateFaceWithHttpMessagesAsync(personGroupId, personId, persistedFaceId, userData, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateFaceWithHttpMessagesAsync(largePersonGroupId, personId, persistedFaceId, userData, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -232,8 +232,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='personGroupId'>
-            /// Id referencing a particular person group.
+            /// <param name='largePersonGroupId'>
+            /// Id referencing a particular large person group.
             /// </param>
             /// <param name='personId'>
             /// Id referencing a particular person.
@@ -255,9 +255,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PersistedFace> AddFaceFromUrlAsync(this IPersonGroupPerson operations, string personGroupId, System.Guid personId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PersistedFace> AddFaceFromUrlAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, System.Guid personId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddFaceFromUrlWithHttpMessagesAsync(personGroupId, personId, url, userData, targetFace, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddFaceFromUrlWithHttpMessagesAsync(largePersonGroupId, personId, url, userData, targetFace, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -270,8 +270,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='personGroupId'>
-            /// Id referencing a particular person group.
+            /// <param name='largePersonGroupId'>
+            /// Id referencing a particular large person group.
             /// </param>
             /// <param name='personId'>
             /// Id referencing a particular person.
@@ -293,9 +293,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PersistedFace> AddFaceFromStreamAsync(this IPersonGroupPerson operations, string personGroupId, System.Guid personId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PersistedFace> AddFaceFromStreamAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, System.Guid personId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddFaceFromStreamWithHttpMessagesAsync(personGroupId, personId, image, userData, targetFace, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddFaceFromStreamWithHttpMessagesAsync(largePersonGroupId, personId, image, userData, targetFace, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

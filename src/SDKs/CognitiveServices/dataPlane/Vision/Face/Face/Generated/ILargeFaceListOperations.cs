@@ -19,126 +19,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PersonGroupPerson operations.
+    /// LargeFaceListOperations operations.
     /// </summary>
-    public partial interface IPersonGroupPerson
+    public partial interface ILargeFaceListOperations
     {
         /// <summary>
-        /// Create a new person in a specified person group.
+        /// Create an empty large face list. Up to 64 large face lists are
+        /// allowed to exist in one subscription.
         /// </summary>
-        /// <param name='personGroupId'>
-        /// Id referencing a particular person group.
-        /// </param>
-        /// <param name='name'>
-        /// User defined name, maximum length is 128.
-        /// </param>
-        /// <param name='userData'>
-        /// User specified data. Length should not exceed 16KB.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="APIErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<Person>> CreateWithHttpMessagesAsync(string personGroupId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// List all persons in a person group, and retrieve person information
-        /// (including personId, name, userData and persistedFaceIds of
-        /// registered faces of the person).
-        /// </summary>
-        /// <param name='personGroupId'>
-        /// Id referencing a particular person group.
-        /// </param>
-        /// <param name='start'>
-        /// Starting person id to return (used to list a range of persons).
-        /// </param>
-        /// <param name='top'>
-        /// Number of persons to return starting with the person id indicated
-        /// by the 'start' parameter.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="APIErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<IList<Person>>> ListWithHttpMessagesAsync(string personGroupId, string start = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Delete an existing person from a person group. All stored person
-        /// data, and face features in the person entry will be deleted.
-        /// </summary>
-        /// <param name='personGroupId'>
-        /// Id referencing a particular person group.
-        /// </param>
-        /// <param name='personId'>
-        /// Id referencing a particular person.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="APIErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string personGroupId, System.Guid personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Retrieve a person's information, including registered persisted
-        /// faces, name and userData.
-        /// </summary>
-        /// <param name='personGroupId'>
-        /// Id referencing a particular person group.
-        /// </param>
-        /// <param name='personId'>
-        /// Id referencing a particular person.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="APIErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<Person>> GetWithHttpMessagesAsync(string personGroupId, System.Guid personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Update name or userData of a person.
-        /// </summary>
-        /// <param name='personGroupId'>
-        /// Id referencing a particular person group.
-        /// </param>
-        /// <param name='personId'>
-        /// Id referencing a particular person.
+        /// <param name='largeFaceListId'>
+        /// Id referencing a particular large face list.
         /// </param>
         /// <param name='name'>
         /// User defined name, maximum length is 128.
@@ -158,16 +48,144 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdateWithHttpMessagesAsync(string personGroupId, System.Guid personId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> CreateWithHttpMessagesAsync(string largeFaceListId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete a face from a person. Relative feature for the persisted
-        /// face will also be deleted.
+        /// Retrieve a large face list's information.
         /// </summary>
-        /// <param name='personGroupId'>
-        /// Id referencing a particular person group.
+        /// <param name='largeFaceListId'>
+        /// Id referencing a particular large face list.
         /// </param>
-        /// <param name='personId'>
-        /// Id referencing a particular person.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<LargeFaceList>> GetWithHttpMessagesAsync(string largeFaceListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Update information of a large face list.
+        /// </summary>
+        /// <param name='largeFaceListId'>
+        /// Id referencing a particular large face list.
+        /// </param>
+        /// <param name='name'>
+        /// User defined name, maximum length is 128.
+        /// </param>
+        /// <param name='userData'>
+        /// User specified data. Length should not exceed 16KB.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse> UpdateWithHttpMessagesAsync(string largeFaceListId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete an existing large face list according to faceListId.
+        /// Persisted face images in the large face list will also be deleted.
+        /// </summary>
+        /// <param name='largeFaceListId'>
+        /// Id referencing a particular large face list.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string largeFaceListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieve the training status of a large face list (completed or
+        /// ongoing).
+        /// </summary>
+        /// <param name='largeFaceListId'>
+        /// Id referencing a particular large face list.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<TrainingStatus>> GetTrainingStatusWithHttpMessagesAsync(string largeFaceListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieve information about all existing large face lists. Only
+        /// largeFaceListId, name and userData will be returned.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<IList<LargeFaceList>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Queue a large face list training task, the training task may not be
+        /// started immediately.
+        /// </summary>
+        /// <param name='largeFaceListId'>
+        /// Id referencing a particular large face list.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse> TrainWithHttpMessagesAsync(string largeFaceListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete an existing face from a large face list (given by a
+        /// persisitedFaceId and a largeFaceListId). Persisted image related to
+        /// the face will also be deleted.
+        /// </summary>
+        /// <param name='largeFaceListId'>
+        /// Id referencing a particular large face list.
         /// </param>
         /// <param name='persistedFaceId'>
         /// Id referencing a particular persistedFaceId of an existing face.
@@ -184,16 +202,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteFaceWithHttpMessagesAsync(string personGroupId, System.Guid personId, System.Guid persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteFaceWithHttpMessagesAsync(string largeFaceListId, System.Guid persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve information about a persisted face (specified by
-        /// persistedFaceId, personId and its belonging personGroupId).
+        /// persistedFaceId and its belonging largeFaceListId).
         /// </summary>
-        /// <param name='personGroupId'>
-        /// Id referencing a particular person group.
-        /// </param>
-        /// <param name='personId'>
-        /// Id referencing a particular person.
+        /// <param name='largeFaceListId'>
+        /// Id referencing a particular large face list.
         /// </param>
         /// <param name='persistedFaceId'>
         /// Id referencing a particular persistedFaceId of an existing face.
@@ -213,15 +228,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<PersistedFace>> GetFaceWithHttpMessagesAsync(string personGroupId, System.Guid personId, System.Guid persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PersistedFace>> GetFaceWithHttpMessagesAsync(string largeFaceListId, System.Guid persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update a person persisted face's userData field.
+        /// Update a persisted face's userData field.
         /// </summary>
-        /// <param name='personGroupId'>
-        /// Id referencing a particular person group.
-        /// </param>
-        /// <param name='personId'>
-        /// Id referencing a particular person.
+        /// <param name='largeFaceListId'>
+        /// Id referencing a particular large face list.
         /// </param>
         /// <param name='persistedFaceId'>
         /// Id referencing a particular persistedFaceId of an existing face.
@@ -241,16 +253,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdateFaceWithHttpMessagesAsync(string personGroupId, System.Guid personId, System.Guid persistedFaceId, string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> UpdateFaceWithHttpMessagesAsync(string largeFaceListId, System.Guid persistedFaceId, string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Add a representative face to a person for identification. The input
-        /// face is specified as an image with a targetFace rectangle.
+        /// Add a face to a large face list. The input face is specified as an
+        /// image with a targetFace rectangle. It returns a persistedFaceId
+        /// representing the added face, and persistedFaceId will not expire.
         /// </summary>
-        /// <param name='personGroupId'>
-        /// Id referencing a particular person group.
-        /// </param>
-        /// <param name='personId'>
-        /// Id referencing a particular person.
+        /// <param name='largeFaceListId'>
+        /// Id referencing a particular large face list.
         /// </param>
         /// <param name='url'>
         /// Publicly reachable URL of an image
@@ -282,16 +292,45 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<PersistedFace>> AddFaceFromUrlWithHttpMessagesAsync(string personGroupId, System.Guid personId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PersistedFace>> AddFaceFromUrlWithHttpMessagesAsync(string largeFaceListId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Add a representative face to a person for identification. The input
-        /// face is specified as an image with a targetFace rectangle.
+        /// List all faces in a large face list, and retrieve face information
+        /// (including userData and persistedFaceIds of registered faces of the
+        /// face).
         /// </summary>
-        /// <param name='personGroupId'>
-        /// Id referencing a particular person group.
+        /// <param name='largeFaceListId'>
+        /// Id referencing a particular large face list.
         /// </param>
-        /// <param name='personId'>
-        /// Id referencing a particular person.
+        /// <param name='start'>
+        /// Starting face id to return (used to list a range of faces).
+        /// </param>
+        /// <param name='top'>
+        /// Number of faces to return starting with the face id indicated by
+        /// the 'start' parameter.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<IList<PersistedFace>>> ListFacesWithHttpMessagesAsync(string largeFaceListId, string start = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Add a face to a large face list. The input face is specified as an
+        /// image with a targetFace rectangle. It returns a persistedFaceId
+        /// representing the added face, and persistedFaceId will not expire.
+        /// </summary>
+        /// <param name='largeFaceListId'>
+        /// Id referencing a particular large face list.
         /// </param>
         /// <param name='image'>
         /// An image stream.
@@ -323,6 +362,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<PersistedFace>> AddFaceFromStreamWithHttpMessagesAsync(string personGroupId, System.Guid personId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PersistedFace>> AddFaceFromStreamWithHttpMessagesAsync(string largeFaceListId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

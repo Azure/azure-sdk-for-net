@@ -444,8 +444,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Delete an existing person from a person group. Persisted face images of the
-        /// person will also be deleted.
+        /// Delete an existing person from a person group. All stored person data, and
+        /// face features in the person entry will be deleted.
         /// </summary>
         /// <param name='personGroupId'>
         /// Id referencing a particular person group.
@@ -944,7 +944,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Delete a face from a person. Relative image for the persisted face will
+        /// Delete a face from a person. Relative feature for the persisted face will
         /// also be deleted.
         /// </summary>
         /// <param name='personGroupId'>
@@ -1010,7 +1010,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedFaces/{persistedFaceId}";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedfaces/{persistedFaceId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
@@ -1167,7 +1167,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedFaces/{persistedFaceId}";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedfaces/{persistedFaceId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
@@ -1333,7 +1333,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                     throw new ValidationException(ValidationRules.MaxLength, "userData", 1024);
                 }
             }
-            UpdatePersonFaceRequest body = new UpdatePersonFaceRequest();
+            UpdateFaceRequest body = new UpdateFaceRequest();
             if (userData != null)
             {
                 body.UserData = userData;
@@ -1354,7 +1354,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedFaces/{persistedFaceId}";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedfaces/{persistedFaceId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
@@ -1492,7 +1492,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PersistedFace>> AddPersonFaceFromUrlWithHttpMessagesAsync(string personGroupId, System.Guid personId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersistedFace>> AddFaceFromUrlWithHttpMessagesAsync(string personGroupId, System.Guid personId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1542,11 +1542,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 tracingParameters.Add("targetFace", targetFace);
                 tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "AddPersonFaceFromUrl", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddFaceFromUrl", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedFaces";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedfaces";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
@@ -1714,7 +1714,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PersistedFace>> AddPersonFaceFromStreamWithHttpMessagesAsync(string personGroupId, System.Guid personId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersistedFace>> AddFaceFromStreamWithHttpMessagesAsync(string personGroupId, System.Guid personId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1759,11 +1759,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 tracingParameters.Add("targetFace", targetFace);
                 tracingParameters.Add("image", image);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "AddPersonFaceFromStream", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddFaceFromStream", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedFaces";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedfaces";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));

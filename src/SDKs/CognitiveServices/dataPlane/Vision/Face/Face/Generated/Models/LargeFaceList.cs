@@ -15,30 +15,31 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     using System.Linq;
 
     /// <summary>
-    /// A combination of user defined name and user specified data for the
-    /// person, largePersonGroup/personGroup, and largeFaceList/faceList.
+    /// Large face list object.
     /// </summary>
-    public partial class NameAndUserDataContract
+    public partial class LargeFaceList : NameAndUserDataContract
     {
         /// <summary>
-        /// Initializes a new instance of the NameAndUserDataContract class.
+        /// Initializes a new instance of the LargeFaceList class.
         /// </summary>
-        public NameAndUserDataContract()
+        public LargeFaceList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NameAndUserDataContract class.
+        /// Initializes a new instance of the LargeFaceList class.
         /// </summary>
+        /// <param name="largeFaceListId">LargeFaceListId of the target large
+        /// face list.</param>
         /// <param name="name">User defined name, maximum length is
         /// 128.</param>
         /// <param name="userData">User specified data. Length should not
         /// exceed 16KB.</param>
-        public NameAndUserDataContract(string name = default(string), string userData = default(string))
+        public LargeFaceList(string largeFaceListId, string name = default(string), string userData = default(string))
+            : base(name, userData)
         {
-            Name = name;
-            UserData = userData;
+            LargeFaceListId = largeFaceListId;
             CustomInit();
         }
 
@@ -48,16 +49,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets user defined name, maximum length is 128.
+        /// Gets or sets largeFaceListId of the target large face list.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets user specified data. Length should not exceed 16KB.
-        /// </summary>
-        [JsonProperty(PropertyName = "userData")]
-        public string UserData { get; set; }
+        [JsonProperty(PropertyName = "largeFaceListId")]
+        public string LargeFaceListId { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -65,20 +60,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
-            if (Name != null)
+            base.Validate();
+            if (LargeFaceListId == null)
             {
-                if (Name.Length > 128)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Name", 128);
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "LargeFaceListId");
             }
-            if (UserData != null)
+            if (LargeFaceListId != null)
             {
-                if (UserData.Length > 16384)
+                if (LargeFaceListId.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "UserData", 16384);
+                    throw new ValidationException(ValidationRules.MaxLength, "LargeFaceListId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(LargeFaceListId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "LargeFaceListId", "^[a-z0-9-_]+$");
                 }
             }
         }

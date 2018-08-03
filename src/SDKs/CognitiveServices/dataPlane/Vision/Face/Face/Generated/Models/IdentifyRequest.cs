@@ -32,11 +32,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Initializes a new instance of the IdentifyRequest class.
         /// </summary>
-        /// <param name="personGroupId">PersonGroupId of the target person
-        /// group, created by PersonGroups.Create</param>
         /// <param name="faceIds">Array of query faces faceIds, created by the
         /// Face - Detect. Each of the faces are identified independently. The
         /// valid number of faceIds is between [1, 10].</param>
+        /// <param name="personGroupId">PersonGroupId of the target person
+        /// group, created by PersonGroup - Create. Parameter personGroupId and
+        /// largePersonGroupId should not be provided at the same time.</param>
+        /// <param name="largePersonGroupId">LargePersonGroupId of the target
+        /// large person group, created by LargePersonGroup - Create. Parameter
+        /// personGroupId and largePersonGroupId should not be provided at the
+        /// same time.</param>
         /// <param name="maxNumOfCandidatesReturned">The range of
         /// maxNumOfCandidatesReturned is between 1 and 5 (default is
         /// 1).</param>
@@ -44,10 +49,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// identification, used to judge whether one face belong to one
         /// person. The range of confidenceThreshold is [0, 1] (default
         /// specified by algorithm).</param>
-        public IdentifyRequest(string personGroupId, IList<System.Guid> faceIds, int? maxNumOfCandidatesReturned = default(int?), double? confidenceThreshold = default(double?))
+        public IdentifyRequest(IList<System.Guid> faceIds, string personGroupId = default(string), string largePersonGroupId = default(string), int? maxNumOfCandidatesReturned = default(int?), double? confidenceThreshold = default(double?))
         {
-            PersonGroupId = personGroupId;
             FaceIds = faceIds;
+            PersonGroupId = personGroupId;
+            LargePersonGroupId = largePersonGroupId;
             MaxNumOfCandidatesReturned = maxNumOfCandidatesReturned;
             ConfidenceThreshold = confidenceThreshold;
             CustomInit();
@@ -59,19 +65,28 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets personGroupId of the target person group, created by
-        /// PersonGroups.Create
-        /// </summary>
-        [JsonProperty(PropertyName = "personGroupId")]
-        public string PersonGroupId { get; set; }
-
-        /// <summary>
         /// Gets or sets array of query faces faceIds, created by the Face -
         /// Detect. Each of the faces are identified independently. The valid
         /// number of faceIds is between [1, 10].
         /// </summary>
         [JsonProperty(PropertyName = "faceIds")]
         public IList<System.Guid> FaceIds { get; set; }
+
+        /// <summary>
+        /// Gets or sets personGroupId of the target person group, created by
+        /// PersonGroup - Create. Parameter personGroupId and
+        /// largePersonGroupId should not be provided at the same time.
+        /// </summary>
+        [JsonProperty(PropertyName = "personGroupId")]
+        public string PersonGroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets largePersonGroupId of the target large person group,
+        /// created by LargePersonGroup - Create. Parameter personGroupId and
+        /// largePersonGroupId should not be provided at the same time.
+        /// </summary>
+        [JsonProperty(PropertyName = "largePersonGroupId")]
+        public string LargePersonGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets the range of maxNumOfCandidatesReturned is between 1
@@ -96,13 +111,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PersonGroupId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PersonGroupId");
-            }
             if (FaceIds == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FaceIds");
+            }
+            if (FaceIds != null)
+            {
+                if (FaceIds.Count > 10)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "FaceIds", 10);
+                }
             }
             if (PersonGroupId != null)
             {
@@ -115,11 +133,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
                     throw new ValidationException(ValidationRules.Pattern, "PersonGroupId", "^[a-z0-9-_]+$");
                 }
             }
-            if (FaceIds != null)
+            if (LargePersonGroupId != null)
             {
-                if (FaceIds.Count > 10)
+                if (LargePersonGroupId.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxItems, "FaceIds", 10);
+                    throw new ValidationException(ValidationRules.MaxLength, "LargePersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(LargePersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "LargePersonGroupId", "^[a-z0-9-_]+$");
                 }
             }
             if (MaxNumOfCandidatesReturned > 5)
