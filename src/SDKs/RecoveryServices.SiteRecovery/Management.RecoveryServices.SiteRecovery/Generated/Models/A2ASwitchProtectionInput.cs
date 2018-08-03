@@ -46,7 +46,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="policyId">The Policy Id.</param>
         /// <param name="recoveryBootDiagStorageAccountId">The boot diagnostic
         /// storage account.</param>
-        public A2ASwitchProtectionInput(string recoveryContainerId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), string policyId = default(string), string recoveryBootDiagStorageAccountId = default(string))
+        /// <param name="diskEncryptionInfo">The recovery disk encryption
+        /// information.</param>
+        public A2ASwitchProtectionInput(string recoveryContainerId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), string policyId = default(string), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo))
         {
             RecoveryContainerId = recoveryContainerId;
             VmDisks = vmDisks;
@@ -56,6 +58,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
             PolicyId = policyId;
             RecoveryBootDiagStorageAccountId = recoveryBootDiagStorageAccountId;
+            DiskEncryptionInfo = diskEncryptionInfo;
             CustomInit();
         }
 
@@ -112,6 +115,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryBootDiagStorageAccountId")]
         public string RecoveryBootDiagStorageAccountId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recovery disk encryption information.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskEncryptionInfo")]
+        public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
 
     }
 }
