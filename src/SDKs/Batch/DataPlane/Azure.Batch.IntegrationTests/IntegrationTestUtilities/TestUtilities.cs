@@ -39,7 +39,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
         public static async Task<BatchClient> OpenBatchClientAsync(BatchSharedKeyCredentials sharedKeyCredentials, bool addDefaultRetryPolicy = true)
         {
-            BatchClient client = await BatchClient.OpenAsync(sharedKeyCredentials);
+            BatchClient client = BatchClient.Open(sharedKeyCredentials);
 
             //Force us to get exception if the server returns something we don't expect
             //TODO: To avoid including this test assembly via "InternalsVisibleTo" we resort to some reflection trickery... maybe this property
