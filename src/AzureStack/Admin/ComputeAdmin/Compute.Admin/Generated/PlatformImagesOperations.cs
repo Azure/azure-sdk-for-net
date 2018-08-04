@@ -90,10 +90,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2015-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -102,6 +99,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -111,9 +109,9 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -173,7 +171,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -244,7 +242,8 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// Returns the requested platform image.
         /// </summary>
         /// <remarks>
-        /// Returns the requested platform image.
+        /// Returns the specific platform image matching publisher, offer, skus and
+        /// version.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -308,10 +307,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "version");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2015-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -324,6 +320,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
                 tracingParameters.Add("offer", offer);
                 tracingParameters.Add("sku", sku);
                 tracingParameters.Add("version", version);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -337,9 +334,9 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             _url = _url.Replace("{sku}", System.Uri.EscapeDataString(sku));
             _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -399,7 +396,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -470,7 +467,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// Creates a platform image.
         /// </summary>
         /// <remarks>
-        /// Creates a new platform image.
+        /// Creates a new platform image with given publisher, offer, skus and version.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -504,7 +501,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         }
 
         /// <summary>
-        /// Deletes a platform image
+        /// Deletes a platform image matching publisher, offer, skus and version
         /// </summary>
         /// <remarks>
         /// Delete a platform image
@@ -568,10 +565,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "version");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2015-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -584,6 +578,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
                 tracingParameters.Add("offer", offer);
                 tracingParameters.Add("sku", sku);
                 tracingParameters.Add("version", version);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -597,9 +592,9 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             _url = _url.Replace("{sku}", System.Uri.EscapeDataString(sku));
             _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -659,7 +654,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -712,7 +707,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// Creates a platform image.
         /// </summary>
         /// <remarks>
-        /// Creates a new platform image.
+        /// Creates a new platform image with given publisher, offer, skus and version.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -779,14 +774,11 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "version");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (newImage == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "newImage");
             }
+            string apiVersion = "2015-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -799,6 +791,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
                 tracingParameters.Add("offer", offer);
                 tracingParameters.Add("sku", sku);
                 tracingParameters.Add("version", version);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("newImage", newImage);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
@@ -813,9 +806,9 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             _url = _url.Replace("{sku}", System.Uri.EscapeDataString(sku));
             _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -881,7 +874,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 202 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

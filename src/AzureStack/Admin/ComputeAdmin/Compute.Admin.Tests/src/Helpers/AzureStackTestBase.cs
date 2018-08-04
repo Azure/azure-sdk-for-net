@@ -4,7 +4,7 @@
 
 using System;
 using System.Net;
-
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
@@ -83,5 +83,20 @@ namespace Compute.Tests
             catch (Exception) { }
         }
 
+        public void ValidateExpectedReturnCode(Action action, HttpStatusCode httpResponseCode)
+        {
+            try { action.Invoke(); }
+            catch (CloudException ex)
+            {
+                if (ex.Response.StatusCode == httpResponseCode)
+                {
+                    // Expected exception received.
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+        }
     }
 }

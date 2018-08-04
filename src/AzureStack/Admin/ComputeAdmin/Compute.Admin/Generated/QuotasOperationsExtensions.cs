@@ -24,10 +24,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
     public static partial class QuotasOperationsExtensions
     {
             /// <summary>
-            /// Returns the requested quota.
+            /// Returns the requested Compute quota.
             /// </summary>
             /// <remarks>
-            /// Get an existing Quota.
+            /// Get an existing Compute Quota.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,10 +44,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             }
 
             /// <summary>
-            /// Returns the requested quota.
+            /// Returns the requested Compute quota.
             /// </summary>
             /// <remarks>
-            /// Get an existing Quota.
+            /// Get an existing Compute Quota.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -70,10 +70,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             }
 
             /// <summary>
-            /// Creates or Updates a Quota.
+            /// Creates or Updates a Compute Quota.
             /// </summary>
             /// <remarks>
-            /// Creates or Updates a Quota.
+            /// Creates or Updates a Compute Quota with the provided quota parameters.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -93,10 +93,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             }
 
             /// <summary>
-            /// Creates or Updates a Quota.
+            /// Creates or Updates a Compute Quota.
             /// </summary>
             /// <remarks>
-            /// Creates or Updates a Quota.
+            /// Creates or Updates a Compute Quota with the provided quota parameters.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -122,10 +122,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             }
 
             /// <summary>
-            /// Deletes specified quota
+            /// Deletes specified Compute quota
             /// </summary>
             /// <remarks>
-            /// Delete an existing quota.
+            /// Delete an existing Compute quota.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -142,10 +142,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             }
 
             /// <summary>
-            /// Deletes specified quota
+            /// Deletes specified Compute quota
             /// </summary>
             /// <remarks>
-            /// Delete an existing quota.
+            /// Delete an existing Compute quota.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -165,10 +165,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             }
 
             /// <summary>
-            /// Lists all quotas.
+            /// Lists all Compute quotas.
             /// </summary>
             /// <remarks>
-            /// Get a list of existing quotas.
+            /// Get a list of existing Compute quotas.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -182,10 +182,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             }
 
             /// <summary>
-            /// Lists all quotas.
+            /// Lists all Compute quotas.
             /// </summary>
             /// <remarks>
-            /// Get a list of existing quotas.
+            /// Get a list of existing Compute quotas.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

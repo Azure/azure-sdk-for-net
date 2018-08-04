@@ -5,6 +5,7 @@
 
 using Microsoft.AzureStack.Management.Compute.Admin;
 using Microsoft.AzureStack.Management.Compute.Admin.Models;
+using System.Net;
 using System.Linq;
 using Xunit;
 
@@ -98,7 +99,6 @@ namespace Compute.Tests
         public void TestCreateAndDeleteVMExtension() {
             RunTest((client) => {
                 // Setup
-
                 var extension = client.VMExtensions.Create(Location, publisher, type, version, Create());
 
                 untilFalse(() => client.VMExtensions.Get(Location, publisher, type, version).ProvisioningState == ProvisioningState.Creating);
@@ -107,8 +107,10 @@ namespace Compute.Tests
                 client.VMExtensions.Delete(Location, publisher, type, version);
 
                 // Validate
-                var result = client.VMExtensions.Get(Location, publisher, type, version);
-                Assert.Null(result);
+                ValidateExpectedReturnCode(
+                    () => client.VMExtensions.Get(Location, publisher, type, version),
+                    HttpStatusCode.NotFound
+                    );
             });
         }
 
