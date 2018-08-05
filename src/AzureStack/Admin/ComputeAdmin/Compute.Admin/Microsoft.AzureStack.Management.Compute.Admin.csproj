@@ -13,6 +13,8 @@
         <PackageReleaseNotes>
             <![CDATA[
                 Preview release of the AzureStack Compute administrator SDK which provides functionality to manage compute quotas, platform images, and virtual machine extensions. 
+                Version change from 0.1.0 to 0.2.0
+                  Added two properties into Compute quota object. Updated tests for validating these two new properties            
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>
