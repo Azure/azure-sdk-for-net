@@ -21,7 +21,6 @@ namespace Microsoft.Rest.Azure
             AdditionalInfo = new List<AdditionalErrorInfo>();
         }
 
-        #region old code
         /// <summary>
         /// The error code parsed from the body of the http error response
         /// </summary>
@@ -36,7 +35,6 @@ namespace Microsoft.Rest.Azure
         /// Gets or sets the target of the error.
         /// </summary>
         public string Target { get; set; }
-        #endregion
 
         /// <summary>
         /// Gets or sets details for the error.
