@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Search
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<long>> CountWithHttpMessagesAsync(
-            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), 
-            Dictionary<string, List<string>> customHeaders = null, 
+            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
+            Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken));
-        
+
         /// <summary>
         /// Retrieves the next page of search results from the Azure Search index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Search
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class;
+            CancellationToken cancellationToken = default(CancellationToken)) where T : class, new();
 
         /// <summary>
         /// Retrieves a document from the Azure Search index.
@@ -206,10 +206,10 @@ namespace Microsoft.Azure.Search
         /// </list>
         /// </remarks>
         Task<AzureOperationResponse<Document>> GetWithHttpMessagesAsync(
-            string key, 
+            string key,
             IEnumerable<string> selectedFields,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            Dictionary<string, List<string>> customHeaders = null, 
+            Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Search
             IEnumerable<string> selectedFields,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class;
+            CancellationToken cancellationToken = default(CancellationToken)) where T : class, new();
 
         /// <summary>
         /// Sends a batch of upload, merge, and/or delete actions to the Azure Search index.
@@ -387,7 +387,7 @@ namespace Microsoft.Azure.Search
         /// for more details on the type mapping.
         /// </remarks>
         Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync<T>(
-            IndexBatch<T> batch,
+            IndexBatch batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class;
@@ -484,7 +484,7 @@ namespace Microsoft.Azure.Search
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class;
+            CancellationToken cancellationToken = default(CancellationToken)) where T : class, new();
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the Azure Search index.
@@ -566,6 +566,6 @@ namespace Microsoft.Azure.Search
             SuggestParameters suggestParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class;
+            CancellationToken cancellationToken = default(CancellationToken)) where T : class, new();
     }
 }

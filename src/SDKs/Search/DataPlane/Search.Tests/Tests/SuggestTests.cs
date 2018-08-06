@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Search.Tests
             var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
             var batch = IndexBatch.Upload(new[] { doc1, doc2 });
 
-            indexClient.Documents.Index(batch);
+            indexClient.Documents.Index<Book>(batch);
             SearchTestUtilities.WaitForIndexing();
 
             var parameters = new SuggestParameters() { Select = new[] { "ISBN", "Title", "PublishDate" } };
@@ -300,7 +300,7 @@ namespace Microsoft.Azure.Search.Tests
 
             var batch = IndexBatch.Upload(new[] { doc });
 
-            indexClient.Documents.Index(batch);
+            indexClient.Documents.Index<T>(batch);
             SearchTestUtilities.WaitForIndexing();
 
             var parameters = new SuggestParameters() { Select = new[] { "*" } };

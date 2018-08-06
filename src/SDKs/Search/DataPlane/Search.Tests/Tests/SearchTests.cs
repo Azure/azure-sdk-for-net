@@ -594,7 +594,7 @@ namespace Microsoft.Azure.Search.Tests
             var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
             var batch = IndexBatch.Upload(new[] { doc1, doc2 });
                 
-            indexClient.Documents.Index(batch);
+            indexClient.Documents.Index<Book>(batch);
             SearchTestUtilities.WaitForIndexing();
 
             DocumentSearchResult<Book> response = indexClient.Documents.Search<Book>("War and Peace");
@@ -651,7 +651,7 @@ namespace Microsoft.Azure.Search.Tests
 
             var batch = IndexBatch.Upload(new[] { doc1, doc2 });
                 
-            indexClient.Documents.Index(batch);
+            indexClient.Documents.Index<NonNullableModel>(batch);
             SearchTestUtilities.WaitForIndexing();
 
             DocumentSearchResult<NonNullableModel> response = indexClient.Documents.Search<NonNullableModel>("*");
@@ -686,7 +686,7 @@ namespace Microsoft.Azure.Search.Tests
 
             var batch = IndexBatch.Upload(new[] { doc });
 
-            indexClient.Documents.Index(batch);
+            indexClient.Documents.Index<ModelWithNullableInt>(batch);
             SearchTestUtilities.WaitForIndexing();
 
             SerializationException e = Assert.Throws<SerializationException>(() => indexClient.Documents.Search<ModelWithInt>("*"));
@@ -713,7 +713,7 @@ namespace Microsoft.Azure.Search.Tests
             var doc = new ModelWithInt() { Key = "123", IntValue = 0 };
             var batch = IndexBatch.Upload(new[] { doc });
 
-            indexClient.Documents.Index(batch);
+            indexClient.Documents.Index<ModelWithInt>(batch);
             SearchTestUtilities.WaitForIndexing();
 
             var parameters = new SearchParameters() { Filter = "IntValue eq 0" };
@@ -773,7 +773,7 @@ namespace Microsoft.Azure.Search.Tests
 
             var batch = IndexBatch.Upload(new[] { doc });
 
-            indexClient.Documents.Index(batch);
+            indexClient.Documents.Index<T>(batch);
             SearchTestUtilities.WaitForIndexing();
 
             DocumentSearchResult<T> response = indexClient.Documents.Search<T>("*");
@@ -802,7 +802,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
 
                 var batch = IndexBatch.Upload(nextHotels);
-                client.Documents.Index(batch);
+                client.Documents.Index<Hotel>(batch);
 
                 SearchTestUtilities.WaitForIndexing();
             }

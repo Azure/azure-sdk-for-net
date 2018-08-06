@@ -54,8 +54,8 @@ namespace Microsoft.Azure.Search
         public IndexBatch FindFailedActionsToRetry(IndexBatch originalBatch, string keyFieldName)
         {
             Func<Document, string> getKey = d => d[keyFieldName].ToString();
-            IEnumerable<IndexAction> failedActions = 
-                this.DoFindFailedActionsToRetry<IndexBatch, IndexAction, Document>(originalBatch, getKey);
+            IEnumerable<IndexAction> failedActions =
+                this.DoFindFailedActionsToRetry<Document>(originalBatch, getKey);
             return IndexBatch.New(failedActions);
         }
 
@@ -71,28 +71,26 @@ namespace Microsoft.Azure.Search
         /// <returns>
         /// A new batch containing all the actions from the given batch that failed and should be retried.
         /// </returns>
-        public IndexBatch<T> FindFailedActionsToRetry<T>(IndexBatch<T> originalBatch, Func<T, string> keySelector)
+        public IndexBatch FindFailedActionsToRetry<T>(IndexBatch originalBatch, Func<T, string> keySelector)
             where T : class
         {
-            IEnumerable<IndexAction<T>> failedActions = 
-                this.DoFindFailedActionsToRetry<IndexBatch<T>, IndexAction<T>, T>(originalBatch, keySelector);
+            IEnumerable<IndexAction> failedActions =
+                this.DoFindFailedActionsToRetry<T>(originalBatch, keySelector);
             return IndexBatch.New(failedActions);
         }
 
-        private IEnumerable<TAction> DoFindFailedActionsToRetry<TBatch, TAction, TDoc>(
-            TBatch originalBatch,
+        private IEnumerable<IndexAction> DoFindFailedActionsToRetry<TDoc>(
+            IndexBatch originalBatch,
             Func<TDoc, string> keySelector)
-            where TBatch : IndexBatchBase<TAction, TDoc>
-            where TAction : IndexActionBase<TDoc>
             where TDoc : class
         {
-            IEnumerable<string> allRetriableKeys = 
+            IEnumerable<string> allRetriableKeys =
                 this.IndexingResults.Where(r => ShouldRetry(r.StatusCode)).Select(r => r.Key);
 
             var uniqueRetriableKeys = new HashSet<string>(allRetriableKeys);
 
-            Func<TAction, bool> shouldRetry = 
-                a => a.Document != null && uniqueRetriableKeys.Contains(keySelector(a.Document));
+            Func<IndexAction, bool> shouldRetry =
+                a => a.Document != null && uniqueRetriableKeys.Contains(keySelector(a.Document as TDoc));
 
             return originalBatch.Actions.Where(shouldRetry);
         }
@@ -102,7 +100,7 @@ namespace Microsoft.Azure.Search
             Throw.IfArgumentNull(documentIndexResult, "documentIndexResult");
 
             return String.Format(
-                MessageFormat, 
+                MessageFormat,
                 documentIndexResult.Results.Count(r => !r.Succeeded),
                 documentIndexResult.Results.Count);
         }

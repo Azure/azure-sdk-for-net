@@ -28,11 +28,14 @@ namespace Microsoft.Azure.Search.Serialization
             CreateSerializerSettings<T>(baseSettings, useCamelCase);
 
         public static JsonSerializerSettings CreateTypedDeserializerSettings<T>(JsonSerializerSettings baseSettings)
-            where T : class =>
+            where T : class, new() =>
             CreateDeserializerSettings<SearchResult<T>, SuggestResult<T>, T>(baseSettings);
 
+        /*        public static JsonSerializerSettings CreateDocumentSerializerSettings(JsonSerializerSettings baseSettings) =>
+                    CreateSerializerSettings<Document>(baseSettings, useCamelCase: false);*/
+
         public static JsonSerializerSettings CreateDocumentSerializerSettings(JsonSerializerSettings baseSettings) =>
-            CreateSerializerSettings<Document>(baseSettings, useCamelCase: false);
+        CreateSerializerSettings<Dictionary<string, object>>(baseSettings, useCamelCase: false);
 
         public static JsonSerializerSettings CreateDocumentDeserializerSettings(JsonSerializerSettings baseSettings) =>
             CreateDeserializerSettings<SearchResult, SuggestResult, Document>(baseSettings);
@@ -64,14 +67,14 @@ namespace Microsoft.Azure.Search.Serialization
             JsonSerializerSettings baseSettings)
             where TSearchResult : SearchResultBase<TDoc>, new()
             where TSuggestResult : SuggestResultBase<TDoc>, new()
-            where TDoc : class
+            where TDoc : class, new()
         {
             JsonSerializerSettings settings = CopySettings(baseSettings);
             settings.Converters.Add(new GeographyPointConverter());
+            settings.Converters.Add(new SearchDocumentConverter<TDoc>());
             settings.Converters.Add(new DocumentConverter());
             settings.Converters.Add(new DateTimeConverter());
             settings.Converters.Add(new DoubleConverter());
-            settings.Converters.Add(new SearchResultConverter<TSearchResult, TDoc>());
             settings.Converters.Add(new SuggestResultConverter<TSuggestResult, TDoc>());
             settings.DateParseHandling = DateParseHandling.DateTimeOffset;
 

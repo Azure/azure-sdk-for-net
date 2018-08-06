@@ -103,10 +103,10 @@ namespace Microsoft.Azure.Search.Tests
         private void AssertRetryBatchContains(params string[] expectedKeys)
         {
             Assert.Equal(
-                expectedKeys, 
-                GetRetryBatch().Actions.Select(a => a.Document[KeyFieldName]).Cast<string>());
+                expectedKeys,
+                GetRetryBatch().Actions.Select(a => (a.Document as Document)[KeyFieldName]).Cast<string>());
 
-            Assert.Equal(expectedKeys, GetTypedRetryBatch().Actions.Select(a => a.Document.HotelId));
+            Assert.Equal(expectedKeys, GetTypedRetryBatch().Actions.Select(a => (a.Document as Hotel).HotelId));
         }
 
         private void AssertRetryBatchEmpty()
@@ -124,13 +124,13 @@ namespace Microsoft.Azure.Search.Tests
             return exception.FindFailedActionsToRetry(originalBatch, KeyFieldName);
         }
 
-        private IndexBatch<Hotel> GetTypedRetryBatch()
+        private IndexBatch GetTypedRetryBatch()
         {
             IEnumerable<string> allKeys = _results.Results.Select(r => r.Key);
 
             var exception = new IndexBatchException(_results);
-            IndexBatch<Hotel> originalBatch = IndexBatch.Upload(allKeys.Select(k => new Hotel() { HotelId = k }));
-            return exception.FindFailedActionsToRetry(originalBatch, h => h.HotelId);
+            IndexBatch originalBatch = IndexBatch.Upload(allKeys.Select(k => new Hotel() { HotelId = k }));
+            return exception.FindFailedActionsToRetry<Hotel>(originalBatch, h => h.HotelId);
         }
     }
 }

@@ -16,32 +16,24 @@ namespace Microsoft.Azure.Search.Serialization
     /// <typeparam name="TDoc">
     /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
     /// </typeparam>
-    /// <typeparam name="TResult">
-    /// Type of the model class that encapsulates documents in a search response.
-    /// </typeparam>
-    internal class SearchResultConverter<TResult, TDoc> : JsonConverter
-        where TResult : SearchResultBase<TDoc>, new()
-        where TDoc : class
+    internal class SearchDocumentConverter<TDoc> : JsonConverter
+         where TDoc : class, new()
     {
+        private static readonly string[] EmptyStringArray = new string[0];
+
         public override bool CanRead
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
         public override bool CanWrite
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(TResult).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
+            return typeof(SearchDocument).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
         public override object ReadJson(
@@ -50,11 +42,13 @@ namespace Microsoft.Azure.Search.Serialization
             object existingValue,
             JsonSerializer serializer)
         {
+            SearchDocument result = new SearchDocument();
+
             JObject propertyBag = serializer.Deserialize<JObject>(reader);
+
             JToken score = propertyBag["@search.score"];
             JToken highlights = propertyBag["@search.highlights"];
 
-            var result = new TResult();
             result.Score = score.Value<double>();
 
             if (highlights != null)
@@ -65,6 +59,7 @@ namespace Microsoft.Azure.Search.Serialization
 
             var docReader = new JTokenReader(propertyBag);
             result.Document = serializer.Deserialize<TDoc>(docReader);
+
             return result;
         }
 

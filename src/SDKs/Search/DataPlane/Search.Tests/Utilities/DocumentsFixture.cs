@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             SearchIndexClient indexClient = this.GetSearchIndexClient();
 
             var batch = IndexBatch.Upload(TestDocuments);
-            indexClient.Documents.Index(batch);
+            indexClient.Documents.Index<Hotel>(batch);
 
             SearchTestUtilities.WaitForIndexing();
         }

@@ -7,17 +7,14 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Abstract base class for index actions that operate on a document.
     /// </summary>
-    /// <typeparam name="T">
-    /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
-    /// </typeparam>
-    public abstract class IndexActionBase<T> where T : class
+    public abstract class IndexActionBase
     {
         /// <summary>
         /// Initializes a new instance of the IndexActionBase class with the given action type.
         /// </summary>
         /// <param name="actionType">The type of action to perform on the document.</param>
         /// <param name="document">The document on which the action will be performed.</param>
-        protected IndexActionBase(IndexActionType actionType, T document)
+        protected IndexActionBase(IndexActionType actionType, object document)
         {
             this.Document = document;
             this.ActionType = actionType;
@@ -32,6 +29,6 @@ namespace Microsoft.Azure.Search.Models
         /// Gets the document on which the action will be performed; Fields other than the key are ignored for
         /// delete actions.
         /// </summary>
-        public T Document { get; private set; }
+        public object Document { get; private set; }
     }
 }

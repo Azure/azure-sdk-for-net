@@ -54,6 +54,8 @@ namespace Microsoft.Azure.Search
         /// documents.
         /// </param>
         /// <param name='accept'>
+        /// The accept parameter in HTTP header advertises which content types,
+        /// expressed as MIME types, the client is able to understand.
         /// </param>
         /// <param name='searchParameters'>
         /// Additional parameters for the operation
@@ -84,6 +86,8 @@ namespace Microsoft.Azure.Search
         /// The definition of the Search request.
         /// </param>
         /// <param name='accept'>
+        /// The accept parameter in HTTP header advertises which content types,
+        /// expressed as MIME types, the client is able to understand.
         /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
@@ -109,6 +113,7 @@ namespace Microsoft.Azure.Search
         /// Search index.
         /// </summary>
         /// <param name='indexBatch'>
+        /// The batch of index actions.
         /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation

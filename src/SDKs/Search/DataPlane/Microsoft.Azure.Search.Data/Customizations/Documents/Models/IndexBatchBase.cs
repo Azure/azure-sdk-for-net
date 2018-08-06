@@ -14,12 +14,8 @@ namespace Microsoft.Azure.Search.Models
     /// <typeparam name="TAction">
     /// The type of action to be contained in the batch. Must be derived from IndexActionBase.
     /// </typeparam>
-    /// <typeparam name="TDoc">
-    /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
-    /// </typeparam>
-    public abstract class IndexBatchBase<TAction, TDoc> 
-        where TAction : IndexActionBase<TDoc>
-        where TDoc : class
+    public abstract class IndexBatchBase<TAction>
+        where TAction : IndexActionBase
     {
         /// <summary>
         /// Initializes a new instance of the IndexBatchBase class.

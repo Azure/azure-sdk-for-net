@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Search
     internal class DocumentsOperations : IServiceOperations<SearchIndexClient>, IDocumentsOperations
     {
         internal static readonly string[] SelectAll = new[] { "*" };
+        internal static readonly string Accept = "application/json; odata.metadata = none";
 
         /// <summary>
         /// Initializes a new instance of the DocumentsOperations class.
@@ -46,14 +47,14 @@ namespace Microsoft.Azure.Search
         public SearchIndexClient Client { get; private set; }
 
         public async Task<AzureOperationResponse<long>> CountWithHttpMessagesAsync(
-            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), 
-            Dictionary<string, List<string>> customHeaders = null, 
+            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
+            Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            AzureOperationResponse<long?> response = 
+            AzureOperationResponse<long?> response =
                 await this.Client.DocumentsProxy.CountWithHttpMessagesAsync(
-                    searchRequestOptions, 
-                    customHeaders, 
+                    searchRequestOptions,
+                    customHeaders,
                     cancellationToken).ConfigureAwait(false);
 
             return new AzureOperationResponse<long>()
@@ -112,7 +113,7 @@ namespace Microsoft.Azure.Search
                     searchRequestOptions,
                     customHeaders,
                     cancellationToken).ConfigureAwait(false);
-            }    
+            }
 
             return new AzureOperationResponse<AutocompleteResult>()
             {
@@ -123,60 +124,98 @@ namespace Microsoft.Azure.Search
             };
         }
 
-        public Task<AzureOperationResponse<DocumentSearchResult>> ContinueSearchWithHttpMessagesAsync(
+        public async Task<AzureOperationResponse<DocumentSearchResult>> ContinueSearchWithHttpMessagesAsync(
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            string invocationId;
-            Guid? clientRequestId;
-            bool shouldTrace =
-                ValidateAndTraceContinueSearch(
-                    continuationToken,
-                    searchRequestOptions,
-                    cancellationToken,
-                    out invocationId,
-                    out clientRequestId);
+            JsonSerializerSettings deserializationSettings =
+                JsonUtility.CreateDocumentDeserializerSettings(this.Client.DeserializationSettings);
 
-            return DoContinueSearchWithHttpMessagesAsync<DocumentSearchResult, SearchResult, Document>(
-                continuationToken.NextLink,
-                continuationToken.NextPageParameters,
-                clientRequestId,
-                customHeaders,
-                continuationToken.NextPageParameters == null,
-                shouldTrace,
-                invocationId,
-                cancellationToken,
-                DeserializeForSearch);
+            bool useGet = continuationToken.NextPageParameters == null;
+
+            AzureOperationResponse<DocumentSearchResultProxy> response;
+
+            if (useGet)
+            {
+                var parameters = ParseQueryParameters(continuationToken.NextLink);
+                string searchText = parameters.ContainsKey("search") ? parameters["search"].First() : null;
+
+                SearchParameters searchParameters = ConvertToSearchParameters(parameters);
+
+                response = await this.Client.DocumentsProxy.SearchGetWithHttpMessagesAsync(searchText, Accept, searchParameters,
+                    searchRequestOptions,
+                    customHeaders,
+                    cancellationToken,
+                    requestDeserializerSettings: deserializationSettings).ConfigureAwait(false);
+            }
+            else
+            {
+                response = await this.Client.DocumentsProxy.SearchPostWithHttpMessagesAsync(
+                    continuationToken.NextPageParameters,
+                    Accept,
+                    searchRequestOptions,
+                    customHeaders,
+                    cancellationToken,
+                    requestDeserializerSettings: deserializationSettings).ConfigureAwait(false);
+            }
+
+            return new AzureOperationResponse<DocumentSearchResult>()
+            {
+                Body = CreateDocumentSearchResultFromProxy(response.Body),
+                Request = response.Request,
+                RequestId = response.RequestId,
+                Response = response.Response
+            };
         }
 
-        public Task<AzureOperationResponse<DocumentSearchResult<T>>> ContinueSearchWithHttpMessagesAsync<T>(
+        public async Task<AzureOperationResponse<DocumentSearchResult<T>>> ContinueSearchWithHttpMessagesAsync<T>(
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken)) where T : class, new()
         {
-            string invocationId;
-            Guid? clientRequestId;
-            bool shouldTrace =
-                ValidateAndTraceContinueSearch(
-                    continuationToken,
-                    searchRequestOptions,
-                    cancellationToken,
-                    out invocationId,
-                    out clientRequestId);
+            JsonSerializerSettings deserializationSettings =
+                JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings);
 
-            return DoContinueSearchWithHttpMessagesAsync<DocumentSearchResult<T>, SearchResult<T>, T>(
-                continuationToken.NextLink,
-                continuationToken.NextPageParameters,
-                clientRequestId,
-                customHeaders,
-                continuationToken.NextPageParameters == null,
-                shouldTrace,
-                invocationId,
-                cancellationToken,
-                DeserializeForSearch<T>);
+            bool useGet = continuationToken.NextPageParameters == null;
+
+            AzureOperationResponse<DocumentSearchResultProxy> response;
+
+            if (useGet)
+            {
+                var parameters = ParseQueryParameters(continuationToken.NextLink);
+                string searchText = parameters.ContainsKey("search") ? parameters["search"].First() : null;
+                SearchParameters searchParameters = ConvertToSearchParameters(parameters);
+
+                response = await this.Client.DocumentsProxy.SearchGetWithHttpMessagesAsync(
+                    searchText,
+                    Accept,
+                    searchParameters,
+                    searchRequestOptions,
+                    customHeaders,
+                    cancellationToken,
+                    requestDeserializerSettings: deserializationSettings).ConfigureAwait(false);
+            }
+            else
+            {
+                response = await this.Client.DocumentsProxy.SearchPostWithHttpMessagesAsync(
+                    continuationToken.NextPageParameters,
+                    Accept,
+                    searchRequestOptions,
+                    customHeaders,
+                    cancellationToken,
+                    requestDeserializerSettings: deserializationSettings).ConfigureAwait(false);
+            }
+
+            return new AzureOperationResponse<DocumentSearchResult<T>>()
+            {
+                Body = CreateTypedSearchResultFromProxy<T>(response.Body),
+                Request = response.Request,
+                RequestId = response.RequestId,
+                Response = response.Response
+            };
         }
 
         public Task<AzureOperationResponse<Document>> GetWithHttpMessagesAsync(
@@ -200,10 +239,11 @@ namespace Microsoft.Azure.Search
             IEnumerable<string> selectedFields,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken)) where T : class, new()
         {
-            JsonSerializerSettings jsonSerializerSettings = 
+            JsonSerializerSettings jsonSerializerSettings =
                 JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings);
+
             return DoGetWithHttpMessagesAsync<T>(
                 key,
                 selectedFields,
@@ -213,7 +253,7 @@ namespace Microsoft.Azure.Search
                 jsonSerializerSettings);
         }
 
-        public Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync(
+        public async Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync(
             IndexBatch batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
@@ -224,14 +264,19 @@ namespace Microsoft.Azure.Search
                 throw new ArgumentNullException("batch");
             }
 
-            JsonSerializerSettings jsonSettings = 
+            JsonSerializerSettings serializationSettings =
                 JsonUtility.CreateDocumentSerializerSettings(this.Client.SerializationSettings);
-            string payload = SafeJsonConvert.SerializeObject(batch, jsonSettings);
-            return DoIndexWithHttpMessagesAsync(payload, searchRequestOptions, customHeaders, cancellationToken);
+
+            AzureOperationResponse<DocumentIndexResult> result
+                = await this.Client.DocumentsProxy.DocumentIndexPostWithHttpMessagesAsync(batch, searchRequestOptions, customHeaders, cancellationToken, requestSerializerSettings: serializationSettings);
+
+            CheckForPartialFailure(result);
+
+            return result;
         }
 
-        public Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync<T>(
-            IndexBatch<T> batch,
+        public async Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync<T>(
+            IndexBatch batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class
@@ -242,43 +287,103 @@ namespace Microsoft.Azure.Search
             }
 
             bool useCamelCase = SerializePropertyNamesAsCamelCaseAttribute.IsDefinedOnType<T>();
-            JsonSerializerSettings jsonSettings =
+            JsonSerializerSettings serializationSettings =
                 JsonUtility.CreateTypedSerializerSettings<T>(this.Client.SerializationSettings, useCamelCase);
-            string payload = SafeJsonConvert.SerializeObject(batch, jsonSettings);
 
-            return DoIndexWithHttpMessagesAsync(payload, searchRequestOptions, customHeaders, cancellationToken);
+            AzureOperationResponse<DocumentIndexResult> result
+                = await this.Client.DocumentsProxy.DocumentIndexPostWithHttpMessagesAsync(batch, searchRequestOptions, customHeaders, cancellationToken, requestSerializerSettings: serializationSettings).ConfigureAwait(false);
+
+            CheckForPartialFailure(result);
+
+            return result;
         }
 
-        public Task<AzureOperationResponse<DocumentSearchResult>> SearchWithHttpMessagesAsync(
+        public async Task<AzureOperationResponse<DocumentSearchResult>> SearchWithHttpMessagesAsync(
             string searchText,
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            return DoSearchWithHttpMessagesAsync<DocumentSearchResult, SearchResult, Document>(
-                searchText,
-                searchParameters,
-                searchRequestOptions,
-                customHeaders,
-                cancellationToken,
-                DeserializeForSearch);
+            JsonSerializerSettings deserializationSettings =
+                JsonUtility.CreateDocumentDeserializerSettings(this.Client.DeserializationSettings);
+
+            AzureOperationResponse<DocumentSearchResultProxy> response;
+
+            if (Client.UseHttpGetForQueries)
+            {
+                response = await this.Client.DocumentsProxy.SearchGetWithHttpMessagesAsync(
+                    searchText,
+                    Accept,
+                    searchParameters,
+                    searchRequestOptions,
+                    customHeaders,
+                    cancellationToken,
+                    requestDeserializerSettings: deserializationSettings).ConfigureAwait(false);
+            }
+            else
+            {
+                SearchParametersPayload request = searchParameters.ToPayload(searchText);
+                response = await this.Client.DocumentsProxy.SearchPostWithHttpMessagesAsync(
+                    request,
+                    Accept,
+                    searchRequestOptions,
+                    customHeaders,
+                    cancellationToken,
+                    requestDeserializerSettings: deserializationSettings).ConfigureAwait(false);
+            }
+
+            return new AzureOperationResponse<DocumentSearchResult>()
+            {
+                Body = CreateDocumentSearchResultFromProxy(response.Body),
+                Request = response.Request,
+                RequestId = response.RequestId,
+                Response = response.Response
+            };
         }
 
-        public Task<AzureOperationResponse<DocumentSearchResult<T>>> SearchWithHttpMessagesAsync<T>(
+        public async Task<AzureOperationResponse<DocumentSearchResult<T>>> SearchWithHttpMessagesAsync<T>(
             string searchText,
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken)) where T : class, new()
         {
-            return DoSearchWithHttpMessagesAsync<DocumentSearchResult<T>, SearchResult<T>, T>(
-                searchText,
-                searchParameters,
-                searchRequestOptions,
-                customHeaders,
-                cancellationToken,
-                DeserializeForSearch<T>);
+            JsonSerializerSettings deserializationSettings =
+                JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings);
+
+            AzureOperationResponse<DocumentSearchResultProxy> response;
+
+            if (Client.UseHttpGetForQueries)
+            {
+                response = await this.Client.DocumentsProxy.SearchGetWithHttpMessagesAsync(
+                    searchText,
+                    Accept,
+                    searchParameters,
+                    searchRequestOptions,
+                    customHeaders,
+                    cancellationToken,
+                    requestDeserializerSettings: deserializationSettings).ConfigureAwait(false);
+            }
+            else
+            {
+                SearchParametersPayload request = searchParameters.ToPayload(searchText);
+                response = await this.Client.DocumentsProxy.SearchPostWithHttpMessagesAsync(
+                    request,
+                    Accept,
+                    searchRequestOptions,
+                    customHeaders,
+                    cancellationToken,
+                    requestDeserializerSettings: deserializationSettings).ConfigureAwait(false);
+            }
+
+            return new AzureOperationResponse<DocumentSearchResult<T>>()
+            {
+                Body = CreateTypedSearchResultFromProxy<T>(response.Body),
+                Request = response.Request,
+                RequestId = response.RequestId,
+                Response = response.Response
+            };
         }
 
         public Task<AzureOperationResponse<DocumentSuggestResult>> SuggestWithHttpMessagesAsync(
@@ -305,7 +410,7 @@ namespace Microsoft.Azure.Search
             SuggestParameters suggestParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken)) where T : class, new()
         {
             return DoSuggestWithHttpMessagesAsync<DocumentSuggestResult<T>, SuggestResult<T>, T>(
                 searchText,
@@ -317,23 +422,8 @@ namespace Microsoft.Azure.Search
                 DeserializeForSuggest<T>);
         }
 
-        private DocumentSearchResponsePayload<SearchResult<T>, T> DeserializeForSearch<T>(string payload)
-            where T : class
-        {
-            return SafeJsonConvert.DeserializeObject<DocumentSearchResponsePayload<SearchResult<T>, T>>(
-                payload,
-                JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings));
-        }
-
-        private DocumentSearchResponsePayload<SearchResult, Document> DeserializeForSearch(string payload)
-        {
-            return SafeJsonConvert.DeserializeObject<DocumentSearchResponsePayload<SearchResult, Document>>(
-                payload,
-                JsonUtility.CreateDocumentDeserializerSettings(this.Client.DeserializationSettings));
-        }
-
         private DocumentSuggestResponsePayload<SuggestResult<T>, T> DeserializeForSuggest<T>(string payload)
-            where T : class
+            where T : class, new()
         {
             return SafeJsonConvert.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult<T>, T>>(
                 payload,
@@ -345,175 +435,6 @@ namespace Microsoft.Azure.Search
             return SafeJsonConvert.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult, Document>>(
                 payload,
                 JsonUtility.CreateDocumentDeserializerSettings(this.Client.DeserializationSettings));
-        }
-
-        private async Task<AzureOperationResponse<TSearchResult>> DoContinueSearchWithHttpMessagesAsync<TSearchResult, TDocResult, TDoc>(
-            string url,
-            SearchParametersPayload searchParameters,
-            Guid? clientRequestId,
-            Dictionary<string, List<string>> customHeaders,
-            bool useGet,
-            bool shouldTrace,
-            string invocationId,
-            CancellationToken cancellationToken,
-            Func<string, DocumentSearchResponsePayload<TDocResult, TDoc>> deserialize)
-            where TSearchResult : DocumentSearchResultBase<TDocResult, TDoc>, new()
-            where TDocResult : SearchResultBase<TDoc>
-            where TDoc : class
-        {
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            HttpResponseMessage httpResponse = null;
-            httpRequest.Method = useGet ? new HttpMethod("GET") : new HttpMethod("POST");
-            httpRequest.RequestUri = new Uri(url);
-
-            // Set Headers
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (clientRequestId != null)
-            {
-                if (httpRequest.Headers.Contains("client-request-id"))
-                {
-                    httpRequest.Headers.Remove("client-request-id");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
-            }
-            if (customHeaders != null)
-            {
-                foreach (var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-            httpRequest.Headers.TryAddWithoutValidation("Accept", "application/json;odata.metadata=none");
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-
-            // Serialize Request for POST only
-            string requestContent = null;
-            if (!useGet)
-            {
-                if (searchParameters != null)
-                {
-                    requestContent = SafeJsonConvert.SerializeObject(searchParameters, this.Client.SerializationSettings);
-                    httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                    httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-                }
-            }
-
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string responseContent = null;
-            if (statusCode != HttpStatusCode.OK)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                try
-                {
-                    responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = SafeJsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
-                    {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(httpRequest, requestContent);
-                ex.Response = new HttpResponseMessageWrapper(httpResponse, responseContent);
-                if (httpResponse.Headers.Contains("request-id"))
-                {
-                    ex.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
-                }
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                httpRequest.Dispose();
-                if (httpResponse != null)
-                {
-                    httpResponse.Dispose();
-                }
-                throw ex;
-            }
-
-            // Create Result
-            var result = new AzureOperationResponse<TSearchResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
-            }
-
-            // Deserialize Response
-            if (statusCode == HttpStatusCode.OK)
-            {
-                responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = new TSearchResult();
-                if (string.IsNullOrEmpty(responseContent) == false)
-                {
-                    DocumentSearchResponsePayload<TDocResult, TDoc> deserializedResult;
-                    try
-                    {
-                        deserializedResult = deserialize(responseContent);
-                    }
-                    catch (JsonException ex)
-                    {
-                        httpRequest.Dispose();
-                        if (httpResponse != null)
-                        {
-                            httpResponse.Dispose();
-                        }
-                        throw new SerializationException("Unable to deserialize the response.", responseContent, ex);
-                    }
-
-                    result.Body.Count = deserializedResult.Count;
-                    result.Body.Coverage = deserializedResult.Coverage;
-                    result.Body.Facets = deserializedResult.Facets;
-                    result.Body.Results = deserializedResult.Documents;
-                    result.Body.ContinuationToken =
-                        deserializedResult.NextLink != null ?
-                            new SearchContinuationToken(
-                                deserializedResult.NextLink,
-                                deserializedResult.NextPageParameters) :
-                            null;
-                }
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-
-            return result;
         }
 
         private async Task<AzureOperationResponse<T>> DoGetWithHttpMessagesAsync<T>(
@@ -721,315 +642,6 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.Exit(invocationId, result);
             }
             return result;
-        }
-
-        private async Task<AzureOperationResponse<DocumentIndexResult>> DoIndexWithHttpMessagesAsync(
-            string payload,
-            SearchRequestOptions searchRequestOptions,
-            Dictionary<string, List<string>> customHeaders,
-            CancellationToken cancellationToken)
-        {
-            if (Client.SearchServiceName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
-            }
-            if (Client.SearchDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
-            }
-            if (Client.IndexName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.IndexName");
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (payload == null)
-            {
-                throw new ArgumentNullException("payload");
-            }
-
-            Guid? clientRequestId = default(Guid?);
-            if (searchRequestOptions != null)
-            {
-                clientRequestId = searchRequestOptions.ClientRequestId;
-            }
-
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("batch", payload);
-                tracingParameters.Add("clientRequestId", clientRequestId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Index", tracingParameters);
-            }
-
-            // Construct URL
-            var baseUrl = Client.BaseUri;
-            var url = baseUrl + (baseUrl.EndsWith("/") ? "" : "/") + "docs/search.index";
-            url = url.Replace("{searchServiceName}", Client.SearchServiceName);
-            url = url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
-            url = url.Replace("{indexName}", Client.IndexName);
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            HttpResponseMessage httpResponse = null;
-            httpRequest.Method = new HttpMethod("POST");
-            httpRequest.RequestUri = new Uri(url);
-
-            // Set Headers
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (clientRequestId != null)
-            {
-                if (httpRequest.Headers.Contains("client-request-id"))
-                {
-                    httpRequest.Headers.Remove("client-request-id");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
-            }
-            if (customHeaders != null)
-            {
-                foreach (var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-            httpRequest.Headers.TryAddWithoutValidation("Accept", "application/json;odata.metadata=none");
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-
-            // Serialize Request
-            string requestContent = null;
-            if (payload != null)
-            {
-                requestContent = payload;
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
-
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string responseContent = null;
-            if (statusCode != HttpStatusCode.OK && statusCode != (HttpStatusCode)207)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                try
-                {
-                    responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = SafeJsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
-                    {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(httpRequest, requestContent);
-                ex.Response = new HttpResponseMessageWrapper(httpResponse, responseContent);
-                if (httpResponse.Headers.Contains("request-id"))
-                {
-                    ex.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
-                }
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                httpRequest.Dispose();
-                if (httpResponse != null)
-                {
-                    httpResponse.Dispose();
-                }
-                throw ex;
-            }
-
-            // Create Result
-            var result = new AzureOperationResponse<DocumentIndexResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
-            }
-
-            // Deserialize Response
-            if (statusCode == HttpStatusCode.OK || statusCode == (HttpStatusCode)207)
-            {
-                responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    result.Body = SafeJsonConvert.DeserializeObject<DocumentIndexResult>(responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    httpRequest.Dispose();
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", responseContent, ex);
-                }
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-
-            // Throw IndexBatchException if necessary.
-            if (statusCode == (HttpStatusCode)207)
-            {
-                CloudException ex = new IndexBatchException(result.Body);
-                ex.Request = new HttpRequestMessageWrapper(httpRequest, requestContent);
-                ex.Response = new HttpResponseMessageWrapper(httpResponse, responseContent);
-                if (httpResponse.Headers.Contains("request-id"))
-                {
-                    ex.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
-                }
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                httpRequest.Dispose();
-                if (httpResponse != null)
-                {
-                    httpResponse.Dispose();
-                }
-                throw ex;
-            }
-
-            return result;
-        }
-
-        private Task<AzureOperationResponse<TSearchResult>> DoSearchWithHttpMessagesAsync<TSearchResult, TDocResult, TDoc>(
-            string searchText,
-            SearchParameters searchParameters,
-            SearchRequestOptions searchRequestOptions,
-            Dictionary<string, List<string>> customHeaders,
-            CancellationToken cancellationToken,
-            Func<string, DocumentSearchResponsePayload<TDocResult, TDoc>> deserialize)
-            where TSearchResult : DocumentSearchResultBase<TDocResult, TDoc>, new()
-            where TDocResult : SearchResultBase<TDoc>
-            where TDoc : class
-        {
-            // Validate
-            if (Client.SearchServiceName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
-            }
-            if (Client.SearchDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
-            }
-            if (Client.IndexName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.IndexName");
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-
-            searchText = searchText ?? "*";
-
-            if (searchParameters == null)
-            {
-                throw new ArgumentNullException("searchParameters");
-            }
-
-            Guid? clientRequestId = default(Guid?);
-            if (searchRequestOptions != null)
-            {
-                clientRequestId = searchRequestOptions.ClientRequestId;
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("searchText", searchText);
-                tracingParameters.Add("searchParameters", searchParameters);
-                tracingParameters.Add("clientRequestId", clientRequestId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Search", tracingParameters);
-            }
-
-            // Construct URL
-            bool useGet = Client.UseHttpGetForQueries;
-            var baseUrl = Client.BaseUri;
-            var url = baseUrl + (baseUrl.EndsWith("/") ? "" : "/") + (useGet ? "docs" : "docs/search.post.search");
-            url = url.Replace("{searchServiceName}", Client.SearchServiceName);
-            url = url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
-            url = url.Replace("{indexName}", Client.IndexName);
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (useGet)
-            {
-                queryParameters.Add(string.Format("search={0}", Uri.EscapeDataString(searchText)));
-                queryParameters.Add(searchParameters.ToString());
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-
-            return DoContinueSearchWithHttpMessagesAsync<TSearchResult, TDocResult, TDoc>(
-                url,
-                searchParameters.ToPayload(searchText),
-                clientRequestId,
-                customHeaders,
-                useGet,
-                shouldTrace,
-                invocationId,
-                cancellationToken,
-                deserialize);
         }
 
         private async Task<AzureOperationResponse<TSuggestResult>> DoSuggestWithHttpMessagesAsync<TSuggestResult, TDocResult, TDoc>(
@@ -1268,62 +880,6 @@ namespace Microsoft.Azure.Search
             return result;
         }
 
-        private bool ValidateAndTraceContinueSearch(
-            SearchContinuationToken continuationToken,
-            SearchRequestOptions searchRequestOptions,
-            CancellationToken cancellationToken,
-            out string invocationId,
-            out Guid? clientRequestId)
-        {
-            // Validate
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (continuationToken == null)
-            {
-                throw new ArgumentNullException("continuationToken");
-            }
-
-            clientRequestId = default(Guid?);
-            if (searchRequestOptions != null)
-            {
-                clientRequestId = searchRequestOptions.ClientRequestId;
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("continuationToken", continuationToken);
-                tracingParameters.Add("clientRequestId", clientRequestId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-
-                ServiceClientTracing.Enter(invocationId, this, "ContinueSearch", tracingParameters);
-            }
-
-            return shouldTrace;
-        }
-
-        private class DocumentSearchResponsePayload<TResult, TDoc> : SearchContinuationTokenPayload
-            where TResult : SearchResultBase<TDoc>
-            where TDoc : class
-        {
-            [JsonProperty("@odata.count")]
-            public long? Count { get; set; }
-
-            [JsonProperty("@search.coverage")]
-            public double? Coverage { get; set; }
-
-            [JsonProperty("@search.facets")]
-            public FacetResults Facets { get; set; }
-
-            [JsonProperty("value")]
-            public List<TResult> Documents { get; set; }
-        }
-
         private class DocumentSuggestResponsePayload<TResult, TDoc>
             where TResult : SuggestResultBase<TDoc>
             where TDoc : class
@@ -1333,6 +889,101 @@ namespace Microsoft.Azure.Search
 
             [JsonProperty("value")]
             public List<TResult> Documents { get; set; }
+        }
+
+        private static DocumentSearchResult CreateDocumentSearchResultFromProxy(DocumentSearchResultProxy resultProxy)
+        {
+            return new DocumentSearchResult()
+            {
+                Facets = resultProxy.Facets,
+                Count = resultProxy.Count,
+                Coverage = resultProxy.Coverage,
+                Results = resultProxy.Results.Select(r => new SearchResult() { Score = r.Score, Highlights = r.Highlights, Document = r.Document as Document }).ToArray(),
+                ContinuationToken = (resultProxy.NextLink != null || resultProxy.NextSearchParametersPayload != null) ? new SearchContinuationToken(resultProxy.NextLink, resultProxy.NextSearchParametersPayload) : null
+            };
+        }
+
+        private static DocumentSearchResult<T> CreateTypedSearchResultFromProxy<T>(DocumentSearchResultProxy resultProxy)
+            where T : class
+        {
+            return new DocumentSearchResult<T>()
+            {
+                Facets = resultProxy.Facets,
+                Count = resultProxy.Count,
+                Coverage = resultProxy.Coverage,
+                Results = resultProxy.Results.Select(r => new SearchResult<T>() { Score = r.Score, Highlights = r.Highlights, Document = r.Document as T }).ToArray(),
+                ContinuationToken = (resultProxy.NextLink != null || resultProxy.NextSearchParametersPayload != null) ? new SearchContinuationToken(resultProxy.NextLink, resultProxy.NextSearchParametersPayload) : null
+            };
+        }
+
+        private static void CheckForPartialFailure(AzureOperationResponse<DocumentIndexResult> documentIndexResult)
+        {
+            foreach (IndexingResult result in documentIndexResult.Body.Results)
+            {
+                if (!result.Succeeded)
+                {
+                    CloudException ex = new IndexBatchException(documentIndexResult.Body);
+                    ex.Request = new HttpRequestMessageWrapper(documentIndexResult.Request, documentIndexResult.Request.Content.ToString());
+                    ex.Response = new HttpResponseMessageWrapper(documentIndexResult.Response, documentIndexResult.Response.Content.ToString());
+                    throw ex;
+                }
+            }
+        }
+
+        private static Dictionary<string, List<string>> ParseQueryParameters(string url)
+        {
+            string queryString = url.Substring(url.IndexOf('?'));
+            queryString = WebUtility.UrlDecode(queryString);
+
+            Dictionary<string, List<string>> parameters =
+                new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (string parameter in queryString.Split('&'))
+            {
+                string[] elements = parameter.Split('=');
+                string name = elements[0];
+                string value = elements[1];
+                if (!parameters.ContainsKey(name))
+                {
+                    parameters.Add(name, new List<string>());
+                }
+                parameters[name].Add(value);
+            }
+            return parameters;
+        }
+
+        private static SearchParameters ConvertToSearchParameters(Dictionary<string, List<string>> parameters)
+        {
+            List<string> values = new List<string>();
+
+            int? Top = null;
+            if (parameters.TryGetValue("$top", out values))
+            {
+                Top = Convert.ToInt32(values.First());
+            }
+
+            int? Skip = null;
+            if (parameters.TryGetValue("$skip", out values))
+            {
+                Skip = Convert.ToInt32(values.First());
+            }
+
+            return new SearchParameters()
+            {
+                QueryType = parameters.TryGetValue("queryType", out values) ? values.First().ParseQueryType() : null,
+                SearchMode = parameters.TryGetValue("searchMode", out values) ? values.First().ParseSearchMode() : null,
+                HighlightPreTag = parameters.TryGetValue("highlightPreTag", out values) ? values.First() : null,
+                HighlightPostTag = parameters.TryGetValue("highlightPostTag", out values) ? values.First() : null,
+                SearchFields = parameters.TryGetValue("searchFields", out values) ? values : null,
+                IncludeTotalResultCount = parameters.TryGetValue("$count", out values) ? Convert.ToBoolean(values.First()) : false,
+                Top = Top,
+                Skip = Skip,
+                Select = parameters.TryGetValue("$select", out values) ? values : null,
+                OrderBy = parameters.TryGetValue("$orderby", out values) ? values : null,
+                Filter = parameters.TryGetValue("$filter", out values) ? values.First() : null,
+                ScoringProfile = parameters.TryGetValue("scoringProfile", out values) ? values.First() : null,
+                ScoringParameterStrings = parameters.TryGetValue("scoringParameter", out values) ? values : null
+            };
         }
     }
 }

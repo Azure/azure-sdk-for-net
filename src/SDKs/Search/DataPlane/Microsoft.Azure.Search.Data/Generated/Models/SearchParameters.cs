@@ -67,6 +67,12 @@ namespace Microsoft.Azure.Search.Models
         /// syntax of the search query. The default is 'simple'. Use 'full' if
         /// your query uses the Lucene query syntax. Possible values include:
         /// 'simple', 'full'</param>
+        /// <param name="scoringParameterStrings">The list of parameter values
+        /// to be used in scoring functions (for example,
+        /// referencePointParameter) using the format name:value. For example,
+        /// if the scoring profile defines a function with a parameter called
+        /// 'mylocation' the parameter string would be
+        /// "mylocation:-122.2,44.8"(without the quotes).</param>
         /// <param name="scoringProfile">The name of a scoring profile to
         /// evaluate match scores for matching documents in order to sort the
         /// results.</param>
@@ -196,9 +202,14 @@ namespace Microsoft.Azure.Search.Models
         public QueryType? QueryType { get; set; }
 
         /// <summary>
+        /// Gets or sets the list of parameter values to be used in scoring
+        /// functions (for example, referencePointParameter) using the format
+        /// name:value. For example, if the scoring profile defines a function
+        /// with a parameter called 'mylocation' the parameter string would be
+        /// "mylocation:-122.2,44.8"(without the quotes).
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
-        protected internal IList<string> ScoringParameterStrings { get { return ScoringParameters == null ? Empty : ScoringParameters.Select(p => p.ToString()).ToList(); } set { } }
+        protected internal IList<string> ScoringParameterStrings { get; set; }
 
         /// <summary>
         /// Gets or sets the name of a scoring profile to evaluate match scores

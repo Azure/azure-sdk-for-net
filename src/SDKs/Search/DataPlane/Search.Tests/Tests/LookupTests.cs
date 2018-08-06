@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Search.Tests
                     };
 
                 var batch = IndexBatch.Upload(new[] { expectedDoc });
-                client.Documents.Index(batch);
+                client.Documents.Index<Hotel>(batch);
 
                 Hotel actualDoc = client.Documents.Get<Hotel>("1");
                 Assert.Equal(expectedDoc, actualDoc);
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Search.Tests
                     };
 
                 var batch = IndexBatch.Upload(new[] { expectedDoc });
-                client.Documents.Index(batch);
+                client.Documents.Index<Hotel>(batch);
 
                 Hotel actualDoc = client.Documents.Get<Hotel>("1");
                 Assert.Equal(expectedDoc, actualDoc);
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Search.Tests
                     };
 
                 var batch = IndexBatch.Upload(new[] { expectedDoc });
-                client.Documents.Index(batch);
+                client.Documents.Index<Hotel>(batch);
                 SearchTestUtilities.WaitForIndexing();
 
                 Hotel actualDoc = client.Documents.Get<Hotel>("1");
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 var expectedDoc = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
                 var batch = IndexBatch.Upload(new[] { expectedDoc });
-                indexClient.Documents.Index(batch);
+                indexClient.Documents.Index<Book>(batch);
 
                 Book actualDoc = indexClient.Documents.Get<Book>("123");
                 Assert.Equal(expectedDoc, actualDoc);
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Search.Tests
                     };
 
                 var batch = IndexBatch.Upload(new[] { indexedDoc });
-                client.Documents.Index(batch);
+                client.Documents.Index<Hotel>(batch);
 
                 Hotel actualDoc = client.Documents.Get<Hotel>("2", new[] { "description", "hotelName" });
                 Assert.Equal(expectedDoc, actualDoc);
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Search.Tests
                     };
 
                 var batch = IndexBatch.Upload(new[] { indexedDoc });
-                client.Documents.Index(batch);
+                client.Documents.Index<Hotel>(batch);
 
                 string[] selectedFields = new[] { "hotelId", "ThisFieldDoesNotExist" };
 
