@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for WebhookAction.
+    /// Defines values for BaseImageTriggerType.
     /// </summary>
-    public static class WebhookAction
+    public static class BaseImageTriggerType
     {
-        public const string Push = "push";
-        public const string Delete = "delete";
-        public const string Quarantine = "quarantine";
+        public const string All = "All";
+        public const string Runtime = "Runtime";
+        public const string None = "None";
     }
 }

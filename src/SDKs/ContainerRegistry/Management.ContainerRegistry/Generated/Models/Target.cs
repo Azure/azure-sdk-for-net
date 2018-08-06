@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="size">The number of bytes of the content. Same as
         /// Length field.</param>
         /// <param name="digest">The digest of the content, as defined by the
-        /// Registry V2 HTTP API Specificiation.</param>
+        /// Registry V2 HTTP API Specification.</param>
         /// <param name="length">The number of bytes of the content. Same as
         /// Size field.</param>
         /// <param name="repository">The repository name.</param>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 
         /// <summary>
         /// Gets or sets the digest of the content, as defined by the Registry
-        /// V2 HTTP API Specificiation.
+        /// V2 HTTP API Specification.
         /// </summary>
         [JsonProperty(PropertyName = "digest")]
         public string Digest { get; set; }

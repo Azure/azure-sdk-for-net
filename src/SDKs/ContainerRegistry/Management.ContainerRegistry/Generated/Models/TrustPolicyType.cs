@@ -12,12 +12,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for WebhookAction.
+    /// Defines values for TrustPolicyType.
     /// </summary>
-    public static class WebhookAction
+    public static class TrustPolicyType
     {
-        public const string Push = "push";
-        public const string Delete = "delete";
-        public const string Quarantine = "quarantine";
+        public const string Notary = "Notary";
     }
 }
