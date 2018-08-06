@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// content language.</param>
         /// <param name="contentType">The response header override for content
         /// type.</param>
-        public ServiceSasParameters(string canonicalizedResource, string resource, string permissions = default(string), string iPAddressOrRange = default(string), HttpProtocol? protocols = default(HttpProtocol?), System.DateTime? sharedAccessStartTime = default(System.DateTime?), System.DateTime? sharedAccessExpiryTime = default(System.DateTime?), string identifier = default(string), string partitionKeyStart = default(string), string partitionKeyEnd = default(string), string rowKeyStart = default(string), string rowKeyEnd = default(string), string keyToSign = default(string), string cacheControl = default(string), string contentDisposition = default(string), string contentEncoding = default(string), string contentLanguage = default(string), string contentType = default(string))
+        public ServiceSasParameters(string canonicalizedResource, string resource = default(string), string permissions = default(string), string iPAddressOrRange = default(string), HttpProtocol? protocols = default(HttpProtocol?), System.DateTime? sharedAccessStartTime = default(System.DateTime?), System.DateTime? sharedAccessExpiryTime = default(System.DateTime?), string identifier = default(string), string partitionKeyStart = default(string), string partitionKeyEnd = default(string), string rowKeyStart = default(string), string rowKeyEnd = default(string), string keyToSign = default(string), string cacheControl = default(string), string contentDisposition = default(string), string contentEncoding = default(string), string contentLanguage = default(string), string contentType = default(string))
         {
             CanonicalizedResource = canonicalizedResource;
             Resource = resource;
@@ -224,10 +224,6 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (CanonicalizedResource == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CanonicalizedResource");
-            }
-            if (Resource == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Resource");
             }
             if (Identifier != null)
             {
