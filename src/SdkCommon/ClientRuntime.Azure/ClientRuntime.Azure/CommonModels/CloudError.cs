@@ -44,7 +44,6 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// Gets or sets additional error info.
         /// </summary>
-        //[JsonProperty(ItemConverterType = typeof(AdditionalErrorInfo))]
         public IList<AdditionalErrorInfo> AdditionalInfo { get; internal set; }
     }
 }

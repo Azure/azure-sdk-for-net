@@ -10,15 +10,18 @@ namespace Microsoft.Rest.ClientRuntime.Azure.CommonModels
     using System.Text;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// This class represents additional info Resource Providers pass when an error occurs
+    /// </summary>
     public class AdditionalErrorInfo
     {
         /// <summary>
-        /// Error type
+        /// Type of error occured (e.g. PolicyViolation, SecurityViolation)
         /// </summary>
         public string Type { get; set; }
 
         /// <summary>
-        /// Additional information
+        /// Additional information of the type of error that occured
         /// </summary>
         public JObject Info { get; set; }
     }
