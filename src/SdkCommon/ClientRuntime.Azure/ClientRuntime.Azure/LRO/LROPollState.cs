@@ -68,6 +68,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 
             if (AsyncOperationResponseBody?.Error != null)
             {
+                this.Error = AsyncOperationResponseBody?.Error;
+
                 if (AsyncOperationResponseBody?.Error?.Message == null)
                 {
                     errorMessage = string.Format(CultureInfo.InvariantCulture, Resources.LongRunningOperationFailed, AsyncOperationResponseBody.Status);
@@ -75,14 +77,20 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 else
                 {
                     errorMessage = string.Format(CultureInfo.InvariantCulture, Resources.LROOperationFailedAdditionalInfo, AsyncOperationResponseBody.Status, AsyncOperationResponseBody.Error?.Message);
-                    errorCode = AsyncOperationResponseBody.Error.Code;
+                    //errorCode = AsyncOperationResponseBody.Error.Code;
                 }
 
-                this.Error = new CloudError()
-                {
-                    Code = errorCode,
-                    Message = errorMessage
-                };
+                // We do this to surface service error message as CloudException message.
+                // this allows the message to be surfaced to Exception.Message, rather than user trying to discover the real message
+                // from Exception.Body.Message (Body is CloudError)
+                this.Error.Message = errorMessage;
+
+                //this.Error = new CloudError()
+                //{
+                //    Code = errorCode,
+                //    Message = errorMessage,
+                //    AdditionalInfo = AsyncOperationResponseBody?.Error?.AdditionalInfo
+                //};
 
                 this.CloudException = new CloudException(errorMessage)
                 {

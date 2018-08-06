@@ -39,12 +39,12 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// Gets or sets details for the error.
         /// </summary>
-        public IList<CloudError> Details { get; private set; }
+        public IList<CloudError> Details { get; internal set; }
 
         /// <summary>
         /// Gets or sets additional error info.
         /// </summary>
         //[JsonProperty(ItemConverterType = typeof(AdditionalErrorInfo))]
-        public IList<AdditionalErrorInfo> AdditionalInfo { get; protected set; }
+        public IList<AdditionalErrorInfo> AdditionalInfo { get; internal set; }
     }
 }
