@@ -27,7 +27,8 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// Returns requested Virtual Machine Extension Image.
         /// </summary>
         /// <remarks>
-        /// Returns requested Virtual Machine Extension Image.
+        /// Returns requested Virtual Machine Extension Image matching
+        /// publisher, type, version.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -61,7 +62,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// Create a Virtual Machine Extension Image.
         /// </summary>
         /// <remarks>
-        /// Create a Virtual Machine Extension Image.
+        /// Create a Virtual Machine Extension Image with publisher, version.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -126,10 +127,11 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string location, string publisher, string type, string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a list of all Virtual Machine Extension Image.
+        /// Returns a list of all Virtual Machine Extension Images.
         /// </summary>
         /// <remarks>
-        /// Returns a list of all Virtual Machine Extension Image.
+        /// List of all Virtual Machine Extension Images for the current
+        /// location are returned.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
