@@ -66,5 +66,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </summary>
         IFaceListOperations FaceList { get; }
 
+        /// <summary>
+        /// Gets the ILargePersonGroupPerson.
+        /// </summary>
+        ILargePersonGroupPerson LargePersonGroupPerson { get; }
+
+        /// <summary>
+        /// Gets the ILargePersonGroupOperations.
+        /// </summary>
+        ILargePersonGroupOperations LargePersonGroup { get; }
+
+        /// <summary>
+        /// Gets the ILargeFaceListOperations.
+        /// </summary>
+        ILargeFaceListOperations LargeFaceList { get; }
+
     }
 }

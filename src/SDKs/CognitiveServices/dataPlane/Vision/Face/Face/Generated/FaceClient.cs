@@ -71,6 +71,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         public virtual IFaceListOperations FaceList { get; private set; }
 
         /// <summary>
+        /// Gets the ILargePersonGroupPerson.
+        /// </summary>
+        public virtual ILargePersonGroupPerson LargePersonGroupPerson { get; private set; }
+
+        /// <summary>
+        /// Gets the ILargePersonGroupOperations.
+        /// </summary>
+        public virtual ILargePersonGroupOperations LargePersonGroup { get; private set; }
+
+        /// <summary>
+        /// Gets the ILargeFaceListOperations.
+        /// </summary>
+        public virtual ILargeFaceListOperations LargeFaceList { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the FaceClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -161,6 +176,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             PersonGroupPerson = new PersonGroupPerson(this);
             PersonGroup = new PersonGroupOperations(this);
             FaceList = new FaceListOperations(this);
+            LargePersonGroupPerson = new LargePersonGroupPerson(this);
+            LargePersonGroup = new LargePersonGroupOperations(this);
+            LargeFaceList = new LargeFaceListOperations(this);
             BaseUri = "{Endpoint}/face/v1.0";
             SerializationSettings = new JsonSerializerSettings
             {

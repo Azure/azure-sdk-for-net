@@ -109,6 +109,14 @@ namespace Management.HDInsight.Tests.UnitTests
             ClusterCreateParametersExtended extendedParams = CreateParametersConverter.GetExtendedClusterCreateParameters("testCluster", createParams);
         }
 
+        [Fact]
+        public void CanConvertAdlsGen2Cluster()
+        {
+            ClusterCreateParameters createParams = GetClusterCreateParamsWithMinRequiredValues();
+            createParams.DefaultStorageInfo = new AzureDataLakeStoreGen2Info("adlsGen2StorageAccount", "key", "fileSystem");
+            ExtendedParameterValidators.ValidateSpecConversion(createParams);
+        }
+
         private static ClusterCreateParameters GetClusterCreateParamsWithMinRequiredValues()
         {
             return new ClusterCreateParameters
