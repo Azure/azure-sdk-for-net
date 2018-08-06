@@ -7,18 +7,44 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "772533e6-a9d5-49c7-b479-26407faf5c44"
+          "ac2c60d8-afc3-4b1a-8d0d-6a227408cd01"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"A1\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"A2\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"A3\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"A4\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"A5\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"A6\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"EM1\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"EM2\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"EM3\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"P1\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"P2\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"P3\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Aug 2018 17:15:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "558ecaa0-f3e1-489a-bb15-b2d4d2bfce24"
+        ],
+        "x-ms-correlation-request-id": [
+          "558ecaa0-f3e1-489a-bb15-b2d4d2bfce24"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180802T171508Z:558ecaa0-f3e1-489a-bb15-b2d4d2bfce24"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "Content-Length": [
           "1826"
         ],
@@ -27,35 +53,9 @@
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 10 Oct 2017 09:33:06 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
-        ],
-        "x-ms-request-id": [
-          "629dc1ec-22dd-467f-aafc-770dedaad5ab"
-        ],
-        "x-ms-correlation-request-id": [
-          "629dc1ec-22dd-467f-aafc-770dedaad5ab"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093307Z:629dc1ec-22dd-467f-aafc-770dedaad5ab"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"EM1\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"EM2\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"EM3\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"P1\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"P2\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"P3\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"A1\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"A2\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"A3\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"A4\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"A5\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    },\r\n    {\r\n      \"resourceType\": \"capacities\",\r\n      \"name\": \"A6\",\r\n      \"locations\": [\r\n        \"West Central US\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"West Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"restrictions\": []\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -64,45 +64,35 @@
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A1\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "306"
-        ],
         "x-ms-client-request-id": [
-          "81ee8ec8-78f5-4e17-8f83-f411a6c0f36a"
+          "1089dd20-4fe9-4c29-87ee-fa378de76fbf"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"state\": \"Provisioning\",\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A1\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "468"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
-        "Expires": [
-          "-1"
-        ],
+        "Content-Length": [
+          "306"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Oct 2017 09:33:13 GMT"
+          "Thu, 02 Aug 2018 17:15:15 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/88F5AA81-D540-4A75-BCF6-963A27F65679?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/2B19B48E-4A50-4A36-B099-158A7B88946B?api-version=2017-01-01-preview"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -111,13 +101,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/88F5AA81-D540-4A75-BCF6-963A27F65679?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/2B19B48E-4A50-4A36-B099-158A7B88946B?api-version=2017-01-01-preview"
         ],
         "x-ms-request-id": [
-          "c39f9f64-d706-43dd-8ead-b034330066a1"
+          "32d053e5-51f9-4c0f-805d-8b94239ce32a"
         ],
         "x-ms-current-utc-date": [
-          "10/10/2017 9:33:07 AM"
+          "8/2/2018 5:15:10 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -135,27 +125,78 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "d0959b5f-9386-4ff0-87d4-c41420171d97"
+          "c5091f94-6059-47e8-9faa-44e706af26cb"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093313Z:d0959b5f-9386-4ff0-87d4-c41420171d97"
+          "NORTHEUROPE:20180802T171515Z:c5091f94-6059-47e8-9faa-44e706af26cb"
+        ],
+        "Content-Length": [
+          "468"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"state\": \"Provisioning\",\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A1\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/88F5AA81-D540-4A75-BCF6-963A27F65679?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy84OEY1QUE4MS1ENTQwLTRBNzUtQkNGNi05NjNBMjdGNjU2Nzk/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/2B19B48E-4A50-4A36-B099-158A7B88946B?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8yQjE5QjQ4RS00QTUwLTRBMzYtQjA5OS0xNThBN0I4ODk0NkI/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/88F5AA81-D540-4A75-BCF6-963A27F65679\",\r\n  \"name\": \"88F5AA81-D540-4A75-BCF6-963A27F65679\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2017-10-10T09:33:10.94Z\"\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Aug 2018 17:15:46 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "Content-Security-Policy": [
+          "script-src 'self'"
+        ],
+        "x-ms-request-id": [
+          "dc9dbee8-807d-4a7b-8855-2ea210bd3ab1"
+        ],
+        "x-ms-current-utc-date": [
+          "8/2/2018 5:15:46 PM"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-correlation-request-id": [
+          "3a15d886-8d3c-401c-a7fc-4f0715e16a7c"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180802T171546Z:3a15d886-8d3c-401c-a7fc-4f0715e16a7c"
+        ],
         "Content-Length": [
           "252"
         ],
@@ -164,21 +205,34 @@
         ],
         "Expires": [
           "-1"
-        ],
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/2B19B48E-4A50-4A36-B099-158A7B88946B\",\r\n  \"name\": \"2B19B48E-4A50-4A36-B099-158A7B88946B\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2018-08-02T17:15:12.8Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/2B19B48E-4A50-4A36-B099-158A7B88946B?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8yQjE5QjQ4RS00QTUwLTRBMzYtQjA5OS0xNThBN0I4ODk0NkI/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Oct 2017 09:33:43 GMT"
+          "Thu, 02 Aug 2018 17:16:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -196,36 +250,154 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "702c80ee-8c90-4bc0-8f67-ae9e9bd8abde"
+          "14aa06ae-c8b9-4a01-afcd-20ef44653787"
         ],
         "x-ms-current-utc-date": [
-          "10/10/2017 9:33:44 AM"
+          "8/2/2018 5:16:16 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "d5959021-d1e1-46e6-a739-c65f2bd19630"
+          "e41ea182-aad2-4d31-b1f6-e88a3bee3ebb"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093344Z:d5959021-d1e1-46e6-a739-c65f2bd19630"
+          "NORTHEUROPE:20180802T171617Z:e41ea182-aad2-4d31-b1f6-e88a3bee3ebb"
+        ],
+        "Content-Length": [
+          "252"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/2B19B48E-4A50-4A36-B099-158A7B88946B\",\r\n  \"name\": \"2B19B48E-4A50-4A36-B099-158A7B88946B\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2018-08-02T17:15:12.8Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/88F5AA81-D540-4A75-BCF6-963A27F65679?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy84OEY1QUE4MS1ENTQwLTRBNzUtQkNGNi05NjNBMjdGNjU2Nzk/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/2B19B48E-4A50-4A36-B099-158A7B88946B?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8yQjE5QjQ4RS00QTUwLTRBMzYtQjA5OS0xNThBN0I4ODk0NkI/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/88F5AA81-D540-4A75-BCF6-963A27F65679\",\r\n  \"name\": \"88F5AA81-D540-4A75-BCF6-963A27F65679\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2017-10-10T09:33:10.94Z\",\r\n  \"endTime\": \"2017-10-10T09:34:06.923Z\"\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Aug 2018 17:16:47 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "Content-Security-Policy": [
+          "script-src 'self'"
+        ],
+        "x-ms-request-id": [
+          "20cd20ff-7252-41d2-be34-71c27ce875da"
+        ],
+        "x-ms-current-utc-date": [
+          "8/2/2018 5:16:47 PM"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-correlation-request-id": [
+          "4295719c-3aeb-4a17-8603-b4e331b23d7d"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180802T171647Z:4295719c-3aeb-4a17-8603-b4e331b23d7d"
+        ],
+        "Content-Length": [
+          "252"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/2B19B48E-4A50-4A36-B099-158A7B88946B\",\r\n  \"name\": \"2B19B48E-4A50-4A36-B099-158A7B88946B\",\r\n  \"status\": \"Provisioning\",\r\n  \"startTime\": \"2018-08-02T17:15:12.8Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/2B19B48E-4A50-4A36-B099-158A7B88946B?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8yQjE5QjQ4RS00QTUwLTRBMzYtQjA5OS0xNThBN0I4ODk0NkI/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Aug 2018 17:17:17 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "Content-Security-Policy": [
+          "script-src 'self'"
+        ],
+        "x-ms-request-id": [
+          "906899b1-9427-44a0-ac64-4f16de3d7aff"
+        ],
+        "x-ms-current-utc-date": [
+          "8/2/2018 5:17:18 PM"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-correlation-request-id": [
+          "d325f41a-6b31-4627-b956-2831669ff473"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180802T171718Z:d325f41a-6b31-4627-b956-2831669ff473"
+        ],
         "Content-Length": [
           "290"
         ],
@@ -234,53 +406,9 @@
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 10 Oct 2017 09:34:13 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "deny"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-XSS-Protection": [
-          "1; mode=block"
-        ],
-        "Content-Security-Policy": [
-          "script-src 'self'"
-        ],
-        "x-ms-request-id": [
-          "e6223459-800d-49de-8cc1-5c927aac5b01"
-        ],
-        "x-ms-current-utc-date": [
-          "10/10/2017 9:34:14 AM"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
-        ],
-        "x-ms-correlation-request-id": [
-          "60b53878-bb9a-4642-aa88-48447cfaf2c1"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093414Z:60b53878-bb9a-4642-aa88-48447cfaf2c1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/2B19B48E-4A50-4A36-B099-158A7B88946B\",\r\n  \"name\": \"2B19B48E-4A50-4A36-B099-158A7B88946B\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-08-02T17:15:12.8Z\",\r\n  \"endTime\": \"2018-08-02T17:17:17.457Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -290,26 +418,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Succeeded\",\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A1\",\r\n    \"tier\": \"PBIE_Azure\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "482"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Oct 2017 09:34:13 GMT"
+          "Thu, 02 Aug 2018 17:17:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -317,17 +435,14 @@
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "d898745f-624e-4ebf-a885-de26c89d1a5a"
+          "22c001d7-9be2-4ed2-bd0b-f3d0eda77e71"
         ],
         "x-ms-current-utc-date": [
-          "10/10/2017 9:34:14 AM"
+          "8/2/2018 5:17:18 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -342,15 +457,25 @@
           "script-src 'self'"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14991"
+          "14994"
         ],
         "x-ms-correlation-request-id": [
-          "90df9fe3-c1a0-4056-848e-682dba50fdf0"
+          "04e8f6a3-ffd5-4e93-bd79-81d41b7f52a9"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093414Z:90df9fe3-c1a0-4056-848e-682dba50fdf0"
+          "NORTHEUROPE:20180802T171718Z:04e8f6a3-ffd5-4e93-bd79-81d41b7f52a9"
+        ],
+        "Content-Length": [
+          "482"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Succeeded\",\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A1\",\r\n    \"tier\": \"PBIE_Azure\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -360,32 +485,22 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "49262a84-b3ba-4b06-89a7-65df889a3686"
+          "b2d77f4f-914b-4718-b555-24fbf717fa97"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Succeeded\",\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A1\",\r\n    \"tier\": \"PBIE_Azure\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "482"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Oct 2017 09:34:14 GMT"
+          "Thu, 02 Aug 2018 17:17:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -393,17 +508,14 @@
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "813402e3-3596-4649-af7d-933927aab801"
+          "56a40460-8b8e-487f-80a5-1a3a506422ca"
         ],
         "x-ms-current-utc-date": [
-          "10/10/2017 9:34:14 AM"
+          "8/2/2018 5:17:18 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -418,15 +530,25 @@
           "script-src 'self'"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
+          "14993"
         ],
         "x-ms-correlation-request-id": [
-          "b0b6dd27-f1cd-4c1d-8f14-d6a215e2cd13"
+          "6acbe741-e2e2-43eb-9f73-3ac5fe1ed386"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093414Z:b0b6dd27-f1cd-4c1d-8f14-d6a215e2cd13"
+          "NORTHEUROPE:20180802T171718Z:6acbe741-e2e2-43eb-9f73-3ac5fe1ed386"
+        ],
+        "Content-Length": [
+          "482"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Succeeded\",\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A1\",\r\n    \"tier\": \"PBIE_Azure\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -436,26 +558,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Succeeded\",\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A2\",\r\n    \"tier\": \"PBIE_Azure\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "482"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Oct 2017 09:35:16 GMT"
+          "Thu, 02 Aug 2018 17:19:54 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -463,17 +575,14 @@
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "dbf91d11-fb1a-4a1e-a080-67254308d4b5"
+          "4ea54e06-709e-481d-844a-351ce4b66316"
         ],
         "x-ms-current-utc-date": [
-          "10/10/2017 9:35:16 AM"
+          "8/2/2018 5:19:54 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -491,12 +600,22 @@
           "14986"
         ],
         "x-ms-correlation-request-id": [
-          "3e6997f3-efb1-4616-9368-8c8e4286eadb"
+          "9dc65ee0-63ed-4977-b0c4-68537d1db0c7"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093516Z:3e6997f3-efb1-4616-9368-8c8e4286eadb"
+          "NORTHEUROPE:20180802T171954Z:9dc65ee0-63ed-4977-b0c4-68537d1db0c7"
+        ],
+        "Content-Length": [
+          "482"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Succeeded\",\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A2\",\r\n    \"tier\": \"PBIE_Azure\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -506,32 +625,22 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "19eaade0-5f73-4d99-b842-3bbee63a765c"
+          "165451a0-8db9-4ff3-ab73-cb7b7675adfe"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Succeeded\",\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A2\",\r\n    \"tier\": \"PBIE_Azure\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "482"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Oct 2017 09:35:16 GMT"
+          "Thu, 02 Aug 2018 17:20:25 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -539,17 +648,14 @@
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "a0b1844a-9ec2-4f56-80e4-fd76ddea56b6"
+          "34f5f50c-79c3-40c4-946a-94413a563a74"
         ],
         "x-ms-current-utc-date": [
-          "10/10/2017 9:35:17 AM"
+          "8/2/2018 5:20:25 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -564,15 +670,98 @@
           "script-src 'self'"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14985"
+          "14983"
         ],
         "x-ms-correlation-request-id": [
-          "748aacfe-fa8a-4258-86b0-b4e14f5b3ccd"
+          "04e79341-83c3-42b5-8a33-6bc69fffd3c6"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093517Z:748aacfe-fa8a-4258-86b0-b4e14f5b3ccd"
+          "NORTHEUROPE:20180802T172025Z:04e79341-83c3-42b5-8a33-6bc69fffd3c6"
+        ],
+        "Content-Length": [
+          "476"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Paused\",\r\n    \"state\": \"Paused\",\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A2\",\r\n    \"tier\": \"PBIE_Azure\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Jlc291cmNlR3JvdXBzL1Rlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlBvd2VyQklEZWRpY2F0ZWQvY2FwYWNpdGllcy9wYmlkc2RrdGVzdD9hcGktdmVyc2lvbj0yMDE3LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "145597b7-6cf4-4ead-8c51-200d556a7f1b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Aug 2018 17:20:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "4366da3a-bb63-407b-9bc0-b37b0aca95df"
+        ],
+        "x-ms-current-utc-date": [
+          "8/2/2018 5:20:27 PM"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "Content-Security-Policy": [
+          "script-src 'self'"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14982"
+        ],
+        "x-ms-correlation-request-id": [
+          "1fe7ed74-4019-4dc0-ae30-8984d41b4a77"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180802T172028Z:1fe7ed74-4019-4dc0-ae30-8984d41b4a77"
+        ],
+        "Content-Length": [
+          "476"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Paused\",\r\n    \"state\": \"Paused\",\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A1\",\r\n    \"tier\": \"PBIE_Azure\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -582,41 +771,28 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "94f12fbb-432a-41ca-9151-a8afafcf9d6f"
+          "06611798-0f26-4f6d-9500-01074ab5c66c"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"resourceType\": \"Microsoft.PowerBIDedicated/capacities\",\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"PBIE_Azure\"\r\n      }\r\n    },\r\n    {\r\n      \"resourceType\": \"Microsoft.PowerBIDedicated/capacities\",\r\n      \"sku\": {\r\n        \"name\": \"A2\",\r\n        \"tier\": \"PBIE_Azure\"\r\n      }\r\n    },\r\n    {\r\n      \"resourceType\": \"Microsoft.PowerBIDedicated/capacities\",\r\n      \"sku\": {\r\n        \"name\": \"A3\",\r\n        \"tier\": \"PBIE_Azure\"\r\n      }\r\n    },\r\n    {\r\n      \"resourceType\": \"Microsoft.PowerBIDedicated/capacities\",\r\n      \"sku\": {\r\n        \"name\": \"A4\",\r\n        \"tier\": \"PBIE_Azure\"\r\n      }\r\n    },\r\n    {\r\n      \"resourceType\": \"Microsoft.PowerBIDedicated/capacities\",\r\n      \"sku\": {\r\n        \"name\": \"A5\",\r\n        \"tier\": \"PBIE_Azure\"\r\n      }\r\n    },\r\n    {\r\n      \"resourceType\": \"Microsoft.PowerBIDedicated/capacities\",\r\n      \"sku\": {\r\n        \"name\": \"A6\",\r\n        \"tier\": \"PBIE_Azure\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "593"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Oct 2017 09:34:14 GMT"
+          "Thu, 02 Aug 2018 17:17:18 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -634,21 +810,31 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "78d0e0ed-dd9c-4594-942e-b3aa61d4535c"
+          "1ad9610e-0d53-45f4-b27e-69dec68dcadd"
         ],
         "x-ms-current-utc-date": [
-          "10/10/2017 9:34:15 AM"
+          "8/2/2018 5:17:19 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
+          "14992"
         ],
         "x-ms-correlation-request-id": [
-          "6965e22f-b4d5-4eb1-a8c5-eff5f9edf34a"
+          "af6982fa-c717-4730-8de9-07ea77bae290"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093415Z:6965e22f-b4d5-4eb1-a8c5-eff5f9edf34a"
+          "NORTHEUROPE:20180802T171719Z:af6982fa-c717-4730-8de9-07ea77bae290"
+        ],
+        "Content-Length": [
+          "593"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"resourceType\": \"Microsoft.PowerBIDedicated/capacities\",\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"PBIE_Azure\"\r\n      }\r\n    },\r\n    {\r\n      \"resourceType\": \"Microsoft.PowerBIDedicated/capacities\",\r\n      \"sku\": {\r\n        \"name\": \"A2\",\r\n        \"tier\": \"PBIE_Azure\"\r\n      }\r\n    },\r\n    {\r\n      \"resourceType\": \"Microsoft.PowerBIDedicated/capacities\",\r\n      \"sku\": {\r\n        \"name\": \"A3\",\r\n        \"tier\": \"PBIE_Azure\"\r\n      }\r\n    },\r\n    {\r\n      \"resourceType\": \"Microsoft.PowerBIDedicated/capacities\",\r\n      \"sku\": {\r\n        \"name\": \"A4\",\r\n        \"tier\": \"PBIE_Azure\"\r\n      }\r\n    },\r\n    {\r\n      \"resourceType\": \"Microsoft.PowerBIDedicated/capacities\",\r\n      \"sku\": {\r\n        \"name\": \"A5\",\r\n        \"tier\": \"PBIE_Azure\"\r\n      }\r\n    },\r\n    {\r\n      \"resourceType\": \"Microsoft.PowerBIDedicated/capacities\",\r\n      \"sku\": {\r\n        \"name\": \"A6\",\r\n        \"tier\": \"PBIE_Azure\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -657,45 +843,35 @@
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"A2\",\r\n    \"tier\": \"PBIE_Azure\"\r\n  }\r\n}",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "66"
-        ],
         "x-ms-client-request-id": [
-          "79110fe3-378f-49c8-97a2-35c914a3bd12"
+          "37be39ab-5070-4b2e-bc46-c21374496c98"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Preparing\",\r\n    \"state\": \"Preparing\",\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A2\",\r\n    \"tier\": \"PBIE_Azure\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "482"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
-        "Expires": [
-          "-1"
-        ],
+        "Content-Length": [
+          "66"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Oct 2017 09:34:15 GMT"
+          "Thu, 02 Aug 2018 17:17:20 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/05805C75-7CE7-48C3-861D-014EA387EB8A?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/1121E2D5-3491-43EB-8F26-7DB1A64640B0?api-version=2017-01-01-preview"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -704,13 +880,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/05805C75-7CE7-48C3-861D-014EA387EB8A?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/1121E2D5-3491-43EB-8F26-7DB1A64640B0?api-version=2017-01-01-preview"
         ],
         "x-ms-request-id": [
-          "9dcb36f2-e15f-4549-b08c-7c8c3b09efd0"
+          "f1643493-b116-4d45-9053-8360152eae43"
         ],
         "x-ms-current-utc-date": [
-          "10/10/2017 9:34:15 AM"
+          "8/2/2018 5:17:19 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -728,27 +904,157 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "1e0357a9-dd69-4e0f-a4d0-b36b1740e46a"
+          "f2619e1a-214c-4d0e-912a-fd7c5f648f51"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093416Z:1e0357a9-dd69-4e0f-a4d0-b36b1740e46a"
+          "NORTHEUROPE:20180802T171720Z:f2619e1a-214c-4d0e-912a-fd7c5f648f51"
+        ],
+        "Content-Length": [
+          "482"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Preparing\",\r\n    \"state\": \"Preparing\",\r\n    \"administration\": {\r\n      \"members\": [\r\n        \"aztest0@stabletest.ccsctp.net\",\r\n        \"aztest1@stabletest.ccsctp.net\"\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A2\",\r\n    \"tier\": \"PBIE_Azure\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/05805C75-7CE7-48C3-861D-014EA387EB8A?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8wNTgwNUM3NS03Q0U3LTQ4QzMtODYxRC0wMTRFQTM4N0VCOEE/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Jlc291cmNlR3JvdXBzL1Rlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlBvd2VyQklEZWRpY2F0ZWQvY2FwYWNpdGllcy9wYmlkc2RrdGVzdD9hcGktdmVyc2lvbj0yMDE3LTEwLTAx",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"A1\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "014f02e7-f1aa-4c7a-8f48-78fd8d331dea"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "39"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Aug 2018 17:20:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "c6cf63d5-be8b-4e75-b6ad-12857b587557"
+        ],
+        "x-ms-current-utc-date": [
+          "8/2/2018 5:20:26 PM"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "Content-Security-Policy": [
+          "script-src 'self'"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "4429f70d-72a3-475a-a83b-09583be4a09a"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180802T172027Z:4429f70d-72a3-475a-a83b-09583be4a09a"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Paused\",\r\n    \"state\": \"Paused\"\r\n  },\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest\",\r\n  \"name\": \"pbidsdktest\",\r\n  \"type\": \"Microsoft.PowerBIDedicated/capacities\",\r\n  \"location\": \"West Central US\",\r\n  \"sku\": {\r\n    \"name\": \"A1\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/1121E2D5-3491-43EB-8F26-7DB1A64640B0?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8xMTIxRTJENS0zNDkxLTQzRUItOEYyNi03REIxQTY0NjQwQjA/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/05805C75-7CE7-48C3-861D-014EA387EB8A\",\r\n  \"name\": \"05805C75-7CE7-48C3-861D-014EA387EB8A\",\r\n  \"status\": \"Scaling\",\r\n  \"startTime\": \"2017-10-10T09:34:14.92Z\"\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Aug 2018 17:17:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "Content-Security-Policy": [
+          "script-src 'self'"
+        ],
+        "x-ms-request-id": [
+          "16ac8c76-62d8-4c2f-81a0-7e9bc099734c"
+        ],
+        "x-ms-current-utc-date": [
+          "8/2/2018 5:17:51 PM"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14991"
+        ],
+        "x-ms-correlation-request-id": [
+          "67fd18d2-da44-408a-bfd3-acc61ee31943"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180802T171751Z:67fd18d2-da44-408a-bfd3-acc61ee31943"
+        ],
         "Content-Length": [
           "247"
         ],
@@ -757,21 +1063,34 @@
         ],
         "Expires": [
           "-1"
-        ],
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/1121E2D5-3491-43EB-8F26-7DB1A64640B0\",\r\n  \"name\": \"1121E2D5-3491-43EB-8F26-7DB1A64640B0\",\r\n  \"status\": \"Scaling\",\r\n  \"startTime\": \"2018-08-02T17:17:20.02Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/1121E2D5-3491-43EB-8F26-7DB1A64640B0?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8xMTIxRTJENS0zNDkxLTQzRUItOEYyNi03REIxQTY0NjQwQjA/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Oct 2017 09:34:45 GMT"
+          "Thu, 02 Aug 2018 17:18:21 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -789,36 +1108,221 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "5a7afb68-68a3-46d5-ba6f-ee78c9d41e15"
+          "92568833-eed0-4074-8b0c-1c10e0680b40"
         ],
         "x-ms-current-utc-date": [
-          "10/10/2017 9:34:46 AM"
+          "8/2/2018 5:18:21 PM"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14990"
+        ],
+        "x-ms-correlation-request-id": [
+          "a56f712b-24e5-46aa-9a5d-df35e0489343"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180802T171822Z:a56f712b-24e5-46aa-9a5d-df35e0489343"
+        ],
+        "Content-Length": [
+          "247"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/1121E2D5-3491-43EB-8F26-7DB1A64640B0\",\r\n  \"name\": \"1121E2D5-3491-43EB-8F26-7DB1A64640B0\",\r\n  \"status\": \"Scaling\",\r\n  \"startTime\": \"2018-08-02T17:17:20.02Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/1121E2D5-3491-43EB-8F26-7DB1A64640B0?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8xMTIxRTJENS0zNDkxLTQzRUItOEYyNi03REIxQTY0NjQwQjA/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Aug 2018 17:18:52 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "Content-Security-Policy": [
+          "script-src 'self'"
+        ],
+        "x-ms-request-id": [
+          "5af44b82-201f-49c3-92e2-6c11465a9d04"
+        ],
+        "x-ms-current-utc-date": [
+          "8/2/2018 5:18:52 PM"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14989"
+        ],
+        "x-ms-correlation-request-id": [
+          "10dbefc6-ccc6-46ce-ab80-1bb98de90398"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180802T171852Z:10dbefc6-ccc6-46ce-ab80-1bb98de90398"
+        ],
+        "Content-Length": [
+          "247"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/1121E2D5-3491-43EB-8F26-7DB1A64640B0\",\r\n  \"name\": \"1121E2D5-3491-43EB-8F26-7DB1A64640B0\",\r\n  \"status\": \"Scaling\",\r\n  \"startTime\": \"2018-08-02T17:17:20.02Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/1121E2D5-3491-43EB-8F26-7DB1A64640B0?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8xMTIxRTJENS0zNDkxLTQzRUItOEYyNi03REIxQTY0NjQwQjA/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Aug 2018 17:19:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "Content-Security-Policy": [
+          "script-src 'self'"
+        ],
+        "x-ms-request-id": [
+          "6ce0b558-90f4-49c3-81b4-8c89cf217c38"
+        ],
+        "x-ms-current-utc-date": [
+          "8/2/2018 5:19:22 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14988"
         ],
         "x-ms-correlation-request-id": [
-          "8a9ebf1e-5588-485b-b82f-e0aadf4f1699"
+          "bb2a42bf-2edf-47ea-ba24-ee353559511e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093446Z:8a9ebf1e-5588-485b-b82f-e0aadf4f1699"
+          "NORTHEUROPE:20180802T171923Z:bb2a42bf-2edf-47ea-ba24-ee353559511e"
+        ],
+        "Content-Length": [
+          "247"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/1121E2D5-3491-43EB-8F26-7DB1A64640B0\",\r\n  \"name\": \"1121E2D5-3491-43EB-8F26-7DB1A64640B0\",\r\n  \"status\": \"Scaling\",\r\n  \"startTime\": \"2018-08-02T17:17:20.02Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/05805C75-7CE7-48C3-861D-014EA387EB8A?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8wNTgwNUM3NS03Q0U3LTQ4QzMtODYxRC0wMTRFQTM4N0VCOEE/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/1121E2D5-3491-43EB-8F26-7DB1A64640B0?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy8xMTIxRTJENS0zNDkxLTQzRUItOEYyNi03REIxQTY0NjQwQjA/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/05805C75-7CE7-48C3-861D-014EA387EB8A\",\r\n  \"name\": \"05805C75-7CE7-48C3-861D-014EA387EB8A\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2017-10-10T09:34:14.92Z\",\r\n  \"endTime\": \"2017-10-10T09:34:57.843Z\"\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Aug 2018 17:19:53 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "Content-Security-Policy": [
+          "script-src 'self'"
+        ],
+        "x-ms-request-id": [
+          "7bfa7268-7433-477a-916b-0ee5ee372983"
+        ],
+        "x-ms-current-utc-date": [
+          "8/2/2018 5:19:53 PM"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14987"
+        ],
+        "x-ms-correlation-request-id": [
+          "db95953f-b02c-4045-b007-8170dcf263d3"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180802T171953Z:db95953f-b02c-4045-b007-8170dcf263d3"
+        ],
         "Content-Length": [
           "290"
         ],
@@ -827,91 +1331,40 @@
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 10 Oct 2017 09:35:15 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "deny"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-XSS-Protection": [
-          "1; mode=block"
-        ],
-        "Content-Security-Policy": [
-          "script-src 'self'"
-        ],
-        "x-ms-request-id": [
-          "41e4c37e-412b-49c0-9c49-7440d6238de0"
-        ],
-        "x-ms-current-utc-date": [
-          "10/10/2017 9:35:16 AM"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14987"
-        ],
-        "x-ms-correlation-request-id": [
-          "c9219740-97e4-45af-8962-f3057b02ec0c"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093516Z:c9219740-97e4-45af-8962-f3057b02ec0c"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/1121E2D5-3491-43EB-8F26-7DB1A64640B0\",\r\n  \"name\": \"1121E2D5-3491-43EB-8F26-7DB1A64640B0\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-08-02T17:17:20.02Z\",\r\n  \"endTime\": \"2018-08-02T17:19:28.537Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest?api-version=2017-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Jlc291cmNlR3JvdXBzL1Rlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlBvd2VyQklEZWRpY2F0ZWQvY2FwYWNpdGllcy9wYmlkc2RrdGVzdD9hcGktdmVyc2lvbj0yMDE3LTEwLTAx",
-      "RequestMethod": "DELETE",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest/suspend?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Jlc291cmNlR3JvdXBzL1Rlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlBvd2VyQklEZWRpY2F0ZWQvY2FwYWNpdGllcy9wYmlkc2RrdGVzdC9zdXNwZW5kP2FwaS12ZXJzaW9uPTIwMTctMTAtMDE=",
+      "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7ded826c-760f-4c75-9e47-8823f2f130c5"
+          "160b0842-dc79-4ca8-a425-4c594f899294"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Oct 2017 09:35:18 GMT"
+          "Thu, 02 Aug 2018 17:19:54 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/65534A34-F1BE-4C98-BFAF-D8510632ECDC?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/7B840481-AD67-4987-82FC-635D8811952C?api-version=2017-01-01-preview"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -920,13 +1373,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/65534A34-F1BE-4C98-BFAF-D8510632ECDC?api-version=2017-01-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/7B840481-AD67-4987-82FC-635D8811952C?api-version=2017-01-01-preview"
         ],
         "x-ms-request-id": [
-          "be6b58ca-3212-4eea-aeea-02aaba4eef89"
+          "50f7cbf3-4c07-4cb0-9407-d61fb1f39a0f"
         ],
         "x-ms-current-utc-date": [
-          "10/10/2017 9:35:17 AM"
+          "8/2/2018 5:19:54 PM"
         ],
         "X-Frame-Options": [
           "deny"
@@ -944,50 +1397,44 @@
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "88e6ba66-3eac-4046-951c-4b3a8b45849d"
+          "fa2302c5-191b-4afb-ba59-f1cf51c3fb3c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093518Z:88e6ba66-3eac-4046-951c-4b3a8b45849d"
+          "NORTHEUROPE:20180802T171955Z:fa2302c5-191b-4afb-ba59-f1cf51c3fb3c"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/65534A34-F1BE-4C98-BFAF-D8510632ECDC?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy82NTUzNEEzNC1GMUJFLTRDOTgtQkZBRi1EODUxMDYzMkVDREM/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/7B840481-AD67-4987-82FC-635D8811952C?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy83Qjg0MDQ4MS1BRDY3LTQ5ODctODJGQy02MzVEODgxMTk1MkM/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/65534A34-F1BE-4C98-BFAF-D8510632ECDC\",\r\n  \"name\": \"65534A34-F1BE-4C98-BFAF-D8510632ECDC\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2017-10-10T09:35:17.073Z\",\r\n  \"endTime\": \"2017-10-10T09:35:18.93Z\"\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "290"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Oct 2017 09:35:48 GMT"
+          "Thu, 02 Aug 2018 17:20:24 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1005,59 +1452,56 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "fa0bb953-c2b9-4a2b-b97b-66039170a6c0"
+          "e18e3567-0fb2-4021-8b16-7af6666e1b28"
         ],
         "x-ms-current-utc-date": [
-          "10/10/2017 9:35:48 AM"
+          "8/2/2018 5:20:25 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14984"
+          "14985"
         ],
         "x-ms-correlation-request-id": [
-          "d113b9f7-eb3e-42ce-9aa6-61ec8a76986e"
+          "8ff915c2-711b-4f52-ba3d-8b37384c7361"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093548Z:d113b9f7-eb3e-42ce-9aa6-61ec8a76986e"
+          "NORTHEUROPE:20180802T172025Z:8ff915c2-711b-4f52-ba3d-8b37384c7361"
+        ],
+        "Content-Length": [
+          "290"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/7B840481-AD67-4987-82FC-635D8811952C\",\r\n  \"name\": \"7B840481-AD67-4987-82FC-635D8811952C\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-08-02T17:19:54.35Z\",\r\n  \"endTime\": \"2018-08-02T17:19:56.613Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/65534A34-F1BE-4C98-BFAF-D8510632ECDC?api-version=2017-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25yZXN1bHRzLzY1NTM0QTM0LUYxQkUtNEM5OC1CRkFGLUQ4NTEwNjMyRUNEQz9hcGktdmVyc2lvbj0yMDE3LTAxLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/7B840481-AD67-4987-82FC-635D8811952C?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25yZXN1bHRzLzdCODQwNDgxLUFENjctNDk4Ny04MkZDLTYzNUQ4ODExOTUyQz9hcGktdmVyc2lvbj0yMDE3LTAxLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/65534A34-F1BE-4C98-BFAF-D8510632ECDC\",\r\n  \"name\": \"65534A34-F1BE-4C98-BFAF-D8510632ECDC\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2017-10-10T09:35:17.073Z\",\r\n  \"endTime\": \"2017-10-10T09:35:18.93Z\"\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "290"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Oct 2017 09:35:48 GMT"
+          "Thu, 02 Aug 2018 17:20:24 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1075,22 +1519,233 @@
           "script-src 'self'"
         ],
         "x-ms-request-id": [
-          "fa0bb953-c2b9-4a2b-b97b-66039170a6c0"
+          "632d2301-88dd-411d-a773-8354b65f83cc"
         ],
         "x-ms-current-utc-date": [
-          "10/10/2017 9:35:48 AM"
+          "8/2/2018 5:20:25 PM"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14984"
         ],
         "x-ms-correlation-request-id": [
-          "d113b9f7-eb3e-42ce-9aa6-61ec8a76986e"
+          "2a4aef10-58a2-46cc-b4ac-c06c39d2b257"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171010T093548Z:d113b9f7-eb3e-42ce-9aa6-61ec8a76986e"
+          "NORTHEUROPE:20180802T172025Z:2a4aef10-58a2-46cc-b4ac-c06c39d2b257"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/resourceGroups/TestRG/providers/Microsoft.PowerBIDedicated/capacities/pbidsdktest?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Jlc291cmNlR3JvdXBzL1Rlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlBvd2VyQklEZWRpY2F0ZWQvY2FwYWNpdGllcy9wYmlkc2RrdGVzdD9hcGktdmVyc2lvbj0yMDE3LTEwLTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3bc2e3c2-edfc-4d68-a333-a396aed62b59"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Aug 2018 17:20:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/5A5F46F9-D463-49C7-AC0D-9841E8E31568?api-version=2017-01-01-preview"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/5A5F46F9-D463-49C7-AC0D-9841E8E31568?api-version=2017-01-01-preview"
+        ],
+        "x-ms-request-id": [
+          "7ca6c554-cd48-4c3e-b457-8e783fbb1fbf"
+        ],
+        "x-ms-current-utc-date": [
+          "8/2/2018 5:20:28 PM"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "Content-Security-Policy": [
+          "script-src 'self'"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "b13764b3-0726-4800-a558-874ff92703d5"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180802T172029Z:b13764b3-0726-4800-a558-874ff92703d5"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationstatuses/5A5F46F9-D463-49C7-AC0D-9841E8E31568?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25zdGF0dXNlcy81QTVGNDZGOS1ENDYzLTQ5QzctQUMwRC05ODQxRThFMzE1Njg/YXBpLXZlcnNpb249MjAxNy0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Aug 2018 17:20:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "Content-Security-Policy": [
+          "script-src 'self'"
+        ],
+        "x-ms-request-id": [
+          "e0fda05f-d1ce-4cef-ba2a-b50b55438c87"
+        ],
+        "x-ms-current-utc-date": [
+          "8/2/2018 5:20:59 PM"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14981"
+        ],
+        "x-ms-correlation-request-id": [
+          "8f332a60-69f6-42c1-b586-3c29bd330606"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180802T172100Z:8f332a60-69f6-42c1-b586-3c29bd330606"
+        ],
+        "Content-Length": [
+          "290"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/5A5F46F9-D463-49C7-AC0D-9841E8E31568\",\r\n  \"name\": \"5A5F46F9-D463-49C7-AC0D-9841E8E31568\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-08-02T17:20:28.427Z\",\r\n  \"endTime\": \"2018-08-02T17:20:29.177Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/5A5F46F9-D463-49C7-AC0D-9841E8E31568?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25yZXN1bHRzLzVBNUY0NkY5LUQ0NjMtNDlDNy1BQzBELTk4NDFFOEUzMTU2OD9hcGktdmVyc2lvbj0yMDE3LTAxLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25815.02",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/0.10.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Aug 2018 17:20:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "Content-Security-Policy": [
+          "script-src 'self'"
+        ],
+        "x-ms-request-id": [
+          "a1ebd566-e4d0-4c81-9141-ef6e1a66cd16"
+        ],
+        "x-ms-current-utc-date": [
+          "8/2/2018 5:21:00 PM"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14980"
+        ],
+        "x-ms-correlation-request-id": [
+          "1698331e-763a-482a-88a6-badb3e907fd3"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180802T172100Z:1698331e-763a-482a-88a6-badb3e907fd3"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
     }
   ],
   "Names": {},

@@ -1,11 +1,20 @@
-2017-11-08 22:41:50 UTC
-
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/PowerBIDedicated/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=G:\sagis\Repos\azure-sdk-for-net\src\SDKs
+2018-08-02 22:48:54 UTC
 1) azure-rest-api-specs repository information
-GitHub user: Azure
-Branch:      current
-Commit:      5e44f1a49008963f1b189dbd91903a22c470f757
+GitHub fork: Azure
+Branch:      master
+Commit:      90464a8a191c4b3c597541d09cf26e83c83b0a6c
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\sagis\AppData\Roaming\npm `-- autorest@2.0.4166  
-Latest installed version:    2.0.4168
+Bootstrapper version:    autorest@2.0.4283
+
+
+Latest installed version:    
+
+
