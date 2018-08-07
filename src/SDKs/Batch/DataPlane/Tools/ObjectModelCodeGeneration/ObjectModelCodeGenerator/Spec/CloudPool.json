@@ -248,7 +248,7 @@
           "Key": {
             "Type": "IReadOnlyList<ResizeError>",
             "Name": "ResizeErrors",
-            "SummaryComment": "A list of errors encountered while performing the last resize on the <see cref=\"CloudPool\"/>. Errors are returned only when the Batch service encountered an error while resizing the pool, and when the pool's <see cref=\"CloudPool.AllocationState\"/> is <see cref=\"AllocationState\">Steady</see>.",
+            "SummaryComment": "A list of errors encountered while performing the last resize on the <see cref=\"CloudPool\"/>. Errors are returned only when the Batch service encountered an error while resizing the pool, and when the pool's <see cref=\"CloudPool.AllocationState\"/> is <see cref=\"Common.AllocationState.Steady\">Steady</see>.",
             "RemarksComment": null,
             "BoundAccess": "read",
             "UnboundAccess": "none"
