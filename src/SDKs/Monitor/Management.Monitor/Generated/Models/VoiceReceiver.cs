@@ -12,34 +12,35 @@ namespace Microsoft.Azure.Management.Monitor.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Specifies a metric dimension.
+    /// A voice receiver.
     /// </summary>
-    public partial class MetricDimension
+    public partial class VoiceReceiver
     {
         /// <summary>
-        /// Initializes a new instance of the MetricDimension class.
+        /// Initializes a new instance of the VoiceReceiver class.
         /// </summary>
-        public MetricDimension()
+        public VoiceReceiver()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MetricDimension class.
+        /// Initializes a new instance of the VoiceReceiver class.
         /// </summary>
-        /// <param name="name">Name of the dimension.</param>
-        /// <param name="operatorProperty">the dimension operator.</param>
-        /// <param name="values">list of dimension values.</param>
-        public MetricDimension(string name, string operatorProperty, IList<string> values)
+        /// <param name="name">The name of the voice receiver. Names must be
+        /// unique across all receivers within an action group.</param>
+        /// <param name="countryCode">The country code of the voice
+        /// receiver.</param>
+        /// <param name="phoneNumber">The phone number of the voice
+        /// receiver.</param>
+        public VoiceReceiver(string name, string countryCode, string phoneNumber)
         {
             Name = name;
-            OperatorProperty = operatorProperty;
-            Values = values;
+            CountryCode = countryCode;
+            PhoneNumber = phoneNumber;
             CustomInit();
         }
 
@@ -49,22 +50,23 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the dimension.
+        /// Gets or sets the name of the voice receiver. Names must be unique
+        /// across all receivers within an action group.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the dimension operator.
+        /// Gets or sets the country code of the voice receiver.
         /// </summary>
-        [JsonProperty(PropertyName = "operator")]
-        public string OperatorProperty { get; set; }
+        [JsonProperty(PropertyName = "countryCode")]
+        public string CountryCode { get; set; }
 
         /// <summary>
-        /// Gets or sets list of dimension values.
+        /// Gets or sets the phone number of the voice receiver.
         /// </summary>
-        [JsonProperty(PropertyName = "values")]
-        public IList<string> Values { get; set; }
+        [JsonProperty(PropertyName = "phoneNumber")]
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -78,13 +80,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (OperatorProperty == null)
+            if (CountryCode == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "OperatorProperty");
+                throw new ValidationException(ValidationRules.CannotBeNull, "CountryCode");
             }
-            if (Values == null)
+            if (PhoneNumber == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Values");
+                throw new ValidationException(ValidationRules.CannotBeNull, "PhoneNumber");
             }
         }
     }

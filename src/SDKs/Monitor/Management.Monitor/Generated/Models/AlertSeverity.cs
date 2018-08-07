@@ -10,26 +10,16 @@
 
 namespace Microsoft.Azure.Management.Monitor.Models
 {
-    using System.Linq;
 
     /// <summary>
-    /// Action descriptor.
+    /// Defines values for AlertSeverity.
     /// </summary>
-    public partial class Action
+    public static class AlertSeverity
     {
-        /// <summary>
-        /// Initializes a new instance of the Action class.
-        /// </summary>
-        public Action()
-        {
-            CustomInit();
-        }
-
-
-        /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
-        /// </summary>
-        partial void CustomInit();
-
+        public const string Zero = "0";
+        public const string One = "1";
+        public const string Two = "2";
+        public const string Three = "3";
+        public const string Four = "4";
     }
 }
