@@ -255,7 +255,7 @@ function Start-MetadataGeneration {
     {
         $metadataTemplate = Get-Content "$PSScriptRoot\MetadataFieldsTemplate.txt" -Raw
         $metadataTemplate = 
-            $metadataTemplate.Replace("{{GithubRepoName}}", $specsRepoName).Replace("{{GithubBranchName}}", $specsRepoBranch).Replace("{{GithubForkName}}", $specsRepoFork).Replace("{{GithubCommidId}}", $commitId).Replace("{{AutoRestVersion}}", $AutoRestVersion).Replace("{{AutoRestCmdExecuted}}", $AutoRestCommandExecuted).Replace("{{AutoRestBootStrapperVersion}}", $ver).Replace("{{CodeGenerationErrors}}", "")
+            $metadataTemplate.Replace("{{GithubRepoName}}", $specsRepoName).Replace("{{GithubBranchName}}", $specsRepoBranch).Replace("{{GithubForkName}}", $specsRepoFork).Replace("{{GithubCommitId}}", $commitId).Replace("{{AutoRestVersion}}", $AutoRestVersion).Replace("{{AutoRestCmdExecuted}}", $AutoRestCommandExecuted).Replace("{{AutoRestBootStrapperVersion}}", $ver).Replace("{{CodeGenerationErrors}}", "")
         $metadataTemplate= $metadataTemplate.TrimEnd()
         $metadataTemplate = $metadataTemplate.Replace('\', '\\')
         $sdkInfo = Get-Content $sdkInfoFile -Raw

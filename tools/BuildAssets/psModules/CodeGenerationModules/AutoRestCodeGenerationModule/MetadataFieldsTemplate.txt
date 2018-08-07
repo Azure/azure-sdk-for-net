@@ -4,7 +4,7 @@
       public static readonly String AutoRestCmdExecuted = "{{AutoRestCmdExecuted}}";
       public static readonly String GithubForkName = "{{GithubForkName}}";
       public static readonly String GithubBranchName = "{{GithubBranchName}}";
-      public static readonly String GithubCommidId = "{{GithubCommidId}}";
+      public static readonly String GithubCommitId = "{{GithubCommitId}}";
       public static readonly String CodeGenerationErrors = "{{CodeGenerationErrors}}";
       public static readonly String GithubRepoName = "{{GithubRepoName}}";
       // END: Code Generation Metadata Section
