@@ -12,34 +12,35 @@ namespace Microsoft.Azure.Management.Monitor.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Specifies a metric dimension.
+    /// A logic app receiver.
     /// </summary>
-    public partial class MetricDimension
+    public partial class LogicAppReceiver
     {
         /// <summary>
-        /// Initializes a new instance of the MetricDimension class.
+        /// Initializes a new instance of the LogicAppReceiver class.
         /// </summary>
-        public MetricDimension()
+        public LogicAppReceiver()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MetricDimension class.
+        /// Initializes a new instance of the LogicAppReceiver class.
         /// </summary>
-        /// <param name="name">Name of the dimension.</param>
-        /// <param name="operatorProperty">the dimension operator.</param>
-        /// <param name="values">list of dimension values.</param>
-        public MetricDimension(string name, string operatorProperty, IList<string> values)
+        /// <param name="name">The name of the logic app receiver. Names must
+        /// be unique across all receivers within an action group.</param>
+        /// <param name="resourceId">The azure resource id of the logic app
+        /// receiver.</param>
+        /// <param name="callbackUrl">The callback url where http request sent
+        /// to.</param>
+        public LogicAppReceiver(string name, string resourceId, string callbackUrl)
         {
             Name = name;
-            OperatorProperty = operatorProperty;
-            Values = values;
+            ResourceId = resourceId;
+            CallbackUrl = callbackUrl;
             CustomInit();
         }
 
@@ -49,22 +50,23 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the dimension.
+        /// Gets or sets the name of the logic app receiver. Names must be
+        /// unique across all receivers within an action group.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the dimension operator.
+        /// Gets or sets the azure resource id of the logic app receiver.
         /// </summary>
-        [JsonProperty(PropertyName = "operator")]
-        public string OperatorProperty { get; set; }
+        [JsonProperty(PropertyName = "resourceId")]
+        public string ResourceId { get; set; }
 
         /// <summary>
-        /// Gets or sets list of dimension values.
+        /// Gets or sets the callback url where http request sent to.
         /// </summary>
-        [JsonProperty(PropertyName = "values")]
-        public IList<string> Values { get; set; }
+        [JsonProperty(PropertyName = "callbackUrl")]
+        public string CallbackUrl { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -78,13 +80,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (OperatorProperty == null)
+            if (ResourceId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "OperatorProperty");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ResourceId");
             }
-            if (Values == null)
+            if (CallbackUrl == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Values");
+                throw new ValidationException(ValidationRules.CannotBeNull, "CallbackUrl");
             }
         }
     }

@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="type">Azure resource type</param>
         /// <param name="storageAccountId">The resource ID of the storage
         /// account to which you would like to send Diagnostic Logs.</param>
+        /// <param name="serviceBusRuleId">The service bus rule Id of the
+        /// diagnostic setting. This is here to maintain backwards
+        /// compatibility.</param>
         /// <param name="eventHubAuthorizationRuleId">The resource Id for the
         /// event hub authorization rule.</param>
         /// <param name="eventHubName">The name of the event hub. If none is
@@ -49,10 +52,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Analytics workspace) for a Log Analytics workspace to which you
         /// would like to send Diagnostic Logs. Example:
         /// /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2</param>
-        public DiagnosticSettingsResource(string id = default(string), string name = default(string), string type = default(string), string storageAccountId = default(string), string eventHubAuthorizationRuleId = default(string), string eventHubName = default(string), IList<MetricSettings> metrics = default(IList<MetricSettings>), IList<LogSettings> logs = default(IList<LogSettings>), string workspaceId = default(string))
+        public DiagnosticSettingsResource(string id = default(string), string name = default(string), string type = default(string), string storageAccountId = default(string), string serviceBusRuleId = default(string), string eventHubAuthorizationRuleId = default(string), string eventHubName = default(string), IList<MetricSettings> metrics = default(IList<MetricSettings>), IList<LogSettings> logs = default(IList<LogSettings>), string workspaceId = default(string))
             : base(id, name, type)
         {
             StorageAccountId = storageAccountId;
+            ServiceBusRuleId = serviceBusRuleId;
             EventHubAuthorizationRuleId = eventHubAuthorizationRuleId;
             EventHubName = eventHubName;
             Metrics = metrics;
@@ -72,6 +76,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountId")]
         public string StorageAccountId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the service bus rule Id of the diagnostic setting.
+        /// This is here to maintain backwards compatibility.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.serviceBusRuleId")]
+        public string ServiceBusRuleId { get; set; }
 
         /// <summary>
         /// Gets or sets the resource Id for the event hub authorization rule.
