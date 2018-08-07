@@ -7,9 +7,9 @@
     <AssemblyName>Media.Tests</AssemblyName>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Storage" Version="[5.0.2-preview,6.0)" />

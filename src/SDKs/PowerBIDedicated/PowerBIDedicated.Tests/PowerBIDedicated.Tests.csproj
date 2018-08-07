@@ -2,14 +2,14 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />  
   <PropertyGroup>
     <PackageId>PowerBIDedicated.Tests</PackageId>
-    <VersionPrefix>0.9.0-preview</VersionPrefix>
+    <VersionPrefix>1.0.0</VersionPrefix>
     <Description>PowerBIDedicated.Tests Class Library</Description>
     <AssemblyName>PowerBIDedicated.Tests</AssemblyName>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\Management.PowerBIDedicated\Microsoft.Azure.Management.PowerBIDedicated.csproj" />

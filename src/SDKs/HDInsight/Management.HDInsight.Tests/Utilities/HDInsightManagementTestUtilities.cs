@@ -71,7 +71,7 @@ namespace Management.HDInsight.Tests
                         client.Clusters.Get(rgName, clusterName);
                         client.Clusters.BeginDelete(rgName, clusterName);
                     }
-                    catch(CloudException ex)
+                    catch(ErrorResponseException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound)
                         {

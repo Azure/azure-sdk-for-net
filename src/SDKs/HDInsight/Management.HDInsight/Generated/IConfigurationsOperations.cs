@@ -32,8 +32,11 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='clusterName'>
         /// The name of the cluster.
         /// </param>
+        /// <param name='configurationName'>
+        /// The name of the cluster configuration.
+        /// </param>
         /// <param name='parameters'>
-        /// The name of the resource group.
+        /// The cluster configurations.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -41,13 +44,13 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateHTTPSettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, HttpConnectivitySettings parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateHTTPSettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The configuration object for the specified cluster.
         /// </summary>
@@ -58,7 +61,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// The name of the cluster.
         /// </param>
         /// <param name='configurationName'>
-        /// The constant for configuration type of gateway.
+        /// The name of the cluster configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -66,7 +69,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -85,8 +88,11 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='clusterName'>
         /// The name of the cluster.
         /// </param>
+        /// <param name='configurationName'>
+        /// The name of the cluster configuration.
+        /// </param>
         /// <param name='parameters'>
-        /// The name of the resource group.
+        /// The cluster configurations.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -94,12 +100,12 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginUpdateHTTPSettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, HttpConnectivitySettings parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginUpdateHTTPSettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

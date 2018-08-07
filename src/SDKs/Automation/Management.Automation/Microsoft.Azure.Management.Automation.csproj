@@ -6,12 +6,17 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Automation</PackageId>
     <Description>Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.</Description>
-    <Version>3.1.0-preview</Version>
+    <Version>3.2.0-preview</Version>
     <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
     <AssemblyTitle>Microsoft Azure Automation Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
     <PackageTags>Automation;Runbook;</PackageTags>
-    <PackageReleaseNotes>Minor Bug Fixes and adding new resource: Watchers</PackageReleaseNotes>
+    <PackageReleaseNotes><![CDATA[
+New features:
+- New NodeCounts resource added
+- Fixed bugs in Schedule and Runbook Contents
+      ]]>
+	  </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

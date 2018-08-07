@@ -15,8 +15,9 @@ namespace Microsoft.Azure.Search
     public static partial class SynonymMapsOperationsExtensions
     {
         /// <summary>
-        /// Creates a new Azure Search synonymmap or updates a synonymmap if it
+        /// Creates a new Azure Search synonym map or updates a synonym map if it
         /// already exists.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map" />
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -25,19 +26,21 @@ namespace Microsoft.Azure.Search
         /// The definition of the synonymmap to create or update.
         /// </param>
         /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <param name='accessCondition'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
+        /// <returns>The synonym map that was created or updated.</returns>
         public static SynonymMap CreateOrUpdate(this ISynonymMapsOperations operations, SynonymMap synonymMap, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
         {
             return operations.CreateOrUpdateAsync(synonymMap, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
         }
 
         /// <summary>
-        /// Creates a new Azure Search synonymmap or updates a synonymmap if it
+        /// Creates a new Azure Search synonym map or updates a synonym map if it
         /// already exists.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map" />
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -46,14 +49,15 @@ namespace Microsoft.Azure.Search
         /// The definition of the synonymmap to create or update.
         /// </param>
         /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <param name='accessCondition'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <returns>The synonym map that was created or updated.</returns>
         public static async Task<SynonymMap> CreateOrUpdateAsync(this ISynonymMapsOperations operations, SynonymMap synonymMap, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(synonymMap, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
@@ -72,7 +76,7 @@ namespace Microsoft.Azure.Search
         /// The name of the synonym map.
         /// </param>
         /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <returns>
         /// <c>true</c> if the synonym map exists; <c>false</c> otherwise.
@@ -95,7 +99,7 @@ namespace Microsoft.Azure.Search
         /// The name of the synonym map.
         /// </param>
         /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.

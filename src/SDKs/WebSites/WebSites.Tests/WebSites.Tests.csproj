@@ -6,9 +6,9 @@
     <AssemblyName>WebSites.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.Websites" Version="1.6.0-preview" />-->    
     <ProjectReference Include="..\Management.Websites\Microsoft.Azure.Management.Websites.csproj" />

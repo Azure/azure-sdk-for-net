@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public string RequestMethod { get; set; }
 
-        //[JsonConverter(typeof(StringEnumConverter))]
         [JsonIgnore]
         public RecordEntryContentType RequestContentType { get; set; }
         
@@ -28,7 +27,6 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public Dictionary<string, List<string>> RequestHeaders { get; set; }
 
-        //[JsonConverter(typeof(StringEnumConverter))]
         [JsonIgnore]
         public RecordEntryContentType ResponseContentType { get; set; }
         public Dictionary<string, List<string>> ResponseHeaders { get; set; }
@@ -41,6 +39,9 @@ namespace Microsoft.Azure.Test.HttpRecorder
         {
             
         }
+
+        public RecordEntry(RecordEntry recEntry) : this(recEntry.GetResponse())
+        { }
 
         public RecordEntry(HttpResponseMessage response)
         {
@@ -108,6 +109,9 @@ namespace Microsoft.Azure.Test.HttpRecorder
         }
     }
 
+    /// <summary>
+    /// Request/Response content type enum
+    /// </summary>
     public enum RecordEntryContentType
     {
         Binary,

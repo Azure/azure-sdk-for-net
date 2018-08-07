@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Net.Http;
-
 namespace Microsoft.Rest.Azure
 {
+    using System;
+
     /// <summary>
     /// An exception generated from an http response returned from a Microsoft Azure service
     /// </summary>

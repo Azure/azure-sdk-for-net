@@ -39,20 +39,28 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <param name="faceListId">An existing user-specified unique
         /// candidate face list, created in Face List - Create a Face List.
         /// Face list contains a set of persistedFaceIds which are persisted
-        /// and will never expire. Parameter faceListId and faceIds should not
-        /// be provided at the same time</param>
+        /// and will never expire. Parameter faceListId, largeFaceListId and
+        /// faceIds should not be provided at the same time。</param>
+        /// <param name="largeFaceListId">An existing user-specified unique
+        /// candidate large face list, created in LargeFaceList - Create. Large
+        /// face list contains a set of persistedFaceIds which are persisted
+        /// and will never expire. Parameter faceListId, largeFaceListId and
+        /// faceIds should not be provided at the same time.</param>
         /// <param name="faceIds">An array of candidate faceIds. All of them
         /// are created by Face - Detect and the faceIds will expire 24 hours
-        /// after the detection call.</param>
+        /// after the detection call. The number of faceIds is limited to 1000.
+        /// Parameter faceListId, largeFaceListId and faceIds should not be
+        /// provided at the same time.</param>
         /// <param name="maxNumOfCandidatesReturned">The number of top similar
         /// faces returned. The valid range is [1, 1000].</param>
         /// <param name="mode">Similar face searching mode. It can be
         /// "matchPerson" or "matchFace". Possible values include:
         /// 'matchPerson', 'matchFace'</param>
-        public FindSimilarRequest(System.Guid faceId, string faceListId = default(string), IList<System.Guid?> faceIds = default(IList<System.Guid?>), int? maxNumOfCandidatesReturned = default(int?), FindSimilarMatchMode mode = default(FindSimilarMatchMode))
+        public FindSimilarRequest(System.Guid faceId, string faceListId = default(string), string largeFaceListId = default(string), IList<System.Guid?> faceIds = default(IList<System.Guid?>), int? maxNumOfCandidatesReturned = default(int?), FindSimilarMatchMode mode = default(FindSimilarMatchMode))
         {
             FaceId = faceId;
             FaceListId = faceListId;
+            LargeFaceListId = largeFaceListId;
             FaceIds = faceIds;
             MaxNumOfCandidatesReturned = maxNumOfCandidatesReturned;
             Mode = mode;
@@ -76,16 +84,28 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// Gets or sets an existing user-specified unique candidate face list,
         /// created in Face List - Create a Face List. Face list contains a set
         /// of persistedFaceIds which are persisted and will never expire.
-        /// Parameter faceListId and faceIds should not be provided at the same
-        /// time
+        /// Parameter faceListId, largeFaceListId and faceIds should not be
+        /// provided at the same time。
         /// </summary>
         [JsonProperty(PropertyName = "faceListId")]
         public string FaceListId { get; set; }
 
         /// <summary>
+        /// Gets or sets an existing user-specified unique candidate large face
+        /// list, created in LargeFaceList - Create. Large face list contains a
+        /// set of persistedFaceIds which are persisted and will never expire.
+        /// Parameter faceListId, largeFaceListId and faceIds should not be
+        /// provided at the same time.
+        /// </summary>
+        [JsonProperty(PropertyName = "largeFaceListId")]
+        public string LargeFaceListId { get; set; }
+
+        /// <summary>
         /// Gets or sets an array of candidate faceIds. All of them are created
         /// by Face - Detect and the faceIds will expire 24 hours after the
-        /// detection call.
+        /// detection call. The number of faceIds is limited to 1000. Parameter
+        /// faceListId, largeFaceListId and faceIds should not be provided at
+        /// the same time.
         /// </summary>
         [JsonProperty(PropertyName = "faceIds")]
         public IList<System.Guid?> FaceIds { get; set; }
@@ -121,6 +141,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
                 if (!System.Text.RegularExpressions.Regex.IsMatch(FaceListId, "^[a-z0-9-_]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "FaceListId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (LargeFaceListId != null)
+            {
+                if (LargeFaceListId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "LargeFaceListId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(LargeFaceListId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "LargeFaceListId", "^[a-z0-9-_]+$");
                 }
             }
             if (FaceIds != null)

@@ -57,13 +57,5 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             this._storageAccountKey = storageAccountKey;
             this._storageContainer = storageContainer;
         }
-
-        public string StorageAccountUri 
-        {
-            get
-            {
-                return string.Format("wasb://{0}@{1}", StorageContainer, StorageAccountName);
-            }
-        }
     }
 }

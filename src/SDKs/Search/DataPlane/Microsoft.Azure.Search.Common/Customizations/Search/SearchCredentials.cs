@@ -14,6 +14,9 @@ namespace Microsoft.Azure.Search
     /// Credentials used to authenticate to an Azure Search service.
     /// <see href="https://docs.microsoft.com/rest/api/searchservice/"/>
     /// </summary>
+    /// <remarks>
+    /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Search.
+    /// </remarks>
     public class SearchCredentials : ServiceClientCredentials
     {
         /// <summary>

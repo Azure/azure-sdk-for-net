@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.HDInsight
     public static partial class ApplicationsOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the applications HDInsight cluster.
+            /// Lists all of the applications for the HDInsight cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             /// <summary>
-            /// Lists all of the applications HDInsight cluster.
+            /// Lists all of the applications for the HDInsight cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -119,12 +119,15 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
+            /// <param name='applicationName'>
+            /// The constant value for the application name.
+            /// </param>
             /// <param name='parameters'>
             /// The application create request.
             /// </param>
-            public static Application Create(this IApplicationsOperations operations, string resourceGroupName, string clusterName, ApplicationGetProperties parameters)
+            public static Application Create(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationProperties parameters)
             {
-                return operations.CreateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, clusterName, applicationName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -139,15 +142,18 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
+            /// <param name='applicationName'>
+            /// The constant value for the application name.
+            /// </param>
             /// <param name='parameters'>
             /// The application create request.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Application> CreateAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, ApplicationGetProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Application> CreateAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -165,9 +171,12 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
-            public static void Delete(this IApplicationsOperations operations, string resourceGroupName, string clusterName)
+            /// <param name='applicationName'>
+            /// The constant value for the application name.
+            /// </param>
+            public static void Delete(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName)
             {
-                operations.DeleteAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, clusterName, applicationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -181,17 +190,20 @@ namespace Microsoft.Azure.Management.HDInsight
             /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster.
+            /// </param>
+            /// <param name='applicationName'>
+            /// The constant value for the application name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Deletes the specified application on the HDInsight cluster.
+            /// Creates applications for the HDInsight cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -202,13 +214,19 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
-            public static void BeginDelete(this IApplicationsOperations operations, string resourceGroupName, string clusterName)
+            /// <param name='applicationName'>
+            /// The constant value for the application name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The application create request.
+            /// </param>
+            public static Application BeginCreate(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationProperties parameters)
             {
-                operations.BeginDeleteAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                return operations.BeginCreateAsync(resourceGroupName, clusterName, applicationName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes the specified application on the HDInsight cluster.
+            /// Creates applications for the HDInsight cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -218,17 +236,69 @@ namespace Microsoft.Azure.Management.HDInsight
             /// </param>
             /// <param name='clusterName'>
             /// The name of the cluster.
+            /// </param>
+            /// <param name='applicationName'>
+            /// The constant value for the application name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The application create request.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Application> BeginCreateAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// Lists all of the applications HDInsight cluster.
+            /// Deletes the specified application on the HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='applicationName'>
+            /// The constant value for the application name.
+            /// </param>
+            public static void BeginDelete(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, clusterName, applicationName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the specified application on the HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='applicationName'>
+            /// The constant value for the application name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Lists all of the applications for the HDInsight cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -242,7 +312,7 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             /// <summary>
-            /// Lists all of the applications HDInsight cluster.
+            /// Lists all of the applications for the HDInsight cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -112,6 +112,9 @@ namespace Microsoft.Azure.Management.Network
         /// Retrieves all vpn connections for a particular virtual wan vpn
         /// gateway.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the VpnGateway.
+        /// </param>
         /// <param name='gatewayName'>
         /// The name of the gateway.
         /// </param>
@@ -130,7 +133,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<VpnConnection>>> ListByVpnGatewayWithHttpMessagesAsync(string gatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VpnConnection>>> ListByVpnGatewayWithHttpMessagesAsync(string resourceGroupName, string gatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a vpn connection to a scalable vpn gateway if it doesn't
         /// exist else updates the existing connection.

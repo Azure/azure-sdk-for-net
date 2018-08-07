@@ -27,7 +27,8 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             /// Returns requested Virtual Machine Extension Image.
             /// </summary>
             /// <remarks>
-            /// Returns requested Virtual Machine Extension Image.
+            /// Returns requested Virtual Machine Extension Image matching publisher, type,
+            /// version.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -53,7 +54,8 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             /// Returns requested Virtual Machine Extension Image.
             /// </summary>
             /// <remarks>
-            /// Returns requested Virtual Machine Extension Image.
+            /// Returns requested Virtual Machine Extension Image matching publisher, type,
+            /// version.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -85,7 +87,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             /// Create a Virtual Machine Extension Image.
             /// </summary>
             /// <remarks>
-            /// Create a Virtual Machine Extension Image.
+            /// Create a Virtual Machine Extension Image with publisher, version.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -114,7 +116,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             /// Create a Virtual Machine Extension Image.
             /// </summary>
             /// <remarks>
-            /// Create a Virtual Machine Extension Image.
+            /// Create a Virtual Machine Extension Image with publisher, version.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -201,10 +203,11 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             }
 
             /// <summary>
-            /// Returns a list of all Virtual Machine Extension Image.
+            /// Returns a list of all Virtual Machine Extension Images.
             /// </summary>
             /// <remarks>
-            /// Returns a list of all Virtual Machine Extension Image.
+            /// List of all Virtual Machine Extension Images for the current location are
+            /// returned.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -218,10 +221,11 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             }
 
             /// <summary>
-            /// Returns a list of all Virtual Machine Extension Image.
+            /// Returns a list of all Virtual Machine Extension Images.
             /// </summary>
             /// <remarks>
-            /// Returns a list of all Virtual Machine Extension Image.
+            /// List of all Virtual Machine Extension Images for the current location are
+            /// returned.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -45,6 +45,19 @@ namespace TestFramework.Tests.TestEnvironment
         }
 
         [Fact]
+        public void OptimizeRecordedFileKVPair()
+        {
+            string emptyStr = CreateConnStrWithAllPossibleValues();
+            ConnectionString cs = new ConnectionString();
+            cs.Parse(emptyStr);
+            Assert.False(cs.GetValue<bool>(ConnectionStringKeys.OptimizeRecordedFileKey));
+
+            cs.KeyValuePairs[ConnectionStringKeys.OptimizeRecordedFileKey] = "true";
+            Assert.True(cs.GetValue<bool>(ConnectionStringKeys.OptimizeRecordedFileKey));
+        }
+
+
+        [Fact]
         public void NullString()
         {
             // null Connection string            

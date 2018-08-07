@@ -433,8 +433,10 @@ namespace Microsoft.Rest
                 }
 
                 HttpClientHandler = httpClientHandler;
-                DelegatingHandler currentHandler = new RetryDelegatingHandler();
-                currentHandler.InnerHandler = HttpClientHandler;
+                // Now, the RetryAfterDelegatingHandler should be the absoulte outermost handler 
+                // because it's extremely lightweight and non-interfering
+                DelegatingHandler currentHandler =
+                    new RetryDelegatingHandler(new RetryAfterDelegatingHandler {InnerHandler = httpClientHandler});
 
                 if (handlers != null)
                 {

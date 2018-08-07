@@ -54,6 +54,12 @@ namespace Microsoft.Azure.Management.Automation
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The type of counts to retrieve. Possible values include: 'status',
+        /// 'nodeconfiguration'
+        /// </summary>
+        public string CountType1 { get; set; }
+
+        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -191,6 +197,11 @@ namespace Microsoft.Azure.Management.Automation
         public virtual IWebhookOperations Webhook { get; private set; }
 
         /// <summary>
+        /// Gets the IWatcherOperations.
+        /// </summary>
+        public virtual IWatcherOperations Watcher { get; private set; }
+
+        /// <summary>
         /// Gets the ISoftwareUpdateConfigurationsOperations.
         /// </summary>
         public virtual ISoftwareUpdateConfigurationsOperations SoftwareUpdateConfigurations { get; private set; }
@@ -261,9 +272,9 @@ namespace Microsoft.Azure.Management.Automation
         public virtual IDscNodeConfigurationOperations DscNodeConfiguration { get; private set; }
 
         /// <summary>
-        /// Gets the IWatcherOperations.
+        /// Gets the INodeCountInformationOperations.
         /// </summary>
-        public virtual IWatcherOperations Watcher { get; private set; }
+        public virtual INodeCountInformationOperations NodeCountInformation { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AutomationClient class.
@@ -490,6 +501,7 @@ namespace Microsoft.Azure.Management.Automation
             Schedule = new ScheduleOperations(this);
             Variable = new VariableOperations(this);
             Webhook = new WebhookOperations(this);
+            Watcher = new WatcherOperations(this);
             SoftwareUpdateConfigurations = new SoftwareUpdateConfigurationsOperations(this);
             SoftwareUpdateConfigurationRuns = new SoftwareUpdateConfigurationRunsOperations(this);
             SoftwareUpdateConfigurationMachineRuns = new SoftwareUpdateConfigurationMachineRunsOperations(this);
@@ -504,7 +516,7 @@ namespace Microsoft.Azure.Management.Automation
             DscCompilationJob = new DscCompilationJobOperations(this);
             DscCompilationJobStream = new DscCompilationJobStreamOperations(this);
             DscNodeConfiguration = new DscNodeConfigurationOperations(this);
-            Watcher = new WatcherOperations(this);
+            NodeCountInformation = new NodeCountInformationOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

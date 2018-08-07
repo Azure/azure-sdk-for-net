@@ -1,6 +1,5 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.Face;
 using System.Net.Http;
-using Face = Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 
 namespace FaceSDK.Tests
 {
@@ -8,7 +7,7 @@ namespace FaceSDK.Tests
     {
         public static bool IsTestTenant = false;
         private static readonly string FaceSubscriptionKey;
-        
+
         static BaseTests()
         {
             // Retrieve the configuration information.
@@ -17,7 +16,10 @@ namespace FaceSDK.Tests
 
         protected IFaceClient GetFaceClient(DelegatingHandler handler)
         {
-            IFaceClient client = new FaceClient(new ApiKeyServiceClientCredentials(FaceSubscriptionKey), handlers: handler);
+            IFaceClient client = new FaceClient(new ApiKeyServiceClientCredentials(FaceSubscriptionKey), handlers: handler)
+            {
+                Endpoint = "https://westus.api.cognitive.microsoft.com"
+            };
 
             return client;
         }

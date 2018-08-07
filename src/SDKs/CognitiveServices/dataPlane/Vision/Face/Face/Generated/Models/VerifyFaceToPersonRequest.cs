@@ -15,7 +15,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     using System.Linq;
 
     /// <summary>
-    /// Request body for verify operation.
+    /// Request body for face to person verification.
     /// </summary>
     public partial class VerifyFaceToPersonRequest
     {
@@ -30,17 +30,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Initializes a new instance of the VerifyFaceToPersonRequest class.
         /// </summary>
-        /// <param name="faceId">FaceId the face, comes from Face -
+        /// <param name="faceId">FaceId of the face, comes from Face -
         /// Detect</param>
+        /// <param name="personId">Specify a certain person in a person group
+        /// or a large person group. personId is created in PersonGroup Person
+        /// - Create or LargePersonGroup Person - Create.</param>
         /// <param name="personGroupId">Using existing personGroupId and
         /// personId for fast loading a specified person. personGroupId is
-        /// created in Person Groups.Create.</param>
-        /// <param name="personId">Specify a certain person in a person group.
-        /// personId is created in Persons.Create.</param>
-        public VerifyFaceToPersonRequest(System.Guid faceId, string personGroupId, System.Guid personId)
+        /// created in PersonGroup - Create. Parameter personGroupId and
+        /// largePersonGroupId should not be provided at the same time.</param>
+        /// <param name="largePersonGroupId">Using existing largePersonGroupId
+        /// and personId for fast loading a specified person.
+        /// largePersonGroupId is created in LargePersonGroup - Create.
+        /// Parameter personGroupId and largePersonGroupId should not be
+        /// provided at the same time.</param>
+        public VerifyFaceToPersonRequest(System.Guid faceId, System.Guid personId, string personGroupId = default(string), string largePersonGroupId = default(string))
         {
             FaceId = faceId;
             PersonGroupId = personGroupId;
+            LargePersonGroupId = largePersonGroupId;
             PersonId = personId;
             CustomInit();
         }
@@ -51,22 +59,33 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets faceId the face, comes from Face - Detect
+        /// Gets or sets faceId of the face, comes from Face - Detect
         /// </summary>
         [JsonProperty(PropertyName = "faceId")]
         public System.Guid FaceId { get; set; }
 
         /// <summary>
         /// Gets or sets using existing personGroupId and personId for fast
-        /// loading a specified person. personGroupId is created in Person
-        /// Groups.Create.
+        /// loading a specified person. personGroupId is created in PersonGroup
+        /// - Create. Parameter personGroupId and largePersonGroupId should not
+        /// be provided at the same time.
         /// </summary>
         [JsonProperty(PropertyName = "personGroupId")]
         public string PersonGroupId { get; set; }
 
         /// <summary>
-        /// Gets or sets specify a certain person in a person group. personId
-        /// is created in Persons.Create.
+        /// Gets or sets using existing largePersonGroupId and personId for
+        /// fast loading a specified person. largePersonGroupId is created in
+        /// LargePersonGroup - Create. Parameter personGroupId and
+        /// largePersonGroupId should not be provided at the same time.
+        /// </summary>
+        [JsonProperty(PropertyName = "largePersonGroupId")]
+        public string LargePersonGroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify a certain person in a person group or a large
+        /// person group. personId is created in PersonGroup Person - Create or
+        /// LargePersonGroup Person - Create.
         /// </summary>
         [JsonProperty(PropertyName = "personId")]
         public System.Guid PersonId { get; set; }
@@ -79,10 +98,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PersonGroupId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PersonGroupId");
-            }
             if (PersonGroupId != null)
             {
                 if (PersonGroupId.Length > 64)
@@ -92,6 +107,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
                 if (!System.Text.RegularExpressions.Regex.IsMatch(PersonGroupId, "^[a-z0-9-_]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "PersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (LargePersonGroupId != null)
+            {
+                if (LargePersonGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "LargePersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(LargePersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "LargePersonGroupId", "^[a-z0-9-_]+$");
                 }
             }
         }

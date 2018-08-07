@@ -6,44 +6,44 @@
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/house.jpg\"\r\n}",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "188"
-        ],
         "Ocp-Apim-Subscription-Key": [
           ""
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/2.0.0.0"
-        ]
-      },
-      "ResponseBody": "����\u0000\u0010JFIF\u0000\u0001\u0001\u0001\u0000`\u0000`\u0000\u0000��\u0000C\u0000\u0004\u0002\u0003\u0003\u0003\u0002\u0004\u0003\u0003\u0003\u0004\u0004\u0004\u0004\u0005\t\u0006\u0005\u0005\u0005\u0005\u000b\b\b\u0006\t\r\u000b\r\r\r\u000b\f\f\u000e\u0010\u0014\u0011\u000e\u000f\u0013\u000f\f\f\u0012\u0018\u0012\u0013\u0015\u0016\u0017\u0017\u0017\u000e\u0011\u0019\u001b\u0019\u0016\u001a\u0014\u0016\u0017\u0016��\u0000C\u0001\u0004\u0004\u0004\u0005\u0005\u0005\n\u0006\u0006\n\u0016\u000f\f\u000f\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016\u0016��\u0000\u0011\b\u0000@\u0000@\u0003\u0001\"\u0000\u0002\u0011\u0001\u0003\u0011\u0001��\u0000\u001f\u0000\u0000\u0001\u0005\u0001\u0001\u0001\u0001\u0001\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\n\u000b��\u0000�\u0010\u0000\u0002\u0001\u0003\u0003\u0002\u0004\u0003\u0005\u0005\u0004\u0004\u0000\u0000\u0001}\u0001\u0002\u0003\u0000\u0004\u0011\u0005\u0012!1A\u0006\u0013Qa\u0007\"q\u00142���\b#B��\u0015R��$3br�\t\n\u0016\u0017\u0018\u0019\u001a%&'()*456789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz���������������������������������������������������������������������������\u0000\u001f\u0001\u0000\u0003\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\n\u000b��\u0000�\u0011\u0000\u0002\u0001\u0002\u0004\u0004\u0003\u0004\u0007\u0005\u0004\u0004\u0000\u0001\u0002w\u0000\u0001\u0002\u0003\u0011\u0004\u0005!1\u0006\u0012AQ\u0007aq\u0013\"2�\b\u0014B����\t#3R�\u0015br�\n\u0016$4�%�\u0017\u0018\u0019\u001a&'()*56789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz��������������������������������������������������������������������������\u0000\f\u0003\u0001\u0000\u0002\u0011\u0003\u0011\u0000?\u0000�\u000b�G�\u0017��\u0015F�\u0005#�/��+���=qU��-?G��\u0000�|K�����ܦnf��8�������T�R�\u001ei���EJsv���\\[n�\"G���US%��\u0015gT�^�md�\u0012i�$�&�WF��\u000fGxAޫ�Gֹ_\u0010|j\u001ec��\u000b�9���6�&\u001av�I�F=�\u0019�\u0000j�}\u0016��e��<K\u001e���+oڤ�\u000f��\u0000{>�ח<�nK�B����n�4����:��S����T��u��.��$��$?\u0014m-�\u0015)���FU�R�+f�3\u0013��@{��3ៈ_\t�O�6�io��c8��.��,���@>]��\ta�5ܸ�\u0003\u0015\u001ev�{鷩����k[���%�'�\u000fʒ;\r��/��]���;�F�E\u0010��ܶ-��d\u000f\f�F�}�\b�4W�S\u0013�\u0019N\b\u001c׷K\u0011J�R��G�R���%c']�ߪk7\u0006��w�$|�\rkR�\u0018�\u0000j(�\u000f���\u0015���.�<U��\u0000j��W��ndm��vg����\\�a���\u001dsQ�f����Ҧ���TR�8O�� �\u0003�\rqZ/�\u000f\u0011��\u001dC�CŚMƥi�[�,� X�#jġʁ�e/��\u001cW�u\u0012S�ܙ���9���\u001e�k�\f�DY���Zi?k�G�\u0013)-8�\u0002�\\k�9\u0000��{�\\��� ��+����4�S��z��%���\u0000%\"����Um{N�����\u0000G��V��P\u0016+\u0001�B\u001b9��\u0018����eRè\u0018��2��dO�+�\r1m��6��q�8\u000e��>�\u0000�p�3�b��\u0017���=L>_y8GY�wk����u��_\u0000\rgV}k�>&�T���$�w\u0005ُ��\u0000*׸�g�\u001e�ɂ�ɰ>P$\u0019�+/ÿ\u000f\u0016���\u001f�V�T]O[��$�m�<30d\u001b�X��\u0003�׊�|\u001f�\u0017��u�]N�I���L��6�U�\u000e�\u001fv���A��\u001a�)�(/��q�\b�s]��\u0000�\u000e�Úǋ|\u00113&�x5->C��+��d\u001e��\u001eGb+���&��\u001b\u0014���M6��\b}>�F��\u0007��)��\u0004��c^A�O�\u0016�\u001f\u0012���Z�查�\u000e�\\\tX� �\u00009��׻̾\u0011���\u0017�\r�T�h�K�uK��X�+6�T_�Vf��\u0018\u0018�kJuqt�T�*��\u0000\u0003P�\nu���$�N��h�^\u001a���hukW�[u�$�F�\r�\u001c�\"���\u001f\n�m?M�̱��}\u0016[���ͮy%r\u0010��\u0004\u0006\"���X�\"�{��:��Uw�s�)Ϫ�n*֥,�����7�\u0013Hw6����I����X\u001a�n��n�8b#M{������\u0010�+��WG�:sx~\u000b�/.6iyn#f'9^��9�\u0018�o��\u0002�5��\u0019�jI�-b{\u000b�b)V�;Rв��pa�m9�Vo��/�k:լ\u0016���L\u0000+r�\u000eY�?t\u0001Ҿ�a�\u0016�u��?��U�G4���\u0017,%\u0018��t��G�d��ѝJ�WrV|˿]\u001b<�R�\u0015��\u001a}�X]�΋�\rRţ\u0000b�8eTܸ;�2\u001e;�^K�x/�:y������\u0012I��i�KrS�2,���e\u001c�\u0000u������I���7��i\u0015q.�t�Ȼ�\u0000\u001b\u0019�[#��k���\u0017�![�q�j��_��J6�=��\u000ey\u001d�\u001d�t�!�t�qoi5�u�i���\fT0jT���\u0014����!�\u0018�/}{i�]-̶���K3\u0019c$*�I�<\u000fJ����j\u0016v^\u00107\u0010I\f�h!��U*��t�AS�\u000e=k��׼Yu�G���\rJ[8��b\u0013����R:u<�?�nu�b8\u0013W�n�\u0012�!\u0004\u001fh}�\u0013��:�<�X�'�f�\u0005���^�}����7�У\u000bQ��u�\u0000\u0004��֍�M��\b2��\u001e�?ƶ�'��8�N<��͌��_SX\u001a>�f�\ti���2x\u0003��b�/\f���\u0000Z��t�yn.n�dp���ܞ�\f�¾\u000fٺ�P��\u0000\u000ea���MJ��\u000fU�/�\"Gu�\u0005^I��\u0000�\u0018gn��G�k�^[�=ꕭ�Ze���h�˳�cP\u0007� e�ܓ��R$�\u0010��<{\u000e��n\u0007\t\u001c\u001e\u00164V�^��a�A.�7�Í�\u000f\u000b����y�\u0013*\u0006?~<|�\b�\u0011�+��L�.ə�� \u000fR=y��\u001f��W+��L���\u0006�\u0003�֏7��S=�x[y\u0014�Y���d��O]�\u0011�\u0002�\u001e!�ZQ�G������\u001f7�'�賏��##�Hʰb\u0017\u0001\u001f����u�\t\u0013*IrdrI\\0�=@��ִ��}�$�G��\u0000^~���T�Go��iE\f\u0019y��A�_9\u001b3��SM\\��",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "2523"
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.2.0.0"
         ],
         "Content-Type": [
-          "image/jpeg"
+          "application/json; charset=utf-8"
         ],
+        "Content-Length": [
+          "186"
+        ]
+      },
+      "ResponseHeaders": {
         "Connection": [
           "close"
         ],
         "Date": [
-          "Thu, 14 Jun 2018 00:34:24 GMT"
+          "Mon, 30 Jul 2018 21:58:49 GMT"
         ],
         "apim-request-id": [
-          "7d07f3d4-999a-4c21-bed4-825d7f9144b2"
+          "5b82b120-6fba-430d-b249-3c1cde09bc11"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
         "x-content-type-options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "2523"
+        ],
+        "Content-Type": [
+          "image/jpeg"
         ]
       },
+      "ResponseBody": "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",
       "StatusCode": 200
     }
   ],
