@@ -6,7 +6,7 @@ namespace Automation.Tests.Helpers
     public class SourceControlDefinition
     {
         public SourceControlDefinition(string sourceControlName, string repoUrl, string branch, string folderPath, bool autoSync,
-                                       bool publishRunbook, string sourceType, string securityToken, string description,
+                                       bool publishRunbook, string sourceType, string accessToken, string description,
                                        string updateBranchName, bool updateAutoPublish)
         {
             SourceControlName = sourceControlName;
@@ -16,7 +16,7 @@ namespace Automation.Tests.Helpers
             AutoSync = autoSync;
             PublishRunbook = publishRunbook;
             SourceType = sourceType;
-            SecurityToken = securityToken;
+            AccessToken = accessToken;
             Description = description;
             UpdateBranchName = updateBranchName;
             UpdateAutoPublish = updateAutoPublish;
@@ -32,7 +32,7 @@ namespace Automation.Tests.Helpers
 
         public string SourceType { get; set; }
 
-        public string SecurityToken { get; set; }
+        public string AccessToken { get; set; }
 
         public string Description { get; set; }
 
@@ -44,18 +44,19 @@ namespace Automation.Tests.Helpers
 
         public bool UpdateAutoPublish { get; set; }
 
-        public static SourceControlDefinition TestSimpleSourceControlDefinition = new SourceControlDefinition(
-                                                                                        "swaggerSourceControl",
-                                                                                        "https://miaromero.visualstudio.com/_git/Marvin",
-                                                                                        "master",
-                                                                                        "/FolderOne",
-                                                                                        false,
-                                                                                        true,
-                                                                                        "VsoGit",
-                                                                                        "nzbxgndni3haxhy27mpyyocwlupsuj66o3fiu3xlhsybf62ffsoa",
-                                                                                        "test creating a Source Control",
-                                                                                        "BranchTwo",
-                                                                                         false
-                                                                                    );
+        public static SourceControlDefinition TestSimpleSourceControlDefinition = 
+            new SourceControlDefinition(
+                "swaggerSourceControl",
+                "https://miaromero.visualstudio.com/_git/Marvin",
+                "master",
+                "/FolderOne",
+                false,
+                true,
+                "VsoGit",
+                "xjarxmpjtlv3bqxs22nxfhsimfy6joouqa2sq5sl2hvi6hnrrnyq",
+                "test creating a Source Control",
+                "BranchTwo",
+                false
+            );
     }
 }

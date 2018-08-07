@@ -582,8 +582,12 @@ namespace Automation.Tests.TestSupport
         #region SourceControl Methods
 
         public SourceControl CreateSourceControl(string sourceControlName, string repoUrl, string branch, string folderPath, bool autoSync,
-                                                 bool publishRunbook, string sourceControlType, string securityToken, string description)
+                                                 bool publishRunbook, string sourceControlType, string accessToken, string description)
         {
+            var securityTokenProperties = new SourceControlSecurityTokenProperties();
+            securityTokenProperties.AccessToken = accessToken;
+            securityTokenProperties.TokenType = "PersonalAccessToken";
+
             var sourceControl = AutomationClient.SourceControl.CreateOrUpdate(ResourceGroup, AutomationAccount, sourceControlName,
                     new SourceControlCreateOrUpdateParameters
                     {
@@ -593,7 +597,7 @@ namespace Automation.Tests.TestSupport
                         AutoSync = autoSync,
                         PublishRunbook = publishRunbook,
                         SourceType = sourceControlType,
-                        SecurityToken = securityToken,
+                        SecurityToken = securityTokenProperties,
                         Description = description
                     });
             return sourceControl;
@@ -634,7 +638,7 @@ namespace Automation.Tests.TestSupport
         public SourceControlSyncJob CreateSourceControlSyncJob(string sourceControlName, Guid sourceControlSyncJobId)
         {
             var sourceControlSyncJob = AutomationClient.SourceControlSyncJob.Create(ResourceGroup, AutomationAccount, sourceControlName, sourceControlSyncJobId,
-                    new SourceControlSyncJobCreateParameters());
+                    new SourceControlSyncJobCreateParameters(""));
 
             return sourceControlSyncJob;
         }
