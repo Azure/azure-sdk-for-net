@@ -48,10 +48,11 @@ namespace Microsoft.Azure.Search
         Task<AzureOperationResponse<long?>> CountWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
         /// <summary>
         /// Searches for documents in the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents" />
         /// </summary>
         /// <param name='searchText'>
-        /// A full-text search query expression; Use null or "*" to match all
-        /// documents.
+        /// A full-text search query expression; Use "*" or omit this parameter
+        /// to match all documents.
         /// </param>
         /// <param name='accept'>
         /// The accept parameter in HTTP header advertises which content types,
@@ -79,8 +80,39 @@ namespace Microsoft.Azure.Search
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<DocumentSearchResultProxy>> SearchGetWithHttpMessagesAsync(string searchText = default(string), string accept = default(string), SearchParameters searchParameters = default(SearchParameters), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
+        /// <param name='key'>
+        /// The key of the document to retrieve.
+        /// </param>
+        /// <param name='selectedFields'>
+        /// List of field names to retrieve for the document; Any field not
+        /// retrieved will be missing from the returned document.
+        /// </param>
+        /// <param name='accept'>
+        /// The accept parameter in HTTP header advertises which content types,
+        /// expressed as MIME types, the client is able to understand.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DocumentLookupResult>> LookupWithHttpMessagesAsync(string key, IList<string> selectedFields = default(IList<string>), string accept = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
         /// <summary>
         /// Searches for documents in the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents" />
         /// </summary>
         /// <param name='searchRequest'>
         /// The definition of the Search request.
@@ -109,8 +141,78 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<DocumentSearchResultProxy>> SearchPostWithHttpMessagesAsync(SearchParametersPayload searchRequest, string accept = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
         /// <summary>
-        /// Sends a batch of upload, merge, and/or delete actions to the Azure
-        /// Search index.
+        /// Suggests query terms based on input text and matching documents in
+        /// the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
+        /// </summary>
+        /// <param name='searchText'>
+        /// The search text to use to suggest queries. Must be at least 1
+        /// character, and no more than 100 characters.
+        /// </param>
+        /// <param name='suggesterName'>
+        /// The name of the suggester as specified in the suggesters collection
+        /// that's part of the index definition.
+        /// </param>
+        /// <param name='accept'>
+        /// The accept parameter in HTTP header advertises which content types,
+        /// expressed as MIME types, the client is able to understand.
+        /// </param>
+        /// <param name='suggestParameters'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DocumentSuggestResultProxy>> SuggestGetWithHttpMessagesAsync(string searchText, string suggesterName, string accept = default(string), SuggestParameters suggestParameters = default(SuggestParameters), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
+        /// <summary>
+        /// Suggests query terms based on input text and matching documents in
+        /// the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
+        /// </summary>
+        /// <param name='suggestRequest'>
+        /// </param>
+        /// <param name='accept'>
+        /// The accept parameter in HTTP header advertises which content types,
+        /// expressed as MIME types, the client is able to understand.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DocumentSuggestResultProxy>> SuggestPostWithHttpMessagesAsync(SuggestParametersPayload suggestRequest, string accept = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
+        /// <summary>
+        /// Sends a batch of upload, merge, mergeOrUpload, and/or delete
+        /// actions to the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/index-operations" />
         /// </summary>
         /// <param name='indexBatch'>
         /// The batch of index actions.
@@ -133,10 +235,11 @@ namespace Microsoft.Azure.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DocumentIndexResult>> DocumentIndexPostWithHttpMessagesAsync(IndexBatch indexBatch, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
+        Task<AzureOperationResponse<DocumentIndexResult>> DocumentIndexWithHttpMessagesAsync(IndexBatch indexBatch, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and
         /// matching terms in the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete" />
         /// </summary>
         /// <param name='searchText'>
         /// The incomplete term which should be auto-completed.
@@ -170,6 +273,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and
         /// matching terms in the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete" />
         /// </summary>
         /// <param name='autocompleteRequest'>
         /// The definition of the Autocomplete request.

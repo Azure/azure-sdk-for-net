@@ -58,27 +58,28 @@ namespace Microsoft.Azure.Search.Models
         /// with only one replica. The default is 100.</param>
         /// <param name="orderBy">The comma-separated list of OData $orderby
         /// expressions by which to sort the results. Each expression can be
-        /// either a field name or a call to the geo.distance() function. Each
-        /// expression can be followed by asc to indicate ascending, and desc
-        /// to indicate descending. The default is ascending order. Ties will
-        /// be broken by the match scores of documents. If no OrderBy is
-        /// specified, the default sort order is descending by document match
-        /// score. There can be at most 32 Orderby clauses.</param>
+        /// either a field name or a call to either the geo.distance() or the
+        /// search.score() functions. Each expression can be followed by asc to
+        /// indicate ascending, and desc to indicate descending. The default is
+        /// ascending order. Ties will be broken by the match scores of
+        /// documents. If no OrderBy is specified, the default sort order is
+        /// descending by document match score. There can be at most 32 Orderby
+        /// clauses.</param>
         /// <param name="queryType">Gets or sets a value that specifies the
         /// syntax of the search query. The default is 'simple'. Use 'full' if
         /// your query uses the Lucene query syntax. Possible values include:
         /// 'simple', 'full'</param>
         /// <param name="scoringParameters">The list of parameter values to be
         /// used in scoring functions (for example, referencePointParameter)
-        /// using the format name:value. For example, if the scoring profile
+        /// using the format name-values. For example, if the scoring profile
         /// defines a function with a parameter called 'mylocation' the
-        /// parameter string would be "mylocation:-122.2,44.8"(without the
+        /// parameter string would be "mylocation--122.2,44.8"(without the
         /// quotes).</param>
         /// <param name="scoringProfile">The name of a scoring profile to
         /// evaluate match scores for matching documents in order to sort the
         /// results.</param>
-        /// <param name="search">A full-text search query expression; Use null
-        /// or "*" to match all documents.</param>
+        /// <param name="search">A full-text search query expression; Use "*"
+        /// or omit this parameter to match all documents.</param>
         /// <param name="searchFields">The comma-separated list of field names
         /// to include in the full-text search.</param>
         /// <param name="searchMode">A value that specifies whether any or all
@@ -187,12 +188,13 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets the comma-separated list of OData $orderby expressions
         /// by which to sort the results. Each expression can be either a field
-        /// name or a call to the geo.distance() function. Each expression can
-        /// be followed by asc to indicate ascending, and desc to indicate
-        /// descending. The default is ascending order. Ties will be broken by
-        /// the match scores of documents. If no OrderBy is specified, the
-        /// default sort order is descending by document match score. There can
-        /// be at most 32 Orderby clauses.
+        /// name or a call to either the geo.distance() or the search.score()
+        /// functions. Each expression can be followed by asc to indicate
+        /// ascending, and desc to indicate descending. The default is
+        /// ascending order. Ties will be broken by the match scores of
+        /// documents. If no OrderBy is specified, the default sort order is
+        /// descending by document match score. There can be at most 32 Orderby
+        /// clauses.
         /// </summary>
         [JsonProperty(PropertyName = "orderby")]
         public string OrderBy { get; set; }
@@ -208,9 +210,9 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets the list of parameter values to be used in scoring
         /// functions (for example, referencePointParameter) using the format
-        /// name:value. For example, if the scoring profile defines a function
+        /// name-values. For example, if the scoring profile defines a function
         /// with a parameter called 'mylocation' the parameter string would be
-        /// "mylocation:-122.2,44.8"(without the quotes).
+        /// "mylocation--122.2,44.8"(without the quotes).
         /// </summary>
         [JsonProperty(PropertyName = "scoringParameters")]
         public IList<string> ScoringParameters { get; set; }
@@ -223,8 +225,8 @@ namespace Microsoft.Azure.Search.Models
         public string ScoringProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets a full-text search query expression; Use null or "*"
-        /// to match all documents.
+        /// Gets or sets a full-text search query expression; Use "*" or omit
+        /// this parameter to match all documents.
         /// </summary>
         [JsonProperty(PropertyName = "search")]
         public string Search { get; set; }

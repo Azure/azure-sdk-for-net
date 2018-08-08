@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Search.Models
         /// highlights. Must be set with HighlightPostTag. If omitted, hit
         /// highlighting is disabled.</param>
         /// <param name="minimumCoverage">A number between 0 and 100 indicating
-        /// the percentage of the index that must be covered by am autocomplete
+        /// the percentage of the index that must be covered by a autocomplete
         /// query in order for the query to be reported as a success. This
         /// parameter can be useful for ensuring search availability even for
         /// services with only one replica. The default is 80.</param>
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a number between 0 and 100 indicating the percentage
-        /// of the index that must be covered by am autocomplete query in order
+        /// of the index that must be covered by a autocomplete query in order
         /// for the query to be reported as a success. This parameter can be
         /// useful for ensuring search availability even for services with only
         /// one replica. The default is 80.

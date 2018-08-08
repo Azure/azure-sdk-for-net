@@ -52,12 +52,13 @@ namespace Microsoft.Azure.Search.Models
         /// services with only one replica. The default is 80.</param>
         /// <param name="orderBy">The comma-separated list of OData $orderby
         /// expressions by which to sort the results. Each expression can be
-        /// either a field name or a call to the geo.distance() function. Each
-        /// expression can be followed by asc to indicate ascending, and desc
-        /// to indicate descending. The default is ascending order. Ties will
-        /// be broken by the match scores of documents. If no OrderBy is
-        /// specified, the default sort order is descending by document match
-        /// score. There can be at most 32 Orderby clauses.</param>
+        /// either a field name or a call to either the geo.distance() or the
+        /// search.score() functions. Each expression can be followed by asc to
+        /// indicate ascending, and desc to indicate descending. The default is
+        /// ascending order. Ties will be broken by the match scores of
+        /// documents. If no OrderBy is specified, the default sort order is
+        /// descending by document match score. There can be at most 32 Orderby
+        /// clauses.</param>
         /// <param name="search">The search text on which to base
         /// suggestions.</param>
         /// <param name="searchFields">The comma-separated list of field names
@@ -138,12 +139,13 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets the comma-separated list of OData $orderby expressions
         /// by which to sort the results. Each expression can be either a field
-        /// name or a call to the geo.distance() function. Each expression can
-        /// be followed by asc to indicate ascending, and desc to indicate
-        /// descending. The default is ascending order. Ties will be broken by
-        /// the match scores of documents. If no OrderBy is specified, the
-        /// default sort order is descending by document match score. There can
-        /// be at most 32 Orderby clauses.
+        /// name or a call to either the geo.distance() or the search.score()
+        /// functions. Each expression can be followed by asc to indicate
+        /// ascending, and desc to indicate descending. The default is
+        /// ascending order. Ties will be broken by the match scores of
+        /// documents. If no OrderBy is specified, the default sort order is
+        /// descending by document match score. There can be at most 32 Orderby
+        /// clauses.
         /// </summary>
         [JsonProperty(PropertyName = "orderby")]
         public string OrderBy { get; set; }

@@ -17,15 +17,18 @@ namespace Microsoft.Azure.Search.Models
     {
         private static readonly IList<string> Empty = new string[0];
 
+        // Set default values for non-nullable types
+        partial void CustomInit()
+        {
+            IncludeTotalResultCount = false;
+            QueryType = QueryType.Simple;
+            SearchMode = SearchMode.Any;
+            ScoringParameters = new List<ScoringParameter>();
+        }
+
         private IList<ScoringParameter> _scoringParameters;
 
         public IList<ScoringParameter> ScoringParameters { get { return _scoringParameters; } set { _scoringParameters = value; ScoringParameterStrings = _scoringParameters.Select(p => p.ToString()).ToList(); } }
-
-        /// <summary>
-        /// Converts the SearchParameters instance to a URL query string.
-        /// </summary>
-        /// <returns>A URL query string containing all the search parameters.</returns>
-        public override string ToString() => String.Join("&", GetAllOptions());
 
         internal SearchParametersPayload ToPayload(string searchText) =>
             new SearchParametersPayload()
@@ -49,78 +52,51 @@ namespace Microsoft.Azure.Search.Models
                 Top = Top
             };
 
-        private IEnumerable<QueryOption> GetAllOptions()
+        internal static SearchParameters FromDictionary(Dictionary<string, List<string>> parameters)
         {
-            yield return new QueryOption("$count", IncludeTotalResultCount.ToString().ToLowerInvariant());
+            List<string> values = new List<string>();
 
-            foreach (string facetExpr in Facets ?? Empty)
+            int? Top = null;
+            if (parameters.TryGetValue("$top", out values))
             {
-                yield return new QueryOption("facet", Uri.EscapeDataString(facetExpr));
+                Top = Convert.ToInt32(values.First());
             }
 
-            if (Filter != null)
+            int? Skip = null;
+            if (parameters.TryGetValue("$skip", out values))
             {
-                yield return new QueryOption("$filter", Uri.EscapeDataString(Filter));
+                Skip = Convert.ToInt32(values.First());
             }
 
-            if (HighlightFields != null && HighlightFields.Any())
+            QueryType? queryType = null;
+            if (parameters.TryGetValue("queryType", out values))
             {
-                yield return new QueryOption("highlight", HighlightFields);
+                queryType = values.First().ParseQueryType();
             }
 
-            if (HighlightPreTag != null)
+            SearchMode? searchMode = null;
+            if (parameters.TryGetValue("searchMode", out values))
             {
-                yield return new QueryOption("highlightPreTag", Uri.EscapeDataString(HighlightPreTag));
+                searchMode = values.First().ParseSearchMode();
             }
 
-            if (HighlightPostTag != null)
+            return new SearchParameters()
             {
-                yield return new QueryOption("highlightPostTag", Uri.EscapeDataString(HighlightPostTag));
-            }
-
-            if (MinimumCoverage != null)
-            {
-                yield return new QueryOption("minimumCoverage", MinimumCoverage.ToString());
-            }
-
-            if (OrderBy != null && OrderBy.Any())
-            {
-                yield return new QueryOption("$orderby", OrderBy);
-            }
-
-            yield return new QueryOption("queryType", (QueryType == Models.QueryType.Simple) ? "simple" : "full");
-
-            foreach (string scoringParameterExpr in ScoringParameterStrings)
-            {
-                yield return new QueryOption("scoringParameter", scoringParameterExpr);
-            }
-
-            if (ScoringProfile != null)
-            {
-                yield return new QueryOption("scoringProfile", ScoringProfile);
-            }
-
-            if (SearchFields != null && SearchFields.Any())
-            {
-                yield return new QueryOption("searchFields", SearchFields);
-            }
-
-            yield return new QueryOption("searchMode", (SearchMode == Models.SearchMode.Any) ? "any" : "all");
-
-            if (Select != null && Select.Any())
-            {
-                yield return new QueryOption("$select", Select);
-            }
-
-            if (Skip != null)
-            {
-                yield return new QueryOption("$skip", Skip.ToString());
-            }
-
-            if (Top != null)
-            {
-                yield return new QueryOption("$top", Top.ToString());
-            }
+                QueryType = queryType ?? queryType.Value,
+                SearchMode = searchMode ?? searchMode.Value,
+                HighlightPreTag = parameters.TryGetValue("highlightPreTag", out values) ? values.First() : null,
+                HighlightPostTag = parameters.TryGetValue("highlightPostTag", out values) ? values.First() : null,
+                SearchFields = parameters.TryGetValue("searchFields", out values) ? values : null,
+                IncludeTotalResultCount = parameters.TryGetValue("$count", out values) ? Convert.ToBoolean(values.First()) : false,
+                Top = Top,
+                Skip = Skip,
+                Select = parameters.TryGetValue("$select", out values) ? values : null,
+                OrderBy = parameters.TryGetValue("$orderby", out values) ? values : null,
+                Filter = parameters.TryGetValue("$filter", out values) ? values.First() : null,
+                ScoringProfile = parameters.TryGetValue("scoringProfile", out values) ? values.First() : null,
+                ScoringParameterStrings = parameters.TryGetValue("scoringParameter", out values) ? values : null
+            };
         }
+
     }
 }

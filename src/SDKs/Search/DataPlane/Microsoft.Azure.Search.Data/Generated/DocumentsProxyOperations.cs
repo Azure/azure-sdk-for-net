@@ -258,10 +258,11 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Searches for documents in the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents" />
         /// </summary>
         /// <param name='searchText'>
-        /// A full-text search query expression; Use null or "*" to match all
-        /// documents.
+        /// A full-text search query expression; Use "*" or omit this parameter to
+        /// match all documents.
         /// </param>
         /// <param name='accept'>
         /// The accept parameter in HTTP header advertises which content types,
@@ -312,7 +313,7 @@ namespace Microsoft.Azure.Search
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            bool? includeTotalResultCount = default(bool?);
+            bool includeTotalResultCount = default(bool);
             if (searchParameters != null)
             {
                 includeTotalResultCount = searchParameters.IncludeTotalResultCount;
@@ -352,7 +353,7 @@ namespace Microsoft.Azure.Search
             {
                 orderBy = searchParameters.OrderBy;
             }
-            QueryType? queryType = default(QueryType?);
+            QueryType queryType = default(QueryType);
             if (searchParameters != null)
             {
                 queryType = searchParameters.QueryType;
@@ -372,7 +373,7 @@ namespace Microsoft.Azure.Search
             {
                 searchFields = searchParameters.SearchFields;
             }
-            SearchMode? searchMode = default(SearchMode?);
+            SearchMode searchMode = default(SearchMode);
             if (searchParameters != null)
             {
                 searchMode = searchParameters.SearchMode;
@@ -441,10 +442,7 @@ namespace Microsoft.Azure.Search
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (includeTotalResultCount != null)
-            {
-                _queryParameters.Add(string.Format("$count={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(includeTotalResultCount, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'))));
-            }
+            _queryParameters.Add(string.Format("$count={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(includeTotalResultCount, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'))));
             if (facets != null)
             {
                 if (facets.Count == 0)
@@ -483,10 +481,7 @@ namespace Microsoft.Azure.Search
             {
                 _queryParameters.Add(string.Format("$orderby={0}", System.Uri.EscapeDataString(string.Join(",", orderBy))));
             }
-            if (queryType != null)
-            {
-                _queryParameters.Add(string.Format("queryType={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(queryType, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'))));
-            }
+            _queryParameters.Add(string.Format("queryType={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(queryType, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'))));
             if (scoringParameterStrings != null)
             {
                 if (scoringParameterStrings.Count == 0)
@@ -509,10 +504,7 @@ namespace Microsoft.Azure.Search
             {
                 _queryParameters.Add(string.Format("searchFields={0}", System.Uri.EscapeDataString(string.Join(",", searchFields))));
             }
-            if (searchMode != null)
-            {
-                _queryParameters.Add(string.Format("searchMode={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(searchMode, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'))));
-            }
+            _queryParameters.Add(string.Format("searchMode={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(searchMode, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'))));
             if (select != null)
             {
                 _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(string.Join(",", select))));
@@ -666,8 +658,242 @@ namespace Microsoft.Azure.Search
             return _result;
         }
 
+        /// <param name='key'>
+        /// The key of the document to retrieve.
+        /// </param>
+        /// <param name='selectedFields'>
+        /// List of field names to retrieve for the document; Any field not retrieved
+        /// will be missing from the returned document.
+        /// </param>
+        /// <param name='accept'>
+        /// The accept parameter in HTTP header advertises which content types,
+        /// expressed as MIME types, the client is able to understand.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<DocumentLookupResult>> LookupWithHttpMessagesAsync(string key, IList<string> selectedFields = default(IList<string>), string accept = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null)
+        {
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
+            if (Client.IndexName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.IndexName");
+            }
+            if (key == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "key");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            System.Guid? clientRequestId = default(System.Guid?);
+            if (searchRequestOptions != null)
+            {
+                clientRequestId = searchRequestOptions.ClientRequestId;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("key", key);
+                tracingParameters.Add("selectedFields", selectedFields);
+                tracingParameters.Add("accept", accept);
+                tracingParameters.Add("clientRequestId", clientRequestId);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Lookup", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "docs/{key}";
+            _url = _url.Replace("{searchServiceName}", Client.SearchServiceName);
+            _url = _url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
+            _url = _url.Replace("{indexName}", Client.IndexName);
+            _url = _url.Replace("{key}", System.Uri.EscapeDataString(key));
+            List<string> _queryParameters = new List<string>();
+            if (selectedFields != null)
+            {
+                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(string.Join(",", selectedFields))));
+            }
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (accept != null)
+            {
+                if (_httpRequest.Headers.Contains("accept"))
+                {
+                    _httpRequest.Headers.Remove("accept");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept", accept);
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+            if (clientRequestId != null)
+            {
+                if (_httpRequest.Headers.Contains("client-request-id"))
+                {
+                    _httpRequest.Headers.Remove("client-request-id");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'));
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, requestDeserializerSettings == null ? Client.DeserializationSettings : requestDeserializerSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<DocumentLookupResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DocumentLookupResult>(_responseContent, requestDeserializerSettings == null ? Client.DeserializationSettings : requestDeserializerSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
         /// <summary>
         /// Searches for documents in the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents" />
         /// </summary>
         /// <param name='searchRequest'>
         /// The definition of the Search request.
@@ -899,8 +1125,581 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Sends a batch of upload, merge, and/or delete actions to the Azure Search
-        /// index.
+        /// Suggests query terms based on input text and matching documents in the
+        /// Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
+        /// </summary>
+        /// <param name='searchText'>
+        /// The search text to use to suggest queries. Must be at least 1 character,
+        /// and no more than 100 characters.
+        /// </param>
+        /// <param name='suggesterName'>
+        /// The name of the suggester as specified in the suggesters collection that's
+        /// part of the index definition.
+        /// </param>
+        /// <param name='accept'>
+        /// The accept parameter in HTTP header advertises which content types,
+        /// expressed as MIME types, the client is able to understand.
+        /// </param>
+        /// <param name='suggestParameters'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<DocumentSuggestResultProxy>> SuggestGetWithHttpMessagesAsync(string searchText, string suggesterName, string accept = default(string), SuggestParameters suggestParameters = default(SuggestParameters), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null)
+        {
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
+            if (Client.IndexName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.IndexName");
+            }
+            if (searchText == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "searchText");
+            }
+            if (suggesterName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "suggesterName");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            string filter = default(string);
+            if (suggestParameters != null)
+            {
+                filter = suggestParameters.Filter;
+            }
+            bool? useFuzzyMatching = default(bool?);
+            if (suggestParameters != null)
+            {
+                useFuzzyMatching = suggestParameters.UseFuzzyMatching;
+            }
+            string highlightPostTag = default(string);
+            if (suggestParameters != null)
+            {
+                highlightPostTag = suggestParameters.HighlightPostTag;
+            }
+            string highlightPreTag = default(string);
+            if (suggestParameters != null)
+            {
+                highlightPreTag = suggestParameters.HighlightPreTag;
+            }
+            double? minimumCoverage = default(double?);
+            if (suggestParameters != null)
+            {
+                minimumCoverage = suggestParameters.MinimumCoverage;
+            }
+            IList<string> orderBy = default(IList<string>);
+            if (suggestParameters != null)
+            {
+                orderBy = suggestParameters.OrderBy;
+            }
+            IList<string> searchFields = default(IList<string>);
+            if (suggestParameters != null)
+            {
+                searchFields = suggestParameters.SearchFields;
+            }
+            string selectStr = default(string);
+            if (suggestParameters != null)
+            {
+                selectStr = suggestParameters.SelectStr;
+            }
+            int? top = default(int?);
+            if (suggestParameters != null)
+            {
+                top = suggestParameters.Top;
+            }
+            System.Guid? clientRequestId = default(System.Guid?);
+            if (searchRequestOptions != null)
+            {
+                clientRequestId = searchRequestOptions.ClientRequestId;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("searchText", searchText);
+                tracingParameters.Add("suggesterName", suggesterName);
+                tracingParameters.Add("accept", accept);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("useFuzzyMatching", useFuzzyMatching);
+                tracingParameters.Add("highlightPostTag", highlightPostTag);
+                tracingParameters.Add("highlightPreTag", highlightPreTag);
+                tracingParameters.Add("minimumCoverage", minimumCoverage);
+                tracingParameters.Add("orderBy", orderBy);
+                tracingParameters.Add("searchFields", searchFields);
+                tracingParameters.Add("selectStr", selectStr);
+                tracingParameters.Add("top", top);
+                tracingParameters.Add("clientRequestId", clientRequestId);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "SuggestGet", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "docs/suggest";
+            _url = _url.Replace("{searchServiceName}", Client.SearchServiceName);
+            _url = _url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
+            _url = _url.Replace("{indexName}", Client.IndexName);
+            List<string> _queryParameters = new List<string>();
+            if (searchText != null)
+            {
+                _queryParameters.Add(string.Format("search={0}", System.Uri.EscapeDataString(searchText)));
+            }
+            if (suggesterName != null)
+            {
+                _queryParameters.Add(string.Format("suggesterName={0}", System.Uri.EscapeDataString(suggesterName)));
+            }
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+            }
+            if (useFuzzyMatching != null)
+            {
+                _queryParameters.Add(string.Format("fuzzy={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(useFuzzyMatching, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'))));
+            }
+            if (highlightPostTag != null)
+            {
+                _queryParameters.Add(string.Format("highlightPostTag={0}", System.Uri.EscapeDataString(highlightPostTag)));
+            }
+            if (highlightPreTag != null)
+            {
+                _queryParameters.Add(string.Format("highlightPreTag={0}", System.Uri.EscapeDataString(highlightPreTag)));
+            }
+            if (minimumCoverage != null)
+            {
+                _queryParameters.Add(string.Format("minimumCoverage={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(minimumCoverage, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'))));
+            }
+            if (orderBy != null)
+            {
+                _queryParameters.Add(string.Format("$orderby={0}", System.Uri.EscapeDataString(string.Join(",", orderBy))));
+            }
+            if (searchFields != null)
+            {
+                _queryParameters.Add(string.Format("searchFields={0}", System.Uri.EscapeDataString(string.Join(",", searchFields))));
+            }
+            if (selectStr != null)
+            {
+                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(selectStr)));
+            }
+            if (top != null)
+            {
+                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (accept != null)
+            {
+                if (_httpRequest.Headers.Contains("accept"))
+                {
+                    _httpRequest.Headers.Remove("accept");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept", accept);
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+            if (clientRequestId != null)
+            {
+                if (_httpRequest.Headers.Contains("client-request-id"))
+                {
+                    _httpRequest.Headers.Remove("client-request-id");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'));
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, requestDeserializerSettings == null ? Client.DeserializationSettings : requestDeserializerSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<DocumentSuggestResultProxy>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DocumentSuggestResultProxy>(_responseContent, requestDeserializerSettings == null ? Client.DeserializationSettings : requestDeserializerSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Suggests query terms based on input text and matching documents in the
+        /// Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
+        /// </summary>
+        /// <param name='suggestRequest'>
+        /// </param>
+        /// <param name='accept'>
+        /// The accept parameter in HTTP header advertises which content types,
+        /// expressed as MIME types, the client is able to understand.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<DocumentSuggestResultProxy>> SuggestPostWithHttpMessagesAsync(SuggestParametersPayload suggestRequest, string accept = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null)
+        {
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
+            if (Client.IndexName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.IndexName");
+            }
+            if (suggestRequest == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "suggestRequest");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            System.Guid? clientRequestId = default(System.Guid?);
+            if (searchRequestOptions != null)
+            {
+                clientRequestId = searchRequestOptions.ClientRequestId;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("suggestRequest", suggestRequest);
+                tracingParameters.Add("accept", accept);
+                tracingParameters.Add("clientRequestId", clientRequestId);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "SuggestPost", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "docs/suggest";
+            _url = _url.Replace("{searchServiceName}", Client.SearchServiceName);
+            _url = _url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
+            _url = _url.Replace("{indexName}", Client.IndexName);
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (accept != null)
+            {
+                if (_httpRequest.Headers.Contains("accept"))
+                {
+                    _httpRequest.Headers.Remove("accept");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept", accept);
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+            if (clientRequestId != null)
+            {
+                if (_httpRequest.Headers.Contains("client-request-id"))
+                {
+                    _httpRequest.Headers.Remove("client-request-id");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'));
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(suggestRequest != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(suggestRequest, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, requestDeserializerSettings == null ? Client.DeserializationSettings : requestDeserializerSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<DocumentSuggestResultProxy>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DocumentSuggestResultProxy>(_responseContent, requestDeserializerSettings == null ? Client.DeserializationSettings : requestDeserializerSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Sends a batch of upload, merge, mergeOrUpload, and/or delete actions to the
+        /// Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/index-operations" />
         /// </summary>
         /// <param name='indexBatch'>
         /// The batch of index actions.
@@ -929,7 +1728,7 @@ namespace Microsoft.Azure.Search
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DocumentIndexResult>> DocumentIndexPostWithHttpMessagesAsync(IndexBatch indexBatch, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null)
+        public async Task<AzureOperationResponse<DocumentIndexResult>> DocumentIndexWithHttpMessagesAsync(IndexBatch indexBatch, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null)
         {
             if (Client.SearchServiceName == null)
             {
@@ -966,7 +1765,7 @@ namespace Microsoft.Azure.Search
                 tracingParameters.Add("indexBatch", indexBatch);
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DocumentIndexPost", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DocumentIndex", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
@@ -1139,6 +1938,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and matching terms
         /// in the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete" />
         /// </summary>
         /// <param name='searchText'>
         /// The incomplete term which should be auto-completed.
@@ -1443,6 +2243,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and matching terms
         /// in the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete" />
         /// </summary>
         /// <param name='autocompleteRequest'>
         /// The definition of the Autocomplete request.
