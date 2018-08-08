@@ -340,6 +340,9 @@ function Get-OutputStream {
 .PARAMETER AutoRestCodeGenerationFlags
     Any additional flags that autorest needs to generate the code. Should be provided as " --flag1 --flag2 "
     
+.PARAMETER SdkRepoRootPath
+    Path to the SDK repo root where the SDK must be generated
+
 #>
 function Start-AutoRestCodeGeneration {
     [CmdletBinding(DefaultParameterSetName="sdkRootDir")]
@@ -379,26 +382,37 @@ function Start-AutoRestCodeGeneration {
         [string] $SdkGenerationType = "singleapi",
 
         [Parameter(Mandatory = $false)]
-        [string] $AutoRestCodeGenerationFlags
+        [string] $AutoRestCodeGenerationFlags,
+
+        [Parameter(Mandatory = $false)]
+        [string] $SdkRepoRootPath
     )
 
     if(-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags -SdkRepoRootPath $SdkRepoRootPath
     }
     elseif (-not [string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags -SdkRepoRootPath $SdkRepoRootPath
     }
     elseif (-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory)){
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkGenerationDirectory $SdkGenerationDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkGenerationDirectory $SdkGenerationDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags -SdkRepoRootPath $SdkRepoRootPath
     }
     else {
         # default path which is the root directory of the RP in sdk repo
-        $SdkDirectory = Get-SdkRepoRootDirectory($(Get-InvokingScriptPath))
-        if([string]::IsNullOrEmpty($SdkDirectory))
+        if(![string]::IsNullOrEmpty($SdkRepoRootPath))
+        {
+            $SdkDirectory = $SdkRepoRootPath
+        }
+        else {
+            $SdkDirectory = Get-SdkRepoRootDirectory($(Get-InvokingScriptPath))    
+        }
+        
+        if([string]::IsNullOrWhiteSpace($SdkDirectory) -or $SdkDirectory.Contains("Documents\WindowsPowerShell\Modules"))
         {
             Write-Error "Could not find default output directory since script is not run from a sdk repo, please provide one!"
+            return
         }
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags -SdkRepoRootPath $SdkRepoRootPath
     }
 }
 
@@ -436,6 +450,8 @@ function Start-AutoRestCodeGeneration {
 
 .PARAMETER AutoRestCodeGenerationFlags
     Any additional flags that autorest needs to generate the code. Should be provided as " --flag1 --flag2 "
+.PARAMETER SdkRepoRootPath
+    Path to the SDK repo root where the SDK must be generated
 
 #>
 function Start-AutoRestCodeGenerationWithLocalConfig {
@@ -461,10 +477,13 @@ function Start-AutoRestCodeGenerationWithLocalConfig {
         [string] $SdkGenerationType = "singleapi",
 
         [Parameter(Mandatory = $false)]
-        [string] $AutoRestCodeGenerationFlags
+        [string] $AutoRestCodeGenerationFlags,
+
+        [Parameter(Mandatory = $false)]
+        [string] $SdkRepoRootPath
     )
 
-    Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkGenerationDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
+    Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkGenerationDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags -SdkRepoRootPath $SdkRepoRootPath
 }
 
 function Start-CodeGeneration {
@@ -481,18 +500,51 @@ function Start-CodeGeneration {
         [string] $ConfigFileTag,
         [string] $LocalConfigFilePath,
         [string] $SdkGenerationType,
-        [string] $AutoRestCodeGenerationFlags
+        [string] $AutoRestCodeGenerationFlags,
+        [string] $SdkRepoRootPath
     )
-    $localSdkRepoDirectory = Get-SdkRepoRootDirectory($(Get-InvokingScriptPath))
+    # If repo root is provided, use that as the SDK root directory
+    if(-not [string]::IsNullOrWhiteSpace($SdkRepoRootPath))
+    {
+        $localSdkRepoDirectory = "$SdkRepoRootPath\SDKs"
+    }
+    else
+    {
+        $localSdkRepoDirectory = Get-SdkRepoRootDirectory($(Get-InvokingScriptPath))
+    }
     
-    if(-not [string]::IsNullOrWhiteSpace($LocalConfigFilePath)) {
+    # if config file comes from a private repo, fail immediately
+    if ($SpecsRepoName.EndsWith("-pr")) {
+        Write-Error "If you are generating code from private spec repo: $(SpecsRepoName) Please use AutoRest CLI. Code generation skipped."
+        return
+    }
+    
+    # If repo root is detected as the directory where this script is installed (usually C:\User\user\Documents\WindowsPowerShell), fail immediately
+    if([string]::IsNullOrEmpty($localSdkRepoDirectory) -or $localSdkRepoDirectory.Contains("Documents\WindowsPowerShell\Modules")) {
+        Write-Error "Could not detect root of SDK repo. Please provide path to the root of the SDK repo."
+        return
+    }
+
+    # if repo root is provided as an empty directory, structure it according to the repo directory
+    if(!(Test-Path -Path "$localSdkRepoDirectory"))
+    {
+        New-Item -ItemType Directory -Path $localSdkRepoDirectory
+        New-Item -ItemType Directory -Path "$localSdkRepoDirectory\_metadata"
+    }
+
+    $logFile = "$localSdkRepoDirectory\_metadata\$($ResourceProvider.Replace("/","_").Replace('\','_')).txt"    
+    if(!$(Test-Path -Path $logFile))
+    {
+        New-Item -Path $logFile -ItemType File
+    }
+    
+    if(-not [string]::IsNullOrWhiteSpace($LocalConfigFilePath)) 
+    {
         
-        if($localSdkRepoDirectory -ne $null)
-        {
-            Remove-Item "$localSdkRepoDirectory\_metadata\$($ResourceProvider.Replace("/","_")).txt" -ErrorAction SilentlyContinue
-        }
-        
+        # if generating using a local config file, create an obscure temp log file, makes detection easier
+        Remove-Item "$localSdkRepoDirectory\_metadata\$($ResourceProvider.Replace("/","_")).txt" -ErrorAction SilentlyContinue
         $logFile = [System.IO.Path]::GetTempFileName()+".txt";
+        
         Write-Warning "!!!!!WARNING!!!!!!" 
         Write-Warning "======================================================================================================================================" 
         Write-Warning "Generating code using a local REST spec at location $LocalConfigFilePath. PRs with code generated using this spec will not be accepted" 
@@ -502,32 +554,9 @@ function Start-CodeGeneration {
     }
     else
     {
-        if ($SpecsRepoName.EndsWith("-pr")) {
-            Write-Error "If you are generating code from private spec repo: $(SpecsRepoName) Please use AutoRest CLI. Code generation skipped."
-            return
-        }
-
-        if([string]::IsNullOrEmpty($localSdkRepoDirectory)) {
-            $logFile = [System.IO.Path]::GetTempFileName()+".txt";
-        }
-        else {
-            $localSdkRepoDirectory = Resolve-Path -Path "$localSdkRepoDirectory\..\SDKs"
-            if(!(Test-Path -Path "$localSdkRepoDirectory\_metadata"))
-            {
-                New-Item -ItemType Directory -Path "$localSdkRepoDirectory\_metadata"
-            }
-            $logFile = "$localSdkRepoDirectory\_metadata\$($ResourceProvider.Replace("/","_").Replace('\','_')).txt"    
-        }
-        
-        if(!$(Test-Path -Path $logFile))
-        {
-            Write-Warning "Creating new file log file: $logFile"
-            New-Item -Path $logFile -ItemType File
-        }
-        
-        $configFile="https://github.com/$SpecsRepoFork/$SpecsRepoName/blob/$SpecsRepoBranch/specification/$ResourceProvider/readme.md"
+       $configFile="https://github.com/$SpecsRepoFork/$SpecsRepoName/blob/$SpecsRepoBranch/specification/$ResourceProvider/readme.md"
     }
-
+    
     if(-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
         $SdkRootDirectory = $SdkDirectory
     }
@@ -552,6 +581,7 @@ function Start-CodeGeneration {
         Write-ErrorLog $_.ToString() 
     }
     finally {
+        Get-OutputStream | Out-File -FilePath $logFile -Encoding utf8 | Out-Null
         $errors = Get-ErrorStream
         if(-not [string]::IsNullOrWhiteSpace($errors))
         {
