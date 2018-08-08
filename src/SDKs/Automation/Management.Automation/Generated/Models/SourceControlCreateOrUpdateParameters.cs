@@ -35,24 +35,23 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Initializes a new instance of the
         /// SourceControlCreateOrUpdateParameters class.
         /// </summary>
-        /// <param name="repoUrl">Gets or sets the repo url of the source
-        /// control.</param>
-        /// <param name="branch">Gets or sets the repo branch of the source
-        /// control. Include branch as empty string for VsoTfvc.</param>
-        /// <param name="folderPath">Gets or sets the folder path of the source
-        /// control. Path must be relative.</param>
-        /// <param name="autoSync">Gets or sets auto async of the source
-        /// control. Default is false.</param>
-        /// <param name="publishRunbook">Gets or sets the auto publish of the
-        /// source control. Default is true.</param>
+        /// <param name="repoUrl">The repo url of the source control.</param>
+        /// <param name="branch">The repo branch of the source control. Include
+        /// branch as empty string for VsoTfvc.</param>
+        /// <param name="folderPath">The folder path of the source control.
+        /// Path must be relative.</param>
+        /// <param name="autoSync">The auto async of the source control.
+        /// Default is false.</param>
+        /// <param name="publishRunbook">The auto publish of the source
+        /// control. Default is true.</param>
         /// <param name="sourceType">The source type. Must be one of VsoGit,
         /// VsoTfvc, GitHub, case sensitive. Possible values include: 'VsoGit',
         /// 'VsoTfvc', 'GitHub'</param>
-        /// <param name="securityToken">Gets or sets the authorization token
-        /// for the repo of the source control.</param>
-        /// <param name="description">Gets or sets the user description of the
-        /// source control.</param>
-        public SourceControlCreateOrUpdateParameters(string repoUrl = default(string), string branch = default(string), string folderPath = default(string), bool? autoSync = default(bool?), bool? publishRunbook = default(bool?), string sourceType = default(string), string securityToken = default(string), string description = default(string))
+        /// <param name="securityToken">The authorization token for the repo of
+        /// the source control.</param>
+        /// <param name="description">The user description of the source
+        /// control.</param>
+        public SourceControlCreateOrUpdateParameters(string repoUrl = default(string), string branch = default(string), string folderPath = default(string), bool? autoSync = default(bool?), bool? publishRunbook = default(bool?), string sourceType = default(string), SourceControlSecurityTokenProperties securityToken = default(SourceControlSecurityTokenProperties), string description = default(string))
         {
             RepoUrl = repoUrl;
             Branch = branch;
@@ -91,7 +90,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string FolderPath { get; set; }
 
         /// <summary>
-        /// Gets or sets auto async of the source control. Default is false.
+        /// Gets or sets the auto async of the source control. Default is
+        /// false.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoSync")]
         public bool? AutoSync { get; set; }
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// control.
         /// </summary>
         [JsonProperty(PropertyName = "properties.securityToken")]
-        public string SecurityToken { get; set; }
+        public SourceControlSecurityTokenProperties SecurityToken { get; set; }
 
         /// <summary>
         /// Gets or sets the user description of the source control.
@@ -155,10 +155,7 @@ namespace Microsoft.Azure.Management.Automation.Models
             }
             if (SecurityToken != null)
             {
-                if (SecurityToken.Length > 1024)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "SecurityToken", 1024);
-                }
+                SecurityToken.Validate();
             }
             if (Description != null)
             {
