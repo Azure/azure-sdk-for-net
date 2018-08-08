@@ -92,6 +92,16 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         public virtual IVMExtensionsOperations VMExtensions { get; private set; }
 
         /// <summary>
+        /// Gets the IDisksOperations.
+        /// </summary>
+        public virtual IDisksOperations Disks { get; private set; }
+
+        /// <summary>
+        /// Gets the IDiskMigrationJobsOperations.
+        /// </summary>
+        public virtual IDiskMigrationJobsOperations DiskMigrationJobs { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the ComputeAdminClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -296,6 +306,8 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             PlatformImages = new PlatformImagesOperations(this);
             Quotas = new QuotasOperations(this);
             VMExtensions = new VMExtensionsOperations(this);
+            Disks = new DisksOperations(this);
+            DiskMigrationJobs = new DiskMigrationJobsOperations(this);
             BaseUri = new System.Uri("https://adminmanagement.local.azurestack.external");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

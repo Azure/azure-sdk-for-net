@@ -86,5 +86,15 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// </summary>
         IVMExtensionsOperations VMExtensions { get; }
 
+        /// <summary>
+        /// Gets the IDisksOperations.
+        /// </summary>
+        IDisksOperations Disks { get; }
+
+        /// <summary>
+        /// Gets the IDiskMigrationJobsOperations.
+        /// </summary>
+        IDiskMigrationJobsOperations DiskMigrationJobs { get; }
+
     }
 }
