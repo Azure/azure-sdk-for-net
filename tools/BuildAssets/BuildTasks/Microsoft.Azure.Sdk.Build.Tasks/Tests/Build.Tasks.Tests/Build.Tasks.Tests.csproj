@@ -1,13 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <TargetFramework>net46</TargetFramework>    
     <PackageOutputPath>$(OutputPath)</PackageOutputPath>
     <IncludeSymbols>true</IncludeSymbols>
     <SdkSampleAssemblyName>SdkInfoSample</SdkSampleAssemblyName>
     <PackageTags>TestPackage;$(AdditionalVersionTags)</PackageTags>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(AfterBuild)' != 'true' ">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+  
    <PropertyGroup>
   	<TargetFrameworks>net46</TargetFrameworks>
   </PropertyGroup> 
@@ -44,12 +48,16 @@
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
   
-  <ItemGroup>
+  <!--<ItemGroup>
     <Folder Include="TestData\SigningManifests\" />
-  </ItemGroup>
+  </ItemGroup>-->
   
-  <ItemGroup>
-    <None Update="TestData\PublishedNugets\Microsoft.Azure.Management.Compute.18.0.0.nupkg">
+  <ItemGroup Condition=" '$(AfterBuild)' != 'true' ">
+    <None Update="TestData\**\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    
+    <!--<None Update="TestData\PublishedNugets\Microsoft.Azure.Management.Compute.18.0.0.nupkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="TestData\PublishedNugets\Microsoft.Azure.Management.Compute.18.0.0.symbols.nupkg">
@@ -57,11 +65,11 @@
     </None>
     <None Update="TestData\SigningManifests\SingleFileSignRequestManifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </None>-->
   </ItemGroup>
 
   <Target Name="BuildCmdletModule" BeforeTargets="Build" Condition="'$(AfterBuild)' != 'true'">
     <MSBuild Projects="$(MSBuildProjectFullPath)" BuildInParallel="true" Properties="EnableDefaultCompileItems=false;AfterBuild=true;AssemblyName=$(SdkSampleAssemblyName);OutputType=Library;IntermediateOutputPath=$(IntermediateOutputPath)sdkInfoSam\" />
-    <!--;DocumentationFile=$(OutputPath)$(TestCmdletModuleAssemblyName).dll-help.xml-->
+    <!--;DocumentationFile=$(OutputPath)$(TestCmdletModuleAssemblyName).dll-help.xml -->
   </Target>
 </Project>

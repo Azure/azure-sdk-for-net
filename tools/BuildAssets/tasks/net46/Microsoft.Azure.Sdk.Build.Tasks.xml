@@ -1,0 +1,493 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Azure.Sdk.Build.Tasks</name>
+    </assembly>
+    <members>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BaseTasks.NetSdkTask.TaskInstance">
+            <summary>
+            Task instance of each derived task.
+            This is required for the base services like TaskLogger to be provided from the base class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuildTask.AssemblyFullPath">
+            <summary>
+            This property is test purpose only
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuildTask.FQTypeName">
+            <summary>
+            This property is test purpose only
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild.PreSignTask.InSearchExtensionToSearch">
+            <summary>
+            Space delimited extension list including . char
+            e.g. .nupkg .dll
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild.PreSignTask.InSignedFilesRootDirPath">
+            <summary>
+            Root directory path where files will be searched for
+            provided space separated extension list <see cref="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild.PreSignTask.InSearchExtensionToSearch"/>
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild.PreSignTask.InFilesToSignWithFullPath">
+            <summary>
+            List of full file path that needs to be signed
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild.PreSignTask.InSignManifestDirPath">
+            <summary>
+            Root directory for creating manifest files needed for signing service
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild.PreSignTask.InSigningOperation">
+            <summary>
+            Possible values
+            1) nuget
+            more types will be added
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild.SignNugetTask.InSearchExtensionToSearch">
+            <summary>
+            Space delimited extension list including . char
+            e.g. .nupkg .dll
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild.SignNugetTask.InSignedFilesRootDirPath">
+            <summary>
+            Root directory path where files will be searched for
+            provided space separated extension list <see cref="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild.SignNugetTask.InSearchExtensionToSearch"/>
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild.SignNugetTask.InSignManifestDirPath">
+            <summary>
+            Root directory for creating manifest files needed for signing service
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild.SignNugetTask.InSigningOperation">
+            <summary>
+            Possible values
+            1) nuget
+            more types will be added
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PreBuildTask">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Sdk.Build.Tasks.PackageTasks.PrePackageTasks">
+            <summary>
+            The idea is to execute series of tasks that are required to be executed tasks prior to Packaging the nuget package
+            The individual tasks will be invoked from this tasks, but yet have them independent to be executed on it's own.
+            
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Sdk.Build.Tasks.Utilities.Check">
+            <summary>
+            Utility to check Null/Empty and throw appropriate exceptions
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Sdk.Build.Tasks.Utilities.Check.NotNull(System.Object,System.String)">
+            <summary>
+            Checks if the argument passed in is NotNull
+            Throws NullReferenceException if the arugment is Null
+            </summary>
+            <param name="argument">arument info for logging purpose</param>
+            <param name="argumentName">argument info for logging</param>
+        </member>
+        <member name="M:Microsoft.Azure.Sdk.Build.Tasks.Utilities.Check.NotEmptyNotNull(System.String,System.String)">
+            <summary>
+            Checks if the string argument passed in is NonEmpty and NotNull
+            Throws NullReferenceException if the arugment is Null or Empty
+            </summary>
+            <param name="argument">arument info for logging purpose</param>
+            <param name="argumentName">argument info for logging</param>
+        </member>
+        <member name="M:Microsoft.Azure.Sdk.Build.Tasks.Utilities.Check.FileExists(System.String)">
+            <summary>
+            Checks if the FilePath exists
+            Throws FileNotFoundException if the filePath does not exists
+            </summary>
+            <param name="filePath">file path info for logging purpose</param>
+        </member>
+        <member name="M:Microsoft.Azure.Sdk.Build.Tasks.Utilities.Check.DirectoryExists(System.String)">
+            <summary>
+            Checks if the DirectoryPath exists
+            Throws DirectoryNotFoundException if the DirectoryPath does not exists
+            </summary>
+            <param name="dirPath">Directory Path</param>
+        </member>
+        <member name="M:Microsoft.Azure.Sdk.Build.Tasks.Utilities.FileSystemUtility.TraverseTowardsRoot(System.String)">
+            <summary>
+            Given a directory path, traverses one directory
+            </summary>
+            <param name="directoryNameToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Sdk.Build.ExecProcess.NugetExec.Publish(System.Tuple{System.String,System.String})">
+            <summary>
+            
+            </summary>
+            <param name="nugPkgs"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Azure.Sdk.Build.ExecProcess.NugetPublishStatus">
+            <summary>
+            Structure to get publish status
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.ExecProcess.ShellExec.ShellProcess">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Sdk.Build.ExecProcess.SignClientExec">
+            <summary>
+            TODO: Make exec base as Task
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.ExecProcess.SignClientExec.CiToolsRootDir">
+            <summary>
+            Root direcotry for CI tools
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.ExecProcess.SignClientExec.SigningInputManifestFilePath">
+            <summary>
+            Signing Client input file
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.ExecProcess.SignClientExec.SigningResultOutputFilePath">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.ExecProcess.SignClientExec.DefaultTimeOut">
+            <summary>
+            Defautl time for the shell process
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Sdk.Build.ExecProcess.SignClientExec.BuildShellProcessArgs">
+            <summary>
+            Build commandline args string
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Azure.Build.Tasks.DebugTask">
+            <summary>
+            Utility task to help debug
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Build.Tasks.DebugTask.DEFAULT_TASK_TIMEOUT">
+            <summary>
+            Default timeout
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Build.Tasks.DebugTask.Timeoutmiliseconds">
+            <summary>
+            Task Timeout
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAzure.Build.Tasks.BuildProjectTemplatesTask.TemplateDirList">
+            <summary>
+            list of directories that contain template data
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.BuildProjectTemplatesTask.TemplateBuildOutputDirPath">
+            <summary>
+            Directory path where the templates will be copied after build
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.BuildProjectTemplatesTask.TaskErrorDetected">
+            <summary>
+            True: If errors were detected during execution of task
+            False: If no errors were detected during task execution
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAzure.Build.Tasks.BuildProjectTemplatesTask.Init">
+            <summary>
+            Initialize data
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAzure.Build.Tasks.BuildProjectTemplatesTask.Execute">
+            <summary>
+            Execute Build Template task
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.FilterOutAutoRestLibraries.NugetPackagesToPublish">
+            <summary>
+            Name of packages that needs to be published. Currently for ease for the user, it will be space delimited list of NetCore projects
+            Non-NetCore projects cannot be published more than one package due to MSBuild limitation as well as our existing architecture of nuget.proj files
+            Plus as we have very limited set of non-netCore projects, so the effort is not worth it. Worse case for publishing non-netCore projects, each job 
+            to publish 1 package at a time
+            
+            E.g. for NetCore projects /p:PackageName="PackageName1 PackageName2" string can be passed to publish PacakgeName1 and PackageName2
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.RegexReplacementTask.OutputDir">
+            <summary>
+            Gets or sets the optional output directory. If a OutputDir value is
+            specified, the original file contents will not be overwritten.
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask._publishAllNugetsunderScope">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.NugetPackageName">
+            <summary>
+            Gets or sets Nuget Package Name that needs to be published
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.PackageOutputPath">
+            <summary>
+            Gets or sets output path for nuget that got packaged/generated
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.PublishNugetToPath">
+            <summary>
+            Gets or sets nuget publishing path.
+            Official Nuget Path is https://www.nuget.org/api/v2/package/
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.NugetExePath">
+            <summary>
+            Sets or gets the path to Nuget.exe
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.UserId">
+            <summary>
+            GitHub userId
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.publishAllNugetsUnderScope">
+            <summary>
+            Publish all nuget found under particular scope
+            e.g. publish all nugets under KeyVault
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.scopePath">
+            <summary>
+            Gets or Sets relative scope Path (e.g. SDKs\Compute relative path after root\src)
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.ApiKey">
+            <summary>
+            API key to be used to publish the nuget pakcage
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects">
+            <summary>
+            This task will enable getting projects that needs to be built.
+            Currently this task makes the following assumption:
+            1) We have hard coded to search for only *.csproj files as the projects that needs to be built
+            It has the capability and properties that will accomodate any number of project file extension (using ; separated list)
+            2) It has currently hard-coded to ignore KeyVault Sample projects (they do not need to be built anytime)
+            3) Due to a Msbuild capability of not able to provide outputs for multi-targeting projects, we need to separate out projects 
+            that are only targeting one framework version.
+            So in our entire build system, we assume that all our proejcts target only .NET 452 and .NET Standard 1.4
+            Not sure if we want to accomodate random target frameworks (possibly not), but then there are always exceptions and we are not
+            ready for those exceptions.
+            Need to file an issue to investigate this and enable it.
+            
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.SourceRootDirPath">
+            <summary>
+            Source Root Dir Path to search projects
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.BuildScope">
+            <summary>
+            BuildScope
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.IgnorePathTokens">
+            <summary>
+            Directory name which needs to be ignore during searching of projects
+            We ignore all directory paths that has the provided directory name
+            for e.g. Microsoft.Azure.KeyVault.Samples, we will ignore any paths that has the given names
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.SearchProjectFileExt">
+            <summary>
+            List of project file extension.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.net452SdkProjectsToBuild">
+            <summary>
+            List of projects that needs to be built
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.net461SdkProjectsToBuild">
+            <summary>
+            List of projects that needs to be built
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.netStd14SdkProjectsToBuild">
+            <summary>
+            List of Test Projects that needs to be build
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.netCore11SdkProjectsToBuild">
+            <summary>
+            List of Test Projects that needs to be build
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.netCore11TestProjectsToBuild">
+            <summary>
+            List of .NET 452 projects that will be separated from the list of projects that 
+            are multi targeting
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.WellKnowTestSDKNet452Projects">
+            <summary>
+            List of .NET 452 test projects that will be separated from the list of projects that
+            are multi-targeting
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.Execute">
+            <summary>
+            Executes the Categorization task
+            The primary objective is to do the following:
+            1) Find supported/unsupported TargetFramework specified in the project file
+            2) Categorize if a project is a test project or not (currently we rely on references added to the project to decide if a project is Test or not)
+            At the end of this task we get 6 outputs
+            Each output array is a list of project categorized according to the TargetFramework the project is targeting.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.GetProjectData(System.Collections.Generic.List{System.String},System.Collections.Concurrent.ConcurrentBag{Microsoft.Azure.Sdk.Build.Tasks.Models.SdkProjectMetaData})">
+            <summary>
+            This function parses project file and gets meta data
+            This is where we categorize if a project is a test project or not (second check based on the references added to the project)
+            This is where we find if the project has any supported target framework.
+            </summary>
+            <param name="projectList">List of project file paths</param>
+            <param name="supportedProjectBag">Collection where parsed data will be saved to get parsed project data</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.WindowsAzure.Build.Tasks.StrongNameUtility">
+            <summary>
+            Utility class for managing the Process used to work with the sn.exe
+            tool in the Windows SDK.
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAzure.Build.Tasks.Utilities.Constants">
+            <summary>
+            Constants used within the Build.Tasks library
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAzure.Build.Tasks.Utilities.Constants.NugetDefaults">
+            <summary>
+            Constants, defaults used for Nuget Publish task
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAzure.Build.Tasks.Utilities.Constants.BuildStageConstant">
+            <summary>
+            Constants used for various build stage tasks
+            </summary>
+        </member>
+        <member name="T:Microsoft.WindowsAzure.Build.Tasks.Utilities.ObjectComparer`1">
+            <summary>
+            Generic class to compare objects
+            </summary>
+            <typeparam name="T">Type for which you want to equate it against</typeparam>
+        </member>
+        <member name="F:Microsoft.WindowsAzure.Build.Tasks.Utilities.ObjectComparer`1.objectComparerDelegate">
+            <summary>
+            Type comparing delegate
+            </summary>
+        </member>
+        <member name="F:Microsoft.WindowsAzure.Build.Tasks.Utilities.ObjectComparer`1.hashComputeDelegate">
+            <summary>
+            Computes Hash for the type
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAzure.Build.Tasks.Utilities.ObjectComparer`1.#ctor(System.Func{`0,`0,System.Boolean})">
+            <summary>
+            Initializes a new instance of the TypeComparer class
+            </summary>
+            <param name="comparisonDelegate">comparisonDelegate for comparison</param>
+        </member>
+        <member name="M:Microsoft.WindowsAzure.Build.Tasks.Utilities.ObjectComparer`1.#ctor(System.Func{`0,`0,System.Boolean},System.Func{`0,System.Int32})">
+            <summary>
+            Initializes a new instance of the TypeComparer class
+            </summary>
+            <param name="comparisonDelegate">Comparison Delegate</param>
+            <param name="hashComputeDelegate">Hash computing Delegate</param>
+        </member>
+        <member name="M:Microsoft.WindowsAzure.Build.Tasks.Utilities.ObjectComparer`1.Equals(`0,`0)">
+            <summary>
+            Implmentation for IEualityComparer
+            </summary>
+            <param name="x">First Instance</param>
+            <param name="y">Second Instance</param>
+            <returns>Returns <see cref="T:System.Boolean"/> comparing two types</returns>
+        </member>
+        <member name="M:Microsoft.WindowsAzure.Build.Tasks.Utilities.ObjectComparer`1.GetHashCode(`0)">
+            <summary>
+            Compare hash
+            </summary>
+            <param name="obj">Instance of Delegate that computes hash</param>
+            <returns>returns <see cref="T:System.Int32"/> computed hash</returns>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.Utilities.ProjectSearchUtility.RootDirForSearch">
+            <summary>
+            This will be path especially when we run a CI run and search all possible projects
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.Utilities.ProjectSearchUtility.ProjectRootDir">
+            <summary>
+            This will be the root directory where projects are being discovered
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAzure.Build.Tasks.Utilities.ProjectSearchUtility.GetFilteredProjects">
+            <summary>
+            Finds all projects that can be found under RootDirForSearch using ProjectExtensionList.
+            </summary>
+            <param name="filterWithIgnoreProjects">true: will filter out all projects using IgnorePathTokenList. false: will not apply any filter</param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Microsoft.WindowsAzure.Build.Tasks.Utilities.ProjectSearchUtility.AdjustPathForScopedProjects(System.String,System.String)" -->
+        <member name="T:Microsoft.WindowsAzure.Build.Tasks.ValidateStrongNameSignatureTask">
+            <summary>
+            A simple Microsoft Build task for validating the strong name signature
+            on a .NET assembly.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.ValidateStrongNameSignatureTask.WindowsSdkPath">
+            <summary>
+            Gets or sets the path to the Windows SDK on the machine.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.ValidateStrongNameSignatureTask.Assembly">
+            <summary>
+            Gets or sets the assembly whose strong name needs to be verified.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.ValidateStrongNameSignatureTask.ExpectedTokenSignature">
+            <summary>
+            Gets or sets the expected strong name token for the assembly.
+            </summary>
+        </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.ValidateStrongNameSignatureTask.ExpectedDelaySigned">
+            <summary>
+            Gets or sets a value indicating whether the assembly is expected to
+            be delay signed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WindowsAzure.Build.Tasks.ValidateStrongNameSignatureTask.Execute">
+            <summary>
+            Executes the task to validate the strong name information for the
+            assembly using the input values expected by the task.
+            </summary>
+            <returns>Returns a value indicating whether the task has been
+            successful and the build should continue.</returns>
+        </member>
+    </members>
+</doc>

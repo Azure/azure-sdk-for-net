@@ -37,7 +37,7 @@ namespace Build.Tasks.Tests.Signing
         {
             PreSignTask pst = new PreSignTask();
             //pst.InSignedFilesRootDirPath = Path.Combine(this.TestDataRuntimeDir, "PublishedNugets");
-            pst.InSignedFilesRootDirPath = this.TestDataRuntimeDir;
+            pst.InSignedFilesRootDirPath = Path.GetDirectoryName(this.TestBinaryOutputDir);
             pst.InSearchExtensionToSearch = ".nupkg";
             pst.InSignBuildName = "TestSignBuildJob";
             pst.InSignManifestDirPath = this.SignManifestDir;

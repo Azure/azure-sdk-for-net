@@ -41,7 +41,14 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
 
         public List<string> ProjectImports { get; set; }
 
-        public SdkProjectMetaData(ITaskItem project, Project msbuildProject, TargetFrameworkMoniker fxMoniker, string fxMonikerString, string fullProjectPath, string targetOutputPath, bool isTargetFxSupported, SdkProjctType projectType = SdkProjctType.Sdk)
+        public SdkProjectMetaData(ITaskItem projTaskItem) : this(projTaskItem.ItemSpec)
+        {
+
+        }
+
+        public SdkProjectMetaData(ITaskItem project, Project msbuildProject, TargetFrameworkMoniker fxMoniker, 
+            string fxMonikerString, string fullProjectPath, string targetOutputPath, bool isTargetFxSupported, 
+            SdkProjctType projectType = SdkProjctType.Sdk)
         {
             ProjectTaskItem = project;
             FxMoniker = fxMoniker;
@@ -82,21 +89,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
         {
             if(!string.IsNullOrEmpty(fullProjectPath))
             {
-                try
-                {
-                    if (ProjectCollection.GlobalProjectCollection.GetLoadedProjects(fullProjectPath).Count != 0)
-                    {
-                        MsBuildProject = ProjectCollection.GlobalProjectCollection.GetLoadedProjects(fullProjectPath).FirstOrDefault<Project>();
-                    }
-                    else
-                    {
-                        MsBuildProject = new Project(fullProjectPath);
-                    }
-                }
-                catch(Exception ex)
-                {
-
-                }
+                MsBuildProject = GetProject(fullProjectPath);
 
                 if(MsBuildProject != null)
                 {
@@ -112,7 +105,34 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                     IsFxNetCore = IsExpectedFxCategory(FxMoniker, TargetFxCategory.NetCore);
                     ProjectImports = GetProjectImports(MsBuildProject);
                 }
+                else
+                {
+                    throw new NullReferenceException("MsBuild Project null");
+                }
             }
+        }
+
+        private Project GetProject(string fullProjectPath)
+        {
+            Project proj = null;
+            //try
+            //{
+                if (ProjectCollection.GlobalProjectCollection.Count > 0)
+                {
+                    proj = ProjectCollection.GlobalProjectCollection.GetLoadedProjects(fullProjectPath).FirstOrDefault<Project>();
+                }
+
+                if(proj == null)
+                {
+                    proj = new Project(fullProjectPath);
+                }
+            //}
+            //catch (Exception ex)
+            //{
+
+            //}
+
+            return proj;
         }
         
         private List<string> GetProjectImports(Project msbuildProj)

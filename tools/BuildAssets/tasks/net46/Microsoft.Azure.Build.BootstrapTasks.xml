@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Azure.Build.BootstrapTasks</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools">
+            <summary>
+            Bootstrap task, which simply copies all build tools to local branch
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.LocalBranchRootDir">
+            <summary>
+            Sets/Gets Local branch Root Directory
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.RemoteRootDir" -->
+        <member name="P:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.LocalBranchCopyToRootDir">
+            <summary>
+            Local branch root directory where files need to be copied to
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.RemoteCopyFromRootDir">
+            <summary>
+            Remote directory from where files need to be copied from
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.LocalMetaDataFilePath">
+            <summary>
+            Local file path for copied Meta data file
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.RemoteMetaDataFilePath">
+            <summary>
+            Remote file path from where meta data file needs to be copied from
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.unableToCopyFilePath">
+            <summary>
+            Stores all the file paths that resulted in any exception (either not found on source or unable to copy on destination)
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.DebugTrace">
+            <summary>
+            Output debug traces during execution of task
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.BuildToolsLogger">
+            <summary>
+            Logger
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.WebCopier">
+            <summary>
+            WebClient to copy files
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.Execute">
+            <summary>
+            Copies tasks and targets to local branch
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.CopyPowershellModules(System.String,System.String[])">
+            <summary>
+            Copy powershell modules to the user profile powershell dir
+            </summary>
+            <param name="psModulesDir">Powershell modules source dir</param>
+            <param name="filesToCopy">List of files to copy to tools dir</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.CopyFile(System.String,System.String)">
+            <summary>
+            Copy files
+            </summary>
+            <param name="sourceFile">Source full file path</param>
+            <param name="destinationPath">destination full file path</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.CreateDirectory(System.String)">
+            <summary>
+            Create directory if does not exists
+            </summary>
+            <param name="filePath">File path for which directory path will be checked and created</param>
+        </member>
+        <member name="M:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.ReportErrors">
+            <summary>
+            Iterates list that holds files that resulted in exepction and logs to the logger
+            </summary>
+        </member>
+    </members>
+</doc>
