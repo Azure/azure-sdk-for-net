@@ -658,6 +658,10 @@ namespace Microsoft.Azure.Search
             return _result;
         }
 
+        /// <summary>
+        /// Retrieves a document from the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document" />
+        /// </summary>
         /// <param name='key'>
         /// The key of the document to retrieve.
         /// </param>
@@ -1469,6 +1473,7 @@ namespace Microsoft.Azure.Search
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
         /// </summary>
         /// <param name='suggestRequest'>
+        /// The Suggest request
         /// </param>
         /// <param name='accept'>
         /// The accept parameter in HTTP header advertises which content types,

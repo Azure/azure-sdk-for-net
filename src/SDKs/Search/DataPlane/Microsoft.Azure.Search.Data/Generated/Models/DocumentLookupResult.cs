@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Document")]
+        [JsonProperty(PropertyName = "document")]
         public object Document { get; set; }
 
     }

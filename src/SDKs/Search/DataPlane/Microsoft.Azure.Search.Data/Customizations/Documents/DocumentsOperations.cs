@@ -8,17 +8,12 @@ namespace Microsoft.Azure.Search
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using Common;
     using Models;
     using Newtonsoft.Json;
     using Rest;
     using Rest.Azure;
-    using Rest.Serialization;
     using Serialization;
 
     internal class DocumentsOperations : IServiceOperations<SearchIndexClient>, IDocumentsOperations

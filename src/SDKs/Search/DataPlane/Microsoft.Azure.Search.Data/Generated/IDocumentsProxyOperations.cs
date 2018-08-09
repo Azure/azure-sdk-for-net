@@ -80,6 +80,10 @@ namespace Microsoft.Azure.Search
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<DocumentSearchResultProxy>> SearchGetWithHttpMessagesAsync(string searchText = default(string), string accept = default(string), SearchParameters searchParameters = default(SearchParameters), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
+        /// <summary>
+        /// Retrieves a document from the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document" />
+        /// </summary>
         /// <param name='key'>
         /// The key of the document to retrieve.
         /// </param>
@@ -185,6 +189,7 @@ namespace Microsoft.Azure.Search
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
         /// </summary>
         /// <param name='suggestRequest'>
+        /// The Suggest request
         /// </param>
         /// <param name='accept'>
         /// The accept parameter in HTTP header advertises which content types,

@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Search.Models
 
         private IList<ScoringParameter> _scoringParameters;
 
-        public IList<ScoringParameter> ScoringParameters { get { return _scoringParameters; } set { _scoringParameters = value; ScoringParameterStrings = _scoringParameters.Select(p => p.ToString()).ToList(); } }
+        public IList<ScoringParameter> ScoringParameters { get { return _scoringParameters; } set { _scoringParameters = value; ScoringParameterStrings = _scoringParameters.Any() ? _scoringParameters.Select(p => p.ToString()).ToList() : null; } }
 
         internal SearchParametersPayload ToPayload(string searchText) =>
             new SearchParametersPayload()
