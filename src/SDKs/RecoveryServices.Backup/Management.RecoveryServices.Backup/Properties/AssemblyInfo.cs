@@ -7,7 +7,7 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Recovery Services Backup Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Recovery Services Backup Resources.")]
 
-[assembly: AssemblyVersion("3.1.0.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
 [assembly: AssemblyFileVersion("3.1.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
