@@ -1,0 +1,215 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/c69f350f-01b9-417d-bb90-08a397934964/providers/Microsoft.Compute.Admin/locations/local/disks?api-version=2018-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzY5ZjM1MGYtMDFiOS00MTdkLWJiOTAtMDhhMzk3OTM0OTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvZGlza3M/YXBpLXZlcnNpb249MjAxOC0wNy0zMC1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0757dc41-67a7-4a71-90b5-0fc112f552a9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26020.03",
+          "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.3.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 09 Aug 2018 06:05:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRveHCLNS8nAqYXgWfZ13dmygDcoO0ZxU0D/VapkUp/lmEhOHa3UJYKXn5A06qPvmchxlAhuQgCn5CSp+UjnnhgwWVU+6e4v+LjkqwBBIxKvYU0uuZvEtksgkkcZDk802e5nRcT/qAeY1ipLIdCXSY7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "00000000-0000-0000-0000-000000000000_0"
+        ],
+        "x-ms-correlation-request-id": [
+          "cb52b295-ed62-471d-95b6-ecf0e1112c7d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14974"
+        ],
+        "x-ms-request-id": [
+          "cb52b295-ed62-471d-95b6-ecf0e1112c7d"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180809T060504Z:cb52b295-ed62-471d-95b6-ecf0e1112c7d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "813"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/c69f350f-01b9-417d-bb90-08a397934964/providers/Microsoft.Compute.Admin/locations/local/disks/2811b3ba-dc71-4a96-8c99-b300a35f46e8\",\r\n      \"name\": \"local/2811b3ba-dc71-4a96-8c99-b300a35f46e8\",\r\n      \"type\": \"Microsoft.Compute.Admin/locations/disks\",\r\n      \"location\": \"local\",\r\n      \"properties\": {\r\n        \"diskId\": \"2811b3ba-dc71-4a96-8c99-b300a35f46e8\",\r\n        \"status\": \"Unattached\",\r\n        \"sharePath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_ObjStore\",\r\n        \"actualSizeGB\": 1,\r\n        \"provisionSizeGB\": 4,\r\n        \"userResourceId\": \"/subscriptions/c69f350f-01b9-417d-bb90-08a397934964/resourceGroups/SYSTEM/providers/Microsoft.Compute/Disks/testdisk\",\r\n        \"diskType\": \"Disk\",\r\n        \"diskSku\": \"Standard_LRS\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c69f350f-01b9-417d-bb90-08a397934964/providers/Microsoft.Compute.Admin/locations/local/diskmigrationjobs/8C47B2D9-1DA8-4E77-8D0E-D63627146899?targetShare=%5C%5CSU1FileServer.azurestack.local%5CSU1_ObjStore_Invalid%5C&api-version=2018-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzY5ZjM1MGYtMDFiOS00MTdkLWJiOTAtMDhhMzk3OTM0OTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvZGlza21pZ3JhdGlvbmpvYnMvOEM0N0IyRDktMURBOC00RTc3LThEMEUtRDYzNjI3MTQ2ODk5P3RhcmdldFNoYXJlPSU1QyU1Q1NVMUZpbGVTZXJ2ZXIuYXp1cmVzdGFjay5sb2NhbCU1Q1NVMV9PYmpTdG9yZV9JbnZhbGlkJTVDJmFwaS12ZXJzaW9uPTIwMTgtMDctMzAtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "[\r\n  {\r\n    \"properties\": {\r\n      \"diskId\": \"2811b3ba-dc71-4a96-8c99-b300a35f46e8\",\r\n      \"status\": \"Unattached\",\r\n      \"sharePath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_ObjStore\"\r\n    },\r\n    \"location\": \"local\"\r\n  }\r\n]",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ea3e3f76-7a83-492a-88f7-27410cf363a1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26020.03",
+          "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.3.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "227"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 09 Aug 2018 06:05:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvTnk3s4LSJszjumCClcJqkx9+pG/xVJCQFCbmLODATXJqSfBb3/A/PvdXNMv9M3BR4Ez5LsEXmeG7F2YridMxAOJN7Kmnl9WUcyi5+oT4HfEgkBKjbbRRr3JZETBodhHn/SGX/kSeRMi1Snykyc88"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "00000000-0000-0000-0000-000000000000_0"
+        ],
+        "x-ms-correlation-request-id": [
+          "3cf6e364-cf66-420e-86a6-7b7fb60bfec8"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1192"
+        ],
+        "x-ms-request-id": [
+          "3cf6e364-cf66-420e-86a6-7b7fb60bfec8"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180809T060504Z:3cf6e364-cf66-420e-86a6-7b7fb60bfec8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "150"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"BadRequest\",\r\n    \"message\": \"Share path \\\\\\\\SU1FileServer.azurestack.local\\\\SU1_ObjStore_Invalid is not found.\"\r\n  }\r\n}",
+      "StatusCode": 400
+    },
+    {
+      "RequestUri": "/subscriptions/c69f350f-01b9-417d-bb90-08a397934964/providers/Microsoft.Compute.Admin/locations/local/diskmigrationjobs/8C47B2D9-1DA8-4E77-8D0E-D63627146899?api-version=2018-07-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzY5ZjM1MGYtMDFiOS00MTdkLWJiOTAtMDhhMzk3OTM0OTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvZGlza21pZ3JhdGlvbmpvYnMvOEM0N0IyRDktMURBOC00RTc3LThEMEUtRDYzNjI3MTQ2ODk5P2FwaS12ZXJzaW9uPTIwMTgtMDctMzAtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ec71fe3a-146a-4317-af51-410cf4e6384a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26020.03",
+          "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.3.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 09 Aug 2018 06:05:05 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvYS9QewPA+jQ23VOGzufFDW2Y3XV6gsCwpemruG9b3RR1Wsc1eSaqD4adBhf80A6cXJ24Xme14JNJfKeeKvj8UeTJdSdQP9ocbigC+F2lF30FOOqpsj7QSQLeKlC9A2HzqtKOWKiuxG/TAxwdY9SN"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-served-by": [
+          "00000000-0000-0000-0000-000000000000_0"
+        ],
+        "x-ms-correlation-request-id": [
+          "3d196f8b-cb75-42ca-8b96-6062f4afa5f3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14973"
+        ],
+        "x-ms-request-id": [
+          "3d196f8b-cb75-42ca-8b96-6062f4afa5f3"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180809T060505Z:3d196f8b-cb75-42ca-8b96-6062f4afa5f3"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "92"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"NotFound\",\r\n    \"message\": \"The entity was not found.\"\r\n  }\r\n}",
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "c69f350f-01b9-417d-bb90-08a397934964"
+  }
+}

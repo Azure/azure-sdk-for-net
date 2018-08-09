@@ -4,6 +4,7 @@ using Microsoft.AzureStack.Management.Compute.Admin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Xunit;
 
 namespace Compute.Tests
@@ -92,6 +93,16 @@ namespace Compute.Tests
                     var diskFromServer = client.Disks.Get(Location, firstDisk.DiskId);
                     ValidateDiskTheSame(firstDisk, diskFromServer);
                 }
+            });
+        }
+
+        [Fact]
+        public void TestGetDiskInvalid()
+        {
+            RunTest((client) => {
+                ValidateExpectedReturnCode(
+                    () => client.Disks.Get(Location, "454E5E28-8D5E-41F9-929E-BFF6A7E1A253"),
+                    HttpStatusCode.NotFound);
             });
         }
     }

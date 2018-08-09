@@ -85,7 +85,10 @@ namespace Compute.Tests
 
         public void ValidateExpectedReturnCode(Action action, HttpStatusCode httpResponseCode)
         {
-            try { action.Invoke(); }
+            try {
+                action.Invoke();
+                throw new Exception("Test failed: Not exception found.");
+            }
             catch (CloudException ex)
             {
                 if (ex.Response.StatusCode == httpResponseCode)
