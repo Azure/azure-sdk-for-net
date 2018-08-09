@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionError', 'ProtectionStopped', 'ProtectionPaused'</param>
         /// <param name="extendedInfo">Additional information for this backup
         /// item.</param>
-        public AzureSqlProtectedItem(BackupManagementType? backupManagementType = default(BackupManagementType?), DataSourceType? workloadType = default(DataSourceType?), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), CreateMode? createMode = default(CreateMode?), string protectedItemDataId = default(string), ProtectedItemState? protectionState = default(ProtectedItemState?), AzureSqlProtectedItemExtendedInfo extendedInfo = default(AzureSqlProtectedItemExtendedInfo))
+        public AzureSqlProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), string protectedItemDataId = default(string), string protectionState = default(string), AzureSqlProtectedItemExtendedInfo extendedInfo = default(AzureSqlProtectedItemExtendedInfo))
             : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode)
         {
             ProtectedItemDataId = protectedItemDataId;
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionStopped', 'ProtectionPaused'
         /// </summary>
         [JsonProperty(PropertyName = "protectionState")]
-        public ProtectedItemState? ProtectionState { get; set; }
+        public string ProtectionState { get; set; }
 
         /// <summary>
         /// Gets or sets additional information for this backup item.

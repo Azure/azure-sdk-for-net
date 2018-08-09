@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// container.</param>
         /// <param name="containerId">Fabric Id of the container such as ARM
         /// Id.</param>
-        public AzureVMAppContainerProtectableContainer(string friendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string healthStatus = default(string), string containerId = default(string))
+        public AzureVMAppContainerProtectableContainer(string friendlyName = default(string), string backupManagementType = default(string), string healthStatus = default(string), string containerId = default(string))
             : base(friendlyName, backupManagementType, healthStatus, containerId)
         {
             CustomInit();

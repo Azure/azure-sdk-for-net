@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
         /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
         /// 'AzureFileShare', 'SAPHanaDatabase'</param>
-        public BMSContainersInquiryQueryObject(BackupManagementType? backupManagementType = default(BackupManagementType?), WorkloadType? workloadType = default(WorkloadType?))
+        public BMSContainersInquiryQueryObject(string backupManagementType = default(string), string workloadType = default(string))
         {
             BackupManagementType = backupManagementType;
             WorkloadType = workloadType;
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public BackupManagementType? BackupManagementType { get; set; }
+        public string BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets workload type for this container. Possible values
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'SAPHanaDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "workloadType")]
-        public WorkloadType? WorkloadType { get; set; }
+        public string WorkloadType { get; set; }
 
     }
 }

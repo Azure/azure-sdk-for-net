@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="status">Status of registration of this container with
         /// the Recovery Services Vault.</param>
         /// <param name="friendlyName">Friendly name of this container.</param>
-        public BMSContainerQueryObject(BackupManagementType backupManagementType, ContainerType? containerType = default(ContainerType?), string backupEngineName = default(string), string fabricName = default(string), string status = default(string), string friendlyName = default(string))
+        public BMSContainerQueryObject(string backupManagementType, string containerType = default(string), string backupEngineName = default(string), string fabricName = default(string), string status = default(string), string friendlyName = default(string))
         {
             BackupManagementType = backupManagementType;
             ContainerType = containerType;
@@ -68,7 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public BackupManagementType BackupManagementType { get; set; }
+        public string BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets type of container for filter. Possible values include:
@@ -79,7 +80,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'GenericContainer'
         /// </summary>
         [JsonProperty(PropertyName = "containerType")]
-        public ContainerType? ContainerType { get; set; }
+        public string ContainerType { get; set; }
 
         /// <summary>
         /// Gets or sets backup engine name
@@ -109,11 +110,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (BackupManagementType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "BackupManagementType");
+            }
         }
     }
 }

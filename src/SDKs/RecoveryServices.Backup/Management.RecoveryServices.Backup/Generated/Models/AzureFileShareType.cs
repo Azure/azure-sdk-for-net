@@ -10,98 +10,14 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for AzureFileShareType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(AzureFileShareTypeConverter))]
-    public struct AzureFileShareType : System.IEquatable<AzureFileShareType>
+    public static class AzureFileShareType
     {
-        private AzureFileShareType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly AzureFileShareType Invalid = "Invalid";
-
-        public static readonly AzureFileShareType XSMB = "XSMB";
-
-        public static readonly AzureFileShareType XSync = "XSync";
-
-
-        /// <summary>
-        /// Underlying value of enum AzureFileShareType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for AzureFileShareType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type AzureFileShareType
-        /// </summary>
-        public bool Equals(AzureFileShareType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to AzureFileShareType
-        /// </summary>
-        public static implicit operator AzureFileShareType(string value)
-        {
-            return new AzureFileShareType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert AzureFileShareType to string
-        /// </summary>
-        public static implicit operator string(AzureFileShareType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum AzureFileShareType
-        /// </summary>
-        public static bool operator == (AzureFileShareType e1, AzureFileShareType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum AzureFileShareType
-        /// </summary>
-        public static bool operator != (AzureFileShareType e1, AzureFileShareType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for AzureFileShareType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is AzureFileShareType && Equals((AzureFileShareType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode AzureFileShareType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Invalid = "Invalid";
+        public const string XSMB = "XSMB";
+        public const string XSync = "XSync";
     }
 }

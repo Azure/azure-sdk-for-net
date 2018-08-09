@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// number of DB's to be protected</param>
         /// <param name="dataDirectoryPaths">Data Directory Paths for default
         /// directories</param>
-        public AzureVmWorkloadSQLInstanceWorkloadItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), ProtectionStatus? protectionState = default(ProtectionStatus?), string parentName = default(string), string serverName = default(string), bool? isAutoProtectable = default(bool?), int? subinquireditemcount = default(int?), int? subWorkloadItemCount = default(int?), IList<SQLDataDirectory> dataDirectoryPaths = default(IList<SQLDataDirectory>))
+        public AzureVmWorkloadSQLInstanceWorkloadItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), string protectionState = default(string), string parentName = default(string), string serverName = default(string), bool? isAutoProtectable = default(bool?), int? subinquireditemcount = default(int?), int? subWorkloadItemCount = default(int?), IList<SQLDataDirectory> dataDirectoryPaths = default(IList<SQLDataDirectory>))
             : base(backupManagementType, workloadType, friendlyName, protectionState, parentName, serverName, isAutoProtectable, subinquireditemcount, subWorkloadItemCount)
         {
             DataDirectoryPaths = dataDirectoryPaths;

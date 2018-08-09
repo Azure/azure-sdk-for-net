@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// item.</param>
         /// <param name="extendedInfo">Additional information for this backup
         /// item.</param>
-        public AzureIaaSVMProtectedItem(BackupManagementType? backupManagementType = default(BackupManagementType?), DataSourceType? workloadType = default(DataSourceType?), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), CreateMode? createMode = default(CreateMode?), string friendlyName = default(string), string virtualMachineId = default(string), string protectionStatus = default(string), ProtectionState? protectionState = default(ProtectionState?), HealthStatus? healthStatus = default(HealthStatus?), IList<AzureIaaSVMHealthDetails> healthDetails = default(IList<AzureIaaSVMHealthDetails>), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), string protectedItemDataId = default(string), AzureIaaSVMProtectedItemExtendedInfo extendedInfo = default(AzureIaaSVMProtectedItemExtendedInfo))
+        public AzureIaaSVMProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), string friendlyName = default(string), string virtualMachineId = default(string), string protectionStatus = default(string), string protectionState = default(string), string healthStatus = default(string), IList<AzureIaaSVMHealthDetails> healthDetails = default(IList<AzureIaaSVMHealthDetails>), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), string protectedItemDataId = default(string), AzureIaaSVMProtectedItemExtendedInfo extendedInfo = default(AzureIaaSVMProtectedItemExtendedInfo))
             : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode)
         {
             FriendlyName = friendlyName;
@@ -121,14 +121,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionStopped', 'ProtectionPaused'
         /// </summary>
         [JsonProperty(PropertyName = "protectionState")]
-        public ProtectionState? ProtectionState { get; set; }
+        public string ProtectionState { get; set; }
 
         /// <summary>
         /// Gets or sets health status of protected item. Possible values
         /// include: 'Passed', 'ActionRequired', 'ActionSuggested', 'Invalid'
         /// </summary>
         [JsonProperty(PropertyName = "healthStatus")]
-        public HealthStatus? HealthStatus { get; set; }
+        public string HealthStatus { get; set; }
 
         /// <summary>
         /// Gets or sets health details on this backup item.

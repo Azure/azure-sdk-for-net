@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="protectionStatus">Backup status query parameter.
         /// Possible values include: 'Invalid', 'NotProtected', 'Protecting',
         /// 'Protected', 'ProtectionFailed'</param>
-        public BMSWorkloadItemQueryObject(BackupManagementType? backupManagementType = default(BackupManagementType?), WorkloadItemType? workloadItemType = default(WorkloadItemType?), WorkloadType? workloadType = default(WorkloadType?), ProtectionStatus? protectionStatus = default(ProtectionStatus?))
+        public BMSWorkloadItemQueryObject(string backupManagementType = default(string), string workloadItemType = default(string), string workloadType = default(string), string protectionStatus = default(string))
         {
             BackupManagementType = backupManagementType;
             WorkloadItemType = workloadItemType;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'AzureSql', 'AzureStorage', 'AzureWorkload', 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public BackupManagementType? BackupManagementType { get; set; }
+        public string BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets workload Item type. Possible values include:
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'SAPHanaDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "workloadItemType")]
-        public WorkloadItemType? WorkloadItemType { get; set; }
+        public string WorkloadItemType { get; set; }
 
         /// <summary>
         /// Gets or sets workload type. Possible values include: 'Invalid',
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'SAPHanaDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "workloadType")]
-        public WorkloadType? WorkloadType { get; set; }
+        public string WorkloadType { get; set; }
 
         /// <summary>
         /// Gets or sets backup status query parameter. Possible values
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionFailed'
         /// </summary>
         [JsonProperty(PropertyName = "protectionStatus")]
-        public ProtectionStatus? ProtectionStatus { get; set; }
+        public string ProtectionStatus { get; set; }
 
     }
 }

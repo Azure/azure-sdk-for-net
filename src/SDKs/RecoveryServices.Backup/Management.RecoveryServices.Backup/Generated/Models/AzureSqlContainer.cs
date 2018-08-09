@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// container with the Recovery Services Vault.</param>
         /// <param name="healthStatus">Status of health of the
         /// container.</param>
-        public AzureSqlContainer(string friendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string registrationStatus = default(string), string healthStatus = default(string))
+        public AzureSqlContainer(string friendlyName = default(string), string backupManagementType = default(string), string registrationStatus = default(string), string healthStatus = default(string))
             : base(friendlyName, backupManagementType, registrationStatus, healthStatus)
         {
             CustomInit();

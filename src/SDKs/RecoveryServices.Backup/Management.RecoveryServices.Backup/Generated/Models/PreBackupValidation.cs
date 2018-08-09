@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="code">Error code of protectable item</param>
         /// <param name="message">Message corresponding to the error code for
         /// the protectable item</param>
-        public PreBackupValidation(InquiryStatus? status = default(InquiryStatus?), string code = default(string), string message = default(string))
+        public PreBackupValidation(string status = default(string), string code = default(string), string message = default(string))
         {
             Status = status;
             Code = code;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Success', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public InquiryStatus? Status { get; set; }
+        public string Status { get; set; }
 
         /// <summary>
         /// Gets or sets error code of protectable item

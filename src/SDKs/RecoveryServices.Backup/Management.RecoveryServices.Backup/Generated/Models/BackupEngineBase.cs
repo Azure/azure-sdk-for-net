@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// upgrade available</param>
         /// <param name="extendedInfo">Extended info of the
         /// backupengine</param>
-        public BackupEngineBase(string friendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string registrationStatus = default(string), string backupEngineState = default(string), string healthStatus = default(string), bool? canReRegister = default(bool?), string backupEngineId = default(string), string dpmVersion = default(string), string azureBackupAgentVersion = default(string), bool? isAzureBackupAgentUpgradeAvailable = default(bool?), bool? isDpmUpgradeAvailable = default(bool?), BackupEngineExtendedInfo extendedInfo = default(BackupEngineExtendedInfo))
+        public BackupEngineBase(string friendlyName = default(string), string backupManagementType = default(string), string registrationStatus = default(string), string backupEngineState = default(string), string healthStatus = default(string), bool? canReRegister = default(bool?), string backupEngineId = default(string), string dpmVersion = default(string), string azureBackupAgentVersion = default(string), bool? isAzureBackupAgentUpgradeAvailable = default(bool?), bool? isDpmUpgradeAvailable = default(bool?), BackupEngineExtendedInfo extendedInfo = default(BackupEngineExtendedInfo))
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public BackupManagementType? BackupManagementType { get; set; }
+        public string BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets registration status of the backup engine with the

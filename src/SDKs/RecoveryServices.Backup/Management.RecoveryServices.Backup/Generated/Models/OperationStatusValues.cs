@@ -10,102 +10,16 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for OperationStatusValues.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(OperationStatusValuesConverter))]
-    public struct OperationStatusValues : System.IEquatable<OperationStatusValues>
+    public static class OperationStatusValues
     {
-        private OperationStatusValues(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly OperationStatusValues Invalid = "Invalid";
-
-        public static readonly OperationStatusValues InProgress = "InProgress";
-
-        public static readonly OperationStatusValues Succeeded = "Succeeded";
-
-        public static readonly OperationStatusValues Failed = "Failed";
-
-        public static readonly OperationStatusValues Canceled = "Canceled";
-
-
-        /// <summary>
-        /// Underlying value of enum OperationStatusValues
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for OperationStatusValues
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type OperationStatusValues
-        /// </summary>
-        public bool Equals(OperationStatusValues e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to OperationStatusValues
-        /// </summary>
-        public static implicit operator OperationStatusValues(string value)
-        {
-            return new OperationStatusValues(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert OperationStatusValues to string
-        /// </summary>
-        public static implicit operator string(OperationStatusValues e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum OperationStatusValues
-        /// </summary>
-        public static bool operator == (OperationStatusValues e1, OperationStatusValues e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum OperationStatusValues
-        /// </summary>
-        public static bool operator != (OperationStatusValues e1, OperationStatusValues e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for OperationStatusValues
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is OperationStatusValues && Equals((OperationStatusValues)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode OperationStatusValues
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Invalid = "Invalid";
+        public const string InProgress = "InProgress";
+        public const string Succeeded = "Succeeded";
+        public const string Failed = "Failed";
+        public const string Canceled = "Canceled";
     }
 }

@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'IRPending'</param>
         /// <param name="extendedInfo">Additional information for this backup
         /// item.</param>
-        public AzureVmWorkloadSQLDatabaseProtectedItem(BackupManagementType? backupManagementType = default(BackupManagementType?), DataSourceType? workloadType = default(DataSourceType?), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), CreateMode? createMode = default(CreateMode?), string friendlyName = default(string), string serverName = default(string), string parentName = default(string), string parentType = default(string), string protectionStatus = default(string), ProtectionState? protectionState = default(ProtectionState?), LastBackupStatus? lastBackupStatus = default(LastBackupStatus?), System.DateTime? lastBackupTime = default(System.DateTime?), ErrorDetail lastBackupErrorDetail = default(ErrorDetail), string protectedItemDataSourceId = default(string), ProtectedItemHealthStatus? protectedItemHealthStatus = default(ProtectedItemHealthStatus?), AzureVmWorkloadProtectedItemExtendedInfo extendedInfo = default(AzureVmWorkloadProtectedItemExtendedInfo))
+        public AzureVmWorkloadSQLDatabaseProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), string friendlyName = default(string), string serverName = default(string), string parentName = default(string), string parentType = default(string), string protectionStatus = default(string), string protectionState = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), ErrorDetail lastBackupErrorDetail = default(ErrorDetail), string protectedItemDataSourceId = default(string), string protectedItemHealthStatus = default(string), AzureVmWorkloadProtectedItemExtendedInfo extendedInfo = default(AzureVmWorkloadProtectedItemExtendedInfo))
             : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode)
         {
             FriendlyName = friendlyName;
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionStopped', 'ProtectionPaused'
         /// </summary>
         [JsonProperty(PropertyName = "protectionState")]
-        public ProtectionState? ProtectionState { get; set; }
+        public string ProtectionState { get; set; }
 
         /// <summary>
         /// Gets or sets last backup operation status. Possible values:
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Unhealthy', 'IRPending'
         /// </summary>
         [JsonProperty(PropertyName = "lastBackupStatus")]
-        public LastBackupStatus? LastBackupStatus { get; set; }
+        public string LastBackupStatus { get; set; }
 
         /// <summary>
         /// Gets or sets timestamp of the last backup operation on this backup
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Healthy', 'Unhealthy', 'NotReachable', 'IRPending'
         /// </summary>
         [JsonProperty(PropertyName = "protectedItemHealthStatus")]
-        public ProtectedItemHealthStatus? ProtectedItemHealthStatus { get; set; }
+        public string ProtectedItemHealthStatus { get; set; }
 
         /// <summary>
         /// Gets or sets additional information for this backup item.

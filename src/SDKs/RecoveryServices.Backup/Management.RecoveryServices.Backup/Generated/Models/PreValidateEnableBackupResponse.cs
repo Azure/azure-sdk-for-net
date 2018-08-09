@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="protectedItemName">Specifies the product specific ds
         /// name. E.g. vm;iaasvmcontainer;rgname;vmname. This is required for
         /// portal</param>
-        public PreValidateEnableBackupResponse(ValidationStatus? status = default(ValidationStatus?), string errorCode = default(string), string errorMessage = default(string), string recommendation = default(string), string containerName = default(string), string protectedItemName = default(string))
+        public PreValidateEnableBackupResponse(string status = default(string), string errorCode = default(string), string errorMessage = default(string), string recommendation = default(string), string containerName = default(string), string protectedItemName = default(string))
         {
             Status = status;
             ErrorCode = errorCode;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public ValidationStatus? Status { get; set; }
+        public string Status { get; set; }
 
         /// <summary>
         /// Gets or sets response error code

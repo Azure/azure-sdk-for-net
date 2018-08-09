@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// policy.</param>
         /// <param name="retentionDuration">Retention duration of retention
         /// Policy.</param>
-        public YearlyRetentionSchedule(RetentionScheduleFormat? retentionScheduleFormatType = default(RetentionScheduleFormat?), IList<MonthOfYear?> monthsOfYear = default(IList<MonthOfYear?>), DailyRetentionFormat retentionScheduleDaily = default(DailyRetentionFormat), WeeklyRetentionFormat retentionScheduleWeekly = default(WeeklyRetentionFormat), IList<System.DateTime?> retentionTimes = default(IList<System.DateTime?>), RetentionDuration retentionDuration = default(RetentionDuration))
+        public YearlyRetentionSchedule(string retentionScheduleFormatType = default(string), IList<MonthOfYear?> monthsOfYear = default(IList<MonthOfYear?>), DailyRetentionFormat retentionScheduleDaily = default(DailyRetentionFormat), WeeklyRetentionFormat retentionScheduleWeekly = default(WeeklyRetentionFormat), IList<System.DateTime?> retentionTimes = default(IList<System.DateTime?>), RetentionDuration retentionDuration = default(RetentionDuration))
         {
             RetentionScheduleFormatType = retentionScheduleFormatType;
             MonthsOfYear = monthsOfYear;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Possible values include: 'Invalid', 'Daily', 'Weekly'
         /// </summary>
         [JsonProperty(PropertyName = "retentionScheduleFormatType")]
-        public RetentionScheduleFormat? RetentionScheduleFormatType { get; set; }
+        public string RetentionScheduleFormatType { get; set; }
 
         /// <summary>
         /// Gets or sets list of months of year of yearly retention policy.

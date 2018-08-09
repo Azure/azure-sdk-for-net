@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="fabricName">Name of the container's fabric</param>
         /// <param name="extendedInformation">Extended information (not
         /// returned in List container API calls)</param>
-        public GenericContainer(string friendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string registrationStatus = default(string), string healthStatus = default(string), string fabricName = default(string), GenericContainerExtendedInfo extendedInformation = default(GenericContainerExtendedInfo))
+        public GenericContainer(string friendlyName = default(string), string backupManagementType = default(string), string registrationStatus = default(string), string healthStatus = default(string), string fabricName = default(string), GenericContainerExtendedInfo extendedInformation = default(GenericContainerExtendedInfo))
             : base(friendlyName, backupManagementType, registrationStatus, healthStatus)
         {
             FabricName = fabricName;

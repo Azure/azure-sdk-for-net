@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Option</param>
         /// <param name="encryptionDetails">Details needed if the VM was
         /// encrypted at the time of backup.</param>
-        public IaasVMRestoreRequest(string recoveryPointId = default(string), RecoveryType? recoveryType = default(RecoveryType?), string sourceResourceId = default(string), string targetVirtualMachineId = default(string), string targetResourceGroupId = default(string), string storageAccountId = default(string), string virtualNetworkId = default(string), string subnetId = default(string), string targetDomainNameId = default(string), string region = default(string), string affinityGroup = default(string), bool? createNewCloudService = default(bool?), bool? originalStorageAccountOption = default(bool?), EncryptionDetails encryptionDetails = default(EncryptionDetails))
+        public IaasVMRestoreRequest(string recoveryPointId = default(string), string recoveryType = default(string), string sourceResourceId = default(string), string targetVirtualMachineId = default(string), string targetResourceGroupId = default(string), string storageAccountId = default(string), string virtualNetworkId = default(string), string subnetId = default(string), string targetDomainNameId = default(string), string region = default(string), string affinityGroup = default(string), bool? createNewCloudService = default(bool?), bool? originalStorageAccountOption = default(bool?), EncryptionDetails encryptionDetails = default(EncryptionDetails))
         {
             RecoveryPointId = recoveryPointId;
             RecoveryType = recoveryType;
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Invalid', 'OriginalLocation', 'AlternateLocation', 'RestoreDisks'
         /// </summary>
         [JsonProperty(PropertyName = "recoveryType")]
-        public RecoveryType? RecoveryType { get; set; }
+        public string RecoveryType { get; set; }
 
         /// <summary>
         /// Gets or sets fully qualified ARM ID of the VM which is being

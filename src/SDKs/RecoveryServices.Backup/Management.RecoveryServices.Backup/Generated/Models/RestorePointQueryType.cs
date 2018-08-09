@@ -10,104 +10,17 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for RestorePointQueryType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(RestorePointQueryTypeConverter))]
-    public struct RestorePointQueryType : System.IEquatable<RestorePointQueryType>
+    public static class RestorePointQueryType
     {
-        private RestorePointQueryType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly RestorePointQueryType Invalid = "Invalid";
-
-        public static readonly RestorePointQueryType Full = "Full";
-
-        public static readonly RestorePointQueryType Log = "Log";
-
-        public static readonly RestorePointQueryType Differential = "Differential";
-
-        public static readonly RestorePointQueryType FullAndDifferential = "FullAndDifferential";
-
-        public static readonly RestorePointQueryType All = "All";
-
-
-        /// <summary>
-        /// Underlying value of enum RestorePointQueryType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for RestorePointQueryType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type RestorePointQueryType
-        /// </summary>
-        public bool Equals(RestorePointQueryType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to RestorePointQueryType
-        /// </summary>
-        public static implicit operator RestorePointQueryType(string value)
-        {
-            return new RestorePointQueryType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert RestorePointQueryType to string
-        /// </summary>
-        public static implicit operator string(RestorePointQueryType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum RestorePointQueryType
-        /// </summary>
-        public static bool operator == (RestorePointQueryType e1, RestorePointQueryType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum RestorePointQueryType
-        /// </summary>
-        public static bool operator != (RestorePointQueryType e1, RestorePointQueryType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for RestorePointQueryType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is RestorePointQueryType && Equals((RestorePointQueryType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode RestorePointQueryType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Invalid = "Invalid";
+        public const string Full = "Full";
+        public const string Log = "Log";
+        public const string Differential = "Differential";
+        public const string FullAndDifferential = "FullAndDifferential";
+        public const string All = "All";
     }
 }

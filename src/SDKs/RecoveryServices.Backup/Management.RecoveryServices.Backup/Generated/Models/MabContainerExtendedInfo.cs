@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// container.</param>
         /// <param name="lastBackupStatus">Latest backup status of this
         /// container.</param>
-        public MabContainerExtendedInfo(System.DateTime? lastRefreshedAt = default(System.DateTime?), BackupItemType? backupItemType = default(BackupItemType?), IList<string> backupItems = default(IList<string>), string policyName = default(string), string lastBackupStatus = default(string))
+        public MabContainerExtendedInfo(System.DateTime? lastRefreshedAt = default(System.DateTime?), string backupItemType = default(string), IList<string> backupItems = default(IList<string>), string policyName = default(string), string lastBackupStatus = default(string))
         {
             LastRefreshedAt = lastRefreshedAt;
             BackupItemType = backupItemType;
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'AzureFileShare', 'SAPHanaDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "backupItemType")]
-        public BackupItemType? BackupItemType { get; set; }
+        public string BackupItemType { get; set; }
 
         /// <summary>
         /// Gets or sets list of backup items associated with this container.

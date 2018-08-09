@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// has to be run.</param>
         /// <param name="scheduleWeeklyFrequency">At every number weeks this
         /// schedule has to be run.</param>
-        public SimpleSchedulePolicy(ScheduleRunType? scheduleRunFrequency = default(ScheduleRunType?), IList<DayOfWeek?> scheduleRunDays = default(IList<DayOfWeek?>), IList<System.DateTime?> scheduleRunTimes = default(IList<System.DateTime?>), int? scheduleWeeklyFrequency = default(int?))
+        public SimpleSchedulePolicy(string scheduleRunFrequency = default(string), IList<DayOfWeek?> scheduleRunDays = default(IList<DayOfWeek?>), IList<System.DateTime?> scheduleRunTimes = default(IList<System.DateTime?>), int? scheduleWeeklyFrequency = default(int?))
         {
             ScheduleRunFrequency = scheduleRunFrequency;
             ScheduleRunDays = scheduleRunDays;
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Possible values include: 'Invalid', 'Daily', 'Weekly'
         /// </summary>
         [JsonProperty(PropertyName = "scheduleRunFrequency")]
-        public ScheduleRunType? ScheduleRunFrequency { get; set; }
+        public string ScheduleRunFrequency { get; set; }
 
         /// <summary>
         /// Gets or sets list of days of week this schedule has to be run.

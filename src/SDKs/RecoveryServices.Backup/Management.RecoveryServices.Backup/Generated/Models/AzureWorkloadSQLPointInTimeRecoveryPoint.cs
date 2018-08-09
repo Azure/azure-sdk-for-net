@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Or when ListRecoveryPoints is called for Log RP only with
         /// ExtendedInfo query filter</param>
         /// <param name="timeRanges">List of log ranges</param>
-        public AzureWorkloadSQLPointInTimeRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), RestorePointType? type = default(RestorePointType?), AzureWorkloadSQLRecoveryPointExtendedInfo extendedInfo = default(AzureWorkloadSQLRecoveryPointExtendedInfo), IList<PointInTimeRange> timeRanges = default(IList<PointInTimeRange>))
+        public AzureWorkloadSQLPointInTimeRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), string type = default(string), AzureWorkloadSQLRecoveryPointExtendedInfo extendedInfo = default(AzureWorkloadSQLRecoveryPointExtendedInfo), IList<PointInTimeRange> timeRanges = default(IList<PointInTimeRange>))
             : base(recoveryPointTimeInUTC, type, extendedInfo)
         {
             TimeRanges = timeRanges;

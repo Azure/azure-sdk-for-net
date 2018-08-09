@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="createMode">Create mode to indicate recovery of
         /// existing soft deleted data source or creation of new data source.
         /// Possible values include: 'Invalid', 'Default', 'Recover'</param>
-        public ProtectedItem(BackupManagementType? backupManagementType = default(BackupManagementType?), DataSourceType? workloadType = default(DataSourceType?), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), CreateMode? createMode = default(CreateMode?))
+        public ProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string))
         {
             BackupManagementType = backupManagementType;
             WorkloadType = workloadType;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public BackupManagementType? BackupManagementType { get; set; }
+        public string BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets type of workload this item represents. Possible values
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'SAPHanaDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "workloadType")]
-        public DataSourceType? WorkloadType { get; set; }
+        public string WorkloadType { get; set; }
 
         /// <summary>
         /// Gets or sets unique name of container
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// include: 'Invalid', 'Default', 'Recover'
         /// </summary>
         [JsonProperty(PropertyName = "createMode")]
-        public CreateMode? CreateMode { get; set; }
+        public string CreateMode { get; set; }
 
     }
 }

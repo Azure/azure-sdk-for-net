@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="resourceId">Entire ARM resource id of the
         /// resource</param>
         /// <param name="poLogicalName">Protectable Item Logical Name</param>
-        public BackupStatusRequest(DataSourceType? resourceType = default(DataSourceType?), string resourceId = default(string), string poLogicalName = default(string))
+        public BackupStatusRequest(string resourceType = default(string), string resourceId = default(string), string poLogicalName = default(string))
         {
             ResourceType = resourceType;
             ResourceId = resourceId;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'AzureFileShare', 'SAPHanaDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
-        public DataSourceType? ResourceType { get; set; }
+        public string ResourceType { get; set; }
 
         /// <summary>
         /// Gets or sets entire ARM resource id of the resource

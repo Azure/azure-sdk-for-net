@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Protected', 'ProtectionFailed'</param>
         /// <param name="friendlyName">Friendly name of the VM represented by
         /// this backup item.</param>
-        public AzureResourceProtectionIntent(BackupManagementType? backupManagementType = default(BackupManagementType?), string sourceResourceId = default(string), string itemId = default(string), string policyId = default(string), ProtectionStatus? protectionState = default(ProtectionStatus?), string friendlyName = default(string))
+        public AzureResourceProtectionIntent(string backupManagementType = default(string), string sourceResourceId = default(string), string itemId = default(string), string policyId = default(string), string protectionState = default(string), string friendlyName = default(string))
             : base(backupManagementType, sourceResourceId, itemId, policyId, protectionState)
         {
             FriendlyName = friendlyName;

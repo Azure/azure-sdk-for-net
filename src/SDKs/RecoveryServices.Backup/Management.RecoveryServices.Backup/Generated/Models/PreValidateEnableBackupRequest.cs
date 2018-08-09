@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="vaultId">ARM id of the Recovery Services Vault</param>
         /// <param name="properties">Configuration of VM if any needs to be
         /// validated like OS type etc</param>
-        public PreValidateEnableBackupRequest(DataSourceType? resourceType = default(DataSourceType?), string resourceId = default(string), string vaultId = default(string), string properties = default(string))
+        public PreValidateEnableBackupRequest(string resourceType = default(string), string resourceId = default(string), string vaultId = default(string), string properties = default(string))
         {
             ResourceType = resourceType;
             ResourceId = resourceId;
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'AzureFileShare', 'SAPHanaDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
-        public DataSourceType? ResourceType { get; set; }
+        public string ResourceType { get; set; }
 
         /// <summary>
         /// Gets or sets ARM Virtual Machine Id

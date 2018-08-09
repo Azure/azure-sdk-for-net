@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// container. Possible values include: 'Invalid', 'AzureIaasVM',
         /// 'MAB', 'DPM', 'AzureBackupServer', 'AzureSql', 'AzureStorage',
         /// 'AzureWorkload', 'DefaultBackup'</param>
-        public BMSRefreshContainersQueryObject(BackupManagementType? backupManagementType = default(BackupManagementType?))
+        public BMSRefreshContainersQueryObject(string backupManagementType = default(string))
         {
             BackupManagementType = backupManagementType;
             CustomInit();
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public BackupManagementType? BackupManagementType { get; set; }
+        public string BackupManagementType { get; set; }
 
     }
 }

@@ -10,102 +10,16 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ProtectedItemHealthStatus.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(ProtectedItemHealthStatusConverter))]
-    public struct ProtectedItemHealthStatus : System.IEquatable<ProtectedItemHealthStatus>
+    public static class ProtectedItemHealthStatus
     {
-        private ProtectedItemHealthStatus(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly ProtectedItemHealthStatus Invalid = "Invalid";
-
-        public static readonly ProtectedItemHealthStatus Healthy = "Healthy";
-
-        public static readonly ProtectedItemHealthStatus Unhealthy = "Unhealthy";
-
-        public static readonly ProtectedItemHealthStatus NotReachable = "NotReachable";
-
-        public static readonly ProtectedItemHealthStatus IRPending = "IRPending";
-
-
-        /// <summary>
-        /// Underlying value of enum ProtectedItemHealthStatus
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for ProtectedItemHealthStatus
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type ProtectedItemHealthStatus
-        /// </summary>
-        public bool Equals(ProtectedItemHealthStatus e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to ProtectedItemHealthStatus
-        /// </summary>
-        public static implicit operator ProtectedItemHealthStatus(string value)
-        {
-            return new ProtectedItemHealthStatus(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert ProtectedItemHealthStatus to string
-        /// </summary>
-        public static implicit operator string(ProtectedItemHealthStatus e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum ProtectedItemHealthStatus
-        /// </summary>
-        public static bool operator == (ProtectedItemHealthStatus e1, ProtectedItemHealthStatus e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum ProtectedItemHealthStatus
-        /// </summary>
-        public static bool operator != (ProtectedItemHealthStatus e1, ProtectedItemHealthStatus e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for ProtectedItemHealthStatus
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is ProtectedItemHealthStatus && Equals((ProtectedItemHealthStatus)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode ProtectedItemHealthStatus
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Invalid = "Invalid";
+        public const string Healthy = "Healthy";
+        public const string Unhealthy = "Unhealthy";
+        public const string NotReachable = "NotReachable";
+        public const string IRPending = "IRPending";
     }
 }

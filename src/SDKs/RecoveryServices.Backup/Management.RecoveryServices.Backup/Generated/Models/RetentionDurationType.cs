@@ -10,102 +10,16 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for RetentionDurationType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(RetentionDurationTypeConverter))]
-    public struct RetentionDurationType : System.IEquatable<RetentionDurationType>
+    public static class RetentionDurationType
     {
-        private RetentionDurationType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly RetentionDurationType Invalid = "Invalid";
-
-        public static readonly RetentionDurationType Days = "Days";
-
-        public static readonly RetentionDurationType Weeks = "Weeks";
-
-        public static readonly RetentionDurationType Months = "Months";
-
-        public static readonly RetentionDurationType Years = "Years";
-
-
-        /// <summary>
-        /// Underlying value of enum RetentionDurationType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for RetentionDurationType
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type RetentionDurationType
-        /// </summary>
-        public bool Equals(RetentionDurationType e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to RetentionDurationType
-        /// </summary>
-        public static implicit operator RetentionDurationType(string value)
-        {
-            return new RetentionDurationType(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert RetentionDurationType to string
-        /// </summary>
-        public static implicit operator string(RetentionDurationType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum RetentionDurationType
-        /// </summary>
-        public static bool operator == (RetentionDurationType e1, RetentionDurationType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum RetentionDurationType
-        /// </summary>
-        public static bool operator != (RetentionDurationType e1, RetentionDurationType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for RetentionDurationType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is RetentionDurationType && Equals((RetentionDurationType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode RetentionDurationType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Invalid = "Invalid";
+        public const string Days = "Days";
+        public const string Weeks = "Weeks";
+        public const string Months = "Months";
+        public const string Years = "Years";
     }
 }

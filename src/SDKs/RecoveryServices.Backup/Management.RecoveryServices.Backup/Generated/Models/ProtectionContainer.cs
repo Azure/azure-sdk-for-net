@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// container with the Recovery Services Vault.</param>
         /// <param name="healthStatus">Status of health of the
         /// container.</param>
-        public ProtectionContainer(string friendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string registrationStatus = default(string), string healthStatus = default(string))
+        public ProtectionContainer(string friendlyName = default(string), string backupManagementType = default(string), string registrationStatus = default(string), string healthStatus = default(string))
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public BackupManagementType? BackupManagementType { get; set; }
+        public string BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets status of registration of the container with the

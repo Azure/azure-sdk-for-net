@@ -10,96 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for FabricName.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(FabricNameConverter))]
-    public struct FabricName : System.IEquatable<FabricName>
+    public static class FabricName
     {
-        private FabricName(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly FabricName Invalid = "Invalid";
-
-        public static readonly FabricName Azure = "Azure";
-
-
-        /// <summary>
-        /// Underlying value of enum FabricName
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for FabricName
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type FabricName
-        /// </summary>
-        public bool Equals(FabricName e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to FabricName
-        /// </summary>
-        public static implicit operator FabricName(string value)
-        {
-            return new FabricName(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert FabricName to string
-        /// </summary>
-        public static implicit operator string(FabricName e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum FabricName
-        /// </summary>
-        public static bool operator == (FabricName e1, FabricName e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum FabricName
-        /// </summary>
-        public static bool operator != (FabricName e1, FabricName e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for FabricName
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is FabricName && Equals((FabricName)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode FabricName
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Invalid = "Invalid";
+        public const string Azure = "Azure";
     }
 }

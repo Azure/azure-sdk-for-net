@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// number of DB's to be protected</param>
         /// <param name="prebackupvalidation">Pre-backup validation for
         /// protectable objects</param>
-        public AzureVmWorkloadSQLAvailabilityGroupProtectableItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), ProtectionStatus? protectionState = default(ProtectionStatus?), string parentName = default(string), string parentUniqueName = default(string), string serverName = default(string), bool? isAutoProtectable = default(bool?), int? subinquireditemcount = default(int?), int? subprotectableitemcount = default(int?), PreBackupValidation prebackupvalidation = default(PreBackupValidation))
+        public AzureVmWorkloadSQLAvailabilityGroupProtectableItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), string protectionState = default(string), string parentName = default(string), string parentUniqueName = default(string), string serverName = default(string), bool? isAutoProtectable = default(bool?), int? subinquireditemcount = default(int?), int? subprotectableitemcount = default(int?), PreBackupValidation prebackupvalidation = default(PreBackupValidation))
             : base(backupManagementType, workloadType, friendlyName, protectionState, parentName, parentUniqueName, serverName, isAutoProtectable, subinquireditemcount, subprotectableitemcount, prebackupvalidation)
         {
             CustomInit();

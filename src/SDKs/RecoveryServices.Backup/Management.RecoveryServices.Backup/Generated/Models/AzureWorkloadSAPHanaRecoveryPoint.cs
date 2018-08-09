@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// recoverypoint was created</param>
         /// <param name="type">Type of restore point. Possible values include:
         /// 'Invalid', 'Full', 'Log', 'Differential'</param>
-        public AzureWorkloadSAPHanaRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), RestorePointType? type = default(RestorePointType?))
+        public AzureWorkloadSAPHanaRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), string type = default(string))
         {
             RecoveryPointTimeInUTC = recoveryPointTimeInUTC;
             Type = type;
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Invalid', 'Full', 'Log', 'Differential'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public RestorePointType? Type { get; set; }
+        public string Type { get; set; }
 
     }
 }

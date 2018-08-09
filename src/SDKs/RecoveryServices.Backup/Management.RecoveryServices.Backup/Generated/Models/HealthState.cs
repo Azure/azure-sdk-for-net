@@ -10,100 +10,15 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for HealthState.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(HealthStateConverter))]
-    public struct HealthState : System.IEquatable<HealthState>
+    public static class HealthState
     {
-        private HealthState(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly HealthState Passed = "Passed";
-
-        public static readonly HealthState ActionRequired = "ActionRequired";
-
-        public static readonly HealthState ActionSuggested = "ActionSuggested";
-
-        public static readonly HealthState Invalid = "Invalid";
-
-
-        /// <summary>
-        /// Underlying value of enum HealthState
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for HealthState
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type HealthState
-        /// </summary>
-        public bool Equals(HealthState e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to HealthState
-        /// </summary>
-        public static implicit operator HealthState(string value)
-        {
-            return new HealthState(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert HealthState to string
-        /// </summary>
-        public static implicit operator string(HealthState e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum HealthState
-        /// </summary>
-        public static bool operator == (HealthState e1, HealthState e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum HealthState
-        /// </summary>
-        public static bool operator != (HealthState e1, HealthState e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for HealthState
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is HealthState && Equals((HealthState)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode HealthState
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Passed = "Passed";
+        public const string ActionRequired = "ActionRequired";
+        public const string ActionSuggested = "ActionSuggested";
+        public const string Invalid = "Invalid";
     }
 }

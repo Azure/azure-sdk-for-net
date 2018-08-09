@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Services Vault.</param>
         /// <param name="protectedItemCount">Number of items backed up in this
         /// container.</param>
-        public AzureStorageContainer(string friendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string registrationStatus = default(string), string healthStatus = default(string), string sourceResourceId = default(string), string storageAccountVersion = default(string), string resourceGroup = default(string), long? protectedItemCount = default(long?))
+        public AzureStorageContainer(string friendlyName = default(string), string backupManagementType = default(string), string registrationStatus = default(string), string healthStatus = default(string), string sourceResourceId = default(string), string storageAccountVersion = default(string), string resourceGroup = default(string), long? protectedItemCount = default(long?))
             : base(friendlyName, backupManagementType, registrationStatus, healthStatus)
         {
             SourceResourceId = sourceResourceId;

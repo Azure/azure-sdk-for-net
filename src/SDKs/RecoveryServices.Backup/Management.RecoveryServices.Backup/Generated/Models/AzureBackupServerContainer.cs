@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="protectionStatus">Protection status of the
         /// container.</param>
         /// <param name="extendedInfo">Extended Info of the container.</param>
-        public AzureBackupServerContainer(string friendlyName = default(string), BackupManagementType? backupManagementType = default(BackupManagementType?), string registrationStatus = default(string), string healthStatus = default(string), bool? canReRegister = default(bool?), string containerId = default(string), long? protectedItemCount = default(long?), string dpmAgentVersion = default(string), IList<string> dpmServers = default(IList<string>), bool? upgradeAvailable = default(bool?), string protectionStatus = default(string), DPMContainerExtendedInfo extendedInfo = default(DPMContainerExtendedInfo))
+        public AzureBackupServerContainer(string friendlyName = default(string), string backupManagementType = default(string), string registrationStatus = default(string), string healthStatus = default(string), bool? canReRegister = default(bool?), string containerId = default(string), long? protectedItemCount = default(long?), string dpmAgentVersion = default(string), IList<string> dpmServers = default(IList<string>), bool? upgradeAvailable = default(bool?), string protectionStatus = default(string), DPMContainerExtendedInfo extendedInfo = default(DPMContainerExtendedInfo))
             : base(friendlyName, backupManagementType, registrationStatus, healthStatus)
         {
             CanReRegister = canReRegister;

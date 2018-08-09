@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="sourceAssociations">Loosely coupled (type, value)
         /// associations (example - parent of a protected item)</param>
         /// <param name="fabricName">Name of this backup item's fabric.</param>
-        public GenericProtectedItem(BackupManagementType? backupManagementType = default(BackupManagementType?), DataSourceType? workloadType = default(DataSourceType?), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), CreateMode? createMode = default(CreateMode?), string friendlyName = default(string), string policyState = default(string), ProtectionState? protectionState = default(ProtectionState?), long? protectedItemId = default(long?), IDictionary<string, string> sourceAssociations = default(IDictionary<string, string>), string fabricName = default(string))
+        public GenericProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), string friendlyName = default(string), string policyState = default(string), string protectionState = default(string), long? protectedItemId = default(long?), IDictionary<string, string> sourceAssociations = default(IDictionary<string, string>), string fabricName = default(string))
             : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode)
         {
             FriendlyName = friendlyName;
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionStopped', 'ProtectionPaused'
         /// </summary>
         [JsonProperty(PropertyName = "protectionState")]
-        public ProtectionState? ProtectionState { get; set; }
+        public string ProtectionState { get; set; }
 
         /// <summary>
         /// Gets or sets data Plane Service ID of the protected item.

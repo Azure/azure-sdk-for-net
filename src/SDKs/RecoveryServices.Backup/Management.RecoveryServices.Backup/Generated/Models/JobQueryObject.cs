@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// UTC.</param>
         /// <param name="endTime">Job has ended at this time. Value is in
         /// UTC.</param>
-        public JobQueryObject(JobStatus? status = default(JobStatus?), BackupManagementType? backupManagementType = default(BackupManagementType?), JobOperationType? operation = default(JobOperationType?), string jobId = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?))
+        public JobQueryObject(string status = default(string), string backupManagementType = default(string), string operation = default(string), string jobId = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?))
         {
             Status = status;
             BackupManagementType = backupManagementType;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Cancelled', 'Cancelling'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public JobStatus? Status { get; set; }
+        public string Status { get; set; }
 
         /// <summary>
         /// Gets or sets type of backup managmenent for the job. Possible
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public BackupManagementType? BackupManagementType { get; set; }
+        public string BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets type of operation. Possible values include: 'Invalid',
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DisableBackup', 'DeleteBackupData'
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
-        public JobOperationType? Operation { get; set; }
+        public string Operation { get; set; }
 
         /// <summary>
         /// Gets or sets jobID represents the job uniquely.

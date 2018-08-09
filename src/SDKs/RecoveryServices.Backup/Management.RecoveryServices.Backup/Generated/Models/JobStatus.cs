@@ -10,106 +10,18 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for JobStatus.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(JobStatusConverter))]
-    public struct JobStatus : System.IEquatable<JobStatus>
+    public static class JobStatus
     {
-        private JobStatus(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
-        public static readonly JobStatus Invalid = "Invalid";
-
-        public static readonly JobStatus InProgress = "InProgress";
-
-        public static readonly JobStatus Completed = "Completed";
-
-        public static readonly JobStatus Failed = "Failed";
-
-        public static readonly JobStatus CompletedWithWarnings = "CompletedWithWarnings";
-
-        public static readonly JobStatus Cancelled = "Cancelled";
-
-        public static readonly JobStatus Cancelling = "Cancelling";
-
-
-        /// <summary>
-        /// Underlying value of enum JobStatus
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for JobStatus
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type JobStatus
-        /// </summary>
-        public bool Equals(JobStatus e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to JobStatus
-        /// </summary>
-        public static implicit operator JobStatus(string value)
-        {
-            return new JobStatus(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert JobStatus to string
-        /// </summary>
-        public static implicit operator string(JobStatus e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum JobStatus
-        /// </summary>
-        public static bool operator == (JobStatus e1, JobStatus e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum JobStatus
-        /// </summary>
-        public static bool operator != (JobStatus e1, JobStatus e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for JobStatus
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is JobStatus && Equals((JobStatus)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode JobStatus
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Invalid = "Invalid";
+        public const string InProgress = "InProgress";
+        public const string Completed = "Completed";
+        public const string Failed = "Failed";
+        public const string CompletedWithWarnings = "CompletedWithWarnings";
+        public const string Cancelled = "Cancelled";
+        public const string Cancelling = "Cancelling";
     }
 }

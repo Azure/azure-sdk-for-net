@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Protectable Objects should be returned.</param>
         /// <param name="status">Backup status query parameter.</param>
         /// <param name="friendlyName">Friendly name.</param>
-        public BMSPOQueryObject(BackupManagementType? backupManagementType = default(BackupManagementType?), WorkloadType? workloadType = default(WorkloadType?), string containerName = default(string), string status = default(string), string friendlyName = default(string))
+        public BMSPOQueryObject(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string status = default(string), string friendlyName = default(string))
         {
             BackupManagementType = backupManagementType;
             WorkloadType = workloadType;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'AzureSql', 'AzureStorage', 'AzureWorkload', 'DefaultBackup'
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
-        public BackupManagementType? BackupManagementType { get; set; }
+        public string BackupManagementType { get; set; }
 
         /// <summary>
         /// Gets or sets workload type. Possible values include: 'Invalid',
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'SAPHanaDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "workloadType")]
-        public WorkloadType? WorkloadType { get; set; }
+        public string WorkloadType { get; set; }
 
         /// <summary>
         /// Gets or sets full name of the container whose Protectable Objects
