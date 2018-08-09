@@ -21,7 +21,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -32,6 +31,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Gets or sets json deserialization settings.
         /// </summary>
         JsonSerializerSettings DeserializationSettings { get; }
+
+        /// <summary>
+        /// Supported Cognitive Services endpoints (protocol and hostname, for
+        /// example: https://westus.api.cognitive.microsoft.com).
+        /// </summary>
+        string Endpoint { get; set; }
 
         /// <summary>
         /// Subscription credentials which uniquely identify client

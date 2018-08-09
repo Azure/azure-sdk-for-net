@@ -85,6 +85,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </return>
         public async Task<HttpOperationResponse<LabelExampleResponse>> AddWithHttpMessagesAsync(System.Guid appId, string versionId, ExampleLabelObject exampleLabelObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -107,8 +111,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "Add", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/example").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/example";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -252,6 +257,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </return>
         public async Task<HttpOperationResponse<IList<BatchLabelExample>>> BatchWithHttpMessagesAsync(System.Guid appId, string versionId, IList<ExampleLabelObject> exampleLabelObjectArray, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -274,8 +283,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "Batch", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/examples").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/examples";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -440,6 +450,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </return>
         public async Task<HttpOperationResponse<IList<LabeledUtterance>>> ListWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -471,8 +485,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/examples").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/examples";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
@@ -623,6 +638,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </return>
         public async Task<HttpOperationResponse<OperationStatus>> DeleteWithHttpMessagesAsync(System.Guid appId, string versionId, int exampleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -641,8 +660,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/examples/{exampleId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/examples/{exampleId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{exampleId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(exampleId, Client.SerializationSettings).Trim('"')));

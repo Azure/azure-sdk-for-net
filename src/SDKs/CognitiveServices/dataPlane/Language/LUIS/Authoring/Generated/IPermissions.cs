@@ -41,6 +41,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<HttpOperationResponse<UserAccessList>> ListWithHttpMessagesAsync(System.Guid appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Adds a user to the allowed list of users to access this LUIS
