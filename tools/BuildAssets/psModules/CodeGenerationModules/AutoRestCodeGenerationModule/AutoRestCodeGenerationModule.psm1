@@ -529,6 +529,10 @@ function Start-CodeGeneration {
     if(!(Test-Path -Path "$localSdkRepoDirectory"))
     {
         New-Item -ItemType Directory -Path $localSdkRepoDirectory
+    }
+    
+    if(!(Test-Path -Path "$localSdkRepoDirectory\_metadata"))
+    {
         New-Item -ItemType Directory -Path "$localSdkRepoDirectory\_metadata"
     }
 
