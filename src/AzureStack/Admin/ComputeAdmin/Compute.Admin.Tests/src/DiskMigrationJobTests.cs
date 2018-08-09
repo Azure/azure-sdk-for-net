@@ -1,8 +1,11 @@
 ﻿
 using Microsoft.AzureStack.Management.Compute.Admin;
 using Microsoft.AzureStack.Management.Compute.Admin.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Threading;
 using Xunit;
 
 namespace Compute.Tests
@@ -67,41 +70,45 @@ namespace Compute.Tests
             RunTest((client) => {
                 var disks = client.Disks.List(Location);
                 List<Disk> toMigrationDisks = new List<Disk>();
-                foreach (var disk in disks)
+                if (disks.Count() > 0)
                 {
-                    if (toMigrationDisks.Count < 3)
-                    {
-                        toMigrationDisks.Add(disk);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
+                    toMigrationDisks.Add(disks.First());
 
-                var migrationId = "8C47B2D9-1DA8-4E77-8D0E-D63627146899";// This guid should be the same as the ones in sessionRecord
+                    var migrationId = "A50E9E6B-CFC2-4BC7-956B-0F7C35035DF2";// This guid should be the same as the ones in sessionRecord
 
-                ValidateExpectedReturnCode(
-                    () => client.DiskMigrationJobs.Create(Location, migrationId, targetShare, toMigrationDisks),
-                    HttpStatusCode.BadRequest
-                    );
+                    ValidateExpectedReturnCode(
+                        () => client.DiskMigrationJobs.Create(Location, migrationId, targetShare, toMigrationDisks),
+                        HttpStatusCode.BadRequest
+                        );
 
-                ValidateExpectedReturnCode(
-                    () => client.DiskMigrationJobs.Get(Location, migrationId),
-                    HttpStatusCode.NotFound
-                    );
+                    ValidateExpectedReturnCode(
+                        () => client.DiskMigrationJobs.Get(Location, migrationId),
+                        HttpStatusCode.NotFound
+                        );
 
-                if(toMigrationDisks.Count > 0)
-                {
                     toMigrationDisks[0].DiskId = "454E5E28-8D5E-41F9-929E-BFF6A7E1A253"; //Use some not exist disk
                     targetShare = @"\\SU1FileServer.azurestack.local\SU1_ObjStore\";
 
-                    //Comment out because migration has a bug validate disk
-                    //ValidateExpectedReturnCode(
-                    //    () => client.DiskMigrationJobs.Create(Location, migrationId, targetShare, toMigrationDisks),
-                    //    HttpStatusCode.NotFound);
+                    var migration = client.DiskMigrationJobs.Create(Location, migrationId, targetShare, toMigrationDisks);
+                    int times = 0;
+                    do
+                    {
+                        Thread.Sleep(3);
+                        migration = client.DiskMigrationJobs.Get(Location, migrationId);
+                        if (migration.Subtasks[0].MigrationSubtaskStatus.Equals("Skipped"))
+                        {
+                            break;
+                        }
+                        times++;
+                        Thread.Sleep(3);
+                    }
+                    while (times < 50);
+                    
+                    if(!migration.Subtasks[0].MigrationSubtaskStatus.Equals("Skipped"))
+                    {
+                        throw new Exception("Migration Status is not expected");
+                    }
                 }
-
             });
         }
     }
