@@ -1203,7 +1203,7 @@ namespace Microsoft.Azure.Search
             {
                 filter = suggestParameters.Filter;
             }
-            bool? useFuzzyMatching = default(bool?);
+            bool useFuzzyMatching = default(bool);
             if (suggestParameters != null)
             {
                 useFuzzyMatching = suggestParameters.UseFuzzyMatching;
@@ -1294,10 +1294,7 @@ namespace Microsoft.Azure.Search
             {
                 _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
             }
-            if (useFuzzyMatching != null)
-            {
-                _queryParameters.Add(string.Format("fuzzy={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(useFuzzyMatching, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'))));
-            }
+            _queryParameters.Add(string.Format("fuzzy={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(useFuzzyMatching, requestSerializerSettings == null ? Client.SerializationSettings : requestSerializerSettings).Trim('"'))));
             if (highlightPostTag != null)
             {
                 _queryParameters.Add(string.Format("highlightPostTag={0}", System.Uri.EscapeDataString(highlightPostTag)));

@@ -4,9 +4,7 @@
 
 namespace Microsoft.Azure.Search.Models
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Common;
 
     /// <summary>

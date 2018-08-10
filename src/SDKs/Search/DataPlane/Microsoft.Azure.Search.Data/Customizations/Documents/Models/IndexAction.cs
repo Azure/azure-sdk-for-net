@@ -9,14 +9,8 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Represents an index action that operates on a document.
     /// </summary>
-    public class IndexAction : IndexActionBase
+    public partial class IndexAction
     {
-        private IndexAction(IndexActionType actionType, object document)
-            : base(actionType, document)
-        {
-            // Do nothing.
-        }
-
         /// <summary>
         /// Creates a new IndexAction for deleting a document.
         /// </summary>

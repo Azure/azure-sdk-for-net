@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Search.Serialization
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(IndexActionBase).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
+            return typeof(IndexAction).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
         public override object ReadJson(
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Search.Serialization
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var action = (IndexActionBase)value;
+            var action = (IndexAction)value;
 
             var injectingWriter = new InjectingJsonWriter(writer);
             injectingWriter.OnStart = 

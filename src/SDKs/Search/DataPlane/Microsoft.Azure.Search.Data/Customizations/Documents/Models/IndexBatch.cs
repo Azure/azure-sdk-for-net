@@ -11,13 +11,13 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Contains a batch of document upload, merge, and/or delete operations to send to the Azure Search index.
     /// </summary>
-    public class IndexBatch : IndexBatchBase<IndexAction>
+    public partial class IndexBatch 
     {
         /// <summary>
         /// Initializes a new instance of the IndexBatch class.
         /// </summary>
         /// <param name="actions">The index actions to include in the batch.</param>
-        public IndexBatch(IEnumerable<IndexAction> actions) : base(actions)
+        public IndexBatch(IEnumerable<IndexAction> actions) : this(actions.ToList())
         {
             // Do nothing.
         }

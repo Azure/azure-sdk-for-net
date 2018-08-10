@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Search.Models
         /// schema are included.</param>
         /// <param name="top">The number of suggestions to retrieve. The value
         /// must be a number between 1 and 100. The default is to 5.</param>
-        private SuggestParameters(string filter = default(string), bool? useFuzzyMatching = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), IList<string> orderBy = default(IList<string>), IList<string> searchFields = default(IList<string>), string selectStr = default(string), int? top = default(int?))
+        private SuggestParameters(string filter = default(string), bool useFuzzyMatching = default(bool), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), IList<string> orderBy = default(IList<string>), IList<string> searchFields = default(IList<string>), string selectStr = default(string), int? top = default(int?))
         {
             Filter = filter;
             UseFuzzyMatching = useFuzzyMatching;
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Search.Models
         /// fuzzy autocomplete queries are slower and consume more resources.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
-        public bool? UseFuzzyMatching { get; set; }
+        public bool UseFuzzyMatching { get; set; }
 
         /// <summary>
         /// Gets or sets a string tag that is appended to hit highlights. Must
