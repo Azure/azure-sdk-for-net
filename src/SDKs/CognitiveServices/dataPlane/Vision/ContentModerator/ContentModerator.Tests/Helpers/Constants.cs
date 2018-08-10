@@ -556,7 +556,7 @@ namespace ContentModeratorTests
 			{
 				ContentModeratorClient client = new ContentModeratorClient(new ApiKeyServiceClientCredentials(ReviewAPISubscriptionKey));
                 
-                client.BaseUrl = "southeastasia.api.cognitive.microsoft.com";
+                client.Endpoint = "https://southeastasia.api.cognitive.microsoft.com";
                
                 return client;
 
@@ -572,8 +572,8 @@ namespace ContentModeratorTests
             try
             {
                 ContentModeratorClient client = new ContentModeratorClient(new ApiKeyServiceClientCredentials(ReviewAPISubscriptionKey),handlers: handler);
-                
-                client.BaseUrl = "southeastasia.api.cognitive.microsoft.com";
+
+                client.Endpoint = "https://southeastasia.api.cognitive.microsoft.com";
                 return client;
 
             }
@@ -822,7 +822,7 @@ namespace ContentModeratorTests
 			try
 			{
 				ContentModeratorClient client = new ContentModeratorClient(new ApiKeyServiceClientCredentials(ContentModeratorSubscriptionKey));
-                client.BaseUrl = AzureRegionBaseUrl.Southeastasiaapicognitivemicrosoftcom; 
+                client.Endpoint = "https://southeastasia.api.cognitive.microsoft.com";
                 return client;
 
 			}
@@ -838,7 +838,7 @@ namespace ContentModeratorTests
             try
             {
                 ContentModeratorClient client = new ContentModeratorClient(new ApiKeyServiceClientCredentials(ContentModeratorSubscriptionKey),handlers: handler);
-                client.BaseUrl = "southeastasia.api.cognitive.microsoft.com";
+                client.Endpoint = "https://southeastasia.api.cognitive.microsoft.com";
                 return client;
 
             }

@@ -7,6 +7,8 @@
 namespace Microsoft.CognitiveServices.ContentModerator.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -25,12 +27,15 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Initializes a new instance of the TermListMetadata class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="keyOne">Optional Key value pair to describe your
         /// list.</param>
         /// <param name="keyTwo">Optional Key value pair to describe your
         /// list.</param>
-        public TermListMetadata(string keyOne = default(string), string keyTwo = default(string))
+        public TermListMetadata(IDictionary<string, string> additionalProperties = default(IDictionary<string, string>), string keyOne = default(string), string keyTwo = default(string))
         {
+            AdditionalProperties = additionalProperties;
             KeyOne = keyOne;
             KeyTwo = keyTwo;
             CustomInit();
@@ -40,6 +45,13 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, string> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets optional Key value pair to describe your list.
