@@ -38,11 +38,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         private string KV_IGNOREDIRNAME = "Microsoft.Azure.KeyVault.Samples";
         private string _ignoreDirNameForSearchingProjects;
         private string _searchProjectFileExt;
+        private HashSet<string> _pkgRefsHs;
         #endregion
 
         public SDKCategorizeProjects()
         {
-         
+            PkgRefsHS = new HashSet<string>();
         }
 
         /// <summary>
@@ -80,6 +81,19 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         }
 
         public string IncludePathTokens { get; set; }
+
+        public HashSet<string> PkgRefsHS
+        {
+            get
+            {
+                if(_pkgRefsHs == null)
+                {
+                    _pkgRefsHs = new HashSet<string>();
+                }
+
+                return _pkgRefsHs;
+            }
+        }
 
         /// <summary>
         /// List of project file extension.
@@ -154,6 +168,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         [Output]
         public string ProjectRootDir { get; private set; }
+
+        [Output]
+        public List<string> AzSdkPackageList { get; private set; }
         
 
         /// <summary>
@@ -289,6 +306,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             SdkProjctType pType = SdkProjctType.Sdk;
             var projList = from p in projectList select new TaskItem(p);
             IBuildEngine buildEng = this.BuildEngine;
+            List<string> packagesList = new List<string>();
 
             //ConcurrentBag<SdkProjectMetaData> projCollection = new ConcurrentBag<SdkProjectMetaData>();
             ConcurrentBag<SdkProjectMetaData> projCollection = GetLoadedProjectList(projList);
@@ -344,6 +362,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     {
                         pType = SdkProjctType.Sdk;
                     }
+
+                    UpdatePackageReferenceList(pkgs);
                 }
 
                 var fxNames = targetFxList?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)?.ToList<string>();
@@ -380,14 +400,57 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
                     sp.ProjectImports = GetProjectImports(sdkProjMD);
 
+                    
+
                     supportedProjectBag.Add(sp);
                 }
             }
+
+            projCollection = null;
             #endregion
 
             return supportedProjectBag;
         }
 
+        private void UpdatePackageReferenceList(ICollection<ProjectItem> pkgs)
+        {
+            List<string> pkgList = new List<string>();
+
+            //var azSdks = from p in pkgs where IsAzSdkRef(p) select p.EvaluatedInclude;
+            var azSdks = from p in pkgs
+                         where
+                            (p.EvaluatedInclude.StartsWith("Microsoft.Azure.", StringComparison.OrdinalIgnoreCase)
+                            ||
+                            p.EvaluatedInclude.StartsWith("Microsoft.Rest.", StringComparison.OrdinalIgnoreCase))
+                         select p.EvaluatedInclude;
+
+            foreach(string pkgRef in azSdks)
+            {
+                if(!PkgRefsHS.Contains(pkgRef))
+                {
+                    PkgRefsHS.Add(pkgRef);
+                }
+            }
+
+
+            if (azSdks.Any<string>())
+            {
+                azSdks.
+                //pkgList = azSdks.ToList<string>();
+            }
+
+            //return pkgList;
+        }
+
+        private bool IsAzSdkRef(ProjectItem pi)
+        {
+            bool isAzSdk = false;
+            isAzSdk = pi.EvaluatedInclude.StartsWith("Microsoft.Azure.", StringComparison.OrdinalIgnoreCase)
+                ||
+                pi.EvaluatedInclude.StartsWith("Microsoft.Rest.", StringComparison.OrdinalIgnoreCase);
+
+            return isAzSdk;
+        }
 
         private ConcurrentBag<SdkProjectMetaData> GetLoadedProjectList(IEnumerable<ITaskItem> projList)
         {

@@ -130,7 +130,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             {
                 _apiKey = value;
             }
-
         }
 
         public override bool Execute()

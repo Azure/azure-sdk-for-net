@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
 
         public List<string> ProjectImports { get; set; }
 
+        public List<string> PackageReferences { get; set; }
+
         public SdkProjectMetaData(ITaskItem projTaskItem) : this(projTaskItem.ItemSpec)
         {
 
