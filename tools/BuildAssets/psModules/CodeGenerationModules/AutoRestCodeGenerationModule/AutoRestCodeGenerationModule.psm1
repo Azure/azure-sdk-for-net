@@ -7,6 +7,8 @@
 
 $errorStream = New-Object -TypeName "System.Text.StringBuilder";
 $outputStream = New-Object -TypeName "System.Text.StringBuilder";
+$generateSDKMetadata = $true
+
 
 function Get-SdkRepoRootDirectory {
     param(
@@ -194,6 +196,18 @@ param(
     }
 }
 
+function Populate-Metadata {
+    param($metadataTemplate, $metadataDict)
+
+    Foreach ($Key in $metadataDict.GetEnumerator())
+    {
+        $metadataTemplate = $metadataTemplate.Replace($key, $metadataDict[$key])
+    }
+    $metadataTemplate = $metadataTemplate.Replace("{{CodeGenerationErrors}}", "")
+    $metadataTemplate= $metadataTemplate.TrimEnd()
+    $metadataTemplate = $metadataTemplate.Replace('\', '\\')
+    return $metadataTemplate
+}
 function Start-MetadataGeneration {
     param(
         [Parameter(Mandatory = $true)]
@@ -248,40 +262,49 @@ function Start-MetadataGeneration {
     }
     Catch{}
     # collected all the metadata, now inject it into the SdkInfo_*.cs file
-
-    $invokingScriptPath = $(Get-InvokingScriptPath($PSScriptRoot))
-    $sdkInfoFile = $(Get-ChildItem -Path $invokingScriptPath -Filter "SdkInfo_*.cs" -Recurse -File).FullName
-    if($sdkInfoFile -and (Test-Path -Path $sdkInfoFile))
+    if($generateSDKMetadata)
     {
-        $metadataTemplate = Get-Content "$PSScriptRoot\MetadataFieldsTemplate.txt" -Raw
-        $metadataTemplate = 
-            $metadataTemplate.Replace("{{GithubRepoName}}", $specsRepoName).Replace("{{GithubBranchName}}", $specsRepoBranch).Replace("{{GithubForkName}}", $specsRepoFork).Replace("{{GithubCommidId}}", $commitId).Replace("{{AutoRestVersion}}", $AutoRestVersion).Replace("{{AutoRestCmdExecuted}}", $AutoRestCommandExecuted).Replace("{{AutoRestBootStrapperVersion}}", $ver).Replace("{{CodeGenerationErrors}}", "")
-        $metadataTemplate= $metadataTemplate.TrimEnd()
-        $metadataTemplate = $metadataTemplate.Replace('\', '\\')
-        $sdkInfo = Get-Content $sdkInfoFile -Raw
-        
-        if($sdkInfo -cmatch '(.*)\/\/ BEGIN: Code Generation Metadata Section(\n|.)*\/\/ END: Code Generation Metadata Section')
+        $invokingScriptPath = $(Get-InvokingScriptPath($PSScriptRoot))
+        $sdkInfoFile = $(Get-ChildItem -Path $invokingScriptPath -Filter "SdkInfo_*.cs" -Recurse -File).FullName
+        if($sdkInfoFile -and (Test-Path -Path $sdkInfoFile))
         {
-            # Find the regex match and replace it with the new metadata
-            $sdkInfo = $sdkInfo -creplace '(.*)\/\/ BEGIN: Code Generation Metadata Section(\n|.)*\/\/ END: Code Generation Metadata Section', $metadataTemplate
-        }
-        else 
-        {
-            # If there is no regex match, we need to insert it for the first time
-            # We need to find the third } which is where we now insert the template
-            $tokenNum = 0
-            $substr = $sdkInfo
-            $subIndex = 0
-            while($tokenNum -lt 4)
+            $metadataTemplate = Get-Content "$PSScriptRoot\MetadataFieldsTemplate.txt" -Raw
+            $metadataDict = @()
+            $metadataDict["{{GithubRepoName}}"] = $specsRepoName
+            $metadataDict["{{GithubBranchName}}"] = $specsRepoBranch
+            $metadataDict["{{GithubForkName}}"] = $specsRepoFork
+            $metadataDict["{{GithubCommidId}}"] = $commitId
+            $metadataDict["{{AutoRestVersion}}"] = $AutoRestVersion
+            $metadataDict["{{AutoRestCmdExecuted}}"] = $AutoRestCommandExecuted
+            $metadataDict["{{AutoRestBootStrapperVersion}}"] = $ver
+
+            $metadataTemplate = Populate-Metadata($metadataTemplate, $metadataDict)
+                
+            $sdkInfo = Get-Content $sdkInfoFile -Raw
+            
+            if($sdkInfo -cmatch '(.*)\/\/ BEGIN: Code Generation Metadata Section(\n|.)*\/\/ END: Code Generation Metadata Section')
             {
-                $i= $substr.IndexOf("}");
-                $subIndex = $subIndex + $i
-                $substr = $substr.Substring($i+1, $substr.Length-1-$i)
-                $tokenNum = $tokenNum +1
+                # Find the regex match and replace it with the new metadata
+                $sdkInfo = $sdkInfo -creplace '(.*)\/\/ BEGIN: Code Generation Metadata Section(\n|.)*\/\/ END: Code Generation Metadata Section', $metadataTemplate
             }
-            $sdkInfo = $sdkInfo.Insert($subIndex +1, $metadataTemplate)
-        }
-        Set-Content -Path $sdkInfoFile -Value $sdkInfo.Trim()
+            else 
+            {
+                # If there is no regex match, we need to insert it for the first time
+                # We need to find the third } which is where we now insert the template
+                $tokenNum = 0
+                $substr = $sdkInfo
+                $subIndex = 0
+                while($tokenNum -lt 4)
+                {
+                    $i= $substr.IndexOf("}");
+                    $subIndex = $subIndex + $i
+                    $substr = $substr.Substring($i+1, $substr.Length-1-$i)
+                    $tokenNum = $tokenNum +1
+                }
+                $sdkInfo = $sdkInfo.Insert($subIndex +1, $metadataTemplate)
+            }
+            Set-Content -Path $sdkInfoFile -Value $sdkInfo.Trim()
+        }        
     }
 }
 
@@ -530,7 +553,7 @@ function Start-CodeGeneration {
     {
         New-Item -ItemType Directory -Path $localSdkRepoDirectory
     }
-    
+
     if(!(Test-Path -Path "$localSdkRepoDirectory\_metadata"))
     {
         New-Item -ItemType Directory -Path "$localSdkRepoDirectory\_metadata"
@@ -587,7 +610,8 @@ function Start-CodeGeneration {
     finally {
         Get-OutputStream | Out-File -FilePath $logFile -Encoding utf8 | Out-Null
         $errors = Get-ErrorStream
-        if(-not [string]::IsNullOrWhiteSpace($errors))
+        $errors | Out-File -FilePath $logFile -Encoding utf8 | Out-Null
+        if(-not [string]::IsNullOrWhiteSpace($errors) -and $generateSDKMetadata)
         {
             $errors | Out-File -FilePath $logFile -Append -Encoding utf8 | Out-Null
             $invokingScriptPath = $(Get-InvokingScriptPath($PSScriptRoot))
