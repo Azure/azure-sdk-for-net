@@ -19,6 +19,8 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
           {
               return new Tuple<string, string, string>[]
               {
+                new Tuple<string, string, string>("Compute.Admin", "DiskMigrationJobs", "2018-07-30-preview"),
+                new Tuple<string, string, string>("Compute.Admin", "Disks", "2018-07-30-preview"),
                 new Tuple<string, string, string>("Compute.Admin", "Operations", "2015-12-01-preview"),
                 new Tuple<string, string, string>("Compute.Admin", "PlatformImages", "2015-12-01-preview"),
                 new Tuple<string, string, string>("Compute.Admin", "Quotas", "2018-02-09"),
