@@ -304,7 +304,7 @@ namespace Microsoft.Azure.ServiceBus.Management
             if (this.Path.Equals(other.Path, StringComparison.OrdinalIgnoreCase)
                 && this.AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
                 && this.DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
-                && this.DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow)
+                && (!this.RequiresDuplicateDetection || this.DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
                 && this.EnableBatchedOperations == other.EnableBatchedOperations
                 && this.EnableDeadLetteringOnMessageExpiration == other.EnableDeadLetteringOnMessageExpiration
                 && this.EnablePartitioning == other.EnablePartitioning
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 && string.Equals(this.userMetadata, other.userMetadata, StringComparison.OrdinalIgnoreCase)
                 && (this.authorizationRules != null && other.authorizationRules != null
                     || this.authorizationRules == null && other.authorizationRules == null)
-                && this.authorizationRules != null && this.AuthorizationRules.Equals(other.AuthorizationRules))
+                && (this.authorizationRules == null || this.AuthorizationRules.Equals(other.AuthorizationRules)))
             {
                 return true;
             }

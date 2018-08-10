@@ -40,13 +40,20 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public static SubscriptionDescription ParseFromContent(string topicName, string xml)
         {
-            var xDoc = XElement.Parse(xml);
-            if (!xDoc.IsEmpty)
+            try
             {
-                if (xDoc.Name.LocalName == "entry")
+                var xDoc = XElement.Parse(xml);
+                if (!xDoc.IsEmpty)
                 {
-                    return ParseFromEntryElement(topicName, xDoc);
+                    if (xDoc.Name.LocalName == "entry")
+                    {
+                        return ParseFromEntryElement(topicName, xDoc);
+                    }
                 }
+            }
+            catch (Exception ex) when (!(ex is ServiceBusException))
+            {
+                throw new ServiceBusException(false, ex);
             }
 
             throw new MessagingEntityNotFoundException("Subscription was not found");
@@ -54,96 +61,96 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public static IList<SubscriptionDescription> ParseCollectionFromContent(string topicName, string xml)
         {
-            var xDoc = XElement.Parse(xml);
-            if (!xDoc.IsEmpty)
-            {
-                if (xDoc.Name.LocalName == "feed")
-                {
-                    var subscriptionList = new List<SubscriptionDescription>();
-
-                    var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNs));
-                    foreach (var entry in entryList)
-                    {
-                        subscriptionList.Add(ParseFromEntryElement(topicName, entry));
-                    }
-
-                    return subscriptionList;
-                }
-            }
-
-            throw new MessagingEntityNotFoundException("Subscription was not found");
-        }
-
-        public static SubscriptionDescription ParseFromEntryElement(string topicName, XElement xEntry)
-        {
             try
             {
-                var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
-                var subscriptionDesc = new SubscriptionDescription(topicName, name);
-
-                var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
-                    .Element(XName.Get("SubscriptionDescription", ManagementClientConstants.SbNs));
-
-                if (qdXml == null)
+                var xDoc = XElement.Parse(xml);
+                if (!xDoc.IsEmpty)
                 {
-                    throw new MessagingEntityNotFoundException("Subscription was not found");
-                }
-
-                foreach (var element in qdXml.Elements())
-                {
-                    switch (element.Name.LocalName)
+                    if (xDoc.Name.LocalName == "feed")
                     {
-                        case "RequiresSession":
-                            subscriptionDesc.RequiresSession = bool.Parse(element.Value);
-                            break;
-                        case "DeadLetteringOnMessageExpiration":
-                            subscriptionDesc.EnableDeadLetteringOnMessageExpiration = bool.Parse(element.Value);
-                            break;
-                        case "DeadLetteringOnFilterEvaluationExceptions":
-                            subscriptionDesc.EnableDeadLetteringOnFilterEvaluationExceptions = bool.Parse(element.Value);
-                            break;
-                        case "LockDuration":
-                            subscriptionDesc.LockDuration = XmlConvert.ToTimeSpan(element.Value);
-                            break;
-                        case "DefaultMessageTimeToLive":
-                            subscriptionDesc.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
-                            break;
-                        case "MaxDeliveryCount":
-                            subscriptionDesc.MaxDeliveryCount = int.Parse(element.Value);
-                            break;
-                        case "Status":
-                            subscriptionDesc.Status = (EntityStatus)Enum.Parse(typeof(EntityStatus), element.Value);
-                            break;
-                        case "EnableBatchedOperations":
-                            subscriptionDesc.EnableBatchedOperations = bool.Parse(element.Value);
-                            break;
-                        case "UserMetadata":
-                            subscriptionDesc.UserMetadata = element.Value;
-                            break;
-                        case "AutoDeleteOnIdle":
-                            subscriptionDesc.AutoDeleteOnIdle = XmlConvert.ToTimeSpan(element.Value);
-                            break;
-                        case "ForwardTo":
-                            if (!string.IsNullOrWhiteSpace(element.Value))
-                            {
-                                subscriptionDesc.ForwardTo = element.Value;
-                            }
-                            break;
-                        case "ForwardDeadLetteredMessagesTo":
-                            if (!string.IsNullOrWhiteSpace(element.Value))
-                            {
-                                subscriptionDesc.ForwardDeadLetteredMessagesTo = element.Value;
-                            }
-                            break;
+                        var subscriptionList = new List<SubscriptionDescription>();
+
+                        var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNs));
+                        foreach (var entry in entryList)
+                        {
+                            subscriptionList.Add(ParseFromEntryElement(topicName, entry));
+                        }
+
+                        return subscriptionList;
                     }
                 }
-
-                return subscriptionDesc;
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
                 throw new ServiceBusException(false, ex);
             }
+
+            throw new MessagingEntityNotFoundException("Subscription was not found");
+        }
+
+        private static SubscriptionDescription ParseFromEntryElement(string topicName, XElement xEntry)
+        {
+            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
+            var subscriptionDesc = new SubscriptionDescription(topicName, name);
+
+            var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
+                .Element(XName.Get("SubscriptionDescription", ManagementClientConstants.SbNs));
+
+            if (qdXml == null)
+            {
+                throw new MessagingEntityNotFoundException("Subscription was not found");
+            }
+
+            foreach (var element in qdXml.Elements())
+            {
+                switch (element.Name.LocalName)
+                {
+                    case "RequiresSession":
+                        subscriptionDesc.RequiresSession = bool.Parse(element.Value);
+                        break;
+                    case "DeadLetteringOnMessageExpiration":
+                        subscriptionDesc.EnableDeadLetteringOnMessageExpiration = bool.Parse(element.Value);
+                        break;
+                    case "DeadLetteringOnFilterEvaluationExceptions":
+                        subscriptionDesc.EnableDeadLetteringOnFilterEvaluationExceptions = bool.Parse(element.Value);
+                        break;
+                    case "LockDuration":
+                        subscriptionDesc.LockDuration = XmlConvert.ToTimeSpan(element.Value);
+                        break;
+                    case "DefaultMessageTimeToLive":
+                        subscriptionDesc.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
+                        break;
+                    case "MaxDeliveryCount":
+                        subscriptionDesc.MaxDeliveryCount = int.Parse(element.Value);
+                        break;
+                    case "Status":
+                        subscriptionDesc.Status = (EntityStatus)Enum.Parse(typeof(EntityStatus), element.Value);
+                        break;
+                    case "EnableBatchedOperations":
+                        subscriptionDesc.EnableBatchedOperations = bool.Parse(element.Value);
+                        break;
+                    case "UserMetadata":
+                        subscriptionDesc.UserMetadata = element.Value;
+                        break;
+                    case "AutoDeleteOnIdle":
+                        subscriptionDesc.AutoDeleteOnIdle = XmlConvert.ToTimeSpan(element.Value);
+                        break;
+                    case "ForwardTo":
+                        if (!string.IsNullOrWhiteSpace(element.Value))
+                        {
+                            subscriptionDesc.ForwardTo = element.Value;
+                        }
+                        break;
+                    case "ForwardDeadLetteredMessagesTo":
+                        if (!string.IsNullOrWhiteSpace(element.Value))
+                        {
+                            subscriptionDesc.ForwardDeadLetteredMessagesTo = element.Value;
+                        }
+                        break;
+                }
+            }
+
+            return subscriptionDesc;
         }
 
         public static XDocument Serialize(this SubscriptionDescription description)

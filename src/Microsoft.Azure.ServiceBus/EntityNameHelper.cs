@@ -51,7 +51,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Formats the rule path, based on the topic path and subscription name.
+        /// Formats the rule path, based on the topic path, subscription name and rule name.
         /// </summary>
         /// <param name="topicPath">The name of the topic, including slashes.</param>
         /// <param name="subscriptionName">The name of the subscription.</param>

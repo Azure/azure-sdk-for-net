@@ -12,13 +12,20 @@ namespace Microsoft.Azure.ServiceBus.Management
     {
         public static TopicDescription ParseFromContent(string xml)
         {
-            var xDoc = XElement.Parse(xml);
-            if (!xDoc.IsEmpty)
+            try
             {
-                if (xDoc.Name.LocalName == "entry")
+                var xDoc = XElement.Parse(xml);
+                if (!xDoc.IsEmpty)
                 {
-                    return ParseFromEntryElement(xDoc);
+                    if (xDoc.Name.LocalName == "entry")
+                    {
+                        return ParseFromEntryElement(xDoc);
+                    }
                 }
+            }
+            catch (Exception ex) when (!(ex is ServiceBusException))
+            {
+                throw new ServiceBusException(false, ex);
             }
 
             throw new MessagingEntityNotFoundException("Topic was not found");
@@ -26,87 +33,87 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public static IList<TopicDescription> ParseCollectionFromContent(string xml)
         {
-            var xDoc = XElement.Parse(xml);
-            if (!xDoc.IsEmpty)
-            {
-                if (xDoc.Name.LocalName == "feed")
-                {
-                    var topicList = new List<TopicDescription>();
-
-                    var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNs));
-                    foreach (var entry in entryList)
-                    {
-                        topicList.Add(ParseFromEntryElement(entry));
-                    }
-
-                    return topicList;
-                }
-            }
-
-            throw new MessagingEntityNotFoundException("Topic was not found");
-        }
-
-        static TopicDescription ParseFromEntryElement(XElement xEntry)
-        {
             try
             {
-                var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
-                var topicDesc = new TopicDescription(name);
-
-                var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
-                    .Element(XName.Get("TopicDescription", ManagementClientConstants.SbNs));
-
-                if (qdXml == null)
+                var xDoc = XElement.Parse(xml);
+                if (!xDoc.IsEmpty)
                 {
-                    throw new MessagingEntityNotFoundException("Topic was not found");
-                }
-
-                foreach (var element in qdXml.Elements())
-                {
-                    switch (element.Name.LocalName)
+                    if (xDoc.Name.LocalName == "feed")
                     {
-                        case "MaxSizeInMegabytes":
-                            topicDesc.MaxSizeInMB = long.Parse(element.Value);
-                            break;
-                        case "RequiresDuplicateDetection":
-                            topicDesc.RequiresDuplicateDetection = bool.Parse(element.Value);
-                            break;
-                        case "DuplicateDetectionHistoryTimeWindow":
-                            topicDesc.duplicateDetectionHistoryTimeWindow = XmlConvert.ToTimeSpan(element.Value);
-                            break;
-                        case "DefaultMessageTimeToLive":
-                            topicDesc.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
-                            break;
-                        case "EnableBatchedOperations":
-                            topicDesc.EnableBatchedOperations = bool.Parse(element.Value);
-                            break;
-                        case "Status":
-                            topicDesc.Status = (EntityStatus)Enum.Parse(typeof(EntityStatus), element.Value);
-                            break;
-                        case "UserMetadata":
-                            topicDesc.UserMetadata = element.Value;
-                            break;
-                        case "AutoDeleteOnIdle":
-                            topicDesc.AutoDeleteOnIdle = XmlConvert.ToTimeSpan(element.Value);
-                            break;
-                        case "EnablePartitioning":
-                            topicDesc.EnablePartitioning = bool.Parse(element.Value);
-                            break;
-                        case "SupportOrdering":
-                            topicDesc.SupportOrdering = bool.Parse(element.Value);
-                            break;
-                        case "AuthorizationRules":
-                            topicDesc.AuthorizationRules = AuthorizationRules.ParseFromXElement(element);
-                            break;
+                        var topicList = new List<TopicDescription>();
+
+                        var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNs));
+                        foreach (var entry in entryList)
+                        {
+                            topicList.Add(ParseFromEntryElement(entry));
+                        }
+
+                        return topicList;
                     }
                 }
-
-                return topicDesc;
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
                 throw new ServiceBusException(false, ex);
             }
+
+            throw new MessagingEntityNotFoundException("Topic was not found");
+        }
+
+        private static TopicDescription ParseFromEntryElement(XElement xEntry)
+        {
+            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
+            var topicDesc = new TopicDescription(name);
+
+            var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
+                .Element(XName.Get("TopicDescription", ManagementClientConstants.SbNs));
+
+            if (qdXml == null)
+            {
+                throw new MessagingEntityNotFoundException("Topic was not found");
+            }
+
+            foreach (var element in qdXml.Elements())
+            {
+                switch (element.Name.LocalName)
+                {
+                    case "MaxSizeInMegabytes":
+                        topicDesc.MaxSizeInMB = long.Parse(element.Value);
+                        break;
+                    case "RequiresDuplicateDetection":
+                        topicDesc.RequiresDuplicateDetection = bool.Parse(element.Value);
+                        break;
+                    case "DuplicateDetectionHistoryTimeWindow":
+                        topicDesc.duplicateDetectionHistoryTimeWindow = XmlConvert.ToTimeSpan(element.Value);
+                        break;
+                    case "DefaultMessageTimeToLive":
+                        topicDesc.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
+                        break;
+                    case "EnableBatchedOperations":
+                        topicDesc.EnableBatchedOperations = bool.Parse(element.Value);
+                        break;
+                    case "Status":
+                        topicDesc.Status = (EntityStatus)Enum.Parse(typeof(EntityStatus), element.Value);
+                        break;
+                    case "UserMetadata":
+                        topicDesc.UserMetadata = element.Value;
+                        break;
+                    case "AutoDeleteOnIdle":
+                        topicDesc.AutoDeleteOnIdle = XmlConvert.ToTimeSpan(element.Value);
+                        break;
+                    case "EnablePartitioning":
+                        topicDesc.EnablePartitioning = bool.Parse(element.Value);
+                        break;
+                    case "SupportOrdering":
+                        topicDesc.SupportOrdering = bool.Parse(element.Value);
+                        break;
+                    case "AuthorizationRules":
+                        topicDesc.AuthorizationRules = AuthorizationRules.ParseFromXElement(element);
+                        break;
+                }
+            }
+
+            return topicDesc;
         }
 
         public static XDocument Serialize(this TopicDescription description)

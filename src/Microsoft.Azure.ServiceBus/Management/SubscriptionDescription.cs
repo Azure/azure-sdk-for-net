@@ -15,7 +15,6 @@ namespace Microsoft.Azure.ServiceBus.Management
         TimeSpan lockDuration = TimeSpan.FromSeconds(60);
         TimeSpan defaultMessageTimeToLive = TimeSpan.MaxValue;
         TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
-        TimeSpan duplicateDetectionHistoryTimeWindow = TimeSpan.FromSeconds(30);
         int maxDeliveryCount = 10;
         string forwardTo = null;
         string forwardDeadLetteredMessagesTo = null;

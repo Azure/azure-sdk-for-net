@@ -486,7 +486,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNull(nameof(description));
             }
 
-            description.ValidateDescriptionName();
+            EntityNameHelper.CheckValidRuleName(description.Name);
             MessagingEventSource.Log.AddRuleStart(this.ClientId, description.Name);
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();

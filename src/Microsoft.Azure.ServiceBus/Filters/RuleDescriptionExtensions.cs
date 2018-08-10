@@ -47,13 +47,20 @@ namespace Microsoft.Azure.ServiceBus
 
         public static RuleDescription ParseFromContent(string xml)
         {
-            var xDoc = XElement.Parse(xml);
-            if (!xDoc.IsEmpty)
+            try
             {
-                if (xDoc.Name.LocalName == "entry")
+                var xDoc = XElement.Parse(xml);
+                if (!xDoc.IsEmpty)
                 {
-                    return ParseFromEntryElement(xDoc);
+                    if (xDoc.Name.LocalName == "entry")
+                    {
+                        return ParseFromEntryElement(xDoc);
+                    }
                 }
+            }
+            catch (Exception ex) when (!(ex is ServiceBusException))
+            {
+                throw new ServiceBusException(false, ex);
             }
 
             throw new MessagingEntityNotFoundException("Rule was not found");
@@ -61,69 +68,69 @@ namespace Microsoft.Azure.ServiceBus
 
         public static IList<RuleDescription> ParseCollectionFromContent(string xml)
         {
-            var xDoc = XElement.Parse(xml);
-            if (!xDoc.IsEmpty)
-            {
-                if (xDoc.Name.LocalName == "feed")
-                {
-                    var rules = new List<RuleDescription>();
-
-                    var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNs));
-                    foreach (var entry in entryList)
-                    {
-                        rules.Add(ParseFromEntryElement(entry));
-                    }
-
-                    return rules;
-                }
-            }
-
-            throw new MessagingEntityNotFoundException("Rule was not found");
-        }
-
-        public static RuleDescription ParseFromEntryElement(XElement xEntry)
-        {
             try
             {
-                var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
-                var ruleDescription = new RuleDescription();
-
-                var rdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
-                    .Element(XName.Get("RuleDescription", ManagementClientConstants.SbNs));
-
-                if (rdXml == null)
+                var xDoc = XElement.Parse(xml);
+                if (!xDoc.IsEmpty)
                 {
-                    throw new MessagingEntityNotFoundException("Rule was not found");
-                }
-
-                foreach (var element in rdXml.Elements())
-                {
-                    switch (element.Name.LocalName)
+                    if (xDoc.Name.LocalName == "feed")
                     {
-                        case "Name":
-                            ruleDescription.Name = element.Value;
-                            break;
-                        case "Filter":
-                            ruleDescription.Filter = FilterExtensions.ParseFromXElement(element);
-                            break;
-                        case "Action":
-                            ruleDescription.Action = RuleActionExtensions.ParseFromXElement(element);
-                            break;
-                        case "CreatedAt":
-                            ruleDescription.CreatedAt = DateTime.Parse(element.Value);
-                            break;
+                        var rules = new List<RuleDescription>();
+
+                        var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNs));
+                        foreach (var entry in entryList)
+                        {
+                            rules.Add(ParseFromEntryElement(entry));
+                        }
+
+                        return rules;
                     }
                 }
-
-                return ruleDescription;
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
                 throw new ServiceBusException(false, ex);
             }
+
+            throw new MessagingEntityNotFoundException("Rule was not found");
         }
 
-        internal static XDocument Serialize(this RuleDescription description)
+        private static RuleDescription ParseFromEntryElement(XElement xEntry)
+        {
+            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
+            var ruleDescription = new RuleDescription();
+
+            var rdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
+                .Element(XName.Get("RuleDescription", ManagementClientConstants.SbNs));
+
+            if (rdXml == null)
+            {
+                throw new MessagingEntityNotFoundException("Rule was not found");
+            }
+
+            foreach (var element in rdXml.Elements())
+            {
+                switch (element.Name.LocalName)
+                {
+                    case "Name":
+                        ruleDescription.Name = element.Value;
+                        break;
+                    case "Filter":
+                        ruleDescription.Filter = FilterExtensions.ParseFromXElement(element);
+                        break;
+                    case "Action":
+                        ruleDescription.Action = RuleActionExtensions.ParseFromXElement(element);
+                        break;
+                    case "CreatedAt":
+                        ruleDescription.CreatedAt = DateTime.Parse(element.Value);
+                        break;
+                }
+            }
+
+            return ruleDescription;
+        }
+
+        public static XDocument Serialize(this RuleDescription description)
         {
             XDocument doc = new XDocument(
                    new XElement(XName.Get("entry", ManagementClientConstants.AtomNs),

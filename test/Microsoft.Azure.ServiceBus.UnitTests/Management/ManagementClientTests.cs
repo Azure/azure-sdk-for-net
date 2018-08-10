@@ -512,6 +512,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 
             var sender = new MessageSender(this.ConnectionString, queueName);
             await sender.SendAsync(new Message() { MessageId = "mid" });
+            await sender.CloseAsync();
 
             var receiver = new MessageReceiver(this.ConnectionString, destinationName);
             var msg = await receiver.ReceiveAsync();
@@ -529,6 +530,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 
             await client.DeleteQueueAsync(queueName);
             await client.DeleteQueueAsync(destinationName);
+            await client.DeleteQueueAsync(dlqDestinationName);
         }
 
         [Fact]

@@ -10,13 +10,20 @@ namespace Microsoft.Azure.ServiceBus.Management
     {
         public static TopicRuntimeInfo ParseFromContent(string xml)
         {
-            var xDoc = XElement.Parse(xml);
-            if (!xDoc.IsEmpty)
+            try
             {
-                if (xDoc.Name.LocalName == "entry")
+                var xDoc = XElement.Parse(xml);
+                if (!xDoc.IsEmpty)
                 {
-                    return ParseFromEntryElement(xDoc);
+                    if (xDoc.Name.LocalName == "entry")
+                    {
+                        return ParseFromEntryElement(xDoc);
+                    }
                 }
+            }
+            catch (Exception ex) when (!(ex is ServiceBusException))
+            {
+                throw new ServiceBusException(false, ex);
             }
 
             throw new MessagingEntityNotFoundException("Topic was not found");
@@ -24,71 +31,64 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         static TopicRuntimeInfo ParseFromEntryElement(XElement xEntry)
         {
-            try
+            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
+            var topicRuntimeInfo = new TopicRuntimeInfo(name);
+
+            var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
+                .Element(XName.Get("TopicDescription", ManagementClientConstants.SbNs));
+
+            if (qdXml == null)
             {
-                var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
-                var topicRuntimeInfo = new TopicRuntimeInfo(name);
+                throw new MessagingEntityNotFoundException("Topic was not found");
+            }
 
-                var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
-                    .Element(XName.Get("TopicDescription", ManagementClientConstants.SbNs));
-
-                if (qdXml == null)
+            foreach (var element in qdXml.Elements())
+            {
+                switch (element.Name.LocalName)
                 {
-                    throw new MessagingEntityNotFoundException("Topic was not found");
-                }
-
-                foreach (var element in qdXml.Elements())
-                {
-                    switch (element.Name.LocalName)
-                    {
-                        case "AccessedAt":
-                            topicRuntimeInfo.AccessedAt = DateTime.Parse(element.Value);
-                            break;
-                        case "CreatedAt":
-                            topicRuntimeInfo.CreatedAt = DateTime.Parse(element.Value);
-                            break;
-                        case "SizeInBytes":
-                            topicRuntimeInfo.SizeInBytes = long.Parse(element.Value);
-                            break;
-                        case "SubscriptionCount":
-                            topicRuntimeInfo.SubscriptionCount = int.Parse(element.Value);
-                            break;
-                        case "UpdatedAt":
-                            topicRuntimeInfo.UpdatedAt = DateTime.Parse(element.Value);
-                            break;
-                        case "CountDetails":
-                            topicRuntimeInfo.MessageCountDetails = new MessageCountDetails();
-                            foreach (var countElement in element.Elements())
+                    case "AccessedAt":
+                        topicRuntimeInfo.AccessedAt = DateTime.Parse(element.Value);
+                        break;
+                    case "CreatedAt":
+                        topicRuntimeInfo.CreatedAt = DateTime.Parse(element.Value);
+                        break;
+                    case "SizeInBytes":
+                        topicRuntimeInfo.SizeInBytes = long.Parse(element.Value);
+                        break;
+                    case "SubscriptionCount":
+                        topicRuntimeInfo.SubscriptionCount = int.Parse(element.Value);
+                        break;
+                    case "UpdatedAt":
+                        topicRuntimeInfo.UpdatedAt = DateTime.Parse(element.Value);
+                        break;
+                    case "CountDetails":
+                        topicRuntimeInfo.MessageCountDetails = new MessageCountDetails();
+                        foreach (var countElement in element.Elements())
+                        {
+                            switch (countElement.Name.LocalName)
                             {
-                                switch (countElement.Name.LocalName)
-                                {
-                                    case "ActiveMessageCount":
-                                        topicRuntimeInfo.MessageCountDetails.ActiveMessageCount = long.Parse(countElement.Value);
-                                        break;
-                                    case "DeadLetterMessageCount":
-                                        topicRuntimeInfo.MessageCountDetails.DeadLetterMessageCount = long.Parse(countElement.Value);
-                                        break;
-                                    case "ScheduledMessageCount":
-                                        topicRuntimeInfo.MessageCountDetails.ScheduledMessageCount = long.Parse(countElement.Value);
-                                        break;
-                                    case "TransferMessageCount":
-                                        topicRuntimeInfo.MessageCountDetails.TransferMessageCount = long.Parse(countElement.Value);
-                                        break;
-                                    case "TransferDeadLetterMessageCount":
-                                        topicRuntimeInfo.MessageCountDetails.TransferDeadLetterMessageCount = long.Parse(countElement.Value);
-                                        break;
-                                }
+                                case "ActiveMessageCount":
+                                    topicRuntimeInfo.MessageCountDetails.ActiveMessageCount = long.Parse(countElement.Value);
+                                    break;
+                                case "DeadLetterMessageCount":
+                                    topicRuntimeInfo.MessageCountDetails.DeadLetterMessageCount = long.Parse(countElement.Value);
+                                    break;
+                                case "ScheduledMessageCount":
+                                    topicRuntimeInfo.MessageCountDetails.ScheduledMessageCount = long.Parse(countElement.Value);
+                                    break;
+                                case "TransferMessageCount":
+                                    topicRuntimeInfo.MessageCountDetails.TransferMessageCount = long.Parse(countElement.Value);
+                                    break;
+                                case "TransferDeadLetterMessageCount":
+                                    topicRuntimeInfo.MessageCountDetails.TransferDeadLetterMessageCount = long.Parse(countElement.Value);
+                                    break;
                             }
-                            break;
-                    }
+                        }
+                        break;
                 }
+            }
 
-                return topicRuntimeInfo;
-            }
-            catch (Exception ex) when (!(ex is ServiceBusException))
-            {
-                throw new ServiceBusException(false, ex);
-            }
+            return topicRuntimeInfo;
         }
     }
 }

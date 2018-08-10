@@ -467,7 +467,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <returns>The <see cref="QueueDescription"/> of the newly created queue.</returns>
         /// <exception cref="ArgumentNullException">Queue name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The length of <paramref name="queuePath"/> is greater than 260 characters.</exception>
-        /// <exception cref="MessagingEntityAlreadyExistsException">A queue with the same name exists under the same service namespace.</exception>
+        /// <exception cref="MessagingEntityAlreadyExistsException">An entity with the same name exists under the same service namespace.</exception>
         /// <exception cref="ServiceBusTimeoutException">The operation times out. The timeout period is initialized through the <see cref="ServiceBusConnection"/> class. You may need to increase the value of timeout to avoid this exception if the timeout value is relatively low.</exception>
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenProvider"/> credentials to perform this operation.</exception>
         /// <exception cref="QuotaExceededException">Either the specified size in the description is not supported or the maximum allowable quota has been reached. You must specify one of the supported size values, delete existing entities, or increase your quota size.</exception>
@@ -1075,7 +1075,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 Path = path,
                 Scheme = Uri.UriSchemeHttps,
                 Port = this.port,
-                Query = $"{ManagementClientConstants.apiVersionQuery}&enrich=false"
+                Query = ManagementClientConstants.apiVersionQuery
             }.Uri;
 
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);

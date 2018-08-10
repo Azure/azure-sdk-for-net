@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus.Management
     using System.Collections.Generic;
     using System.Xml;
 
-    static class QueueDescriptionExtensions
+    internal static class QueueDescriptionExtensions
     {
         public static XDocument Serialize(this QueueDescription description)
         {
@@ -41,119 +41,126 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public static QueueDescription ParseFromContent(string xml)
         {
-            var xDoc = XElement.Parse(xml);
-            if (!xDoc.IsEmpty)
-            {
-                if (xDoc.Name.LocalName == "entry")
-                {
-                    return ParseFromEntryElement(xDoc);
-                }
-            }
-
-            throw new MessagingEntityNotFoundException("Queue was not found");
-        }
-
-        static QueueDescription ParseFromEntryElement(XElement xEntry)
-        {
             try
             {
-                var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
-                var qd = new QueueDescription(name);
-
-                var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
-                    .Element(XName.Get("QueueDescription", ManagementClientConstants.SbNs));
-
-                if (qdXml == null)
+                var xDoc = XElement.Parse(xml);
+                if (!xDoc.IsEmpty)
                 {
-                    throw new MessagingEntityNotFoundException("Queue was not found");
-                }
-
-                foreach (var element in qdXml.Elements())
-                {
-                    switch (element.Name.LocalName)
+                    if (xDoc.Name.LocalName == "entry")
                     {
-                        case "MaxSizeInMegabytes":
-                            qd.MaxSizeInMB = Int64.Parse(element.Value);
-                            break;
-                        case "RequiresDuplicateDetection":
-                            qd.RequiresDuplicateDetection = Boolean.Parse(element.Value);
-                            break;
-                        case "RequiresSession":
-                            qd.RequiresSession = Boolean.Parse(element.Value);
-                            break;
-                        case "DeadLetteringOnMessageExpiration":
-                            qd.EnableDeadLetteringOnMessageExpiration = Boolean.Parse(element.Value);
-                            break;
-                        case "DuplicateDetectionHistoryTimeWindow":
-                            qd.duplicateDetectionHistoryTimeWindow = XmlConvert.ToTimeSpan(element.Value);
-                            break;
-                        case "LockDuration":
-                            qd.LockDuration = XmlConvert.ToTimeSpan(element.Value);
-                            break;
-                        case "DefaultMessageTimeToLive":
-                            qd.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
-                            break;
-                        case "MaxDeliveryCount":
-                            qd.MaxDeliveryCount = Int32.Parse(element.Value);
-                            break;
-                        case "EnableBatchedOperations":
-                            qd.EnableBatchedOperations = Boolean.Parse(element.Value);
-                            break;
-                        case "Status":
-                            qd.Status = (EntityStatus)Enum.Parse(typeof(EntityStatus), element.Value);
-                            break;
-                        case "AutoDeleteOnIdle":
-                            qd.AutoDeleteOnIdle = XmlConvert.ToTimeSpan(element.Value);
-                            break;
-                        case "EnablePartitioning":
-                            qd.EnablePartitioning = bool.Parse(element.Value);
-                            break;
-                        case "UserMetadata":
-                            qd.UserMetadata = element.Value;
-                            break;
-                        case "ForwardTo":
-                            if (!string.IsNullOrWhiteSpace(element.Value))
-                            {
-                                qd.ForwardTo = element.Value;
-                            }
-                            break;
-                        case "ForwardDeadLetteredMessagesTo":
-                            if (!string.IsNullOrWhiteSpace(element.Value))
-                            {
-                                qd.ForwardDeadLetteredMessagesTo = element.Value;
-                            }
-                            break;
-                        case "AuthorizationRules":
-                            qd.AuthorizationRules = AuthorizationRules.ParseFromXElement(element);
-                            break;
+                        return ParseFromEntryElement(xDoc);
                     }
                 }
-
-                return qd;
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
                 throw new ServiceBusException(false, ex);
             }
+
+            throw new MessagingEntityNotFoundException("Queue was not found");
+        }
+
+        private static QueueDescription ParseFromEntryElement(XElement xEntry)
+        {
+            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
+            var qd = new QueueDescription(name);
+
+            var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
+                .Element(XName.Get("QueueDescription", ManagementClientConstants.SbNs));
+
+            if (qdXml == null)
+            {
+                throw new MessagingEntityNotFoundException("Queue was not found");
+            }
+
+            foreach (var element in qdXml.Elements())
+            {
+                switch (element.Name.LocalName)
+                {
+                    case "MaxSizeInMegabytes":
+                        qd.MaxSizeInMB = Int64.Parse(element.Value);
+                        break;
+                    case "RequiresDuplicateDetection":
+                        qd.RequiresDuplicateDetection = Boolean.Parse(element.Value);
+                        break;
+                    case "RequiresSession":
+                        qd.RequiresSession = Boolean.Parse(element.Value);
+                        break;
+                    case "DeadLetteringOnMessageExpiration":
+                        qd.EnableDeadLetteringOnMessageExpiration = Boolean.Parse(element.Value);
+                        break;
+                    case "DuplicateDetectionHistoryTimeWindow":
+                        qd.duplicateDetectionHistoryTimeWindow = XmlConvert.ToTimeSpan(element.Value);
+                        break;
+                    case "LockDuration":
+                        qd.LockDuration = XmlConvert.ToTimeSpan(element.Value);
+                        break;
+                    case "DefaultMessageTimeToLive":
+                        qd.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
+                        break;
+                    case "MaxDeliveryCount":
+                        qd.MaxDeliveryCount = Int32.Parse(element.Value);
+                        break;
+                    case "EnableBatchedOperations":
+                        qd.EnableBatchedOperations = Boolean.Parse(element.Value);
+                        break;
+                    case "Status":
+                        qd.Status = (EntityStatus)Enum.Parse(typeof(EntityStatus), element.Value);
+                        break;
+                    case "AutoDeleteOnIdle":
+                        qd.AutoDeleteOnIdle = XmlConvert.ToTimeSpan(element.Value);
+                        break;
+                    case "EnablePartitioning":
+                        qd.EnablePartitioning = bool.Parse(element.Value);
+                        break;
+                    case "UserMetadata":
+                        qd.UserMetadata = element.Value;
+                        break;
+                    case "ForwardTo":
+                        if (!string.IsNullOrWhiteSpace(element.Value))
+                        {
+                            qd.ForwardTo = element.Value;
+                        }
+                        break;
+                    case "ForwardDeadLetteredMessagesTo":
+                        if (!string.IsNullOrWhiteSpace(element.Value))
+                        {
+                            qd.ForwardDeadLetteredMessagesTo = element.Value;
+                        }
+                        break;
+                    case "AuthorizationRules":
+                        qd.AuthorizationRules = AuthorizationRules.ParseFromXElement(element);
+                        break;
+                }
+            }
+
+            return qd;
         }
 
         public static IList<QueueDescription> ParseCollectionFromContent(string xml)
         {
-            var xDoc = XElement.Parse(xml);
-            if (!xDoc.IsEmpty)
+            try
             {
-                if (xDoc.Name.LocalName == "feed")
+                var xDoc = XElement.Parse(xml);
+                if (!xDoc.IsEmpty)
                 {
-                    var queueList = new List<QueueDescription>();
-
-                    var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNs));
-                    foreach (var entry in entryList)
+                    if (xDoc.Name.LocalName == "feed")
                     {
-                        queueList.Add(ParseFromEntryElement(entry));
-                    }
+                        var queueList = new List<QueueDescription>();
 
-                    return queueList;
+                        var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNs));
+                        foreach (var entry in entryList)
+                        {
+                            queueList.Add(ParseFromEntryElement(entry));
+                        }
+
+                        return queueList;
+                    }
                 }
+            }
+            catch (Exception ex) when (!(ex is ServiceBusException))
+            {
+                throw new ServiceBusException(false, ex);
             }
 
             throw new MessagingEntityNotFoundException("Queue was not found");
@@ -186,6 +193,5 @@ namespace Microsoft.Azure.ServiceBus.Management
 
             return forwardToUri.AbsoluteUri;
         }
-
     }
 }

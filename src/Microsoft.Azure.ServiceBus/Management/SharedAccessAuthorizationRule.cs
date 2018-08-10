@@ -318,8 +318,6 @@ namespace Microsoft.Azure.ServiceBus.Management
                 new XElement(XName.Get("ClaimValue", ManagementClientConstants.SbNs), this.ClaimValue),
                 new XElement(XName.Get("Rights", ManagementClientConstants.SbNs),
                     this.Rights.Select(right => new XElement(XName.Get("AccessRights", ManagementClientConstants.SbNs), right.ToString()))),
-                new XElement(XName.Get("CreatedTime", ManagementClientConstants.SbNs), XmlConvert.ToString(this.CreatedTime, XmlDateTimeSerializationMode.Utc)),
-                new XElement(XName.Get("ModifiedTime", ManagementClientConstants.SbNs), XmlConvert.ToString(this.ModifiedTime, XmlDateTimeSerializationMode.Utc)),
                 new XElement(XName.Get("KeyName", ManagementClientConstants.SbNs), this.KeyName),
                 new XElement(XName.Get("PrimaryKey", ManagementClientConstants.SbNs), this.PrimaryKey),
                 new XElement(XName.Get("SecondaryKey", ManagementClientConstants.SbNs), this.SecondaryKey)
