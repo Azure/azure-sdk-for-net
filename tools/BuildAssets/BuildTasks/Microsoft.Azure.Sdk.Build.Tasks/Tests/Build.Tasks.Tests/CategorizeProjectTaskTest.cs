@@ -154,6 +154,23 @@ namespace Build.Tasks.Tests
         }
 
         [Fact]
+        public void GetReferencedPackagesForScope()
+        {
+            string scopeDir = @"SDKs\Compute";
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = scopeDir;
+            cproj.IgnorePathTokens = Path.Combine(ignoreDir);
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(cproj.net452SdkProjectsToBuild.Count<ITaskItem>(), 1);
+                Assert.Equal(cproj.netCore20TestProjectsToBuild.Count<ITaskItem>(), 1);
+                Assert.True(cproj.AzSdkPackageList.Count<string>() >= 1);
+            }
+        }
+
+        [Fact]
         public void BuildOnlyIncludedTokenListProjects()
         {
             SDKCategorizeProjects cproj = new SDKCategorizeProjects();
@@ -393,7 +410,6 @@ namespace Build.Tasks.Tests
             }
 
             string dirRoot = Directory.GetDirectoryRoot(currDir);
-
             var buildProjFile = Directory.EnumerateFiles(currDir, "build.proj", SearchOption.TopDirectoryOnly);
             
             while(currDir != dirRoot)

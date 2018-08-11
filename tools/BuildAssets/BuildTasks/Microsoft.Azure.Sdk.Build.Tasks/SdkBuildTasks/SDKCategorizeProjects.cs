@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         public SDKCategorizeProjects()
         {
-            PkgRefsHS = new HashSet<string>();
+            //PkgRefsHS = new HashSet<string>();
         }
 
         /// <summary>
@@ -261,6 +261,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             //This allows us to reuse the metadata later.
             TaskData.CategorizedProjects = projWithMetaData.ToList<SdkProjectMetaData>();
 
+            #region update collections for output
             var net452SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var net461SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.net461 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var netStd14SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netstandard14 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
@@ -289,6 +290,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             unSupportedProjectsToBuild = unSupportedProjects?.ToArray<ITaskItem>();
             UnFilteredProjects = allProjects.ToArray<string>();
             nonSdkProjectToBuild = nonSdkProjects?.ToArray<ITaskItem>();
+
+            if (PkgRefsHS.Any<string>())
+            {
+                AzSdkPackageList = PkgRefsHS.ToList<string>();
+            }
+            #endregion
 
             return true;
         }
@@ -424,22 +431,13 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                             p.EvaluatedInclude.StartsWith("Microsoft.Rest.", StringComparison.OrdinalIgnoreCase))
                          select p.EvaluatedInclude;
 
-            foreach(string pkgRef in azSdks)
+            foreach (string pkgRef in azSdks)
             {
-                if(!PkgRefsHS.Contains(pkgRef))
-                {
-                    PkgRefsHS.Add(pkgRef);
-                }
+                PkgRefsHS.Add(pkgRef);
             }
 
+            //pkgList = PkgRefsHS.ToList<string>();
 
-            if (azSdks.Any<string>())
-            {
-                azSdks.
-                //pkgList = azSdks.ToList<string>();
-            }
-
-            //return pkgList;
         }
 
         private bool IsAzSdkRef(ProjectItem pi)
