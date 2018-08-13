@@ -175,15 +175,23 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
         #endregion
 
         #region Caches
-        public List<string> GetRestoreCacheLocation()
+        public List<string> GetRestoreCacheLocation(string workingDir = "")
         {
             string procOutput = string.Empty;
             string args = @"locals all -list";
             string[] outputSplitToken = new string[] { Environment.NewLine };
             string[] cacheLocationSplitToken = new string[] { " " }; 
             List<string> cacheLocationPath = new List<string>();
+            int exitCode = -1;
 
-            int exitCode = ExecuteCommand(args);
+            if(string.IsNullOrEmpty(workingDir))
+            {
+                exitCode = ExecuteCommand(args);
+            }
+            else
+            {
+                exitCode = ExecuteCommand(args, workingDir);
+            }
 
             if(exitCode != 0)
             {

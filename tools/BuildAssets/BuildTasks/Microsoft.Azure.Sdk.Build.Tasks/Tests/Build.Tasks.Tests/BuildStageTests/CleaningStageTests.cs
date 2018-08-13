@@ -26,29 +26,26 @@ namespace Build.Tasks.Tests.BuildStageTests
         [Fact]
         public void CleanScopedPackages()
         {
-            SDKCategorizeProjects catProj = CategorizeProjects(@"SDKs\Compute");
-            List<string> pkgRefList = catProj.AzSdkPackageList;
+            SDKCategorizeProjects catProj = CategorizeProjects(@"SDKs\Network");
+            List<string> pkgRefList = catProj.AzSdkPackageList.Select<ITaskItem, string>((item) => item.ItemSpec.ToString())?.ToList<string>();
 
             List<string> projList = catProj.net452SdkProjectsToBuild.Select<ITaskItem, string>((item) => item.ItemSpec).ToList<string>();
 
             NugetExec nExec = new NugetExec();
             NugetProcStatus procStatus = nExec.RestoreProject(projList);
-            Assert.Equal(0, procStatus.ExitCode);
+            //Assert.Equal(0, procStatus.ExitCode);
 
-            List<string> cacheLocations = nExec.GetRestoreCacheLocation();
-            cacheLocations.Add(RepoRestoreDir);
+            List<string> cacheLocations = new List<string>() { RepoRestoreDir };
 
-            //foreach (string cacheLocation in cacheLocations)
-            //{
-            //    foreach (string pkgName in pkgRefList)
-            //    {
-            //        string pkgNameDirPath = Path.Combine(cacheLocation, pkgName);
-            //        Assert.Equal(true, Directory.Exists(pkgNameDirPath));
-            //    }
-            //}
+            foreach (string pkgName in pkgRefList)
+            {
+                string pkgNameDirPath = Path.Combine(RepoRestoreDir, pkgName);
+                Assert.Equal(true, Directory.Exists(pkgNameDirPath));
+            }
 
             CleanPackagesTask cleanTsk = new CleanPackagesTask();
-            cleanTsk.PackageReferenceList = pkgRefList;
+            cleanTsk.PackageReferenceList = pkgRefList.ToArray<string>();
+            cleanTsk.RestoreCacheLocations = cacheLocations.ToArray<string>();
 
             cleanTsk.Execute();
 

@@ -170,7 +170,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         public string ProjectRootDir { get; private set; }
 
         [Output]
-        public List<string> AzSdkPackageList { get; private set; }
+        public ITaskItem[] AzSdkPackageList { get; private set; }
         
 
         /// <summary>
@@ -293,7 +293,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             if (PkgRefsHS.Any<string>())
             {
-                AzSdkPackageList = PkgRefsHS.ToList<string>();
+                var pkgRefTskItems = PkgRefsHS.Select<string, ITaskItem>((item) => new TaskItem(item));
+                AzSdkPackageList = pkgRefTskItems?.ToArray<ITaskItem>();
             }
             #endregion
 

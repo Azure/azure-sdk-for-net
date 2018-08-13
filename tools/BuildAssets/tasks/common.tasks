@@ -13,6 +13,7 @@
   <UsingTask TaskName="BuildProjectTemplatesTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
   <UsingTask TaskName="DebugTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
   <UsingTask TaskName="SDKCategorizeProjects" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
+  <UsingTask TaskName="CleanPackagesTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
   <UsingTask TaskName="PostBuildTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
   <UsingTask TaskName="PreBuildTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
   <UsingTask TaskName="SignNugetTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />

@@ -166,7 +166,7 @@ namespace Build.Tasks.Tests
             {
                 Assert.Equal(cproj.net452SdkProjectsToBuild.Count<ITaskItem>(), 1);
                 Assert.Equal(cproj.netCore20TestProjectsToBuild.Count<ITaskItem>(), 1);
-                Assert.True(cproj.AzSdkPackageList.Count<string>() >= 1);
+                Assert.True(cproj.AzSdkPackageList.Count<ITaskItem>() >= 1);
             }
         }
 

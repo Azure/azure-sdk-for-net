@@ -98,6 +98,9 @@
     </ItemGroup>
     <Message Text="Cleaning..... @(_SDKPackageFilesToDelete)" Condition=" '@(_SDKPackageFilesToDelete)' != '' " />
     <Delete Files="@(_SDKPackageFilesToDelete)" Condition=" '@(_SDKPackageFilesToDelete)' != '' " ContinueOnError="true"/>
+    <DebugTask Condition=" '$(DebugMode)' == 'true' "/>
+    <CleanPackagesTask RestoreCacheLocations="$(RestorePackagesPath)" PackageReferenceList="@(SdkProjPackageList)" DebugTrace="$(DebugTrace)" />
+
   </Target>
 
   <Target Name="RestoreLatestProjects" Condition=" '$(SkipRestore)' != 'true' ">
@@ -295,11 +298,11 @@
       <SkipSymbolPublishing Condition=" '$(SkipSymbolPublishing)' == '' ">false</SkipSymbolPublishing>
     </PropertyGroup>
 	
-	<Message Text="NugetPackageName...... $(NugetPackageName)" Condition=" '$(DebugTrace)' == 'true' "/>
-	<Message Text="PackageOutputPath...... $(PackageOutputPath)" Condition=" '$(DebugTrace)' == 'true' "/>
-	<Message Text="PublishNugetToDir...... $(PublishNugetToDir)" Condition=" '$(DebugTrace)' == 'true' "/>
-	<Message Text="NuGetCommand...... $(NuGetCommand)" Condition=" '$(DebugTrace)' == 'true' "/>
-	<Message Text="UserId...... $(UserId)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="NugetPackageName...... $(NugetPackageName)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="PackageOutputPath...... $(PackageOutputPath)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="PublishNugetToDir...... $(PublishNugetToDir)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="NuGetCommand...... $(NuGetCommand)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="UserId...... $(UserId)" Condition=" '$(DebugTrace)' == 'true' "/>
 	
     <MakeDir Directories="$(PublishNugetToDir)" Condition="!Exists($(PublishNugetToDir)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(PublishNugetToDir)', '^(?i)http'))" />
     <PublishSDKNugetTask 
@@ -335,6 +338,7 @@
       <Output TaskParameter="unSupportedProjectsToBuild" ItemName="unsupportedProj" />
       <Output TaskParameter="nonSdkProjectToBuild" ItemName="nonSdkProj" />
       <Output TaskParameter="ProjectRootDir" PropertyName="ProjRootDir" />
+      <Output TaskParameter="AzSdkPackageList" ItemName="SdkProjPkgList" />
     </SDKCategorizeProjects>
 
     <Message Text="Categorizing Projects....."/>
@@ -362,6 +366,7 @@
     <Message Text=" "/>
     <Message Text="NonSdk Projects......... @(nonSdkProj->Count())" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text="%(nonSdkProj.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
+    
 
     <PropertyGroup>
       <ProjectRootDir>$(ProjRootDir)</ProjectRootDir>
@@ -375,9 +380,10 @@
       <netCore11TestProjects Include="@(netCore11TestProj)"/>
       <netCore20TestProjects Include="@(netCore20TestProj)"/>
       <net452TestProjects Include="@(net452TestProj)"/>
-	  <net461TestProjects Include="@(net461TestProj)"/>
+	    <net461TestProjects Include="@(net461TestProj)"/>
       <unSupportedProject Include="@(unsupportedProj)"/>
       <nonSdkProject Include="@(nonSdkProj)"/>
+      <SdkProjPackageList Include="@(SdkProjPkgList)" />
     </ItemGroup>
 
     <ItemGroup>
@@ -387,6 +393,9 @@
       <ProjectToScanDirs Include="%(FilteredTestProjects.RootDir)%(FilteredTestProjects.Directory)"/>
     </ItemGroup>
 
+    <Message Text=" "/>
+    <Message Text="Package List....... @(SdkProjPackageList->Count())" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="%(SdkProjPackageList.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text=" "/>
     <Message Text="ProjectRootDir......... $(ProjectRootDir)" Condition=" '$(DebugTrace)' == 'true' "/>
   </Target>
