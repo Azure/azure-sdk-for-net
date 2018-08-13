@@ -6,33 +6,64 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 {
     public class CleanPackagesTask : NetSdkTask
     {
+        #region fields
+        List<string> packageToBeCleaned;
+        int testCount;
+        #endregion
+
         protected override INetSdkTask TaskInstance => this;
 
         public override string NetSdkTaskName => "CleanPackagesTask";
 
         [Required]
-        public string[] PackageReferenceList { get; set; }
+        public string[] PackageReferences { get; set; }
 
         public string[] RestoreCacheLocations { get; set; }
 
+        public string PackageSearchPattern { get; set; }
+
         public bool DebugTrace { get; set; }
 
+        public bool WhatIf { get; set; }
 
+        public bool DebugMode { get; set; }
+
+
+        public CleanPackagesTask()
+        {
+            packageToBeCleaned = new List<string>();
+            testCount = 1;
+        }
+
+        /// <summary>
+        /// Deletes packages from known nuget cache location
+        /// </summary>
+        /// <returns></returns>
         public override bool Execute()
         {
+            //InitExecute(DebugTrace, DebugMode);
+
             this.DebugTraceEnabled = DebugTrace;
+
+            packageToBeCleaned?.AddRange(PackageReferences);
+
             List<string> localCacheLocations = new NugetExec().GetRestoreCacheLocation();
 
             if (RestoreCacheLocations != null)
             {
                 localCacheLocations.AddRange(RestoreCacheLocations);
-                //RestoreCacheLocations = new NugetExec().GetRestoreCacheLocation();
+            }
+
+            if(!string.IsNullOrEmpty(PackageSearchPattern))
+            {
+                packageToBeCleaned.Add(PackageSearchPattern);
             }
 
             if(localCacheLocations.Any<string>())
@@ -42,46 +73,84 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 
                 localCacheLocations.ForEach((cl) =>
                 {
-                    TaskLogger.LogDebugInfo("Checking {0}", cl);
+                    //TaskLogger.LogDebugInfo("Checking {0}", cl);
                     delTsks[tskCount] = Task.Run(async () => await CleanRestoredPackagesAsync(cl));
                     tskCount++;
                 });
 
                 Task.WaitAll(delTsks);
+
+                TaskLogger.LogDebugInfo("Cleaning of Packages completed.....");
             }
 
-            //localCacheLocations.ForEach((cacheLoc) => Task.Run(() => CleanRestoredPackagesAsync(cacheLoc)));
-            //localCacheLocations.ForEach((cachLoc) => CleanRestoredPackages(cachLoc));
             return true;
         }
 
         private async Task CleanRestoredPackagesAsync(string cacheLocationDirPath)
         {
-            await Task.Run(() =>
+            //await Task.Run(() =>
+            //{
+            if (Directory.Exists(cacheLocationDirPath))
             {
-                if (Directory.Exists(cacheLocationDirPath))
-                {
-                    foreach (string pkgName in PackageReferenceList)
-                    {
-                        try
-                        {
-                            string fullPkgPath = Path.Combine(cacheLocationDirPath, pkgName);
-                            //TaskLogger.LogInfo("Checking {0} from {1}", pkgName, cacheLocationDirPath);
+                TaskLogger.LogDebugInfo("Checking {0}", cacheLocationDirPath);
 
-                            if (Directory.Exists(fullPkgPath))
+                foreach (string pkgName in packageToBeCleaned)
+                {   
+                    try
+                    {
+                        if (pkgName.Contains("*") || pkgName.Contains("?"))
+                        {
+                            var pkgSearchDirs = Directory.EnumerateDirectories(cacheLocationDirPath, pkgName, SearchOption.TopDirectoryOnly);
+
+                            if (pkgSearchDirs.Any<string>())
                             {
-                                TaskLogger.LogDebugInfo("Cleaning {0} from {1}", pkgName, cacheLocationDirPath);
-                                Directory.Delete(fullPkgPath, true);
+                                TaskLogger.LogDebugInfo("Found {0} package(s) under {1}", pkgSearchDirs.Count<string>().ToString(), cacheLocationDirPath);
                             }
 
+                            foreach (string dirWithPkg in pkgSearchDirs)
+                            {
+                                await DeleteDirAsync(dirWithPkg);
+                            }
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            TaskLogger.LogInfo(ex.ToString());
+                            await DeleteDirAsync(Path.Combine(cacheLocationDirPath, pkgName));
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        TaskLogger.LogInfo(ex.ToString());
+                    }
                 }
-            });
+            }
+        }
+            //});
+        
+
+        private async Task DeleteDirAsync(string dirToBeDeletedFullPath)
+        {
+            if(WhatIf)
+            {
+                //if (testCount == 4)
+                //{
+                //    await Task.Delay(TimeSpan.FromSeconds(15));
+                //}
+
+                if (Directory.Exists(dirToBeDeletedFullPath))
+                {
+                    TaskLogger.LogInfo("** Would be deleted {0}", dirToBeDeletedFullPath);
+                }
+            }
+            else
+            {   
+                if (Directory.Exists(dirToBeDeletedFullPath))
+                {
+                    TaskLogger.LogDebugInfo("Cleaning {0}", dirToBeDeletedFullPath);
+                    await Task.Run(() => Directory.Delete(dirToBeDeletedFullPath, true));
+                }
+            }
+
+            testCount++;
         }
     }
 }

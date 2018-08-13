@@ -99,8 +99,12 @@
     <Message Text="Cleaning..... @(_SDKPackageFilesToDelete)" Condition=" '@(_SDKPackageFilesToDelete)' != '' " />
     <Delete Files="@(_SDKPackageFilesToDelete)" Condition=" '@(_SDKPackageFilesToDelete)' != '' " ContinueOnError="true"/>
     <DebugTask Condition=" '$(DebugMode)' == 'true' "/>
-    <CleanPackagesTask RestoreCacheLocations="$(RestorePackagesPath)" PackageReferenceList="@(SdkProjPackageList)" DebugTrace="$(DebugTrace)" />
-
+    <CleanPackagesTask 
+            RestoreCacheLocations="$(RestorePackagesPath)" 
+            PackageReferences="@(SdkProjPackageList)" 
+            PackageSearchPattern="$(PackageSearchPattern)" 
+            DebugTrace="$(DebugTrace)" 
+            WhatIf="$(WhatIf)"/>
   </Target>
 
   <Target Name="RestoreLatestProjects" Condition=" '$(SkipRestore)' != 'true' ">

@@ -44,7 +44,7 @@ namespace Build.Tasks.Tests.BuildStageTests
             }
 
             CleanPackagesTask cleanTsk = new CleanPackagesTask();
-            cleanTsk.PackageReferenceList = pkgRefList.ToArray<string>();
+            cleanTsk.PackageReferences = pkgRefList.ToArray<string>();
             cleanTsk.RestoreCacheLocations = cacheLocations.ToArray<string>();
 
             cleanTsk.Execute();

@@ -446,7 +446,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             bool isAzSdk = false;
             isAzSdk = pi.EvaluatedInclude.StartsWith("Microsoft.Azure.", StringComparison.OrdinalIgnoreCase)
                 ||
-                pi.EvaluatedInclude.StartsWith("Microsoft.Rest.", StringComparison.OrdinalIgnoreCase);
+                pi.EvaluatedInclude.StartsWith("Microsoft.Rest.", StringComparison.OrdinalIgnoreCase)
+                ||
+                pi.EvaluatedInclude.StartsWith("Microsoft.AzureStack.", StringComparison.OrdinalIgnoreCase);
 
             return isAzSdk;
         }

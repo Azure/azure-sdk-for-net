@@ -10,6 +10,12 @@
             This is required for the base services like TaskLogger to be provided from the base class.
             </summary>
         </member>
+        <member name="M:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.CleanPackagesTask.Execute">
+            <summary>
+            Deletes packages from known nuget cache location
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuildTask.AssemblyFullPath">
             <summary>
             This property is test purpose only

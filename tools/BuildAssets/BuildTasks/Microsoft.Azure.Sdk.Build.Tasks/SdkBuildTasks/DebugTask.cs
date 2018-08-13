@@ -41,6 +41,12 @@ namespace Microsoft.Azure.Build.Tasks
             return true;
         }
 
+        public virtual bool ExecWithInfo(string info)
+        {
+            Console.WriteLine("Debugging {0}", info);
+            return Execute();
+        }
+
         private void GetProcessInfo()
         {
             Process proc = Process.GetCurrentProcess();
