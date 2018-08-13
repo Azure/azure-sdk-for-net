@@ -28,8 +28,8 @@ namespace Sql.Tests
 
                 Assert.True(response.Available);
                 Assert.Equal(serverName, response.Name);
-                Assert.Equal(null, response.Message);
-                Assert.Equal(null, response.Reason);
+                Assert.Null(response.Message);
+                Assert.Null(response.Reason);
             }
         }
 

@@ -278,7 +278,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateTriggerHistoryListResponse1(IPage<WorkflowTriggerHistory> page)
         {
-            Assert.Equal(1, page.Count());
+            Assert.Single(page);
             Assert.Equal("http://management.azure.com/keyNextLink", page.NextPageLink);
             this.ValidateTriggerHistory1(page.First());
         }

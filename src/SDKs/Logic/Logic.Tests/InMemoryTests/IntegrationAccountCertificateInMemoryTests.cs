@@ -265,7 +265,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateCertificateList(IPage<IntegrationAccountCertificate> result)
         {            
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
             this.ValidateCertificate(result.First());
             Assert.Equal(Constants.NextPageLink, result.NextPageLink);
         }

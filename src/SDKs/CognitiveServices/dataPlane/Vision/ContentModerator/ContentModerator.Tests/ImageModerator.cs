@@ -26,7 +26,6 @@ namespace ContentModeratorTests
         static ContentModeratorAPI api;
         public static List<ImageList> allImageLists;
         public static ImageIds allImages;
-        string imageListIdToDelete, imageListIdToUpdate, imageListId, imageId;
 
         
         BodyModel ImageUrlToModerate = new BodyModel ("URL", "https://pbs.twimg.com/media/BfopodJCUAAjmkU.jpg:large");
@@ -41,7 +40,7 @@ namespace ContentModeratorTests
             
         }
 
-        
+        [Fact(Skip = "Appeasing warnings")]
         public void TestCleanup()
         {
             TestCleanupConfiguration();

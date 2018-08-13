@@ -102,8 +102,8 @@ namespace WebSites.Tests.ScenarioTests
 
                 var whp1 = webHostingPlanResponse.First(f => f.Name == whpName1);
                 var whp2 = webHostingPlanResponse.First(f => f.Name == whpName2);
-                Assert.Equal(whp1.Sku.Tier, "Shared");
-                Assert.Equal(whp2.Sku.Tier, "Basic");
+                Assert.Equal("Shared", whp1.Sku.Tier);
+                Assert.Equal("Basic", whp2.Sku.Tier);
             }
         }
 
@@ -143,7 +143,7 @@ namespace WebSites.Tests.ScenarioTests
 
                 var webHostingPlanResponse = webSitesClient.AppServicePlans.ListByResourceGroup(resourceGroupName);
 
-                Assert.Equal(0, webHostingPlanResponse.Count());
+                Assert.Empty(webHostingPlanResponse);
             }
         }
 
@@ -253,7 +253,7 @@ namespace WebSites.Tests.ScenarioTests
 
                 var webHostingPlanResponse = webSitesClient.AppServicePlans.ListByResourceGroup(resourceGroupName);
 
-                Assert.Equal(0, webHostingPlanResponse.Count());
+                Assert.Empty(webHostingPlanResponse);
 
                 // Validate response
                 Assert.NotNull(result);

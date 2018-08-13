@@ -7,6 +7,9 @@
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>ApiManagementManagement.Tests</AssemblyName>    
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
+    <NoWarn>1591,1998</NoWarn>
+  </PropertyGroup>
 
   <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>

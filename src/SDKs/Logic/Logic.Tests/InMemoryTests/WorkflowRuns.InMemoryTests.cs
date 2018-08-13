@@ -270,7 +270,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateRunListResponse1(IPage<WorkflowRun> page)
         {
-            Assert.Equal(1, page.Count());
+            Assert.Single(page);
             Assert.Equal("http://management.azure.com/runNextLink", page.NextPageLink);
             this.ValidateRun1(page.First());
         }

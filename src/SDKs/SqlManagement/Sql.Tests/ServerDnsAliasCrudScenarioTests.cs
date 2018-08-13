@@ -38,7 +38,7 @@ namespace Sql.Tests
                 //
                 var serverDnsAliases = sqlClient.ServerDnsAliases.ListByServer(resourceGroup.Name, sourceServer.Name);
                 Assert.NotNull(serverDnsAliases);
-                Assert.Equal(1, serverDnsAliases.Count());
+                Assert.Single(serverDnsAliases);
                 Assert.Equal(serverDnsAliasName, serverDnsAliases.Select(a => a.Name).First());
 
                 // Update server to which alias is pointing

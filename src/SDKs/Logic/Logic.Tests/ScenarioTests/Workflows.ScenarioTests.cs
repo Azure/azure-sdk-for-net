@@ -131,7 +131,7 @@ namespace Test.Azure.Management.Logic
                 // List the workflow in resource group
                 var lists = client.Workflows.ListByResourceGroup(this.resourceGroupName, new ODataQuery<WorkflowFilter>(f => f.State == WorkflowState.Disabled) { Top = 1 });
 
-                Assert.Equal(1, lists.Count());
+                Assert.Single(lists);
 
                 // List the workflow in resource group
                 lists = client.Workflows.ListByResourceGroup(this.resourceGroupName);
@@ -229,7 +229,7 @@ namespace Test.Azure.Management.Logic
 
                 workflows = client.Workflows.ListByResourceGroup(this.resourceGroupName);
 
-                Assert.Equal(0, workflows.Count());
+                Assert.Empty(workflows);
             }
         }
 
@@ -255,7 +255,7 @@ namespace Test.Azure.Management.Logic
                 // Verify the response
                 Assert.Equal(workflowName, workflow.Name);
                 Assert.Equal(WorkflowState.Enabled, workflow.State);
-                Assert.Equal(null, workflow.Tags);
+                Assert.Null(workflow.Tags);
 
                 // Update the workflow
                 workflow = new Workflow()

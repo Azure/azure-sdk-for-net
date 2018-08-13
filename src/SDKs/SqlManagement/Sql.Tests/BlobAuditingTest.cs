@@ -159,7 +159,7 @@ namespace Sql.Tests
             else
             {
                 Assert.Equal(expected.AuditActionsAndGroups.Count, actual.AuditActionsAndGroups.Count);
-                actual.AuditActionsAndGroups.ForEach(s => Assert.True(expected.AuditActionsAndGroups.Any(es => es.Equals(s))));
+                actual.AuditActionsAndGroups.ForEach(s => Assert.Contains(expected.AuditActionsAndGroups, es => es.Equals(s)));
             }
             Assert.Equal(expected.StorageAccountSubscriptionId, actual.StorageAccountSubscriptionId);
             Assert.Equal(expected.IsStorageSecondaryKeyInUse, actual.IsStorageSecondaryKeyInUse);

@@ -901,7 +901,7 @@ namespace ContentModeratorTests
             Utilities u = new Utilities();
 			try
 			{
-				string tc = "Is this a crap email abcdef@abcd.com, phone: 6657789887, IP: 255.255.255.255, 1 Microsoft Way, Redmond, WA 98052 <HTML>HTML tags</HTML>";
+				//string tc = "Is this a crap email abcdef@abcd.com, phone: 6657789887, IP: 255.255.255.255, 1 Microsoft Way, Redmond, WA 98052 <HTML>HTML tags</HTML>";
 				
 				
 				TestBase.wait(2);

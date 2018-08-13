@@ -16,7 +16,7 @@ using Microsoft.Azure.CognitiveServices.ContentModerator;
 
 namespace ContentModeratorTests
 {
-        public class ImageListManagement : TestBase
+    public class ImageListManagement : TestBase
     {
 
         ContentModeratorClient client = null;
@@ -24,7 +24,7 @@ namespace ContentModeratorTests
         static ContentModeratorAPI api;
         public static List<ImageList> allImageLists;
         public static ImageIds allImages;
-        string imageListIdToDelete, imageListIdToUpdate, imageListId, imageId;
+
 
         public ImageListManagement()
         {
@@ -32,12 +32,13 @@ namespace ContentModeratorTests
         }
 
         
+        [Fact(Skip ="Appeasing warnings")]
         public void TestSetUp()
         {
             TestSetUpConfiguration();
         }
 
-        
+        [Fact(Skip = "Appeasing warnings")]
         public void TestCleanup()
         {
             TestCleanupConfiguration();
@@ -306,7 +307,7 @@ namespace ContentModeratorTests
                         api = ContentModeratorAPI.ADD_IMAGE;
                         HttpMockServer.Initialize("ImageListManagement", "AddImage");
                         client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
-                        results = Constants.GetResponse(client, api, imageListId);
+                        results = Constants.GetResponse(client, api, null);
                     }
                     var addImgeToListId = results.AddImage;
 

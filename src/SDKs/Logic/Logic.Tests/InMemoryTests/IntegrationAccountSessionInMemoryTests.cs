@@ -292,7 +292,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateSessionList(IPage<IntegrationAccountSession> result)
         {
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
             this.ValidateSession(result.First());
             Assert.Equal(Constants.NextPageLink, result.NextPageLink);
         }

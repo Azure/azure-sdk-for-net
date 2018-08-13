@@ -58,7 +58,7 @@ namespace Sql.Tests
 
                 // Validate key is gone by listing keys
                 var keyList2 = sqlClient.ServerKeys.ListByServer(resourceGroup.Name, server.Name);
-                Assert.Equal(1, keyList2.Count());
+                Assert.Single(keyList2);
             }
         }
     }

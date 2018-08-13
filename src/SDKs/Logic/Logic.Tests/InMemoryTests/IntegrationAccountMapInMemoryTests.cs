@@ -265,7 +265,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateMapList(IPage<IntegrationAccountMap> result)
         {            
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
             this.ValidateMap(result.First());
             Assert.Equal(Constants.NextPageLink, result.NextPageLink);
         }

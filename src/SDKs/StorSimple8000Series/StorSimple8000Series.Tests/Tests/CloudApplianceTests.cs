@@ -58,12 +58,12 @@ namespace StorSimple8000Series.Tests
                 var device = this.TrackScaJobByDeviceStatus(deviceName);
                 // Validate device status to be Ready to Setup
                 Assert.NotNull(device);
-                Assert.Equal(device.Status, DeviceStatus.ReadyToSetup);
+                Assert.Equal(DeviceStatus.ReadyToSetup, device.Status);
 
                 // Get job and validate if status is succeeded
                 var job = this.Client.Jobs.Get(deviceName, jobName, this.ResourceGroupName, this.ManagerName);
-                Assert.Equal(job.JobType, JobType.CreateCloudAppliance);
-                Assert.Equal(job.Status, JobStatus.Succeeded);
+                Assert.Equal(JobType.CreateCloudAppliance, job.JobType);
+                Assert.Equal(JobStatus.Succeeded, job.Status);
             }
             catch (Exception ex)
             {

@@ -29,7 +29,7 @@ namespace ContentModeratorTests
             TestSetUpConfiguration();
         }
 
-        
+        [Fact(Skip = "Appeasing warnings")]
         public void TestCleanup()
         {
             TestCleanupConfiguration();

@@ -5,6 +5,7 @@
     <Description>Microsoft Azure Key Vault Extensions tests</Description>
     <VersionPrefix>3.0.0-alpha</VersionPrefix>
     <AssemblyName>Microsoft.Azure.KeyVault.Extensions.Tests</AssemblyName>    
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>

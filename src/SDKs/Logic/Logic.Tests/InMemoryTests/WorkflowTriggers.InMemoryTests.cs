@@ -365,7 +365,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateTriggerListResponse1(IPage<WorkflowTrigger> page)
         {
-            Assert.Equal(1, page.Count());
+            Assert.Single(page);
             Assert.Equal("http://management.azure.com/triggerNextLink", page.NextPageLink);
             this.ValidateTrigger1(page.First());
         }

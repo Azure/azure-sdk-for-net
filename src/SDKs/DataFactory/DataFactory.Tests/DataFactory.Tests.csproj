@@ -6,6 +6,9 @@
     <AssemblyName>DataFactory.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
+    <NoWarn>1591;1701;1573;CS1591;CS1998</NoWarn>
+  </PropertyGroup>
   <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>-->

@@ -66,7 +66,7 @@ namespace WebSites.Tests.ScenarioTests
 
                 // TODO: Replace with GetSite with slotName API once its CSM related issue is resolved.
                 var webSiteSlotCollection = webSitesClient.WebApps.ListSlots(resourceGroupName, webSiteName);
-                Assert.Equal(1, webSiteSlotCollection.Count());
+                Assert.Single(webSiteSlotCollection);
                 Assert.Equal(siteSlotResourceName, webSiteSlotCollection.ToList()[0].Name);
             }
         }
@@ -121,7 +121,7 @@ namespace WebSites.Tests.ScenarioTests
 
                 var webSiteSlots = webSitesClient.WebApps.ListSlots(resourceGroupName, webSiteName);
 
-                Assert.Equal(1, webSiteSlots.Count());
+                Assert.Single(webSiteSlots);
                 Assert.Equal(siteSlotResourceName, webSiteSlots.ToList()[0].Name);
                 Assert.Equal(serverFarmId, webSiteSlots.ToList()[0].ServerFarmId, StringComparer.OrdinalIgnoreCase);
             }
@@ -179,7 +179,7 @@ namespace WebSites.Tests.ScenarioTests
 
                 var webSites = webSitesClient.WebApps.ListSlots(resourceGroupName, webSiteName);
 
-                Assert.Equal(0, webSites.Count());
+                Assert.Empty(webSites);
             }
         }
     }

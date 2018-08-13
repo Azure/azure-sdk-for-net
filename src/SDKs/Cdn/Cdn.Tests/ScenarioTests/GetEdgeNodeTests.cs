@@ -34,8 +34,8 @@ namespace Cdn.Tests.ScenarioTests
 
                 var edgeNodes = cdnMgmtClient.EdgeNodes.List().GetEnumerator().ToIEnumerable<EdgeNode>().ToList();
 
-                Assert.Equal(0, edgeNodes.Select(e => e.Name).Except(expectedEdgeNodeNames).Count());
-                Assert.Equal(0, expectedEdgeNodeNames.Except(edgeNodes.Select(e => e.Name)).Count());
+                Assert.Empty(edgeNodes.Select(e => e.Name).Except(expectedEdgeNodeNames));
+                Assert.Empty(expectedEdgeNodeNames.Except(edgeNodes.Select(e => e.Name)));
 
                 foreach (var edgeNode in edgeNodes)
                 {

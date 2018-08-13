@@ -36,7 +36,7 @@ namespace Test.Azure.Management.Logic
                 // List the triggers
                 var triggers = client.WorkflowTriggers.List(this.resourceGroupName, workflowName);
 
-                Assert.Equal(0, triggers.Count());
+                Assert.Empty(triggers);
 
                 // Delete the workflow
                 client.Workflows.Delete(this.resourceGroupName, workflowName);
@@ -65,7 +65,7 @@ namespace Test.Azure.Management.Logic
                 // List the triggers
                 var triggers = client.WorkflowTriggers.List(this.resourceGroupName, workflowName);
 
-                Assert.Equal(1, triggers.Count());
+                Assert.Single(triggers);
 
                 var trigger = client.WorkflowTriggers.Get(this.resourceGroupName, workflowName, "httpTrigger");
 

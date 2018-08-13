@@ -55,7 +55,7 @@ namespace WebSites.Tests.ScenarioTests
                 });
 
                 var backupResponse = webSitesClient.WebApps.ListBackups(resourceGroupName, siteName);
-                Assert.Equal(0, backupResponse.Count()); // , "Backup list should be empty"
+                Assert.Empty(backupResponse); // , "Backup list should be empty"
 
                 // the following URL just have a proper format, but it is not valid - for an API test it is not needed to be valid,
                 // since we are just testing a roundtrip here
@@ -93,7 +93,7 @@ namespace WebSites.Tests.ScenarioTests
 
                 var serverFarmResponse = webSitesClient.AppServicePlans.ListByResourceGroup(resourceGroupName);
 
-                Assert.Equal(0, serverFarmResponse.Count());
+                Assert.Empty(serverFarmResponse);
             }
         }
     }
