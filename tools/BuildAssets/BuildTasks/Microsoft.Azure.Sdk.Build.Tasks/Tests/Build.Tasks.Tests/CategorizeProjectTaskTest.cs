@@ -109,7 +109,7 @@ namespace Build.Tasks.Tests
             {
                 //Using a random number, basically if the number of projects drop below a certain, should fail this test
                 Assert.True(cproj.net452SdkProjectsToBuild.Count<ITaskItem>() > 10);
-                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() > 10);
+                Assert.True(cproj.netCore20TestProjectsToBuild.Count<ITaskItem>() > 10);
             }
             else
             {
@@ -129,7 +129,7 @@ namespace Build.Tasks.Tests
             {
                 int totalSdkProjectCount = cproj.net452SdkProjectsToBuild.Count() + cproj.netStd14SdkProjectsToBuild.Count<ITaskItem>();
                 Assert.True(totalSdkProjectCount > 112);
-                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() > 54);
+                Assert.True(cproj.netCore20TestProjectsToBuild.Count<ITaskItem>() > 54);
                 Assert.True(cproj.net452TestProjectsToBuild.Count<ITaskItem>() > 7);
 
                 Assert.Contains(sourceRootDir, cproj.ProjectRootDir);
@@ -148,8 +148,25 @@ namespace Build.Tasks.Tests
             if (cproj.Execute())
             {
                 Assert.Equal(cproj.net452SdkProjectsToBuild.Count<ITaskItem>(), 1);
-                Assert.Equal(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>(), 1);
+                Assert.Equal(cproj.netCore20TestProjectsToBuild.Count<ITaskItem>(), 1);
                 Assert.Contains(sourceRootDir, cproj.ProjectRootDir);
+            }
+        }
+
+        [Fact]
+        public void GetReferencedPackagesForScope()
+        {
+            string scopeDir = @"SDKs\Compute";
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = scopeDir;
+            cproj.IgnorePathTokens = Path.Combine(ignoreDir);
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(cproj.net452SdkProjectsToBuild.Count<ITaskItem>(), 1);
+                Assert.Equal(cproj.netCore20TestProjectsToBuild.Count<ITaskItem>(), 1);
+                Assert.True(cproj.AzSdkPackageList.Count<ITaskItem>() >= 1);
             }
         }
 
@@ -165,7 +182,7 @@ namespace Build.Tasks.Tests
             if (cproj.Execute())
             {
                 Assert.True(cproj.net452SdkProjectsToBuild.Count<ITaskItem>() >= 7);
-                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() >= 7);
+                Assert.True(cproj.netCore20TestProjectsToBuild.Count<ITaskItem>() >= 7);
             }
         }
 
@@ -181,7 +198,7 @@ namespace Build.Tasks.Tests
             if (cproj.Execute())
             {
                 Assert.True(cproj.net452SdkProjectsToBuild.Count<ITaskItem>() >= 3);
-                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() >= 3);
+                Assert.True(cproj.netCore20TestProjectsToBuild.Count<ITaskItem>() >= 3);
             }
         }
 
@@ -196,7 +213,7 @@ namespace Build.Tasks.Tests
             if (cproj.Execute())
             {
                 Assert.True(cproj.net452SdkProjectsToBuild.Count<ITaskItem>() == 0);
-                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() == 0);
+                Assert.True(cproj.netCore20TestProjectsToBuild.Count<ITaskItem>() == 0);
             }
         }
 
@@ -206,12 +223,12 @@ namespace Build.Tasks.Tests
             SDKCategorizeProjects cproj = new SDKCategorizeProjects();
             cproj.BuildScope = @"SDKs";
             cproj.SourceRootDirPath = sourceRootDir;
-            cproj.IncludePathTokens = "Batch Billing DataBox";
+            cproj.IncludePathTokens = "Search Billing DataBox";
 
             if (cproj.Execute())
             {
                 Assert.True(cproj.net452SdkProjectsToBuild.Count<ITaskItem>() >= 8);
-                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() >= 8);
+                Assert.True(cproj.netCore20TestProjectsToBuild.Count<ITaskItem>() >= 8);
             }
         }
 
@@ -227,7 +244,7 @@ namespace Build.Tasks.Tests
             if (cproj.Execute())
             {
                 Assert.Equal(1, cproj.net452SdkProjectsToBuild.Count<ITaskItem>());
-                Assert.Equal(1, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());
+                Assert.Equal(1, cproj.netCore20TestProjectsToBuild.Count<ITaskItem>());
             }
         }
 
@@ -289,7 +306,7 @@ namespace Build.Tasks.Tests
             if (cproj.Execute())
             {
                 Assert.True(cproj.net452SdkProjectsToBuild.Count<ITaskItem>() > 0);
-                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() > 0);
+                Assert.True(cproj.netCore20TestProjectsToBuild.Count<ITaskItem>() > 0);
             }
             else
             {
@@ -308,7 +325,7 @@ namespace Build.Tasks.Tests
             if (cproj.Execute())
             {
                 Assert.Equal(cproj.net452SdkProjectsToBuild.Count<ITaskItem>(), 1);
-                Assert.Equal(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>(), 1);
+                Assert.Equal(cproj.netCore20TestProjectsToBuild.Count<ITaskItem>(), 1);
             }
         }
 
@@ -327,7 +344,7 @@ namespace Build.Tasks.Tests
                 //but rather projects that are built without any targetFx
                 //
                 Assert.True(cproj.net452SdkProjectsToBuild.Count<ITaskItem>() >= 7);
-                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() >= 5);                
+                Assert.True(cproj.netCore20TestProjectsToBuild.Count<ITaskItem>() >= 5);                
             }
         }
 
@@ -346,7 +363,7 @@ namespace Build.Tasks.Tests
                 //but rather projects that are build without any targetFx
                 Assert.Equal(0, cproj.netStd14SdkProjectsToBuild.Count());
                 Assert.Equal(2, cproj.net452SdkProjectsToBuild.Count());
-                Assert.Equal(2, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());
+                Assert.Equal(2, cproj.netCore20TestProjectsToBuild.Count<ITaskItem>());
             }
         }
 
@@ -362,7 +379,7 @@ namespace Build.Tasks.Tests
             if (cproj.Execute())
             {
                 Assert.Equal(2, cproj.netStd14SdkProjectsToBuild.Count<ITaskItem>());
-                Assert.Equal(2, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());
+                Assert.Equal(2, cproj.netCore20TestProjectsToBuild.Count<ITaskItem>());
             }
         }
 
@@ -393,7 +410,6 @@ namespace Build.Tasks.Tests
             }
 
             string dirRoot = Directory.GetDirectoryRoot(currDir);
-
             var buildProjFile = Directory.EnumerateFiles(currDir, "build.proj", SearchOption.TopDirectoryOnly);
             
             while(currDir != dirRoot)

@@ -24,6 +24,8 @@ namespace Build.Tasks.Tests
         public string TestBinaryOutputDir { get; set; }
         public string TestDataRuntimeDir { get; set; }
 
+        public string RepoRestoreDir { get; set; }
+
         public BuildTestBase()
         {
             string codeBasePath = Assembly.GetExecutingAssembly().CodeBase;
@@ -37,6 +39,7 @@ namespace Build.Tasks.Tests
             SourceRootDir = Path.Combine(RootDir, "src");
             BinariesRootDir = Path.Combine(RootDir, "binaries");
             SignManifestDir = Path.Combine(BinariesRootDir, "signManifest");
+            RepoRestoreDir = Path.Combine(RootDir, "restoredPackages");
         }
 
         internal string GetSourceRootDir()

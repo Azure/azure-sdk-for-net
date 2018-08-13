@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
     using Microsoft.WindowsAzure.Build.Tasks.Utilities;
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
     using System.Text;
 
     public class NugetExec : ShellExec
@@ -103,6 +105,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
         {
         }
 
+        #region Publish
         public NugetPublishStatus Publish(string nupkgPath)
         {
             string args = string.Empty;
@@ -168,6 +171,111 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
 
             return publishStatusList;
         }
+
+        #endregion
+
+        #region Caches
+        public List<string> GetRestoreCacheLocation(string workingDir = "")
+        {
+            string procOutput = string.Empty;
+            string args = @"locals all -list";
+            string[] outputSplitToken = new string[] { Environment.NewLine };
+            string[] cacheLocationSplitToken = new string[] { " " }; 
+            List<string> cacheLocationPath = new List<string>();
+            int exitCode = -1;
+
+            if(string.IsNullOrEmpty(workingDir))
+            {
+                exitCode = ExecuteCommand(args);
+            }
+            else
+            {
+                exitCode = ExecuteCommand(args, workingDir);
+            }
+
+            if(exitCode != 0)
+            {
+                procOutput = this.AnalyzeExitCode();
+            }
+            else
+            {
+                procOutput = this.GetOutput();
+
+                foreach(string cacheLoc in procOutput.Split(outputSplitToken, StringSplitOptions.RemoveEmptyEntries ))
+                {
+                    string[] locTokens = cacheLoc.Split(cacheLocationSplitToken, StringSplitOptions.RemoveEmptyEntries);
+
+                    //TODO: find a much robust way to deal with the split tokens
+                    if(locTokens?.Length == 2)
+                    {
+                        // we are assuming that there will not be any duplicate locations nuget adds on a machine.
+                        // TODO: check how nuget behaves on non-windows for .NET Core
+                        //string loc = Path.Combine(locTokens[1], locTokens[2]);
+                        string loc = locTokens[1];
+                        cacheLocationPath.Add(loc);
+                    }
+                }
+            }
+
+            return cacheLocationPath;
+        }
+        #endregion
+
+        #region Restore
+        public NugetProcStatus RestoreProject(List<string> projectList)
+        {
+            string slnFilePath = string.Empty;
+
+            foreach (string projPath in projectList)
+            {
+                slnFilePath = GetSlnFilePath(projPath);
+
+                if (!string.IsNullOrEmpty(slnFilePath))
+                {
+                    break;
+                }
+            }
+
+            string args = string.Format("restore {0}", slnFilePath);
+            int exitcode = ExecuteCommand(args);
+
+            return new NugetProcStatus()
+            {
+                ExitCode = exitcode,
+                ProcInputArgs = args
+            };
+        }
+
+        private string GetSlnFilePath(string projectPath)
+        {
+            //This is poor mans method to get sln. Assuming the solution for the provided is in the rootpath
+
+            int depth = 3;
+            int currentDepth = 1;
+            string dirPath = Path.GetDirectoryName(projectPath);
+            string slnFilePath = string.Empty;
+
+            while(currentDepth <= depth)
+            {
+                if(Directory.Exists(dirPath))
+                {
+                    var slnFiles = Directory.EnumerateFiles(dirPath, "*.sln", SearchOption.TopDirectoryOnly);
+                    if(slnFiles.Any<string>())
+                    {
+                        slnFilePath = slnFiles.FirstOrDefault<string>();
+                        break;
+                    }
+
+                    dirPath = Directory.GetParent(dirPath).FullName;
+                    currentDepth++;
+                }
+            }
+
+            return slnFilePath;
+        }
+
+        #endregion
+
     }
     
     /// <summary>
@@ -184,5 +292,14 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
         public string PublishArgs { get; set; }
 
         public Exception CaughtException { get; set; }
+    }
+
+
+    public class NugetProcStatus
+    {
+        public int ExitCode { get; set; }
+        public string ProcErrorOutput { get; set; }
+
+        public string ProcInputArgs { get; set; }
     }
 }

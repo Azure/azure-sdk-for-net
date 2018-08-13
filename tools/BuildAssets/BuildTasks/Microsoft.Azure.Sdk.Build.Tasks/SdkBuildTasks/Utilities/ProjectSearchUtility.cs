@@ -332,7 +332,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         #region Private functions
         /// <summary>
         /// This function checks if the scope path (which is a relative path) is found under src directory
-        /// If not found, it will adjust the root directory from the actul root of repo (one level up)
+        /// If not found, it will adjust the root directory from the actual root of repo (one level up)
         /// Earlier: RootDirForSearch use to be <root>\src
         /// But we adjust and move one level up and then search again (if prior attempt resulted in no matching directories)
         /// </summary>

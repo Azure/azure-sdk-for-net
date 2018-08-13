@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BaseTasks
     using Microsoft.Build.Utilities;
     using Microsoft.Azure.Sdk.Build.Tasks.Utilities;
     using Microsoft.Build.Framework;
+    using Microsoft.Azure.Build.Tasks;
 
     public abstract class NetSdkTask : Task, INetSdkTask
     {
@@ -40,6 +41,17 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BaseTasks
         public override bool Execute()
         {
             throw new NotImplementedException();
+        }
+
+        public virtual void InitExecute(bool debugTrace, bool debugMode)
+        {
+            DebugTraceEnabled = debugTrace;
+
+            if(debugMode)
+            {
+                DebugTask dbgTsk = new DebugTask();
+                dbgTsk.ExecWithInfo(this.NetSdkTaskName);
+            }
         }
 
         #region Logging

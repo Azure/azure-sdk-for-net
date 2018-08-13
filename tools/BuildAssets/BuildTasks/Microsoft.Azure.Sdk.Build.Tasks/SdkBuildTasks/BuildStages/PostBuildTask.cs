@@ -196,6 +196,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             catch(Exception ex)
             {
                 TaskLogger.LogDebugInfo(ex.Message);
+                throw ex;
             }
 
             return combinedApiMap;

@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
                     foreach (string extToSearch in fileExt)
                     {
                         string searchPattern = string.Concat("*", extToSearch);
-                        var enumFiles = Directory.EnumerateFiles(InSignedFilesRootDirPath, searchPattern, SearchOption.AllDirectories);
+                        var enumFiles = Directory.EnumerateFiles(InSignedFilesRootDirPath, searchPattern, SearchOption.TopDirectoryOnly);
                         if(enumFiles.Any<string>())
                         {
                             searchedFiles.AddRange(enumFiles.ToList<string>());

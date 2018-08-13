@@ -38,11 +38,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         private string KV_IGNOREDIRNAME = "Microsoft.Azure.KeyVault.Samples";
         private string _ignoreDirNameForSearchingProjects;
         private string _searchProjectFileExt;
+        private HashSet<string> _pkgRefsHs;
         #endregion
 
         public SDKCategorizeProjects()
         {
-         
+            //PkgRefsHS = new HashSet<string>();
         }
 
         /// <summary>
@@ -80,6 +81,19 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         }
 
         public string IncludePathTokens { get; set; }
+
+        public HashSet<string> PkgRefsHS
+        {
+            get
+            {
+                if(_pkgRefsHs == null)
+                {
+                    _pkgRefsHs = new HashSet<string>();
+                }
+
+                return _pkgRefsHs;
+            }
+        }
 
         /// <summary>
         /// List of project file extension.
@@ -154,6 +168,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         [Output]
         public string ProjectRootDir { get; private set; }
+
+        [Output]
+        public ITaskItem[] AzSdkPackageList { get; private set; }
         
 
         /// <summary>
@@ -244,6 +261,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             //This allows us to reuse the metadata later.
             TaskData.CategorizedProjects = projWithMetaData.ToList<SdkProjectMetaData>();
 
+            #region update collections for output
             var net452SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var net461SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.net461 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var netStd14SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netstandard14 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
@@ -273,6 +291,13 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             UnFilteredProjects = allProjects.ToArray<string>();
             nonSdkProjectToBuild = nonSdkProjects?.ToArray<ITaskItem>();
 
+            if (PkgRefsHS.Any<string>())
+            {
+                var pkgRefTskItems = PkgRefsHS.Select<string, ITaskItem>((item) => new TaskItem(item));
+                AzSdkPackageList = pkgRefTskItems?.ToArray<ITaskItem>();
+            }
+            #endregion
+
             return true;
         }
 
@@ -289,37 +314,42 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             SdkProjctType pType = SdkProjctType.Sdk;
             var projList = from p in projectList select new TaskItem(p);
             IBuildEngine buildEng = this.BuildEngine;
+            List<string> packagesList = new List<string>();
 
-            ConcurrentBag<SdkProjectMetaData> projCollection = new ConcurrentBag<SdkProjectMetaData>();
+            //ConcurrentBag<SdkProjectMetaData> projCollection = new ConcurrentBag<SdkProjectMetaData>();
+            ConcurrentBag<SdkProjectMetaData> projCollection = GetLoadedProjectList(projList);
 
-#if DebugInVS
-            foreach (ITaskItem proj in projList)
-            {
-#else
-            ThreadingTsk.Parallel.ForEach<ITaskItem>(projList, (proj) =>
-            {
-#endif
-            try
-            {
-                    projCollection.Add(new SdkProjectMetaData() { MsBuildProject = new Project(proj.ItemSpec), ProjectTaskItem = proj });
-                }
-                catch (Exception ex)
-                {
-                    if (buildEng != null)
-                    {
-                        Log.LogWarningFromException(ex);
-                    }
-                    else
-                    {
-                        Debug.WriteLine(ex.Message);
-                    }
-                }
-#if !DebugInVS
-            });
-#else
-            }
-#endif
+            #region commentedCode
+            //#if DebugInVS
+            //            foreach (ITaskItem proj in projList)
+            //            {
+            //#else
+            //            ThreadingTsk.Parallel.ForEach<ITaskItem>(projList, (proj) =>
+            //            {
+            //#endif
+            //            try
+            //            {
+            //                    projCollection.Add(new SdkProjectMetaData() { MsBuildProject = new Project(proj.ItemSpec), ProjectTaskItem = proj });
+            //                }
+            //                catch (Exception ex)
+            //                {
+            //                    if (buildEng != null)
+            //                    {
+            //                        Log.LogWarningFromException(ex);
+            //                    }
+            //                    else
+            //                    {
+            //                        Debug.WriteLine(ex.Message);
+            //                    }
+            //                }
+            //#if !DebugInVS
+            //            });
+            //#else
+            //            }
+            //#endif
+            #endregion
 
+            #region
             foreach (SdkProjectMetaData sdkProjMD in projCollection)
             {
                 string targetFxList = sdkProjMD.MsBuildProject.GetPropertyValue("TargetFrameworks");
@@ -340,6 +370,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     {
                         pType = SdkProjctType.Sdk;
                     }
+
+                    UpdatePackageReferenceList(pkgs);
                 }
 
                 var fxNames = targetFxList?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)?.ToList<string>();
@@ -376,11 +408,96 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
                     sp.ProjectImports = GetProjectImports(sdkProjMD);
 
+                    
+
                     supportedProjectBag.Add(sp);
                 }
             }
 
+            projCollection = null;
+            #endregion
+
             return supportedProjectBag;
+        }
+
+        private void UpdatePackageReferenceList(ICollection<ProjectItem> pkgs)
+        {
+            List<string> pkgList = new List<string>();
+
+            //var azSdks = from p in pkgs where IsAzSdkRef(p) select p.EvaluatedInclude;
+            var azSdks = from p in pkgs
+                         where
+                            (p.EvaluatedInclude.StartsWith("Microsoft.Azure.", StringComparison.OrdinalIgnoreCase)
+                            ||
+                            p.EvaluatedInclude.StartsWith("Microsoft.Rest.", StringComparison.OrdinalIgnoreCase))
+                         select p.EvaluatedInclude;
+
+            foreach (string pkgRef in azSdks)
+            {
+                PkgRefsHS.Add(pkgRef);
+            }
+
+            //pkgList = PkgRefsHS.ToList<string>();
+
+        }
+
+        private bool IsAzSdkRef(ProjectItem pi)
+        {
+            bool isAzSdk = false;
+            isAzSdk = pi.EvaluatedInclude.StartsWith("Microsoft.Azure.", StringComparison.OrdinalIgnoreCase)
+                ||
+                pi.EvaluatedInclude.StartsWith("Microsoft.Rest.", StringComparison.OrdinalIgnoreCase)
+                ||
+                pi.EvaluatedInclude.StartsWith("Microsoft.AzureStack.", StringComparison.OrdinalIgnoreCase);
+
+            return isAzSdk;
+        }
+
+        private ConcurrentBag<SdkProjectMetaData> GetLoadedProjectList(IEnumerable<ITaskItem> projList)
+        {
+            //var projList = from p in projectList select new TaskItem(p);
+            ConcurrentBag<SdkProjectMetaData> projCollection = new ConcurrentBag<SdkProjectMetaData>();
+            IBuildEngine buildEng = this.BuildEngine;
+            Object lockObj = new object();
+
+            //#if !DebugInVS
+            //foreach (ITaskItem proj in projList)
+            //{
+            //#else
+            ThreadingTsk.Parallel.ForEach<ITaskItem>(projList, (proj) =>
+              {
+                   //#endif
+                   lock (lockObj)
+                  {
+                      try
+                      {
+                          projCollection.Add(new SdkProjectMetaData(proj));
+                           //{
+                           //    MsBuildProject = new Project(proj.ItemSpec),
+                           //    ProjectTaskItem = proj
+                           //});
+                       }
+                      catch (Exception ex)
+                      {
+                          if (buildEng != null)
+                          {
+                              Log.LogWarningFromException(ex);
+                          }
+                          else
+                          {
+                              Debug.WriteLine(ex.Message);
+                          }
+
+                          throw ex;
+                      }
+                  }
+                   //#if DebugInVS
+               });
+            //#else
+            //}
+            //#endif
+
+            return projCollection;
         }
 
         private List<string> GetProjectImports(SdkProjectMetaData sdkProjMD)

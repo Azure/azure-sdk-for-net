@@ -25,12 +25,12 @@ namespace Build.Tasks.Tests
             sdkSampleAssemblyDir = codeBaseUri.LocalPath;
         }
 
-        [Fact]
-        public void TagMultipleApiVersions()
-        {
-            GetApiMap("ApiInfo_Compute");
-            VerifyNupkg();
-        }
+        //[Fact]
+        //public void TagMultipleApiVersions()
+        //{
+        //    GetApiMap("ApiInfo_Compute");
+        //    VerifyNupkg();
+        //}
 
 
 

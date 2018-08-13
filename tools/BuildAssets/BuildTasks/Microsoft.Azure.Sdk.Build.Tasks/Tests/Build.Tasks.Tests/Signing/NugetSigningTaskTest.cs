@@ -13,7 +13,7 @@ namespace Build.Tasks.Tests.Signing
 
     public class NugetSigningTaskTest
     {
-        [Fact]
+        [Fact(Skip ="Have to be run on a machine where signing is enabled")]
         public void SignOneNuet()
         {
             SignClientExec signExec = new SignClientExec();
