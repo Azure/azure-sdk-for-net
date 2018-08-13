@@ -35,23 +35,21 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="id">Resource id.</param>
-        /// <param name="syncJobId">Gets the source control sync job
+        /// <param name="sourceControlSyncJobId">The source control sync job
         /// id.</param>
-        /// <param name="creationTime">Gets the creation time of the
-        /// job.</param>
-        /// <param name="provisioningState">Gets the provisioning state of the
-        /// job. Possible values include: 'Completed', 'Failed',
-        /// 'Running'</param>
-        /// <param name="startTime">Gets the start time of the job.</param>
-        /// <param name="endTime">Gets the end time of the job.</param>
-        /// <param name="startType">Gets the type of start for the sync job.
+        /// <param name="creationTime">The creation time of the job.</param>
+        /// <param name="provisioningState">The provisioning state of the job.
+        /// Possible values include: 'Completed', 'Failed', 'Running'</param>
+        /// <param name="startTime">The start time of the job.</param>
+        /// <param name="endTime">The end time of the job.</param>
+        /// <param name="startType">The type of start for the sync job.
         /// Possible values include: 'AutoSync', 'ManualSync'</param>
-        public SourceControlSyncJob(string name = default(string), string type = default(string), string id = default(string), string syncJobId = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string provisioningState = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string startType = default(string))
+        public SourceControlSyncJob(string name = default(string), string type = default(string), string id = default(string), string sourceControlSyncJobId = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string provisioningState = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string startType = default(string))
         {
             Name = name;
             Type = type;
             Id = id;
-            SyncJobId = syncJobId;
+            SourceControlSyncJobId = sourceControlSyncJobId;
             CreationTime = creationTime;
             ProvisioningState = provisioningState;
             StartTime = startTime;
@@ -84,10 +82,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the source control sync job id.
+        /// Gets or sets the source control sync job id.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.syncJobId")]
-        public string SyncJobId { get; set; }
+        [JsonProperty(PropertyName = "properties.sourceControlSyncJobId")]
+        public string SourceControlSyncJobId { get; set; }
 
         /// <summary>
         /// Gets the creation time of the job.
@@ -96,8 +94,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         public System.DateTimeOffset CreationTime { get; private set; }
 
         /// <summary>
-        /// Gets the provisioning state of the job. Possible values include:
-        /// 'Completed', 'Failed', 'Running'
+        /// Gets or sets the provisioning state of the job. Possible values
+        /// include: 'Completed', 'Failed', 'Running'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
@@ -115,8 +113,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         public System.DateTimeOffset? EndTime { get; private set; }
 
         /// <summary>
-        /// Gets the type of start for the sync job. Possible values include:
-        /// 'AutoSync', 'ManualSync'
+        /// Gets or sets the type of start for the sync job. Possible values
+        /// include: 'AutoSync', 'ManualSync'
         /// </summary>
         [JsonProperty(PropertyName = "properties.startType")]
         public string StartType { get; set; }

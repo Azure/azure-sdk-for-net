@@ -67,7 +67,8 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             /// Returns the requested platform image.
             /// </summary>
             /// <remarks>
-            /// Returns the requested platform image.
+            /// Returns the specific platform image matching publisher, offer, skus and
+            /// version.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -96,7 +97,8 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             /// Returns the requested platform image.
             /// </summary>
             /// <remarks>
-            /// Returns the requested platform image.
+            /// Returns the specific platform image matching publisher, offer, skus and
+            /// version.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -131,7 +133,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             /// Creates a platform image.
             /// </summary>
             /// <remarks>
-            /// Creates a new platform image.
+            /// Creates a new platform image with given publisher, offer, skus and version.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -163,7 +165,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             /// Creates a platform image.
             /// </summary>
             /// <remarks>
-            /// Creates a new platform image.
+            /// Creates a new platform image with given publisher, offer, skus and version.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -198,7 +200,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             }
 
             /// <summary>
-            /// Deletes a platform image
+            /// Deletes a platform image matching publisher, offer, skus and version
             /// </summary>
             /// <remarks>
             /// Delete a platform image
@@ -227,7 +229,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             }
 
             /// <summary>
-            /// Deletes a platform image
+            /// Deletes a platform image matching publisher, offer, skus and version
             /// </summary>
             /// <remarks>
             /// Delete a platform image
@@ -262,7 +264,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             /// Creates a platform image.
             /// </summary>
             /// <remarks>
-            /// Creates a new platform image.
+            /// Creates a new platform image with given publisher, offer, skus and version.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -294,7 +296,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             /// Creates a platform image.
             /// </summary>
             /// <remarks>
-            /// Creates a new platform image.
+            /// Creates a new platform image with given publisher, offer, skus and version.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

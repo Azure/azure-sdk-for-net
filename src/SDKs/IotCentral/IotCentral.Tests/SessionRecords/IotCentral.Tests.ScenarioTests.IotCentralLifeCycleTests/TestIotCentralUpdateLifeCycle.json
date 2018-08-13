@@ -65,8 +65,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/providers/Microsoft.IoTCentral/checkNameAvailability?api-version=2017-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW9UQ2VudHJhbC9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxNy0wNy0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/providers/Microsoft.IoTCentral/checkNameAvailability?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW9UQ2VudHJhbC9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxOC0wOS0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"name\": \"dotnetsdkapppdate\"\r\n}",
       "RequestHeaders": {
@@ -142,8 +142,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate?api-version=2017-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHBwZGF0ZT9hcGktdmVyc2lvbj0yMDE3LTA3LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHBwZGF0ZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"dotnetsdkapppdate\",\r\n    \"subdomain\": \"dotnetsdkapppdate\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"location\": \"WestUS\"\r\n}",
       "RequestHeaders": {
@@ -215,8 +215,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate?api-version=2017-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHBwZGF0ZT9hcGktdmVyc2lvbj0yMDE3LTA3LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHBwZGF0ZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"test-updated-display-name\",\r\n    \"subdomain\": \"test-updated-sub-domain\",\r\n    \"template\": \"iotc-default@1.0.0\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"location\": \"WestUS\"\r\n}",
       "RequestHeaders": {
@@ -288,8 +288,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate?api-version=2017-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHBwZGF0ZT9hcGktdmVyc2lvbj0yMDE3LTA3LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHBwZGF0ZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -353,8 +353,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate?api-version=2017-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHBwZGF0ZT9hcGktdmVyc2lvbj0yMDE3LTA3LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHBwZGF0ZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -418,8 +418,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps?api-version=2017-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcz9hcGktdmVyc2lvbj0yMDE3LTA3LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcz9hcGktdmVyc2lvbj0yMDE4LTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

@@ -86,6 +86,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </return>
         public async Task<HttpOperationResponse<int?>> AddPhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, PhraselistCreateObject phraselistCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -108,8 +112,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddPhraseList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/phraselists").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/phraselists";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -256,6 +261,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </return>
         public async Task<HttpOperationResponse<IList<PhraseListFeatureInfo>>> ListPhraseListsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -287,8 +296,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "ListPhraseLists", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/phraselists").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/phraselists";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
@@ -442,6 +452,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </return>
         public async Task<HttpOperationResponse<FeaturesResponseObject>> ListWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -473,8 +487,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/features").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/features";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
@@ -625,6 +640,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </return>
         public async Task<HttpOperationResponse<PhraseListFeatureInfo>> GetPhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, int phraselistId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -643,8 +662,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetPhraseList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/phraselists/{phraselistId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/phraselists/{phraselistId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{phraselistId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(phraselistId, Client.SerializationSettings).Trim('"')));
@@ -788,6 +808,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </return>
         public async Task<HttpOperationResponse<OperationStatus>> UpdatePhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, int phraselistId, PhraselistUpdateObject phraselistUpdateObject = default(PhraselistUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -807,8 +831,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdatePhraseList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/phraselists/{phraselistId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/phraselists/{phraselistId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{phraselistId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(phraselistId, Client.SerializationSettings).Trim('"')));
@@ -953,6 +978,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </return>
         public async Task<HttpOperationResponse<OperationStatus>> DeletePhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, int phraselistId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -971,8 +1000,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeletePhraseList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/phraselists/{phraselistId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/phraselists/{phraselistId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{phraselistId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(phraselistId, Client.SerializationSettings).Trim('"')));

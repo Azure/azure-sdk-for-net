@@ -21,7 +21,7 @@ namespace PowerBIDedicated.Tests.ScenarioTests
 {
     public class CapacityOperationsTests : TestBase
     {
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public void CreateGetUpdateDeleteTest()
         {
             string executingAssemblyPath = typeof(PowerBIDedicated.Tests.ScenarioTests.CapacityOperationsTests).GetTypeInfo().Assembly.Location;
@@ -177,7 +177,8 @@ namespace PowerBIDedicated.Tests.ScenarioTests
                 DedicatedCapacity testCapacity = PowerBIDedicatedTestUtilities.GetDefaultDedicatedResource();
 
                 SkuEnumerationForNewResourceResult skusListForNew = client.Capacities.ListSkus();
-                testCapacity.Sku = skusListForNew.Value.First();
+                testCapacity.Sku = skusListForNew.Value.Where(val => val.Name == "A1").First() ;
+                if (testCapacity.Sku == null) skusListForNew.Value.First();
 
                 DedicatedCapacity resultCreate = null;
                 try
@@ -214,7 +215,7 @@ namespace PowerBIDedicated.Tests.ScenarioTests
 
                 // Scale up the capacity and verify
                 SkuEnumerationForExistingResourceResult skusListForExisting = client.Capacities.ListSkusForCapacity(PowerBIDedicatedTestUtilities.DefaultResourceGroup, PowerBIDedicatedTestUtilities.DefaultCapacityName);
-                ResourceSku newSku = skusListForExisting.Value.Where(detail => detail.Sku.Name != testCapacity.Sku.Name).First().Sku;
+                ResourceSku newSku = skusListForExisting.Value.Where(detail => detail.Sku.Name != testCapacity.Sku.Name && detail.Sku.Name.StartsWith("A")).First().Sku;
 
                 DedicatedCapacityUpdateParameters updateParameters = new DedicatedCapacityUpdateParameters()
                 {
@@ -229,14 +230,35 @@ namespace PowerBIDedicated.Tests.ScenarioTests
                 Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
                 Assert.Equal("Succeeded", resultUpdate.State);
 
+                // Suspend the capacity
+                client.Capacities.Suspend(PowerBIDedicatedTestUtilities.DefaultResourceGroup, PowerBIDedicatedTestUtilities.DefaultCapacityName);
+
+                // get the capacity and ensure that all the values are properly set.
+                resultGet = client.Capacities.GetDetails(PowerBIDedicatedTestUtilities.DefaultResourceGroup, PowerBIDedicatedTestUtilities.DefaultCapacityName);
+
+                Assert.Equal("Paused", resultGet.ProvisioningState);
+                Assert.Equal("Paused", resultGet.State);
+
+                updateParameters = new DedicatedCapacityUpdateParameters()
+                {
+                    Sku = testCapacity.Sku
+                };
+
+                resultUpdate = client.Capacities.Update(
+                    PowerBIDedicatedTestUtilities.DefaultResourceGroup,
+                    PowerBIDedicatedTestUtilities.DefaultCapacityName,
+                    updateParameters);
+
+                Assert.Equal("Paused", resultUpdate.ProvisioningState);
+                Assert.Equal("Paused", resultUpdate.State);
+
                 // get the capacity and ensure that all the values are properly set.
                 resultGet = client.Capacities.GetDetails(PowerBIDedicatedTestUtilities.DefaultResourceGroup, PowerBIDedicatedTestUtilities.DefaultCapacityName);
 
                 // validate the capacity creation process
                 Assert.Equal(PowerBIDedicatedTestUtilities.DefaultLocation, resultGet.Location);
                 Assert.Equal(PowerBIDedicatedTestUtilities.DefaultCapacityName, resultGet.Name);
-                Assert.Equal(newSku.Name, resultGet.Sku.Name);
-                Assert.Equal(newSku.Tier, resultGet.Sku.Tier);
+                Assert.Equal(testCapacity.Sku.Name, resultGet.Sku.Name);
                 Assert.Equal(2, resultGet.Tags.Count);
                 Assert.True(resultGet.Tags.ContainsKey("key1"));
                 Assert.Equal(2, resultGet.Administration.Members.Count);
@@ -264,13 +286,13 @@ namespace PowerBIDedicated.Tests.ScenarioTests
                     var resultOperationsList = client.Operations.List();
 
                     // validate the opertaions result
-                    Assert.Equal(5, resultOperationsList.Count());
+                    Assert.Equal(16, resultOperationsList.Count());
 
                     var opertationsPageLink = "https://api-dogfood.resources.windows-int.net/providers/Microsoft.PowerBIDedicated/operations?api-version=2017-10-01";
                     var resultOperationsNextPage = client.Operations.ListNext(opertationsPageLink);
 
                     // validate the opertaions result
-                    Assert.Equal(5, resultOperationsNextPage.Count());
+                    Assert.Equal(16, resultOperationsNextPage.Count());
                 }
                 catch (Exception ex)
                 {

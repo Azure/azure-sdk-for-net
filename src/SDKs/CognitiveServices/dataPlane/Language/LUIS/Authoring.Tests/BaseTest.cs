@@ -22,7 +22,10 @@ namespace LUIS.Authoring.Tests.Luis
 
         private ILUISAuthoringClient GetClient(DelegatingHandler handler)
         {
-            return new LUISAuthoringClient(new ApiKeyServiceClientCredentials(subscriptionKey), handlers: handler);
+            var client = new LUISAuthoringClient(new ApiKeyServiceClientCredentials(subscriptionKey), handlers: handler);
+            client.Endpoint = "https://westus.api.cognitive.microsoft.com";
+            return client;
+
         }
 
         protected async void UseClientFor(Func<ILUISAuthoringClient, Task> doTest, string className = null, [CallerMemberName] string methodName = "")

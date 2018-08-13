@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
-
 namespace Microsoft.Rest.Azure
 {
+    using Microsoft.Rest.ClientRuntime.Azure.CommonModels;
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Provides additional information about an http error response
     /// </summary>
@@ -16,6 +18,7 @@ namespace Microsoft.Rest.Azure
         public CloudError()
         {
             Details = new List<CloudError>();
+            AdditionalInfo = new List<AdditionalErrorInfo>();
         }
 
         /// <summary>
@@ -36,6 +39,11 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// Gets or sets details for the error.
         /// </summary>
-        public IList<CloudError> Details { get; private set; }
+        public IList<CloudError> Details { get; internal set; }
+
+        /// <summary>
+        /// Gets or sets additional error info.
+        /// </summary>
+        public IList<AdditionalErrorInfo> AdditionalInfo { get; internal set; }
     }
 }
