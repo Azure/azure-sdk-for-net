@@ -10,8 +10,6 @@
 // Do not modify it.
 //
 
-using Microsoft.Azure.Batch.Common;
-
 namespace Microsoft.Azure.Batch
 {
     using Models = Microsoft.Azure.Batch.Protocol.Models;
