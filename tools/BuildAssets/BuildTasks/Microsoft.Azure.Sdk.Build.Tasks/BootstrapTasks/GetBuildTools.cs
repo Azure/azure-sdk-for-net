@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Build.BootstrapTasks
     using System.IO;
     using System.Net;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Bootstrap task, which simply copies all build tools to local branch
@@ -129,10 +130,14 @@ namespace Microsoft.Azure.Build.BootstrapTasks
                         else
                         {
                             string url = remoteUri.ToString();
-                            if (url.ToLower().Contains("readme.md"))
+                            Regex regex = new Regex("readme.md", RegexOptions.IgnoreCase);
+                            if (regex.IsMatch(url))
                             {
-                                url = url.ToLower().Replace("readme.md", "");
-                                _remoteRootDir = url;
+                                _remoteRootDir = regex.Replace(url, "");
+                            }
+                            else
+                            {
+                                BuildToolsLogger.LogException(new Exception(string.Format("Url {0} does not contain readme.md", url)));
                             }
                         }
                     }
@@ -311,6 +316,7 @@ namespace Microsoft.Azure.Build.BootstrapTasks
                     {
                         copyFrom = Path.Combine(RemoteCopyFromRootDir, fl);
                         copyTo = Path.Combine(LocalBranchCopyToRootDir, fl);
+                        BuildToolsLogger.LogDebugInfo(string.Format("Copying {0} to {1}", copyFrom, copyTo));
                         CopyFile(copyFrom, copyTo);
                     }
 
@@ -356,7 +362,6 @@ namespace Microsoft.Azure.Build.BootstrapTasks
                         //BuildToolsLogger.LogInfo("redirected to:" + myResp.GetResponseHeader("Location"));
                     }
                 }
-
                 if (remoteUri == null)
                 {
                     BuildToolsLogger.LogDebugInfo("Unable to retrieve aka.ms uri");
@@ -379,12 +384,12 @@ namespace Microsoft.Azure.Build.BootstrapTasks
         {
             string userProfilePSModulesPath = new Uri(Environment.GetEnvironmentVariable("USERPROFILE") + "\\Documents\\WindowsPowerShell\\Modules").AbsolutePath;
             
-            IEnumerable<string> psModulesToCopy = filesToCopy.Where(p=>p.StartsWith("psModules"))
-                                                             .Where(p=>p.EndsWith(".psm1")||p.EndsWith(".psd1")||p.EndsWith(".ps1"));
+            IEnumerable<string> psModulesToCopy = filesToCopy.Where(p=>p.StartsWith("psModules"));
             foreach (var module in psModulesToCopy)
             {
                 var srcFile = Path.GetFullPath(Path.Combine(psModulesDir, module));
                 var destFile = Path.GetFullPath(Path.Combine(userProfilePSModulesPath, module.Replace("psModules/", "")));
+                BuildToolsLogger.LogDebugInfo(string.Format("Copying {0} to {1}", srcFile, destFile));
                 CopyFile(srcFile, destFile);
             }
         }
