@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Automation.Models
 {
 
     /// <summary>
-    /// Defines values for StartType.
+    /// Defines values for SyncType.
     /// </summary>
-    public static class StartType
+    public static class SyncType
     {
-        public const string AutoSync = "AutoSync";
-        public const string ManualSync = "ManualSync";
+        public const string PartialSync = "PartialSync";
+        public const string FullSync = "FullSync";
     }
 }
