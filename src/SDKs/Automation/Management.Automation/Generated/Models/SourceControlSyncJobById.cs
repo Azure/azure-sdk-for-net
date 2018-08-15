@@ -40,11 +40,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Possible values include: 'Completed', 'Failed', 'Running'</param>
         /// <param name="startTime">The start time of the job.</param>
         /// <param name="endTime">The end time of the job.</param>
-        /// <param name="startType">The type of start for the sync job.
-        /// Possible values include: 'AutoSync', 'ManualSync'</param>
+        /// <param name="syncType">The sync type. Possible values include:
+        /// 'PartialSync', 'FullSync'</param>
         /// <param name="exception">The exceptions that occured while running
         /// the sync job.</param>
-        public SourceControlSyncJobById(string id = default(string), string sourceControlSyncJobId = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string provisioningState = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string startType = default(string), string exception = default(string))
+        public SourceControlSyncJobById(string id = default(string), string sourceControlSyncJobId = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string provisioningState = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string syncType = default(string), string exception = default(string))
         {
             Id = id;
             SourceControlSyncJobId = sourceControlSyncJobId;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Automation.Models
             ProvisioningState = provisioningState;
             StartTime = startTime;
             EndTime = endTime;
-            StartType = startType;
+            SyncType = syncType;
             Exception = exception;
             CustomInit();
         }
@@ -100,11 +100,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         public System.DateTimeOffset? EndTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the type of start for the sync job. Possible values
-        /// include: 'AutoSync', 'ManualSync'
+        /// Gets or sets the sync type. Possible values include: 'PartialSync',
+        /// 'FullSync'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.startType")]
-        public string StartType { get; set; }
+        [JsonProperty(PropertyName = "properties.syncType")]
+        public string SyncType { get; set; }
 
         /// <summary>
         /// Gets or sets the exceptions that occured while running the sync

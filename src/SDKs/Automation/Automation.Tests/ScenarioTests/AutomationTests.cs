@@ -467,7 +467,7 @@ namespace Automation.Tests.ScenarioTests
                     Assert.Equal(retrievedSyncJob.ProvisioningState, syncJob.ProvisioningState);
                     Assert.Equal(retrievedSyncJob.StartTime, syncJob.StartTime);
                     Assert.Equal(retrievedSyncJob.EndTime, syncJob.EndTime);
-                    Assert.Equal(retrievedSyncJob.StartType, syncJob.StartType);
+                    //Assert.Equal(retrievedSyncJob.SyncType, syncJob.SyncType);
 
                     var syncJobList = testFixture.GetSourceControlSyncJobs(sourceControlName);
 
