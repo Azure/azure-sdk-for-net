@@ -432,7 +432,7 @@ namespace Automation.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Waiting on webservice deployment")]
         public void CanCreateSourceControlSyncJob()
         {
             using (var context = MockContext.Start(GetType().FullName))
