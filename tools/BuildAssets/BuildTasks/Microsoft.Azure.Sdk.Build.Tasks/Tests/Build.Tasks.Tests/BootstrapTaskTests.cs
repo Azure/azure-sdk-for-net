@@ -51,6 +51,20 @@ namespace Build.Tasks.Tests
             Assert.False(getBldTools.unableToCopyFilePath.Count > 0);
         }
 
+        // Ensure we do not change case of the URL while accessing git. 
+        // Since "azuRe" doesn't exist, build tools will not be installed
+        [Fact]
+        public void CopyFilesFromGitHubCaseInsensitive()
+        {
+            string localBranchDir = new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
+            string remoteRootDir = @"https://raw.githubusercontent.com/azuRe/azure-sdk-for-net/psSdkJson6/";
+            Assert.False(string.IsNullOrEmpty(localBranchDir) && Directory.Exists(localBranchDir));
+            GetBuildTools getBldTools = new GetBuildTools(localBranchDir, remoteRootDir);
+            getBldTools.Execute();
+            var sdkBuildToolsDir = Path.Combine(localBranchDir, @"tools\SdkBuildTools");
+            Assert.Empty(Directory.GetFiles(sdkBuildToolsDir));
+        }
+
         [Fact]
         public void CopyFilesFromLocalDir()
         {
