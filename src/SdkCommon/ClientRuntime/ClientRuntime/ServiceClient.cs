@@ -208,8 +208,10 @@ namespace Microsoft.Rest
                                 .Substring("Version=".Length);
                     }
 
+                    _clientVersion = CleanUserAgentInfoEntry(_clientVersion);
+
                 }
-                return CleanUserAgentInfoEntry(_clientVersion);
+                return _clientVersion;
             }
         }
 
