@@ -589,18 +589,15 @@
                     {
                         var stronglyTypedRequest = (Microsoft.Azure.Batch.Protocol.BatchRequests.JobAddBatchRequest)req;
 
-                        var originalServiceRequestFunc = stronglyTypedRequest.ServiceRequestFunc;
-
                         stronglyTypedRequest.ServiceRequestFunc = (token) =>
                         {
                             ++callCount;
-                            return originalServiceRequestFunc(token);
+                            throw new Microsoft.Rest.ValidationException();
                         };
                     }));
 
                 client.CustomBehaviors.Add(new RetryPolicyProvider(policy));
 
-                //This will throw an exception since a job has required parameters such as id which are not specified
                 CloudJob job = client.JobOperations.CreateJob();
                 await Assert.ThrowsAsync<Microsoft.Rest.ValidationException>(async () => await job.CommitAsync());
 

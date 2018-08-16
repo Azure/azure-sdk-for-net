@@ -510,7 +510,7 @@
                         this.testOutputHelper.WriteLine("File {0} has last modified time: {1}", Constants.StandardOutFileName, file.Properties.LastModified);
 
                         Assert.Equal(expectedFileSize, file.Properties.ContentLength);
-                        Assert.Equal("application/octet-stream", file.Properties.ContentType);
+                        Assert.Equal("text/plain", file.Properties.ContentType);
 
                         //
                         // NodeFile by node
@@ -538,7 +538,7 @@
                         this.testOutputHelper.WriteLine("File {0} has last modified time: {1}", filePathToGet, file.Properties.LastModified);
 
                         Assert.Equal(expectedFileSize, file.Properties.ContentLength);
-                        Assert.Equal("application/octet-stream", file.Properties.ContentType);
+                        Assert.Equal("text/plain", file.Properties.ContentType);
                     }
                     finally
                     {

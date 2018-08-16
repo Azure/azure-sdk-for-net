@@ -136,6 +136,7 @@ namespace Azure.Batch.Unit.Tests
                 new ComparerPropertyMapping(typeof(ComputeNode), typeof(Protocol.Models.ComputeNode), "IPAddress", "IpAddress"),
                 new ComparerPropertyMapping(typeof(ComputeNode), typeof(Protocol.Models.ComputeNode), "VirtualMachineSize", "VmSize"),
                 new ComparerPropertyMapping(typeof(ComputeNode), typeof(Protocol.Models.ComputeNode), "StartTaskInformation", "StartTaskInfo"),
+                new ComparerPropertyMapping(typeof(ComputeNode), typeof(Protocol.Models.ComputeNode), "NodeAgentInformation", "NodeAgentInfo"),
 
                 new ComparerPropertyMapping(typeof(ComputeNodeInformation), typeof(Protocol.Models.ComputeNodeInformation), "ComputeNodeId", "NodeId"),
                 new ComparerPropertyMapping(typeof(ComputeNodeInformation), typeof(Protocol.Models.ComputeNodeInformation), "ComputeNodeUrl", "NodeUrl"),
