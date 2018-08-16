@@ -88,6 +88,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     string revisionNumber = "2";
 
                     // create a revision of Petstore
+                    var revisionDescription = "Petstore second revision";
                     var petstoreRevisionContract = new ApiCreateOrUpdateParameter()
                     {
                         Path = petstoreApiContract.Path + revisionNumber,
@@ -96,7 +97,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                         Protocols = petstoreApiContract.Protocols,
                         SubscriptionKeyParameterNames = petstoreApiContract.SubscriptionKeyParameterNames,
                         AuthenticationSettings = petstoreApiContract.AuthenticationSettings,
-                        Description = petstoreApiContract.Description
+                        Description = petstoreApiContract.Description,
+                        ApiRevisionDescription = revisionDescription
                     };
 
                     var petStoreSecondRevision = await testBase.client.Api.CreateOrUpdateAsync(
@@ -108,6 +110,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(petstoreRevisionContract.Path, petStoreSecondRevision.Path);
                     Assert.Equal(petstoreRevisionContract.ServiceUrl, petStoreSecondRevision.ServiceUrl);
                     Assert.Equal(revisionNumber, petStoreSecondRevision.ApiRevision);
+                    Assert.Equal(revisionDescription, petStoreSecondRevision.ApiRevisionDescription);
 
                     // add couple of operation to this revision
                     var newOperationId = TestUtilities.GenerateName("firstOpRev");
@@ -159,6 +162,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         newApiId);
                     Assert.NotNull(apiRevisions);
                     Assert.Equal(2, apiRevisions.GetEnumerator().ToIEnumerable<ApiRevisionContract>().Count());
+                    Assert.NotEmpty(apiRevisions.GetEnumerator().ToIEnumerable().Single(d => d.ApiRevision.Equals(revisionNumber)).ApiRevision);
                     Assert.Single(apiRevisions.GetEnumerator().ToIEnumerable().Where(a => a.IsCurrent.HasValue && a.IsCurrent.Value)); // there is only one revision which is current
 
                     // get the etag of the revision
