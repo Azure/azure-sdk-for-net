@@ -7,7 +7,7 @@
 
 $errorStream = New-Object -TypeName "System.Text.StringBuilder";
 $outputStream = New-Object -TypeName "System.Text.StringBuilder";
-$generateSDKMetadata = $false
+$generateSDKMetadata = $true
 
 
 function Get-SdkRepoRootDirectory {
@@ -198,8 +198,7 @@ param(
 
 function Populate-Metadata {
     param($metadataTemplate, $metadataDict)
-
-    Foreach ($Key in $metadataDict.GetEnumerator())
+    Foreach ($key in $metadataDict.Keys)
     {
         $metadataTemplate = $metadataTemplate.Replace($key, $metadataDict[$key])
     }
@@ -208,6 +207,7 @@ function Populate-Metadata {
     $metadataTemplate = $metadataTemplate.Replace('\', '\\')
     return $metadataTemplate
 }
+
 function Start-MetadataGeneration {
     param(
         [Parameter(Mandatory = $true)]
@@ -269,19 +269,17 @@ function Start-MetadataGeneration {
         if($sdkInfoFile -and (Test-Path -Path $sdkInfoFile))
         {
             $metadataTemplate = Get-Content "$PSScriptRoot\MetadataFieldsTemplate.txt" -Raw
-            $metadataDict = @()
-            $metadataDict["{{GithubRepoName}}"] = $specsRepoName
-            $metadataDict["{{GithubBranchName}}"] = $specsRepoBranch
-            $metadataDict["{{GithubForkName}}"] = $specsRepoFork
-            $metadataDict["{{GithubCommidId}}"] = $commitId
-            $metadataDict["{{AutoRestVersion}}"] = $AutoRestVersion
-            $metadataDict["{{AutoRestCmdExecuted}}"] = $AutoRestCommandExecuted
-            $metadataDict["{{AutoRestBootStrapperVersion}}"] = $ver
-
-            $metadataTemplate = Populate-Metadata($metadataTemplate, $metadataDict)
+            $metadataDict = New-Object 'System.Collections.Generic.Dictionary[String,String]'
+            $metadataDict.Add("{{GithubRepoName}}", $specsRepoName)
+            $metadataDict.Add("{{GithubBranchName}}", $specsRepoBranch)
+            $metadataDict.Add("{{GithubForkName}}", $specsRepoFork)
+            $metadataDict.Add("{{GithubCommidId}}", $commitId)
+            $metadataDict.Add("{{AutoRestVersion}}", $AutoRestVersion)
+            $metadataDict.Add("{{AutoRestCmdExecuted}}", $AutoRestCommandExecuted)
+            $metadataDict.Add("{{AutoRestBootStrapperVersion}}", $ver)
+            $metadataTemplate = Populate-Metadata $metadataTemplate $metadataDict
                 
             $sdkInfo = Get-Content $sdkInfoFile -Raw
-            
             if($sdkInfo -cmatch '(.*)\/\/ BEGIN: Code Generation Metadata Section(\n|.)*\/\/ END: Code Generation Metadata Section')
             {
                 # Find the regex match and replace it with the new metadata
@@ -604,7 +602,6 @@ function Start-CodeGeneration {
         }
     }
     catch {
-        Write-ErrorLog $_.ToString() 
         Write-ErrorLog $_.ToString() 
     }
     finally {
