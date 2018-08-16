@@ -1,14 +1,14 @@
-﻿using Microsoft.WindowsAzure.Build.Tasks;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Build.Tasks.Tests
 {
+    using Microsoft.WindowsAzure.Build.Tasks;
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+
     public class BuildTestBase
     {
         internal string rootDir = string.Empty;
@@ -18,6 +18,8 @@ namespace Build.Tasks.Tests
         public string SourceRootDir { get; private set; }
 
         public string BinariesRootDir { get; private set; }
+
+        public string ToolsRootDir { get; private set; }
 
         public string SignManifestDir { get; private set; }
 
@@ -38,6 +40,7 @@ namespace Build.Tasks.Tests
             RootDir = GetSourceRootDir();
             SourceRootDir = Path.Combine(RootDir, "src");
             BinariesRootDir = Path.Combine(RootDir, "binaries");
+            ToolsRootDir = Path.Combine(RootDir, "Tools");
             SignManifestDir = Path.Combine(BinariesRootDir, "signManifest");
             RepoRestoreDir = Path.Combine(RootDir, "restoredPackages");
         }

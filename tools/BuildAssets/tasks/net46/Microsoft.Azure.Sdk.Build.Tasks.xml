@@ -10,12 +10,6 @@
             This is required for the base services like TaskLogger to be provided from the base class.
             </summary>
         </member>
-        <member name="M:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.CleanPackagesTask.Execute">
-            <summary>
-            Deletes packages from known nuget cache location
-            </summary>
-            <returns></returns>
-        </member>
         <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuildTask.AssemblyFullPath">
             <summary>
             This property is test purpose only
@@ -83,6 +77,12 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Sdk.Build.Tasks.BuildStages.CleanPackagesTask.Execute">
+            <summary>
+            Deletes packages from known nuget cache location
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Microsoft.Azure.Sdk.Build.Tasks.PackageTasks.PrePackageTasks">
             <summary>
@@ -178,6 +178,33 @@
         <member name="M:Microsoft.Azure.Sdk.Build.ExecProcess.SignClientExec.BuildShellProcessArgs">
             <summary>
             Build commandline args string
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.UtilityTasks.InstallProjectTemplates.ToolsDirPath">
+            <summary>
+            Directory path to the tools directory in the repo
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.UtilityTasks.InstallProjectTemplates.TaskErrorDetected">
+            <summary>
+            True: If errors were detected during execution of task
+            False: If no errors were detected during task execution
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.UtilityTasks.InstallProjectTemplates.TemplateBuildOutputDirPath">
+            <summary>
+            Directory path where the templates will be copied after build
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Sdk.Build.UtilityTasks.InstallProjectTemplates.Init">
+            <summary>
+            Initialize data
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Sdk.Build.UtilityTasks.InstallProjectTemplates.Execute">
+            <summary>
+            Execute Build Template task
             </summary>
             <returns></returns>
         </member>
