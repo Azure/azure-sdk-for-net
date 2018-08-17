@@ -2,6 +2,7 @@ targets/additional.targets
 targets/common.Build.props
 targets/common.NugetPackage.props
 targets/common.targets
+targets/utility.targets
 targets/ideCmd.targets
 targets/signing.targets
 targets/core/_AzSdk.props

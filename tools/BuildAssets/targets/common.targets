@@ -439,5 +439,6 @@
   <Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)"/>
   <Import Project="signing.targets"/>  
   <Import Project="additional.targets"/>
+  <Import Project="utility.targets"/>
   <Import Project="..\tasks\common.tasks"/>  
 </Project>
