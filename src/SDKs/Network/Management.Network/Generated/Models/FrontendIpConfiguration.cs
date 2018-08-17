@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// use this frontend IP.</param>
         /// <param name="inboundNatPools">Read only. Inbound pools URIs that
         /// use this frontend IP.</param>
-        /// <param name="outboundNatRules">Read only. Outbound rules URIs that
-        /// use this frontend IP.</param>
+        /// <param name="outboundRules">Read only. Outbound rules URIs that use
+        /// this frontend IP.</param>
         /// <param name="loadBalancingRules">Gets load balancing rules URIs
         /// that use this frontend IP.</param>
         /// <param name="privateIPAddress">The private IP address of the IP
@@ -50,6 +50,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// values include: 'Static', 'Dynamic'</param>
         /// <param name="subnet">The reference of the subnet resource.</param>
         /// <param name="publicIPAddress">The reference of the Public IP
+        /// resource.</param>
+        /// <param name="publicIPPrefix">The reference of the Public IP Prefix
         /// resource.</param>
         /// <param name="provisioningState">Gets the provisioning state of the
         /// public IP resource. Possible values are: 'Updating', 'Deleting',
@@ -61,17 +63,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the resource is updated.</param>
         /// <param name="zones">A list of availability zones denoting the IP
         /// allocated for the resource needs to come from.</param>
-        public FrontendIPConfiguration(string id = default(string), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundNatRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), Subnet subnet = default(Subnet), PublicIPAddress publicIPAddress = default(PublicIPAddress), string provisioningState = default(string), string name = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
+        public FrontendIPConfiguration(string id = default(string), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), Subnet subnet = default(Subnet), PublicIPAddress publicIPAddress = default(PublicIPAddress), SubResource publicIPPrefix = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
             : base(id)
         {
             InboundNatRules = inboundNatRules;
             InboundNatPools = inboundNatPools;
-            OutboundNatRules = outboundNatRules;
+            OutboundRules = outboundRules;
             LoadBalancingRules = loadBalancingRules;
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
+            PublicIPPrefix = publicIPPrefix;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -99,8 +102,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets read only. Outbound rules URIs that use this frontend IP.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.outboundNatRules")]
-        public IList<SubResource> OutboundNatRules { get; private set; }
+        [JsonProperty(PropertyName = "properties.outboundRules")]
+        public IList<SubResource> OutboundRules { get; private set; }
 
         /// <summary>
         /// Gets load balancing rules URIs that use this frontend IP.
@@ -133,6 +136,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public PublicIPAddress PublicIPAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of the Public IP Prefix resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicIPPrefix")]
+        public SubResource PublicIPPrefix { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the public IP resource. Possible
