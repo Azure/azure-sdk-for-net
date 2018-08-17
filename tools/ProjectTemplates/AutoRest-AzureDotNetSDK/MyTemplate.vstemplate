@@ -18,7 +18,7 @@
 	<Project File="AutoRest-AzureDotNetSDK.csproj" ReplaceParameters="true">
 		<Folder Name="Properties" TargetFolderName="Properties">
 			<ProjectItem ReplaceParameters="true" TargetFileName="Properties\AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
-		</Folder>		
+		</Folder>
 		<ProjectItem ReplaceParameters="true" TargetFileName="Class1.cs" OpenInEditor="true">Class1.cs</ProjectItem>
     </Project>
   </TemplateContent>
