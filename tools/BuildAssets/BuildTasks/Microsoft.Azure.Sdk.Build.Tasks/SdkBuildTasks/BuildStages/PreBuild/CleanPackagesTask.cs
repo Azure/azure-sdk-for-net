@@ -48,8 +48,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         /// <returns></returns>
         public override bool Execute()
         {
-            //InitExecute(DebugTrace, DebugMode);
-
             this.DebugTraceEnabled = DebugTrace;
 
             packageToBeCleaned?.AddRange(PackageReferences);
