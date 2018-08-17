@@ -7,9 +7,6 @@
     <VersionPrefix>1.0.0-preview</VersionPrefix>
     <!--<TargetFrameworks>netcoreapp1.1</TargetFrameworks>-->
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
-    <NoWarn>xUnit1026,1591</NoWarn>
-  </PropertyGroup>
   
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">

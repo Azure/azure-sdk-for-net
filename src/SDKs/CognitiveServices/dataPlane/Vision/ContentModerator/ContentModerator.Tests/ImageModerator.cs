@@ -40,8 +40,7 @@ namespace ContentModeratorTests
             
         }
 
-        [Fact(Skip = "Appeasing warnings")]
-        public void TestCleanup()
+        internal void TestCleanup()
         {
             TestCleanupConfiguration();
         }
