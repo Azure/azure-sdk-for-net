@@ -98,5 +98,6 @@ namespace Microsoft.Azure.Management.Sql
       public static readonly String GithubCommidId = "5ba2af3c6980cc4f617c1270cbdbd72ab6d02281";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section  }
+      // END: Code Generation Metadata Section  
+  }
 }
