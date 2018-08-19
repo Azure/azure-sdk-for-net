@@ -15,9 +15,10 @@ namespace Sql.Tests
 {
     public class SensitivityLabelsScenarioTests
     {
-        private const string SchemaName = "dbo";
-        private const string TableName = "Persons";
-        private const string Current = "current";
+        private const string s_Current = "current";
+        private const string s_DatabaseNamePrefix = "sqldatabasesensitivitylabelscrudtest-";
+        private const string s_SchemaName = "dbo";
+        private const string s_TableName = "Persons";
 
         [Fact]
         public void TestDatabaseSensitivityLabels()
@@ -33,7 +34,7 @@ namespace Sql.Tests
                     EndIpAddress = "255.255.255.255"
                 });
 
-                Database database = client.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(DatabaseNamePrefix), new Database()
+                Database database = client.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(s_DatabaseNamePrefix), new Database()
                 {
                     Location = server.Location,
                 });
@@ -59,7 +60,7 @@ namespace Sql.Tests
                                 FirstName varchar(255),
                                 Address varchar(255),
                                 City varchar(255) 
-                            );", TableName), connection);
+                            );", s_TableName), connection);
                         command.ExecuteNonQuery();
                     }
 
@@ -67,31 +68,31 @@ namespace Sql.Tests
                     IPage<SensitivityLabel> sensitivityLabels = client.SensitivityLabels.ListByDatabase(resourceGroup.Name, server.Name, database.Name);
                     Assert.NotNull(sensitivityLabels);
                     Assert.NotEmpty(sensitivityLabels);
-                    Assert.DoesNotContain(sensitivityLabels, label => label.Name.Equals(Current));
+                    Assert.DoesNotContain(sensitivityLabels, label => label.Name.Equals(s_Current));
                     int labelsCount = sensitivityLabels.Count();
                     SensitivityLabel sensitivityLabel = sensitivityLabels.First();
                     string columnName = sensitivityLabel.Id.Split("/")[16];
 
                     SensitivityLabel responseLabel = client.SensitivityLabels.CreateOrUpdate(
-                        resourceGroup.Name, server.Name, database.Name, SchemaName, TableName, columnName,
+                        resourceGroup.Name, server.Name, database.Name, s_SchemaName, s_TableName, columnName,
                         new SensitivityLabel(labelName: sensitivityLabel.LabelName, informationType: sensitivityLabel.InformationType));
                     AssertEqual(sensitivityLabel, responseLabel);
 
-                    responseLabel = client.SensitivityLabels.Get(resourceGroup.Name, server.Name, database.Name, SchemaName, TableName, columnName, SensitivityLabelSource.Current);
+                    responseLabel = client.SensitivityLabels.Get(resourceGroup.Name, server.Name, database.Name, s_SchemaName, s_TableName, columnName, SensitivityLabelSource.Current);
                     AssertEqual(sensitivityLabel, responseLabel);
 
                     sensitivityLabels = client.SensitivityLabels.ListByDatabase(resourceGroup.Name, server.Name, database.Name);
                     Assert.NotNull(sensitivityLabels);
                     Assert.Equal(labelsCount, sensitivityLabels.Count());
                     Assert.Equal(labelsCount - 1, sensitivityLabels.Where(l => l.Name == "recommended").Count());
-                    Assert.Contains(sensitivityLabels, label => label.Name.Equals(Current));
+                    Assert.Contains(sensitivityLabels, label => label.Name.Equals(s_Current));
 
-                    client.SensitivityLabels.Delete(resourceGroup.Name, server.Name, database.Name, SchemaName, TableName, columnName);
+                    client.SensitivityLabels.Delete(resourceGroup.Name, server.Name, database.Name, s_SchemaName, s_TableName, columnName);
 
                     sensitivityLabels = client.SensitivityLabels.ListByDatabase(resourceGroup.Name, server.Name, database.Name);
                     Assert.NotNull(sensitivityLabels);
                     Assert.Equal(labelsCount, sensitivityLabels.Count());
-                    Assert.DoesNotContain(sensitivityLabels, label => label.Name.Equals(Current));
+                    Assert.DoesNotContain(sensitivityLabels, label => label.Name.Equals(s_Current));
 
                     client.Databases.Delete(resourceGroup.Name, server.Name, database.Name);
                     client.Servers.Delete(resourceGroup.Name, server.Name);
@@ -115,9 +116,7 @@ namespace Sql.Tests
             Assert.Equal(expected.LabelName, actual.LabelName);
             Assert.Equal(expected.InformationType, actual.InformationType);
             Assert.Equal(expected.Type, actual.Type);
-            Assert.Equal(Current, actual.Name);
+            Assert.Equal(s_Current, actual.Name);
         }
-
-        private const string DatabaseNamePrefix = "sqldatabasesensitivitylabelscrudtest-";
     }
 }

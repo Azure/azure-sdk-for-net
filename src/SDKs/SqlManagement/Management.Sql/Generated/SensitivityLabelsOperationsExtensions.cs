@@ -77,6 +77,70 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
+            /// Gets the sensitivity labels of a given database
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='sensitivityLabelSource'>
+            /// Optional source of the sensitivity label. Valid values are current or
+            /// recommeneded. In not specified both returned. Possible values include:
+            /// 'current', 'recommended'
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static IPage<SensitivityLabel> ListByDatabaseWithSource(this ISensitivityLabelsOperations operations, string resourceGroupName, string serverName, string databaseName, SensitivityLabelSource sensitivityLabelSource, ODataQuery<SensitivityLabel> odataQuery = default(ODataQuery<SensitivityLabel>))
+            {
+                return operations.ListByDatabaseWithSourceAsync(resourceGroupName, serverName, databaseName, sensitivityLabelSource, odataQuery).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the sensitivity labels of a given database
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='sensitivityLabelSource'>
+            /// Optional source of the sensitivity label. Valid values are current or
+            /// recommeneded. In not specified both returned. Possible values include:
+            /// 'current', 'recommended'
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SensitivityLabel>> ListByDatabaseWithSourceAsync(this ISensitivityLabelsOperations operations, string resourceGroupName, string serverName, string databaseName, SensitivityLabelSource sensitivityLabelSource, ODataQuery<SensitivityLabel> odataQuery = default(ODataQuery<SensitivityLabel>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDatabaseWithSourceWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, sensitivityLabelSource, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the sensitivity label of a given column
             /// </summary>
             /// <param name='operations'>
@@ -314,6 +378,40 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<IPage<SensitivityLabel>> ListByDatabaseNextAsync(this ISensitivityLabelsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the sensitivity labels of a given database
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SensitivityLabel> ListByDatabaseWithSourceNext(this ISensitivityLabelsOperations operations, string nextPageLink)
+            {
+                return operations.ListByDatabaseWithSourceNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the sensitivity labels of a given database
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SensitivityLabel>> ListByDatabaseWithSourceNextAsync(this ISensitivityLabelsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDatabaseWithSourceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
