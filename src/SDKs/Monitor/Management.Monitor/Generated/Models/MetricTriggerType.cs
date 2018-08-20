@@ -10,26 +10,13 @@
 
 namespace Microsoft.Azure.Management.Monitor.Models
 {
-    using System.Linq;
 
     /// <summary>
-    /// Action descriptor.
+    /// Defines values for MetricTriggerType.
     /// </summary>
-    public partial class Action
+    public static class MetricTriggerType
     {
-        /// <summary>
-        /// Initializes a new instance of the Action class.
-        /// </summary>
-        public Action()
-        {
-            CustomInit();
-        }
-
-
-        /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
-        /// </summary>
-        partial void CustomInit();
-
+        public const string Consecutive = "Consecutive";
+        public const string Total = "Total";
     }
 }

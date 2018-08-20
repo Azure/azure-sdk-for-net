@@ -30,7 +30,7 @@ namespace Monitor.Tests.Scenarios
         }
 
         [Fact]
-        [Trait("Category", "Sceanrio")]
+        [Trait("Category", "Scenario")]
         public void MetricAlertRuleFlow()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

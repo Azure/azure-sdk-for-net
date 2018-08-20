@@ -10,26 +10,15 @@
 
 namespace Microsoft.Azure.Management.Monitor.Models
 {
-    using System.Linq;
 
     /// <summary>
-    /// Action descriptor.
+    /// Defines values for ProvisioningState.
     /// </summary>
-    public partial class Action
+    public static class ProvisioningState
     {
-        /// <summary>
-        /// Initializes a new instance of the Action class.
-        /// </summary>
-        public Action()
-        {
-            CustomInit();
-        }
-
-
-        /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
-        /// </summary>
-        partial void CustomInit();
-
+        public const string Succeeded = "Succeeded";
+        public const string Deploying = "Deploying";
+        public const string Canceled = "Canceled";
+        public const string Failed = "Failed";
     }
 }
