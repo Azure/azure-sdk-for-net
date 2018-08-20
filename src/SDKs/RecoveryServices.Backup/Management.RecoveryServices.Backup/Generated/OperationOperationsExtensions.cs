@@ -17,15 +17,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for ExportJobsOperationResultsOperations.
+    /// Extension methods for OperationOperations.
     /// </summary>
-    public static partial class ExportJobsOperationResultsOperationsExtensions
+    public static partial class OperationOperationsExtensions
     {
             /// <summary>
-            /// Gets the operation result of operation triggered by Export Jobs API. If the
-            /// operation is successful, then it also
-            /// contains URL of a Blob and a SAS key to access the same. The blob contains
-            /// exported jobs in JSON serialized format.
+            /// Validate operation for specified backed up item. This is a synchronous
+            /// operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -37,19 +35,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// The name of the resource group where the recovery services vault is
             /// present.
             /// </param>
-            /// <param name='operationId'>
-            /// OperationID which represents the export job.
+            /// <param name='parameters'>
+            /// resource validate operation request
             /// </param>
-            public static OperationResultInfoBaseResource Get(this IExportJobsOperationResultsOperations operations, string vaultName, string resourceGroupName, string operationId)
+            public static ValidateOperationsResponse Validate(this IOperationOperations operations, string vaultName, string resourceGroupName, ValidateOperationRequest parameters)
             {
-                return operations.GetAsync(vaultName, resourceGroupName, operationId).GetAwaiter().GetResult();
+                return operations.ValidateAsync(vaultName, resourceGroupName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the operation result of operation triggered by Export Jobs API. If the
-            /// operation is successful, then it also
-            /// contains URL of a Blob and a SAS key to access the same. The blob contains
-            /// exported jobs in JSON serialized format.
+            /// Validate operation for specified backed up item. This is a synchronous
+            /// operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,15 +57,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// The name of the resource group where the recovery services vault is
             /// present.
             /// </param>
-            /// <param name='operationId'>
-            /// OperationID which represents the export job.
+            /// <param name='parameters'>
+            /// resource validate operation request
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationResultInfoBaseResource> GetAsync(this IExportJobsOperationResultsOperations operations, string vaultName, string resourceGroupName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ValidateOperationsResponse> ValidateAsync(this IOperationOperations operations, string vaultName, string resourceGroupName, ValidateOperationRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(vaultName, resourceGroupName, operationId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ValidateWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

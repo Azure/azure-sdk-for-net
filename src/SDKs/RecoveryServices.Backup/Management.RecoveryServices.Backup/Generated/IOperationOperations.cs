@@ -19,17 +19,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ProtectionPolicyOperationStatusesOperations operations.
+    /// OperationOperations operations.
     /// </summary>
-    public partial interface IProtectionPolicyOperationStatusesOperations
+    public partial interface IOperationOperations
     {
         /// <summary>
-        /// Provides the status of the asynchronous operations like backup,
-        /// restore. The status can be in progress, completed
-        /// or failed. You can refer to the Operation Status enum for all the
-        /// possible states of an operation. Some operations
-        /// create jobs. This method returns the list of jobs associated with
-        /// operation.
+        /// Validate operation for specified backed up item. This is a
+        /// synchronous operation.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -38,12 +34,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The name of the resource group where the recovery services vault is
         /// present.
         /// </param>
-        /// <param name='policyName'>
-        /// Backup policy name whose operation's status needs to be fetched.
-        /// </param>
-        /// <param name='operationId'>
-        /// Operation ID which represents an operation whose status needs to be
-        /// fetched.
+        /// <param name='parameters'>
+        /// resource validate operation request
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -60,6 +52,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationStatus>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, string policyName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ValidateOperationsResponse>> ValidateWithHttpMessagesAsync(string vaultName, string resourceGroupName, ValidateOperationRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

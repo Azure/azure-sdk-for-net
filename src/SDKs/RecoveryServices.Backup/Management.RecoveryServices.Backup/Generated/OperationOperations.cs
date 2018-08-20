@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BackupsOperations operations.
+    /// OperationOperations operations.
     /// </summary>
-    internal partial class BackupsOperations : IServiceOperations<RecoveryServicesBackupClient>, IBackupsOperations
+    internal partial class OperationOperations : IServiceOperations<RecoveryServicesBackupClient>, IOperationOperations
     {
         /// <summary>
-        /// Initializes a new instance of the BackupsOperations class.
+        /// Initializes a new instance of the OperationOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal BackupsOperations(RecoveryServicesBackupClient client)
+        internal OperationOperations(RecoveryServicesBackupClient client)
         {
             if (client == null)
             {
@@ -51,9 +51,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public RecoveryServicesBackupClient Client { get; private set; }
 
         /// <summary>
-        /// Triggers backup for specified backed up item. This is an asynchronous
-        /// operation. To know the status of the
-        /// operation, call GetProtectedItemOperationResult API.
+        /// Validate operation for specified backed up item. This is a synchronous
+        /// operation.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -62,17 +61,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The name of the resource group where the recovery services vault is
         /// present.
         /// </param>
-        /// <param name='fabricName'>
-        /// Fabric name associated with the backup item.
-        /// </param>
-        /// <param name='containerName'>
-        /// Container name associated with the backup item.
-        /// </param>
-        /// <param name='protectedItemName'>
-        /// Backup item for which backup needs to be triggered.
-        /// </param>
         /// <param name='parameters'>
-        /// resource backup request
+        /// resource validate operation request
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -83,6 +73,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -92,7 +85,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> TriggerWithHttpMessagesAsync(string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, BackupRequestResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ValidateOperationsResponse>> ValidateWithHttpMessagesAsync(string vaultName, string resourceGroupName, ValidateOperationRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vaultName == null)
             {
@@ -106,23 +99,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (fabricName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "fabricName");
-            }
-            if (containerName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "containerName");
-            }
-            if (protectedItemName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "protectedItemName");
-            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2016-12-01";
+            string apiVersion = "2017-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -133,22 +114,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("fabricName", fabricName);
-                tracingParameters.Add("containerName", containerName);
-                tracingParameters.Add("protectedItemName", protectedItemName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Trigger", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Validate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/backup").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupValidateOperation").ToString();
             _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{fabricName}", System.Uri.EscapeDataString(fabricName));
-            _url = _url.Replace("{containerName}", System.Uri.EscapeDataString(containerName));
-            _url = _url.Replace("{protectedItemName}", System.Uri.EscapeDataString(protectedItemName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -218,7 +193,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -253,12 +228,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<ValidateOperationsResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ValidateOperationsResponse>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
