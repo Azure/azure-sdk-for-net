@@ -228,7 +228,7 @@ namespace Microsoft.Azure.ServiceBus
         /// </remarks>
         public string To { get; set; }
 
-        /// <summary>Gets or sets the content tpye descriptor.</summary>
+        /// <summary>Gets or sets the content type descriptor.</summary>
         /// <value>RFC2045 Content-Type descriptor.</value>
         /// <remarks>
         ///   Optionally describes the payload of the message, with a descriptor following the format of 
