@@ -13,21 +13,21 @@ namespace Microsoft.Azure.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Event data for Microsoft.Devices.DeviceCreated event.
+    /// Event data for Microsoft.Devices.DeviceDisconnected event.
     /// </summary>
-    public partial class IotHubDeviceCreatedEventData : DeviceLifeCycleEventProperties
+    public partial class IotHubDeviceDisconnectedEventData : DeviceConnectionStateEventProperties
     {
         /// <summary>
-        /// Initializes a new instance of the IotHubDeviceCreatedEventData
+        /// Initializes a new instance of the IotHubDeviceDisconnectedEventData
         /// class.
         /// </summary>
-        public IotHubDeviceCreatedEventData()
+        public IotHubDeviceDisconnectedEventData()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IotHubDeviceCreatedEventData
+        /// Initializes a new instance of the IotHubDeviceDisconnectedEventData
         /// class.
         /// </summary>
         /// <param name="deviceId">The unique identifier of the device. This
@@ -35,12 +35,17 @@ namespace Microsoft.Azure.EventGrid.Models
         /// supports ASCII 7-bit alphanumeric characters plus the following
         /// special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $
         /// '.</param>
+        /// <param name="moduleId">The unique identifier of the module. This
+        /// case-sensitive string can be up to 128 characters long, and
+        /// supports ASCII 7-bit alphanumeric characters plus the following
+        /// special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $
+        /// '.</param>
         /// <param name="hubName">Name of the IoT Hub where the device was
         /// created or deleted.</param>
-        /// <param name="twin">Information about the device twin, which is the
-        /// cloud representation of application device metadata.</param>
-        public IotHubDeviceCreatedEventData(string deviceId = default(string), string hubName = default(string), DeviceTwinInfo twin = default(DeviceTwinInfo))
-            : base(deviceId, hubName, twin)
+        /// <param name="deviceConnectionStateEventInfo">Information about the
+        /// device connection state event.</param>
+        public IotHubDeviceDisconnectedEventData(string deviceId = default(string), string moduleId = default(string), string hubName = default(string), DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = default(DeviceConnectionStateEventInfo))
+            : base(deviceId, moduleId, hubName, deviceConnectionStateEventInfo)
         {
             CustomInit();
         }
