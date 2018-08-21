@@ -872,10 +872,10 @@ namespace ContentModeratorTests
 				Random r = new Random();
 				string num = r.Next(0,1000).ToString();
 				b.Name = $"BVT{c.GetDescription()}List" + num;
-				b.Description = $"BVT{c.GetDescription()}List" + num; 
-				b.Metadata = new BodyMetadata();
-				b.Metadata.KeyOne = $"BVT{c.GetDescription()}ListKeyNote1" + num; 
-				b.Metadata.KeyTwo = $"BVT{c.GetDescription()}ListKeyNote2" + num; 
+				b.Description = $"BVT{c.GetDescription()}List" + num;
+                b.Metadata = new Dictionary<string, string>();
+                b.Metadata["Key One"] = $"BVT{c.GetDescription()}ListKeyNote1" + num; 
+				b.Metadata["Key Two"] = $"BVT{c.GetDescription()}ListKeyNote2" + num; 
 				return b; 
 			}
 			catch (Exception e)

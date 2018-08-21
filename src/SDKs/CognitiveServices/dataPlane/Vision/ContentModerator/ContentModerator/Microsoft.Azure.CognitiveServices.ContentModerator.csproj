@@ -15,6 +15,7 @@
     
     Changes in this release:
     1. Supported customizing service endpoints by assigning the endpoint string to ContentModeratorClient.Endpoint. The endpoint string can be found on Azure Portal, it should contain only protocol and hostname, for example: https://westus.api.cognitive.microsoft.com.
+    2. Body.Metadata, ImageList.Metadata, TermList.Metadata, members of RefreshIndex.Metadata are now IDictionary<string, string>.
     ]]>
 	</PackageReleaseNotes>
   </PropertyGroup>
