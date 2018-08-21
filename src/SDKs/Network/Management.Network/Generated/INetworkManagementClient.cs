@@ -52,19 +52,20 @@ namespace Microsoft.Azure.Management.Network
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running
-        /// Operations. Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default
+        /// value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated
-        /// and included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When
+        /// set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
@@ -220,6 +221,11 @@ namespace Microsoft.Azure.Management.Network
         IPublicIPAddressesOperations PublicIPAddresses { get; }
 
         /// <summary>
+        /// Gets the IPublicIPPrefixesOperations.
+        /// </summary>
+        IPublicIPPrefixesOperations PublicIPPrefixes { get; }
+
+        /// <summary>
         /// Gets the IRouteFiltersOperations.
         /// </summary>
         IRouteFiltersOperations RouteFilters { get; }
@@ -313,6 +319,16 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IVpnConnectionsOperations.
         /// </summary>
         IVpnConnectionsOperations VpnConnections { get; }
+
+        /// <summary>
+        /// Gets the IServiceEndpointPoliciesOperations.
+        /// </summary>
+        IServiceEndpointPoliciesOperations ServiceEndpointPolicies { get; }
+
+        /// <summary>
+        /// Gets the IServiceEndpointPolicyDefinitionsOperations.
+        /// </summary>
+        IServiceEndpointPolicyDefinitionsOperations ServiceEndpointPolicyDefinitions { get; }
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.azure.com zone is
