@@ -194,7 +194,7 @@
              Projects="@(netCore20TestProj)"
              Properties="TargetFramework=$(NetCore20)"
              BuildInParallel="$(BuildInParallel)"
-             ContinueOnError="true">
+             ContinueOnError="ErrorAndStop">
     </MSBuild>
 
 	  <Message Text="Building SDK Projects ..... @(net452TestProj) for $(net452TestProj)"  Condition=" '@(net452TestProj)' != '' " />
@@ -202,7 +202,7 @@
               Projects="@(net452TestProj)"
               Properties="TargetFramework=$(NetFx452)"
               BuildInParallel="$(BuildInParallel)"
-              ContinueOnError="true">
+              ContinueOnError="ErrorAndStop">
     </MSBuild>
 	
 	<Message Text="Building SDK Projects ..... @(net461TestProj) for $(net461TestProj)"  Condition=" '@(net461TestProj)' != '' " />
@@ -210,7 +210,7 @@
               Projects="@(net461TestProj)"
               Properties="TargetFramework=$(NetFx461)"
               BuildInParallel="$(BuildInParallel)"
-              ContinueOnError="true">
+              ContinueOnError="ErrorAndStop">
     </MSBuild>
 
     <!--UnSupported Projects-->
