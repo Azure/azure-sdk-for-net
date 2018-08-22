@@ -174,7 +174,7 @@ skip_Rps() {
 }
 
 getBuildTools() {
-    copyFromRootDir="https://raw.githubusercontent.com/shahabhijeet/azure-sdk-for-net/addTfm"
+    copyFromRootDir="https://raw.githubusercontent.com/Azure/azure-sdk-for-net/BuildToolsForSdk"                     
     printf "Updating Build tools .....\n"
     
     if [ ! -d ./tools/SdkBuildTools ]; then
