@@ -202,6 +202,7 @@ getBuildTools() {
     curl -s $copyFromRootDir/tools/BuildAssets/targets/common.targets > ./tools/SdkBuildTools/targets/common.targets
     curl -s $copyFromRootDir/tools/BuildAssets/targets/signing.targets > ./tools/SdkBuildTools/targets/signing.targets
 	curl -s $copyFromRootDir/tools/BuildAssets/targets/ideCmd.targets > ./tools/SdkBuildTools/targets/ideCmd.targets
+    curl -s $copyFromRootDir/tools/BuildAssets/targets/utility.targets > ./tools/SdkBuildTools/targets/utility.targets
     curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_AzSdk.props > ./tools/SdkBuildTools/targets/core/_AzSdk.props
     curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_build.proj > ./tools/SdkBuildTools/targets/core/_build.proj
     curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_Directory.Build.props > ./tools/SdkBuildTools/targets/core/_Directory.Build.props
@@ -216,8 +217,7 @@ getBuildTools() {
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Collections.Immutable.dll > ./tools/SdkBuildTools/tasks/net46/System.Collections.Immutable.dll
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Reflection.Metadata.dll > ./tools/SdkBuildTools/tasks/net46/System.Reflection.Metadata.dll
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Runtime.InteropServices.RuntimeInformation.dll > ./tools/SdkBuildTools/tasks/net46/System.Runtime.InteropServices.RuntimeInformation.dll
-    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Threading.Thread.dll > ./tools/SdkBuildTools/tasks/net46/System.Threading.Thread.dll
-    
+    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Threading.Thread.dll > ./tools/SdkBuildTools/tasks/net46/System.Threading.Thread.dll    
 }
 
 getBuildTools
