@@ -91,15 +91,14 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        //[Fact(Skip = "Todo")]
+        [Fact(Skip = "Deptecated API")]
         //[Fact(Skip="TODO: Fix datetime parsing in test to properly handle universal time and rerecord.")]
-        [Fact]
         public void GetSiteMetrics()
         {
             RunWebsiteTestScenario(
                 (webSiteName, resourceGroupName, whpName, locationName, webSitesClient, resourcesClient) =>
                 {
-                    var endTime = DateTime.Parse("2017-01-28T00:23:02Z").ToUniversalTime();
+                    var endTime = DateTime.Parse("2018-01-28T00:23:02Z").ToUniversalTime();
                     var metricNames = new List<string> {"Requests", "CPU", "MemoryWorkingSet"};
                     metricNames.Sort();
                     var result = webSitesClient.WebApps.ListMetrics(resourceGroupName: resourceGroupName,

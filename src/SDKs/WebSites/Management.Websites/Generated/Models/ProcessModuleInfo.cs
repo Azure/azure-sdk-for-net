@@ -74,13 +74,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Gets or sets base address. Used as module identifier in ARM
         /// resource URI.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.baseAddress")]
+        [JsonProperty(PropertyName = "properties.base_address")]
         public string BaseAddress { get; set; }
 
         /// <summary>
         /// Gets or sets file name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.fileName")]
+        [JsonProperty(PropertyName = "properties.file_name")]
         public string FileName { get; set; }
 
         /// <summary>
@@ -92,25 +92,25 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets file path.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.filePath")]
+        [JsonProperty(PropertyName = "properties.file_path")]
         public string FilePath { get; set; }
 
         /// <summary>
         /// Gets or sets module memory size.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.moduleMemorySize")]
+        [JsonProperty(PropertyName = "properties.module_memory_size")]
         public int? ModuleMemorySize { get; set; }
 
         /// <summary>
         /// Gets or sets file version.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.fileVersion")]
+        [JsonProperty(PropertyName = "properties.file_version")]
         public string FileVersion { get; set; }
 
         /// <summary>
         /// Gets or sets file description.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.fileDescription")]
+        [JsonProperty(PropertyName = "properties.file_description")]
         public string FileDescription { get; set; }
 
         /// <summary>
@@ -122,13 +122,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets product version.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.productVersion")]
+        [JsonProperty(PropertyName = "properties.product_version")]
         public string ProductVersion { get; set; }
 
         /// <summary>
         /// Gets or sets is debug?
         /// </summary>
-        [JsonProperty(PropertyName = "properties.isDebug")]
+        [JsonProperty(PropertyName = "properties.is_debug")]
         public bool? IsDebug { get; set; }
 
         /// <summary>

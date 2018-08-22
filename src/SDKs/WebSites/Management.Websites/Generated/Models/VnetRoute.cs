@@ -37,9 +37,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="vnetRouteName">The name of this route. This is only
-        /// returned by the server and does not need to be set by the
-        /// client.</param>
         /// <param name="startAddress">The starting address for this route.
         /// This may also include a CIDR notation, in which case the end
         /// address must not be specified.</param>
@@ -55,10 +52,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// These values will be used for syncing an app's routes with those
         /// from a Virtual Network. Possible values include: 'DEFAULT',
         /// 'INHERITED', 'STATIC'</param>
-        public VnetRoute(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string vnetRouteName = default(string), string startAddress = default(string), string endAddress = default(string), string routeType = default(string))
+        public VnetRoute(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string startAddress = default(string), string endAddress = default(string), string routeType = default(string))
             : base(id, name, kind, type)
         {
-            VnetRouteName = vnetRouteName;
             StartAddress = startAddress;
             EndAddress = endAddress;
             RouteType = routeType;
@@ -69,13 +65,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the name of this route. This is only returned by the
-        /// server and does not need to be set by the client.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string VnetRouteName { get; set; }
 
         /// <summary>
         /// Gets or sets the starting address for this route. This may also

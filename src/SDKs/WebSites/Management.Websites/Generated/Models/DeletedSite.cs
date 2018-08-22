@@ -29,22 +29,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the DeletedSite class.
         /// </summary>
-        /// <param name="id">Numeric id for the deleted site</param>
+        /// <param name="deletedSiteId">Numeric id for the deleted site</param>
         /// <param name="deletedTimestamp">Time in UTC when the app was
         /// deleted.</param>
         /// <param name="subscription">Subscription containing the deleted
         /// site</param>
         /// <param name="resourceGroup">ResourceGroup that contained the
         /// deleted site</param>
-        /// <param name="name">Name of the deleted site</param>
+        /// <param name="deletedSiteName">Name of the deleted site</param>
         /// <param name="slot">Slot of the deleted site</param>
-        public DeletedSite(int? id = default(int?), string deletedTimestamp = default(string), string subscription = default(string), string resourceGroup = default(string), string name = default(string), string slot = default(string))
+        public DeletedSite(int? deletedSiteId = default(int?), string deletedTimestamp = default(string), string subscription = default(string), string resourceGroup = default(string), string deletedSiteName = default(string), string slot = default(string))
         {
-            Id = id;
+            DeletedSiteId = deletedSiteId;
             DeletedTimestamp = deletedTimestamp;
             Subscription = subscription;
             ResourceGroup = resourceGroup;
-            Name = name;
+            DeletedSiteName = deletedSiteName;
             Slot = slot;
             CustomInit();
         }
@@ -55,10 +55,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets numeric id for the deleted site
+        /// Gets numeric id for the deleted site
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public int? Id { get; set; }
+        [JsonProperty(PropertyName = "deletedSiteId")]
+        public int? DeletedSiteId { get; private set; }
 
         /// <summary>
         /// Gets time in UTC when the app was deleted.
@@ -81,8 +81,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets name of the deleted site
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        [JsonProperty(PropertyName = "deletedSiteName")]
+        public string DeletedSiteName { get; private set; }
 
         /// <summary>
         /// Gets slot of the deleted site

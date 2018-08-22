@@ -147,7 +147,7 @@ namespace WebSites.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: Re-enable afer the Provisioning state issue on the backend is fixed for update serverfarm operation")]
         public void GetAndSetAdminSiteWebHostingPlan()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
