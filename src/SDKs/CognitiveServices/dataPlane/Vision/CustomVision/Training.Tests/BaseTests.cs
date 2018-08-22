@@ -12,11 +12,21 @@
     using System.Threading.Tasks;
     using Xunit;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class BaseTests : IClassFixture<ProjectIdFixture>
     {
         private static readonly string TrainingKey = "";
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected static HttpRecorderMode RecorderMode = HttpRecorderMode.Playback;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         protected static string ObjDetectionProjectName = "Obj Detection SDK Tests";
 
         protected static Guid FoodDomain = Guid.Parse("C151D5B5-DD07-472A-ACC8-15D29DEA8518");
@@ -51,7 +61,7 @@
             return client;
         }
 
-        public async Task<Guid> CreateTrainedImageClassificationProjectAsync(Guid? domain = null)
+        public Guid CreateTrainedImageClassificationProjectAsync(Guid? domain = null)
         {
 #if RECORD_MODE
             var client = GetTrainingClient();
@@ -108,7 +118,7 @@
 #endif
         }
 
-        public async Task<Guid> CreateTrainedObjDetectionProject()
+        public Guid CreateTrainedObjDetectionProject()
         {
 #if RECORD_MODE
             Dictionary<string, double[]> fileToRegionMap = new Dictionary<string, double[]>()

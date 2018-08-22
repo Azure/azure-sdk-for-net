@@ -5,6 +5,7 @@
     <Description>Network.Tests Class Library</Description>
     <AssemblyName>Network.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>

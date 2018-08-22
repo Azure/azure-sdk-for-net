@@ -130,7 +130,7 @@ namespace Test.Azure.Management.Logic
 
                 Assert.Equal(updatedMap.Name, integrationAccountMapName);
                 Assert.NotNull(updatedMap.ContentLink.Uri);
-                Assert.Equal(updatedMap.Metadata, "meta-data");
+                Assert.Equal("meta-data", updatedMap.Metadata);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }

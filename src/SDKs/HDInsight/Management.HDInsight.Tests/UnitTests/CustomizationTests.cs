@@ -72,7 +72,7 @@ namespace Management.HDInsight.Tests.UnitTests
             Assert.Equal(handler.Requests[0], handler.Requests[1]);
         }
 
-        public void TestDisableHttpCustomization()
+        internal void TestDisableHttpCustomization()
         {
             TestDelegatingHandler handler = new TestDelegatingHandler();
             HDInsightManagementClient client = GetHDInsightUnitTestingClient(handler);

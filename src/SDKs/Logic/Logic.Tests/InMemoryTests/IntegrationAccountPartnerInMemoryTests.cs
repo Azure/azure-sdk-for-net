@@ -265,7 +265,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidatePartnerList(IPage<IntegrationAccountPartner> result)
         {
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
             this.ValidatePartner(result.First());
             Assert.Equal(Constants.NextPageLink, result.NextPageLink);
         }

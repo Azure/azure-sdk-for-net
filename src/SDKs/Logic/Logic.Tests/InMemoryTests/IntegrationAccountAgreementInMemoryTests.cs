@@ -264,7 +264,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateAgreementList(IPage<IntegrationAccountAgreement> result)
         {
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
             this.ValidateAgreement(result.First());
             Assert.Equal(Constants.NextPageLink, result.NextPageLink);
         }

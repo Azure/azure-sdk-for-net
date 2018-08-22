@@ -23,8 +23,8 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
         [MemberData(nameof(AvailabilityResultsData))]
         [MemberData(nameof(PerformanceCountersData))]
         [MemberData(nameof(CustomMetricsData))]
-        public async Task GetEventsAsync<T>(EventType eventType, MultiQueryAsync<T> multiQueryAsync, SingleQueryAsync<T> singleQueryAsync,
-            object unused1, object unused2) where T : EventsResultData
+        public async Task GetEventsAsync<T>(EventType eventType, MultiQueryAsync<T> multiQueryAsync, SingleQueryAsync<T> singleQueryAsync
+            /* object unused1, object unused2*/ ) where T : EventsResultData
         {
             using (var ctx = MockContext.Start(GetType().FullName, $"GetEvents.{eventType}"))
             {
@@ -68,7 +68,7 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
         [MemberData(nameof(AvailabilityResultsData))]
         [MemberData(nameof(PerformanceCountersData))]
         [MemberData(nameof(CustomMetricsData))]
-        public void GetEvents<T>(EventType eventType, object unused1, object unused2,
+        public void GetEvents<T>(EventType eventType, /* object unused1, object unused2, */
             MultiQuery<T> multiQuery, SingleQuery<T> singleQuery) where T : EventsResultData
         {
             using (var ctx = MockContext.Start(GetType().FullName, $"GetEvents.{eventType}"))

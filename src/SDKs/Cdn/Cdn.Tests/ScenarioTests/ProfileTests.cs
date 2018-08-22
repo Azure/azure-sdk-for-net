@@ -197,7 +197,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List profiles should return none
                 var profiles = cdnMgmtClient.Profiles.ListByResourceGroup(resourceGroupName);
-                Assert.Equal(0, profiles.Count());
+                Assert.Empty(profiles);
 
                 // Delete non-existing profile should succeed
                 cdnMgmtClient.Profiles.Delete(resourceGroupName, profile.Name);
@@ -232,7 +232,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List profiles should return none
                 profiles = cdnMgmtClient.Profiles.ListByResourceGroup(resourceGroupName);
-                Assert.Equal(0, profiles.Count());
+                Assert.Empty(profiles);
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
@@ -256,7 +256,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List profiles should return none
                 var profiles = cdnMgmtClient.Profiles.ListByResourceGroup(resourceGroupName);
-                Assert.Equal(0, profiles.Count());
+                Assert.Empty(profiles);
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
@@ -280,7 +280,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List profiles should return one profile
                 profiles = cdnMgmtClient.Profiles.ListByResourceGroup(resourceGroupName);
-                Assert.Equal(1, profiles.Count());
+                Assert.Single(profiles);
 
                 // Create a second cdn profile and don't wait for creation to finish
                 var profileName2 = TestUtilities.GenerateName("profile");
@@ -313,7 +313,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List profiles should return only one profile
                 profiles = cdnMgmtClient.Profiles.ListByResourceGroup(resourceGroupName);
-                Assert.Equal(1, profiles.Count());
+                Assert.Single(profiles);
 
                 // Wait for second profile to complete creation
                 CdnTestUtilities.WaitIfNotInPlaybackMode();
@@ -333,7 +333,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List profiles should none
                 profiles = cdnMgmtClient.Profiles.ListByResourceGroup(resourceGroupName);
-                Assert.Equal(0, profiles.Count());
+                Assert.Empty(profiles);
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
@@ -354,7 +354,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List profiles should return none
                 var profiles = cdnMgmtClient.Profiles.List();
-                Assert.Equal(0, profiles.Count());
+                Assert.Empty(profiles);
 
                 // Create resource group
                 var resourceGroupName1 = CdnTestUtilities.CreateResourceGroup(resourcesClient);
@@ -381,7 +381,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List profiles should return one profile
                 profiles = cdnMgmtClient.Profiles.List();
-                Assert.Equal(1, profiles.Count());
+                Assert.Single(profiles);
 
                 // Create another resource group
                 var resourceGroupName2 = CdnTestUtilities.CreateResourceGroup(resourcesClient);
@@ -411,14 +411,14 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List profiles should return only one profile
                 profiles = cdnMgmtClient.Profiles.List();
-                Assert.Equal(1, profiles.Count());
+                Assert.Single(profiles);
 
                 // Delete second profile
                 cdnMgmtClient.Profiles.Delete(resourceGroupName2, profileName2);
 
                 // List profiles should none
                 profiles = cdnMgmtClient.Profiles.List();
-                Assert.Equal(0, profiles.Count());
+                Assert.Empty(profiles);
 
                 // Delete resource groups
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName1);
@@ -545,7 +545,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // CheckUsage on subscription should return zero profiles
                 var subscriptionLevelUsages = cdnMgmtClient.ResourceUsage.List();
-                Assert.Equal(1, subscriptionLevelUsages.Count());
+                Assert.Single(subscriptionLevelUsages);
 
                 var defaultUsage = subscriptionLevelUsages.First();
                 Assert.Equal(25, defaultUsage.Limit);
@@ -571,7 +571,7 @@ namespace Cdn.Tests.ScenarioTests
                 VerifyProfileCreated(profile, createParameters);
 
                 subscriptionLevelUsages = cdnMgmtClient.ResourceUsage.List();
-                Assert.Equal(1, subscriptionLevelUsages.Count());
+                Assert.Single(subscriptionLevelUsages);
 
                 var usageAfterCreation = subscriptionLevelUsages.First();
                 Assert.Equal(25, usageAfterCreation.Limit);
@@ -579,7 +579,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // test Profile level usage
                 var profileLevelUsages = cdnMgmtClient.Profiles.ListResourceUsage(resourceGroupName, profileName);
-                Assert.Equal(1, profileLevelUsages.Count());
+                Assert.Single(profileLevelUsages);
 
                 var profileLevelUsage = profileLevelUsages.First();
                 Assert.Equal(10, profileLevelUsage.Limit);
@@ -605,7 +605,7 @@ namespace Cdn.Tests.ScenarioTests
                 var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
 
                 profileLevelUsages = cdnMgmtClient.Profiles.ListResourceUsage(resourceGroupName, profileName);
-                Assert.Equal(1, profileLevelUsages.Count());
+                Assert.Single(profileLevelUsages);
 
                 var profileLevelUsageAfterEndpointCreation = profileLevelUsages.First();
                 Assert.Equal(10, profileLevelUsageAfterEndpointCreation.Limit);
@@ -622,7 +622,7 @@ namespace Cdn.Tests.ScenarioTests
             Assert.Equal(profile.Sku.Name, parameters.Sku.Name);
             Assert.Equal(profile.Tags.Count, parameters.Tags.Count);
             Assert.True(profile.Tags.SequenceEqual(parameters.Tags));
-            Assert.Equal(profile.ProvisioningState, "Succeeded");
+            Assert.Equal("Succeeded", profile.ProvisioningState);
             Assert.Equal(profile.ResourceState, ProfileResourceState.Active);
         }
 

@@ -950,7 +950,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
         #region Helper methods
 
-        public static void CreateRecordSets(
+        internal static void CreateRecordSets(
             SingleRecordSetTestContext testContext,
             string[] recordSetNames)
         {
@@ -1001,7 +1001,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 parameters: createParameters3);
         }
 
-        public static void DeleteRecordSetsAndZone(
+        internal static void DeleteRecordSetsAndZone(
             SingleRecordSetTestContext testContext,
             string[] recordSetNames)
         {

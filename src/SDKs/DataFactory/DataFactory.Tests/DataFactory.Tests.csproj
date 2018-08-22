@@ -6,9 +6,6 @@
     <AssemblyName>DataFactory.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
   <ItemGroup>
     <ProjectReference Include="..\Management.DataFactory\Microsoft.Azure.Management.DataFactory.csproj" />
   </ItemGroup>

@@ -84,7 +84,7 @@ namespace Sql.Tests
                 sqlClient.ManagedInstances.Delete(resourceGroup.Name, managedInstanceName);
 
                 var listMI2 = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
-                Assert.Equal(1, listMI2.Count());
+                Assert.Single(listMI2);
 
                 sqlClient.ManagedInstances.Delete(resourceGroup.Name, managedInstanceName2);
                 var listMI3 = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);

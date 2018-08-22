@@ -90,18 +90,18 @@ namespace Storage.Tests
                 // Verify encryption settings
                 Assert.NotNull(account.Encryption);
                 Assert.NotNull(account.Encryption.Services.Blob);
-                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
+                Assert.True(account.Encryption.Services.Blob.Enabled);
                 Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
 
                 Assert.NotNull(account.Encryption.Services.File);
-                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.True(account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
                 if (null != account.Encryption.Services.Table)
                 {
                     if (account.Encryption.Services.Table.Enabled.HasValue)
                     {
-                        Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                        Assert.False(account.Encryption.Services.Table.LastEnabledTime.HasValue);
                     }
                 }
 
@@ -109,7 +109,7 @@ namespace Storage.Tests
                 {
                     if (account.Encryption.Services.Queue.Enabled.HasValue)
                     {
-                        Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                        Assert.False(account.Encryption.Services.Queue.LastEnabledTime.HasValue);
                     }
                 }
             }
@@ -374,24 +374,24 @@ namespace Storage.Tests
 
                 // List account and verify
                 var accounts = storageMgmtClient.StorageAccounts.ListByResourceGroup(rgname);
-                Assert.Equal(1, accounts.Count());
+                Assert.Single(accounts);
 
                 var account = accounts.ToArray()[0];
                 StorageManagementTestUtilities.VerifyAccountProperties(account, true);
                 Assert.NotNull(account.Encryption);
                 Assert.NotNull(account.Encryption.Services.Blob);
-                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
+                Assert.True(account.Encryption.Services.Blob.Enabled);
                 Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
 
                 Assert.NotNull(account.Encryption.Services.File);
-                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.True(account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
                 if (null != account.Encryption.Services.Table)
                 {
                     if (account.Encryption.Services.Table.Enabled.HasValue)
                     {
-                        Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                        Assert.False(account.Encryption.Services.Table.LastEnabledTime.HasValue);
                     }
                 }
 
@@ -399,7 +399,7 @@ namespace Storage.Tests
                 {
                     if (account.Encryption.Services.Queue.Enabled.HasValue)
                     {
-                        Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                        Assert.False(account.Encryption.Services.Queue.LastEnabledTime.HasValue);
                     }
                 }
             }
@@ -522,14 +522,14 @@ namespace Storage.Tests
                 // Check valid name
                 string accountName = TestUtilities.GenerateName("sto");
                 var checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(accountName);
-                Assert.Equal(true, checkNameRequest.NameAvailable);
+                Assert.True(checkNameRequest.NameAvailable);
                 Assert.Null(checkNameRequest.Reason);
                 Assert.Null(checkNameRequest.Message);
 
                 // Check invalid name
                 accountName = "CAPS";
                 checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(accountName);
-                Assert.Equal(false, checkNameRequest.NameAvailable);
+                Assert.False(checkNameRequest.NameAvailable);
                 Assert.Equal(Reason.AccountNameInvalid, checkNameRequest.Reason);
                 Assert.Equal("CAPS is not a valid storage account name. Storage account name must be between 3 and 24 "
                     + "characters in length and use numbers and lower-case letters only.", checkNameRequest.Message);
@@ -567,11 +567,11 @@ namespace Storage.Tests
                     Sku = new Sku { Name = SkuName.StandardLRS }
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
-                Assert.Equal(account.Sku.Name, SkuName.StandardLRS);
+                Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
 
                 // Validate
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
-                Assert.Equal(account.Sku.Name, SkuName.StandardLRS);
+                Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
 
                 // Update storage tags
                 parameters = new StorageAccountCreateParameters
@@ -612,18 +612,18 @@ namespace Storage.Tests
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 Assert.NotNull(account.Encryption);
                 Assert.NotNull(account.Encryption.Services.Blob);
-                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
+                Assert.True(account.Encryption.Services.Blob.Enabled);
                 Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
 
                 Assert.NotNull(account.Encryption.Services.File);
-                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.True(account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
                 if (null != account.Encryption.Services.Table)
                 {
                     if (account.Encryption.Services.Table.Enabled.HasValue)
                     {
-                        Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                        Assert.False(account.Encryption.Services.Table.LastEnabledTime.HasValue);
                     }
                 }
 
@@ -631,7 +631,7 @@ namespace Storage.Tests
                 {
                     if (account.Encryption.Services.Queue.Enabled.HasValue)
                     {
-                        Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                        Assert.False(account.Encryption.Services.Queue.LastEnabledTime.HasValue);
                     }
                 }
 
@@ -685,11 +685,11 @@ namespace Storage.Tests
                     Sku = new Sku { Name = SkuName.StandardLRS }
                 };
                 var account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
-                Assert.Equal(account.Sku.Name, SkuName.StandardLRS);
+                Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
 
                 // Validate
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
-                Assert.Equal(account.Sku.Name, SkuName.StandardLRS);
+                Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
 
                 // Update storage tags
                 parameters = new StorageAccountUpdateParameters
@@ -724,18 +724,18 @@ namespace Storage.Tests
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 Assert.NotNull(account.Encryption);
                 Assert.NotNull(account.Encryption.Services.Blob);
-                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
+                Assert.True(account.Encryption.Services.Blob.Enabled);
                 Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
 
                 Assert.NotNull(account.Encryption.Services.File);
-                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.True(account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
                 if (null != account.Encryption.Services.Table)
                 {
                     if (account.Encryption.Services.Table.Enabled.HasValue)
                     {
-                        Assert.Equal(false, account.Encryption.Services.Table.LastEnabledTime.HasValue);
+                        Assert.False(account.Encryption.Services.Table.LastEnabledTime.HasValue);
                     }
                 }
 
@@ -743,7 +743,7 @@ namespace Storage.Tests
                 {
                     if (account.Encryption.Services.Queue.Enabled.HasValue)
                     {
-                        Assert.Equal(false, account.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                        Assert.False(account.Encryption.Services.Queue.LastEnabledTime.HasValue);
                     }
                 }
 
@@ -800,12 +800,12 @@ namespace Storage.Tests
                     }
                 };
                 var account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
-                Assert.Equal(account.Sku.Name, SkuName.StandardLRS);
+                Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
                 Assert.Equal(account.Tags.Count, parameters.Tags.Count);
 
                 // Validate
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
-                Assert.Equal(account.Sku.Name, SkuName.StandardLRS);
+                Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
                 Assert.Equal(account.Tags.Count, parameters.Tags.Count);
             }
         }
@@ -822,7 +822,7 @@ namespace Storage.Tests
 
                 // Query usage
                 var usages = storageMgmtClient.Usages.List();
-                Assert.Equal(1, usages.Count());
+                Assert.Single(usages);
                 Assert.Equal(UsageUnit.Count, usages.First().Unit);
                 Assert.NotNull(usages.First().CurrentValue);
                 Assert.Equal(250, usages.First().Limit);
@@ -832,7 +832,7 @@ namespace Storage.Tests
             }
         }
 
-        // [Fact]
+        [Fact(Skip ="Skipping test")]
         public void StorageAccountGetOperationsTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -842,7 +842,7 @@ namespace Storage.Tests
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var ops = resourcesClient.ResourceProviderOperationDetails.List("Microsoft.Storage", "2015-06-15");
 
-                Assert.Equal(ops.Count(), 7);
+                Assert.Equal(7, ops.Count());
             }
         }
 
@@ -1101,11 +1101,11 @@ namespace Storage.Tests
                     Sku = new Sku { Name = SkuName.StandardLRS }
                 };
                 var account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
-                Assert.Equal(account.Sku.Name, SkuName.StandardLRS);
+                Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
 
                 // Validate
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
-                Assert.Equal(account.Sku.Name, SkuName.StandardLRS);
+                Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
 
                 // Update storage tags
                 parameters = new StorageAccountUpdateParameters
@@ -1141,11 +1141,11 @@ namespace Storage.Tests
 
                 Assert.NotNull(account.Encryption);
                 Assert.NotNull(account.Encryption.Services.Blob);
-                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
+                Assert.True(account.Encryption.Services.Blob.Enabled);
                 Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
 
                 Assert.NotNull(account.Encryption.Services.File);
-                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.True(account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
                 // 2. Restore storage encryption
@@ -1165,11 +1165,11 @@ namespace Storage.Tests
 
                 Assert.NotNull(account.Encryption);
                 Assert.NotNull(account.Encryption.Services.Blob);
-                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
+                Assert.True(account.Encryption.Services.Blob.Enabled);
                 Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
 
                 Assert.NotNull(account.Encryption.Services.File);
-                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.True(account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
                 // 3. Remove file encryption service field.
@@ -1189,11 +1189,11 @@ namespace Storage.Tests
 
                 Assert.NotNull(account.Encryption);
                 Assert.NotNull(account.Encryption.Services.Blob);
-                Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
+                Assert.True(account.Encryption.Services.Blob.Enabled);
                 Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
 
                 Assert.NotNull(account.Encryption.Services.File);
-                Assert.Equal(true, account.Encryption.Services.File.Enabled);
+                Assert.True(account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
             }
@@ -1605,13 +1605,13 @@ namespace Storage.Tests
                     EnableHttpsTrafficOnly = true
                 };
                 var account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
-                Assert.Equal(account.Kind, Kind.StorageV2);
+                Assert.Equal(Kind.StorageV2, account.Kind);
                 Assert.True(account.EnableHttpsTrafficOnly);
                 Assert.NotNull(account.PrimaryEndpoints.Web);
 
                 // Validate
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
-                Assert.Equal(account.Kind, Kind.StorageV2);
+                Assert.Equal(Kind.StorageV2, account.Kind);
                 Assert.True(account.EnableHttpsTrafficOnly);
                 Assert.NotNull(account.PrimaryEndpoints.Web);
             }

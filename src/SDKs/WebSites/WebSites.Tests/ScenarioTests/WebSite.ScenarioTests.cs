@@ -54,7 +54,7 @@ namespace WebSites.Tests.ScenarioTests
                 {
                     var webSites = webSitesClient.WebApps.ListByResourceGroup(resourceGroupName, null);
 
-                    Assert.Equal(1, webSites.Count());
+                    Assert.Single(webSites);
                     Assert.Equal(webSiteName, webSites.ToList()[0].Name);
                     var serverfarmId = ResourceGroupHelper.GetServerFarmId(webSitesClient.SubscriptionId,
                     resourceGroupName, whpName);
@@ -74,12 +74,12 @@ namespace WebSites.Tests.ScenarioTests
 
                     var getWebSiteResponse = webSitesClient.WebApps.Get(resourceGroupName, webSiteName);
                     Assert.NotNull(getWebSiteResponse);
-                    Assert.Equal(getWebSiteResponse.State, "Stopped");
+                    Assert.Equal("Stopped", getWebSiteResponse.State);
 
                     webSitesClient.WebApps.Start(resourceGroupName, webSiteName);
                     getWebSiteResponse = webSitesClient.WebApps.Get(resourceGroupName, webSiteName);
                     Assert.NotNull(getWebSiteResponse);
-                    Assert.Equal(getWebSiteResponse.State, "Running");
+                    Assert.Equal("Running", getWebSiteResponse.State);
 
                     #endregion Start/Stop website
 
@@ -87,7 +87,7 @@ namespace WebSites.Tests.ScenarioTests
 
                     var webSites = webSitesClient.WebApps.ListByResourceGroup(resourceGroupName);
 
-                    Assert.Equal(0, webSites.Count());
+                    Assert.Empty(webSites);
                 });
         }
 
@@ -213,12 +213,12 @@ namespace WebSites.Tests.ScenarioTests
                         new ConnectionStringDictionary { Properties = new Dictionary<string, ConnStringValueTypePair> { { connectionStringName, connStringValueTypePair } } });
 
                     Assert.NotNull(connectionStringResponse);
-                    Assert.True(connectionStringResponse.Properties.Contains(new KeyValuePair<string, ConnStringValueTypePair>(connectionStringName, connStringValueTypePair), new ConnectionStringComparer()));
+                    Assert.Contains(new KeyValuePair<string, ConnStringValueTypePair>(connectionStringName, connStringValueTypePair), connectionStringResponse.Properties, new ConnectionStringComparer());
 
                     connectionStringResponse = webSitesClient.WebApps.ListConnectionStrings(resourceGroupName, siteName);
 
                     Assert.NotNull(connectionStringResponse);
-                    Assert.True(connectionStringResponse.Properties.Contains(new KeyValuePair<string, ConnStringValueTypePair>(connectionStringName, connStringValueTypePair), new ConnectionStringComparer()));
+                    Assert.Contains(new KeyValuePair<string, ConnStringValueTypePair>(connectionStringName, connStringValueTypePair), connectionStringResponse.Properties, new ConnectionStringComparer());
 
                     #endregion Get/Set Connection strings
 

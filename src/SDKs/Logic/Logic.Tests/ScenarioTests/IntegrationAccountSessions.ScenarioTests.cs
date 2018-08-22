@@ -161,7 +161,7 @@ namespace Test.Azure.Management.Logic
                     sessionName: integrationAccountSessionName);
 
                 Assert.Equal(session.Name, getSession.Name);
-                Assert.Equal(session.Content, "256");
+                Assert.Equal("256", session.Content);
 
                 client.IntegrationAccounts.Delete(
                     resourceGroupName: Constants.DefaultResourceGroup,

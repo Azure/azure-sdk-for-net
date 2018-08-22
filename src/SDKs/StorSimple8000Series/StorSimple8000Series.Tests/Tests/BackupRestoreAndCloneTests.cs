@@ -76,7 +76,7 @@ namespace StorSimple8000Series.Tests
                                     this.ManagerName);
 
             Assert.NotNull(backupPolicy);
-            Assert.Equal(backupPolicy.SchedulesCount, 0);
+            Assert.Equal(0, backupPolicy.SchedulesCount);
 
             List<string> scheduleNames = new List<string>()
             {
@@ -144,7 +144,7 @@ namespace StorSimple8000Series.Tests
                                 this.ManagerName,
                                 new ODataQuery<BackupFilter>(filter));
 
-            Assert.Equal(1, backups.Count());
+            Assert.Single(backups);
 
             return backups.First() as Backup;
         }

@@ -155,7 +155,7 @@ namespace Insights.Tests.BasicTests
 
             if (exp == null)
             {
-                Assert.Equal(null, act);
+                Assert.Null(act);
             }
 
             Assert.False(act == null, "List can't be null");

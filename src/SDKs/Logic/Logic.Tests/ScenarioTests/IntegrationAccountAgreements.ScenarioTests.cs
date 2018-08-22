@@ -50,8 +50,8 @@ namespace Test.Azure.Management.Logic
                 integrationAccountAgreementName);
 
                 Assert.Equal(getAgreement.Name, integrationAccountAgreementName);
-                Assert.Equal(getAgreement.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.MD5);
-                Assert.Equal(getAgreement.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.MD5);
+                Assert.Equal(HashingAlgorithm.MD5, getAgreement.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm);
+                Assert.Equal(HashingAlgorithm.MD5, getAgreement.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm);
 
                 client.Agreements.Delete(Constants.DefaultResourceGroup, integrationAccountName,
                     integrationAccountAgreementName);
@@ -131,8 +131,8 @@ namespace Test.Azure.Management.Logic
                     integrationAccountAgreementName);
 
                 Assert.Equal(agreement.Name, getAgreement.Name);
-                Assert.Equal(agreement.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.SHA1);
-                Assert.Equal(agreement.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.SHA1);
+                Assert.Equal(HashingAlgorithm.SHA1, agreement.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm);
+                Assert.Equal(HashingAlgorithm.SHA1, agreement.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm);
 
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
@@ -181,7 +181,7 @@ namespace Test.Azure.Management.Logic
                 var fetchedAgreement = client.Agreements.Get(Constants.DefaultResourceGroup,
                     integrationAccountName, integrationX12AccountAgreementName);
 
-                Assert.Equal(fetchedAgreement.Content.X12.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides[0].ResponsibleAgencyCode,"X");
+                Assert.Equal("X", fetchedAgreement.Content.X12.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides[0].ResponsibleAgencyCode);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }

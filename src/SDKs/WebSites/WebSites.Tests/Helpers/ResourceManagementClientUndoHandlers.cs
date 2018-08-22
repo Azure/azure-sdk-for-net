@@ -9,10 +9,12 @@ namespace Microsoft.WindowsAzure.Management.ResourceManagement.Testing
     using System.Reflection;
     using System.Threading;
 
+    /*
     /// <summary>
     /// Class used to discover and construct undo handlers available in the app domain
     /// </summary>
-    /// 
+    ///
+    */
     //[UndoHandlerFactory]
     //public static partial class UndoContextDiscoveryExtensions
     //{

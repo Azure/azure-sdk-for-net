@@ -151,6 +151,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<CloudException>(() => client.Workflows.ListBySubscription());
         }
 
+        [Fact]
         public void Workflows_ListBySubscription_Success()
         {
             var handler = new RecordedDelegatingHandler();
@@ -192,6 +193,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<CloudException>(() => client.Workflows.ListBySubscriptionNext("http://management.azure.com/nextLink"));
         }
 
+        [Fact]
         public void Workflows_ListBySubscriptionNext_Success()
         {
             var handler = new RecordedDelegatingHandler();
@@ -275,6 +277,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<CloudException>(() => client.Workflows.ListByResourceGroupNext("http://management.azure.com/nextLink"));
         }
 
+        [Fact]
         public void Workflows_ListByResourceGroupNext_Success()
         {
             var handler = new RecordedDelegatingHandler();
@@ -790,7 +793,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateWorkflowList1(IPage<Workflow> result)
         {
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
             this.ValidateWorkflow1(result.First());
             Assert.Equal("http://workflowlist1nextlink", result.NextPageLink);
         }

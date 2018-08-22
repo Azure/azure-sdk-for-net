@@ -265,7 +265,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateSchemaList(IPage<IntegrationAccountSchema> result)
         {            
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
             this.ValidateSchema(result.First());
             Assert.Equal(Constants.NextPageLink, result.NextPageLink);
         }

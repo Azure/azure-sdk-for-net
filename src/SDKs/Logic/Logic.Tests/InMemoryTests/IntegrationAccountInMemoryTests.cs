@@ -427,7 +427,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateIntegrationAccountList(IPage<IntegrationAccount> result)
         {            
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
             this.ValidateIntegrationAccount(result.First());
             Assert.Equal(Constants.NextPageLink, result.NextPageLink);
         }

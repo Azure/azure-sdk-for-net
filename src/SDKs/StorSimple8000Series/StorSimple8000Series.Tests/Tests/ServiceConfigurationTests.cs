@@ -139,7 +139,7 @@ namespace StorSimple8000Series.Tests
         /// <summary>
         /// Deletes and validates deletion of the specified storage account credential.
         /// </summary>
-        public void DeleteStorageAccountCredentialAndValidate(string storageAccountCredentialName)
+        internal void DeleteStorageAccountCredentialAndValidate(string storageAccountCredentialName)
         {
             var sacToDelete = this.Client.StorageAccountCredentials.Get(
                 storageAccountCredentialName.GetDoubleEncoded(),
@@ -163,7 +163,7 @@ namespace StorSimple8000Series.Tests
         /// <summary>
         /// Deletes and validates deletion of the specified access control record.
         /// </summary>
-        public void DeleteAccessControlRecordAndValidate(string acrName)
+        internal void DeleteAccessControlRecordAndValidate(string acrName)
         {
             var acrToDelete = this.Client.AccessControlRecords.Get(
                 acrName.GetDoubleEncoded(),
@@ -187,7 +187,7 @@ namespace StorSimple8000Series.Tests
         /// <summary>
         /// Deletes and validates deletion of the specified bandwidth setting.
         /// </summary>
-        public void DeleteBandwidthSettingAndValidate(string bwsName)
+        internal void DeleteBandwidthSettingAndValidate(string bwsName)
         {
             var bwsToDelete = this.Client.BandwidthSettings.Get(
                 bwsName.GetDoubleEncoded(),
