@@ -103,10 +103,6 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "user");
             }
-            if (user != null)
-            {
-                user.Validate();
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -2647,10 +2643,6 @@ namespace Microsoft.Azure.Batch.Protocol
             if (uploadBatchServiceLogsConfiguration == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "uploadBatchServiceLogsConfiguration");
-            }
-            if (uploadBatchServiceLogsConfiguration != null)
-            {
-                uploadBatchServiceLogsConfiguration.Validate();
             }
             if (Client.ApiVersion == null)
             {

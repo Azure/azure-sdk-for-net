@@ -156,11 +156,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The ID of the job to which the task collection is to be added.
             /// </param>
             /// <param name='value'>
-            /// The collection of tasks to add. The total serialized size of this
-            /// collection must be less than 4MB. If it is greater than 4MB (for example if
-            /// each task has 100's of resource files or environment variables), the
-            /// request will fail with code 'RequestBodyTooLarge' and should be retried
-            /// again with fewer tasks.
+            /// The collection of tasks to add. The maximum count of tasks is 100. The
+            /// total serialized size of this collection must be less than 1MB. If it is
+            /// greater than 1MB (for example if each task has 100's of resource files or
+            /// environment variables), the request will fail with code
+            /// 'RequestBodyTooLarge' and should be retried again with fewer tasks.
             /// </param>
             /// <param name='taskAddCollectionOptions'>
             /// Additional parameters for the operation
@@ -197,11 +197,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The ID of the job to which the task collection is to be added.
             /// </param>
             /// <param name='value'>
-            /// The collection of tasks to add. The total serialized size of this
-            /// collection must be less than 4MB. If it is greater than 4MB (for example if
-            /// each task has 100's of resource files or environment variables), the
-            /// request will fail with code 'RequestBodyTooLarge' and should be retried
-            /// again with fewer tasks.
+            /// The collection of tasks to add. The maximum count of tasks is 100. The
+            /// total serialized size of this collection must be less than 1MB. If it is
+            /// greater than 1MB (for example if each task has 100's of resource files or
+            /// environment variables), the request will fail with code
+            /// 'RequestBodyTooLarge' and should be retried again with fewer tasks.
             /// </param>
             /// <param name='taskAddCollectionOptions'>
             /// Additional parameters for the operation

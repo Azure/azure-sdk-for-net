@@ -116,27 +116,18 @@ namespace Microsoft.Azure.Batch
         /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
-        public async Task<string> ReadAsStringAsync(
+        public Task<string> ReadAsStringAsync(
             Encoding encoding = null,
             GetFileRequestByteRange byteRange = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            using(Stream streamToUse = new MemoryStream())
-            {
-                // get the data
-                System.Threading.Tasks.Task asyncTask = CopyToStreamAsync(streamToUse, byteRange, additionalBehaviors, cancellationToken);
-
-                // wait for completion
-                await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
-
-                streamToUse.Seek(0, SeekOrigin.Begin); //We just wrote to this stream, have to seek to the beginning
-
-                // convert to string
-                string result = UtilitiesInternal.StreamToString(streamToUse, encoding);
-                
-                return result;
-            }
+            return UtilitiesInternal.ReadNodeFileAsStringAsync(
+                CopyToStreamAsync,
+                encoding,
+                byteRange,
+                additionalBehaviors,
+                cancellationToken);
         }
 
         /// <summary>

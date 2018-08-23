@@ -116,48 +116,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (StartTask != null)
-            {
-                StartTask.Validate();
-            }
-            if (CertificateReferences != null)
-            {
-                foreach (var element in CertificateReferences)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (ApplicationPackageReferences != null)
-            {
-                foreach (var element1 in ApplicationPackageReferences)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (Metadata != null)
-            {
-                foreach (var element2 in Metadata)
-                {
-                    if (element2 != null)
-                    {
-                        element2.Validate();
-                    }
-                }
-            }
-        }
     }
 }

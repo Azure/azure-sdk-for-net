@@ -28,9 +28,7 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task UpdateBoundJobWithNewAutoTerminationPropertiesTest()
         {
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-
-            using (BatchClient client = await BatchClient.OpenAsync(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Models.CloudJob protoJob = new Models.CloudJob(id: "id", onAllTasksComplete: Models.OnAllTasksComplete.NoAction, onTaskFailure: Models.OnTaskFailure.PerformExitOptionsJobAction);
 
@@ -51,9 +49,7 @@ namespace Azure.Batch.Unit.Tests
             const string jobId = "id-123";
             const string taskId = "id-001";
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-
-            using (BatchClient client = await BatchClient.OpenAsync(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Models.CloudJob protoJob = new Models.CloudJob(id: jobId, onAllTasksComplete: Models.OnAllTasksComplete.NoAction, onTaskFailure: Models.OnTaskFailure.PerformExitOptionsJobAction);
 
