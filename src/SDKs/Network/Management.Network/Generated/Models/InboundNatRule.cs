@@ -55,6 +55,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// AlwaysOn Availability Group. This setting is required when using
         /// the SQL AlwaysOn Availability Groups in SQL server. This setting
         /// can't be changed after you create the endpoint.</param>
+        /// <param name="enableTcpReset">Receive bidirectional TCP Reset on TCP
+        /// flow idle timeout or unexpected connection termination. This
+        /// element is only used when the protocol is set to TCP.</param>
         /// <param name="provisioningState">Gets the provisioning state of the
         /// public IP resource. Possible values are: 'Updating', 'Deleting',
         /// and 'Failed'.</param>
@@ -63,7 +66,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public InboundNatRule(string id = default(string), SubResource frontendIPConfiguration = default(SubResource), NetworkInterfaceIPConfiguration backendIPConfiguration = default(NetworkInterfaceIPConfiguration), string protocol = default(string), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public InboundNatRule(string id = default(string), SubResource frontendIPConfiguration = default(SubResource), NetworkInterfaceIPConfiguration backendIPConfiguration = default(NetworkInterfaceIPConfiguration), string protocol = default(string), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
@@ -73,6 +76,7 @@ namespace Microsoft.Azure.Management.Network.Models
             BackendPort = backendPort;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             EnableFloatingIP = enableFloatingIP;
+            EnableTcpReset = enableTcpReset;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -136,6 +140,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableFloatingIP")]
         public bool? EnableFloatingIP { get; set; }
+
+        /// <summary>
+        /// Gets or sets receive bidirectional TCP Reset on TCP flow idle
+        /// timeout or unexpected connection termination. This element is only
+        /// used when the protocol is set to TCP.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableTcpReset")]
+        public bool? EnableTcpReset { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the public IP resource. Possible
