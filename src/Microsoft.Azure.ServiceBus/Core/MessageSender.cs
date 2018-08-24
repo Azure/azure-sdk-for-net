@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace Microsoft.Azure.ServiceBus.Core
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             if (this.RegisteredPlugins.Any(p => p.GetType() == serviceBusPlugin.GetType()))
             {
-                throw new ArgumentException(nameof(serviceBusPlugin), Resources.PluginAlreadyRegistered.FormatForUser(nameof(serviceBusPlugin)));
+                throw new ArgumentException(nameof(serviceBusPlugin), Resources.PluginAlreadyRegistered.FormatForUser(serviceBusPlugin.Name));
             }
             this.RegisteredPlugins.Add(serviceBusPlugin);
         }
