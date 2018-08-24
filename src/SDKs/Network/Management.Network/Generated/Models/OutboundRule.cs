@@ -34,19 +34,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the OutboundRule class.
         /// </summary>
+        /// <param name="frontendIPConfigurations">The Frontend IP addresses of
+        /// the load balancer.</param>
         /// <param name="backendAddressPool">A reference to a pool of DIPs.
         /// Outbound traffic is randomly load balanced across IPs in the
         /// backend IPs.</param>
+        /// <param name="protocol">Protocol - TCP, UDP or All. Possible values
+        /// include: 'Tcp', 'Udp', 'All'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="allocatedOutboundPorts">The number of outbound ports
         /// to be used for NAT.</param>
-        /// <param name="frontendIPConfigurations">The Frontend IP addresses of
-        /// the load balancer.</param>
         /// <param name="provisioningState">Gets the provisioning state of the
         /// PublicIP resource. Possible values are: 'Updating', 'Deleting', and
         /// 'Failed'.</param>
-        /// <param name="protocol">Protocol - TCP, UDP or All. Possible values
-        /// include: 'Tcp', 'Udp', 'All'</param>
         /// <param name="enableTcpReset">Receive bidirectional TCP Reset on TCP
         /// flow idle timeout or unexpected connection termination. This
         /// element is only used when the protocol is set to TCP.</param>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public OutboundRule(SubResource backendAddressPool, string id = default(string), int? allocatedOutboundPorts = default(int?), IList<SubResource> frontendIPConfigurations = default(IList<SubResource>), string provisioningState = default(string), string protocol = default(string), bool? enableTcpReset = default(bool?), int? idleTimeoutInMinutes = default(int?), string name = default(string), string etag = default(string))
+        public OutboundRule(IList<SubResource> frontendIPConfigurations, SubResource backendAddressPool, string protocol, string id = default(string), int? allocatedOutboundPorts = default(int?), string provisioningState = default(string), bool? enableTcpReset = default(bool?), int? idleTimeoutInMinutes = default(int?), string name = default(string), string etag = default(string))
             : base(id)
         {
             AllocatedOutboundPorts = allocatedOutboundPorts;
@@ -146,9 +146,17 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (FrontendIPConfigurations == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FrontendIPConfigurations");
+            }
             if (BackendAddressPool == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "BackendAddressPool");
+            }
+            if (Protocol == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Protocol");
             }
         }
     }
