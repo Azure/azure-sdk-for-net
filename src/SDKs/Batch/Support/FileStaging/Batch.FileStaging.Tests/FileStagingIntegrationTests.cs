@@ -48,7 +48,7 @@ namespace Batch.FileStaging.Tests
         {
             StagingStorageAccount storageCreds = TestUtilities.GetStorageCredentialsFromEnvironment();
 
-            using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+            using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
             {
                 string jobId = "TestTaskWithFilesToStage-" + TestUtilities.GetMyName();
 
@@ -176,7 +176,7 @@ namespace Batch.FileStaging.Tests
                 });
 
                 StagingStorageAccount storageCredentials = TestUtilities.GetStorageCredentialsFromEnvironment();
-                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironment())
                 {
                     await this.AddTasksSimpleTestAsync(
                         batchCli,
