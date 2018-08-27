@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         }
 
         [Fact]
-        public async Task CannotCreateOutputStorageForNullStorageAccount()
+        public void CannotCreateOutputStorageForNullStorageAccount()
         {
             var taskResponse = new Batch.Protocol.Models.CloudTask
             {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
                 Url = $"http://contoso.noregion.batch.azure.com/jobs/fakejob/tasks/faketask",  // TODO: remove if .NET client library can surface CloudTask.JobId directly
             };
 
-            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient(taskResponse)))
+            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient(taskResponse)))
             {
                 CloudTask task = batchClient.JobOperations.GetTask("fakejob", "faketask");
                 CloudStorageAccount storageAccount = null;

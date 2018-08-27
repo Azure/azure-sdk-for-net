@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
         [Fact]
         public async Task CloudJobOutputStorageExtensionSavesToCorrectContainer()
         {
-            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient()))
+            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
             {
                 var job = batchClient.JobOperations.CreateJob(_jobId, null);
 
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
         [Fact]
         public async Task CloudJobGetStorageContainerUrlExtensionSasPermitsWritingToJobOutputContainer()
         {
-            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient()))
+            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
             {
                 var job = batchClient.JobOperations.CreateJob(_jobId, null);
 
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
         [Fact]
         public async Task CloudJobPrepareOutputStorageExtensionCreatesCorrectContainer()
         {
-            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient()))
+            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
             {
                 var job = batchClient.JobOperations.CreateJob(_jobId, null);
 
