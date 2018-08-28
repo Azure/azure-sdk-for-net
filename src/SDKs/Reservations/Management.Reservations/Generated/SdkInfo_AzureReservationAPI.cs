@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Reservations
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/reservations/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\AzureSDK\\azure-sdk-for-net\\src\\SDKs";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "7af01aa799cf34b4c2d736401a08eb1fd7f02064";
+      public static readonly String GithubCommidId = "13e9db3229a01a2000029a19a5d9926b463f0e37";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section  }
