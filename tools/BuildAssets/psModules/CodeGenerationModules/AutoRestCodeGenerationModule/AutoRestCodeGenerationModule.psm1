@@ -208,6 +208,24 @@ function Populate-Metadata {
     return $metadataTemplate
 }
 
+function Get-MetadataCode {
+    param([string] $sdkInfo)
+        # If there is no regex match, we need to insert it for the first time
+        # We need to find the third } which is where we now insert the template
+        $substr = $sdkInfo
+        $tokenNum = 0
+        $subIndex = 0
+        while($tokenNum -lt 4)
+        {
+            $i= $substr.IndexOf("}");
+            $subIndex = $subIndex + $i
+            $substr = $substr.Substring($i+1, $substr.Length-1-$i)
+            $tokenNum = $tokenNum +1
+        }
+        $sdkInfo = $sdkInfo.Insert($subIndex +1, $metadataTemplate)
+        return $sdkInfo
+}
+
 function Start-MetadataGeneration {
     param(
         [Parameter(Mandatory = $true)]
@@ -287,21 +305,20 @@ function Start-MetadataGeneration {
             }
             else 
             {
-                # If there is no regex match, we need to insert it for the first time
-                # We need to find the third } which is where we now insert the template
-                $tokenNum = 0
-                $substr = $sdkInfo
-                $subIndex = 0
-                while($tokenNum -lt 4)
+                if($sdkInfo.GetType().IsArray)
                 {
-                    $i= $substr.IndexOf("}");
-                    $subIndex = $subIndex + $i
-                    $substr = $substr.Substring($i+1, $substr.Length-1-$i)
-                    $tokenNum = $tokenNum +1
+                    Foreach($info in $sdkInfo)
+                    {
+                        $newSdkInfo = Get-MetadataCode $info
+                        Set-Content -Path $sdkInfoFile -Value $newSdkInfo.Trim()
+                    }
                 }
-                $sdkInfo = $sdkInfo.Insert($subIndex +1, $metadataTemplate)
+                else 
+                {
+                    $sdkInfo = Get-MetadataCode $sdkInfo $
+                    Set-Content -Path $sdkInfoFile -Value $sdkInfo.Trim()
+                }
             }
-            Set-Content -Path $sdkInfoFile -Value $sdkInfo.Trim()
         }        
     }
 }
@@ -565,7 +582,6 @@ function Start-CodeGeneration {
     
     if(-not [string]::IsNullOrWhiteSpace($LocalConfigFilePath)) 
     {
-        
         # if generating using a local config file, create an obscure temp log file, makes detection easier
         Remove-Item "$localSdkRepoDirectory\_metadata\$($ResourceProvider.Replace("/","_")).txt" -ErrorAction SilentlyContinue
         $logFile = [System.IO.Path]::GetTempFileName()+".txt";
@@ -624,7 +640,10 @@ function Start-CodeGeneration {
         }
         
         Clear-OutputStreams
-        Write-Host "Log file can be found at location $logFile"
+        if(!$generateSDKMetadata)
+        {
+            Write-Host "Log file can be found at location $logFile"
+        }
     }
 }
 
