@@ -31,7 +31,7 @@ namespace Cdn.Tests.ScenarioTests
                 // Create resource group
                 var resourceGroupName = CdnTestUtilities.CreateResourceGroup(resourcesClient);
 
-                // Create a standard cdn profile
+                // Create a standard verizon cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
                 Profile createParameters = new Profile
                 {
@@ -47,7 +47,37 @@ namespace Cdn.Tests.ScenarioTests
                 var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
                 VerifyProfileCreated(profile, createParameters);
 
-                // Create a premium cdn profile
+                // Create a standard akamai cdn profile
+                profileName = TestUtilities.GenerateName("profile");
+                createParameters = new Profile
+                {
+                    Location = "EastUs",
+                    Sku = new Sku { Name = SkuName.StandardAkamai },
+                    Tags = new Dictionary<string, string>
+                        {
+                            {"key3","value3"},
+                            {"key4","value4"}
+                        }
+                };
+                profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
+                VerifyProfileCreated(profile, createParameters);
+
+                // Create a standard microsoft cdn profile
+                profileName = TestUtilities.GenerateName("profile");
+                createParameters = new Profile
+                {
+                    Location = "WestUs",
+                    Sku = new Sku { Name = SkuName.StandardMicrosoft },
+                    Tags = new Dictionary<string, string>
+                        {
+                            {"key5","value5"},
+                            {"key6","value6"}
+                        }
+                };
+                profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
+                VerifyProfileCreated(profile, createParameters);
+
+                // Create a premium verizon cdn profile
                 profileName = TestUtilities.GenerateName("profile");
                 createParameters = new Profile
                 {
@@ -55,8 +85,8 @@ namespace Cdn.Tests.ScenarioTests
                     Sku = new Sku { Name = SkuName.PremiumVerizon },
                     Tags = new Dictionary<string, string>
                         {
-                            {"key1","value1"},
-                            {"key2","value2"}
+                            {"key7","value7"},
+                            {"key8","value8"}
                         }
                 };
 

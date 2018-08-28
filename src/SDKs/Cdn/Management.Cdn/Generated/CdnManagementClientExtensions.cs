@@ -58,6 +58,42 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
+            /// Check the availability of a resource name. This is needed for resources
+            /// where name is globally unique, such as a CDN endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// The resource name to validate.
+            /// </param>
+            public static CheckNameAvailabilityOutput CheckNameAvailabilityWithSubscription(this ICdnManagementClient operations, string name)
+            {
+                return operations.CheckNameAvailabilityWithSubscriptionAsync(name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check the availability of a resource name. This is needed for resources
+            /// where name is globally unique, such as a CDN endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// The resource name to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameAvailabilityOutput> CheckNameAvailabilityWithSubscriptionAsync(this ICdnManagementClient operations, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithSubscriptionWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Check if the probe path is a valid path and the file can be accessed. Probe
             /// path is the path to a file hosted on the origin server to help accelerate
             /// the delivery of dynamic content via the CDN endpoint. This path is relative

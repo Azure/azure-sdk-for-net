@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -91,34 +90,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "uploadOptions")]
         public OutputFileUploadOptions UploadOptions { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (FilePattern == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "FilePattern");
-            }
-            if (Destination == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Destination");
-            }
-            if (UploadOptions == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "UploadOptions");
-            }
-            if (Destination != null)
-            {
-                Destination.Validate();
-            }
-            if (UploadOptions != null)
-            {
-                UploadOptions.Validate();
-            }
-        }
     }
 }

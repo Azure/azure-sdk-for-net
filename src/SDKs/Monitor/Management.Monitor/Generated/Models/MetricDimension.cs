@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Specifies a metric dimension.
+    /// </summary>
     public partial class MetricDimension
     {
         /// <summary>

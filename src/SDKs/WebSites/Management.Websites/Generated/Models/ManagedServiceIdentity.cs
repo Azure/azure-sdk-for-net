@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,15 +31,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the ManagedServiceIdentity class.
         /// </summary>
-        /// <param name="type">Type of managed service identity.</param>
+        /// <param name="type">Type of managed service identity. Possible
+        /// values include: 'SystemAssigned', 'UserAssigned'</param>
         /// <param name="tenantId">Tenant of managed service identity.</param>
         /// <param name="principalId">Principal Id of managed service
         /// identity.</param>
-        public ManagedServiceIdentity(object type = default(object), string tenantId = default(string), string principalId = default(string))
+        /// <param name="identityIds">Array of UserAssigned managed service
+        /// identities.</param>
+        public ManagedServiceIdentity(string type = default(string), string tenantId = default(string), string principalId = default(string), IList<string> identityIds = default(IList<string>))
         {
             Type = type;
             TenantId = tenantId;
             PrincipalId = principalId;
+            IdentityIds = identityIds;
             CustomInit();
         }
 
@@ -47,10 +53,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of managed service identity.
+        /// Gets or sets type of managed service identity. Possible values
+        /// include: 'SystemAssigned', 'UserAssigned'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public object Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets tenant of managed service identity.
@@ -63,6 +70,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
         public string PrincipalId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets array of UserAssigned managed service identities.
+        /// </summary>
+        [JsonProperty(PropertyName = "identityIds")]
+        public IList<string> IdentityIds { get; set; }
 
     }
 }

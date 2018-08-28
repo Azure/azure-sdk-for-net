@@ -7,9 +7,9 @@
     <Description>Test Project for Automation tests</Description>
   </PropertyGroup>
   
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
+  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Network" Version="[14.0.0-preview,16.0)" />

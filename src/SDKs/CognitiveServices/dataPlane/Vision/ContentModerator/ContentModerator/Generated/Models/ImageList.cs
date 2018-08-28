@@ -7,6 +7,8 @@
 namespace Microsoft.CognitiveServices.ContentModerator.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,7 +31,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <param name="name">Image List Name.</param>
         /// <param name="description">Description for image list.</param>
         /// <param name="metadata">Image List Metadata.</param>
-        public ImageList(int? id = default(int?), string name = default(string), string description = default(string), ImageListMetadata metadata = default(ImageListMetadata))
+        public ImageList(int? id = default(int?), string name = default(string), string description = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
@@ -65,7 +67,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// Gets or sets image List Metadata.
         /// </summary>
         [JsonProperty(PropertyName = "Metadata")]
-        public ImageListMetadata Metadata { get; set; }
+        public IDictionary<string, string> Metadata { get; set; }
 
     }
 }

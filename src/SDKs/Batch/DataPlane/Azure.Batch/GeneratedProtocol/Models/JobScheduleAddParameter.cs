@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -107,40 +106,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
-            }
-            if (Schedule == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Schedule");
-            }
-            if (JobSpecification == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "JobSpecification");
-            }
-            if (JobSpecification != null)
-            {
-                JobSpecification.Validate();
-            }
-            if (Metadata != null)
-            {
-                foreach (var element in Metadata)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-        }
     }
 }

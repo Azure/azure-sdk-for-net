@@ -41,27 +41,24 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="latestRun">Latest job run information.</param>
         /// <param name="historyUrl">History URL.</param>
         /// <param name="schedulerLogsUrl">Scheduler Logs URL.</param>
-        /// <param name="triggeredWebJobName">Job name. Used as job identifier
-        /// in ARM resource URI.</param>
         /// <param name="runCommand">Run command.</param>
         /// <param name="url">Job URL.</param>
         /// <param name="extraInfoUrl">Extra Info URL.</param>
-        /// <param name="jobType">Job type. Possible values include:
+        /// <param name="webJobType">Job type. Possible values include:
         /// 'Continuous', 'Triggered'</param>
         /// <param name="error">Error information.</param>
         /// <param name="usingSdk">Using SDK?</param>
         /// <param name="settings">Job settings.</param>
-        public TriggeredWebJob(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), TriggeredJobRun latestRun = default(TriggeredJobRun), string historyUrl = default(string), string schedulerLogsUrl = default(string), string triggeredWebJobName = default(string), string runCommand = default(string), string url = default(string), string extraInfoUrl = default(string), WebJobType? jobType = default(WebJobType?), string error = default(string), bool? usingSdk = default(bool?), IDictionary<string, object> settings = default(IDictionary<string, object>))
+        public TriggeredWebJob(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), TriggeredJobRun latestRun = default(TriggeredJobRun), string historyUrl = default(string), string schedulerLogsUrl = default(string), string runCommand = default(string), string url = default(string), string extraInfoUrl = default(string), WebJobType? webJobType = default(WebJobType?), string error = default(string), bool? usingSdk = default(bool?), IDictionary<string, object> settings = default(IDictionary<string, object>))
             : base(id, name, kind, type)
         {
             LatestRun = latestRun;
             HistoryUrl = historyUrl;
             SchedulerLogsUrl = schedulerLogsUrl;
-            TriggeredWebJobName = triggeredWebJobName;
             RunCommand = runCommand;
             Url = url;
             ExtraInfoUrl = extraInfoUrl;
-            JobType = jobType;
+            WebJobType = webJobType;
             Error = error;
             UsingSdk = usingSdk;
             Settings = settings;
@@ -76,31 +73,25 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets latest job run information.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.latestRun")]
+        [JsonProperty(PropertyName = "properties.latest_run")]
         public TriggeredJobRun LatestRun { get; set; }
 
         /// <summary>
         /// Gets or sets history URL.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.historyUrl")]
+        [JsonProperty(PropertyName = "properties.history_url")]
         public string HistoryUrl { get; set; }
 
         /// <summary>
         /// Gets or sets scheduler Logs URL.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.schedulerLogsUrl")]
+        [JsonProperty(PropertyName = "properties.scheduler_logs_url")]
         public string SchedulerLogsUrl { get; set; }
-
-        /// <summary>
-        /// Gets job name. Used as job identifier in ARM resource URI.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string TriggeredWebJobName { get; private set; }
 
         /// <summary>
         /// Gets or sets run command.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.runCommand")]
+        [JsonProperty(PropertyName = "properties.run_command")]
         public string RunCommand { get; set; }
 
         /// <summary>
@@ -112,15 +103,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets extra Info URL.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.extraInfoUrl")]
+        [JsonProperty(PropertyName = "properties.extra_info_url")]
         public string ExtraInfoUrl { get; set; }
 
         /// <summary>
         /// Gets or sets job type. Possible values include: 'Continuous',
         /// 'Triggered'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.jobType")]
-        public WebJobType? JobType { get; set; }
+        [JsonProperty(PropertyName = "properties.web_job_type")]
+        public WebJobType? WebJobType { get; set; }
 
         /// <summary>
         /// Gets or sets error information.
@@ -131,7 +122,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets using SDK?
         /// </summary>
-        [JsonProperty(PropertyName = "properties.usingSdk")]
+        [JsonProperty(PropertyName = "properties.using_sdk")]
         public bool? UsingSdk { get; set; }
 
         /// <summary>

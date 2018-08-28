@@ -53,7 +53,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
         /// <summary>
         /// Lists of backup policies associated with Recovery Services Vault. API
-        /// provides pagination parameters to fetch scoped results.
+        /// provides pagination parameters to fetch
+        /// scoped results.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -261,7 +262,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
         /// <summary>
         /// Lists of backup policies associated with Recovery Services Vault. API
-        /// provides pagination parameters to fetch scoped results.
+        /// provides pagination parameters to fetch
+        /// scoped results.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -64,6 +64,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".</param>
         /// <param name="reserved">&lt;code&gt;true&lt;/code&gt; if reserved;
         /// otherwise, &lt;code&gt;false&lt;/code&gt;.</param>
+        /// <param name="isXenon">Hyper-V sandbox.</param>
         /// <param name="lastModifiedTimeUtc">Last time the app was modified,
         /// in UTC. Read-only.</param>
         /// <param name="siteConfig">Configuration of the app.</param>
@@ -107,8 +108,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// This only applies to Functions container.</param>
         /// <param name="cloningInfo">If specified during app creation, the app
         /// is cloned from a source app.</param>
-        /// <param name="snapshotInfo">If specified during app creation, the
-        /// app is created from a previous snapshot.</param>
         /// <param name="resourceGroup">Name of the resource group the app
         /// belongs to. Read-only.</param>
         /// <param name="isDefaultContainer">&lt;code&gt;true&lt;/code&gt; if
@@ -121,7 +120,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="httpsOnly">HttpsOnly: configures a web site to accept
         /// only https requests. Issues redirect for
         /// http requests</param>
-        public Site(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string state = default(string), IList<string> hostNames = default(IList<string>), string repositorySiteName = default(string), UsageState? usageState = default(UsageState?), bool? enabled = default(bool?), IList<string> enabledHostNames = default(IList<string>), SiteAvailabilityState? availabilityState = default(SiteAvailabilityState?), IList<HostNameSslState> hostNameSslStates = default(IList<HostNameSslState>), string serverFarmId = default(string), bool? reserved = default(bool?), System.DateTime? lastModifiedTimeUtc = default(System.DateTime?), SiteConfig siteConfig = default(SiteConfig), IList<string> trafficManagerHostNames = default(IList<string>), bool? scmSiteAlsoStopped = default(bool?), string targetSwapSlot = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), bool? clientAffinityEnabled = default(bool?), bool? clientCertEnabled = default(bool?), bool? hostNamesDisabled = default(bool?), string outboundIpAddresses = default(string), string possibleOutboundIpAddresses = default(string), int? containerSize = default(int?), int? dailyMemoryTimeQuota = default(int?), System.DateTime? suspendedTill = default(System.DateTime?), int? maxNumberOfWorkers = default(int?), CloningInfo cloningInfo = default(CloningInfo), SnapshotRecoveryRequest snapshotInfo = default(SnapshotRecoveryRequest), string resourceGroup = default(string), bool? isDefaultContainer = default(bool?), string defaultHostName = default(string), SlotSwapStatus slotSwapStatus = default(SlotSwapStatus), bool? httpsOnly = default(bool?), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
+        public Site(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string state = default(string), IList<string> hostNames = default(IList<string>), string repositorySiteName = default(string), UsageState? usageState = default(UsageState?), bool? enabled = default(bool?), IList<string> enabledHostNames = default(IList<string>), SiteAvailabilityState? availabilityState = default(SiteAvailabilityState?), IList<HostNameSslState> hostNameSslStates = default(IList<HostNameSslState>), string serverFarmId = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), System.DateTime? lastModifiedTimeUtc = default(System.DateTime?), SiteConfig siteConfig = default(SiteConfig), IList<string> trafficManagerHostNames = default(IList<string>), bool? scmSiteAlsoStopped = default(bool?), string targetSwapSlot = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), bool? clientAffinityEnabled = default(bool?), bool? clientCertEnabled = default(bool?), bool? hostNamesDisabled = default(bool?), string outboundIpAddresses = default(string), string possibleOutboundIpAddresses = default(string), int? containerSize = default(int?), int? dailyMemoryTimeQuota = default(int?), System.DateTime? suspendedTill = default(System.DateTime?), int? maxNumberOfWorkers = default(int?), CloningInfo cloningInfo = default(CloningInfo), string resourceGroup = default(string), bool? isDefaultContainer = default(bool?), string defaultHostName = default(string), SlotSwapStatus slotSwapStatus = default(SlotSwapStatus), bool? httpsOnly = default(bool?), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
             : base(location, id, name, kind, type, tags)
         {
             State = state;
@@ -134,6 +133,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             HostNameSslStates = hostNameSslStates;
             ServerFarmId = serverFarmId;
             Reserved = reserved;
+            IsXenon = isXenon;
             LastModifiedTimeUtc = lastModifiedTimeUtc;
             SiteConfig = siteConfig;
             TrafficManagerHostNames = trafficManagerHostNames;
@@ -150,7 +150,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             SuspendedTill = suspendedTill;
             MaxNumberOfWorkers = maxNumberOfWorkers;
             CloningInfo = cloningInfo;
-            SnapshotInfo = snapshotInfo;
             ResourceGroup = resourceGroup;
             IsDefaultContainer = isDefaultContainer;
             DefaultHostName = defaultHostName;
@@ -237,6 +236,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.reserved")]
         public bool? Reserved { get; set; }
+
+        /// <summary>
+        /// Gets or sets hyper-V sandbox.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isXenon")]
+        public bool? IsXenon { get; set; }
 
         /// <summary>
         /// Gets last time the app was modified, in UTC. Read-only.
@@ -360,13 +365,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public CloningInfo CloningInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets if specified during app creation, the app is created
-        /// from a previous snapshot.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.snapshotInfo")]
-        public SnapshotRecoveryRequest SnapshotInfo { get; set; }
-
-        /// <summary>
         /// Gets name of the resource group the app belongs to. Read-only.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGroup")]
@@ -414,6 +412,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public override void Validate()
         {
             base.Validate();
+            if (SiteConfig != null)
+            {
+                SiteConfig.Validate();
+            }
             if (CloningInfo != null)
             {
                 CloningInfo.Validate();

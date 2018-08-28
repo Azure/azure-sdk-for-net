@@ -26,7 +26,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     {
         /// <summary>
         /// Lists of backup policies associated with Recovery Services Vault.
-        /// API provides pagination parameters to fetch scoped results.
+        /// API provides pagination parameters to fetch
+        /// scoped results.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -56,7 +57,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<AzureOperationResponse<IPage<ProtectionPolicyResource>>> ListWithHttpMessagesAsync(string vaultName, string resourceGroupName, ODataQuery<ProtectionPolicyQueryObject> odataQuery = default(ODataQuery<ProtectionPolicyQueryObject>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists of backup policies associated with Recovery Services Vault.
-        /// API provides pagination parameters to fetch scoped results.
+        /// API provides pagination parameters to fetch
+        /// scoped results.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

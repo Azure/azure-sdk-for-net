@@ -165,7 +165,7 @@ skip_Rps() {
     #printf "checking......$1\n"
     if [[ ("$1" =~ "Authorization")  || ( "$1" =~ "Gallery" ) || ("$1" =~ "Automation") || ( "$1" =~ "Intune" ) || ( "$1" =~ "DataLake.Store" ) 
                 || ( "$1" =~ "Monitor" ) || ( "$1" =~ "RedisCache" ) || ( "$1" =~ "Search" ) || ( "$1" =~ "KeyVault.Tests" ) 
-                || ( "$1" =~ "DeviceProvisioningServices") || ("$1" =~ "ServerManagement")
+                || ( "$1" =~ "DeviceProvisioningServices") || ("$1" =~ "ServerManagement") || ( "$1" =~ "BotService")
                 || ("$1" =~ "Batch") || ("$1" =~ "KeyVault")
                 || ( "$1" =~ "KeyVault.TestFramework") || ( "$1" =~ "Subscription.FullDesktop.Tests") ]]; then                
         retVal=true
@@ -174,7 +174,7 @@ skip_Rps() {
 }
 
 getBuildTools() {
-    copyFromRootDir="https://raw.githubusercontent.com/shahabhijeet/azure-sdk-for-net/addTfm"
+    copyFromRootDir="https://raw.githubusercontent.com/Azure/azure-sdk-for-net/BuildToolsForSdk"                     
     printf "Updating Build tools .....\n"
     
     if [ ! -d ./tools/SdkBuildTools ]; then
@@ -202,6 +202,7 @@ getBuildTools() {
     curl -s $copyFromRootDir/tools/BuildAssets/targets/common.targets > ./tools/SdkBuildTools/targets/common.targets
     curl -s $copyFromRootDir/tools/BuildAssets/targets/signing.targets > ./tools/SdkBuildTools/targets/signing.targets
 	curl -s $copyFromRootDir/tools/BuildAssets/targets/ideCmd.targets > ./tools/SdkBuildTools/targets/ideCmd.targets
+    curl -s $copyFromRootDir/tools/BuildAssets/targets/utility.targets > ./tools/SdkBuildTools/targets/utility.targets
     curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_AzSdk.props > ./tools/SdkBuildTools/targets/core/_AzSdk.props
     curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_build.proj > ./tools/SdkBuildTools/targets/core/_build.proj
     curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_Directory.Build.props > ./tools/SdkBuildTools/targets/core/_Directory.Build.props
@@ -216,8 +217,7 @@ getBuildTools() {
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Collections.Immutable.dll > ./tools/SdkBuildTools/tasks/net46/System.Collections.Immutable.dll
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Reflection.Metadata.dll > ./tools/SdkBuildTools/tasks/net46/System.Reflection.Metadata.dll
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Runtime.InteropServices.RuntimeInformation.dll > ./tools/SdkBuildTools/tasks/net46/System.Runtime.InteropServices.RuntimeInformation.dll
-    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Threading.Thread.dll > ./tools/SdkBuildTools/tasks/net46/System.Threading.Thread.dll
-    
+    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Threading.Thread.dll > ./tools/SdkBuildTools/tasks/net46/System.Threading.Thread.dll    
 }
 
 getBuildTools

@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="slotDifferenceType">Type of the difference:
-        /// Information, Warning or Error.</param>
+        /// <param name="level">Level of the difference: Information, Warning
+        /// or Error.</param>
         /// <param name="settingType">The type of the setting: General,
         /// AppSetting or ConnectionString.</param>
         /// <param name="diffRule">Rule that describes how to process the
@@ -49,10 +49,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// slot.</param>
         /// <param name="description">Description of the setting
         /// difference.</param>
-        public SlotDifference(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string slotDifferenceType = default(string), string settingType = default(string), string diffRule = default(string), string settingName = default(string), string valueInCurrentSlot = default(string), string valueInTargetSlot = default(string), string description = default(string))
+        public SlotDifference(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string level = default(string), string settingType = default(string), string diffRule = default(string), string settingName = default(string), string valueInCurrentSlot = default(string), string valueInTargetSlot = default(string), string description = default(string))
             : base(id, name, kind, type)
         {
-            SlotDifferenceType = slotDifferenceType;
+            Level = level;
             SettingType = settingType;
             DiffRule = diffRule;
             SettingName = settingName;
@@ -68,10 +68,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets type of the difference: Information, Warning or Error.
+        /// Gets level of the difference: Information, Warning or Error.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.type")]
-        public string SlotDifferenceType { get; private set; }
+        [JsonProperty(PropertyName = "properties.level")]
+        public string Level { get; private set; }
 
         /// <summary>
         /// Gets the type of the setting: General, AppSetting or

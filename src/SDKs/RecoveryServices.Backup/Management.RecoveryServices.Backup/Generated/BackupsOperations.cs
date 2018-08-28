@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
         /// <summary>
         /// Triggers backup for specified backed up item. This is an asynchronous
-        /// operation. To know the status of the operation, call
-        /// GetProtectedItemOperationResult API.
+        /// operation. To know the status of the
+        /// operation, call GetProtectedItemOperationResult API.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.

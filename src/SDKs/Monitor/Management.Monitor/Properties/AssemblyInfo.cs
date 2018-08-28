@@ -8,7 +8,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides Microsoft Azure Monitor operations.")]
 
 [assembly: AssemblyVersion("0.20.0.0")]
-[assembly: AssemblyFileVersion("0.20.0.0")]
+[assembly: AssemblyFileVersion("0.20.1.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]

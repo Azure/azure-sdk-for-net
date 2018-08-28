@@ -60,7 +60,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <summary>
         /// Registers the container with Recovery Services vault.
         /// This is an asynchronous operation. To track the operation status,
-        /// use location header to call get latest status of the operation.
+        /// use location header to call get latest status of
+        /// the operation.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -96,9 +97,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<AzureOperationResponse<ProtectionContainerResource>> RegisterWithHttpMessagesAsync(string vaultName, string resourceGroupName, string fabricName, string containerName, ProtectionContainerResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Unregisters the given container from your Recovery Services Vault.
-        /// This is an asynchronous operation. To determine whether the backend
-        /// service has finished processing the request, call Get Container
-        /// Operation Result API.
+        /// This is an asynchronous operation. To determine
+        /// whether the backend service has finished processing the request,
+        /// call Get Container Operation Result API.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -166,9 +167,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<AzureOperationResponse> InquireWithHttpMessagesAsync(string vaultName, string resourceGroupName, string fabricName, string containerName, ODataQuery<BMSContainersInquiryQueryObject> odataQuery = default(ODataQuery<BMSContainersInquiryQueryObject>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Discovers all the containers in the subscription that can be backed
-        /// up to Recovery Services Vault. This is an asynchronous operation.
-        /// To know the status of the operation, call GetRefreshOperationResult
-        /// API.
+        /// up to Recovery Services Vault. This is an
+        /// asynchronous operation. To know the status of the operation, call
+        /// GetRefreshOperationResult API.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.

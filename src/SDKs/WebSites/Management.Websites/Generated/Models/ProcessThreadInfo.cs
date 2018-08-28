@@ -36,8 +36,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="processThreadInfoId">ARM Identifier for
-        /// deployment.</param>
+        /// <param name="identifier">Site extension ID.</param>
         /// <param name="href">HRef URI.</param>
         /// <param name="process">Process URI.</param>
         /// <param name="startAddress">Start address.</param>
@@ -51,10 +50,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// time.</param>
         /// <param name="state">Thread state.</param>
         /// <param name="waitReason">Wait reason.</param>
-        public ProcessThreadInfo(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? processThreadInfoId = default(int?), string href = default(string), string process = default(string), string startAddress = default(string), int? currentPriority = default(int?), string priorityLevel = default(string), int? basePriority = default(int?), System.DateTime? startTime = default(System.DateTime?), string totalProcessorTime = default(string), string userProcessorTime = default(string), string priviledgedProcessorTime = default(string), string state = default(string), string waitReason = default(string))
+        public ProcessThreadInfo(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? identifier = default(int?), string href = default(string), string process = default(string), string startAddress = default(string), int? currentPriority = default(int?), string priorityLevel = default(string), int? basePriority = default(int?), System.DateTime? startTime = default(System.DateTime?), string totalProcessorTime = default(string), string userProcessorTime = default(string), string priviledgedProcessorTime = default(string), string state = default(string), string waitReason = default(string))
             : base(id, name, kind, type)
         {
-            ProcessThreadInfoId = processThreadInfoId;
+            Identifier = identifier;
             Href = href;
             Process = process;
             StartAddress = startAddress;
@@ -76,10 +75,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets ARM Identifier for deployment.
+        /// Gets site extension ID.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.id")]
-        public int? ProcessThreadInfoId { get; set; }
+        [JsonProperty(PropertyName = "properties.identifier")]
+        public int? Identifier { get; private set; }
 
         /// <summary>
         /// Gets or sets hRef URI.
@@ -96,49 +95,49 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets start address.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.startAddress")]
+        [JsonProperty(PropertyName = "properties.start_address")]
         public string StartAddress { get; set; }
 
         /// <summary>
         /// Gets or sets current thread priority.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.currentPriority")]
+        [JsonProperty(PropertyName = "properties.current_priority")]
         public int? CurrentPriority { get; set; }
 
         /// <summary>
         /// Gets or sets thread priority level.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.priorityLevel")]
+        [JsonProperty(PropertyName = "properties.priority_level")]
         public string PriorityLevel { get; set; }
 
         /// <summary>
         /// Gets or sets base priority.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.basePriority")]
+        [JsonProperty(PropertyName = "properties.base_priority")]
         public int? BasePriority { get; set; }
 
         /// <summary>
         /// Gets or sets start time.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.startTime")]
+        [JsonProperty(PropertyName = "properties.start_time")]
         public System.DateTime? StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets total processor time.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.totalProcessorTime")]
+        [JsonProperty(PropertyName = "properties.total_processor_time")]
         public string TotalProcessorTime { get; set; }
 
         /// <summary>
         /// Gets or sets user processor time.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.userProcessorTime")]
+        [JsonProperty(PropertyName = "properties.user_processor_time")]
         public string UserProcessorTime { get; set; }
 
         /// <summary>
         /// Gets or sets priviledged processor time.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.priviledgedProcessorTime")]
+        [JsonProperty(PropertyName = "properties.priviledged_processor_time")]
         public string PriviledgedProcessorTime { get; set; }
 
         /// <summary>
@@ -150,7 +149,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets wait reason.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.waitReason")]
+        [JsonProperty(PropertyName = "properties.wait_reason")]
         public string WaitReason { get; set; }
 
     }
