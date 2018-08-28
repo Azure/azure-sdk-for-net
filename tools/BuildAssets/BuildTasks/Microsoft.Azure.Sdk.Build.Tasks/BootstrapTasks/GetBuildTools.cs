@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Build.BootstrapTasks
         #endregion
 
         #region
-        public bool UseLKG { get; set; }
+        public bool UseLatest { get; set; }
         public string RemoteBranchName
         {
             get
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Build.BootstrapTasks
         {
             LocalBranchRootDir = localRootDir;
             RemoteRootDir = remoteRootDir;
-            UseLKG = true;
+            UseLatest = true;
             Init();
         }
         /// <summary>
@@ -347,13 +347,13 @@ namespace Microsoft.Azure.Build.BootstrapTasks
 
             try
             {
-                if(UseLKG == true)
+                if(UseLatest == true)
                 {
-                    req = (HttpWebRequest)WebRequest.Create(LKG_AKAMS_URI);
+                    req = (HttpWebRequest)WebRequest.Create(LATEST_AKAMS_URI);
                 }
                 else
                 {
-                    req = (HttpWebRequest)WebRequest.Create(LATEST_AKAMS_URI);
+                    req = (HttpWebRequest)WebRequest.Create(LKG_AKAMS_URI);
                 }
 
                 req.Method = "HEAD";
