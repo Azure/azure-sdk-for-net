@@ -9,11 +9,6 @@
             Bootstrap task, which simply copies all build tools to local branch
             </summary>
         </member>
-        <member name="P:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.LocalBranchRootDir">
-            <summary>
-            Sets/Gets Local branch Root Directory
-            </summary>
-        </member>
         <!-- Badly formed XML comment ignored for member "P:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.RemoteRootDir" -->
         <member name="P:Microsoft.Azure.Build.BootstrapTasks.GetBuildTools.LocalBranchCopyToRootDir">
             <summary>

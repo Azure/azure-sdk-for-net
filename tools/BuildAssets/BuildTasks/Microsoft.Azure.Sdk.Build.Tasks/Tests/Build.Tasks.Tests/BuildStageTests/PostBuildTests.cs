@@ -24,7 +24,7 @@ namespace Build.Tasks.Tests
             catProjTest = new CategorizeProjectTaskTest();
         }
 
-        [Fact(/*Skip = "Enable after merge from psSdkJson6"*/)]
+        [Fact(Skip = "Build the scope before running this test")]
         public void BuildOneProject()
         {
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
@@ -67,7 +67,7 @@ namespace Build.Tasks.Tests
         }
 
 
-        [Fact]
+        [Fact(Skip ="Build the scope before running this test")]
         public void BuildAzureStackScope()
         {
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();

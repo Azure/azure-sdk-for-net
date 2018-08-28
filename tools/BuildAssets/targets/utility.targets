@@ -11,12 +11,6 @@
     </innerUtilitiesDependsOn>
   </PropertyGroup>
 
-<!--
- DependsOnTargets="UtilDependsOn"
- 
-		<Message Text="Executing Utils" />
-	</Target>
--->
   <Target Name="innerUtilities" DependsOnTargets="$(innerUtilitiesDependsOn)" >
     <Message Text="UtilName = $(UtilName)" Condition=" '$(DebugTrace)' == 'true' " />
     <Message Text="Exiting Utils" />

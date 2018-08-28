@@ -133,7 +133,7 @@
             <param name="directoryNameToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Microsoft.Azure.Sdk.Build.ExecProcess.NugetExec.Publish(System.Tuple{System.String,System.String})">
+        <member name="M:Microsoft.Azure.Sdk.Build.ExecProcess.NugetExec.GetRestoreCacheLocation(System.String)">
             <summary>
             
             </summary>
@@ -271,9 +271,9 @@
             
             </summary>
         </member>
-        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.NugetPackageName">
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.ScopePath">
             <summary>
-            Gets or sets Nuget Package Name that needs to be published
+            Gets or Sets relative scope Path (e.g. SDKs\Compute relative path after root\src)
             </summary>
         </member>
         <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.PackageOutputPath">
@@ -287,25 +287,25 @@
             Official Nuget Path is https://www.nuget.org/api/v2/package/
             </summary>
         </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.NugetPackageName">
+            <summary>
+            Gets or sets Nuget Package Name that needs to be published
+            </summary>
+        </member>
         <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.NugetExePath">
             <summary>
             Sets or gets the path to Nuget.exe
             </summary>
         </member>
-        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.UserId">
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.CIUserId">
             <summary>
             GitHub userId
             </summary>
         </member>
-        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.publishAllNugetsUnderScope">
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.SkipSymbolPublishing">
             <summary>
             Publish all nuget found under particular scope
             e.g. publish all nugets under KeyVault
-            </summary>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.scopePath">
-            <summary>
-            Gets or Sets relative scope Path (e.g. SDKs\Compute relative path after root\src)
             </summary>
         </member>
         <member name="P:Microsoft.WindowsAzure.Build.Tasks.PublishSDKNugetTask.ApiKey">
