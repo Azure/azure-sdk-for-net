@@ -14,38 +14,44 @@ namespace Microsoft.Azure.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Schema of the Data property of an EventGridEvent for a device life
-    /// cycle event (DeviceCreated, DeviceDeleted).
+    /// Schema of the Data property of an EventGridEvent for a device
+    /// connection state event (DeviceConnected, DeviceDisconnected).
     /// </summary>
-    public partial class DeviceLifeCycleEventProperties
+    public partial class DeviceConnectionStateEventProperties
     {
         /// <summary>
-        /// Initializes a new instance of the DeviceLifeCycleEventProperties
-        /// class.
+        /// Initializes a new instance of the
+        /// DeviceConnectionStateEventProperties class.
         /// </summary>
-        public DeviceLifeCycleEventProperties()
+        public DeviceConnectionStateEventProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DeviceLifeCycleEventProperties
-        /// class.
+        /// Initializes a new instance of the
+        /// DeviceConnectionStateEventProperties class.
         /// </summary>
         /// <param name="deviceId">The unique identifier of the device. This
         /// case-sensitive string can be up to 128 characters long, and
         /// supports ASCII 7-bit alphanumeric characters plus the following
         /// special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $
         /// '.</param>
+        /// <param name="moduleId">The unique identifier of the module. This
+        /// case-sensitive string can be up to 128 characters long, and
+        /// supports ASCII 7-bit alphanumeric characters plus the following
+        /// special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $
+        /// '.</param>
         /// <param name="hubName">Name of the IoT Hub where the device was
         /// created or deleted.</param>
-        /// <param name="twin">Information about the device twin, which is the
-        /// cloud representation of application device metadata.</param>
-        public DeviceLifeCycleEventProperties(string deviceId = default(string), string hubName = default(string), DeviceTwinInfo twin = default(DeviceTwinInfo))
+        /// <param name="deviceConnectionStateEventInfo">Information about the
+        /// device connection state event.</param>
+        public DeviceConnectionStateEventProperties(string deviceId = default(string), string moduleId = default(string), string hubName = default(string), DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = default(DeviceConnectionStateEventInfo))
         {
             DeviceId = deviceId;
+            ModuleId = moduleId;
             HubName = hubName;
-            Twin = twin;
+            DeviceConnectionStateEventInfo = deviceConnectionStateEventInfo;
             CustomInit();
         }
 
@@ -65,6 +71,16 @@ namespace Microsoft.Azure.EventGrid.Models
         public string DeviceId { get; set; }
 
         /// <summary>
+        /// Gets or sets the unique identifier of the module. This
+        /// case-sensitive string can be up to 128 characters long, and
+        /// supports ASCII 7-bit alphanumeric characters plus the following
+        /// special characters: - : . + % _ &amp;amp;#35; * ? ! ( ) , = @ ; $
+        /// '.
+        /// </summary>
+        [JsonProperty(PropertyName = "moduleId")]
+        public string ModuleId { get; set; }
+
+        /// <summary>
         /// Gets or sets name of the IoT Hub where the device was created or
         /// deleted.
         /// </summary>
@@ -72,11 +88,10 @@ namespace Microsoft.Azure.EventGrid.Models
         public string HubName { get; set; }
 
         /// <summary>
-        /// Gets or sets information about the device twin, which is the cloud
-        /// representation of application device metadata.
+        /// Gets or sets information about the device connection state event.
         /// </summary>
-        [JsonProperty(PropertyName = "twin")]
-        public DeviceTwinInfo Twin { get; set; }
+        [JsonProperty(PropertyName = "deviceConnectionStateEventInfo")]
+        public DeviceConnectionStateEventInfo DeviceConnectionStateEventInfo { get; set; }
 
     }
 }
