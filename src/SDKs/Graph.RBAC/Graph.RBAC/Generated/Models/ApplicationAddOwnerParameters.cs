@@ -17,31 +17,34 @@ namespace Microsoft.Azure.Graph.RBAC.Models
     using System.Linq;
 
     /// <summary>
-    /// The password profile associated with a user.
+    /// Request parameters for adding a owner to an application.
     /// </summary>
-    public partial class PasswordProfile
+    public partial class ApplicationAddOwnerParameters
     {
         /// <summary>
-        /// Initializes a new instance of the PasswordProfile class.
+        /// Initializes a new instance of the ApplicationAddOwnerParameters
+        /// class.
         /// </summary>
-        public PasswordProfile()
+        public ApplicationAddOwnerParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PasswordProfile class.
+        /// Initializes a new instance of the ApplicationAddOwnerParameters
+        /// class.
         /// </summary>
-        /// <param name="password">Password</param>
+        /// <param name="url">A owner object URL, such as
+        /// "https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd",
+        /// where "0b1f9851-1bf0-433f-aec3-cb9272f093dc" is the tenantId and
+        /// "f260bbc4-c254-447b-94cf-293b5ec434dd" is the objectId of the owner
+        /// (user, application, servicePrincipal, group) to be added.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="forceChangePasswordNextLogin">Whether to force a
-        /// password change on next login.</param>
-        public PasswordProfile(string password, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), bool? forceChangePasswordNextLogin = default(bool?))
+        public ApplicationAddOwnerParameters(string url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
         {
             AdditionalProperties = additionalProperties;
-            Password = password;
-            ForceChangePasswordNextLogin = forceChangePasswordNextLogin;
+            Url = url;
             CustomInit();
         }
 
@@ -58,16 +61,14 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets password
+        /// Gets or sets a owner object URL, such as
+        /// "https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd",
+        /// where "0b1f9851-1bf0-433f-aec3-cb9272f093dc" is the tenantId and
+        /// "f260bbc4-c254-447b-94cf-293b5ec434dd" is the objectId of the owner
+        /// (user, application, servicePrincipal, group) to be added.
         /// </summary>
-        [JsonProperty(PropertyName = "password")]
-        public string Password { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether to force a password change on next login.
-        /// </summary>
-        [JsonProperty(PropertyName = "forceChangePasswordNextLogin")]
-        public bool? ForceChangePasswordNextLogin { get; set; }
+        [JsonProperty(PropertyName = "url")]
+        public string Url { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -77,9 +78,9 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Password == null)
+            if (Url == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Password");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Url");
             }
         }
     }

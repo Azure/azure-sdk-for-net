@@ -2,7 +2,7 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Graph.RBAC</PackageId>
-    <VersionPrefix>3.4.0-preview</VersionPrefix>
+    <VersionPrefix>3.5.0-preview</VersionPrefix>
     <Description>Microsoft.Azure.Graph.RBAC</Description>
     <AssemblyName>Microsoft.Azure.Graph.RBAC</AssemblyName>
     <PackageTags>Microsoft AutoRest Management REST;netcore451511</PackageTags>    

@@ -19,34 +19,15 @@ namespace Microsoft.Azure.Graph.RBAC
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ObjectsOperations operations.
+    /// OAuth2Operations operations.
     /// </summary>
-    public partial interface IObjectsOperations
+    public partial interface IOAuth2Operations
     {
         /// <summary>
-        /// Gets the details for the currently logged-in user.
+        /// Queries OAuth2 permissions for the relevant SP ObjectId of an app.
         /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="GraphErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<AADObject>> GetCurrentUserWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets AD group membership for the specified AD object IDs.
-        /// </summary>
-        /// <param name='parameters'>
-        /// Objects filtering parameters.
+        /// <param name='filter'>
+        /// This is the Service Principal ObjectId associated with the app
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -63,12 +44,13 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AADObject>>> GetObjectsByObjectIdsWithHttpMessagesAsync(GetObjectsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Permissions>> GetWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets AD group membership for the specified AD object IDs.
+        /// Grants OAuth2 permissions for the relevant resource Ids of an app.
         /// </summary>
-        /// <param name='nextLink'>
-        /// Next link for the list operation.
+        /// <param name='body'>
+        /// The relevant app Service Principal Object Id and the Service
+        /// Principal Objecit Id you want to grant.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -85,6 +67,6 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AADObject>>> GetObjectsByObjectIdsNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Permissions>> PostWithHttpMessagesAsync(Permissions body = default(Permissions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
