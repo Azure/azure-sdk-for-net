@@ -623,7 +623,7 @@ function Start-CodeGeneration {
     finally {
         Get-OutputStream | Out-File -FilePath $logFile -Encoding utf8 | Out-Null
         $errors = Get-ErrorStream
-        $errors | Out-File -FilePath $logFile -Encoding utf8 | Out-Null
+        $errors = $errors.Trim()
         if(-not [string]::IsNullOrWhiteSpace($errors) -and $generateSDKMetadata)
         {
             $errors | Out-File -FilePath $logFile -Append -Encoding utf8 | Out-Null
@@ -640,10 +640,7 @@ function Start-CodeGeneration {
         }
         
         Clear-OutputStreams
-        if(!$generateSDKMetadata)
-        {
-            Write-Host "Log file can be found at location $logFile"
-        }
+        Write-Host "Log file can be found at location $logFile"
     }
 }
 
