@@ -16,7 +16,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class ApiExportImportTests : TestBase
     {
         [Fact]
-        public async Task SwaggerTest()
+        public void SwaggerTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -76,7 +76,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
-        public async Task WadlTest()
+        public void WadlTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -138,7 +138,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
-        public async Task WsdlTest()
+        public void WsdlTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
