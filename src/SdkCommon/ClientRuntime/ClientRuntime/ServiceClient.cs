@@ -208,6 +208,8 @@ namespace Microsoft.Rest
                                 .Substring("Version=".Length);
                     }
 
+                    _clientVersion = CleanUserAgentInfoEntry(_clientVersion);
+
                 }
                 return _clientVersion;
             }
@@ -502,7 +504,7 @@ namespace Microsoft.Rest
         /// <returns></returns>
         private string CleanUserAgentInfoEntry(string infoEntry)
         {
-            Regex pattern = new Regex("[~`!@#$%^&*(),<>?{} ]");            
+            Regex pattern = new Regex("[~`!@#$%^&*(),<>?{} \/]");            
             infoEntry = pattern.Replace(infoEntry, "");
 
             return infoEntry;
