@@ -324,11 +324,11 @@ function Start-MetadataGeneration {
 }
 
 function Get-ErrorStream {
-    $errorStream.ToString()
+    $errorStream.ToString().Trim()
 }
 
 function Get-OutputStream {
-    $outputStream.ToString()
+    $outputStream.ToString().Trim()
 }
 
 <#
@@ -447,7 +447,7 @@ function Start-AutoRestCodeGeneration {
         
         if([string]::IsNullOrWhiteSpace($SdkDirectory) -or $SdkDirectory.Contains("Documents\WindowsPowerShell\Modules"))
         {
-            Write-Error "Could not find default output directory since script is not run from a sdk repo, please provide one!"
+            Write-Error "Could not find root for output directory since script is not run from SDK repo, please provide this using the -SdkRepoPath parameter!"
             return
         }
         Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags -SdkRepoRootPath $SdkRepoRootPath
@@ -623,7 +623,6 @@ function Start-CodeGeneration {
     finally {
         Get-OutputStream | Out-File -FilePath $logFile -Encoding utf8 | Out-Null
         $errors = Get-ErrorStream
-        $errors = $errors.Trim()
         if(-not [string]::IsNullOrWhiteSpace($errors) -and $generateSDKMetadata)
         {
             $errors | Out-File -FilePath $logFile -Append -Encoding utf8 | Out-Null
