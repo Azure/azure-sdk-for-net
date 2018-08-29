@@ -53,7 +53,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <param name="maximumThroughputUnits">Upper limit of throughput
         /// units when AutoInflate is enabled, vaule should be within 0 to 20
         /// throughput units. ( '0' if AutoInflateEnabled = true)</param>
-        public EHNamespace(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), bool? isAutoInflateEnabled = default(bool?), int? maximumThroughputUnits = default(int?))
+        /// <param name="kafkaEnabled">Value that indicates whether Kafka is
+        /// enabled for eventhub namespace.</param>
+        /// <param name="zoneRedundant">Enabling this property creates a
+        /// Standard Event Hubs Namespace in regions supported availability
+        /// zones.</param>
+        public EHNamespace(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), bool? isAutoInflateEnabled = default(bool?), int? maximumThroughputUnits = default(int?), bool? kafkaEnabled = default(bool?), bool? zoneRedundant = default(bool?))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
@@ -64,6 +69,8 @@ namespace Microsoft.Azure.Management.EventHub.Models
             MetricId = metricId;
             IsAutoInflateEnabled = isAutoInflateEnabled;
             MaximumThroughputUnits = maximumThroughputUnits;
+            KafkaEnabled = kafkaEnabled;
+            ZoneRedundant = zoneRedundant;
             CustomInit();
         }
 
@@ -122,6 +129,20 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.maximumThroughputUnits")]
         public int? MaximumThroughputUnits { get; set; }
+
+        /// <summary>
+        /// Gets or sets value that indicates whether Kafka is enabled for
+        /// eventhub namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.kafkaEnabled")]
+        public bool? KafkaEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets enabling this property creates a Standard Event Hubs
+        /// Namespace in regions supported availability zones.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.zoneRedundant")]
+        public bool? ZoneRedundant { get; set; }
 
         /// <summary>
         /// Validate the object.
