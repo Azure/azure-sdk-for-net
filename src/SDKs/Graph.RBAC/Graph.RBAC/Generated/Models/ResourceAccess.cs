@@ -17,31 +17,36 @@ namespace Microsoft.Azure.Graph.RBAC.Models
     using System.Linq;
 
     /// <summary>
-    /// The password profile associated with a user.
+    /// Specifies an OAuth 2.0 permission scope or an app role that an
+    /// application requires. The resourceAccess property of the
+    /// RequiredResourceAccess type is a collection of ResourceAccess.
     /// </summary>
-    public partial class PasswordProfile
+    public partial class ResourceAccess
     {
         /// <summary>
-        /// Initializes a new instance of the PasswordProfile class.
+        /// Initializes a new instance of the ResourceAccess class.
         /// </summary>
-        public PasswordProfile()
+        public ResourceAccess()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PasswordProfile class.
+        /// Initializes a new instance of the ResourceAccess class.
         /// </summary>
-        /// <param name="password">Password</param>
+        /// <param name="id">The unique identifier for one of the
+        /// OAuth2Permission or AppRole instances that the resource application
+        /// exposes.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="forceChangePasswordNextLogin">Whether to force a
-        /// password change on next login.</param>
-        public PasswordProfile(string password, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), bool? forceChangePasswordNextLogin = default(bool?))
+        /// <param name="type">Specifies whether the id property references an
+        /// OAuth2Permission or an AppRole. Possible values are "scope" or
+        /// "role".</param>
+        public ResourceAccess(string id, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string type = default(string))
         {
             AdditionalProperties = additionalProperties;
-            Password = password;
-            ForceChangePasswordNextLogin = forceChangePasswordNextLogin;
+            Id = id;
+            Type = type;
             CustomInit();
         }
 
@@ -58,16 +63,19 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets password
+        /// Gets or sets the unique identifier for one of the OAuth2Permission
+        /// or AppRole instances that the resource application exposes.
         /// </summary>
-        [JsonProperty(PropertyName = "password")]
-        public string Password { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to force a password change on next login.
+        /// Gets or sets specifies whether the id property references an
+        /// OAuth2Permission or an AppRole. Possible values are "scope" or
+        /// "role".
         /// </summary>
-        [JsonProperty(PropertyName = "forceChangePasswordNextLogin")]
-        public bool? ForceChangePasswordNextLogin { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -77,9 +85,9 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Password == null)
+            if (Id == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Password");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
             }
         }
     }

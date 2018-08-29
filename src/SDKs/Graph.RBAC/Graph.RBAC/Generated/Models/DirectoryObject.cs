@@ -16,30 +16,31 @@ namespace Microsoft.Azure.Graph.RBAC.Models
     using System.Linq;
 
     /// <summary>
-    /// Server response for IsMemberOf API call
+    /// Represents an Azure Active Directory object.
     /// </summary>
-    public partial class CheckGroupMembershipResult
+    public partial class DirectoryObject
     {
         /// <summary>
-        /// Initializes a new instance of the CheckGroupMembershipResult class.
+        /// Initializes a new instance of the DirectoryObject class.
         /// </summary>
-        public CheckGroupMembershipResult()
+        public DirectoryObject()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CheckGroupMembershipResult class.
+        /// Initializes a new instance of the DirectoryObject class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="value">True if the specified user, group, contact, or
-        /// service principal has either direct or transitive membership in the
-        /// specified group; otherwise, false.</param>
-        public CheckGroupMembershipResult(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), bool? value = default(bool?))
+        /// <param name="objectId">The object ID.</param>
+        /// <param name="deletionTimestamp">The time at which the directory
+        /// object was deleted.</param>
+        public DirectoryObject(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string objectId = default(string), System.DateTime? deletionTimestamp = default(System.DateTime?))
         {
             AdditionalProperties = additionalProperties;
-            Value = value;
+            ObjectId = objectId;
+            DeletionTimestamp = deletionTimestamp;
             CustomInit();
         }
 
@@ -56,12 +57,16 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets true if the specified user, group, contact, or service
-        /// principal has either direct or transitive membership in the
-        /// specified group; otherwise, false.
+        /// Gets the object ID.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public bool? Value { get; set; }
+        [JsonProperty(PropertyName = "objectId")]
+        public string ObjectId { get; private set; }
+
+        /// <summary>
+        /// Gets the time at which the directory object was deleted.
+        /// </summary>
+        [JsonProperty(PropertyName = "deletionTimestamp")]
+        public System.DateTime? DeletionTimestamp { get; private set; }
 
     }
 }
