@@ -7,7 +7,7 @@
 
 $errorStream = New-Object -TypeName "System.Text.StringBuilder";
 $outputStream = New-Object -TypeName "System.Text.StringBuilder";
-$generateSDKMetadata = $false
+$generateSDKMetadata = $true
 
 
 function Get-SdkRepoRootDirectory {
