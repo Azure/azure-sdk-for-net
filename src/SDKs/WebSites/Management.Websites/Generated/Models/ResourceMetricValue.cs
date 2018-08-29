@@ -37,7 +37,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="maximum">Value maximum.</param>
         /// <param name="total">Value total.</param>
         /// <param name="count">Value count.</param>
-        /// <param name="properties">Properties.</param>
+        /// <param name="properties">Resource metric properties
+        /// collection.</param>
         public ResourceMetricValue(string timestamp = default(string), double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?), IList<ResourceMetricProperty> properties = default(IList<ResourceMetricProperty>))
         {
             Timestamp = timestamp;
@@ -92,7 +93,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public double? Count { get; private set; }
 
         /// <summary>
-        /// Gets properties.
+        /// Gets resource metric properties collection.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public IList<ResourceMetricProperty> Properties { get; private set; }

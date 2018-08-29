@@ -14,29 +14,29 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies the web app that snapshot contents will be written to.
+    /// Specifies the web app that snapshot contents will be retrieved from.
     /// </summary>
-    public partial class SnapshotRecoveryTarget
+    public partial class SnapshotRecoverySource
     {
         /// <summary>
-        /// Initializes a new instance of the SnapshotRecoveryTarget class.
+        /// Initializes a new instance of the SnapshotRecoverySource class.
         /// </summary>
-        public SnapshotRecoveryTarget()
+        public SnapshotRecoverySource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SnapshotRecoveryTarget class.
+        /// Initializes a new instance of the SnapshotRecoverySource class.
         /// </summary>
-        /// <param name="location">Geographical location of the target web app,
+        /// <param name="location">Geographical location of the source web app,
         /// e.g. SouthEastAsia, SouthCentralUS</param>
-        /// <param name="id">ARM resource ID of the target app.
+        /// <param name="id">ARM resource ID of the source app.
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}
         /// for production slots and
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName}
         /// for other slots.</param>
-        public SnapshotRecoveryTarget(string location = default(string), string id = default(string))
+        public SnapshotRecoverySource(string location = default(string), string id = default(string))
         {
             Location = location;
             Id = id;
@@ -49,14 +49,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets geographical location of the target web app, e.g.
+        /// Gets or sets geographical location of the source web app, e.g.
         /// SouthEastAsia, SouthCentralUS
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets ARM resource ID of the target app.
+        /// Gets or sets ARM resource ID of the source app.
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}
         /// for production slots and
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName}

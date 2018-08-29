@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the RequestsBasedTrigger class.
         /// </summary>
-        /// <param name="count">Count.</param>
+        /// <param name="count">Request Count.</param>
         /// <param name="timeInterval">Time interval.</param>
         public RequestsBasedTrigger(int? count = default(int?), string timeInterval = default(string))
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets count.
+        /// Gets or sets request Count.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
         public int? Count { get; set; }

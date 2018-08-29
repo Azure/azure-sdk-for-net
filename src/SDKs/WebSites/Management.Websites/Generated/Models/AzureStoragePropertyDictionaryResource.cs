@@ -10,39 +10,38 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Response for an app restore request.
+    /// AzureStorageInfo dictionary resource.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class RestoreResponse : ProxyOnlyResource
+    public partial class AzureStoragePropertyDictionaryResource : ProxyOnlyResource
     {
         /// <summary>
-        /// Initializes a new instance of the RestoreResponse class.
+        /// Initializes a new instance of the
+        /// AzureStoragePropertyDictionaryResource class.
         /// </summary>
-        public RestoreResponse()
+        public AzureStoragePropertyDictionaryResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RestoreResponse class.
+        /// Initializes a new instance of the
+        /// AzureStoragePropertyDictionaryResource class.
         /// </summary>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="operationId">When server starts the restore process,
-        /// it will return an operation ID identifying that particular restore
-        /// operation.</param>
-        public RestoreResponse(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string operationId = default(string))
+        /// <param name="properties">Azure storage accounts.</param>
+        public AzureStoragePropertyDictionaryResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, AzureStorageInfoValue> properties = default(IDictionary<string, AzureStorageInfoValue>))
             : base(id, name, kind, type)
         {
-            OperationId = operationId;
+            Properties = properties;
             CustomInit();
         }
 
@@ -52,11 +51,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets when server starts the restore process, it will return an
-        /// operation ID identifying that particular restore operation.
+        /// Gets or sets azure storage accounts.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.operationId")]
-        public string OperationId { get; private set; }
+        [JsonProperty(PropertyName = "properties")]
+        public IDictionary<string, AzureStorageInfoValue> Properties { get; set; }
 
     }
 }
