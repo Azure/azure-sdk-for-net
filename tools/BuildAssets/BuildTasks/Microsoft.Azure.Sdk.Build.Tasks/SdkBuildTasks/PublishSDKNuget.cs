@@ -322,6 +322,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             if (!ScopePath.Equals("all", StringComparison.OrdinalIgnoreCase) && MultiPackagePublish == true)
             {
                 pkgList = GetAllNugetPackages();
+                LogInfo("Packages to be published: {0}", pkgList.Count.ToString());
 
                 if (pkgList.Count >= 2)
                 {

@@ -306,7 +306,7 @@
     <Message Text="PackageOutputPath...... $(PackageOutputPath)" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text="PublishNugetToDir...... $(PublishNugetToDir)" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text="NuGetCommand...... $(NuGetCommand)" Condition=" '$(DebugTrace)' == 'true' "/>
-    <Message Text="UserId...... $(UserId)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="UserId...... $(CIUserId)" Condition=" '$(DebugTrace)' == 'true' "/>
     <DebugTask Condition=" '$(DebugMode)' == 'true' "/>
 	
     <MakeDir Directories="$(PublishNugetToDir)" Condition="!Exists($(PublishNugetToDir)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(PublishNugetToDir)', '^(?i)http'))" />
