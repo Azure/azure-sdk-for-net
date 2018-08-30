@@ -85,8 +85,9 @@ namespace EventHub.Tests.ScenarioTests
 
                 // Get all VirtualNetworks
                 var getAllVirtualNetworkRulesResponse = EventHubManagementClient.Namespaces.ListVirtualNetworkRules(resourceGroup, namespaceName);
-                Assert.NotNull(getAllVirtualNetworkRulesResponse);
+                Assert.NotNull(getAllVirtualNetworkRulesResponse);                
                 Assert.True(getAllVirtualNetworkRulesResponse.Count() > 0);
+                Assert.Contains(getAllVirtualNetworkRulesResponse, ns => ns.Name == virtualNetworkRuleName);
                                
                 VirtualNetworkRule updateVirtualNetworkRuleParameter = new VirtualNetworkRule();
                 updateVirtualNetworkRuleParameter.VirtualNetworkSubnetId = @"/subscriptions/"+EventHubManagementClient.SubscriptionId+ "/resourceGroups/EventHubClusterRG/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/default";

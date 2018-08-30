@@ -8,7 +8,6 @@
     <AssemblyName>EventHub.Tests</AssemblyName>    
   </PropertyGroup>  
   <ItemGroup>
-    <Compile Remove="Tests\ScenarioTests.ConsumergroupsTests.CRUD.cs" />
     <Compile Remove="Tests\ScenarioTests.ConsumergroupsTests.CRUD_Length.cs" />
     <Compile Remove="Tests\ScenarioTests.DisasterRecoveryAlertnateNameTests.CRUD.cs" />
     <Compile Remove="Tests\ScenarioTests.DisasterRecoveryTests.CRUD.cs" />

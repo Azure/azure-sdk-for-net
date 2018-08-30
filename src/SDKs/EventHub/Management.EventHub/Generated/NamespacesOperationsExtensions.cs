@@ -453,7 +453,7 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='namespaceName'>
             /// The Namespace name
             /// </param>
-            public static IPage<IpFilterRule> ListVirtualNetworkRules(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
+            public static IPage<VirtualNetworkRule> ListVirtualNetworkRules(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
             {
                 return operations.ListVirtualNetworkRulesAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
             }
@@ -473,7 +473,7 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<IpFilterRule>> ListVirtualNetworkRulesAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualNetworkRule>> ListVirtualNetworkRulesAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListVirtualNetworkRulesWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -822,7 +822,7 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<IpFilterRule> ListVirtualNetworkRulesNext(this INamespacesOperations operations, string nextPageLink)
+            public static IPage<VirtualNetworkRule> ListVirtualNetworkRulesNext(this INamespacesOperations operations, string nextPageLink)
             {
                 return operations.ListVirtualNetworkRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -839,7 +839,7 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<IpFilterRule>> ListVirtualNetworkRulesNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualNetworkRule>> ListVirtualNetworkRulesNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListVirtualNetworkRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
