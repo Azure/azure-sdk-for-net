@@ -56,7 +56,8 @@ namespace WebSites.Tests.ScenarioTests
 
                 var recommendationResponse = webSitesClient.Recommendations.ListRecommendedRulesForWebApp(resourceGroupName, siteName);
 
-                Assert.NotEmpty(recommendationResponse);
+                Assert.Equal("0", recommendationResponse.AsEnumerable().Count().ToString());
+                Assert.Null(recommendationResponse.NextPageLink);
 
                 var rec = recommendationResponse.FirstOrDefault();
 
@@ -77,7 +78,8 @@ namespace WebSites.Tests.ScenarioTests
 
                 var serverFarmResponse = webSitesClient.AppServicePlans.ListByResourceGroup(resourceGroupName);
 
-                Assert.Empty(serverFarmResponse);
+                Assert.Equal("0", serverFarmResponse.AsEnumerable().Count().ToString());
+                Assert.Null(serverFarmResponse.NextPageLink);
             }
         }
     }

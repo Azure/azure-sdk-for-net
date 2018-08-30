@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             if (Path.IsPathRooted(relativePath))
             {
-                throw new ArgumentException($"{nameof(relativePath)} must not be a relative path", nameof(relativePath));
+                throw new ArgumentException($"{nameof(relativePath)} must be a relative path", nameof(relativePath));
             }
 
             string sourcePath = Path.Combine(baseFolder.FullName, relativePath);
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             if (Path.IsPathRooted(relativePath))
             {
-                throw new ArgumentException($"{nameof(relativePath)} must not be a relative path", nameof(relativePath));
+                throw new ArgumentException($"{nameof(relativePath)} must be a relative path", nameof(relativePath));
             }
 
             var destinationPath = GetDestinationBlobPath(relativePath);

@@ -521,6 +521,36 @@
                 return null;
             }
         }
+
+        /// <summary>
+        /// Begins asynchronous call to return the contents of the file as a string.
+        /// </summary>
+        /// <param name="copyStreamFunc">The stream copy function.</param>
+        /// <param name="encoding">The encoding used to interpret the file data. If no value or null is specified, UTF8 is used.</param>
+        /// <param name="byteRange">The file byte range to retrieve. If null, the entire file is retrieved.</param>
+        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
+        internal static async Task<string> ReadNodeFileAsStringAsync(
+            Func<Stream, GetFileRequestByteRange, IEnumerable<BatchClientBehavior>, CancellationToken, Task> copyStreamFunc,
+            Encoding encoding,
+            GetFileRequestByteRange byteRange,
+            IEnumerable<BatchClientBehavior> additionalBehaviors,
+            CancellationToken cancellationToken)
+        {
+            using (Stream streamToUse = new MemoryStream())
+            {
+                // get the data
+                Task asyncTask = copyStreamFunc(streamToUse, byteRange, additionalBehaviors, cancellationToken);
+
+                // wait for completion
+                await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
+
+                streamToUse.Seek(0, SeekOrigin.Begin); //We just wrote to this stream, have to seek to the beginning
+                // convert to string
+                return StreamToString(streamToUse, encoding);
+            }
+        }
     }
 
 }

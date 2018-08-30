@@ -94,6 +94,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// This URI is a case-sensitive identifier for the token issuer.
         /// More information on OpenID Connect Discovery:
         /// http://openid.net/specs/openid-connect-discovery-1_0.html</param>
+        /// <param name="validateIssuer">Gets a value indicating whether the
+        /// issuer should be a valid HTTPS url and be validated as
+        /// such.</param>
         /// <param name="allowedAudiences">Allowed audience values to consider
         /// when validating JWTs issued by
         /// Azure Active Directory. Note that the
@@ -162,7 +165,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// the default scope.
         /// Microsoft Account Scopes and permissions documentation:
         /// https://msdn.microsoft.com/en-us/library/dn631845.aspx</param>
-        public SiteAuthSettings(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), string runtimeVersion = default(string), UnauthenticatedClientAction? unauthenticatedClientAction = default(UnauthenticatedClientAction?), bool? tokenStoreEnabled = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), BuiltInAuthenticationProvider? defaultProvider = default(BuiltInAuthenticationProvider?), double? tokenRefreshExtensionHours = default(double?), string clientId = default(string), string clientSecret = default(string), string issuer = default(string), IList<string> allowedAudiences = default(IList<string>), IList<string> additionalLoginParams = default(IList<string>), string googleClientId = default(string), string googleClientSecret = default(string), IList<string> googleOAuthScopes = default(IList<string>), string facebookAppId = default(string), string facebookAppSecret = default(string), IList<string> facebookOAuthScopes = default(IList<string>), string twitterConsumerKey = default(string), string twitterConsumerSecret = default(string), string microsoftAccountClientId = default(string), string microsoftAccountClientSecret = default(string), IList<string> microsoftAccountOAuthScopes = default(IList<string>))
+        public SiteAuthSettings(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), string runtimeVersion = default(string), UnauthenticatedClientAction? unauthenticatedClientAction = default(UnauthenticatedClientAction?), bool? tokenStoreEnabled = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), BuiltInAuthenticationProvider? defaultProvider = default(BuiltInAuthenticationProvider?), double? tokenRefreshExtensionHours = default(double?), string clientId = default(string), string clientSecret = default(string), string issuer = default(string), bool? validateIssuer = default(bool?), IList<string> allowedAudiences = default(IList<string>), IList<string> additionalLoginParams = default(IList<string>), string googleClientId = default(string), string googleClientSecret = default(string), IList<string> googleOAuthScopes = default(IList<string>), string facebookAppId = default(string), string facebookAppSecret = default(string), IList<string> facebookOAuthScopes = default(IList<string>), string twitterConsumerKey = default(string), string twitterConsumerSecret = default(string), string microsoftAccountClientId = default(string), string microsoftAccountClientSecret = default(string), IList<string> microsoftAccountOAuthScopes = default(IList<string>))
             : base(id, name, kind, type)
         {
             Enabled = enabled;
@@ -175,6 +178,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             ClientId = clientId;
             ClientSecret = clientSecret;
             Issuer = issuer;
+            ValidateIssuer = validateIssuer;
             AllowedAudiences = allowedAudiences;
             AdditionalLoginParams = additionalLoginParams;
             GoogleClientId = googleClientId;
@@ -300,6 +304,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.issuer")]
         public string Issuer { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the issuer should be a valid HTTPS
+        /// url and be validated as such.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.validateIssuer")]
+        public bool? ValidateIssuer { get; set; }
 
         /// <summary>
         /// Gets or sets allowed audience values to consider when validating

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains the IpTag associated with the public IP address
+    /// Contains the IpTag associated with the object
     /// </summary>
     public partial class IpTag
     {

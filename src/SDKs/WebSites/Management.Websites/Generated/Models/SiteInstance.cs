@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets name of instance.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
+        [JsonProperty(PropertyName = "properties.siteInstanceName")]
         public string SiteInstanceName { get; private set; }
 
     }

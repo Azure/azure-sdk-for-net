@@ -41,16 +41,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="failed">The number of tasks which failed. A task fails
         /// if its result (found in the executionInfo property) is
         /// 'failure'.</param>
-        /// <param name="validationStatus">Whether the task counts have been
-        /// validated.</param>
-        public TaskCounts(int active, int running, int completed, int succeeded, int failed, TaskCountValidationStatus validationStatus)
+        public TaskCounts(int active, int running, int completed, int succeeded, int failed)
         {
             Active = active;
             Running = running;
             Completed = completed;
             Succeeded = succeeded;
             Failed = failed;
-            ValidationStatus = validationStatus;
             CustomInit();
         }
 
@@ -91,23 +88,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "failed")]
         public int Failed { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether the task counts have been validated.
-        /// </summary>
-        /// <remarks>
-        /// Possible values include: 'validated', 'unvalidated'
-        /// </remarks>
-        [JsonProperty(PropertyName = "validationStatus")]
-        public TaskCountValidationStatus ValidationStatus { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-        }
     }
 }

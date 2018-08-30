@@ -51,14 +51,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "disableTasks")]
         public DisableJobOption DisableTasks { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-        }
     }
 }

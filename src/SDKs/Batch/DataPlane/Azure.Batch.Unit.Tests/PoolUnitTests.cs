@@ -25,9 +25,7 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void GetPoolsListTest()
         {
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
                 {
@@ -68,10 +66,8 @@ namespace Azure.Batch.Unit.Tests
         {
             DateTime currentDateTime = DateTime.UtcNow;
             DateTime dateTimeMinusAnHour = currentDateTime.AddHours(-1);
-                   
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
 
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
                 {
@@ -173,8 +169,7 @@ namespace Azure.Batch.Unit.Tests
 
             var autoScaleError = new Models.AutoScaleRun { Error = autoScaleRunError };
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
                 {
@@ -224,9 +219,7 @@ namespace Azure.Batch.Unit.Tests
                                     WaitForSuccess = false
                                 };
 
-
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
                 {
@@ -262,8 +255,7 @@ namespace Azure.Batch.Unit.Tests
         {
             var dateTime = DateTime.UtcNow;
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
                 {

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// Operation.
+    /// An operation on a resource.
     /// </summary>
     public partial class Operation
     {
