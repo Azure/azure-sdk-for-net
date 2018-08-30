@@ -36,23 +36,21 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// resource</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource.</param>
-        /// <param name="repoUrl">Gets or sets the repo url of the source
+        /// <param name="repoUrl">The repo url of the source control.</param>
+        /// <param name="branch">The repo branch of the source control. Include
+        /// branch as empty string for VsoTfvc.</param>
+        /// <param name="folderPath">The folder path of the source
         /// control.</param>
-        /// <param name="branch">Gets or sets the repo branch of the source
-        /// control. Include branch as empty string for VsoTfvc.</param>
-        /// <param name="folderPath">Gets or sets the folder path of the source
-        /// control.</param>
-        /// <param name="autoSync">Gets or sets auto async of the source
-        /// control. Default is false.</param>
-        /// <param name="publishRunbook">Gets or sets the auto publish of the
-        /// source control. Default is true.</param>
+        /// <param name="autoSync">The auto sync of the source control. Default
+        /// is false.</param>
+        /// <param name="publishRunbook">The auto publish of the source
+        /// control. Default is true.</param>
         /// <param name="sourceType">The source type. Must be one of VsoGit,
         /// VsoTfvc, GitHub. Possible values include: 'VsoGit', 'VsoTfvc',
         /// 'GitHub'</param>
-        /// <param name="description">Gets or sets the description.</param>
-        /// <param name="creationTime">Gets or sets the creation time.</param>
-        /// <param name="lastModifiedTime">Gets or sets the last modified
-        /// time.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="creationTime">The creation time.</param>
+        /// <param name="lastModifiedTime">The last modified time.</param>
         public SourceControl(string id = default(string), string name = default(string), string type = default(string), string repoUrl = default(string), string branch = default(string), string folderPath = default(string), bool? autoSync = default(bool?), bool? publishRunbook = default(bool?), string sourceType = default(string), string description = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset))
             : base(id, name, type)
         {
@@ -93,7 +91,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string FolderPath { get; set; }
 
         /// <summary>
-        /// Gets or sets auto async of the source control. Default is false.
+        /// Gets or sets the auto sync of the source control. Default is false.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoSync")]
         public bool? AutoSync { get; set; }

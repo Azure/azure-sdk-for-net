@@ -1,17 +1,1 @@
-﻿Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/recoveryservicessiterecovery/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\Github\azure-sdk-for-net\tools\..\src\SDKs\
-2018-05-08 13:44:39 UTC
-1) azure-rest-api-specs repository information
-GitHub fork: Azure
-Branch:      master
-Commit:      f0face31d69f4a7191f9db6143c0a1a01f398d89
-
-2) AutoRest information
-Requested version: latest
-Bootstrapper version:    C:\Users\avrai\AppData\Roaming\npm  `-- autorest@2.0.4262
-
-
-Latest installed version:    
-.\tools\generate.ps1 was invoked by generate.ps1
-
-
+﻿

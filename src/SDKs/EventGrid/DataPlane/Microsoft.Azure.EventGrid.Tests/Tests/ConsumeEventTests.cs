@@ -241,7 +241,7 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
         [Fact]
         public void ConsumeIoTHubDeviceCreatedEvent()
         {
-            string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/ID/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/hub1\",  \"subject\": \"devices/LogicAppTestDevice\",  \"eventType\": \"Microsoft.Devices.DeviceCreated\",  \"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {    \"twin\": {      \"deviceId\": \"LogicAppTestDevice\",      \"etag\": \"AAAAAAAAAAE=\",      \"status\": \"enabled\",      \"statusUpdateTime\": \"0001-01-01T00:00:00\",      \"connectionState\": \"Disconnected\",      \"lastActivityTime\": \"0001-01-01T00:00:00\",      \"cloudToDeviceMessageCount\": 0,      \"authenticationType\": \"sas\",      \"x509Thumbprint\": {        \"primaryThumbprint\": null,        \"secondaryThumbprint\": null      },      \"version\": 2,      \"properties\": {        \"desired\": {          \"$metadata\": {            \"$lastUpdated\": \"2018-01-02T19:17:44.4383997Z\"          },          \"$version\": 1        },        \"reported\": {          \"$metadata\": {            \"$lastUpdated\": \"2018-01-02T19:17:44.4383997Z\"          },          \"$version\": 1        }      }    },    \"hubName\": \"egtesthub1\",    \"deviceId\": \"LogicAppTestDevice\",    \"operationTimestamp\": \"2018-01-02T19:17:44.4383997Z\",    \"opType\": \"DeviceCreated\"  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}]";
+            string requestContent = "[{ \"id\": \"2da5e9b4-4e38-04c1-cc58-9da0b37230c0\", \"topic\": \"/SUBSCRIPTIONS/BDF55CDD-8DAB-4CF4-9B2F-C21E8A780472/RESOURCEGROUPS/EGTESTRG/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/EGTESTHUB1\", \"subject\": \"devices/48e44e11-1437-4907-83b1-4a8d7e89859e\", \"eventType\": \"Microsoft.Devices.DeviceCreated\", \"eventTime\": \"2018-07-03T23:20:07.6532054Z\",    \"data\": {      \"twin\": {        \"deviceId\": \"48e44e11-1437-4907-83b1-4a8d7e89859e\",        \"etag\": \"AAAAAAAAAAE=\",        \"deviceEtag\": null,        \"status\": \"enabled\",        \"statusUpdateTime\": \"0001-01-01T00:00:00\",        \"connectionState\": \"Disconnected\",        \"lastActivityTime\": \"0001-01-01T00:00:00\",        \"cloudToDeviceMessageCount\": 0,        \"authenticationType\": \"sas\",        \"x509Thumbprint\": {          \"primaryThumbprint\": null,          \"secondaryThumbprint\": null        },        \"version\": 2,        \"properties\": {          \"desired\": {            \"$metadata\": {              \"$lastUpdated\": \"2018-07-03T23:20:07.6532054Z\"            },            \"$version\": 1          },          \"reported\": {            \"$metadata\": {              \"$lastUpdated\": \"2018-07-03T23:20:07.6532054Z\"            },            \"$version\": 1          }        }      },      \"hubName\": \"EGTESTHUB1\",      \"deviceId\": \"48e44e11-1437-4907-83b1-4a8d7e89859e\"    },    \"dataVersion\": \"\",    \"metadataVersion\": \"1\"  }]";
 
             var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
 
@@ -254,14 +254,40 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
         [Fact]
         public void ConsumeIoTHubDeviceDeletedEvent()
         {
-            string requestContent = "[{  \"id\": \"56afc886-767b-d359-d59e-0da7877166b2\",  \"topic\": \"/SUBSCRIPTIONS/id/RESOURCEGROUPS/rg/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/hub1\",  \"subject\": \"devices/LogicAppTestDevice\",  \"eventType\": \"Microsoft.Devices.DeviceDeleted\",  \"eventTime\": \"2018-01-02T19:17:44.4383997Z\",  \"data\": {    \"twin\": {      \"deviceId\": \"LogicAppTestDevice\",      \"etag\": \"AAAAAAAAAAE=\",      \"status\": \"enabled\",      \"statusUpdateTime\": \"0001-01-01T00:00:00\",      \"connectionState\": \"Disconnected\",      \"lastActivityTime\": \"0001-01-01T00:00:00\",      \"cloudToDeviceMessageCount\": 0,      \"authenticationType\": \"sas\",      \"x509Thumbprint\": {        \"primaryThumbprint\": null,        \"secondaryThumbprint\": null      },      \"version\": 2,      \"properties\": {        \"desired\": {          \"$metadata\": {            \"$lastUpdated\": \"2018-01-02T19:17:44.4383997Z\"          },          \"$version\": 1        },        \"reported\": {          \"$metadata\": {            \"$lastUpdated\": \"2018-01-02T19:17:44.4383997Z\"          },          \"$version\": 1        }      }    },    \"hubName\": \"egtesthub1\",    \"deviceId\": \"LogicAppTestDevice\",    \"operationTimestamp\": \"2018-01-02T19:17:44.4383997Z\",    \"opType\": \"DeviceCreated\"  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}]";
+            string requestContent = "[  {    \"id\": \"aaaf95c6-ed99-b307-e321-81d8e4f731a6\",    \"topic\":      \"/SUBSCRIPTIONS/BDF55CDD-8DAB-4CF4-9B2F-C21E8A780472/RESOURCEGROUPS/EGTESTRG/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/EGTESTHUB1\",    \"subject\": \"devices/48e44e11-1437-4907-83b1-4a8d7e89859e\",    \"eventType\": \"Microsoft.Devices.DeviceDeleted\",    \"eventTime\": \"2018-07-03T23:21:33.2753956Z\",    \"data\": {      \"twin\": {        \"deviceId\": \"48e44e11-1437-4907-83b1-4a8d7e89859e\",        \"etag\": \"AAAAAAAAAAI=\",        \"deviceEtag\": null,        \"status\": \"enabled\",        \"statusUpdateTime\": \"0001-01-01T00:00:00\",        \"connectionState\": \"Disconnected\",        \"lastActivityTime\": \"0001-01-01T00:00:00\",        \"cloudToDeviceMessageCount\": 0,        \"authenticationType\": \"sas\",        \"x509Thumbprint\": {          \"primaryThumbprint\": null,          \"secondaryThumbprint\": null        },        \"version\": 3,        \"tags\": {          \"testKey\": \"testValue\"        },        \"properties\": {          \"desired\": {            \"$metadata\": {              \"$lastUpdated\": \"2018-07-03T23:20:07.6532054Z\"            },            \"$version\": 1          },          \"reported\": {            \"$metadata\": {              \"$lastUpdated\": \"2018-07-03T23:20:07.6532054Z\"            },            \"$version\": 1          }        }      },      \"hubName\": \"EGTESTHUB1\",      \"deviceId\": \"48e44e11-1437-4907-83b1-4a8d7e89859e\"    },    \"dataVersion\": \"\",    \"metadataVersion\": \"1\"  }]";
 
             var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
 
             Assert.NotNull(events);
             Assert.True(events[0].Data is IotHubDeviceDeletedEventData);
             IotHubDeviceDeletedEventData eventData = (IotHubDeviceDeletedEventData)events[0].Data;
-            Assert.Equal("AAAAAAAAAAE=", eventData.Twin.Etag);
+            Assert.Equal("AAAAAAAAAAI=", eventData.Twin.Etag);
+        }
+
+        [Fact]
+        public void ConsumeIoTHubDeviceConnectedEvent()
+        {
+            string requestContent = "[  {    \"id\": \"fbfd8ee1-cf78-74c6-dbcf-e1c58638ccbd\",    \"topic\":      \"/SUBSCRIPTIONS/BDF55CDD-8DAB-4CF4-9B2F-C21E8A780472/RESOURCEGROUPS/EGTESTRG/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/EGTESTHUB1\",    \"subject\": \"devices/48e44e11-1437-4907-83b1-4a8d7e89859e\",    \"eventType\": \"Microsoft.Devices.DeviceConnected\",    \"eventTime\": \"2018-07-03T23:20:11.6921933+00:00\",    \"data\": {      \"deviceConnectionStateEventInfo\": {        \"sequenceNumber\":          \"000000000000000001D4132452F67CE200000002000000000000000000000001\"      },      \"hubName\": \"EGTESTHUB1\",      \"deviceId\": \"48e44e11-1437-4907-83b1-4a8d7e89859e\",      \"moduleId\": \"\"    },    \"dataVersion\": \"\",    \"metadataVersion\": \"1\"  }]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is IotHubDeviceConnectedEventData);
+            IotHubDeviceConnectedEventData eventData = (IotHubDeviceConnectedEventData)events[0].Data;
+            Assert.Equal("EGTESTHUB1", eventData.HubName);
+        }
+
+        [Fact]
+        public void ConsumeIoTHubDeviceDisconnectedEvent()
+        {
+            string requestContent = "[  {    \"id\": \"877f0b10-a086-98ec-27b8-6ae2dfbf5f67\",    \"topic\":      \"/SUBSCRIPTIONS/BDF55CDD-8DAB-4CF4-9B2F-C21E8A780472/RESOURCEGROUPS/EGTESTRG/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/EGTESTHUB1\",    \"subject\": \"devices/48e44e11-1437-4907-83b1-4a8d7e89859e\",    \"eventType\": \"Microsoft.Devices.DeviceDisconnected\",    \"eventTime\": \"2018-07-03T23:20:52.646434+00:00\",    \"data\": {      \"deviceConnectionStateEventInfo\": {        \"sequenceNumber\":          \"000000000000000001D4132452F67CE200000002000000000000000000000002\"      },      \"hubName\": \"EGTESTHUB1\",      \"deviceId\": \"48e44e11-1437-4907-83b1-4a8d7e89859e\",      \"moduleId\": \"\"    },    \"dataVersion\": \"\",    \"metadataVersion\": \"1\"  }]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is IotHubDeviceDisconnectedEventData);
+            IotHubDeviceDisconnectedEventData eventData = (IotHubDeviceDisconnectedEventData)events[0].Data;
+            Assert.Equal("000000000000000001D4132452F67CE200000002000000000000000000000002", eventData.DeviceConnectionStateEventInfo.SequenceNumber);
         }
 
         // EventGrid events
@@ -316,7 +342,7 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
             Assert.NotNull(events);
             Assert.True(events[0].Data is MediaJobStateChangeEventData);
             MediaJobStateChangeEventData eventData = (MediaJobStateChangeEventData)events[0].Data;
-            Assert.Equal("Finished", eventData.State);
+            Assert.Equal(JobState.Finished, eventData.State);
         }
 
         // Resource Manager (Azure Subscription/Resource Group) events
@@ -397,6 +423,46 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
             ResourceDeleteCancelData eventData = (ResourceDeleteCancelData)events[0].Data;
             Assert.Equal("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
         }
+
+        [Fact]
+        public void ConsumeResourceActionSuccessEvent()
+        {
+            string requestContent = "[   {     \"topic\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.Resources.ResourceActionSuccess\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": {        \"authorization\":\"{azure_resource_manager_authorizations}\",        \"claims\":\"{azure_resource_manager_claims}\",        \"correlationId\":\"54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6\",        \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",        \"operationName\":\"Microsoft.EventGrid/eventSubscriptions/write\",        \"status\":\"Succeeded\",        \"subscriptionId\":\"{subscription-id}\",        \"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"        },      \"dataVersion\": \"\",      \"metadataVersion\": \"1\"  }]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is ResourceActionSuccessData);
+            ResourceActionSuccessData eventData = (ResourceActionSuccessData)events[0].Data;
+            Assert.Equal("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+        }
+
+        [Fact]
+        public void ConsumeResourceActionFailureEvent()
+        {
+            string requestContent = "[   {     \"topic\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.Resources.ResourceActionFailure\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": {        \"authorization\":\"{azure_resource_manager_authorizations}\",        \"claims\":\"{azure_resource_manager_claims}\",        \"correlationId\":\"54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6\",        \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",        \"operationName\":\"Microsoft.EventGrid/eventSubscriptions/write\",        \"status\":\"Succeeded\",        \"subscriptionId\":\"{subscription-id}\",        \"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"        },      \"dataVersion\": \"\",      \"metadataVersion\": \"1\"  }]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is ResourceActionFailureData);
+            ResourceActionFailureData eventData = (ResourceActionFailureData)events[0].Data;
+            Assert.Equal("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+        }
+
+        [Fact]
+        public void ConsumeResourceActionCancelEvent()
+        {
+            string requestContent = "[   {     \"topic\":\"/subscriptions/{subscription-id}\",     \"subject\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",    \"eventType\":\"Microsoft.Resources.ResourceActionCancel\",    \"eventTime\":\"2017-08-16T03:54:38.2696833Z\",    \"id\":\"25b3b0d0-d79b-44d5-9963-440d4e6a9bba\",    \"data\": {        \"authorization\":\"{azure_resource_manager_authorizations}\",        \"claims\":\"{azure_resource_manager_claims}\",        \"correlationId\":\"54ef1e39-6a82-44b3-abc1-bdeb6ce4d3c6\",        \"httpRequest\":\"{request-operation}\",        \"resourceProvider\":\"Microsoft.EventGrid\",        \"resourceUri\":\"/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.EventGrid/eventSubscriptions/LogicAppdd584bdf-8347-49c9-b9a9-d1f980783501\",        \"operationName\":\"Microsoft.EventGrid/eventSubscriptions/write\",        \"status\":\"Succeeded\",        \"subscriptionId\":\"{subscription-id}\",        \"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"        },      \"dataVersion\": \"\",      \"metadataVersion\": \"1\"  }]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is ResourceActionCancelData);
+            ResourceActionCancelData eventData = (ResourceActionCancelData)events[0].Data;
+            Assert.Equal("72f988bf-86f1-41af-91ab-2d7cd011db47", eventData.TenantId);
+        }
+
 
         // ServiceBus events
         [Fact]

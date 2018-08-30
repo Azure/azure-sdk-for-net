@@ -1,6 +1,22 @@
 # Microsoft.Azure.Batch release notes
 
-## Change in 8.1.2
+## Changes in 9.0.0
+### Features
+- Added the ability to see what version of the Azure Batch Node Agent is running on each of the VMs in a pool, via the new `NodeAgentInformation` property on `ComputeNode`.
+- Added the ability to specify a `Filter` on the `Result` of a task. See [here](https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch) for more details.
+  - This enables the often requested scenario of performing a server-side query to find all tasks which failed.
+- **[Breaking]** Added a default retry policy to `BatchClient`.
+  - Note that this policy may not be sufficient for every case. If the old behavior (a `BatchClient` that doesn't perform any retries) is desired, the default policy can be removed from a `BatchClient` with `client.CustomBehaviors = client.CustomBehaviors.Where(behavior => !(behavior is RetryPolicyProvider)).ToList()`.
+- **[Breaking]** Removed the `ValidationStatus` property from `TaskCounts`, as well as the `TaskCountValidationStatus` enum.
+- **[Breaking]** The default caching type for `DataDisk` and `OSDisk` is now `ReadWrite` instead of `None`.
+
+### Bug fixes
+- Fixed bug when using `BatchSharedKeyCredentials` where some operations would fail with an `Unauthenticated` error in `netcoreapp2.1` even though the right shared key was used.
+
+### REST API version
+This version of the Batch .NET client library targets version 2018-08-01.7.0 of the Azure Batch REST API.
+
+## Changes in 8.1.2
 Rename Nuget package name from Azure.Batch to Microsoft.Azure.Batch
 
 # Prior to version 8.1.2, this package was named "Azure.Batch" on Nuget. The release notes below are for that package.

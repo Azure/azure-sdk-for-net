@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         /// <param name="validation">MachineKey validation.</param>
         /// <param name="validationKey">Validation key.</param>
-        /// <param name="decryption">Decryption.</param>
+        /// <param name="decryption">Algorithm used for decryption.</param>
         /// <param name="decryptionKey">Decryption key.</param>
         public SiteMachineKey(string validation = default(string), string validationKey = default(string), string decryption = default(string), string decryptionKey = default(string))
         {
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string ValidationKey { get; set; }
 
         /// <summary>
-        /// Gets or sets decryption.
+        /// Gets or sets algorithm used for decryption.
         /// </summary>
         [JsonProperty(PropertyName = "decryption")]
         public string Decryption { get; set; }

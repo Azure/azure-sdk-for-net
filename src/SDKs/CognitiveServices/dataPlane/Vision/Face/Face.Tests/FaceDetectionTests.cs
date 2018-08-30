@@ -67,7 +67,7 @@ namespace FaceSDK.Tests
                     Assert.True(face.FaceAttributes.Glasses == GlassesType.ReadingGlasses);
                     Assert.False(face.FaceAttributes.Makeup.EyeMakeup);
                     Assert.False(face.FaceAttributes.Makeup.LipMakeup);
-                    Assert.True(face.FaceAttributes.Emotion.Neutral > 0.9);
+                    Assert.True(face.FaceAttributes.Emotion.Neutral > 0.5);
                     Assert.True(face.FaceAttributes.Occlusion.ForeheadOccluded);
                     Assert.False(face.FaceAttributes.Occlusion.EyeOccluded);
                     Assert.False(face.FaceAttributes.Occlusion.MouthOccluded);

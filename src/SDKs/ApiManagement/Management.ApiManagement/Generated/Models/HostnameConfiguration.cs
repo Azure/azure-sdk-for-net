@@ -125,10 +125,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public bool? NegotiateClientCertificate { get; set; }
 
         /// <summary>
-        /// Gets certificate information.
+        /// Gets or sets certificate information.
         /// </summary>
         [JsonProperty(PropertyName = "certificate")]
-        public CertificateInformation Certificate { get; private set; }
+        public CertificateInformation Certificate { get; set; }
 
         /// <summary>
         /// Validate the object.

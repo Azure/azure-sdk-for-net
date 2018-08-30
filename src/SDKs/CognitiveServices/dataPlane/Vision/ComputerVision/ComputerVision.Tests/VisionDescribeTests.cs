@@ -68,7 +68,7 @@ namespace ComputerVisionSDK.Tests
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
-                    string maxCandidates = 2.ToString(CultureInfo.InvariantCulture);
+                    const int maxCandidates = 2;
 
                     ImageDescription result = client.DescribeImageAsync(imageUrl, maxCandidates).Result;
 
@@ -114,7 +114,7 @@ namespace ComputerVisionSDK.Tests
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
-                    string maxCandidates = "1";
+                    const int maxCandidates = 1;
 
                     ImageDescription result = client.DescribeImageAsync(imageUrl, maxCandidates, "ja").Result;
 

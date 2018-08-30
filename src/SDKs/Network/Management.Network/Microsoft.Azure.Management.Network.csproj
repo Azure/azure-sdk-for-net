@@ -7,11 +7,15 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.2.0-preview</Version>
+		<Version>19.3.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Added missing parameter (resourceGroupName) to VpnConnections.ListByVpnGateway
+			- Added PublicIpPrefix & ServiceEndpointPolicy resources
+			- Replaced LoadBalancer's unused OutboundNatRules property with OutboundRules
+			- Added property EnableTcpReset to LoadBalancingRule, InboundNatRule, Inbound NatPool
+			- Added property AllowGlobalReach to ExpressRouteCircuit
+			- Added property ExpressRouteGatewayBypass to VirtualNetworkGatewayConnection
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

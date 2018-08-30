@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -158,32 +157,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "containerConfiguration")]
         public ContainerConfiguration ContainerConfiguration { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ImageReference == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ImageReference");
-            }
-            if (NodeAgentSKUId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "NodeAgentSKUId");
-            }
-            if (DataDisks != null)
-            {
-                foreach (var element in DataDisks)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-        }
     }
 }

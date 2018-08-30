@@ -49,7 +49,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </exception>
         Task<HttpOperationResponse> CreateWithHttpMessagesAsync(string personGroupId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an existing person group. Persisted face images of all
+        /// Delete an existing person group. Persisted face features of all
         /// people in the person group will also be deleted.
         /// </summary>
         /// <param name='personGroupId'>

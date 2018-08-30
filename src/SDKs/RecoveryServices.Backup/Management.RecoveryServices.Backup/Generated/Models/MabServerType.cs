@@ -31,10 +31,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public const string SQLAGWorkLoadContainer = "SQLAGWorkLoadContainer";
         public const string StorageContainer = "StorageContainer";
         public const string GenericContainer = "GenericContainer";
-        public const string SqlCluster = "SqlCluster";
-        public const string ExchangeDAG = "ExchangeDAG";
-        public const string SharepointFarm = "SharepointFarm";
-        public const string HyperVCluster = "HyperVCluster";
-        public const string WindowsClient = "WindowsClient";
     }
 }

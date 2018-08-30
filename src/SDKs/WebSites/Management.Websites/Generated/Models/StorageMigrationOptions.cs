@@ -32,13 +32,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the StorageMigrationOptions class.
         /// </summary>
+        /// <param name="azurefilesConnectionString">AzureFiles connection
+        /// string.</param>
+        /// <param name="azurefilesShare">AzureFiles share.</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="azurefilesConnectionString">AzureFiles connection
-        /// string.</param>
-        /// <param name="azurefilesShare">AzureFiles share.</param>
         /// <param
         /// name="switchSiteAfterMigration">&lt;code&gt;true&lt;/code&gt;if the
         /// app should be switched over; otherwise,
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="blockWriteAccessToSite">&lt;code&gt;true&lt;/code&gt;
         /// if the app should be read only during copy operation; otherwise,
         /// &lt;code&gt;false&lt;/code&gt;.</param>
-        public StorageMigrationOptions(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string azurefilesConnectionString = default(string), string azurefilesShare = default(string), bool? switchSiteAfterMigration = default(bool?), bool? blockWriteAccessToSite = default(bool?))
+        public StorageMigrationOptions(string azurefilesConnectionString, string azurefilesShare, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? switchSiteAfterMigration = default(bool?), bool? blockWriteAccessToSite = default(bool?))
             : base(id, name, kind, type)
         {
             AzurefilesConnectionString = azurefilesConnectionString;
@@ -89,5 +89,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.blockWriteAccessToSite")]
         public bool? BlockWriteAccessToSite { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (AzurefilesConnectionString == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AzurefilesConnectionString");
+            }
+            if (AzurefilesShare == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AzurefilesShare");
+            }
+        }
     }
 }

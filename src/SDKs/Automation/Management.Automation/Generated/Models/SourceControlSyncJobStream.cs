@@ -33,16 +33,16 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Initializes a new instance of the SourceControlSyncJobStream class.
         /// </summary>
         /// <param name="id">Resource id.</param>
-        /// <param name="syncJobStreamId">Gets the sync job stream id.</param>
-        /// <param name="summary">Gets the summary of the sync job
-        /// stream.</param>
-        /// <param name="time">Gets the time of the sync job stream.</param>
-        /// <param name="streamType">Gets the type of the sync job stream.
-        /// Possible values include: 'Error', 'Output'</param>
-        public SourceControlSyncJobStream(string id = default(string), string syncJobStreamId = default(string), string summary = default(string), System.DateTimeOffset? time = default(System.DateTimeOffset?), string streamType = default(string))
+        /// <param name="sourceControlSyncJobStreamId">The sync job stream
+        /// id.</param>
+        /// <param name="summary">The summary of the sync job stream.</param>
+        /// <param name="time">The time of the sync job stream.</param>
+        /// <param name="streamType">The type of the sync job stream. Possible
+        /// values include: 'Error', 'Output'</param>
+        public SourceControlSyncJobStream(string id = default(string), string sourceControlSyncJobStreamId = default(string), string summary = default(string), System.DateTimeOffset? time = default(System.DateTimeOffset?), string streamType = default(string))
         {
             Id = id;
-            SyncJobStreamId = syncJobStreamId;
+            SourceControlSyncJobStreamId = sourceControlSyncJobStreamId;
             Summary = summary;
             Time = time;
             StreamType = streamType;
@@ -61,13 +61,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the sync job stream id.
+        /// Gets or sets the sync job stream id.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.syncJobStreamId")]
-        public string SyncJobStreamId { get; set; }
+        [JsonProperty(PropertyName = "properties.sourceControlSyncJobStreamId")]
+        public string SourceControlSyncJobStreamId { get; set; }
 
         /// <summary>
-        /// Gets the summary of the sync job stream.
+        /// Gets or sets the summary of the sync job stream.
         /// </summary>
         [JsonProperty(PropertyName = "properties.summary")]
         public string Summary { get; set; }
@@ -79,8 +79,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         public System.DateTimeOffset? Time { get; private set; }
 
         /// <summary>
-        /// Gets the type of the sync job stream. Possible values include:
-        /// 'Error', 'Output'
+        /// Gets or sets the type of the sync job stream. Possible values
+        /// include: 'Error', 'Output'
         /// </summary>
         [JsonProperty(PropertyName = "properties.streamType")]
         public string StreamType { get; set; }

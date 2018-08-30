@@ -52,19 +52,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -117,6 +118,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Gets the IBackupUsageSummariesOperations.
         /// </summary>
         public virtual IBackupUsageSummariesOperations BackupUsageSummaries { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperationOperations.
+        /// </summary>
+        public virtual IOperationOperations Operation { get; private set; }
 
         /// <summary>
         /// Gets the IBackupResourceVaultConfigsOperations.
@@ -251,6 +257,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <summary>
         /// Initializes a new instance of the RecoveryServicesBackupClient class.
         /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling RecoveryServicesBackupClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected RecoveryServicesBackupClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the RecoveryServicesBackupClient class.
+        /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
@@ -331,6 +350,33 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Thrown when a required parameter is null
         /// </exception>
         public RecoveryServicesBackupClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the RecoveryServicesBackupClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling RecoveryServicesBackupClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public RecoveryServicesBackupClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -459,6 +505,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             BackupPolicies = new BackupPoliciesOperations(this);
             BackupProtectedItems = new BackupProtectedItemsOperations(this);
             BackupUsageSummaries = new BackupUsageSummariesOperations(this);
+            Operation = new OperationOperations(this);
             BackupResourceVaultConfigs = new BackupResourceVaultConfigsOperations(this);
             BackupEngines = new BackupEnginesOperations(this);
             ProtectionContainerRefreshOperationResults = new ProtectionContainerRefreshOperationResultsOperations(this);
@@ -530,6 +577,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProtectionIntent>("protectionIntentItemType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProtectionPolicy>("backupManagementType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProtectionPolicy>("backupManagementType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RestoreRequest>("objectType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RestoreRequest>("objectType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ValidateOperationRequest>("objectType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ValidateOperationRequest>("objectType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BackupEngineBase>("backupEngineType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BackupEngineBase>("backupEngineType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BackupRequest>("objectType"));
@@ -544,8 +595,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProtectionContainer>("containerType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryPoint>("objectType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryPoint>("objectType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RestoreRequest>("objectType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RestoreRequest>("objectType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WorkloadItem>("workloadItemType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<WorkloadItem>("workloadItemType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WorkloadProtectableItem>("protectableItemType"));

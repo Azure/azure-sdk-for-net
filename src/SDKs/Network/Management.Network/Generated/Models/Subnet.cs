@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="serviceEndpoints">An array of service
         /// endpoints.</param>
+        /// <param name="serviceEndpointPolicies">An array of service endpoint
+        /// policies.</param>
         /// <param name="ipConfigurations">Gets an array of references to the
         /// network interface IP configurations using subnet.</param>
         /// <param name="resourceNavigationLinks">Gets an array of references
@@ -54,13 +56,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public Subnet(string id = default(string), string addressPrefix = default(string), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), RouteTable routeTable = default(RouteTable), IList<ServiceEndpointPropertiesFormat> serviceEndpoints = default(IList<ServiceEndpointPropertiesFormat>), IList<IPConfiguration> ipConfigurations = default(IList<IPConfiguration>), IList<ResourceNavigationLink> resourceNavigationLinks = default(IList<ResourceNavigationLink>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public Subnet(string id = default(string), string addressPrefix = default(string), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), RouteTable routeTable = default(RouteTable), IList<ServiceEndpointPropertiesFormat> serviceEndpoints = default(IList<ServiceEndpointPropertiesFormat>), IList<ServiceEndpointPolicy> serviceEndpointPolicies = default(IList<ServiceEndpointPolicy>), IList<IPConfiguration> ipConfigurations = default(IList<IPConfiguration>), IList<ResourceNavigationLink> resourceNavigationLinks = default(IList<ResourceNavigationLink>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             AddressPrefix = addressPrefix;
             NetworkSecurityGroup = networkSecurityGroup;
             RouteTable = routeTable;
             ServiceEndpoints = serviceEndpoints;
+            ServiceEndpointPolicies = serviceEndpointPolicies;
             IpConfigurations = ipConfigurations;
             ResourceNavigationLinks = resourceNavigationLinks;
             ProvisioningState = provisioningState;
@@ -97,6 +100,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceEndpoints")]
         public IList<ServiceEndpointPropertiesFormat> ServiceEndpoints { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array of service endpoint policies.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.serviceEndpointPolicies")]
+        public IList<ServiceEndpointPolicy> ServiceEndpointPolicies { get; set; }
 
         /// <summary>
         /// Gets an array of references to the network interface IP

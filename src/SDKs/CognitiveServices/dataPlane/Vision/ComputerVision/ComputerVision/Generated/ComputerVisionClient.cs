@@ -424,7 +424,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             }
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -961,7 +961,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImageDescription>> DescribeImageWithHttpMessagesAsync(string url, string maxCandidates = "1", string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImageDescription>> DescribeImageWithHttpMessagesAsync(string url, int? maxCandidates = 1, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -996,11 +996,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             List<string> _queryParameters = new List<string>();
             if (maxCandidates != null)
             {
-                _queryParameters.Add(string.Format("maxCandidates={0}", System.Uri.EscapeDataString(maxCandidates)));
+                _queryParameters.Add(string.Format("maxCandidates={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(maxCandidates, SerializationSettings).Trim('"'))));
             }
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1187,7 +1187,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1383,7 +1383,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1843,7 +1843,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// A string indicating which domain-specific details to return. Multiple
         /// values should be comma-separated. Valid visual feature types
         /// include:Celebrities - identifies celebrities if detected in the image.
-        /// Possible values include: 'Celebrities', 'Landmarks'
         /// </param>
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is not
@@ -1873,7 +1872,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageInStreamWithHttpMessagesAsync(Stream image, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), string details = default(string), string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageInStreamWithHttpMessagesAsync(Stream image, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -1908,11 +1907,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             }
             if (details != null)
             {
-                _queryParameters.Add(string.Format("details={0}", System.Uri.EscapeDataString(details)));
+                _queryParameters.Add(string.Format("details={0}", System.Uri.EscapeDataString(string.Join(",", details))));
             }
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2448,7 +2447,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImageDescription>> DescribeImageInStreamWithHttpMessagesAsync(Stream image, string maxCandidates = "1", string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImageDescription>> DescribeImageInStreamWithHttpMessagesAsync(Stream image, int? maxCandidates = 1, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -2478,11 +2477,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             List<string> _queryParameters = new List<string>();
             if (maxCandidates != null)
             {
-                _queryParameters.Add(string.Format("maxCandidates={0}", System.Uri.EscapeDataString(maxCandidates)));
+                _queryParameters.Add(string.Format("maxCandidates={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(maxCandidates, SerializationSettings).Trim('"'))));
             }
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2667,7 +2666,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2861,7 +2860,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {

@@ -75,9 +75,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// VirtualNetworkGatewayConnection resource. Possible values are:
         /// 'Updating', 'Deleting', and 'Failed'.</param>
+        /// <param name="expressRouteGatewayBypass">Bypass ExpressRoute Gateway
+        /// for data forwarding</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VirtualNetworkGatewayConnectionListEntity(VirtualNetworkConnectionGatewayReference virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkConnectionGatewayReference virtualNetworkGateway2 = default(VirtualNetworkConnectionGatewayReference), VirtualNetworkConnectionGatewayReference localNetworkGateway2 = default(VirtualNetworkConnectionGatewayReference), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkGatewayConnectionListEntity(VirtualNetworkConnectionGatewayReference virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkConnectionGatewayReference virtualNetworkGateway2 = default(VirtualNetworkConnectionGatewayReference), VirtualNetworkConnectionGatewayReference localNetworkGateway2 = default(VirtualNetworkConnectionGatewayReference), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             AuthorizationKey = authorizationKey;
@@ -97,6 +99,7 @@ namespace Microsoft.Azure.Management.Network.Models
             IpsecPolicies = ipsecPolicies;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
+            ExpressRouteGatewayBypass = expressRouteGatewayBypass;
             Etag = etag;
             CustomInit();
         }
@@ -216,6 +219,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets bypass ExpressRoute Gateway for data forwarding
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.expressRouteGatewayBypass")]
+        public bool? ExpressRouteGatewayBypass { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

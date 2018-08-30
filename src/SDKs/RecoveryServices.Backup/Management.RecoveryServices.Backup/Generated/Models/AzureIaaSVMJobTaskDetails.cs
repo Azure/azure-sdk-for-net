@@ -36,7 +36,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="duration">Time elapsed for task.</param>
         /// <param name="status">The status.</param>
         /// <param name="progressPercentage">Progress of the task.</param>
-        public AzureIaaSVMJobTaskDetails(string taskId = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string instanceId = default(string), System.TimeSpan? duration = default(System.TimeSpan?), string status = default(string), double? progressPercentage = default(double?))
+        /// <param name="taskExecutionDetails">Details about execution of the
+        /// task.
+        /// eg: number of bytes transfered etc</param>
+        public AzureIaaSVMJobTaskDetails(string taskId = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string instanceId = default(string), System.TimeSpan? duration = default(System.TimeSpan?), string status = default(string), double? progressPercentage = default(double?), string taskExecutionDetails = default(string))
         {
             TaskId = taskId;
             StartTime = startTime;
@@ -45,6 +48,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             Duration = duration;
             Status = status;
             ProgressPercentage = progressPercentage;
+            TaskExecutionDetails = taskExecutionDetails;
             CustomInit();
         }
 
@@ -94,6 +98,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "progressPercentage")]
         public double? ProgressPercentage { get; set; }
+
+        /// <summary>
+        /// Gets or sets details about execution of the task.
+        /// eg: number of bytes transfered etc
+        /// </summary>
+        [JsonProperty(PropertyName = "taskExecutionDetails")]
+        public string TaskExecutionDetails { get; set; }
 
     }
 }

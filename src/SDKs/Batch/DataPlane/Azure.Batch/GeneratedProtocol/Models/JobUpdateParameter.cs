@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -124,32 +123,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (PoolInfo == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PoolInfo");
-            }
-            if (PoolInfo != null)
-            {
-                PoolInfo.Validate();
-            }
-            if (Metadata != null)
-            {
-                foreach (var element in Metadata)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-        }
     }
 }
