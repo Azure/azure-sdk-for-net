@@ -29,14 +29,16 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// <summary>
         /// Initializes a new instance of the ParentGroupInfo class.
         /// </summary>
-        /// <param name="parentId">The fully qualified ID for the parent
-        /// management group.  For example,
+        /// <param name="id">The fully qualified ID for the parent management
+        /// group.  For example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000</param>
+        /// <param name="name">The name of the parent management group</param>
         /// <param name="displayName">The friendly name of the parent
         /// management group.</param>
-        public ParentGroupInfo(string parentId = default(string), string displayName = default(string))
+        public ParentGroupInfo(string id = default(string), string name = default(string), string displayName = default(string))
         {
-            ParentId = parentId;
+            Id = id;
+            Name = name;
             DisplayName = displayName;
             CustomInit();
         }
@@ -51,8 +53,14 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// group.  For example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
         /// </summary>
-        [JsonProperty(PropertyName = "parentId")]
-        public string ParentId { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the parent management group
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the friendly name of the parent management group.

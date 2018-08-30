@@ -30,13 +30,16 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// Initializes a new instance of the PolicyDefinitionSummary class.
         /// </summary>
         /// <param name="policyDefinitionId">Policy definition ID.</param>
+        /// <param name="policyDefinitionReferenceId">Policy definition
+        /// reference ID.</param>
         /// <param name="effect">Policy effect, i.e. policy definition
         /// action.</param>
         /// <param name="results">Non-compliance summary for the policy
         /// definition.</param>
-        public PolicyDefinitionSummary(string policyDefinitionId = default(string), string effect = default(string), SummaryResults results = default(SummaryResults))
+        public PolicyDefinitionSummary(string policyDefinitionId = default(string), string policyDefinitionReferenceId = default(string), string effect = default(string), SummaryResults results = default(SummaryResults))
         {
             PolicyDefinitionId = policyDefinitionId;
+            PolicyDefinitionReferenceId = policyDefinitionReferenceId;
             Effect = effect;
             Results = results;
             CustomInit();
@@ -52,6 +55,12 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "policyDefinitionId")]
         public string PolicyDefinitionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets policy definition reference ID.
+        /// </summary>
+        [JsonProperty(PropertyName = "policyDefinitionReferenceId")]
+        public string PolicyDefinitionReferenceId { get; set; }
 
         /// <summary>
         /// Gets or sets policy effect, i.e. policy definition action.

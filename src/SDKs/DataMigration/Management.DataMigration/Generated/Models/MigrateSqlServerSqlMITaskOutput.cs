@@ -10,13 +10,14 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Output for task that migrates SQL Server databases to Azure SQL
     /// Database Managed Instance.
     /// </summary>
-    public partial class MigrateSqlServerSqlMITaskOutput : TaskOutput
+    public partial class MigrateSqlServerSqlMITaskOutput
     {
         /// <summary>
         /// Initializes a new instance of the MigrateSqlServerSqlMITaskOutput
@@ -33,8 +34,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         /// <param name="id">Result identifier</param>
         public MigrateSqlServerSqlMITaskOutput(string id = default(string))
-            : base(id)
         {
+            Id = id;
             CustomInit();
         }
 
@@ -42,6 +43,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets result identifier
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
     }
 }

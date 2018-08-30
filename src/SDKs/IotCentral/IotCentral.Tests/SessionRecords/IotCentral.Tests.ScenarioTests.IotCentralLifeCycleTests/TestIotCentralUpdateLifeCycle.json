@@ -1,0 +1,496 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourcegroups/UpdateDotNetSdkIotCentralRG?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlZ3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRz9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"WestUS\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "7c2f84e5-4025-4e09-a029-e0850c17aad1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG\",\r\n  \"name\": \"UpdateDotNetSdkIotCentralRG\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "207"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 18 Jun 2018 23:25:05 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "2e3e2f46-5448-47db-9263-43624ae01212"
+        ],
+        "x-ms-correlation-request-id": [
+          "2e3e2f46-5448-47db-9263-43624ae01212"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180618T232505Z:2e3e2f46-5448-47db-9263-43624ae01212"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/providers/Microsoft.IoTCentral/checkNameAvailability?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW9UQ2VudHJhbC9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxOC0wOS0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"dotnetsdkapppdate\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "35"
+        ],
+        "x-ms-client-request-id": [
+          "537f9096-8d5f-4489-98d7-a4fe8f1eccec"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "Microsoft.Azure.Management.IotCentral.IotCentralClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"nameAvailable\": true\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0"
+        ],
+        "Date": [
+          "Mon, 18 Jun 2018 23:25:05 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "W/\"16-4/x+wI91pK3bZiWtoOg+Zr/n2HE\""
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "bbab3035-a57c-4cb4-a4dc-198362e77f66"
+        ],
+        "X-IoT-Version": [
+          "20180611.4"
+        ],
+        "X-IoT-Cluster": [
+          "iotcprodwestus01"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 6221002404E84AA1A4502CE1F84C0CA7 Ref B: CO1EDGE0212 Ref C: 2018-06-18T23:25:06Z"
+        ],
+        "X-Powered-By": [
+          "Express"
+        ],
+        "x-ms-correlation-request-id": [
+          "9bb134a8-89ae-4b43-abad-864da4e5fb25"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180618T232506Z:9bb134a8-89ae-4b43-abad-864da4e5fb25"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHBwZGF0ZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"dotnetsdkapppdate\",\r\n    \"subdomain\": \"dotnetsdkapppdate\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"location\": \"WestUS\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "168"
+        ],
+        "x-ms-client-request-id": [
+          "ee02074c-c316-49b2-988c-6efe383dd3b7"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "Microsoft.Azure.Management.IotCentral.IotCentralClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate\",\r\n  \"name\": \"dotnetsdkapppdate\",\r\n  \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n  \"location\": \"WestUS\",\r\n  \"properties\": {\r\n    \"applicationId\": \"5093ca00-4f07-46e8-9b20-90a59ddecbab\",\r\n    \"state\": \"created\",\r\n    \"displayName\": \"dotnetsdkapppdate\",\r\n    \"subdomain\": \"dotnetsdkapppdate\",\r\n    \"createdDate\": \"2018-06-18T23:25:08.736Z\",\r\n    \"template\": \"iotc-default@1.0.0\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"etag\": \"\\\"2b005146-0000-0000-0000-5b283f540000\\\"\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "542"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0"
+        ],
+        "Date": [
+          "Mon, 18 Jun 2018 23:25:08 GMT"
+        ],
+        "ETag": [
+          "\"2b005146-0000-0000-0000-5b283f540000\""
+        ],
+        "x-ms-request-id": [
+          "4a82e20a-ff63-4d61-a9ab-ff78e636e0ab"
+        ],
+        "X-IoT-Version": [
+          "20180611.4"
+        ],
+        "X-IoT-Cluster": [
+          "iotcprodwestus01"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: DAC0B32AC8C641F68248C5DE777DAFB6 Ref B: CO1EDGE0212 Ref C: 2018-06-18T23:25:08Z"
+        ],
+        "X-Powered-By": [
+          "Express"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "e2033548-1974-403a-9361-b2a5e7112bdd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180618T232508Z:e2033548-1974-403a-9361-b2a5e7112bdd"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHBwZGF0ZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"test-updated-display-name\",\r\n    \"subdomain\": \"test-updated-sub-domain\",\r\n    \"template\": \"iotc-default@1.0.0\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"location\": \"WestUS\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "221"
+        ],
+        "x-ms-client-request-id": [
+          "c2d5e47a-9b94-4e26-b790-dff4b57d1f5b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "Microsoft.Azure.Management.IotCentral.IotCentralClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate\",\r\n  \"name\": \"dotnetsdkapppdate\",\r\n  \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n  \"location\": \"WestUS\",\r\n  \"properties\": {\r\n    \"applicationId\": \"b2b3496c-4cd0-4c35-bba9-cf67a29e6bd0\",\r\n    \"state\": \"created\",\r\n    \"displayName\": \"test-updated-display-name\",\r\n    \"subdomain\": \"test-updated-sub-domain\",\r\n    \"createdDate\": \"2018-06-18T23:25:41.697Z\",\r\n    \"template\": \"iotc-default@1.0.0\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"etag\": \"\\\"0b00a389-0000-0000-0000-5b283f750000\\\"\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "556"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0"
+        ],
+        "Date": [
+          "Mon, 18 Jun 2018 23:25:40 GMT"
+        ],
+        "ETag": [
+          "\"0b00a389-0000-0000-0000-5b283f750000\""
+        ],
+        "x-ms-request-id": [
+          "f6b87946-1afc-4891-b48b-74a36170091c"
+        ],
+        "X-IoT-Version": [
+          "20180611.4"
+        ],
+        "X-IoT-Cluster": [
+          "iotcprodwestus01"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 3EB7A053743A433BACF5D93561145691 Ref B: CO1EDGE0212 Ref C: 2018-06-18T23:25:41Z"
+        ],
+        "X-Powered-By": [
+          "Express"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "e8fb3b54-e235-4d9c-afea-b404beee76ff"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180618T232541Z:e8fb3b54-e235-4d9c-afea-b404beee76ff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHBwZGF0ZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "Microsoft.Azure.Management.IotCentral.IotCentralClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate\",\r\n  \"name\": \"dotnetsdkapppdate\",\r\n  \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n  \"location\": \"WestUS\",\r\n  \"properties\": {\r\n    \"applicationId\": \"5093ca00-4f07-46e8-9b20-90a59ddecbab\",\r\n    \"state\": \"created\",\r\n    \"displayName\": \"dotnetsdkapppdate\",\r\n    \"subdomain\": \"dotnetsdkapppdate\",\r\n    \"createdDate\": \"2018-06-18T23:25:08.736Z\",\r\n    \"template\": \"iotc-default@1.0.0\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"etag\": \"\\\"2b005146-0000-0000-0000-5b283f540000\\\"\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0"
+        ],
+        "Date": [
+          "Mon, 18 Jun 2018 23:25:38 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "W/\"2b005146-0000-0000-0000-5b283f540000\""
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "3dcd8055-441a-44ca-86ea-dd7b66dccc83"
+        ],
+        "X-IoT-Version": [
+          "20180611.4"
+        ],
+        "X-IoT-Cluster": [
+          "iotcprodwestus01"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: F0CF48028D764D028C7C0F488E8273B0 Ref B: CO1EDGE0212 Ref C: 2018-06-18T23:25:39Z"
+        ],
+        "X-Powered-By": [
+          "Express"
+        ],
+        "x-ms-correlation-request-id": [
+          "48fcc8a8-579a-4800-8229-f1778a557d21"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180618T232539Z:48fcc8a8-579a-4800-8229-f1778a557d21"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHBwZGF0ZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "Microsoft.Azure.Management.IotCentral.IotCentralClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate\",\r\n  \"name\": \"dotnetsdkapppdate\",\r\n  \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n  \"location\": \"WestUS\",\r\n  \"properties\": {\r\n    \"applicationId\": \"b2b3496c-4cd0-4c35-bba9-cf67a29e6bd0\",\r\n    \"state\": \"created\",\r\n    \"displayName\": \"test-updated-display-name\",\r\n    \"subdomain\": \"test-updated-sub-domain\",\r\n    \"createdDate\": \"2018-06-18T23:25:41.697Z\",\r\n    \"template\": \"iotc-default@1.0.0\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"etag\": \"\\\"0b00a389-0000-0000-0000-5b283f750000\\\"\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0"
+        ],
+        "Date": [
+          "Mon, 18 Jun 2018 23:26:11 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "W/\"0b00a389-0000-0000-0000-5b283f750000\""
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "527d6ce2-094d-443e-85cb-3eb91e7d775b"
+        ],
+        "X-IoT-Version": [
+          "20180611.4"
+        ],
+        "X-IoT-Cluster": [
+          "iotcprodwestus01"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: FC745C365C8341D1B327EEC493F4EB9F Ref B: CO1EDGE0212 Ref C: 2018-06-18T23:26:12Z"
+        ],
+        "X-Powered-By": [
+          "Express"
+        ],
+        "x-ms-correlation-request-id": [
+          "1ed3f6ed-7327-4576-bfc5-3e605bd2e63f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180618T232612Z:1ed3f6ed-7327-4576-bfc5-3e605bd2e63f"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL1VwZGF0ZURvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcz9hcGktdmVyc2lvbj0yMDE4LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c1260cad-57de-43bd-9b63-5c62af4ae70f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "Microsoft.Azure.Management.IotCentral.IotCentralClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate\",\r\n      \"name\": \"dotnetsdkapppdate\",\r\n      \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n      \"location\": \"WestUS\",\r\n      \"properties\": {\r\n        \"applicationId\": \"b2b3496c-4cd0-4c35-bba9-cf67a29e6bd0\",\r\n        \"state\": \"created\",\r\n        \"displayName\": \"test-updated-display-name\",\r\n        \"subdomain\": \"test-updated-sub-domain\",\r\n        \"createdDate\": \"2018-06-18T23:25:41.697Z\",\r\n        \"template\": \"iotc-default@1.0.0\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"S1\"\r\n      },\r\n      \"etag\": \"\\\"0b00a389-0000-0000-0000-5b283f750000\\\"\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/UpdateDotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapppdate\",\r\n      \"name\": \"dotnetsdkapppdate\",\r\n      \"type\": \"Microsoft.IoTCentral/IoTApps\",\r\n      \"location\": \"WestUS\",\r\n      \"properties\": {\r\n        \"applicationId\": \"5093ca00-4f07-46e8-9b20-90a59ddecbab\",\r\n        \"state\": \"created\",\r\n        \"displayName\": \"dotnetsdkapppdate\",\r\n        \"subdomain\": \"dotnetsdkapppdate\",\r\n        \"createdDate\": \"2018-06-18T23:25:08.736Z\",\r\n        \"template\": \"iotc-default@1.0.0\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"S1\"\r\n      },\r\n      \"etag\": \"\\\"2b005146-0000-0000-0000-5b283f540000\\\"\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0"
+        ],
+        "Date": [
+          "Mon, 18 Jun 2018 23:26:12 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "W/\"467-qHczbuKzWt1zFByZko+PqPdabZE\""
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-request-id": [
+          "eadd3494-d8e8-493c-ba3e-d8b0343600db"
+        ],
+        "X-IoT-Version": [
+          "20180611.4"
+        ],
+        "X-IoT-Cluster": [
+          "iotcprodwestus01"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: B25D270D154F4229B50F3337542B2E93 Ref B: CO1EDGE0120 Ref C: 2018-06-18T23:26:12Z"
+        ],
+        "X-Powered-By": [
+          "Express"
+        ],
+        "x-ms-correlation-request-id": [
+          "537c051c-7b51-4e56-9084-52a636fabde3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180618T232612Z:537c051c-7b51-4e56-9084-52a636fabde3"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "5e057e7d-4134-4581-aeaf-a40b25e60055"
+  }
+}

@@ -5,16 +5,16 @@
     <Description>Microsoft Azure Key Vault Cryptography tests</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Cryptography tests</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.KeyVault.Cryptography.Tests</AssemblyName>
-    <VersionPrefix>2.0.2</VersionPrefix>    
+    <VersionPrefix>3.0.0-alpha</VersionPrefix>    
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
-  <ItemGroup>
+  </PropertyGroup>-->
+  <!--<ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.KeyVault.Core\Microsoft.Azure.KeyVault.Core.csproj" />
@@ -22,13 +22,18 @@
     <ProjectReference Include="..\Microsoft.Azure.KeyVault.WebKey\Microsoft.Azure.KeyVault.WebKey.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.2.0" />
-    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.0.0" />
+  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
+    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.3.0" />
+  </ItemGroup>-->
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.3.0" />
   </ItemGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <DefineConstants>$(DefineConstants);NETSTANDARD;NETCOREAPP11</DefineConstants>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD14;NETCOREAPP20</DefineConstants>
     <DebugType>portable</DebugType>
   </PropertyGroup>
 

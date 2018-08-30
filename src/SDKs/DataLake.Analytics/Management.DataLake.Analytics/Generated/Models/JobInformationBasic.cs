@@ -32,40 +32,40 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobInformationBasic class.
         /// </summary>
-        /// <param name="name">the friendly name of the job.</param>
-        /// <param name="type">the job type of the current job (Hive, USql, or
+        /// <param name="name">The friendly name of the job.</param>
+        /// <param name="type">The job type of the current job (Hive, USql, or
         /// Scope (for internal use only)). Possible values include: 'USql',
         /// 'Hive', 'Scope'</param>
-        /// <param name="jobId">the job's unique identifier (a GUID).</param>
-        /// <param name="submitter">the user or account that submitted the
+        /// <param name="jobId">The job's unique identifier (a GUID).</param>
+        /// <param name="submitter">The user or account that submitted the
         /// job.</param>
-        /// <param name="degreeOfParallelism">the degree of parallelism used
+        /// <param name="degreeOfParallelism">The degree of parallelism used
         /// for this job. This must be greater than 0, if set to less than 0 it
         /// will default to 1.</param>
-        /// <param name="priority">the priority value for the current job.
+        /// <param name="priority">The priority value for the current job.
         /// Lower numbers have a higher priority. By default, a job has a
         /// priority of 1000. This must be greater than 0.</param>
-        /// <param name="submitTime">the time the job was submitted to the
+        /// <param name="submitTime">The time the job was submitted to the
         /// service.</param>
-        /// <param name="startTime">the start time of the job.</param>
-        /// <param name="endTime">the completion time of the job.</param>
-        /// <param name="state">the job state. When the job is in the Ended
+        /// <param name="startTime">The start time of the job.</param>
+        /// <param name="endTime">The completion time of the job.</param>
+        /// <param name="state">The job state. When the job is in the Ended
         /// state, refer to Result and ErrorMessage for details. Possible
         /// values include: 'Accepted', 'Compiling', 'Ended', 'New', 'Queued',
         /// 'Running', 'Scheduling', 'Starting', 'Paused',
         /// 'WaitingForCapacity'</param>
-        /// <param name="result">the result of job execution or the current
+        /// <param name="result">The result of job execution or the current
         /// result of the running job. Possible values include: 'None',
         /// 'Succeeded', 'Cancelled', 'Failed'</param>
-        /// <param name="logFolder">the log folder path to use in the following
+        /// <param name="logFolder">The log folder path to use in the following
         /// format:
         /// adl://&lt;accountName&gt;.azuredatalakestore.net/system/jobservice/jobs/Usql/2016/03/13/17/18/5fe51957-93bc-4de0-8ddc-c5a4753b068b/logs/.</param>
-        /// <param name="logFilePatterns">the list of log file name patterns to
+        /// <param name="logFilePatterns">The list of log file name patterns to
         /// find in the logFolder. '*' is the only matching character allowed.
         /// Example format: jobExecution*.log or *mylog*.txt</param>
-        /// <param name="related">the recurring job relationship information
+        /// <param name="related">The recurring job relationship information
         /// properties.</param>
-        /// <param name="tags">the key-value pairs used to add additional
+        /// <param name="tags">The key-value pairs used to add additional
         /// metadata to the job information. (Only for use internally with
         /// Scope job type.)</param>
         public JobInformationBasic(string name, JobType type, System.Guid? jobId = default(System.Guid?), string submitter = default(string), int? degreeOfParallelism = default(int?), int? priority = default(int?), System.DateTimeOffset? submitTime = default(System.DateTimeOffset?), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), JobState? state = default(JobState?), JobResult? result = default(JobResult?), string logFolder = default(string), IList<string> logFilePatterns = default(IList<string>), JobRelationshipProperties related = default(JobRelationshipProperties), IDictionary<string, string> tags = default(IDictionary<string, string>))

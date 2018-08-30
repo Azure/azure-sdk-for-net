@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Automation
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using Newtonsoft.Json;
     using System.Collections;
@@ -54,8 +55,11 @@ namespace Microsoft.Azure.Management.Automation
         /// Delete the dsc node identified by node id.
         /// <see href="http://aka.ms/azureautomationsdk/dscnodeoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// Automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='nodeId'>
         /// The node id.
@@ -81,17 +85,25 @@ namespace Microsoft.Azure.Management.Automation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DscNode>> DeleteWithHttpMessagesAsync(string automationAccountName, string nodeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DscNode>> DeleteWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string nodeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.ResourceGroupName != null)
+            if (resourceGroupName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.ResourceGroupName, "^[-\\w\\._]+$"))
+                if (resourceGroupName.Length > 90)
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.ResourceGroupName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
                 }
             }
             if (automationAccountName == null)
@@ -106,7 +118,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-10-31";
+            string apiVersion = "2018-01-15";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -114,6 +126,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccountName", automationAccountName);
                 tracingParameters.Add("nodeId", nodeId);
                 tracingParameters.Add("apiVersion", apiVersion);
@@ -123,7 +136,7 @@ namespace Microsoft.Azure.Management.Automation
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(automationAccountName));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -256,8 +269,11 @@ namespace Microsoft.Azure.Management.Automation
         /// Retrieve the dsc node identified by node id.
         /// <see href="http://aka.ms/azureautomationsdk/dscnodeoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='nodeId'>
         /// The node id.
@@ -283,17 +299,25 @@ namespace Microsoft.Azure.Management.Automation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DscNode>> GetWithHttpMessagesAsync(string automationAccountName, string nodeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DscNode>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string nodeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.ResourceGroupName != null)
+            if (resourceGroupName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.ResourceGroupName, "^[-\\w\\._]+$"))
+                if (resourceGroupName.Length > 90)
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.ResourceGroupName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
                 }
             }
             if (automationAccountName == null)
@@ -308,7 +332,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-10-31";
+            string apiVersion = "2018-01-15";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -316,6 +340,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccountName", automationAccountName);
                 tracingParameters.Add("nodeId", nodeId);
                 tracingParameters.Add("apiVersion", apiVersion);
@@ -325,7 +350,7 @@ namespace Microsoft.Azure.Management.Automation
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(automationAccountName));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -458,13 +483,16 @@ namespace Microsoft.Azure.Management.Automation
         /// Update the dsc node.
         /// <see href="http://aka.ms/azureautomationsdk/dscnodeoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='nodeId'>
         /// Parameters supplied to the update dsc node.
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='dscNodeUpdateParameters'>
         /// Parameters supplied to the update dsc node.
         /// </param>
         /// <param name='customHeaders'>
@@ -488,17 +516,25 @@ namespace Microsoft.Azure.Management.Automation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DscNode>> UpdateWithHttpMessagesAsync(string automationAccountName, string nodeId, DscNodeUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DscNode>> UpdateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string nodeId, DscNodeUpdateParameters dscNodeUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.ResourceGroupName != null)
+            if (resourceGroupName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.ResourceGroupName, "^[-\\w\\._]+$"))
+                if (resourceGroupName.Length > 90)
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.ResourceGroupName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
                 }
             }
             if (automationAccountName == null)
@@ -509,15 +545,15 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nodeId");
             }
-            if (parameters == null)
+            if (dscNodeUpdateParameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "dscNodeUpdateParameters");
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-10-31";
+            string apiVersion = "2018-01-15";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -525,9 +561,10 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccountName", automationAccountName);
                 tracingParameters.Add("nodeId", nodeId);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("dscNodeUpdateParameters", dscNodeUpdateParameters);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
@@ -535,7 +572,7 @@ namespace Microsoft.Azure.Management.Automation
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(automationAccountName));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -582,9 +619,9 @@ namespace Microsoft.Azure.Management.Automation
 
             // Serialize Request
             string _requestContent = null;
-            if(parameters != null)
+            if(dscNodeUpdateParameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(dscNodeUpdateParameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -674,11 +711,17 @@ namespace Microsoft.Azure.Management.Automation
         /// Retrieve a list of dsc nodes.
         /// <see href="http://aka.ms/azureautomationsdk/dscnodeoperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
         /// </param>
-        /// <param name='filter'>
-        /// The filter to apply on the operation.
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='inlinecount'>
+        /// Return total rows.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -701,17 +744,25 @@ namespace Microsoft.Azure.Management.Automation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<DscNode>>> ListByAutomationAccountWithHttpMessagesAsync(string automationAccountName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<DscNode>>> ListByAutomationAccountWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, ODataQuery<DscNode> odataQuery = default(ODataQuery<DscNode>), string inlinecount = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.ResourceGroupName != null)
+            if (resourceGroupName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.ResourceGroupName, "^[-\\w\\._]+$"))
+                if (resourceGroupName.Length > 90)
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.ResourceGroupName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
                 }
             }
             if (automationAccountName == null)
@@ -722,7 +773,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-10-31";
+            string apiVersion = "2018-01-15";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -730,8 +781,10 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccountName", automationAccountName);
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("inlinecount", inlinecount);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByAutomationAccount", tracingParameters);
@@ -739,13 +792,21 @@ namespace Microsoft.Azure.Management.Automation
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(automationAccountName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
+            if (odataQuery != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter))
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
+            }
+            if (inlinecount != null)
+            {
+                _queryParameters.Add(string.Format("$inlinecount={0}", System.Uri.EscapeDataString(inlinecount)));
             }
             if (apiVersion != null)
             {

@@ -5,7 +5,7 @@
     <Description>ApplicationInsights.Tests Class library</Description>
     <PackageId>ApplicationInsights.Tests</PackageId>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview, 2.0.0)" />

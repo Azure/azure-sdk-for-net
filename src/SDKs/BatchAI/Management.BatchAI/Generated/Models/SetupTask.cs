@@ -33,20 +33,18 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the SetupTask class.
         /// </summary>
-        /// <param name="commandLine">Command Line to start Setup
-        /// process.</param>
-        /// <param name="stdOutErrPathPrefix">The path where the Batch AI
-        /// service will upload the stdout and stderror of setup task.</param>
-        /// <param name="environmentVariables">Collection of environment
-        /// settings.</param>
-        /// <param name="runElevated">Specifies whether to run the setup task
-        /// in elevated mode. The default value is false.</param>
-        public SetupTask(string commandLine, string stdOutErrPathPrefix, IList<EnvironmentSetting> environmentVariables = default(IList<EnvironmentSetting>), bool? runElevated = default(bool?))
+        /// <param name="commandLine">Command line.</param>
+        /// <param name="stdOutErrPathPrefix">Output path prefix.</param>
+        /// <param name="environmentVariables">Environment variables.</param>
+        /// <param name="secrets">Secrets.</param>
+        /// <param name="stdOutErrPathSuffix">Output path suffix.</param>
+        public SetupTask(string commandLine, string stdOutErrPathPrefix, IList<EnvironmentVariable> environmentVariables = default(IList<EnvironmentVariable>), IList<EnvironmentVariableWithSecretValue> secrets = default(IList<EnvironmentVariableWithSecretValue>), string stdOutErrPathSuffix = default(string))
         {
             CommandLine = commandLine;
             EnvironmentVariables = environmentVariables;
-            RunElevated = runElevated;
+            Secrets = secrets;
             StdOutErrPathPrefix = stdOutErrPathPrefix;
+            StdOutErrPathSuffix = stdOutErrPathSuffix;
             CustomInit();
         }
 
@@ -56,30 +54,60 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets command Line to start Setup process.
+        /// Gets or sets command line.
         /// </summary>
+        /// <remarks>
+        /// The command line to be executed on each cluster's node after it
+        /// being allocated or rebooted. The command is executed in a bash
+        /// subshell as a root.
+        /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
-        /// Gets or sets collection of environment settings.
+        /// Gets or sets environment variables.
         /// </summary>
+        /// <remarks>
+        /// A collection of user defined environment variables to be set for
+        /// setup task.
+        /// </remarks>
         [JsonProperty(PropertyName = "environmentVariables")]
-        public IList<EnvironmentSetting> EnvironmentVariables { get; set; }
+        public IList<EnvironmentVariable> EnvironmentVariables { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies whether to run the setup task in elevated
-        /// mode. The default value is false.
+        /// Gets or sets secrets.
         /// </summary>
-        [JsonProperty(PropertyName = "runElevated")]
-        public bool? RunElevated { get; set; }
+        /// <remarks>
+        /// A collection of user defined environment variables with secret
+        /// values to be set for the setup task. Server will never report
+        /// values of these variables back.
+        /// </remarks>
+        [JsonProperty(PropertyName = "secrets")]
+        public IList<EnvironmentVariableWithSecretValue> Secrets { get; set; }
 
         /// <summary>
-        /// Gets or sets the path where the Batch AI service will upload the
-        /// stdout and stderror of setup task.
+        /// Gets or sets output path prefix.
         /// </summary>
+        /// <remarks>
+        /// The prefix of a path where the Batch AI service will upload the
+        /// stdout, stderr and execution log of the setup task.
+        /// </remarks>
         [JsonProperty(PropertyName = "stdOutErrPathPrefix")]
         public string StdOutErrPathPrefix { get; set; }
+
+        /// <summary>
+        /// Gets output path suffix.
+        /// </summary>
+        /// <remarks>
+        /// A path segment appended by Batch AI to stdOutErrPathPrefix to form
+        /// a path where stdout, stderr and execution log of the setup task
+        /// will be uploaded. Batch AI creates the setup task output
+        /// directories under an unique path to avoid conflicts between
+        /// different clusters. The full path can be obtained by concatenation
+        /// of stdOutErrPathPrefix and stdOutErrPathSuffix.
+        /// </remarks>
+        [JsonProperty(PropertyName = "stdOutErrPathSuffix")]
+        public string StdOutErrPathSuffix { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -104,6 +132,16 @@ namespace Microsoft.Azure.Management.BatchAI.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (Secrets != null)
+            {
+                foreach (var element1 in Secrets)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

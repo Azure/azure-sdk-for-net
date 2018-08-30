@@ -1,27 +1,28 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 18:04:31 GMT",
-        "x-ms-request-id": "00d8b4cd-058f-4da8-a3a9-7a7a9ae772f0",
+        "Date": "Sat, 16 Jun 2018 00:46:32 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1177",
-        "x-ms-correlation-request-id": "9693bca3-4ee7-4501-865e-8411952d196b"
+        "x-ms-ratelimit-remaining-subscription-deletes": "14989",
+        "x-ms-request-id": "ea0cf989-0831-4d49-84a8-9732da344b72",
+        "x-ms-correlation-request-id": "ea0cf989-0831-4d49-84a8-9732da344b72"
       },
       "body": null
     },
     "204": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 18:04:31 GMT",
-        "x-ms-ratelimit-remaining-subscription-writes": "1176",
-        "x-ms-request-id": "95fce457-ddee-44a2-84a1-05c33b32d807",
-        "x-ms-correlation-request-id": "95fce457-ddee-44a2-84a1-05c33b32d807"
+        "Date": "Sat, 16 Jun 2018 00:46:32 GMT",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14988",
+        "x-ms-request-id": "3bf2d00f-7f37-4ab0-96c4-9ae560bc1f64",
+        "x-ms-correlation-request-id": "3bf2d00f-7f37-4ab0-96c4-9ae560bc1f64",
+        "X-Content-Type-Options": "nosniff"
       },
       "body": null
     }

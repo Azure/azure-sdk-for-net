@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -32,7 +31,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskAddCollectionParameter class.
         /// </summary>
-        /// <param name="value">The collection of tasks to add.</param>
+        /// <param name="value">The collection of tasks to add. The maximum
+        /// count of tasks is 100.</param>
         public TaskAddCollectionParameter(IList<TaskAddParameter> value)
         {
             Value = value;
@@ -45,11 +45,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the collection of tasks to add.
+        /// Gets or sets the collection of tasks to add. The maximum count of
+        /// tasks is 100.
         /// </summary>
         /// <remarks>
-        /// The total serialized size of this collection must be less than 4MB.
-        /// If it is greater than 4MB (for example if each task has 100's of
+        /// The total serialized size of this collection must be less than 1MB.
+        /// If it is greater than 1MB (for example if each task has 100's of
         /// resource files or environment variables), the request will fail
         /// with code 'RequestBodyTooLarge' and should be retried again with
         /// fewer tasks.
@@ -57,32 +58,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "value")]
         public IList<TaskAddParameter> Value { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Value == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
-            }
-            if (Value != null)
-            {
-                if (Value.Count > 100)
-                {
-                    throw new ValidationException(ValidationRules.MaxItems, "Value", 100);
-                }
-                foreach (var element in Value)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-        }
     }
 }

@@ -1,8 +1,34 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 4.0.4-preview
+
+- Added ApiRevisionDescription and ApiVersionDescription to ApiContract
+- Fixed bug in ApiManagementService contract. The CertificateInformation has a setter for Update scenarios.
+
+### Changes in 4.0.3-preview
+
+- Fixed contract for Error in OperationResultContract
+- Fixed validation for adding Apis to Product
+
+### Changes in 4.0.2-preview
+
+- Fixed Contract for ErrorResponse for Management Apis
+
+### Changes in 4.0.1-preview
+
+*** Resource Management APIs ***
+
+- Added missing privateIP address in Additional Location
+
+*** Management APIs ****
+
+- Added support for Issue, Issue Comments and Issue Attachments
+- Added support for accepting non-Xml Encoded policies.
+
 ### Changes in 4.0.0-preview
 
 **Notes**
+
 *** Resource Management APIs ***
 - Added support for Basic Sku
 - Added support for Intermediate Certificates

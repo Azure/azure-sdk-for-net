@@ -1,31 +1,31 @@
 {
   "Entries": [
     {
-      "RequestUri": "/contentmoderator/moderate/v1.0/ProcessText/Screen/?language=eng&autocorrect=false&PII=false&listId=&classify=false",
-      "EncodedRequestUri": "L2NvbnRlbnRtb2RlcmF0b3IvbW9kZXJhdGUvdjEuMC9Qcm9jZXNzVGV4dC9TY3JlZW4vP2xhbmd1YWdlPWVuZyZhdXRvY29ycmVjdD1mYWxzZSZQSUk9ZmFsc2UmbGlzdElkPSZjbGFzc2lmeT1mYWxzZQ==",
+      "RequestUri": "/contentmoderator/moderate/v1.0/ProcessText/Screen/?autocorrect=false&PII=false&listId=&classify=false",
+      "EncodedRequestUri": "L2NvbnRlbnRtb2RlcmF0b3IvbW9kZXJhdGUvdjEuMC9Qcm9jZXNzVGV4dC9TY3JlZW4vP2F1dG9jb3JyZWN0PWZhbHNlJlBJST1mYWxzZSZsaXN0SWQ9JmNsYXNzaWZ5PWZhbHNl",
       "RequestMethod": "POST",
-      "RequestBody": "\"Ciao buongiorno stronzo sucks!\"",
+      "RequestBody": "crap 764-879-887",
       "RequestHeaders": {
         "Content-Type": [
           "text/plain"
         ],
         "Content-Length": [
-          "32"
+          "16"
         ],
         "Ocp-Apim-Subscription-Key": [
-         
+          "a79e5f9eeafa4f059ac507a93e1a9ff1"
         ],
         "User-Agent": [
-          "FxVersion/4.7.2600.0",
+          "FxVersion/4.7.2633.0",
           "OSName/Windows10Enterprise",
           "OSVersion/6.3.16299",
           "Microsoft.CognitiveServices.ContentModerator.ContentModeratorClient/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"OriginalText\": \"\\\"Ciao buongiorno stronzo sucks!\\\"\",\r\n  \"NormalizedText\": \"\\\" Ciao buongiorno stronzo sucks! \\\"\",\r\n  \"Misrepresentation\": null,\r\n  \"Language\": \"eng\",\r\n  \"Terms\": [\r\n    {\r\n      \"Index\": 25,\r\n      \"OriginalIndex\": 25,\r\n      \"ListId\": 0,\r\n      \"Term\": \"sucks\"\r\n    }\r\n  ],\r\n  \"Status\": {\r\n    \"Code\": 3000,\r\n    \"Description\": \"OK\",\r\n    \"Exception\": null\r\n  },\r\n  \"TrackingId\": \"822d73e9-f2f2-411c-bd8d-e4f5214f47aa\"\r\n}",
+      "ResponseBody": "{\r\n  \"OriginalText\": \"crap 764-879-887\",\r\n  \"NormalizedText\": \"crap 764- 879- 887\",\r\n  \"Misrepresentation\": null,\r\n  \"Language\": \"eng\",\r\n  \"Terms\": [\r\n    {\r\n      \"Index\": 0,\r\n      \"OriginalIndex\": 0,\r\n      \"ListId\": 0,\r\n      \"Term\": \"crap\"\r\n    }\r\n  ],\r\n  \"Status\": {\r\n    \"Code\": 3000,\r\n    \"Description\": \"OK\",\r\n    \"Exception\": null\r\n  },\r\n  \"TrackingId\": \"4b411c02-c882-443b-be08-7a736535d0be\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "330"
+          "291"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -37,7 +37,7 @@
           "no-cache"
         ],
         "apim-request-id": [
-          "87fc350c-1040-4b98-95f1-571548591f09"
+          "16a5bce3-1817-440b-a503-5b4b90ac601d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -49,7 +49,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 15 Dec 2017 22:18:42 GMT"
+          "Mon, 16 Apr 2018 20:15:26 GMT"
         ],
         "X-AspNet-Version": [
           "4.0.30319"

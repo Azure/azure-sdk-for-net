@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.DataLake.Analytics</PackageId>
     <Description>Provides Data Lake Analytics account, job and catalog management capabilities for Microsoft Azure.</Description>
-    <Version>3.3.0-preview</Version>
+    <Version>3.5.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.DataLake.Analytics</AssemblyName>
     <PackageTags>Microsoft Azure Data Lake Analytics management;DataLakeAnalytics;Data Lake Analytics;</PackageTags>
     <PackageReleaseNotes>See https://aka.ms/adladotnetsdkchangelog for release notes.</PackageReleaseNotes>

@@ -23,7 +23,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
     {
             /// <summary>
             /// Associates existing subscription with the management group.
-            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,7 +43,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
             /// <summary>
             /// Associates existing subscription with the management group.
-            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -68,7 +66,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
             /// <summary>
             /// De-associates subscription from the management group.
-            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -89,7 +86,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
             /// <summary>
             /// De-associates subscription from the management group.
-            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

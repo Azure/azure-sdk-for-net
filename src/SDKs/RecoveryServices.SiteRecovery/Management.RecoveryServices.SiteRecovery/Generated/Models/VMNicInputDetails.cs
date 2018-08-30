@@ -34,12 +34,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="replicaNicStaticIPAddress">Replica nic static IP
         /// address.</param>
         /// <param name="selectionType">Selection type for failover.</param>
-        public VMNicInputDetails(string nicId = default(string), string recoveryVMSubnetName = default(string), string replicaNicStaticIPAddress = default(string), string selectionType = default(string))
+        /// <param name="enableAcceleratedNetworkingOnRecovery">Whether the NIC
+        /// has accerated networking enabled.</param>
+        public VMNicInputDetails(string nicId = default(string), string recoveryVMSubnetName = default(string), string replicaNicStaticIPAddress = default(string), string selectionType = default(string), bool? enableAcceleratedNetworkingOnRecovery = default(bool?))
         {
             NicId = nicId;
             RecoveryVMSubnetName = recoveryVMSubnetName;
             ReplicaNicStaticIPAddress = replicaNicStaticIPAddress;
             SelectionType = selectionType;
+            EnableAcceleratedNetworkingOnRecovery = enableAcceleratedNetworkingOnRecovery;
             CustomInit();
         }
 
@@ -71,6 +74,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "selectionType")]
         public string SelectionType { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the NIC has accerated networking enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableAcceleratedNetworkingOnRecovery")]
+        public bool? EnableAcceleratedNetworkingOnRecovery { get; set; }
 
     }
 }

@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="lastModifiedTime">Gets or sets the last modified
         /// time.</param>
         /// <param name="description">Gets or sets the description.</param>
-        public Activity(string id = default(string), string name = default(string), string definition = default(string), IList<ActivityParameterSet> parameterSets = default(IList<ActivityParameterSet>), IList<ActivityOutputType> outputTypes = default(IList<ActivityOutputType>), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string description = default(string))
+        public Activity(string id = default(string), string name = default(string), string definition = default(string), IList<ActivityParameterSet> parameterSets = default(IList<ActivityParameterSet>), IList<ActivityOutputType> outputTypes = default(IList<ActivityOutputType>), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string))
         {
             Id = id;
             Name = name;
@@ -98,13 +98,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the creation time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; set; }
+        public System.DateTimeOffset CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; set; }
+        public System.DateTimeOffset LastModifiedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the description.

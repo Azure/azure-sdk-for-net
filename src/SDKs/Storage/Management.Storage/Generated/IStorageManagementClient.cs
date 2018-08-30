@@ -41,31 +41,30 @@ namespace Microsoft.Azure.Management.Storage
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify the Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running
-        /// Operations. Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default
+        /// value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated
-        /// and included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When
+        /// set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
@@ -86,9 +85,14 @@ namespace Microsoft.Azure.Management.Storage
         IStorageAccountsOperations StorageAccounts { get; }
 
         /// <summary>
-        /// Gets the IUsageOperations.
+        /// Gets the IUsagesOperations.
         /// </summary>
-        IUsageOperations Usage { get; }
+        IUsagesOperations Usages { get; }
+
+        /// <summary>
+        /// Gets the IBlobContainersOperations.
+        /// </summary>
+        IBlobContainersOperations BlobContainers { get; }
 
     }
 }

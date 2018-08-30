@@ -65,19 +65,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -452,6 +453,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PolicyProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificContainerCreationInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificContainerCreationInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificContainerMappingInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificContainerMappingInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryPlanActionDetails>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryPlanActionDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DisableProtectionProviderSpecificInput>("instanceType"));
@@ -476,12 +479,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProviderSpecificFailoverInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PolicyProviderSpecificDetails>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PolicyProviderSpecificDetails>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProtectionContainerMappingProviderSpecificDetails>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProtectionContainerMappingProviderSpecificDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProviderSpecificRecoveryPointDetails>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProviderSpecificRecoveryPointDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryPlanProviderSpecificFailoverInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryPlanProviderSpecificFailoverInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificSettings>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificSettings>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificUpdateContainerMappingInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificUpdateContainerMappingInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReverseReplicationProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReverseReplicationProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SwitchProtectionProviderSpecificInput>("instanceType"));

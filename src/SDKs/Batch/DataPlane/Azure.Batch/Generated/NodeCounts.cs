@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Batch
         {
             this.Creating = protocolObject.Creating;
             this.Idle = protocolObject.Idle;
+            this.LeavingPool = protocolObject.LeavingPool;
             this.Offline = protocolObject.Offline;
             this.Preempted = protocolObject.Preempted;
             this.Rebooting = protocolObject.Rebooting;
@@ -54,6 +55,11 @@ namespace Microsoft.Azure.Batch
         /// Gets the number of nodes in <see cref="Common.ComputeNodeState.Idle" />.
         /// </summary>
         public int Idle { get; }
+
+        /// <summary>
+        /// Gets the number of nodes in <see cref="Common.ComputeNodeState.LeavingPool" />.
+        /// </summary>
+        public int LeavingPool { get; }
 
         /// <summary>
         /// Gets the number of nodes in <see cref="Common.ComputeNodeState.Offline" />.

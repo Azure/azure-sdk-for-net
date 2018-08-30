@@ -5,8 +5,8 @@
     <Description>Data.ApplicationInsights.Tests Class library</Description>
     <PackageId>Data.ApplicationInsights.Tests</PackageId>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
+  
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

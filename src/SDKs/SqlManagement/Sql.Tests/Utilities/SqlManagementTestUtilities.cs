@@ -87,6 +87,17 @@ namespace Sql.Tests
             Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
         }
 
+        public static void ValidateManagedInstance(ManagedInstance actual, string name, string login, Dictionary<string, string> tags, string location)
+        {
+            Assert.NotNull(actual);
+            Assert.Equal(name, actual.Name);
+            Assert.Equal(login, actual.AdministratorLogin);
+            SqlManagementTestUtilities.AssertCollection(tags, actual.Tags);
+
+            // Location is being returned two different ways across different APIs.
+            Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
+        }
+        
         public static void ValidateDatabase(dynamic expected, Database actual, string name)
         {
             Assert.Equal(name, actual.Name);
@@ -126,15 +137,6 @@ namespace Sql.Tests
             else
             {
                 Assert.NotNull(actual.MaxSizeBytes);
-            }
-
-            if (expected.RequestedServiceObjectiveId != null)
-            {
-                Assert.Equal(expected.RequestedServiceObjectiveId, actual.RequestedServiceObjectiveId);
-            }
-            else
-            {
-                Assert.NotNull(actual.RequestedServiceObjectiveId);
             }
 
             if (!string.IsNullOrEmpty(expected.RequestedServiceObjectiveName))
@@ -193,15 +195,6 @@ namespace Sql.Tests
                 Assert.NotNull(actual.MaxSizeBytes);
             }
 
-            if (expected.RequestedServiceObjectiveId != null)
-            {
-                Assert.Equal(expected.RequestedServiceObjectiveId, actual.RequestedServiceObjectiveId);
-            }
-            else
-            {
-                Assert.NotNull(actual.RequestedServiceObjectiveId);
-            }
-
             if (!string.IsNullOrEmpty(expected.RequestedServiceObjectiveName))
             {
                 Assert.Equal(expected.RequestedServiceObjectiveName, actual.RequestedServiceObjectiveName);
@@ -214,6 +207,68 @@ namespace Sql.Tests
             if (expected.Tags != null)
             {
                 SqlManagementTestUtilities.AssertCollection(expected.Tags, actual.Tags);
+            }
+        }
+		
+		public static void ValidateManagedDatabase(dynamic expected, ManagedDatabase actual, string name)
+        {
+            Assert.Equal(name, actual.Name);
+            Assert.NotNull(actual.CreationDate);
+            Assert.NotNull(actual.Id);
+            Assert.NotNull(actual.Type);
+
+            // Old 2014-04-01 apis return en-us location friendly name, e.g. "Japan East",
+            // newer apis return locaion id e.g. "japaneast". This makes comparison
+            // logic annoying until we have a newer api-version for database.
+            //Assert.Equal(expected.Location, actual.Location);
+
+            if (!string.IsNullOrEmpty(expected.Collation))
+            {
+                Assert.Equal(expected.Collation, actual.Collation);
+            }
+            else
+            {
+                Assert.NotNull(actual.Collation);
+            }
+
+            if (expected.Location != null)
+            {
+                Assert.Equal(expected.Location, actual.Location);
+            }
+            else
+            {
+                Assert.NotNull(actual.Location);
+            }
+        }
+
+        public static void ValidateManagedDatabaseEx(ManagedDatabase expected, ManagedDatabase actual)
+        {
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.NotNull(actual.CreationDate);
+            Assert.NotNull(actual.Id);
+            Assert.NotNull(actual.Type);
+
+            // Old 2014-04-01 apis return en-us location friendly name, e.g. "Japan East",
+            // newer apis return locaion id e.g. "japaneast". This makes comparison
+            // logic annoying until we have a newer api-version for database.
+            //Assert.Equal(expected.Location, actual.Location);
+
+            if (!string.IsNullOrEmpty(expected.Collation))
+            {
+                Assert.Equal(expected.Collation, actual.Collation);
+            }
+            else
+            {
+                Assert.NotNull(actual.Collation);
+            }
+
+            if (expected.Location != null)
+            {
+                Assert.Equal(expected.Location, actual.Location);
+            }
+            else
+            {
+                Assert.NotNull(actual.Location);
             }
         }
 
@@ -267,6 +322,21 @@ namespace Sql.Tests
             AssertCollection(expected.Tags, actual.Tags);
         }
 
+        public static void ValidateInstanceFailoverGroup(InstanceFailoverGroup expected, InstanceFailoverGroup actual, string name)
+        {
+            Assert.NotNull(actual);
+            Assert.NotNull(actual.Id);
+            Assert.NotNull(actual.Type);
+
+            Assert.Equal(name, actual.Name);
+            Assert.Equal(expected.ReadOnlyEndpoint.FailoverPolicy, actual.ReadOnlyEndpoint.FailoverPolicy);
+            Assert.Equal(expected.ReadWriteEndpoint.FailoverPolicy, actual.ReadWriteEndpoint.FailoverPolicy);
+            Assert.Equal(expected.ReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes, actual.ReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes);
+            
+            Assert.Equal(expected.ManagedInstancePairs.FirstOrDefault().PrimaryManagedInstanceId, actual.ManagedInstancePairs.FirstOrDefault().PrimaryManagedInstanceId);
+            Assert.Equal(expected.ManagedInstancePairs.FirstOrDefault().PartnerManagedInstanceId, actual.ManagedInstancePairs.FirstOrDefault().PartnerManagedInstanceId);
+        }
+
         public static void ValidateFirewallRule(FirewallRule expected, FirewallRule actual, string name)
         {
             Assert.NotNull(actual.Id);
@@ -306,6 +376,31 @@ namespace Sql.Tests
                     new Database()
                     {
                         Location = server.Location
+                    }));
+            }
+
+            // Wait for all databases to be created.
+            return Task.WhenAll(createDbTasks);
+        }
+		
+		internal static Task<ManagedDatabase[]> CreateManagedDatabasesAsync(
+            SqlManagementClient sqlClient,
+            string resourceGroupName,
+            ManagedInstance managedInstance,
+            string testPrefix,
+            int count)
+        {
+            List<Task<ManagedDatabase>> createDbTasks = new List<Task<ManagedDatabase>>();
+            for (int i = 0; i < count; i++)
+            {
+                string name = SqlManagementTestUtilities.GenerateName();
+                createDbTasks.Add(sqlClient.ManagedDatabases.CreateOrUpdateAsync(
+                    resourceGroupName,
+                    managedInstance.Name,
+                    name,
+                    new ManagedDatabase()
+                    {
+                        Location = managedInstance.Location
                     }));
             }
 
@@ -374,7 +469,8 @@ namespace Sql.Tests
                 Properties = new VaultProperties()
                 {
                     AccessPolicies = accessPolicy,
-                    TenantId = server.Identity.TenantId.Value
+                    TenantId = server.Identity.TenantId.Value,
+                    EnableSoftDelete = true
                 }
             });
 

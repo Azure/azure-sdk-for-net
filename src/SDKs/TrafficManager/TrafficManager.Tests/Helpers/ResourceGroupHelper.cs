@@ -6,9 +6,9 @@ namespace TrafficManager.Tests.Helpers
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.Resources;
     using System.Linq;
-    using Microsoft.Azure.Management.ResourceManager.Models;
+    using Microsoft.Azure.Management.Resources.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
@@ -50,18 +50,19 @@ namespace TrafficManager.Tests.Helpers
             return location;
         }
 
+        public const string ResourceGroupLocation = "Central US";
+
         public static ResourceGroup CreateResourceGroup(this TestBase testBase, MockContext context, string resourceGroupName)
         {
             ResourceManagementClient resourcesClient = ResourceGroupHelper.GetResourceManagementClient(testBase, context);
             
-            string location = "Central US"; 
 
-            Assert.False(string.IsNullOrEmpty(location), "CSM did not return any valid locations for DNS resources");
+            Assert.False(string.IsNullOrEmpty(ResourceGroupLocation), "CSM did not return any valid locations for DNS resources");
 
             var response = resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
                 new ResourceGroup
                 {
-                    Location = location
+                    Location = ResourceGroupLocation
                 });
 
             return response;

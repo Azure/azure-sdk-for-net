@@ -28,9 +28,8 @@ namespace Compute.Tests
         /// List VMSizes in an AvailabilitySet
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         [Trait("Name", "TestVMScenarioOperations")]
-        [Trait("Failure", "Password policy")]
         public void TestVMScenarioOperations()
         {
             TestVMScenarioOperationsInternal("TestVMScenarioOperations");
@@ -50,7 +49,7 @@ namespace Compute.Tests
         /// 
         /// To record this test case, you need to run it in region which support XMF VMSizeFamily like eastus2.
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         [Trait("Name", "TestVMScenarioOperations_ManagedDisks")]
         public void TestVMScenarioOperations_ManagedDisks()
         {
@@ -65,8 +64,27 @@ namespace Compute.Tests
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
             }
+        }
 
-            
+        /// <summary>
+        /// TODO: StandardSSD is currently in preview and is available only in a few regions. Once it goes GA, it can be tested in 
+        /// the default test location.
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_ManagedDisks_StandardSSD")]
+        public void TestVMScenarioOperations_ManagedDisks_StandardSSD()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks_StandardSSD", hasManagedDisks: true,
+                    storageAccountType: StorageAccountTypes.StandardSSDLRS);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
         }
 
         /// <summary>
@@ -79,8 +97,8 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
-                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks_PirImage_Zones", hasManagedDisks: true, zones: new List<string> { "1" });
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks_PirImage_Zones", hasManagedDisks: true, zones: new List<string> { "1" }, callUpdateVM: true);
             }
             finally
             {
@@ -88,8 +106,8 @@ namespace Compute.Tests
             }
         }
 
-        private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = VirtualMachineSizeTypes.StandardA0,
-            string storageAccountType = StorageAccountTypes.StandardLRS, bool? writeAcceleratorEnabled = null)
+        private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A0",
+            string storageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null, bool callUpdateVM = false)
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
@@ -111,8 +129,10 @@ namespace Compute.Tests
 
                     CreateVM(rgName, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: hasManagedDisks, vmSize: vmSize, storageAccountType: storageAccountType, 
                         writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones);
-                    // NOTE: In record mode, uncomment this line. This is to ensure that there is sufficient time for VMAgent to populate status blob with OS details.
-                    // Thread.Sleep(TimeSpan.FromMinutes(5));
+
+                    // Instance view is not completely populated just after VM is provisioned. So we wait here for a few minutes to 
+                    // allow GA blob to populate.
+                    ComputeManagementTestUtilities.WaitMinutes(5);
 
                     var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
                     Assert.True(getVMWithInstanceViewResponse != null, "VM in Get");
@@ -133,6 +153,19 @@ namespace Compute.Tests
 
                     listVMSizesResponse = m_CrpClient.AvailabilitySets.ListAvailableSizes(rgName, asName);
                     Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled);
+
+                    if (callUpdateVM)
+                    {
+                        VirtualMachineUpdate updateParams = new VirtualMachineUpdate()
+                        {
+                            Tags = inputVM.Tags
+                        };
+
+                        string updateKey = "UpdateTag";
+                        updateParams.Tags.Add(updateKey, "UpdateTagValue");
+                        VirtualMachine updateResponse = m_CrpClient.VirtualMachines.Update(rgName, inputVM.Name, updateParams);
+                        Assert.True(updateResponse.Tags.ContainsKey(updateKey));
+                    }
                 }
                 finally
                 {

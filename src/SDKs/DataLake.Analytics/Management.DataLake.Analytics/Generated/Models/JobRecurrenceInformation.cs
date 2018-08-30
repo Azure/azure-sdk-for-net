@@ -29,25 +29,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobRecurrenceInformation class.
         /// </summary>
-        /// <param name="recurrenceId">the recurrence identifier (a GUID),
+        /// <param name="recurrenceId">The recurrence identifier (a GUID),
         /// unique per activity/script, regardless of iterations. This is
         /// something to link different occurrences of the same job
         /// together.</param>
-        /// <param name="recurrenceName">the recurrence name, user friendly
+        /// <param name="recurrenceName">The recurrence name, user friendly
         /// name for the correlation between jobs.</param>
-        /// <param name="numJobsFailed">the number of jobs in this recurrence
+        /// <param name="numJobsFailed">The number of jobs in this recurrence
         /// that have failed.</param>
-        /// <param name="numJobsCanceled">the number of jobs in this recurrence
+        /// <param name="numJobsCanceled">The number of jobs in this recurrence
         /// that have been canceled.</param>
-        /// <param name="numJobsSucceeded">the number of jobs in this
+        /// <param name="numJobsSucceeded">The number of jobs in this
         /// recurrence that have succeeded.</param>
-        /// <param name="auHoursFailed">the number of job execution hours that
+        /// <param name="auHoursFailed">The number of job execution hours that
         /// resulted in failed jobs.</param>
-        /// <param name="auHoursCanceled">the number of job execution hours
+        /// <param name="auHoursCanceled">The number of job execution hours
         /// that resulted in canceled jobs.</param>
-        /// <param name="auHoursSucceeded">the number of job execution hours
+        /// <param name="auHoursSucceeded">The number of job execution hours
         /// that resulted in successful jobs.</param>
-        /// <param name="lastSubmitTime">the last time a job in this recurrence
+        /// <param name="lastSubmitTime">The last time a job in this recurrence
         /// was submitted.</param>
         public JobRecurrenceInformation(System.Guid? recurrenceId = default(System.Guid?), string recurrenceName = default(string), int? numJobsFailed = default(int?), int? numJobsCanceled = default(int?), int? numJobsSucceeded = default(int?), double? auHoursFailed = default(double?), double? auHoursCanceled = default(double?), double? auHoursSucceeded = default(double?), System.DateTimeOffset? lastSubmitTime = default(System.DateTimeOffset?))
         {

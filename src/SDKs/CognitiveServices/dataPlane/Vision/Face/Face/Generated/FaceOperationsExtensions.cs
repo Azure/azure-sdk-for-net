@@ -24,7 +24,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     {
             /// <summary>
             /// Given query face's faceId, find the similar-looking faces from a faceId
-            /// array or a faceListId.
+            /// array, a face list or a large face list.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -37,12 +37,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='faceListId'>
             /// An existing user-specified unique candidate face list, created in Face List
             /// - Create a Face List. Face list contains a set of persistedFaceIds which
-            /// are persisted and will never expire. Parameter faceListId and faceIds
-            /// should not be provided at the same time
+            /// are persisted and will never expire. Parameter faceListId, largeFaceListId
+            /// and faceIds should not be provided at the same time。
+            /// </param>
+            /// <param name='largeFaceListId'>
+            /// An existing user-specified unique candidate large face list, created in
+            /// LargeFaceList - Create. Large face list contains a set of persistedFaceIds
+            /// which are persisted and will never expire. Parameter faceListId,
+            /// largeFaceListId and faceIds should not be provided at the same time.
             /// </param>
             /// <param name='faceIds'>
             /// An array of candidate faceIds. All of them are created by Face - Detect and
-            /// the faceIds will expire 24 hours after the detection call.
+            /// the faceIds will expire 24 hours after the detection call. The number of
+            /// faceIds is limited to 1000. Parameter faceListId, largeFaceListId and
+            /// faceIds should not be provided at the same time.
             /// </param>
             /// <param name='maxNumOfCandidatesReturned'>
             /// The number of top similar faces returned. The valid range is [1, 1000].
@@ -54,9 +62,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<SimilarFace>> FindSimilarAsync(this IFaceOperations operations, System.Guid faceId, string faceListId = default(string), IList<System.Guid?> faceIds = default(IList<System.Guid?>), int? maxNumOfCandidatesReturned = 20, FindSimilarMatchMode mode = default(FindSimilarMatchMode), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<SimilarFace>> FindSimilarAsync(this IFaceOperations operations, System.Guid faceId, string faceListId = default(string), string largeFaceListId = default(string), IList<System.Guid?> faceIds = default(IList<System.Guid?>), int? maxNumOfCandidatesReturned = 20, FindSimilarMatchMode mode = default(FindSimilarMatchMode), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.FindSimilarWithHttpMessagesAsync(faceId, faceListId, faceIds, maxNumOfCandidatesReturned, mode, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.FindSimilarWithHttpMessagesAsync(faceId, faceListId, largeFaceListId, faceIds, maxNumOfCandidatesReturned, mode, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -84,18 +92,26 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
 
             /// <summary>
-            /// Identify unknown faces from a person group.
+            /// 1-to-many identification to find the closest matches of the specific query
+            /// person face from a person group or large person group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='personGroupId'>
-            /// PersonGroupId of the target person group, created by PersonGroups.Create
             /// </param>
             /// <param name='faceIds'>
             /// Array of query faces faceIds, created by the Face - Detect. Each of the
             /// faces are identified independently. The valid number of faceIds is between
             /// [1, 10].
+            /// </param>
+            /// <param name='personGroupId'>
+            /// PersonGroupId of the target person group, created by PersonGroup - Create.
+            /// Parameter personGroupId and largePersonGroupId should not be provided at
+            /// the same time.
+            /// </param>
+            /// <param name='largePersonGroupId'>
+            /// LargePersonGroupId of the target large person group, created by
+            /// LargePersonGroup - Create. Parameter personGroupId and largePersonGroupId
+            /// should not be provided at the same time.
             /// </param>
             /// <param name='maxNumOfCandidatesReturned'>
             /// The range of maxNumOfCandidatesReturned is between 1 and 5 (default is 1).
@@ -108,9 +124,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<IdentifyResult>> IdentifyAsync(this IFaceOperations operations, string personGroupId, IList<System.Guid> faceIds, int? maxNumOfCandidatesReturned = 1, double? confidenceThreshold = default(double?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<IdentifyResult>> IdentifyAsync(this IFaceOperations operations, IList<System.Guid> faceIds, string personGroupId = default(string), string largePersonGroupId = default(string), int? maxNumOfCandidatesReturned = 1, double? confidenceThreshold = default(double?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.IdentifyWithHttpMessagesAsync(personGroupId, faceIds, maxNumOfCandidatesReturned, confidenceThreshold, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.IdentifyWithHttpMessagesAsync(faceIds, personGroupId, largePersonGroupId, maxNumOfCandidatesReturned, confidenceThreshold, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -148,6 +164,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// The operations group for this extension method.
             /// </param>
             /// <param name='url'>
+            /// Publicly reachable URL of an image
             /// </param>
             /// <param name='returnFaceId'>
             /// A value indicating whether the operation should return faceIds of detected
@@ -183,22 +200,31 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// The operations group for this extension method.
             /// </param>
             /// <param name='faceId'>
-            /// FaceId the face, comes from Face - Detect
+            /// FaceId of the face, comes from Face - Detect
+            /// </param>
+            /// <param name='personId'>
+            /// Specify a certain person in a person group or a large person group.
+            /// personId is created in PersonGroup Person - Create or LargePersonGroup
+            /// Person - Create.
             /// </param>
             /// <param name='personGroupId'>
             /// Using existing personGroupId and personId for fast loading a specified
-            /// person. personGroupId is created in Person Groups.Create.
+            /// person. personGroupId is created in PersonGroup - Create. Parameter
+            /// personGroupId and largePersonGroupId should not be provided at the same
+            /// time.
             /// </param>
-            /// <param name='personId'>
-            /// Specify a certain person in a person group. personId is created in
-            /// Persons.Create.
+            /// <param name='largePersonGroupId'>
+            /// Using existing largePersonGroupId and personId for fast loading a specified
+            /// person. largePersonGroupId is created in LargePersonGroup - Create.
+            /// Parameter personGroupId and largePersonGroupId should not be provided at
+            /// the same time.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VerifyResult> VerifyFaceToPersonAsync(this IFaceOperations operations, System.Guid faceId, string personGroupId, System.Guid personId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VerifyResult> VerifyFaceToPersonAsync(this IFaceOperations operations, System.Guid faceId, System.Guid personId, string personGroupId = default(string), string largePersonGroupId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.VerifyFaceToPersonWithHttpMessagesAsync(faceId, personGroupId, personId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.VerifyFaceToPersonWithHttpMessagesAsync(faceId, personId, personGroupId, largePersonGroupId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

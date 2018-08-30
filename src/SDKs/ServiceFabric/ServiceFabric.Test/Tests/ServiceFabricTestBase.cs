@@ -76,14 +76,14 @@ namespace ServiceFabric.Tests.Tests
                       {
                           ApplicationPorts = new EndpointRangeDescription()
                           {
-                              StartPort = 1234,
-                              EndPort = 4321
+                              StartPort = 1000,
+                              EndPort = 3000
                           },
                           DurabilityLevel = "Bronze",
                           EphemeralPorts = new EndpointRangeDescription()
                           {
-                              StartPort = 3456,
-                              EndPort = 6543
+                              StartPort = 4000,
+                              EndPort = 6000
                           },
                           IsPrimary = true,
                           Name = "n1",
@@ -96,7 +96,7 @@ namespace ServiceFabric.Tests.Tests
                       }
                    },
                   clusterId: clusterId,
-                  name: "testCluster2",
+                  name: clusterName,
                   type: "Microsoft.ServiceFabric/clusters",
                   vmImage: "Windows"
                   )

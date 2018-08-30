@@ -5,11 +5,11 @@
     <Description>LocationBasedServices.Tests Class Library</Description>
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>LocationBasedServices.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0-preview</Version>
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.CognitiveServices" Version="0.3.0-preview" />-->

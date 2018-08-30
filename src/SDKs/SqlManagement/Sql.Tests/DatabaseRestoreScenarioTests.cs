@@ -106,12 +106,14 @@ namespace Sql.Tests
                 Assert.StartsWith(db1.Name, droppedDatabase.Name);
 
                 // Restore the deleted database using restorable dropped database id
+                //   In new DB API (Version 2017), if use restorable dropped database id, need to specify the RestorableDroppedDatabaseId,
+                //       which include the source database id and deletion time
                 var db3Name = SqlManagementTestUtilities.GenerateName();
                 var db3Input = new Database
                 {
                     Location = server.Location,
                     CreateMode = CreateMode.Restore,
-                    SourceDatabaseId = droppedDatabase.Id,
+                    RestorableDroppedDatabaseId = droppedDatabase.Id,
                     RestorePointInTime = droppedDatabase.EarliestRestoreDate // optional param for Restore
                 };
                 var db3Response = sqlClient.Databases.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, db3Name, db3Input);
@@ -219,6 +221,75 @@ namespace Sql.Tests
             }
         }
 
+
+        [Fact]
+        public void TestShortTermRetentionPolicyOnPremium()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                // Create a Premium DB so it defaults to 35 days retention.
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                Database database = sqlClient.Databases.CreateOrUpdate(
+                    resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(),
+                    new Database
+                    {
+                        Location = server.Location,
+                        Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.P1)
+                    });
+
+                // Decrease retention period to 8 days and verfiy that it was updated.
+                BackupShortTermRetentionPolicy parameters = new BackupShortTermRetentionPolicy(retentionDays: 8);
+                sqlClient.BackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
+                Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(3));
+                BackupShortTermRetentionPolicy policy = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                Assert.Equal(parameters.RetentionDays, policy.RetentionDays);
+
+                // Increase retention period to 35 days again and verfiy that it was updated.
+                parameters = new BackupShortTermRetentionPolicy(retentionDays: 35);
+                sqlClient.BackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
+                Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(3));
+                policy = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                Assert.Equal(parameters.RetentionDays, policy.RetentionDays);
+            }
+        }
+
+        [Fact]
+        public void TestShortTermRetentionPolicyOnBasic()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                int basicRetention = 7;
+
+                // Create a Basic DB so it defaults to 7 days retention.
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                Database database = sqlClient.Databases.CreateOrUpdate(
+                    resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(),
+                    new Database
+                    {
+                        Location = server.Location,
+                        Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.Basic)
+                    });
+
+                // Attempt to increase retention period to 8 days and verfiy that the operation fails.
+                BackupShortTermRetentionPolicy parameters = new BackupShortTermRetentionPolicy(retentionDays: 8);
+                sqlClient.BackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
+                Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(3));
+                BackupShortTermRetentionPolicy policy = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                Assert.Equal(basicRetention, policy.RetentionDays);
+
+                // Attempt to dncrease retention period to 3 days and verify operation failure.
+                parameters = new BackupShortTermRetentionPolicy(retentionDays: 3);
+                sqlClient.BackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
+                Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(3));
+                policy = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                Assert.Equal(basicRetention, policy.RetentionDays);
+            }
+        }
+
         [Fact(Skip = "Manual test due to long setup time required (over 18 hours).")]
         public void TestLongTermRetentionV2Crud()
         {
@@ -262,16 +333,16 @@ namespace Sql.Tests
                 LongTermRetentionBackup backup = sqlClient.LongTermRetentionBackups.Get(locationName, serverName, databaseName, backups.First().Name);
                 Assert.NotNull(backup);
 
-                // Restore the backup - TODO After Database 2017-03-01-Preview is done
+                // Restore the backup
                 //
-                /* Database restoredDatabase = sqlClient.Databases.CreateOrUpdate(
+                Database restoredDatabase = sqlClient.Databases.CreateOrUpdate(
                     resourceGroupName, serverName, databaseName: SqlManagementTestUtilities.GenerateName(),
                     parameters: new Database
                     {
                         Location = locationName,
                         CreateMode = CreateMode.RestoreLongTermRetentionBackup,
-                        RecoveryServicesRecoveryPointResourceId = ""
-                    });*/
+                        LongTermRetentionBackupResourceId = backup.Id
+                    });
 
                 // Delete the backup.
                 //
@@ -319,7 +390,7 @@ namespace Sql.Tests
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
                 // List geo recoverable database backups
-                IEnumerable<RecoverableDatabase> recoverableDatabases = 
+                IEnumerable<RecoverableDatabase> recoverableDatabases =
                     sqlClient.RecoverableDatabases.ListByServer(resourceGroupName, serverName);
                 Assert.True(recoverableDatabases.Any(), "No recoverable databases found.");
 
@@ -337,6 +408,75 @@ namespace Sql.Tests
                         CreateMode = CreateMode.Recovery,
                         SourceDatabaseId = recoverableDatabase.Id
                     });
+            }
+        }
+
+        [Fact]
+        public void TestDatabaseRestorePoint()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                string restoreLabel = "restorePointLabel";
+
+                // Create database with only required parameters
+                var db = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(),
+                    new Database
+                    {
+                        Location = server.Location,
+                        Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.DW100)
+                    });
+                Assert.NotNull(db);
+
+                CreateDatabaseRestorePointDefinition restoreDefinition = new CreateDatabaseRestorePointDefinition { RestorePointLabel = restoreLabel };
+
+                RestorePoint postResponse = sqlClient.RestorePoints.Create(
+                        resourceGroup.Name,
+                        server.Name,
+                        db.Name,
+                        restoreDefinition);
+
+                Assert.True(postResponse.RestorePointType == RestorePointType.DISCRETE);
+                Assert.True(postResponse.RestorePointLabel == restoreLabel);
+                Assert.True(!string.IsNullOrWhiteSpace(postResponse.RestorePointCreationDate.ToString()));
+
+                IEnumerable<RestorePoint> listResponse =
+                    sqlClient.RestorePoints.ListByDatabase(
+                        resourceGroup.Name,
+                        server.Name,
+                        db.Name);
+
+                IEnumerable<RestorePoint> restorePointList = listResponse.ToList<RestorePoint>();
+
+                Assert.True(restorePointList.Any());
+
+                RestorePoint getResponse =
+                    sqlClient.RestorePoints.Get(
+                        resourceGroup.Name,
+                        server.Name,
+                        db.Name,
+                        postResponse.Name);
+
+                Assert.True(getResponse.RestorePointType == RestorePointType.DISCRETE);
+                Assert.True(!string.IsNullOrWhiteSpace(getResponse.RestorePointCreationDate.ToString()));
+                Assert.True(getResponse.Name == postResponse.Name);
+
+                sqlClient.RestorePoints.Delete(
+                    resourceGroup.Name,
+                    server.Name,
+                    db.Name,
+                    getResponse.Name);
+
+                IEnumerable<RestorePoint> listResponseAfterDelete =
+                    sqlClient.RestorePoints.ListByDatabase(
+                        resourceGroup.Name,
+                        server.Name,
+                        db.Name);
+
+                Assert.True(!listResponseAfterDelete.Any()
+                    || !listResponseAfterDelete.Where(x => x.Name == postResponse.Name).Any());
             }
         }
     }

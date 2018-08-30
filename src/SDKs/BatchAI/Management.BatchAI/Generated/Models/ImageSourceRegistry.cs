@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the container image such as name, URL and credentials.
+    /// Information about docker image for the job.
     /// </summary>
     public partial class ImageSourceRegistry
     {
@@ -30,11 +30,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the ImageSourceRegistry class.
         /// </summary>
-        /// <param name="image">The name of the image in image
-        /// repository.</param>
-        /// <param name="serverUrl">URL for image repository.</param>
-        /// <param name="credentials">Information to access the private Docker
-        /// repository.</param>
+        /// <param name="image">Image.</param>
+        /// <param name="serverUrl">Server URL.</param>
+        /// <param name="credentials">Credentials.</param>
         public ImageSourceRegistry(string image, string serverUrl = default(string), PrivateRegistryCredentials credentials = default(PrivateRegistryCredentials))
         {
             ServerUrl = serverUrl;
@@ -49,20 +47,29 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets URL for image repository.
+        /// Gets or sets server URL.
         /// </summary>
+        /// <remarks>
+        /// URL for image repository.
+        /// </remarks>
         [JsonProperty(PropertyName = "serverUrl")]
         public string ServerUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the image in image repository.
+        /// Gets or sets image.
         /// </summary>
+        /// <remarks>
+        /// The name of the image in the image repository.
+        /// </remarks>
         [JsonProperty(PropertyName = "image")]
         public string Image { get; set; }
 
         /// <summary>
-        /// Gets or sets information to access the private Docker repository.
+        /// Gets or sets credentials.
         /// </summary>
+        /// <remarks>
+        /// Credentials to access the private docker repository.
+        /// </remarks>
         [JsonProperty(PropertyName = "credentials")]
         public PrivateRegistryCredentials Credentials { get; set; }
 

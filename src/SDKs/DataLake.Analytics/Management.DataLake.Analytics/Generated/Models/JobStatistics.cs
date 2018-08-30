@@ -31,11 +31,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobStatistics class.
         /// </summary>
-        /// <param name="lastUpdateTimeUtc">the last update time for the
+        /// <param name="lastUpdateTimeUtc">The last update time for the
         /// statistics.</param>
-        /// <param name="finalizingTimeUtc">the job finalizing start
+        /// <param name="finalizingTimeUtc">The job finalizing start
         /// time.</param>
-        /// <param name="stages">the list of stages for the job.</param>
+        /// <param name="stages">The list of stages for the job.</param>
         public JobStatistics(System.DateTimeOffset? lastUpdateTimeUtc = default(System.DateTimeOffset?), System.DateTimeOffset? finalizingTimeUtc = default(System.DateTimeOffset?), IList<JobStatisticsVertexStage> stages = default(IList<JobStatisticsVertexStage>))
         {
             LastUpdateTimeUtc = lastUpdateTimeUtc;

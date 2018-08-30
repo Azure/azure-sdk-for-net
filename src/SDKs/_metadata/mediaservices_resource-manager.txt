@@ -1,0 +1,37 @@
+﻿Installing AutoRest version: latest
+
+> autorest@2.0.4280 preinstall C:\Users\quintinb\AppData\Roaming\npm\node_modules\autorest
+> node ./preinstall-check
+
+C:\Users\quintinb\AppData\Roaming\npm\autorest -> C:\Users\quintinb\AppData\Roaming\npm\node_modules\autorest\dist\app.js
++ autorest@2.0.4280
+updated 1 package in 2.199s
+
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/mediaservices/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\github\azure-sdk-for-net-qb\src\SDKs
+AutoRest code generation utility [version: 2.0.4280; node: v8.9.4]
+(C) 2018 Microsoft Corporation.
+https://aka.ms/autorest
+C:\Users\quintinb\.autorest\@microsoft.azure_autorest-core@2.0.4280\autorest-core -> C:\Users\quintinb\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist\app.js
+C:\Users\quintinb\.autorest\@microsoft.azure_autorest-core@2.0.4280\autorest-language-service -> C:\Users\quintinb\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist\language-service\language-service.js
+   Loading AutoRest core      'C:\Users\quintinb\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist' (2.0.4280)
+   Loading AutoRest extension '@microsoft.azure/autorest.csharp' (~2.2.51->2.2.57)
+   Loading AutoRest extension '@microsoft.azure/autorest.modeler' (2.3.43->2.3.43)
+
+2018-06-21 15:53:47 UTC
+1) azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      master
+Commit:      3c5a26019529fb0a1df963608668401771e61b2c
+
+2) AutoRest information
+Requested version: latest
+Bootstrapper version:    C:\Users\quintinb\AppData\Roaming\npm  `-- autorest@2.0.4280
+
+
+Latest installed version:    
+
+

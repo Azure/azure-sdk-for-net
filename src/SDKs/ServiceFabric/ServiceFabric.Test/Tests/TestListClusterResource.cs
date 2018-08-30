@@ -21,8 +21,8 @@ namespace ServiceFabric.Tests.Tests
 
                 Assert.NotNull(clusters);
                 Assert.NotNull(clusters);
-                var subscriptions = clusters.GroupBy(c => c.Id).Select(r => r.Key.Split('/')[2]).Distinct();
-                Assert.Equal(subscriptions.Count(), 1);
+                var subscriptions = clusters.Value.GroupBy(c => c.Id).Select(r => r.Key.Split('/')[2]).Distinct();
+                Assert.Single(subscriptions);
             }
         }
 
@@ -43,10 +43,10 @@ namespace ServiceFabric.Tests.Tests
                         Assert.NotNull(clusters);
 
                         var res1 = resources.Select(r => r.Name).OrderBy(r => r).ToList();
-                        var res2 = clusters.Select(
+                        var res2 = clusters.Value.Select(
                           c => c.Name).OrderBy(r => r).ToList();
 
-                        Assert.True(res1.Count == res2.Count);
+                        Assert.Equal(res1.Count, res2.Count);
 
                         for (int i = 0; i < res1.Count; i++)
                         {

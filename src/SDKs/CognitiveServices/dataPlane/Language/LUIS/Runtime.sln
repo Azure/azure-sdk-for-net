@@ -2,9 +2,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.LUIS", "Runtime\Microsoft.Azure.CognitiveServices.LUIS.csproj", "{EDD669F1-B4F9-4014-BBAD-C3BFFE7C4041}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.LUIS.Runtime", "Runtime\Microsoft.Azure.CognitiveServices.LUIS.Runtime.csproj", "{EDD669F1-B4F9-4014-BBAD-C3BFFE7C4041}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.LUIS.Tests", "Runtime.Tests\Microsoft.Azure.CognitiveServices.LUIS.Tests.csproj", "{EDD989BB-7B18-49E8-8B93-81D0740DFE8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.LUIS.Runtime.Tests", "Runtime.Tests\Microsoft.Azure.CognitiveServices.LUIS.Runtime.Tests.csproj", "{EDD989BB-7B18-49E8-8B93-81D0740DFE8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,13 +7,14 @@
 		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-		<Version>3.0.1-preview</Version>
+		<Version>3.1.0-preview</Version>
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public preview release of the Azure HDInsight SDK. Fixed the namespace of the HDInsight management client.
+        This is a public preview release of the Azure HDInsight SDK. Fixed customization support for ADLS Gen 2.
       ]]>
 		</PackageReleaseNotes>
+    
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

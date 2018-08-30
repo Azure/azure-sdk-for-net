@@ -2,17 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Microsoft.Azure.Management.Authorization;
+using Microsoft.Azure.Management.Authorization.Models;
 using Microsoft.Azure.Management.DataFactory;
 using Microsoft.Azure.Management.DataFactory.Models;
-using Rm = Microsoft.Azure.Management.Resources;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.Serialization;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
+using Rm = Microsoft.Azure.Management.Resources;
 
 namespace DataFactory.Tests.Utils
 {
@@ -29,9 +31,12 @@ namespace DataFactory.Tests.Utils
         private string outputFolder;
         private string outputFolderWorkarounds;
 
+        private IAuthorizationManagementClient authClient;
         private IDataFactoryManagementClient client;
         private Rm.IResourceManagementClient rmClient;
         private ExampleTracingInterceptor interceptor;
+
+        private string roleAssignmentName = Guid.NewGuid().ToString();
 
         public ExampleCapture(string secretsFile, string outputFolder, string outputFolderWorkarounds = null)
         {
@@ -40,6 +45,7 @@ namespace DataFactory.Tests.Utils
             this.outputFolderWorkarounds = outputFolderWorkarounds;
             this.client = ExampleHelpers.GetRealClient(secrets);
             this.rmClient = ExampleHelpers.GetRealRmClient(secrets);
+            this.authClient = ExampleHelpers.GetAuthorizationClient(secrets);
             this.interceptor = new ExampleTracingInterceptor(client.SubscriptionId, client.ApiVersion);
             ServiceClientTracing.AddTracingInterceptor(interceptor);
         }        
@@ -57,6 +63,7 @@ namespace DataFactory.Tests.Utils
                 // Start Factories operations, leaving factory available
                 CaptureFactories_CreateOrUpdate(); // 200
                 CaptureFactories_Update(); // 200
+                CaptureFactories_ConfigureRepo(); // 200
                 CaptureFactories_Get(); // 200
                 CaptureFactories_ListByResourceGroup(); // 200
                 CaptureFactories_List();
@@ -102,14 +109,14 @@ namespace DataFactory.Tests.Utils
                 CapturePipelines_Get(); // 200
                 CapturePipelines_ListByFactory(); // 200
                 DateTime beforeStartTime = DateTime.UtcNow.AddMinutes(-1); // allow 1 minute for clock skew
-                string runId = CapturePipelines_CreateRun(); // 202, ISSUE service doesn't follow long-running pattern
+                string runId = CapturePipelines_CreateRun(); // 200
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(120)); // Prefer to get succeeded monitoring result on first attempt even if it slows capture
                 DateTime afterEndTime = DateTime.UtcNow.AddMinutes(10); // allow 10 minutes for run time, monitoring latency, and clock skew
-                CaptureFactories_CancelRun();
+                CapturePipelineRuns_Cancel();
 
-                CapturePipelineRuns_ListByFactory(runId, beforeStartTime, afterEndTime); // 200, waits until succeeded so ready to get logs
+                CapturePipelineRuns_QueryByFactory(runId, beforeStartTime, afterEndTime); // 200, waits until succeeded so ready to get logs
                 CapturePipelineRuns_Get(runId); // 200
-                CaptureActivityRuns_ListByPipelineRun(runId, beforeStartTime, afterEndTime); // 200
+                CaptureActivityRuns_QueryByPipelineRun(runId, beforeStartTime, afterEndTime); // 200
 
                 // Start Trigger operations, leaving triggers available
                 CaptureTriggers_Create(); // 200
@@ -117,7 +124,7 @@ namespace DataFactory.Tests.Utils
                 CaptureTriggers_Get(); // 200
                 CaptureTriggers_Start(); // 202
                 CaptureTriggers_ListByFactory(); // 200
-                CaptureTriggers_ListRuns(); // 200
+                CaptureTriggerRuns_QueryByFactory(beforeStartTime, afterEndTime); // 200
                 CaptureTriggers_Stop(); // 202
 
                 // Finish Triggers operations, deleting triggers
@@ -144,6 +151,10 @@ namespace DataFactory.Tests.Utils
                 CaptureFactories_Delete(); // 204
 
                 CaptureOperations_List(); // 200
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
             finally
             {
@@ -179,8 +190,9 @@ namespace DataFactory.Tests.Utils
             try
             {
                 client.Factories.Delete(secrets.ResourceGroupName, secrets.FactoryName);
+                client.Factories.Delete(secrets.ResourceGroupName, secrets.FactoryName + "-linked");
             }
-            catch (ErrorResponseException)
+            catch (CloudException)
             {
                 // in direct access case might get exception rather than 204 since rg doesn't exist
             }
@@ -191,7 +203,7 @@ namespace DataFactory.Tests.Utils
                 {
                     client.Factories.Get(secrets.ResourceGroupName, secrets.FactoryName);
                 }
-                catch (ErrorResponseException e)
+                catch (CloudException e)
                 {
                     if (e.Response.StatusCode == System.Net.HttpStatusCode.NotFound)
                     {
@@ -205,7 +217,12 @@ namespace DataFactory.Tests.Utils
         private void CaptureFactories_CreateOrUpdate()
         {
             interceptor.CurrentExampleName = "Factories_CreateOrUpdate";
-            Factory resource = client.Factories.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, new Factory { Location = secrets.FactoryLocation });
+            Factory resource = client.Factories.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName,
+                new Factory
+                {
+                    Identity = new FactoryIdentity(),
+                    Location = secrets.FactoryLocation
+                });
         }
 
         private void CaptureFactories_Update()
@@ -217,6 +234,26 @@ namespace DataFactory.Tests.Utils
                 { "exampleTag", "exampleValue" }
             };
             Factory resource = client.Factories.Update(secrets.ResourceGroupName, secrets.FactoryName, new FactoryUpdateParameters { Tags = tags });
+        }
+
+        private void CaptureFactories_ConfigureRepo()
+        {
+            interceptor.CurrentExampleName = "Factories_ConfigureFactoryRepo";
+            var repoUpdate = new FactoryRepoUpdate()
+            {
+                FactoryResourceId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DataFactory/factories/{2}", secrets.SubId, secrets.ResourceGroupName, secrets.FactoryName),
+                RepoConfiguration = new FactoryVSTSConfiguration()
+                {
+                    AccountName = "ADF",
+                    ProjectName= "project",
+                    RepositoryName= "repo",
+                    CollaborationBranch= "master",
+                    RootFolder= "/",
+                    LastCommitId= "",
+                    TenantId= ""
+                }
+            };
+            Factory resource = client.Factories.ConfigureFactoryRepo(secrets.FactoryLocation, repoUpdate);
         }
 
         private void CaptureFactories_Get()
@@ -243,7 +280,7 @@ namespace DataFactory.Tests.Utils
             client.Factories.Delete(secrets.ResourceGroupName, secrets.FactoryName);
         }
 
-        private IntegrationRuntimeResource GetIntegrationRuntimeResource(string type, string description, string location = null)
+        private IntegrationRuntimeResource GetIntegrationRuntimeResource(string type, string description, string location = null, string resourceId = null)
         {
             if (type.Equals("Managed", StringComparison.OrdinalIgnoreCase))
             {
@@ -266,7 +303,7 @@ namespace DataFactory.Tests.Utils
                                 CatalogAdminUserName = this.secrets.CatalogAdminUsername,
                                 CatalogAdminPassword = new SecureString(this.secrets.CatalogAdminPassword),
                                 CatalogServerEndpoint = this.secrets.CatalogServerEndpoint,
-                                CatalogPricingTier = "S1"
+                                CatalogPricingTier = "Basic"
                             }
                         }
                     }
@@ -279,6 +316,20 @@ namespace DataFactory.Tests.Utils
                     Properties = new SelfHostedIntegrationRuntime
                     {
                         Description = description
+                    }
+                };
+            }
+            else if (type.Equals("Linked", StringComparison.OrdinalIgnoreCase))
+            {
+                return new IntegrationRuntimeResource
+                {
+                    Properties = new SelfHostedIntegrationRuntime()
+                    {
+                        Description = description,
+                        LinkedInfo = new LinkedIntegrationRuntimeRbacAuthorization()
+                        {
+                            ResourceId = resourceId
+                        }
                     }
                 };
             }
@@ -298,7 +349,7 @@ namespace DataFactory.Tests.Utils
         private void CaptureIntegrationRuntimes_Update()
         {
             interceptor.CurrentExampleName = "IntegrationRuntimes_Update";
-            IntegrationRuntimeStatusResponse response = client.IntegrationRuntimes.Update(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName,
+            IntegrationRuntimeResource response = client.IntegrationRuntimes.Update(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName,
                 new UpdateIntegrationRuntimeRequest
                 {
                     AutoUpdate = IntegrationRuntimeAutoUpdate.Off,
@@ -380,17 +431,6 @@ namespace DataFactory.Tests.Utils
             client.IntegrationRuntimes.Upgrade(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName);
         }
 
-        private void CaptureIntegrationRuntimes_RemoveNode()
-        {
-            interceptor.CurrentExampleName = "IntegrationRuntimes_RemoveNode";
-
-            client.IntegrationRuntimes.RemoveNode(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName,
-                new IntegrationRuntimeRemoveNodeRequest
-                {
-                    NodeName = "Node_1"
-                });
-        }
-
         private void CaptureIntegrationRuntimeNodes_Update()
         {
             interceptor.CurrentExampleName = "IntegrationRuntimeNodes_Update";
@@ -414,6 +454,102 @@ namespace DataFactory.Tests.Utils
             interceptor.CurrentExampleName = "IntegrationRuntimeNodes_GetIpAddress";
 
             client.IntegrationRuntimeNodes.GetIpAddress(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, "YANZHANG-02");
+        }
+
+        private void CaptureIntegrationRuntimes_GrantPermission()
+        {
+            ServiceClientTracing.IsEnabled = false;
+            IntegrationRuntimeResource origIntegrationRuntime = client.IntegrationRuntimes.Get(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName);
+            Factory LinkedFactory = client.Factories.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName + "-linked",
+                new Factory
+                {
+                    Identity = new FactoryIdentity(),
+                    Location = secrets.FactoryLocation
+                });
+
+            Task.Delay(TimeSpan.FromSeconds(30)).Wait();
+
+            // Create role assignment
+            authClient.RoleAssignments.Create(
+                origIntegrationRuntime.Id,
+                roleAssignmentName,
+                new RoleAssignmentCreateParameters()
+                {
+                    // Contributor
+                    RoleDefinitionId =
+                        "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                    PrincipalId = LinkedFactory.Identity.PrincipalId.Value.ToString()
+                });
+
+            ServiceClientTracing.IsEnabled = true;
+        }
+
+        private void CaptureIntegrationRuntimes_RevokePermission()
+        {
+            ServiceClientTracing.IsEnabled = false;
+            Factory LinkedFactory = client.Factories.Get(secrets.ResourceGroupName, secrets.FactoryName + "-linked");
+            IntegrationRuntimeResource origIntegrationRuntime = client.IntegrationRuntimes.Get(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName);
+
+            authClient.RoleAssignments.Delete(origIntegrationRuntime.Id, roleAssignmentName);
+
+            client.Factories.Delete(secrets.ResourceGroupName, secrets.FactoryName + "-linked");
+            ServiceClientTracing.IsEnabled = true;
+        }
+
+        private void CaptureIntegrationRuntimes_CreateLinkedIntegrationRuntime()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_CreateLinkedIntegrationRuntime";
+
+            ServiceClientTracing.IsEnabled = false;
+            IntegrationRuntimeResource resource = client.IntegrationRuntimes.Get(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName);
+
+            ServiceClientTracing.IsEnabled = true;
+            IntegrationRuntimeResource resource2 = client.IntegrationRuntimes.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName + "-linked", integrationRuntimeName + "-linked",
+                GetIntegrationRuntimeResource(type: "Linked", description: "A Linked integration runtime", resourceId: resource.Id));
+        }
+
+        private void CaptureIntegrationRuntimes_GetLinkedIntegrationRuntime()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_GetLinkedIntegrationRuntime";
+            IntegrationRuntimeResource resource = client.IntegrationRuntimes.Get(secrets.ResourceGroupName, secrets.FactoryName + "-linked", integrationRuntimeName + "-linked");
+        }
+
+        private void CaptureIntegrationRuntimes_GetStatusLinkedIntegrationRuntime()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_GetStatusLinkedIntegrationRuntime";
+            IntegrationRuntimeStatusResponse response = client.IntegrationRuntimes.GetStatus(secrets.ResourceGroupName, secrets.FactoryName + "-linked", integrationRuntimeName + "-linked");
+        }
+
+        private void CaptureIntegrationRuntimes_UpdateLinkedIntegrationRuntime()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_UpdateLinkedIntegrationRuntime";
+
+            IntegrationRuntimeResource resource2 = client.IntegrationRuntimes.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName + "-linked", integrationRuntimeName + "-linked",
+                GetIntegrationRuntimeResource(type: "Linked", description: "A Linked integration runtime"));
+        }
+
+        private void CaptureIntegrationRuntimes_DeleteLinkedIntegrationRuntime()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_DeleteLinkedIntegrationRuntime";
+            try
+            {
+                client.IntegrationRuntimes.Delete(secrets.ResourceGroupName, secrets.FactoryName + "-linked", integrationRuntimeName + "-linked");
+            }
+            catch (Exception e)
+            {
+            }
+        }
+
+        private void CaptureIntegrationRuntimes_RemoveLinks()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_RemoveLinks";
+            try
+            {
+                client.IntegrationRuntimes.RemoveLinks(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, new LinkedIntegrationRuntimeRequest(secrets.FactoryName + "-linked"));
+            }
+            catch (Exception e)
+            {
+            }
         }
 
         private LinkedServiceResource GetLinkedServiceResource(string description)
@@ -534,6 +670,7 @@ namespace DataFactory.Tests.Utils
             CopyActivity copyActivity = new CopyActivity
             {
                 Name = "ExampleCopyActivity",
+                DataIntegrationUnits = 32,
                 Inputs = new List<DatasetReference>
                             {
                                 new DatasetReference
@@ -615,15 +752,15 @@ namespace DataFactory.Tests.Utils
                 { "OutputBlobNameList",  outputBlobNameArray }
             };
 
-            CreateRunResponse rtr = client.Pipelines.CreateRun(secrets.ResourceGroupName, secrets.FactoryName, pipelineName, arguments);
+            CreateRunResponse rtr = client.Pipelines.CreateRun(secrets.ResourceGroupName, secrets.FactoryName, pipelineName, parameters: arguments);
             return rtr.RunId;
         }
 
-        private void CaptureFactories_CancelRun()
+        private void CapturePipelineRuns_Cancel()
         {
             string runId = this.CapturePipelines_CreateRun();
-            interceptor.CurrentExampleName = "Factories_CancelPipelineRun";
-            client.Factories.CancelPipelineRun(secrets.ResourceGroupName, secrets.FactoryName, runId);
+            interceptor.CurrentExampleName = "PipelineRuns_Cancel";
+            client.PipelineRuns.Cancel(secrets.ResourceGroupName, secrets.FactoryName, runId);
         }
 
         private void CapturePipelines_Delete()
@@ -632,22 +769,22 @@ namespace DataFactory.Tests.Utils
             client.Pipelines.Delete(secrets.ResourceGroupName, secrets.FactoryName, pipelineName);
         }
 
-        private void CapturePipelineRuns_ListByFactory(string runId, DateTime lastUpdatedAfter, DateTime lastUpdatedBefore)
+        private void CapturePipelineRuns_QueryByFactory(string runId, DateTime lastUpdatedAfter, DateTime lastUpdatedBefore)
         {
             // Assumes run will be on first page if found, which is currently true.
-            interceptor.CurrentExampleName = "PipelineRuns_ListByFactory";
-            PipelineRunQueryResponse response;
+            interceptor.CurrentExampleName = "PipelineRuns_QueryByFactory";
+            PipelineRunsQueryResponse response;
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
             do
             {
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
 
-                response = client.PipelineRuns.QueryByFactory(secrets.ResourceGroupName, secrets.FactoryName, new PipelineRunFilterParameters
+                response = client.PipelineRuns.QueryByFactory(secrets.ResourceGroupName, secrets.FactoryName, new RunFilterParameters
                 {
-                    Filters = new List<PipelineRunQueryFilter>
+                    Filters = new List<RunQueryFilter>
                     {
-                        new PipelineRunQueryFilter(PipelineRunQueryFilterOperand.PipelineName, PipelineRunQueryFilterOperator.Equals, new List<string> { pipelineName })
+                        new RunQueryFilter(RunQueryFilterOperand.PipelineName, RunQueryFilterOperator.Equals, new List<string> { pipelineName })
                     },
                     LastUpdatedAfter = lastUpdatedAfter,
                     LastUpdatedBefore = lastUpdatedBefore
@@ -672,20 +809,24 @@ namespace DataFactory.Tests.Utils
             PipelineRun run = client.PipelineRuns.Get(secrets.ResourceGroupName, secrets.FactoryName, runId);
         }
 
-        private void CaptureActivityRuns_ListByPipelineRun(string runId, DateTime startTime, DateTime endTime)
+        private void CaptureActivityRuns_QueryByPipelineRun(string runId, DateTime lastUpdatedAfter, DateTime lastUpdatedBefore)
         {
             // Assumes activity runs are on first page if found, which is currently true
-            interceptor.CurrentExampleName = "ActivityRuns_ListByPipelineRun";
-            IPage<ActivityRun> response;
+            interceptor.CurrentExampleName = "ActivityRuns_QueryByPipelineRun";
+            ActivityRunsQueryResponse response;
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
             do
             {
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-                response = client.ActivityRuns.ListByPipelineRun(secrets.ResourceGroupName, secrets.FactoryName, runId, startTime, endTime);
+                response = client.ActivityRuns.QueryByPipelineRun(secrets.ResourceGroupName, secrets.FactoryName, runId, new RunFilterParameters
+                {
+                    LastUpdatedAfter = lastUpdatedAfter,
+                    LastUpdatedBefore = lastUpdatedBefore
+                });
                 if (response != null)
                 {
-                    foreach (ActivityRun item in response)
+                    foreach (ActivityRun item in response.Value)
                     {
                         if (item.Status == "Succeeded")
                         {
@@ -694,7 +835,7 @@ namespace DataFactory.Tests.Utils
                     }
                 }
             } while (sw.Elapsed.TotalMinutes <= 3);
-            throw new TimeoutException("CaptureActivityRuns_ListByPipelineRun didn't finish in 3 minutes, should take about 1");
+            throw new TimeoutException("ActivityRuns_QueryByPipelineRun didn't finish in 3 minutes, should take about 1");
         }
 
         private TriggerResource GetTriggerResource(string description)
@@ -810,37 +951,47 @@ namespace DataFactory.Tests.Utils
             client.Triggers.Stop(secrets.ResourceGroupName, secrets.FactoryName, triggerName);
         }
 
-        private void CaptureTriggers_ListRuns()
+        private void CaptureTriggerRuns_QueryByFactory(DateTime lastUpdatedAfter, DateTime lastUpdatedBefore)
         {
-            interceptor.CurrentExampleName = "Triggers_ListRuns";
+            interceptor.CurrentExampleName = "TriggerRuns_QueryByFactory";
 
             //Wait for the Trigger to Run
             System.Threading.Thread.Sleep(TimeSpan.FromMinutes(6));
 
-            IPage<TriggerRun> response = client.Triggers.ListRuns(secrets.ResourceGroupName, secrets.FactoryName, triggerName, DateTime.UtcNow.AddMinutes(-10), DateTime.UtcNow.AddMinutes(10));
+            TriggerRunsQueryResponse response = client.TriggerRuns.QueryByFactory(secrets.ResourceGroupName, secrets.FactoryName, new RunFilterParameters
+            {
+                Filters = new List<RunQueryFilter>
+                    {
+                        new RunQueryFilter("TriggerName", RunQueryFilterOperator.Equals, new List<string> { triggerName })
+                    },
+                LastUpdatedAfter = lastUpdatedAfter,
+                LastUpdatedBefore = lastUpdatedBefore
+            });
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
             do
             {
-                if (response != null && response.Count() > 0)
+                if (response != null && response.Value.Count > 0)
                 {
                     return; // found successful run
                 }
 
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(30));
 
-                if (response.NextPageLink != null)
+                response = client.TriggerRuns.QueryByFactory(secrets.ResourceGroupName, secrets.FactoryName, new RunFilterParameters
                 {
-                    response = client.Triggers.ListRunsNext(response.NextPageLink);
-                }
-                else
-                {
-                    response = client.Triggers.ListRuns(secrets.ResourceGroupName, secrets.FactoryName, triggerName, DateTime.UtcNow.AddMinutes(-20), DateTime.UtcNow.AddMinutes(20));
-                }
+                    Filters = new List<RunQueryFilter>
+                    {
+                        new RunQueryFilter("TriggerName", RunQueryFilterOperator.Equals, new List<string> { triggerName })
+                    },
+                    LastUpdatedAfter = lastUpdatedAfter,
+                    LastUpdatedBefore = lastUpdatedBefore,
+                    ContinuationToken = response.ContinuationToken
+                });
 
             } while (sw.Elapsed.TotalMinutes <= 3);
 
-            throw new TimeoutException("Triggers_ListRuns didn't finish in 5 minutes");
+            throw new TimeoutException("TriggerRuns_QueryByFactory didn't finish in 5 minutes");
         }
 
         private void CaptureTriggers_Delete()
@@ -852,7 +1003,7 @@ namespace DataFactory.Tests.Utils
         private void CaptureOperations_List()
         {
             interceptor.CurrentExampleName = "Operations_List";
-            OperationListResponse operations = client.Operations.List();
+            IPage<Operation> operations = client.Operations.List();
         }
 
     }

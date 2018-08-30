@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Compute.Tests
 {
-    public class VMScaleSetScenarioTests : VMScaleSetTestsBase
+    public class VMScaleSetScenarioTests : VMScaleSetVMTestsBase
     {
         /// <summary>
         /// Covers following Operations:
@@ -29,7 +29,6 @@ namespace Compute.Tests
         /// </summary>
         [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations")]
-        [Trait("Failure", "New Unable Match Http")]
         public void TestVMScaleSetScenarioOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -51,7 +50,7 @@ namespace Compute.Tests
         /// Delete VMScaleSet
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks")]
         public void TestVMScaleSetScenarioOperations_ManagedDisks_PirImage()
         {
@@ -64,14 +63,14 @@ namespace Compute.Tests
         /// <summary>
         /// To record this test case, you need to run it again zone supported regions like eastus2euap.
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_SingleZone")]
         public void TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_SingleZone()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
                 using (MockContext context = MockContext.Start(this.GetType().FullName))
                 {
                     TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1" });
@@ -86,17 +85,22 @@ namespace Compute.Tests
         /// <summary>
         /// To record this test case, you need to run it again zone supported regions like eastus2euap.
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_Zones")]
         public void TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_Zones()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
                 using (MockContext context = MockContext.Start(this.GetType().FullName))
                 {
-                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1", "3" });
+                    TestScaleSetOperationsInternal(
+                        context, 
+                        hasManagedDisks: true, 
+                        useVmssExtension: false, 
+                        zones: new List<string> { "1", "3" }, 
+                        osDiskSizeInGB: 175);
                 }
             }
             finally
@@ -105,7 +109,8 @@ namespace Compute.Tests
             }
         }
 
-        private void TestScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false, bool useVmssExtension = true, IList<string> zones = null)
+        private void TestScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false, bool useVmssExtension = true, 
+            IList<string> zones = null, int? osDiskSizeInGB = null)
         {
             EnsureClientsInitialized(context);
 
@@ -139,7 +144,8 @@ namespace Compute.Tests
                     useVmssExtension ? extensionProfile : null,
                     (vmScaleSet) => { vmScaleSet.Overprovision = true; },
                     createWithManagedDisks: hasManagedDisks,
-                    zones: zones);
+                    zones: zones,
+                    osDiskSizeInGB: osDiskSizeInGB);
 
                 ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks);
 
@@ -153,6 +159,22 @@ namespace Compute.Tests
                 var listSkusResponse = m_CrpClient.VirtualMachineScaleSets.ListSkus(rgName, vmssName);
                 Assert.NotNull(listSkusResponse);
                 Assert.False(listSkusResponse.Count() == 0);
+
+                if (zones != null)
+                {
+                    var query = new Microsoft.Rest.Azure.OData.ODataQuery<VirtualMachineScaleSetVM>();
+                    query.SetFilter(vm => vm.LatestModelApplied == true);
+                    var listVMsResponse = m_CrpClient.VirtualMachineScaleSetVMs.List(rgName, vmssName, query);
+                    Assert.False(listVMsResponse == null, "VMScaleSetVMs not returned");
+                    Assert.True(listVMsResponse.Count() == inputVMScaleSet.Sku.Capacity);
+
+                    foreach (var vmScaleSetVM in listVMsResponse)
+                    {
+                        string instanceId = vmScaleSetVM.InstanceId;
+                        var getVMResponse = m_CrpClient.VirtualMachineScaleSetVMs.Get(rgName, vmssName, instanceId);
+                        ValidateVMScaleSetVM(inputVMScaleSet, instanceId, getVMResponse, hasManagedDisks);
+                    }
+                }
 
                 m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
             }

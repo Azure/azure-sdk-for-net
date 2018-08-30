@@ -10,177 +10,424 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for VirtualMachineSizeTypes.
     /// </summary>
-    public static class VirtualMachineSizeTypes
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(VirtualMachineSizeTypesConverter))]
+    public struct VirtualMachineSizeTypes : System.IEquatable<VirtualMachineSizeTypes>
     {
-        public const string BasicA0 = "Basic_A0";
-        public const string BasicA1 = "Basic_A1";
-        public const string BasicA2 = "Basic_A2";
-        public const string BasicA3 = "Basic_A3";
-        public const string BasicA4 = "Basic_A4";
-        public const string StandardA0 = "Standard_A0";
-        public const string StandardA1 = "Standard_A1";
-        public const string StandardA2 = "Standard_A2";
-        public const string StandardA3 = "Standard_A3";
-        public const string StandardA4 = "Standard_A4";
-        public const string StandardA5 = "Standard_A5";
-        public const string StandardA6 = "Standard_A6";
-        public const string StandardA7 = "Standard_A7";
-        public const string StandardA8 = "Standard_A8";
-        public const string StandardA9 = "Standard_A9";
-        public const string StandardA10 = "Standard_A10";
-        public const string StandardA11 = "Standard_A11";
-        public const string StandardA1V2 = "Standard_A1_v2";
-        public const string StandardA2V2 = "Standard_A2_v2";
-        public const string StandardA4V2 = "Standard_A4_v2";
-        public const string StandardA8V2 = "Standard_A8_v2";
-        public const string StandardA2mV2 = "Standard_A2m_v2";
-        public const string StandardA4mV2 = "Standard_A4m_v2";
-        public const string StandardA8mV2 = "Standard_A8m_v2";
-        public const string StandardB1s = "Standard_B1s";
-        public const string StandardB1ms = "Standard_B1ms";
-        public const string StandardB2s = "Standard_B2s";
-        public const string StandardB2ms = "Standard_B2ms";
-        public const string StandardB4ms = "Standard_B4ms";
-        public const string StandardB8ms = "Standard_B8ms";
-        public const string StandardD1 = "Standard_D1";
-        public const string StandardD2 = "Standard_D2";
-        public const string StandardD3 = "Standard_D3";
-        public const string StandardD4 = "Standard_D4";
-        public const string StandardD11 = "Standard_D11";
-        public const string StandardD12 = "Standard_D12";
-        public const string StandardD13 = "Standard_D13";
-        public const string StandardD14 = "Standard_D14";
-        public const string StandardD1V2 = "Standard_D1_v2";
-        public const string StandardD2V2 = "Standard_D2_v2";
-        public const string StandardD3V2 = "Standard_D3_v2";
-        public const string StandardD4V2 = "Standard_D4_v2";
-        public const string StandardD5V2 = "Standard_D5_v2";
-        public const string StandardD2V3 = "Standard_D2_v3";
-        public const string StandardD4V3 = "Standard_D4_v3";
-        public const string StandardD8V3 = "Standard_D8_v3";
-        public const string StandardD16V3 = "Standard_D16_v3";
-        public const string StandardD32V3 = "Standard_D32_v3";
-        public const string StandardD64V3 = "Standard_D64_v3";
-        public const string StandardD2sV3 = "Standard_D2s_v3";
-        public const string StandardD4sV3 = "Standard_D4s_v3";
-        public const string StandardD8sV3 = "Standard_D8s_v3";
-        public const string StandardD16sV3 = "Standard_D16s_v3";
-        public const string StandardD32sV3 = "Standard_D32s_v3";
-        public const string StandardD64sV3 = "Standard_D64s_v3";
-        public const string StandardD11V2 = "Standard_D11_v2";
-        public const string StandardD12V2 = "Standard_D12_v2";
-        public const string StandardD13V2 = "Standard_D13_v2";
-        public const string StandardD14V2 = "Standard_D14_v2";
-        public const string StandardD15V2 = "Standard_D15_v2";
-        public const string StandardDS1 = "Standard_DS1";
-        public const string StandardDS2 = "Standard_DS2";
-        public const string StandardDS3 = "Standard_DS3";
-        public const string StandardDS4 = "Standard_DS4";
-        public const string StandardDS11 = "Standard_DS11";
-        public const string StandardDS12 = "Standard_DS12";
-        public const string StandardDS13 = "Standard_DS13";
-        public const string StandardDS14 = "Standard_DS14";
-        public const string StandardDS1V2 = "Standard_DS1_v2";
-        public const string StandardDS2V2 = "Standard_DS2_v2";
-        public const string StandardDS3V2 = "Standard_DS3_v2";
-        public const string StandardDS4V2 = "Standard_DS4_v2";
-        public const string StandardDS5V2 = "Standard_DS5_v2";
-        public const string StandardDS11V2 = "Standard_DS11_v2";
-        public const string StandardDS12V2 = "Standard_DS12_v2";
-        public const string StandardDS13V2 = "Standard_DS13_v2";
-        public const string StandardDS14V2 = "Standard_DS14_v2";
-        public const string StandardDS15V2 = "Standard_DS15_v2";
-        public const string StandardDS134V2 = "Standard_DS13-4_v2";
-        public const string StandardDS132V2 = "Standard_DS13-2_v2";
-        public const string StandardDS148V2 = "Standard_DS14-8_v2";
-        public const string StandardDS144V2 = "Standard_DS14-4_v2";
-        public const string StandardE2V3 = "Standard_E2_v3";
-        public const string StandardE4V3 = "Standard_E4_v3";
-        public const string StandardE8V3 = "Standard_E8_v3";
-        public const string StandardE16V3 = "Standard_E16_v3";
-        public const string StandardE32V3 = "Standard_E32_v3";
-        public const string StandardE64V3 = "Standard_E64_v3";
-        public const string StandardE2sV3 = "Standard_E2s_v3";
-        public const string StandardE4sV3 = "Standard_E4s_v3";
-        public const string StandardE8sV3 = "Standard_E8s_v3";
-        public const string StandardE16sV3 = "Standard_E16s_v3";
-        public const string StandardE32sV3 = "Standard_E32s_v3";
-        public const string StandardE64sV3 = "Standard_E64s_v3";
-        public const string StandardE3216V3 = "Standard_E32-16_v3";
-        public const string StandardE328sV3 = "Standard_E32-8s_v3";
-        public const string StandardE6432sV3 = "Standard_E64-32s_v3";
-        public const string StandardE6416sV3 = "Standard_E64-16s_v3";
-        public const string StandardF1 = "Standard_F1";
-        public const string StandardF2 = "Standard_F2";
-        public const string StandardF4 = "Standard_F4";
-        public const string StandardF8 = "Standard_F8";
-        public const string StandardF16 = "Standard_F16";
-        public const string StandardF1s = "Standard_F1s";
-        public const string StandardF2s = "Standard_F2s";
-        public const string StandardF4s = "Standard_F4s";
-        public const string StandardF8s = "Standard_F8s";
-        public const string StandardF16s = "Standard_F16s";
-        public const string StandardF2sV2 = "Standard_F2s_v2";
-        public const string StandardF4sV2 = "Standard_F4s_v2";
-        public const string StandardF8sV2 = "Standard_F8s_v2";
-        public const string StandardF16sV2 = "Standard_F16s_v2";
-        public const string StandardF32sV2 = "Standard_F32s_v2";
-        public const string StandardF64sV2 = "Standard_F64s_v2";
-        public const string StandardF72sV2 = "Standard_F72s_v2";
-        public const string StandardG1 = "Standard_G1";
-        public const string StandardG2 = "Standard_G2";
-        public const string StandardG3 = "Standard_G3";
-        public const string StandardG4 = "Standard_G4";
-        public const string StandardG5 = "Standard_G5";
-        public const string StandardGS1 = "Standard_GS1";
-        public const string StandardGS2 = "Standard_GS2";
-        public const string StandardGS3 = "Standard_GS3";
-        public const string StandardGS4 = "Standard_GS4";
-        public const string StandardGS5 = "Standard_GS5";
-        public const string StandardGS48 = "Standard_GS4-8";
-        public const string StandardGS44 = "Standard_GS4-4";
-        public const string StandardGS516 = "Standard_GS5-16";
-        public const string StandardGS58 = "Standard_GS5-8";
-        public const string StandardH8 = "Standard_H8";
-        public const string StandardH16 = "Standard_H16";
-        public const string StandardH8m = "Standard_H8m";
-        public const string StandardH16m = "Standard_H16m";
-        public const string StandardH16r = "Standard_H16r";
-        public const string StandardH16mr = "Standard_H16mr";
-        public const string StandardL4s = "Standard_L4s";
-        public const string StandardL8s = "Standard_L8s";
-        public const string StandardL16s = "Standard_L16s";
-        public const string StandardL32s = "Standard_L32s";
-        public const string StandardM64s = "Standard_M64s";
-        public const string StandardM64ms = "Standard_M64ms";
-        public const string StandardM128s = "Standard_M128s";
-        public const string StandardM128ms = "Standard_M128ms";
-        public const string StandardM6432ms = "Standard_M64-32ms";
-        public const string StandardM6416ms = "Standard_M64-16ms";
-        public const string StandardM12864ms = "Standard_M128-64ms";
-        public const string StandardM12832ms = "Standard_M128-32ms";
-        public const string StandardNC6 = "Standard_NC6";
-        public const string StandardNC12 = "Standard_NC12";
-        public const string StandardNC24 = "Standard_NC24";
-        public const string StandardNC24r = "Standard_NC24r";
-        public const string StandardNC6sV2 = "Standard_NC6s_v2";
-        public const string StandardNC12sV2 = "Standard_NC12s_v2";
-        public const string StandardNC24sV2 = "Standard_NC24s_v2";
-        public const string StandardNC24rsV2 = "Standard_NC24rs_v2";
-        public const string StandardNC6sV3 = "Standard_NC6s_v3";
-        public const string StandardNC12sV3 = "Standard_NC12s_v3";
-        public const string StandardNC24sV3 = "Standard_NC24s_v3";
-        public const string StandardNC24rsV3 = "Standard_NC24rs_v3";
-        public const string StandardND6s = "Standard_ND6s";
-        public const string StandardND12s = "Standard_ND12s";
-        public const string StandardND24s = "Standard_ND24s";
-        public const string StandardND24rs = "Standard_ND24rs";
-        public const string StandardNV6 = "Standard_NV6";
-        public const string StandardNV12 = "Standard_NV12";
-        public const string StandardNV24 = "Standard_NV24";
+        private VirtualMachineSizeTypes(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly VirtualMachineSizeTypes BasicA0 = "Basic_A0";
+
+        public static readonly VirtualMachineSizeTypes BasicA1 = "Basic_A1";
+
+        public static readonly VirtualMachineSizeTypes BasicA2 = "Basic_A2";
+
+        public static readonly VirtualMachineSizeTypes BasicA3 = "Basic_A3";
+
+        public static readonly VirtualMachineSizeTypes BasicA4 = "Basic_A4";
+
+        public static readonly VirtualMachineSizeTypes StandardA0 = "Standard_A0";
+
+        public static readonly VirtualMachineSizeTypes StandardA1 = "Standard_A1";
+
+        public static readonly VirtualMachineSizeTypes StandardA2 = "Standard_A2";
+
+        public static readonly VirtualMachineSizeTypes StandardA3 = "Standard_A3";
+
+        public static readonly VirtualMachineSizeTypes StandardA4 = "Standard_A4";
+
+        public static readonly VirtualMachineSizeTypes StandardA5 = "Standard_A5";
+
+        public static readonly VirtualMachineSizeTypes StandardA6 = "Standard_A6";
+
+        public static readonly VirtualMachineSizeTypes StandardA7 = "Standard_A7";
+
+        public static readonly VirtualMachineSizeTypes StandardA8 = "Standard_A8";
+
+        public static readonly VirtualMachineSizeTypes StandardA9 = "Standard_A9";
+
+        public static readonly VirtualMachineSizeTypes StandardA10 = "Standard_A10";
+
+        public static readonly VirtualMachineSizeTypes StandardA11 = "Standard_A11";
+
+        public static readonly VirtualMachineSizeTypes StandardA1V2 = "Standard_A1_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardA2V2 = "Standard_A2_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardA4V2 = "Standard_A4_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardA8V2 = "Standard_A8_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardA2mV2 = "Standard_A2m_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardA4mV2 = "Standard_A4m_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardA8mV2 = "Standard_A8m_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardB1s = "Standard_B1s";
+
+        public static readonly VirtualMachineSizeTypes StandardB1ms = "Standard_B1ms";
+
+        public static readonly VirtualMachineSizeTypes StandardB2s = "Standard_B2s";
+
+        public static readonly VirtualMachineSizeTypes StandardB2ms = "Standard_B2ms";
+
+        public static readonly VirtualMachineSizeTypes StandardB4ms = "Standard_B4ms";
+
+        public static readonly VirtualMachineSizeTypes StandardB8ms = "Standard_B8ms";
+
+        public static readonly VirtualMachineSizeTypes StandardD1 = "Standard_D1";
+
+        public static readonly VirtualMachineSizeTypes StandardD2 = "Standard_D2";
+
+        public static readonly VirtualMachineSizeTypes StandardD3 = "Standard_D3";
+
+        public static readonly VirtualMachineSizeTypes StandardD4 = "Standard_D4";
+
+        public static readonly VirtualMachineSizeTypes StandardD11 = "Standard_D11";
+
+        public static readonly VirtualMachineSizeTypes StandardD12 = "Standard_D12";
+
+        public static readonly VirtualMachineSizeTypes StandardD13 = "Standard_D13";
+
+        public static readonly VirtualMachineSizeTypes StandardD14 = "Standard_D14";
+
+        public static readonly VirtualMachineSizeTypes StandardD1V2 = "Standard_D1_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardD2V2 = "Standard_D2_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardD3V2 = "Standard_D3_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardD4V2 = "Standard_D4_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardD5V2 = "Standard_D5_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardD2V3 = "Standard_D2_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardD4V3 = "Standard_D4_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardD8V3 = "Standard_D8_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardD16V3 = "Standard_D16_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardD32V3 = "Standard_D32_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardD64V3 = "Standard_D64_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardD2sV3 = "Standard_D2s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardD4sV3 = "Standard_D4s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardD8sV3 = "Standard_D8s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardD16sV3 = "Standard_D16s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardD32sV3 = "Standard_D32s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardD64sV3 = "Standard_D64s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardD11V2 = "Standard_D11_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardD12V2 = "Standard_D12_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardD13V2 = "Standard_D13_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardD14V2 = "Standard_D14_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardD15V2 = "Standard_D15_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS1 = "Standard_DS1";
+
+        public static readonly VirtualMachineSizeTypes StandardDS2 = "Standard_DS2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS3 = "Standard_DS3";
+
+        public static readonly VirtualMachineSizeTypes StandardDS4 = "Standard_DS4";
+
+        public static readonly VirtualMachineSizeTypes StandardDS11 = "Standard_DS11";
+
+        public static readonly VirtualMachineSizeTypes StandardDS12 = "Standard_DS12";
+
+        public static readonly VirtualMachineSizeTypes StandardDS13 = "Standard_DS13";
+
+        public static readonly VirtualMachineSizeTypes StandardDS14 = "Standard_DS14";
+
+        public static readonly VirtualMachineSizeTypes StandardDS1V2 = "Standard_DS1_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS2V2 = "Standard_DS2_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS3V2 = "Standard_DS3_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS4V2 = "Standard_DS4_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS5V2 = "Standard_DS5_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS11V2 = "Standard_DS11_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS12V2 = "Standard_DS12_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS13V2 = "Standard_DS13_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS14V2 = "Standard_DS14_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS15V2 = "Standard_DS15_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS134V2 = "Standard_DS13-4_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS132V2 = "Standard_DS13-2_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS148V2 = "Standard_DS14-8_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardDS144V2 = "Standard_DS14-4_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardE2V3 = "Standard_E2_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE4V3 = "Standard_E4_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE8V3 = "Standard_E8_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE16V3 = "Standard_E16_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE32V3 = "Standard_E32_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE64V3 = "Standard_E64_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE2sV3 = "Standard_E2s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE4sV3 = "Standard_E4s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE8sV3 = "Standard_E8s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE16sV3 = "Standard_E16s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE32sV3 = "Standard_E32s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE64sV3 = "Standard_E64s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE3216V3 = "Standard_E32-16_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE328sV3 = "Standard_E32-8s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE6432sV3 = "Standard_E64-32s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardE6416sV3 = "Standard_E64-16s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardF1 = "Standard_F1";
+
+        public static readonly VirtualMachineSizeTypes StandardF2 = "Standard_F2";
+
+        public static readonly VirtualMachineSizeTypes StandardF4 = "Standard_F4";
+
+        public static readonly VirtualMachineSizeTypes StandardF8 = "Standard_F8";
+
+        public static readonly VirtualMachineSizeTypes StandardF16 = "Standard_F16";
+
+        public static readonly VirtualMachineSizeTypes StandardF1s = "Standard_F1s";
+
+        public static readonly VirtualMachineSizeTypes StandardF2s = "Standard_F2s";
+
+        public static readonly VirtualMachineSizeTypes StandardF4s = "Standard_F4s";
+
+        public static readonly VirtualMachineSizeTypes StandardF8s = "Standard_F8s";
+
+        public static readonly VirtualMachineSizeTypes StandardF16s = "Standard_F16s";
+
+        public static readonly VirtualMachineSizeTypes StandardF2sV2 = "Standard_F2s_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardF4sV2 = "Standard_F4s_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardF8sV2 = "Standard_F8s_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardF16sV2 = "Standard_F16s_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardF32sV2 = "Standard_F32s_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardF64sV2 = "Standard_F64s_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardF72sV2 = "Standard_F72s_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardG1 = "Standard_G1";
+
+        public static readonly VirtualMachineSizeTypes StandardG2 = "Standard_G2";
+
+        public static readonly VirtualMachineSizeTypes StandardG3 = "Standard_G3";
+
+        public static readonly VirtualMachineSizeTypes StandardG4 = "Standard_G4";
+
+        public static readonly VirtualMachineSizeTypes StandardG5 = "Standard_G5";
+
+        public static readonly VirtualMachineSizeTypes StandardGS1 = "Standard_GS1";
+
+        public static readonly VirtualMachineSizeTypes StandardGS2 = "Standard_GS2";
+
+        public static readonly VirtualMachineSizeTypes StandardGS3 = "Standard_GS3";
+
+        public static readonly VirtualMachineSizeTypes StandardGS4 = "Standard_GS4";
+
+        public static readonly VirtualMachineSizeTypes StandardGS5 = "Standard_GS5";
+
+        public static readonly VirtualMachineSizeTypes StandardGS48 = "Standard_GS4-8";
+
+        public static readonly VirtualMachineSizeTypes StandardGS44 = "Standard_GS4-4";
+
+        public static readonly VirtualMachineSizeTypes StandardGS516 = "Standard_GS5-16";
+
+        public static readonly VirtualMachineSizeTypes StandardGS58 = "Standard_GS5-8";
+
+        public static readonly VirtualMachineSizeTypes StandardH8 = "Standard_H8";
+
+        public static readonly VirtualMachineSizeTypes StandardH16 = "Standard_H16";
+
+        public static readonly VirtualMachineSizeTypes StandardH8m = "Standard_H8m";
+
+        public static readonly VirtualMachineSizeTypes StandardH16m = "Standard_H16m";
+
+        public static readonly VirtualMachineSizeTypes StandardH16r = "Standard_H16r";
+
+        public static readonly VirtualMachineSizeTypes StandardH16mr = "Standard_H16mr";
+
+        public static readonly VirtualMachineSizeTypes StandardL4s = "Standard_L4s";
+
+        public static readonly VirtualMachineSizeTypes StandardL8s = "Standard_L8s";
+
+        public static readonly VirtualMachineSizeTypes StandardL16s = "Standard_L16s";
+
+        public static readonly VirtualMachineSizeTypes StandardL32s = "Standard_L32s";
+
+        public static readonly VirtualMachineSizeTypes StandardM64s = "Standard_M64s";
+
+        public static readonly VirtualMachineSizeTypes StandardM64ms = "Standard_M64ms";
+
+        public static readonly VirtualMachineSizeTypes StandardM128s = "Standard_M128s";
+
+        public static readonly VirtualMachineSizeTypes StandardM128ms = "Standard_M128ms";
+
+        public static readonly VirtualMachineSizeTypes StandardM6432ms = "Standard_M64-32ms";
+
+        public static readonly VirtualMachineSizeTypes StandardM6416ms = "Standard_M64-16ms";
+
+        public static readonly VirtualMachineSizeTypes StandardM12864ms = "Standard_M128-64ms";
+
+        public static readonly VirtualMachineSizeTypes StandardM12832ms = "Standard_M128-32ms";
+
+        public static readonly VirtualMachineSizeTypes StandardNC6 = "Standard_NC6";
+
+        public static readonly VirtualMachineSizeTypes StandardNC12 = "Standard_NC12";
+
+        public static readonly VirtualMachineSizeTypes StandardNC24 = "Standard_NC24";
+
+        public static readonly VirtualMachineSizeTypes StandardNC24r = "Standard_NC24r";
+
+        public static readonly VirtualMachineSizeTypes StandardNC6sV2 = "Standard_NC6s_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardNC12sV2 = "Standard_NC12s_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardNC24sV2 = "Standard_NC24s_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardNC24rsV2 = "Standard_NC24rs_v2";
+
+        public static readonly VirtualMachineSizeTypes StandardNC6sV3 = "Standard_NC6s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardNC12sV3 = "Standard_NC12s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardNC24sV3 = "Standard_NC24s_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardNC24rsV3 = "Standard_NC24rs_v3";
+
+        public static readonly VirtualMachineSizeTypes StandardND6s = "Standard_ND6s";
+
+        public static readonly VirtualMachineSizeTypes StandardND12s = "Standard_ND12s";
+
+        public static readonly VirtualMachineSizeTypes StandardND24s = "Standard_ND24s";
+
+        public static readonly VirtualMachineSizeTypes StandardND24rs = "Standard_ND24rs";
+
+        public static readonly VirtualMachineSizeTypes StandardNV6 = "Standard_NV6";
+
+        public static readonly VirtualMachineSizeTypes StandardNV12 = "Standard_NV12";
+
+        public static readonly VirtualMachineSizeTypes StandardNV24 = "Standard_NV24";
+
+
+        /// <summary>
+        /// Underlying value of enum VirtualMachineSizeTypes
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for VirtualMachineSizeTypes
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type VirtualMachineSizeTypes
+        /// </summary>
+        public bool Equals(VirtualMachineSizeTypes e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to VirtualMachineSizeTypes
+        /// </summary>
+        public static implicit operator VirtualMachineSizeTypes(string value)
+        {
+            return new VirtualMachineSizeTypes(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert VirtualMachineSizeTypes to string
+        /// </summary>
+        public static implicit operator string(VirtualMachineSizeTypes e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum VirtualMachineSizeTypes
+        /// </summary>
+        public static bool operator == (VirtualMachineSizeTypes e1, VirtualMachineSizeTypes e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum VirtualMachineSizeTypes
+        /// </summary>
+        public static bool operator != (VirtualMachineSizeTypes e1, VirtualMachineSizeTypes e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for VirtualMachineSizeTypes
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is VirtualMachineSizeTypes && Equals((VirtualMachineSizeTypes)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode VirtualMachineSizeTypes
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

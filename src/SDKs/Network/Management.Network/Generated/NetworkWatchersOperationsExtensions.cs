@@ -533,7 +533,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log on a specified resource.
+            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -553,7 +554,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log on a specified resource.
+            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -579,7 +581,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Queries status of flow log on a specified resource.
+            /// Queries status of flow log and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -591,7 +594,8 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network watcher resource.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters that define a resource to query flow log status.
+            /// Parameters that define a resource to query flow log and traffic analytics
+            /// (optional)  status.
             /// </param>
             public static FlowLogInformation GetFlowLogStatus(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters)
             {
@@ -599,7 +603,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Queries status of flow log on a specified resource.
+            /// Queries status of flow log and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -611,7 +616,8 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network watcher resource.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters that define a resource to query flow log status.
+            /// Parameters that define a resource to query flow log and traffic analytics
+            /// (optional)  status.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -765,6 +771,52 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<AvailableProvidersList> ListAvailableProvidersAsync(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAvailableProvidersWithHttpMessagesAsync(resourceGroupName, networkWatcherName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get network configuration diagnostic.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to get network configuration diagnostic.
+            /// </param>
+            public static NetworkConfigurationDiagnosticResponse GetNetworkConfigurationDiagnostic(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, NetworkConfigurationDiagnosticParameters parameters)
+            {
+                return operations.GetNetworkConfigurationDiagnosticAsync(resourceGroupName, networkWatcherName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get network configuration diagnostic.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to get network configuration diagnostic.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NetworkConfigurationDiagnosticResponse> GetNetworkConfigurationDiagnosticAsync(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, NetworkConfigurationDiagnosticParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNetworkConfigurationDiagnosticWithHttpMessagesAsync(resourceGroupName, networkWatcherName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1040,7 +1092,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log on a specified resource.
+            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1060,7 +1113,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log on a specified resource.
+            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1086,7 +1140,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Queries status of flow log on a specified resource.
+            /// Queries status of flow log and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1098,7 +1153,8 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network watcher resource.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters that define a resource to query flow log status.
+            /// Parameters that define a resource to query flow log and traffic analytics
+            /// (optional)  status.
             /// </param>
             public static FlowLogInformation BeginGetFlowLogStatus(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters)
             {
@@ -1106,7 +1162,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Queries status of flow log on a specified resource.
+            /// Queries status of flow log and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1118,7 +1175,8 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network watcher resource.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters that define a resource to query flow log status.
+            /// Parameters that define a resource to query flow log and traffic analytics
+            /// (optional)  status.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1272,6 +1330,52 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<AvailableProvidersList> BeginListAvailableProvidersAsync(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginListAvailableProvidersWithHttpMessagesAsync(resourceGroupName, networkWatcherName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get network configuration diagnostic.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to get network configuration diagnostic.
+            /// </param>
+            public static NetworkConfigurationDiagnosticResponse BeginGetNetworkConfigurationDiagnostic(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, NetworkConfigurationDiagnosticParameters parameters)
+            {
+                return operations.BeginGetNetworkConfigurationDiagnosticAsync(resourceGroupName, networkWatcherName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get network configuration diagnostic.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to get network configuration diagnostic.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NetworkConfigurationDiagnosticResponse> BeginGetNetworkConfigurationDiagnosticAsync(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, NetworkConfigurationDiagnosticParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGetNetworkConfigurationDiagnosticWithHttpMessagesAsync(resourceGroupName, networkWatcherName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

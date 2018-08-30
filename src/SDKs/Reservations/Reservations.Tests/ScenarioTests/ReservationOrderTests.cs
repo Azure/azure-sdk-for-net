@@ -21,7 +21,7 @@ namespace Reservations.Tests.ScenarioTests
     {
         string ReservationOrderId = Common.ReservationOrderId;
 
-        public static void ValidateReservationOrder(ReservationOrderResponse ReservationOrder)
+        internal static void ValidateReservationOrder(ReservationOrderResponse ReservationOrder)
         {
             Assert.NotNull(ReservationOrder);
             Assert.NotNull(ReservationOrder.Etag);

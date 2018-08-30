@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
@@ -22,11 +23,10 @@ namespace Compute.Tests
         [Fact]
         public void TestDCOSOperations()
         {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                EnsureClientsInitialized(context);
-                m_location = "australiasoutheast"; // TODO: For now, APIs nly work in this region under BU endpoint
-
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix) + 1;
                 var csName = TestUtilities.GenerateName(ContainerServiceNamePrefix);
@@ -34,6 +34,9 @@ namespace Compute.Tests
                 var agentPoolDnsPrefixName = TestUtilities.GenerateName(AgentPoolProfileDnsPrefix);
                 try
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "australiasoutheast");
+                    EnsureClientsInitialized(context);
+
                     ContainerService inputContainerService;
                     var containerService = CreateContainerService_NoAsyncTracking(
                         rgName,
@@ -46,6 +49,7 @@ namespace Compute.Tests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
                     // of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
@@ -64,11 +68,9 @@ namespace Compute.Tests
         [Fact]
         public void TestSwarmOperations()
         {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                EnsureClientsInitialized(context);
-                m_location = "australiasoutheast"; // TODO: For now, APIs nly work in this region under BU endpoint
-
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix) + 1;
                 var csName = TestUtilities.GenerateName(ContainerServiceNamePrefix);
@@ -76,6 +78,9 @@ namespace Compute.Tests
                 var agentPoolDnsPrefixName = TestUtilities.GenerateName(AgentPoolProfileDnsPrefix);
                 try
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "australiasoutheast");
+                    EnsureClientsInitialized(context);
+
                     ContainerService inputContainerService;
                     var containerService = CreateContainerService_NoAsyncTracking(
                         rgName,
@@ -88,6 +93,7 @@ namespace Compute.Tests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
                     // of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rgName);

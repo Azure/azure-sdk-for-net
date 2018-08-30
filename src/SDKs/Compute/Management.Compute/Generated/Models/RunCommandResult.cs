@@ -10,16 +10,12 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// Run command operation response.
-    /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class RunCommandResult : OperationStatusResponse
+    public partial class RunCommandResult
     {
         /// <summary>
         /// Initializes a new instance of the RunCommandResult class.
@@ -32,16 +28,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the RunCommandResult class.
         /// </summary>
-        /// <param name="name">Operation ID</param>
-        /// <param name="status">Operation status</param>
-        /// <param name="startTime">Start time of the operation</param>
-        /// <param name="endTime">End time of the operation</param>
-        /// <param name="error">Api error</param>
-        /// <param name="output">Operation output data (raw JSON)</param>
-        public RunCommandResult(string name = default(string), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), ApiError error = default(ApiError), object output = default(object))
-            : base(name, status, startTime, endTime, error)
+        /// <param name="value">Run command operation response.</param>
+        public RunCommandResult(IList<InstanceViewStatus> value = default(IList<InstanceViewStatus>))
         {
-            Output = output;
+            Value = value;
             CustomInit();
         }
 
@@ -51,10 +41,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets operation output data (raw JSON)
+        /// Gets or sets run command operation response.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.output")]
-        public object Output { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<InstanceViewStatus> Value { get; set; }
 
     }
 }

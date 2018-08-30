@@ -6,7 +6,7 @@
     <PackageId>AnalysisServices.Tests</PackageId>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

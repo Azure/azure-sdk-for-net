@@ -33,10 +33,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the ScaleSettings class.
         /// </summary>
-        /// <param name="manual">The scale for the cluster by manual
-        /// settings</param>
-        /// <param name="autoScale">The scale for the cluster by autoscale
-        /// settings</param>
+        /// <param name="manual">Manual scale settings.</param>
+        /// <param name="autoScale">Auto-scale settings.</param>
         public ScaleSettings(ManualScaleSettings manual = default(ManualScaleSettings), AutoScaleSettings autoScale = default(AutoScaleSettings))
         {
             Manual = manual;
@@ -50,14 +48,20 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the scale for the cluster by manual settings
+        /// Gets or sets manual scale settings.
         /// </summary>
+        /// <remarks>
+        /// Manual scale settings for the cluster.
+        /// </remarks>
         [JsonProperty(PropertyName = "manual")]
         public ManualScaleSettings Manual { get; set; }
 
         /// <summary>
-        /// Gets or sets the scale for the cluster by autoscale settings
+        /// Gets or sets auto-scale settings.
         /// </summary>
+        /// <remarks>
+        /// Auto-scale settings for the cluster.
+        /// </remarks>
         [JsonProperty(PropertyName = "autoScale")]
         public AutoScaleSettings AutoScale { get; set; }
 

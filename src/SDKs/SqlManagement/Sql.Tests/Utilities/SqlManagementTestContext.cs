@@ -66,6 +66,12 @@ namespace Sql.Tests
             return resourceGroup;
         }
 
+        public void DeleteResourceGroup(string resourceGroupName)
+        {
+            ResourceManagementClient resourceClient = GetClient<ResourceManagementClient>();
+            resourceClient.ResourceGroups.BeginDelete(resourceGroupName);
+        }
+
         public Server CreateServer(ResourceGroup resourceGroup)
         {
             return CreateServer(resourceGroup, TestEnvironmentUtilities.DefaultLocation);
@@ -91,6 +97,35 @@ namespace Sql.Tests
             SqlManagementTestUtilities.ValidateServer(v12Server, serverName, SqlManagementTestUtilities.DefaultLogin, version12, tags, location);
 
             return v12Server;
+        }
+
+        public ManagedInstance CreateManagedInstance(ResourceGroup resourceGroup)
+        {
+            return CreateManagedInstance(resourceGroup, TestEnvironmentUtilities.DefaultLocationId);
+        }
+
+        public ManagedInstance CreateManagedInstance(ResourceGroup resourceGroup, string location)
+        {
+            SqlManagementClient sqlClient = GetClient<SqlManagementClient>();
+
+            string miName = "crud-tests-" + SqlManagementTestUtilities.GenerateName();
+            Dictionary<string, string> tags = new Dictionary<string, string>();
+            string subnetId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/RG_MIPlayground/providers/Microsoft.Network/virtualNetworks/VNET_MIPlayground/subnets/MISubnet";
+            Microsoft.Azure.Management.Sql.Models.Sku sku = new Microsoft.Azure.Management.Sql.Models.Sku(name: "CLS3", tier: "Standard");
+
+            var managedInstance = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, miName, new ManagedInstance()
+            {
+                AdministratorLogin = SqlManagementTestUtilities.DefaultLogin,
+                AdministratorLoginPassword = SqlManagementTestUtilities.DefaultPassword,
+                Sku = sku,
+                SubnetId = subnetId,
+                Tags = tags,
+                Location = location,
+            });
+
+            SqlManagementTestUtilities.ValidateManagedInstance(managedInstance, miName, SqlManagementTestUtilities.DefaultLogin, tags, location);
+
+            return managedInstance;
         }
 
         protected virtual void Dispose(bool disposing)

@@ -1,11 +1,20 @@
-2018-01-22 18:16:54 UTC
-
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/Face/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\FaceTeam\AutoRest\forks\azure-sdk-for-net\src\SDKs
+2018-08-03 02:36:07 UTC
 1) azure-rest-api-specs repository information
-GitHub user: Azure
-Branch:      current
-Commit:      3b71b39f879fb9f67a9f52b8d03353d0ef898d27
+GitHub fork: Azure
+Branch:      master
+Commit:      f9e6a10aabe3278244edb0760fbb97ab4a1d96b7
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\siqliu\AppData\Roaming\npm `-- autorest@2.0.4238  
+Bootstrapper version:    autorest@2.0.4283
+
+
 Latest installed version:    
+
+

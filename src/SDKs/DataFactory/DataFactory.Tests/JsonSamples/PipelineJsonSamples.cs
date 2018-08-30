@@ -3122,7 +3122,7 @@ namespace DataFactory.Tests.JsonSamples
                   },
                   enableSkipIncompatibleRow: true,
                   parallelCopies: 32,
-                  cloudDataMovementUnits: 16,
+                  dataIntegrationUnits: 16,
                   enableSkipIncompatibleRow: true,
                   redirectIncompatibleRowSettings: {
                       linkedServiceName: {
@@ -3287,5 +3287,78 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
-	}
+        [JsonSample(version: "Copy")]
+        public const string UserProperties = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyBlobToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""BlobSource""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""BlobDataset1"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset2"", type: ""DatasetReference""
+                    }
+                ],
+                ""userProperties"": [
+                    {
+                        ""name"": ""File"",
+                        ""value"": ""@item().File""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string EmptyUserProperties = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyBlobToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""BlobSource""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""BlobDataset1"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset2"", type: ""DatasetReference""
+                    }
+                ],
+                ""userProperties"": [ ]
+            }
+        ]
+    }
+}";
+
+    }
 }

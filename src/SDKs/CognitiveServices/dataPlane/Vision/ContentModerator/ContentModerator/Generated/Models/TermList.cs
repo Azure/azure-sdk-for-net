@@ -7,6 +7,8 @@
 namespace Microsoft.CognitiveServices.ContentModerator.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,7 +31,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <param name="name">Term list name.</param>
         /// <param name="description">Description for term list.</param>
         /// <param name="metadata">Term list metadata.</param>
-        public TermList(int? id = default(int?), string name = default(string), string description = default(string), TermListMetadata metadata = default(TermListMetadata))
+        public TermList(int? id = default(int?), string name = default(string), string description = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
@@ -65,7 +67,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// Gets or sets term list metadata.
         /// </summary>
         [JsonProperty(PropertyName = "Metadata")]
-        public TermListMetadata Metadata { get; set; }
+        public IDictionary<string, string> Metadata { get; set; }
 
     }
 }

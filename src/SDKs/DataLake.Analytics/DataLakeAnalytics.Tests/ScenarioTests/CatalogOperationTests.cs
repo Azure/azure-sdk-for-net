@@ -115,6 +115,22 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(tableListResponse.Count() >= 1);
                     Assert.True(tableListResponse.ElementAt(0).ColumnList == null || tableListResponse.ElementAt(0).ColumnList.Count() == 0);
 
+                    // Get preview of the specific table
+                    var tablePreviewGetResponse = 
+                        clientToUse.Catalog.PreviewTable(
+                            commonData.SecondDataLakeAnalyticsAccountName,
+                            commonData.DatabaseName, 
+                            CommonTestFixture.SchemaName, 
+                            commonData.TableName 
+                        );
+
+                    Assert.True(tablePreviewGetResponse.TotalRowCount > 0);
+                    Assert.True(tablePreviewGetResponse.TotalColumnCount > 0);
+                    Assert.True(tablePreviewGetResponse.Rows != null && tablePreviewGetResponse.Rows.Count() > 0);
+                    Assert.True(tablePreviewGetResponse.Schema != null && tablePreviewGetResponse.Schema.Count() > 0);
+                    Assert.NotNull(tablePreviewGetResponse.Schema[0].Name);
+                    Assert.NotNull(tablePreviewGetResponse.Schema[0].Type);
+
                     // Get the specific table as well
                     var tableGetResponse = 
                         clientToUse.Catalog.GetTable(
@@ -234,6 +250,23 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(partitionList.Count() >= 1);
 
                     var specificPartition = partitionList.First();
+
+                    // Get preview of the specific partition
+                    var partitionPreviewGetResponse = 
+                        clientToUse.Catalog.PreviewTablePartition(
+                            commonData.SecondDataLakeAnalyticsAccountName,
+                            commonData.DatabaseName, 
+                            CommonTestFixture.SchemaName, 
+                            commonData.TableName, 
+                            specificPartition.Name
+                        );
+
+                    Assert.True(partitionPreviewGetResponse.TotalRowCount > 0);
+                    Assert.True(partitionPreviewGetResponse.TotalColumnCount > 0);
+                    Assert.True(partitionPreviewGetResponse.Rows != null && partitionPreviewGetResponse.Rows.Count() > 0);
+                    Assert.True(partitionPreviewGetResponse.Schema != null && partitionPreviewGetResponse.Schema.Count() > 0);
+                    Assert.NotNull(tablePreviewGetResponse.Schema[0].Name);
+                    Assert.NotNull(tablePreviewGetResponse.Schema[0].Type);
                     
                     // Get the specific partition as well
                     var partitionGetResponse = 
@@ -246,6 +279,18 @@ namespace DataLakeAnalytics.Tests
                         );
 
                     Assert.Equal(specificPartition.Name, partitionGetResponse.Name);
+
+                    // Get the fragment list
+                    var fragmentList =
+                        clientToUse.Catalog.ListTableFragments(
+                            commonData.SecondDataLakeAnalyticsAccountName,
+                            commonData.DatabaseName,
+                            CommonTestFixture.SchemaName,
+                            commonData.TableName
+                        );
+
+                    Assert.NotNull(fragmentList);
+                    Assert.NotEmpty(fragmentList);
 
                     // Get all the types
                     var typeGetResponse = 

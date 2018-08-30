@@ -54,8 +54,17 @@ namespace Microsoft.Azure.Management.Automation
         /// Get a single software update configuration Run by Id.
         /// <see href="http://aka.ms/azureautomationsdk/softwareupdateconfigurationrunoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
         /// <param name='softwareUpdateConfigurationRunId'>
         /// The Id of the software update configuration run.
+        /// </param>
+        /// <param name='clientRequestId'>
+        /// Identifies this specific client request.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -63,7 +72,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -78,26 +87,34 @@ namespace Microsoft.Azure.Management.Automation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SoftwareUpdateConfigurationRun>> GetByIdWithHttpMessagesAsync(System.Guid softwareUpdateConfigurationRunId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SoftwareUpdateConfigurationRun>> GetByIdWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, System.Guid softwareUpdateConfigurationRunId, string clientRequestId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.ResourceGroupName != null)
+            if (resourceGroupName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.ResourceGroupName, "^[-\\w\\._]+$"))
+                if (resourceGroupName.Length > 90)
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.ResourceGroupName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
                 }
             }
-            if (Client.AutomationAccountName == null)
+            if (automationAccountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AutomationAccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "automationAccountName");
             }
             string apiVersion = "2017-05-15-preview";
             // Tracing
@@ -107,8 +124,11 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("automationAccountName", automationAccountName);
                 tracingParameters.Add("softwareUpdateConfigurationRunId", softwareUpdateConfigurationRunId);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetById", tracingParameters);
             }
@@ -116,8 +136,8 @@ namespace Microsoft.Azure.Management.Automation
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns/{softwareUpdateConfigurationRunId}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(Client.AutomationAccountName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(automationAccountName));
             _url = _url.Replace("{softwareUpdateConfigurationRunId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(softwareUpdateConfigurationRunId, Client.SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -138,13 +158,13 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
-            if (Client.ClientRequestId != null)
+            if (clientRequestId != null)
             {
                 if (_httpRequest.Headers.Contains("clientRequestId"))
                 {
                     _httpRequest.Headers.Remove("clientRequestId");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("clientRequestId", Client.ClientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("clientRequestId", clientRequestId);
             }
             if (Client.AcceptLanguage != null)
             {
@@ -190,16 +210,15 @@ namespace Microsoft.Azure.Management.Automation
             System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -209,10 +228,6 @@ namespace Microsoft.Azure.Management.Automation
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -261,6 +276,15 @@ namespace Microsoft.Azure.Management.Automation
         /// Return list of software update configuration runs
         /// <see href="http://aka.ms/azureautomationsdk/softwareupdateconfigurationoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='clientRequestId'>
+        /// Identifies this specific client request.
+        /// </param>
         /// <param name='filter'>
         /// The filter to apply on the operation. You can use the following filters:
         /// 'properties/osType', 'properties/status', 'properties/startTime', and
@@ -278,7 +302,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -293,26 +317,34 @@ namespace Microsoft.Azure.Management.Automation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SoftwareUpdateConfigurationRunListResult>> ListWithHttpMessagesAsync(string filter = default(string), string skip = default(string), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SoftwareUpdateConfigurationRunListResult>> ListWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string clientRequestId = default(string), string filter = default(string), string skip = default(string), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.ResourceGroupName != null)
+            if (resourceGroupName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.ResourceGroupName, "^[-\\w\\._]+$"))
+                if (resourceGroupName.Length > 90)
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.ResourceGroupName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
                 }
             }
-            if (Client.AutomationAccountName == null)
+            if (automationAccountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AutomationAccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "automationAccountName");
             }
             string apiVersion = "2017-05-15-preview";
             // Tracing
@@ -322,7 +354,10 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("automationAccountName", automationAccountName);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("skip", skip);
                 tracingParameters.Add("top", top);
@@ -333,8 +368,8 @@ namespace Microsoft.Azure.Management.Automation
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(Client.AutomationAccountName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(automationAccountName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -366,13 +401,13 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
-            if (Client.ClientRequestId != null)
+            if (clientRequestId != null)
             {
                 if (_httpRequest.Headers.Contains("clientRequestId"))
                 {
                     _httpRequest.Headers.Remove("clientRequestId");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("clientRequestId", Client.ClientRequestId);
+                _httpRequest.Headers.TryAddWithoutValidation("clientRequestId", clientRequestId);
             }
             if (Client.AcceptLanguage != null)
             {
@@ -418,16 +453,15 @@ namespace Microsoft.Azure.Management.Automation
             System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -437,10 +471,6 @@ namespace Microsoft.Azure.Management.Automation
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);

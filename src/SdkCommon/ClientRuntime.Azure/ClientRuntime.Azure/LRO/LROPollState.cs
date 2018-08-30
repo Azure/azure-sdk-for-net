@@ -11,6 +11,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
@@ -46,7 +47,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 
         internal string LastSerializationExceptionMessage { get; set; }
 
-        internal LROPollState(HttpOperationResponse<TResourceBody, TRequestHeaders> response, IAzureClient client) : base(response, client.LongRunningOperationRetryTimeout)
+        internal LROPollState(HttpOperationResponse<TResourceBody, TRequestHeaders> response, IAzureClient client) 
+            : base(response, client.LongRunningOperationRetryTimeout)
         {
             SdkClient = client;
             InitialResponse = response;
@@ -57,32 +59,27 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 
         internal async Task Poll(Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken)
-        {
+        {   
             await UpdateResourceFromPollingUri(customHeaders, cancellationToken);
 
             #region Error response returned while polling on AsyncOperationHeader
-            string errorMessage = string.Empty;
-            string errorCode = string.Empty;
-
             if (AsyncOperationResponseBody?.Error != null)
             {
+                this.Error = AsyncOperationResponseBody?.Error;
+                
+                // We do this to surface service error message as CloudException message.
+                // this allows the message to be surfaced to Exception.Message, rather than user trying to discover the real message
+                // from Exception.Body.Message (Body is CloudError)
                 if (AsyncOperationResponseBody?.Error?.Message == null)
                 {
-                    errorMessage = string.Format(CultureInfo.InvariantCulture, Resources.LongRunningOperationFailed, AsyncOperationResponseBody.Status);
+                    this.Error.Message = string.Format(CultureInfo.InvariantCulture, Resources.LongRunningOperationFailed, AsyncOperationResponseBody.Status);
                 }
                 else
                 {
-                    errorMessage = string.Format(CultureInfo.InvariantCulture, Resources.LROOperationFailedAdditionalInfo, AsyncOperationResponseBody.Status, AsyncOperationResponseBody.Error?.Message);
-                    errorCode = AsyncOperationResponseBody.Error.Code;
+                    this.Error.Message = string.Format(CultureInfo.InvariantCulture, Resources.LROOperationFailedAdditionalInfo, AsyncOperationResponseBody.Status, AsyncOperationResponseBody.Error?.Message);
                 }
 
-                this.Error = new CloudError()
-                {
-                    Code = errorCode,
-                    Message = errorMessage
-                };
-
-                this.CloudException = new CloudException(errorMessage)
+                this.CloudException = new CloudException(this.Error.Message)
                 {
                     Body = AsyncOperationResponseBody?.Error,
                     Request = new HttpRequestMessageWrapper(this.Request, null),
@@ -133,24 +130,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             return deserializedData;
         }
 
-        internal string GetProvisioningState()
-        {
-            string provisionState = string.Empty;
-            if (this.RawBody != null &&
-                   this.RawBody["properties"] != null &&
-                   this.RawBody["properties"]["provisioningState"] != null)
-            {
-                provisionState = (string)this.RawBody["properties"]["provisioningState"];
-            }
-
-            return provisionState;
-        }
-
         /// <summary>
         /// Gets a resource from the specified URL.
         /// </summary>
-        /// <param name="client">IAzureClient</param>
-        /// <param name="operationUrl">URL of the resource.</param>
         /// <param name="customHeaders">Headers that will be added to request</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns></returns>
@@ -206,6 +188,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 ServiceClientTracing.SendRequest(invocationId, httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
+
             HttpResponseMessage httpResponse = await SdkClient.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             if (shouldTrace)
             {

@@ -1,7 +1,7 @@
     {
       "Name": "SubtaskInformation",
       "ProtocolName": "Models.SubtaskInformation",
-      "Comment": "Information about an Azure Batch subtask.",
+      "SummaryComment": "Information about an Azure Batch subtask.",
       "IsConstructorPublic": false,
       "Properties": [
         {

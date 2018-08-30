@@ -39,10 +39,16 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// 'Updates'</param>
         /// <param name="excludedKbNumbers">KB numbers excluded from the
         /// software update configuration.</param>
-        public WindowsProperties(string includedUpdateClassifications = default(string), IList<string> excludedKbNumbers = default(IList<string>))
+        /// <param name="includedKbNumbers">KB numbers included from the
+        /// software update configuration.</param>
+        /// <param name="rebootSetting">Reboot setting for the software update
+        /// configuration.</param>
+        public WindowsProperties(string includedUpdateClassifications = default(string), IList<string> excludedKbNumbers = default(IList<string>), IList<string> includedKbNumbers = default(IList<string>), string rebootSetting = default(string))
         {
             IncludedUpdateClassifications = includedUpdateClassifications;
             ExcludedKbNumbers = excludedKbNumbers;
+            IncludedKbNumbers = includedKbNumbers;
+            RebootSetting = rebootSetting;
             CustomInit();
         }
 
@@ -67,6 +73,19 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "excludedKbNumbers")]
         public IList<string> ExcludedKbNumbers { get; set; }
+
+        /// <summary>
+        /// Gets or sets KB numbers included from the software update
+        /// configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "includedKbNumbers")]
+        public IList<string> IncludedKbNumbers { get; set; }
+
+        /// <summary>
+        /// Gets or sets reboot setting for the software update configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "rebootSetting")]
+        public string RebootSetting { get; set; }
 
     }
 }

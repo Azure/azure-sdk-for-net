@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.Network.Models
     {
         public const string IkeV2 = "IkeV2";
         public const string SSTP = "SSTP";
+        public const string OpenVPN = "OpenVPN";
     }
 }

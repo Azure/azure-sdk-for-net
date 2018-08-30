@@ -78,8 +78,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
 
             /// <summary>
-            /// Delete an existing person from a person group. Persisted face images of the
-            /// person will also be deleted.
+            /// Delete an existing person from a person group. All stored person data, and
+            /// face features in the person entry will be deleted.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
 
             /// <summary>
-            /// Delete a face from a person. Relative image for the persisted face will
+            /// Delete a face from a person. Relative feature for the persisted face will
             /// also be deleted.
             /// </summary>
             /// <param name='operations'>
@@ -239,6 +239,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// Id referencing a particular person.
             /// </param>
             /// <param name='url'>
+            /// Publicly reachable URL of an image
             /// </param>
             /// <param name='userData'>
             /// User-specified data about the face for any purpose. The maximum length is
@@ -254,9 +255,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PersistedFace> AddPersonFaceFromUrlAsync(this IPersonGroupPerson operations, string personGroupId, System.Guid personId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PersistedFace> AddFaceFromUrlAsync(this IPersonGroupPerson operations, string personGroupId, System.Guid personId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddPersonFaceFromUrlWithHttpMessagesAsync(personGroupId, personId, url, userData, targetFace, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddFaceFromUrlWithHttpMessagesAsync(personGroupId, personId, url, userData, targetFace, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -292,9 +293,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PersistedFace> AddPersonFaceFromStreamAsync(this IPersonGroupPerson operations, string personGroupId, System.Guid personId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PersistedFace> AddFaceFromStreamAsync(this IPersonGroupPerson operations, string personGroupId, System.Guid personId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddPersonFaceFromStreamWithHttpMessagesAsync(personGroupId, personId, image, userData, targetFace, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddFaceFromStreamWithHttpMessagesAsync(personGroupId, personId, image, userData, targetFace, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

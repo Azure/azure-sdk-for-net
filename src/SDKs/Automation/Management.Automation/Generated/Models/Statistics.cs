@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// statistic.</param>
         /// <param name="endTime">Gets the endTime of the statistic.</param>
         /// <param name="id">Gets the id.</param>
-        public Statistics(string counterProperty = default(string), long? counterValue = default(long?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string id = default(string))
+        public Statistics(string counterProperty = default(string), long? counterValue = default(long?), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string id = default(string))
         {
             CounterProperty = counterProperty;
             CounterValue = counterValue;
@@ -67,13 +67,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets the startTime of the statistic.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
-        public System.DateTime? StartTime { get; private set; }
+        public System.DateTimeOffset StartTime { get; private set; }
 
         /// <summary>
         /// Gets the endTime of the statistic.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
-        public System.DateTime? EndTime { get; private set; }
+        public System.DateTimeOffset? EndTime { get; private set; }
 
         /// <summary>
         /// Gets the id.

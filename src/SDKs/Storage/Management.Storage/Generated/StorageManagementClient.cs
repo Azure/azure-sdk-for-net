@@ -47,31 +47,30 @@ namespace Microsoft.Azure.Management.Storage
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify the Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -91,9 +90,14 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
 
         /// <summary>
-        /// Gets the IUsageOperations.
+        /// Gets the IUsagesOperations.
         /// </summary>
-        public virtual IUsageOperations Usage { get; private set; }
+        public virtual IUsagesOperations Usages { get; private set; }
+
+        /// <summary>
+        /// Gets the IBlobContainersOperations.
+        /// </summary>
+        public virtual IBlobContainersOperations BlobContainers { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the StorageManagementClient class.
@@ -299,9 +303,10 @@ namespace Microsoft.Azure.Management.Storage
             Operations = new Operations(this);
             Skus = new SkusOperations(this);
             StorageAccounts = new StorageAccountsOperations(this);
-            Usage = new UsageOperations(this);
+            Usages = new UsagesOperations(this);
+            BlobContainers = new BlobContainersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-10-01";
+            ApiVersion = "2018-03-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

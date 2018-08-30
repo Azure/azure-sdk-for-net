@@ -1,7 +1,7 @@
 {
   "Name": "OSDisk",
   "ProtocolName": "Models.OSDisk",
-  "Comment": "Settings for the operating system disk of the virtual machine.",
+  "SummaryComment": "Settings for the operating system disk of the virtual machine.",
   "IsConstructorPublic": true,
   "Properties": [
     {
@@ -9,7 +9,7 @@
         "Type": "Common.CachingType?",
         "Name": "Caching",
         "SummaryComment": "The type of caching to enable for the OS disk.",
-        "RemarksComment": null,
+        "RemarksComment": "If omitted, the default is <see cref=\"Common.CachingType.ReadWrite\" />.",
         "BoundAccess": "read",
         "UnboundAccess": "read,write",
         "ConstructorArgumentType": "Optional",

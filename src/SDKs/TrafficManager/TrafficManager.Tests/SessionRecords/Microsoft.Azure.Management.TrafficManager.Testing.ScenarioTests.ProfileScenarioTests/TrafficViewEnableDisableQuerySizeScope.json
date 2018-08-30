@@ -1,0 +1,599 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourcegroups/azuresdkpersistentheatmapdata?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlZ3JvdXBzL2F6dXJlc2RrcGVyc2lzdGVudGhlYXRtYXBkYXRhP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "32"
+        ],
+        "x-ms-client-request-id": [
+          "bf48ca36-b8d6-4265-8bba-b574cebacb7e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata\",\r\n  \"name\": \"azuresdkpersistentheatmapdata\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "214"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 17 Jul 2018 23:44:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "b16d6420-d53c-40d5-8735-be2bd032b149"
+        ],
+        "x-ms-correlation-request-id": [
+          "b16d6420-d53c-40d5-8735-be2bd032b149"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180717T234428Z:b16d6420-d53c-40d5-8735-be2bd032b149"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficmanagerprofiles/persistentHeatMap?api-version=2018-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrcGVyc2lzdGVudGhlYXRtYXBkYXRhL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL3BlcnNpc3RlbnRIZWF0TWFwP2FwaS12ZXJzaW9uPTIwMTgtMDQtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"persistentHeatMap\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"protocol\": \"http\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\"\r\n    },\r\n    \"trafficViewEnrollmentStatus\": \"Disabled\"\r\n  },\r\n  \"location\": \"global\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "376"
+        ],
+        "x-ms-client-request-id": [
+          "d59fc7aa-a753-4a2c-b0f7-a92044942996"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.5.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficManagerProfiles/persistentHeatMap\",\r\n  \"name\": \"persistentHeatMap\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"location\": \"global\",\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"persistentheatmap\",\r\n      \"fqdn\": \"persistentheatmap.trafficmanager.net\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": \"Inactive\",\r\n      \"protocol\": \"HTTP\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\",\r\n      \"intervalInSeconds\": 30,\r\n      \"toleratedNumberOfFailures\": 3,\r\n      \"timeoutInSeconds\": 10\r\n    },\r\n    \"endpoints\": [],\r\n    \"trafficViewEnrollmentStatus\": \"Disabled\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "698"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Jul 2018 23:44:30 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "d59fc7aa-a753-4a2c-b0f7-a92044942996"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "10799"
+        ],
+        "x-ms-correlation-request-id": [
+          "c0588813-cc46-4ba4-b848-3a1288670ced"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180717T234430Z:c0588813-cc46-4ba4-b848-3a1288670ced"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficmanagerprofiles/persistentHeatMap?api-version=2018-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrcGVyc2lzdGVudGhlYXRtYXBkYXRhL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL3BlcnNpc3RlbnRIZWF0TWFwP2FwaS12ZXJzaW9uPTIwMTgtMDQtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"persistentheatmap\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": \"CheckingEndpoints\",\r\n      \"protocol\": \"HTTP\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\",\r\n      \"intervalInSeconds\": 30,\r\n      \"timeoutInSeconds\": 10,\r\n      \"toleratedNumberOfFailures\": 3\r\n    },\r\n    \"trafficViewEnrollmentStatus\": \"Enabled\"\r\n  },\r\n  \"tags\": {},\r\n  \"location\": \"global\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "544"
+        ],
+        "x-ms-client-request-id": [
+          "fb85a8d9-ddc3-41e3-88a0-756ba9d936b9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.5.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficManagerProfiles/persistentHeatMap\",\r\n  \"name\": \"persistentHeatMap\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"location\": \"global\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"persistentheatmap\",\r\n      \"fqdn\": \"persistentheatmap.trafficmanager.net\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": \"Inactive\",\r\n      \"protocol\": \"HTTP\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\",\r\n      \"intervalInSeconds\": 30,\r\n      \"toleratedNumberOfFailures\": 3,\r\n      \"timeoutInSeconds\": 10\r\n    },\r\n    \"endpoints\": [],\r\n    \"trafficViewEnrollmentStatus\": \"Enabled\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Jul 2018 23:44:54 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "fb85a8d9-ddc3-41e3-88a0-756ba9d936b9"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "10797"
+        ],
+        "x-ms-correlation-request-id": [
+          "d126c48c-1a2d-438e-a369-20a1299aeea6"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180717T234454Z:d126c48c-1a2d-438e-a369-20a1299aeea6"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficmanagerprofiles/persistentHeatMap/ExternalEndpoints/My%20external%20endpoint?api-version=2018-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrcGVyc2lzdGVudGhlYXRtYXBkYXRhL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL3BlcnNpc3RlbnRIZWF0TWFwL0V4dGVybmFsRW5kcG9pbnRzL015JTIwZXh0ZXJuYWwlMjBlbmRwb2ludD9hcGktdmVyc2lvbj0yMDE4LTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"target\": \"foobar.contoso.com\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointLocation\": \"North Europe\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "139"
+        ],
+        "x-ms-client-request-id": [
+          "4917fcb7-20a1-4e45-9b19-bc519182b4b9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.5.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficManagerProfiles/persistentHeatMap/externalEndpoints/My external endpoint\",\r\n  \"name\": \"My external endpoint\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n    \"target\": \"foobar.contoso.com\",\r\n    \"weight\": 1,\r\n    \"priority\": 1,\r\n    \"endpointLocation\": \"North Europe\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "496"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Jul 2018 23:44:31 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "4917fcb7-20a1-4e45-9b19-bc519182b4b9"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "6416839b-56f4-43da-acd1-5b0786e7b899"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180717T234431Z:6416839b-56f4-43da-acd1-5b0786e7b899"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficmanagerprofiles/persistentHeatMap?api-version=2018-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrcGVyc2lzdGVudGhlYXRtYXBkYXRhL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL3BlcnNpc3RlbnRIZWF0TWFwP2FwaS12ZXJzaW9uPTIwMTgtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "16d34462-0e13-423f-9d8a-776c72cdccde"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.5.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficManagerProfiles/persistentHeatMap\",\r\n  \"name\": \"persistentHeatMap\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"location\": \"global\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"persistentheatmap\",\r\n      \"fqdn\": \"persistentheatmap.trafficmanager.net\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": \"CheckingEndpoints\",\r\n      \"protocol\": \"HTTP\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\",\r\n      \"intervalInSeconds\": 30,\r\n      \"toleratedNumberOfFailures\": 3,\r\n      \"timeoutInSeconds\": 10\r\n    },\r\n    \"endpoints\": [\r\n      {\r\n        \"id\": \"/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficManagerProfiles/persistentHeatMap/externalEndpoints/My external endpoint\",\r\n        \"name\": \"My external endpoint\",\r\n        \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n        \"properties\": {\r\n          \"endpointStatus\": \"Enabled\",\r\n          \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n          \"target\": \"foobar.contoso.com\",\r\n          \"weight\": 1,\r\n          \"priority\": 1,\r\n          \"endpointLocation\": \"North Europe\"\r\n        }\r\n      }\r\n    ],\r\n    \"trafficViewEnrollmentStatus\": \"Disabled\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Jul 2018 23:44:31 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "16d34462-0e13-423f-9d8a-776c72cdccde"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "10799"
+        ],
+        "x-ms-correlation-request-id": [
+          "a432302b-aaeb-41ec-91f5-60b1b2f4a6c9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180717T234432Z:a432302b-aaeb-41ec-91f5-60b1b2f4a6c9"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficmanagerprofiles/persistentHeatMap/heatMaps/default?api-version=2018-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrcGVyc2lzdGVudGhlYXRtYXBkYXRhL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL3BlcnNpc3RlbnRIZWF0TWFwL2hlYXRNYXBzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAxOC0wNC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5fd91138-a08f-4370-8848-3144a3d18e4d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.5.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"NotAuthorized\",\r\n  \"message\": \"Unable to access Profile HeatMap. Please register for 'Traffic View'. See if 'trafficViewEnrollmentStatus' is 'Enabled' in your profile.\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "173"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Connection": [
+          "close"
+        ],
+        "Date": [
+          "Tue, 17 Jul 2018 23:44:53 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "5fd91138-a08f-4370-8848-3144a3d18e4d"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-failure-cause": [
+          "service"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "599"
+        ],
+        "x-ms-correlation-request-id": [
+          "b6d8e634-3857-4106-8359-0a27c2b37c4e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180717T234453Z:b6d8e634-3857-4106-8359-0a27c2b37c4e"
+        ]
+      },
+      "StatusCode": 502
+    },
+    {
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficmanagerprofiles/persistentHeatMap/heatMaps/default?api-version=2018-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrcGVyc2lzdGVudGhlYXRtYXBkYXRhL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL3BlcnNpc3RlbnRIZWF0TWFwL2hlYXRNYXBzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAxOC0wNC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "841130d1-5ced-41d0-bb5f-950361ad704b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.5.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficManagerProfiles/persistentHeatMap/heatMaps/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/heatMaps\",\r\n  \"properties\": {\r\n    \"endTime\": \"2018-07-14T22:00:00Z\",\r\n    \"endpoints\": [\r\n      {\r\n        \"endpointId\": 0,\r\n        \"resourceId\": \"/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficManagerProfiles/persistentheatmap/externalEndpoints/my external endpoint\"\r\n      }\r\n    ],\r\n    \"startTime\": \"2018-07-07T22:00:00Z\",\r\n    \"trafficFlows\": [\r\n      {\r\n        \"latitude\": 41.59,\r\n        \"longitude\": -93.616,\r\n        \"queryExperiences\": [\r\n          {\r\n            \"endpointId\": 0,\r\n            \"queryCount\": 4\r\n          }\r\n        ],\r\n        \"sourceIp\": \"52.176.43.64\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Jul 2018 23:44:54 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "841130d1-5ced-41d0-bb5f-950361ad704b"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "599"
+        ],
+        "x-ms-correlation-request-id": [
+          "18a38992-796c-4dd0-99e6-d5c03061e4af"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180717T234455Z:18a38992-796c-4dd0-99e6-d5c03061e4af"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficmanagerprofiles/persistentHeatMap/heatMaps/default?topLeft=41.69%2C-93.716&botRight=41.49%2C-93.516&api-version=2018-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrcGVyc2lzdGVudGhlYXRtYXBkYXRhL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL3BlcnNpc3RlbnRIZWF0TWFwL2hlYXRNYXBzL2RlZmF1bHQ/dG9wTGVmdD00MS42OSUyQy05My43MTYmYm90UmlnaHQ9NDEuNDklMkMtOTMuNTE2JmFwaS12ZXJzaW9uPTIwMTgtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d62f7549-430b-401d-8cf3-48a6224c3efd"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.5.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficManagerProfiles/persistentHeatMap/heatMaps/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/heatMaps\",\r\n  \"properties\": {\r\n    \"endTime\": \"2018-07-14T22:00:00Z\",\r\n    \"endpoints\": [\r\n      {\r\n        \"endpointId\": 0,\r\n        \"resourceId\": \"/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficManagerProfiles/persistentheatmap/externalEndpoints/my external endpoint\"\r\n      }\r\n    ],\r\n    \"startTime\": \"2018-07-07T22:00:00Z\",\r\n    \"trafficFlows\": [\r\n      {\r\n        \"latitude\": 41.59,\r\n        \"longitude\": -93.616,\r\n        \"queryExperiences\": [\r\n          {\r\n            \"endpointId\": 0,\r\n            \"queryCount\": 4\r\n          }\r\n        ],\r\n        \"sourceIp\": \"52.176.43.64\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Jul 2018 23:44:55 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "d62f7549-430b-401d-8cf3-48a6224c3efd"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "598"
+        ],
+        "x-ms-correlation-request-id": [
+          "273cdd28-62f0-4b01-9144-4a5a5c35d5f7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180717T234455Z:273cdd28-62f0-4b01-9144-4a5a5c35d5f7"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficmanagerprofiles/persistentHeatMap/heatMaps/default?topLeft=41.69%2C-93.716&botRight=41.64%2C-93.666&api-version=2018-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTYyMDdhNWQtNDc0Ni00YTJkLTlmN2YtYzVhYzc3YTVkZGZkL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrcGVyc2lzdGVudGhlYXRtYXBkYXRhL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL3BlcnNpc3RlbnRIZWF0TWFwL2hlYXRNYXBzL2RlZmF1bHQ/dG9wTGVmdD00MS42OSUyQy05My43MTYmYm90UmlnaHQ9NDEuNjQlMkMtOTMuNjY2JmFwaS12ZXJzaW9uPTIwMTgtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4e3e4f88-f713-4b6d-a563-61a18f24d704"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.5.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficManagerProfiles/persistentHeatMap/heatMaps/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/heatMaps\",\r\n  \"properties\": {\r\n    \"endTime\": \"2018-07-14T22:00:00Z\",\r\n    \"endpoints\": [\r\n      {\r\n        \"endpointId\": 0,\r\n        \"resourceId\": \"/subscriptions/56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd/resourceGroups/azuresdkpersistentheatmapdata/providers/Microsoft.Network/trafficManagerProfiles/persistentheatmap/externalEndpoints/my external endpoint\"\r\n      }\r\n    ],\r\n    \"startTime\": \"2018-07-07T22:00:00Z\",\r\n    \"trafficFlows\": []\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 17 Jul 2018 23:44:55 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "4e3e4f88-f713-4b6d-a563-61a18f24d704"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "597"
+        ],
+        "x-ms-correlation-request-id": [
+          "822a1fe4-2f58-490a-b29c-bb7637dab1ad"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180717T234455Z:822a1fe4-2f58-490a-b29c-bb7637dab1ad"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "56207a5d-4746-4a2d-9f7f-c5ac77a5ddfd"
+  }
+}

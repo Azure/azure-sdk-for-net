@@ -74,9 +74,19 @@ namespace Microsoft.Azure.Management.BatchAI
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IClustersOperations.
+        /// Gets the IUsagesOperations.
         /// </summary>
-        IClustersOperations Clusters { get; }
+        IUsagesOperations Usages { get; }
+
+        /// <summary>
+        /// Gets the IWorkspacesOperations.
+        /// </summary>
+        IWorkspacesOperations Workspaces { get; }
+
+        /// <summary>
+        /// Gets the IExperimentsOperations.
+        /// </summary>
+        IExperimentsOperations Experiments { get; }
 
         /// <summary>
         /// Gets the IJobsOperations.
@@ -87,6 +97,11 @@ namespace Microsoft.Azure.Management.BatchAI
         /// Gets the IFileServersOperations.
         /// </summary>
         IFileServersOperations FileServers { get; }
+
+        /// <summary>
+        /// Gets the IClustersOperations.
+        /// </summary>
+        IClustersOperations Clusters { get; }
 
     }
 }

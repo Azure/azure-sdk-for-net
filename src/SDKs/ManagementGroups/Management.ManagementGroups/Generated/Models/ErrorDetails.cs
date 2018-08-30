@@ -33,10 +33,13 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// codes.</param>
         /// <param name="message">A human-readable representation of the
         /// error.</param>
-        public ErrorDetails(string code = default(string), string message = default(string))
+        /// <param name="details">A human-readable representation of the
+        /// error's details.</param>
+        public ErrorDetails(string code = default(string), string message = default(string), string details = default(string))
         {
             Code = code;
             Message = message;
+            Details = details;
             CustomInit();
         }
 
@@ -56,6 +59,13 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
+
+        /// <summary>
+        /// Gets or sets a human-readable representation of the error's
+        /// details.
+        /// </summary>
+        [JsonProperty(PropertyName = "details")]
+        public string Details { get; set; }
 
     }
 }

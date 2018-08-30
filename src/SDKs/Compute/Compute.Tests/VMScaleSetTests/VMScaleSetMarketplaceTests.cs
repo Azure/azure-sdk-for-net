@@ -23,7 +23,7 @@ namespace Compute.Tests
             return m_CrpClient.VirtualMachineImages.Get(m_location, vmmPublisherName, vmmOfferName, vmmSku, imageRef.Version);
         }
 
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public void TestVMScaleSetMarketplace()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

@@ -14,7 +14,7 @@ namespace EventHub.Tests.ScenarioTests
     using Xunit;
     public partial class ScenarioTests
     {
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public void NamespaceCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -31,10 +31,6 @@ namespace EventHub.Tests.ScenarioTests
                 }
 
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
-
-                var operationsResponse = EventHubManagementClient.Operations.List();
-
-                var checkNameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(new CheckNameAvailabilityParameter() { Name = namespaceName });
 
                 var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
                     new EHNamespace()
@@ -73,14 +69,14 @@ namespace EventHub.Tests.ScenarioTests
                 var getAllNamespacesResponse = EventHubManagementClient.Namespaces.ListByResourceGroupAsync(resourceGroup).Result;
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
-                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
                 Assert.True(getAllNamespacesResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
                 // Get all namespaces created within the subscription irrespective of the resourceGroup
                 getAllNamespacesResponse = EventHubManagementClient.Namespaces.List();
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
-                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
 
                 // Update namespace tags and make the namespace critical
                 var updateNamespaceParameter = new EHNamespace()
@@ -104,11 +100,11 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(namespaceName, getNamespaceResponse.Name);
-                Assert.Equal(getNamespaceResponse.Tags.Count, 2);
+                Assert.Equal(2, getNamespaceResponse.Tags.Count);
                 foreach (var tag in updateNamespaceParameter.Tags)
                 {
-                    Assert.True(getNamespaceResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
-                    Assert.True(getNamespaceResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
+                    Assert.Contains(getNamespaceResponse.Tags, t => t.Key.Equals(tag.Key));
+                    Assert.Contains(getNamespaceResponse.Tags, t => t.Value.Equals(tag.Value));
                 }
                 TestUtilities.Wait(TimeSpan.FromSeconds(10));
                 // Delete namespace

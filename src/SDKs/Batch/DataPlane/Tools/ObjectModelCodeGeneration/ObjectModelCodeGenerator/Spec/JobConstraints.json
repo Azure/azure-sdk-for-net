@@ -1,7 +1,7 @@
     {
       "Name": "JobConstraints",
       "ProtocolName": "Models.JobConstraints",
-      "Comment": "Specifies the execution constraints for a job.",
+      "SummaryComment": "Specifies the execution constraints for a job.",
       "Properties": [
         {
           "Key": {

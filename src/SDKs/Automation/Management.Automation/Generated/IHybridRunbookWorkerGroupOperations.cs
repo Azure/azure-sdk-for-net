@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Automation
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -27,8 +28,11 @@ namespace Microsoft.Azure.Management.Automation
         /// Delete a hybrid runbook worker group.
         /// <see href="http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// Automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='hybridRunbookWorkerGroupName'>
         /// The hybrid runbook worker group name
@@ -45,13 +49,16 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string automationAccountName, string hybridRunbookWorkerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a hybrid runbook worker group.
         /// <see href="http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='hybridRunbookWorkerGroupName'>
         /// The hybrid runbook worker group name
@@ -71,13 +78,16 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<HybridRunbookWorkerGroup>> GetWithHttpMessagesAsync(string automationAccountName, string hybridRunbookWorkerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<HybridRunbookWorkerGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update a hybrid runbook worker group.
         /// <see href="http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='hybridRunbookWorkerGroupName'>
         /// The hybrid runbook worker group name
@@ -100,13 +110,19 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<HybridRunbookWorkerGroup>> UpdateWithHttpMessagesAsync(string automationAccountName, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<HybridRunbookWorkerGroup>> UpdateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of hybrid runbook worker groups.
         /// <see href="http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -123,7 +139,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<HybridRunbookWorkerGroup>>> ListByAutomationAccountWithHttpMessagesAsync(string automationAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<HybridRunbookWorkerGroup>>> ListByAutomationAccountWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, ODataQuery<HybridRunbookWorkerGroup> odataQuery = default(ODataQuery<HybridRunbookWorkerGroup>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of hybrid runbook worker groups.
         /// <see href="http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations" />

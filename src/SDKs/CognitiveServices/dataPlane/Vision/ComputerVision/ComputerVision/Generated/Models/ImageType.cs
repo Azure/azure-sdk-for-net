@@ -34,7 +34,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// art.</param>
         /// <param name="lineDrawingType">Confidence level that the image is a
         /// line drawing.</param>
-        public ImageType(double? clipArtType = default(double?), double? lineDrawingType = default(double?))
+        public ImageType(int clipArtType = default(int), int lineDrawingType = default(int))
         {
             ClipArtType = clipArtType;
             LineDrawingType = lineDrawingType;
@@ -50,13 +50,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Gets or sets confidence level that the image is a clip art.
         /// </summary>
         [JsonProperty(PropertyName = "clipArtType")]
-        public double? ClipArtType { get; set; }
+        public int ClipArtType { get; set; }
 
         /// <summary>
         /// Gets or sets confidence level that the image is a line drawing.
         /// </summary>
         [JsonProperty(PropertyName = "lineDrawingType")]
-        public double? LineDrawingType { get; set; }
+        public int LineDrawingType { get; set; }
 
     }
 }

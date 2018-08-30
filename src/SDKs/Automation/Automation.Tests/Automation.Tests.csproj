@@ -8,8 +8,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-    <TestProjectType>true</TestProjectType>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

@@ -22,14 +22,18 @@ namespace Microsoft.Azure.Management.Automation
     public static partial class TestJobStreamsOperationsExtensions
     {
             /// <summary>
-            /// Retrieve a test job streams identified by runbook name and stream id.
+            /// Retrieve a test job stream of the test job identified by runbook name and
+            /// stream id.
             /// <see href="http://aka.ms/azureautomationsdk/jobstreamoperations" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -37,20 +41,24 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='jobStreamId'>
             /// The job stream id.
             /// </param>
-            public static JobStream Get(this ITestJobStreamsOperations operations, string automationAccountName, string runbookName, string jobStreamId)
+            public static JobStream Get(this ITestJobStreamsOperations operations, string resourceGroupName, string automationAccountName, string runbookName, string jobStreamId)
             {
-                return operations.GetAsync(automationAccountName, runbookName, jobStreamId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, automationAccountName, runbookName, jobStreamId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Retrieve a test job streams identified by runbook name and stream id.
+            /// Retrieve a test job stream of the test job identified by runbook name and
+            /// stream id.
             /// <see href="http://aka.ms/azureautomationsdk/jobstreamoperations" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -61,9 +69,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobStream> GetAsync(this ITestJobStreamsOperations operations, string automationAccountName, string runbookName, string jobStreamId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobStream> GetAsync(this ITestJobStreamsOperations operations, string resourceGroupName, string automationAccountName, string runbookName, string jobStreamId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(automationAccountName, runbookName, jobStreamId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, jobStreamId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -76,8 +84,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -85,9 +96,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static IPage<JobStream> ListByTestJob(this ITestJobStreamsOperations operations, string automationAccountName, string runbookName, string filter = default(string))
+            public static IPage<JobStream> ListByTestJob(this ITestJobStreamsOperations operations, string resourceGroupName, string automationAccountName, string runbookName, string filter = default(string))
             {
-                return operations.ListByTestJobAsync(automationAccountName, runbookName, filter).GetAwaiter().GetResult();
+                return operations.ListByTestJobAsync(resourceGroupName, automationAccountName, runbookName, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -97,8 +108,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -109,9 +123,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobStream>> ListByTestJobAsync(this ITestJobStreamsOperations operations, string automationAccountName, string runbookName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobStream>> ListByTestJobAsync(this ITestJobStreamsOperations operations, string resourceGroupName, string automationAccountName, string runbookName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByTestJobWithHttpMessagesAsync(automationAccountName, runbookName, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByTestJobWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

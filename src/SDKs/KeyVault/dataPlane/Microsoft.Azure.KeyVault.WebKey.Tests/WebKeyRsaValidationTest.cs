@@ -27,7 +27,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         {
             byte[] plainText = null;
 
-#if NET452
+#if FullNetFx
             if ( key is RSACryptoServiceProvider )
             {
                 plainText = ( ( RSACryptoServiceProvider )key ).Decrypt( cipherText, true );
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             {
                 throw new CryptographicException( string.Format( "{0} is not supported", key.GetType().FullName ) );
             }
-#elif NETCOREAPP11
+#elif NETCOREAPP20
             plainText = key.Decrypt(cipherText, RSAEncryptionPadding.OaepSHA1);
 #else
 #error Unknown Build Flavor            
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         {
             byte[] cipherText = null;
 
-#if NET452
+#if FullNetFx
             if ( key is RSACryptoServiceProvider )
             {
                 cipherText = ( ( RSACryptoServiceProvider )key ).Encrypt( _plainText, true );
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             {
                 throw new CryptographicException( string.Format( "{0} is not supported", key.GetType().FullName ) );
             }
-#elif NETCOREAPP11
+#elif NETCOREAPP20
             cipherText = key.Encrypt( _plainText, RSAEncryptionPadding.OaepSHA1 );
 #else
             #error Unknown Build Flavor            
@@ -184,56 +184,6 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             SetParameter( key, paramName, padded );
         }
 
-        [Fact(Skip = "Fails on NETCore on differnt platforms. The reason is still unknown, but likely a test bug.")]
-        public void ExcessBitMustThrowException()
-        {
-            foreach ( var ordinary in GetOrdinaryTestKeys().Values )
-            {
-                foreach ( var paramName in _rsaFields )
-                {
-                    var excessBitKey = JsonConvert.DeserializeObject<JsonWebKey>( ordinary );
-                    AddExcessBitOnParameter( excessBitKey, paramName );
-                    if ( paramName == "E" || paramName == "N" )
-                        KeyMustThrowCryptoException( paramName, excessBitKey );
-                    else
-                        ExcessBitMustThrowInvalidLength( paramName, excessBitKey );
-                }
-            }
-        }
-
-        private static void AddExcessBitOnParameter( JsonWebKey key, string paramName )
-        {
-            var data = GetParameter( key, paramName );
-            int excessLen;
-            if ( paramName == "E" || paramName == "N" )
-                excessLen = 1 + data.Length;
-            else
-                excessLen = 1 + GetRequiredLen( data.Length );
-            var excess = new byte[excessLen];
-            Array.Copy( data, 0, excess, excessLen - data.Length, data.Length );
-            excess[0] = 1;
-            SetParameter( key, paramName, excess );
-        }
-
-        private static void ExcessBitMustThrowInvalidLength( string paramName, JsonWebKey excessBitKey )
-        {
-            try
-            {
-                // We sill must be able to serialize and de-serialize
-                var serialized = excessBitKey.ToString();
-                JsonConvert.DeserializeObject<JsonWebKey>( serialized );
-
-                KeyMustThrowInvalidLength( excessBitKey );
-
-                // Test only public parameters, which should work.
-                KeyMustWork( excessBitKey );
-            }
-            catch ( Exception ex )
-            {
-                throw new Exception( "Key with extra bit on \"" + paramName + "\" didn't produce expected result", ex );
-            }
-        }
-
         private static int GetRequiredLen( int len )
         {
             var requiredLen = len;
@@ -343,70 +293,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             }
         }
 
-        private static void KeyMustThrowCryptoException( string paramName, JsonWebKey badKey )
-        {
-            // We sill must be able to serialize...
-            var serialized = badKey.ToString();
-            // ...and deserialize
-            var deserialized = JsonConvert.DeserializeObject<JsonWebKey>( serialized );
-            Assert.Equal( badKey, deserialized );
-
-            try
-            {
-                KeyMustThrowCryptoException( badKey );
-            }
-            catch ( Exception ex )
-            {
-                throw new Exception( "Key with extra bit on \"" + paramName + "\" didn't produce expected result", ex );
-            }
-        }
-
-        private static void KeyMustThrowCryptoException( JsonWebKey badKey )
-        {
-            RSA rsa;
-            try
-            {
-                rsa = badKey.ToRSA( true );
-                //throw new Exception( "ToRSA(true) didn't throw exception." );
-            }
-            catch ( CryptographicException )
-            {
-                return;
-            }
-
-            // Perform encrypt and decrypt with the key
-            EncryptDecrypt( rsa );
-        }
-
-        private static void KeyMustThrowInvalidLength( JsonWebKey excessBitKey )
-        {
-            try
-            {
-                excessBitKey.ToRSAParameters( true );
-                throw new Exception( "ToRSAParameters should throw exception." );
-            }
-            catch ( ArgumentException e )
-            {
-                ValidateInvalidLength( e );
-            }
-
-            try
-            {
-                excessBitKey.ToRSA( true );
-                throw new Exception( "ToRSA should throw exception." );
-            }
-            catch ( ArgumentException e )
-            {
-                ValidateInvalidLength( e );
-            }
-        }
-
-        private static void ValidateInvalidLength( ArgumentException e )
-        {
-            Assert.True( e.Message.ToLowerInvariant().Contains( "invalid length" ), "Unexpected error message: " + e.Message );
-        }
-
-        public static void EmitTestData( int keySize )
+        internal static void EmitTestData( int keySize )
         {
             EmitOrdinary( keySize );
             EmitDSmallerThanN( keySize );
@@ -448,7 +335,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             throw new Exception( "Unable to generate key with D < N." );
         }
 
-        public static void EmitVariable( string collectionName, int keySize, JsonWebKey key )
+        internal static void EmitVariable( string collectionName, int keySize, JsonWebKey key )
         {
             var text = key.ToString();
             text = text.Replace( "\"", "\\\"" );

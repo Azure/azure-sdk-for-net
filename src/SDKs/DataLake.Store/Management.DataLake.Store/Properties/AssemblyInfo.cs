@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDescription("Provides Microsoft Azure Data Lake Store management operations including account and filesystem management.")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.4.0.0")]
+[assembly: AssemblyFileVersion("2.4.1.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]

@@ -6,10 +6,17 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Vision.ComputerVision</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services ComputerVision APIs.</Description>
-    <VersionPrefix>1.0.2-preview</VersionPrefix>
+    <Version>3.2.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.ComputerVision</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Computer Vision;Computer Vision API;Computer Vision SDK;Vision;netcore451511</PackageTags>
-    <PackageReleaseNotes>This is a preview release of the Cognitive Services Computer Vision SDK.</PackageReleaseNotes>
+    <PackageReleaseNotes>2.0.0 - A breaking change for RecognizeText.  Rather than a boolean argument for handwritten text, callers must specify a mode enumerated value.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+    <![CDATA[
+    1) The API client name was changed from ComputerVisionAPI to ComputerVisionClient, in keeping with other Azure SDKs.
+    2) The way the Azure region is specfied has changed.  Specifically, the AzureRegion property was dropped in favor of an Endpoint property.  If you were previously specifying an AzureRegion value, you should now specify Endpoint='https://{AzureRegion}.api.cognitive.microsoft.com' instead. This change ensures better global coverage.
+    3) Some inconsistencies in argument types were corrected.  (a) maxCandidate is an integer for DescribeImage. (b) details is a array of enumerated types for AnalyzeImage. (c) isBWImg in the AnalyzeImage(color) response is a non-nullable bool. (d) clipArtType/lineDrawing in AnalyzeImage(imageType) is an integer (index) instead of a double.
+    ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the ScopeJobResource class.
         /// </summary>
-        /// <param name="name">the name of the resource.</param>
-        /// <param name="path">the path to the resource.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="path">The path to the resource.</param>
         public ScopeJobResource(string name = default(string), string path = default(string))
         {
             Name = name;

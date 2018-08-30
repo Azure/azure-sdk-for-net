@@ -1,7 +1,7 @@
     {
       "Name": "DeleteCertificateError",
       "ProtocolName": "Models.DeleteCertificateError",
-      "Comment": "An error encountered by the Batch service when deleting a certificate.",
+      "SummaryComment": "An error encountered by the Batch service when deleting a certificate.",
       "IsConstructorPublic": false,
       "Properties": [
         {

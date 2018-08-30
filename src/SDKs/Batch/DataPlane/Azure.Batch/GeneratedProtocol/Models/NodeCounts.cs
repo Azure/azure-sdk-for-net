@@ -46,6 +46,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// state.</param>
         /// <param name="startTaskFailed">The number of nodes in the
         /// startTaskFailed state.</param>
+        /// <param name="leavingPool">The number of nodes in the leavingPool
+        /// state.</param>
         /// <param name="unknown">The number of nodes in the unknown
         /// state.</param>
         /// <param name="unusable">The number of nodes in the unusable
@@ -53,7 +55,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="waitingForStartTask">The number of nodes in the
         /// waitingForStartTask state.</param>
         /// <param name="total">The total number of nodes.</param>
-        public NodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int unknown, int unusable, int waitingForStartTask, int total)
+        public NodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int total)
         {
             Creating = creating;
             Idle = idle;
@@ -64,6 +66,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             Running = running;
             Starting = starting;
             StartTaskFailed = startTaskFailed;
+            LeavingPool = leavingPool;
             Unknown = unknown;
             Unusable = unusable;
             WaitingForStartTask = waitingForStartTask;
@@ -131,6 +134,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int StartTaskFailed { get; set; }
 
         /// <summary>
+        /// Gets or sets the number of nodes in the leavingPool state.
+        /// </summary>
+        [JsonProperty(PropertyName = "leavingPool")]
+        public int LeavingPool { get; set; }
+
+        /// <summary>
         /// Gets or sets the number of nodes in the unknown state.
         /// </summary>
         [JsonProperty(PropertyName = "unknown")]
@@ -154,15 +163,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "total")]
         public int Total { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

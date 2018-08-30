@@ -12,8 +12,6 @@ namespace Microsoft.Azure.Management.Automation.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,19 +33,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// AgentRegistrationRegenerateKeyParameter class.
         /// </summary>
         /// <param name="keyName">Gets or sets the agent registration key name
-        /// - Primary or Secondary. Possible values include: 'Primary',
-        /// 'Secondary'</param>
-        /// <param name="name">Gets or sets the name of the resource.</param>
-        /// <param name="location">Gets or sets the location of the
-        /// resource.</param>
-        /// <param name="tags">Gets or sets the tags attached to the
-        /// resource.</param>
-        public AgentRegistrationRegenerateKeyParameter(string keyName, string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// - primary or secondary. Possible values include: 'primary',
+        /// 'secondary'</param>
+        public AgentRegistrationRegenerateKeyParameter(string keyName)
         {
             KeyName = keyName;
-            Name = name;
-            Location = location;
-            Tags = tags;
             CustomInit();
         }
 
@@ -57,29 +47,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the agent registration key name - Primary or
-        /// Secondary. Possible values include: 'Primary', 'Secondary'
+        /// Gets or sets the agent registration key name - primary or
+        /// secondary. Possible values include: 'primary', 'secondary'
         /// </summary>
         [JsonProperty(PropertyName = "keyName")]
         public string KeyName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tags attached to the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Validate the object.

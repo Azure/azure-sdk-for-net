@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// The maximum size limits for a database.
+    /// The maximum size capability.
     /// </summary>
     public partial class MaxSizeCapability
     {
@@ -29,19 +29,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the MaxSizeCapability class.
         /// </summary>
-        /// <param name="limit">The maximum size of the database (see 'unit'
-        /// for the units).</param>
+        /// <param name="limit">The maximum size limit (see 'unit' for the
+        /// units).</param>
         /// <param name="unit">The units that the limit is expressed in.
         /// Possible values include: 'Megabytes', 'Gigabytes', 'Terabytes',
         /// 'Petabytes'</param>
-        /// <param name="status">The status of the maximum size capability.
-        /// Possible values include: 'Visible', 'Available', 'Default',
-        /// 'Disabled'</param>
-        public MaxSizeCapability(long limit = default(long), MaxSizeUnits? unit = default(MaxSizeUnits?), CapabilityStatus? status = default(CapabilityStatus?))
+        public MaxSizeCapability(int? limit = default(int?), string unit = default(string))
         {
             Limit = limit;
             Unit = unit;
-            Status = status;
             CustomInit();
         }
 
@@ -51,24 +47,17 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the maximum size of the database (see 'unit' for the units).
+        /// Gets the maximum size limit (see 'unit' for the units).
         /// </summary>
         [JsonProperty(PropertyName = "limit")]
-        public long Limit { get; private set; }
+        public int? Limit { get; private set; }
 
         /// <summary>
         /// Gets the units that the limit is expressed in. Possible values
         /// include: 'Megabytes', 'Gigabytes', 'Terabytes', 'Petabytes'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public MaxSizeUnits? Unit { get; private set; }
-
-        /// <summary>
-        /// Gets the status of the maximum size capability. Possible values
-        /// include: 'Visible', 'Available', 'Default', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public CapabilityStatus? Status { get; private set; }
+        public string Unit { get; private set; }
 
     }
 }

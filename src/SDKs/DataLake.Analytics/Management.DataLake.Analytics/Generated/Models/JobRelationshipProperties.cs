@@ -31,19 +31,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobRelationshipProperties class.
         /// </summary>
-        /// <param name="recurrenceId">the recurrence identifier (a GUID),
+        /// <param name="recurrenceId">The recurrence identifier (a GUID),
         /// unique per activity/script, regardless of iterations. This is
         /// something to link different occurrences of the same job
         /// together.</param>
-        /// <param name="pipelineId">the job relationship pipeline identifier
+        /// <param name="pipelineId">The job relationship pipeline identifier
         /// (a GUID).</param>
-        /// <param name="pipelineName">the friendly name of the job
+        /// <param name="pipelineName">The friendly name of the job
         /// relationship pipeline, which does not need to be unique.</param>
-        /// <param name="pipelineUri">the pipeline uri, unique, links to the
+        /// <param name="pipelineUri">The pipeline uri, unique, links to the
         /// originating service for this pipeline.</param>
-        /// <param name="runId">the run identifier (a GUID), unique identifier
+        /// <param name="runId">The run identifier (a GUID), unique identifier
         /// of the iteration of this pipeline.</param>
-        /// <param name="recurrenceName">the recurrence name, user friendly
+        /// <param name="recurrenceName">The recurrence name, user friendly
         /// name for the correlation between jobs.</param>
         public JobRelationshipProperties(System.Guid recurrenceId, System.Guid? pipelineId = default(System.Guid?), string pipelineName = default(string), string pipelineUri = default(string), System.Guid? runId = default(System.Guid?), string recurrenceName = default(string))
         {

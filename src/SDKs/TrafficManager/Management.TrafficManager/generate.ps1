@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "trafficmanager/resource-manager" -AutoRestVersion "latest"

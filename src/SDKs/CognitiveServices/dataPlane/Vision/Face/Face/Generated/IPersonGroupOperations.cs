@@ -49,7 +49,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </exception>
         Task<HttpOperationResponse> CreateWithHttpMessagesAsync(string personGroupId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an existing person group. Persisted face images of all
+        /// Delete an existing person group. Persisted face features of all
         /// people in the person group will also be deleted.
         /// </summary>
         /// <param name='personGroupId'>
@@ -162,6 +162,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
         /// </exception>
         Task<HttpOperationResponse<IList<PersonGroup>>> ListWithHttpMessagesAsync(string start = default(string), int? top = 1000, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>

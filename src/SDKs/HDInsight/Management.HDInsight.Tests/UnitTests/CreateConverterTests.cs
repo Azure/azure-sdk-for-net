@@ -85,6 +85,14 @@ namespace Management.HDInsight.Tests.UnitTests
         }
 
         [Fact]
+        public void CanConvertMLServicesCluster()
+        {
+            ClusterCreateParameters createParams = GetClusterCreateParamsWithMinRequiredValues();
+            createParams.ClusterType = "MlServicEs";
+            ExtendedParameterValidators.ValidateSpecConversion(createParams);
+        }
+
+        [Fact]
         public void CanConvertHadoopClusterWithCustomVnet()
         {
             ClusterCreateParameters createParams = GetClusterCreateParamsWithMinRequiredValues();
@@ -99,6 +107,14 @@ namespace Management.HDInsight.Tests.UnitTests
             ClusterCreateParameters createParams = new ClusterCreateParameters();
 
             ClusterCreateParametersExtended extendedParams = CreateParametersConverter.GetExtendedClusterCreateParameters("testCluster", createParams);
+        }
+
+        [Fact]
+        public void CanConvertAdlsGen2Cluster()
+        {
+            ClusterCreateParameters createParams = GetClusterCreateParamsWithMinRequiredValues();
+            createParams.DefaultStorageInfo = new AzureDataLakeStoreGen2Info("adlsGen2StorageAccount", "key", "fileSystem");
+            ExtendedParameterValidators.ValidateSpecConversion(createParams);
         }
 
         private static ClusterCreateParameters GetClusterCreateParamsWithMinRequiredValues()

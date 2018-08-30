@@ -1,7 +1,7 @@
 {
   "Name": "DataDisk",
   "ProtocolName": "Models.DataDisk",
-  "Comment": "Settings which will be used by the data disks associated to compute nodes in the pool.",
+  "SummaryComment": "Settings which will be used by the data disks associated to compute nodes in the pool.",
   "IsConstructorPublic": true,
   "IsUsedInCollections":  true,
   "Properties": [
@@ -23,7 +23,7 @@
         "Type": "Common.CachingType?",
         "Name": "Caching",
         "SummaryComment": "The type of caching to enable for the OS disk.",
-        "RemarksComment": "If omitted, the default is <see cref=\"Common.CachingType.None\" />.",
+        "RemarksComment": "If omitted, the default is <see cref=\"Common.CachingType.ReadWrite\" />.",
         "BoundAccess": "read",
         "UnboundAccess": "read,write",
         "ConstructorArgumentType": "Optional",

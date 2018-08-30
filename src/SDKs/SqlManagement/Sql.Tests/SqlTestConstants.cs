@@ -11,9 +11,28 @@ namespace Sql.Tests
         public const string DefaultCollation = "SQL_Latin1_General_CP1_CI_AS";
 
         // Default database edition
-        public const string DefaultDatabaseEdition = DatabaseEdition.Basic;
+        public static readonly string DefaultDatabaseEdition = DatabaseEdition.Basic;
 
         // Default elastic pool edition
-        public const string DefaultElasticPoolEdition = ElasticPoolEdition.Basic;
+        public static readonly string DefaultElasticPoolEdition = ElasticPoolEdition.Basic;
+
+        public static Sku DefaultDatabaseSku()
+        {
+            return new Sku(ServiceObjectiveName.Basic);
+        }
+
+        public static Sku DefaultDataWarehouseSku()
+        {
+            return new Sku(ServiceObjectiveName.DW100);
+        }
+
+        public static Sku DefaultElasticPoolSku()
+        {
+            return new Sku(DefaultElasticPoolEdition + "Pool")
+            {
+                Tier = DefaultElasticPoolEdition, // todo: should be optional
+                Capacity = 100
+            };
+        }
     }
 }

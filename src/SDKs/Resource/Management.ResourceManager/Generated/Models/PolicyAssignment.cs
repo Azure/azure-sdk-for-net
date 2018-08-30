@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         /// <param name="displayName">The display name of the policy
         /// assignment.</param>
-        /// <param name="policyDefinitionId">The ID of the policy
-        /// definition.</param>
+        /// <param name="policyDefinitionId">The ID of the policy definition or
+        /// policy set definition being assigned.</param>
         /// <param name="scope">The scope for the policy assignment.</param>
         /// <param name="notScopes">The policy's excluded scopes.</param>
         /// <param name="parameters">Required if a parameter is used in policy
@@ -49,8 +49,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="id">The ID of the policy assignment.</param>
         /// <param name="type">The type of the policy assignment.</param>
         /// <param name="name">The name of the policy assignment.</param>
-        /// <param name="sku">The policy sku.</param>
-        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), IList<string> notScopes = default(IList<string>), object parameters = default(object), string description = default(string), object metadata = default(object), string id = default(string), string type = default(string), string name = default(string), PolicySku sku = default(PolicySku))
+        /// <param name="sku">The policy sku. This property is optional,
+        /// obsolete, and will be ignored.</param>
+        /// <param name="location">The location of the policy assignment. Only
+        /// required when utilizing managed identity.</param>
+        /// <param name="identity">The managed identity associated with the
+        /// policy assignment.</param>
+        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), IList<string> notScopes = default(IList<string>), object parameters = default(object), string description = default(string), object metadata = default(object), string id = default(string), string type = default(string), string name = default(string), PolicySku sku = default(PolicySku), string location = default(string), Identity identity = default(Identity))
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -63,6 +68,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Type = type;
             Name = name;
             Sku = sku;
+            Location = location;
+            Identity = identity;
             CustomInit();
         }
 
@@ -78,7 +85,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the ID of the policy definition.
+        /// Gets or sets the ID of the policy definition or policy set
+        /// definition being assigned.
         /// </summary>
         [JsonProperty(PropertyName = "properties.policyDefinitionId")]
         public string PolicyDefinitionId { get; set; }
@@ -133,10 +141,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the policy sku.
+        /// Gets or sets the policy sku. This property is optional, obsolete,
+        /// and will be ignored.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public PolicySku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the policy assignment. Only required
+        /// when utilizing managed identity.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets the managed identity associated with the policy
+        /// assignment.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

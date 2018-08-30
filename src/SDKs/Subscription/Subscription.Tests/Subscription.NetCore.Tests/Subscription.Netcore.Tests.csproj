@@ -6,9 +6,9 @@
     <AssemblyName>Subscription.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\..\Management.Subscription\Microsoft.Azure.Management.Subscription.csproj" />
@@ -17,5 +17,13 @@
   <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="SessionRecords\ResourceGroups.Tests.LiveSubscriptionTests\GetSubscriptionDetails.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\ResourceGroups.Tests.LiveSubscriptionTests\ListSubscriptions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

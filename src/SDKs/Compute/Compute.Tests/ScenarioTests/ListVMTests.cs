@@ -12,7 +12,7 @@ namespace Compute.Tests
 {
     public class ListVMTests: VMTestBase
     {
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public void TestListVMInSubscription()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

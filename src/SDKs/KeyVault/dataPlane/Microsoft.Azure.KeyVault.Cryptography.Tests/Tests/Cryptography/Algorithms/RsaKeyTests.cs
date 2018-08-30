@@ -24,7 +24,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
 
         static RandomNumberGenerator RNG = RandomNumberGenerator.Create();
 
-        public void SetFixture( TestFixture data )
+        internal void SetFixture( TestFixture data )
         {
             // Intentionally empty
         }
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
             var unwrapped = await key.UnwrapKeyAsync( wrapped.Item1, Rsa15.AlgorithmName ).ConfigureAwait( false );
 
             // Assert
-            Assert.True( wrapped.Item2.Equals( "RSA_15" ) );
+            Assert.Equal("RSA_15", wrapped.Item2);
             Assert.True( unwrapped.SequenceEqual( CEK ) );
 
             // Encrypt and Decrypt
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
             var decrypted = await key.DecryptAsync( encrypted.Item1, null, null, null, Rsa15.AlgorithmName ).ConfigureAwait( false );
 
             // Assert
-            Assert.True( encrypted.Item3.Equals( "RSA_15" ) );
+            Assert.Equal("RSA_15", encrypted.Item3);
             Assert.True( decrypted.SequenceEqual( CEK ) );
         }
 
@@ -66,14 +66,14 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
             var unwrapped = await key.UnwrapKeyAsync( wrapped.Item1, RsaOaep.AlgorithmName ).ConfigureAwait( false );
 
             // Assert
-            Assert.True( wrapped.Item2.Equals( "RSA-OAEP" ) );
+            Assert.Equal("RSA-OAEP", wrapped.Item2);
             Assert.True( unwrapped.SequenceEqual( CEK ) );
 
             var encrypted = await key.EncryptAsync( CEK, null, null, RsaOaep.AlgorithmName ).ConfigureAwait( false );
             var decrypted = await key.DecryptAsync( encrypted.Item1, null, null, null, RsaOaep.AlgorithmName ).ConfigureAwait( false );
 
             // Assert
-            Assert.True( encrypted.Item3.Equals( "RSA-OAEP" ) );
+            Assert.Equal("RSA-OAEP", encrypted.Item3);
             Assert.True( decrypted.SequenceEqual( CEK ) );
         }
 
@@ -85,22 +85,22 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
         {
             RsaKey key = GetTestRsaKey();
 
-            Assert.True( key.DefaultEncryptionAlgorithm.Equals( "RSA-OAEP" ) );
-            Assert.True( key.DefaultKeyWrapAlgorithm.Equals( "RSA-OAEP" ) );
-            Assert.True( key.DefaultSignatureAlgorithm.Equals( "RS256" ) );
+            Assert.Equal("RSA-OAEP", key.DefaultEncryptionAlgorithm);
+            Assert.Equal("RSA-OAEP", key.DefaultKeyWrapAlgorithm);
+            Assert.Equal("RS256", key.DefaultSignatureAlgorithm);
 
             var wrapped   = await key.WrapKeyAsync( CEK, null ).ConfigureAwait( false );
             var unwrapped = await key.UnwrapKeyAsync( wrapped.Item1, null ).ConfigureAwait( false );
 
             // Assert
-            Assert.True( wrapped.Item2.Equals( "RSA-OAEP" ) );
+            Assert.Equal("RSA-OAEP", wrapped.Item2);
             Assert.True( unwrapped.SequenceEqual( CEK ) );
 
             var encrypted = await key.EncryptAsync( CEK, null, null, null ).ConfigureAwait( false );
             var decrypted = await key.DecryptAsync( encrypted.Item1, null, null, null, null ).ConfigureAwait( false );
 
             // Assert
-            Assert.True( encrypted.Item3.Equals( "RSA-OAEP" ) );
+            Assert.Equal("RSA-OAEP", encrypted.Item3);
             Assert.True( decrypted.SequenceEqual( CEK ) );
         }
 
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
 
             var signature = await key.SignAsync( digest, "RS256" ).ConfigureAwait( false );
 
-            Assert.True( signature.Item2.Equals( "RS256" ) );
+            Assert.Equal("RS256", signature.Item2);
             Assert.NotNull( signature.Item1 );
 
             var verify = await key.VerifyAsync( digest, signature.Item1, signature.Item2 ).ConfigureAwait( false );

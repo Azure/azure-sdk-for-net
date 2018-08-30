@@ -1,14 +1,14 @@
     {
       "Name": "MultiInstanceSettings",
       "ProtocolName": "Models.MultiInstanceSettings",
-      "Comment": "Settings which specify how to run a multi-instance task. Multi-instance tasks are commonly used to support MPI tasks. For more information see https://azure.microsoft.com/documentation/articles/batch-mpi/.",
+      "SummaryComment": "Settings which specify how to run a multi-instance task. Multi-instance tasks are commonly used to support MPI tasks. For more information see https://azure.microsoft.com/documentation/articles/batch-mpi/.",
       "Properties": [
         {
           "Key": {
             "Type": "IList<ResourceFile>",
             "Name": "CommonResourceFiles",
             "SummaryComment": "A list of files that the Batch service will download before running the coordination command line.",
-            "RemarksComment": "The difference between common resource files and task resource files is that common resource files are downloaded for all subtasks including the primary, whereas task resource files are downloaded only for the primary.",
+            "RemarksComment": "The difference between common resource files and task resource files is that common resource files are downloaded for all subtasks including the primary, whereas task resource files are downloaded only for the primary. There is a maximum size for the list of resource files. When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of resource files must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers.",
             "BoundAccess": "read",
             "UnboundAccess": "read,write"
           },

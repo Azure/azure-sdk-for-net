@@ -1,103 +1,103 @@
+{
+  "Name": "PoolUsageMetrics",
+  "ProtocolName": "Models.PoolUsageMetrics",
+  "SummaryComment": "The usage metrics for a single pool in a certain time range.",
+  "IsConstructorPublic": false,
+  "Properties": [
     {
-      "Name": "PoolUsageMetrics",
-      "ProtocolName": "Models.PoolUsageMetrics",
-      "Comment": "The usage metrics for a single pool in a certain time range.",
-      "IsConstructorPublic": false,
-      "Properties": [
-        {
-          "Key": {
-            "Type": "double",
-            "Name": "DataEgressGiB",
-            "SummaryComment": "The cross data center network egress from the pool during this interval, in gibibytes.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": {
-            "Type": "double",
-            "Name": "DataEgressGiB"
-          }
-        },
-        {
-          "Key": {
-            "Type": "double",
-            "Name": "DataIngressGiB",
-            "SummaryComment": "The cross data center network ingress to the pool during this interval, in gibibytes.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": {
-            "Type": "double",
-            "Name": "DataIngressGiB"
-          }
-        },
-        {
-          "Key": {
-            "Type": "DateTime",
-            "Name": "EndTime",
-            "SummaryComment": "The end time of the aggregation interval for this entry.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": {
-            "Type": "DateTime",
-            "Name": "EndTime"
-          }
-        },
-        {
-          "Key": {
-            "Type": "string",
-            "Name": "PoolId",
-            "SummaryComment": "The id of the pool whose metrics are aggregated in this entry.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "DateTime",
-            "Name": "StartTime",
-            "SummaryComment": "The start time of the aggregation interval covered by this entry.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": {
-            "Type": "DateTime",
-            "Name": "StartTime"
-          }
-        },
-        {
-          "Key": {
-            "Type": "double",
-            "Name": "TotalCoreHours",
-            "SummaryComment": "The total core hours used in the pool during this aggregation interval.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": {
-            "Type": "double",
-            "Name": "TotalCoreHours"
-          }
-        },
-        {
-          "Key": {
-            "Type": "string",
-            "Name": "VirtualMachineSize",
-            "SummaryComment": "The size of the virtual machines in the pool.  All virtual machines in a pool are the same size.",
-            "RemarksComment": "<para>For information about available sizes of virtual machines for Cloud Services pools (pools created with a <see cref=\"CloudServiceConfiguration\"/>), see https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/. Batch supports all Cloud Services VM sizes except ExtraSmall.</para><para>For information about available VM sizes for pools using images from the Virtual Machines Marketplace (pools created with a <see cref=\"VirtualMachineConfiguration\"/>) see https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/ or https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/. Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (for example STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series).</para>",
-            "BoundAccess": "read",
-            "UnboundAccess": "none"
-          },
-          "Value": {
-            "Type": "string",
-            "Name": "VmSize"
-          }
-        }
-      ]
+      "Key": {
+        "Type": "double",
+        "Name": "DataEgressGiB",
+        "SummaryComment": "The cross data center network egress from the pool during this interval, in gibibytes.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "double",
+        "Name": "DataEgressGiB"
+      }
+    },
+    {
+      "Key": {
+        "Type": "double",
+        "Name": "DataIngressGiB",
+        "SummaryComment": "The cross data center network ingress to the pool during this interval, in gibibytes.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "double",
+        "Name": "DataIngressGiB"
+      }
+    },
+    {
+      "Key": {
+        "Type": "DateTime",
+        "Name": "EndTime",
+        "SummaryComment": "The end time of the aggregation interval for this entry.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "DateTime",
+        "Name": "EndTime"
+      }
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "PoolId",
+        "SummaryComment": "The id of the pool whose metrics are aggregated in this entry.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "DateTime",
+        "Name": "StartTime",
+        "SummaryComment": "The start time of the aggregation interval covered by this entry.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "DateTime",
+        "Name": "StartTime"
+      }
+    },
+    {
+      "Key": {
+        "Type": "double",
+        "Name": "TotalCoreHours",
+        "SummaryComment": "The total core hours used in the pool during this aggregation interval.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "double",
+        "Name": "TotalCoreHours"
+      }
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "VirtualMachineSize",
+        "SummaryComment": "The size of the virtual machines in the pool.  All virtual machines in a pool are the same size.",
+        "RemarksComment": "<para>For information about available sizes of virtual machines in pools, see Choose a VM size for compute nodes in an Azure Batch pool (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).</para>",
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": {
+        "Type": "string",
+        "Name": "VmSize"
+      }
     }
+  ]
+}

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <param name="age">Possible age of the face.</param>
         /// <param name="gender">Possible gender of the face. Possible values
         /// include: 'Male', 'Female'</param>
-        public FaceDescription(int? age = default(int?), string gender = default(string), FaceRectangle faceRectangle = default(FaceRectangle))
+        public FaceDescription(int age = default(int), Gender? gender = default(Gender?), FaceRectangle faceRectangle = default(FaceRectangle))
         {
             Age = age;
             Gender = gender;
@@ -49,14 +49,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Gets or sets possible age of the face.
         /// </summary>
         [JsonProperty(PropertyName = "age")]
-        public int? Age { get; set; }
+        public int Age { get; set; }
 
         /// <summary>
         /// Gets or sets possible gender of the face. Possible values include:
         /// 'Male', 'Female'
         /// </summary>
         [JsonProperty(PropertyName = "gender")]
-        public string Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         /// <summary>
         /// </summary>

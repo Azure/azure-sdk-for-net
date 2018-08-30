@@ -1617,6 +1617,137 @@ namespace Microsoft.Azure.Batch
             return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
         }
 
+        internal async Task CopyNodeFileContentToStreamAsyncImpl(
+            string poolId,
+            string computeNodeId,
+            string filePath,
+            Stream stream,
+            GetFileRequestByteRange byteRange,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken)
+        {
+            await this.ParentBatchClient.ProtocolLayer.GetNodeFileByNode(
+                poolId,
+                computeNodeId,
+                filePath,
+                stream,
+                byteRange,
+                bhMgr,
+                cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        /// <summary>
+        /// Copies the contents of a file from the specified node to the given <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="poolId">The id of the pool that contains the compute node.</param>
+        /// <param name="computeNodeId">The id of the compute node.</param>
+        /// <param name="filePath">The path of the file to retrieve.</param>
+        /// <param name="stream">The stream to copy the file contents to.</param>
+        /// <param name="byteRange">A byte range defining what section of the file to copy. If omitted, the entire file is downloaded.</param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <remarks>The get file operation runs asynchronously.</remarks>
+        public Task CopyNodeFileContentToStreamAsync(
+            string poolId,
+            string computeNodeId,
+            string filePath,
+            Stream stream,
+            GetFileRequestByteRange byteRange = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // set up behavior manager
+            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            return this.CopyNodeFileContentToStreamAsyncImpl(poolId, computeNodeId, filePath, stream, byteRange, bhMgr, cancellationToken);
+        }
+
+        /// <summary>
+        /// Copies the contents of a file from the specified node to the given <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="poolId">The id of the pool that contains the compute node.</param>
+        /// <param name="computeNodeId">The id of the compute node.</param>
+        /// <param name="filePath">The path of the file to retrieve.</param>
+        /// <param name="stream">The stream to copy the file contents to.</param>
+        /// <param name="byteRange">A byte range defining what section of the file to copy. If omitted, the entire file is downloaded.</param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <remarks>This is a blocking operation.  For a non-blocking equivalent, see <see cref="CopyNodeFileContentToStreamAsync"/>.</remarks>
+        public void CopyNodeFileContentToStream(
+            string poolId,
+            string computeNodeId,
+            string filePath,
+            Stream stream,
+            GetFileRequestByteRange byteRange = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            Task asyncTask = this.CopyNodeFileContentToStreamAsync(poolId, computeNodeId, filePath, stream, byteRange, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+        }
+
+        internal Task<string> CopyNodeFileContentToStringAsyncImpl(
+            string poolId,
+            string computeNodeId,
+            string filePath,
+            Encoding encoding,
+            GetFileRequestByteRange byteRange,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken)
+        {
+            return UtilitiesInternal.ReadNodeFileAsStringAsync(
+                // Note that behaviors is purposefully dropped in the below call since it's already managed by the bhMgr
+                (stream, bRange, behaviors, ct) => this.CopyNodeFileContentToStreamAsyncImpl(poolId, computeNodeId, filePath, stream, bRange, bhMgr, ct),
+                encoding,
+                byteRange,
+                additionalBehaviors: null,
+                cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Reads the contents of a file from the specified node into a string.
+        /// </summary>
+        /// <param name="poolId">The id of the pool that contains the compute node.</param>
+        /// <param name="computeNodeId">The id of the compute node.</param>
+        /// <param name="filePath">The path of the file to retrieve.</param>
+        /// <param name="encoding">The encoding to use. If no value or null is specified, UTF8 is used.</param>
+        /// <param name="byteRange">A byte range defining what section of the file to copy. If omitted, the entire file is downloaded.</param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>The contents of the file, as a string</returns>
+        public Task<string> CopyNodeFileContentToStringAsync(
+            string poolId,
+            string computeNodeId,
+            string filePath,
+            Encoding encoding = null,
+            GetFileRequestByteRange byteRange = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // set up behavior manager
+            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            return CopyNodeFileContentToStringAsyncImpl(poolId, computeNodeId, filePath, encoding, byteRange, bhMgr, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reads the contents of a file from the specified node into a string.
+        /// </summary>
+        /// <param name="poolId">The id of the pool that contains the compute node.</param>
+        /// <param name="computeNodeId">The id of the compute node.</param>
+        /// <param name="filePath">The path of the file to retrieve.</param>
+        /// <param name="encoding">The encoding to use. If no value or null is specified, UTF8 is used.</param>
+        /// <param name="byteRange">A byte range defining what section of the file to copy. If omitted, the entire file is downloaded.</param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <returns>The contents of the file, as a string</returns>
+        public string CopyNodeFileContentToString(
+            string poolId,
+            string computeNodeId,
+            string filePath,
+            Encoding encoding = null,
+            GetFileRequestByteRange byteRange = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            Task<string> asyncTask = this.CopyNodeFileContentToStringAsync(poolId, computeNodeId, filePath, encoding, byteRange, additionalBehaviors);
+            return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+        }
+
         internal IPagedEnumerable<NodeFile> ListNodeFilesImpl(
             string poolId,
             string computeNodeId,
@@ -1735,7 +1866,8 @@ namespace Microsoft.Azure.Batch
 
         /// <summary>
         /// Gets lifetime summary statistics for all of the pools in the current account.
-        /// Statistics are aggregated across all pools that have ever existed in the account, from account creation to the last update time of the statistics.
+        /// Statistics are aggregated across all pools that have ever existed in the account, from account creation to the last update time of the statistics. The statistics may not be immediately available. The
+        /// Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
@@ -1758,7 +1890,8 @@ namespace Microsoft.Azure.Batch
 
         /// <summary>
         /// Gets lifetime summary statistics for all of the pools in the current account.  
-        /// Statistics are aggregated across all pools that have ever existed in the account, from account creation to the last update time of the statistics.
+        /// Statistics are aggregated across all pools that have ever existed in the account, from account creation to the last update time of the statistics. The statistics may not be immediately available. The
+        /// Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>The aggregated pool statistics.</returns>

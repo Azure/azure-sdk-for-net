@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties of the file.
+    /// Properties of the file or directory.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class File
@@ -32,15 +32,15 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the File class.
         /// </summary>
-        /// <param name="name">file name</param>
-        /// <param name="downloadUrl">file downloand url, example:
-        /// https://mystg.blob.core.windows.net/mycontainer/myModel_1.dnn</param>
-        /// <param name="lastModified">The time at which the file was last
-        /// modified.</param>
-        /// <param name="contentLength">The file size.</param>
-        public File(string name, string downloadUrl, System.DateTime? lastModified = default(System.DateTime?), long? contentLength = default(long?))
+        /// <param name="name">Name.</param>
+        /// <param name="fileType">File type.</param>
+        /// <param name="downloadUrl">Download URL.</param>
+        /// <param name="lastModified">Last modified time.</param>
+        /// <param name="contentLength">Content length.</param>
+        public File(string name = default(string), string fileType = default(string), string downloadUrl = default(string), System.DateTime? lastModified = default(System.DateTime?), long? contentLength = default(long?))
         {
             Name = name;
+            FileType = fileType;
             DownloadUrl = downloadUrl;
             LastModified = lastModified;
             ContentLength = contentLength;
@@ -53,59 +53,51 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets file name
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets file downloand url, example:
-        /// https://mystg.blob.core.windows.net/mycontainer/myModel_1.dnn
+        /// Gets name.
         /// </summary>
         /// <remarks>
-        /// This will be returned only if the model has been archived. During
-        /// job run, this won't be returned and customers can use SSH tunneling
-        /// to download. Users can use Get Remote Login Information API to get
-        /// the IP address and port information of all the compute nodes
-        /// running the job.
+        /// Name of the file.
         /// </remarks>
-        [JsonProperty(PropertyName = "downloadUrl")]
-        public string DownloadUrl { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the time at which the file was last modified.
+        /// Gets file type.
+        /// </summary>
+        /// <remarks>
+        /// Type of the file. Possible values are file and directory. Possible
+        /// values include: 'file', 'directory'
+        /// </remarks>
+        [JsonProperty(PropertyName = "fileType")]
+        public string FileType { get; private set; }
+
+        /// <summary>
+        /// Gets download URL.
+        /// </summary>
+        /// <remarks>
+        /// URL to download the corresponding file. The downloadUrl is not
+        /// returned for directories.
+        /// </remarks>
+        [JsonProperty(PropertyName = "downloadUrl")]
+        public string DownloadUrl { get; private set; }
+
+        /// <summary>
+        /// Gets last modified time.
         /// </summary>
         /// <remarks>
         /// The time at which the file was last modified.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.lastModified")]
-        public System.DateTime? LastModified { get; set; }
+        public System.DateTime? LastModified { get; private set; }
 
         /// <summary>
-        /// Gets or sets the file size.
+        /// Gets content length.
         /// </summary>
         /// <remarks>
-        /// The file size.
+        /// The file of the size.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.contentLength")]
-        public long? ContentLength { get; set; }
+        public long? ContentLength { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (DownloadUrl == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DownloadUrl");
-            }
-        }
     }
 }

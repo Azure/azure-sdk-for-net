@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// can reference inbound nat pools of one public and one internal load
         /// balancer. Multiple scale sets cannot use the same load
         /// balancer</param>
-        public VirtualMachineScaleSetIPConfiguration(string name, string id = default(string), ApiEntityReference subnet = default(ApiEntityReference), bool? primary = default(bool?), VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetPublicIPAddressConfiguration), string privateIPAddressVersion = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
+        public VirtualMachineScaleSetIPConfiguration(string name, string id = default(string), ApiEntityReference subnet = default(ApiEntityReference), bool? primary = default(bool?), VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetPublicIPAddressConfiguration), IPVersion? privateIPAddressVersion = default(IPVersion?), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
             : base(id)
         {
             Name = name;
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Possible values include: 'IPv4', 'IPv6'
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAddressVersion")]
-        public string PrivateIPAddressVersion { get; set; }
+        public IPVersion? PrivateIPAddressVersion { get; set; }
 
         /// <summary>
         /// Gets or sets specifies an array of references to backend address

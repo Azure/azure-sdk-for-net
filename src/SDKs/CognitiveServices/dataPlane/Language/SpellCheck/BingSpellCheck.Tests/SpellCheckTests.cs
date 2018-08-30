@@ -1,6 +1,6 @@
 using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.CognitiveServices.SpellCheck;
-using Microsoft.Azure.CognitiveServices.SpellCheck.Models;
+using Microsoft.Azure.CognitiveServices.Language.SpellCheck;
+using Microsoft.Azure.CognitiveServices.Language.SpellCheck.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Linq;
 using Xunit;
@@ -18,7 +18,7 @@ namespace SpellCheckSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "SpellCheck");
 
-                ISpellCheckAPI client = new SpellCheckAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                ISpellCheckClient client = new SpellCheckClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 var resp = client.SpellCheckerAsync(text: "Bill Gatas").Result;
                 Assert.NotNull(resp);

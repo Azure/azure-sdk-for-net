@@ -33,6 +33,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         /// <param name="id">Result identifier</param>
         /// <param name="databaseName">Name of the database</param>
+        /// <param name="sizeMB">Size of the database in megabytes</param>
         /// <param name="state">Current state of migration. Possible values
         /// include: 'None', 'InProgress', 'Failed', 'Warning', 'Completed',
         /// 'Skipped', 'Stopped'</param>
@@ -44,10 +45,11 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="message">Migration progress message</param>
         /// <param name="exceptionsAndWarnings">Migration exceptions and
         /// warnings</param>
-        public MigrateSqlServerSqlMITaskOutputDatabaseLevel(string id = default(string), string databaseName = default(string), string state = default(string), string stage = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string message = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
+        public MigrateSqlServerSqlMITaskOutputDatabaseLevel(string id = default(string), string databaseName = default(string), double? sizeMB = default(double?), string state = default(string), string stage = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string message = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
             : base(id)
         {
             DatabaseName = databaseName;
+            SizeMB = sizeMB;
             State = state;
             Stage = stage;
             StartedOn = startedOn;
@@ -67,6 +69,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; private set; }
+
+        /// <summary>
+        /// Gets size of the database in megabytes
+        /// </summary>
+        [JsonProperty(PropertyName = "sizeMB")]
+        public double? SizeMB { get; private set; }
 
         /// <summary>
         /// Gets current state of migration. Possible values include: 'None',

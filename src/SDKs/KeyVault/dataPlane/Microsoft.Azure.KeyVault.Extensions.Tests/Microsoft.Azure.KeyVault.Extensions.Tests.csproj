@@ -3,12 +3,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.KeyVault.Extensions.Tests</PackageId>
     <Description>Microsoft Azure Key Vault Extensions tests</Description>
-    <VersionPrefix>2.0.2</VersionPrefix>
+    <VersionPrefix>3.0.0-alpha</VersionPrefix>
     <AssemblyName>Microsoft.Azure.KeyVault.Extensions.Tests</AssemblyName>    
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -32,20 +32,20 @@
     <!--<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />-->
     <!--<PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />-->
     <!--<PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.3.5-preview, 2.0.0)" />-->
-    <PackageReference Include="Moq" Version="4.6.38-alpha" />
+    <PackageReference Include="Moq" Version="4.9.0" />
     <!--<PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />-->
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.13.9" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.14.0" />
   </ItemGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <DefineConstants>$(DefineConstants);NETSTANDARD;NETCOREAPP11</DefineConstants>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD14;NETCOREAPP20</DefineConstants>
     <DebugType>portable</DebugType>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.0.0" />
-    <PackageReference Include="System.Diagnostics.TraceSource" Version="4.0.0" />
-    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.2.0" />
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

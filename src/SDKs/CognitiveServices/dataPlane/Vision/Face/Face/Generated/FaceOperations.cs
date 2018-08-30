@@ -25,7 +25,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     /// <summary>
     /// FaceOperations operations.
     /// </summary>
-    public partial class FaceOperations : IServiceOperations<FaceAPI>, IFaceOperations
+    public partial class FaceOperations : IServiceOperations<FaceClient>, IFaceOperations
     {
         /// <summary>
         /// Initializes a new instance of the FaceOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public FaceOperations(FaceAPI client)
+        public FaceOperations(FaceClient client)
         {
             if (client == null)
             {
@@ -46,13 +46,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Gets a reference to the FaceAPI
+        /// Gets a reference to the FaceClient
         /// </summary>
-        public FaceAPI Client { get; private set; }
+        public FaceClient Client { get; private set; }
 
         /// <summary>
         /// Given query face's faceId, find the similar-looking faces from a faceId
-        /// array or a faceListId.
+        /// array, a face list or a large face list.
         /// </summary>
         /// <param name='faceId'>
         /// FaceId of the query face. User needs to call Face - Detect first to get a
@@ -62,12 +62,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='faceListId'>
         /// An existing user-specified unique candidate face list, created in Face List
         /// - Create a Face List. Face list contains a set of persistedFaceIds which
-        /// are persisted and will never expire. Parameter faceListId and faceIds
-        /// should not be provided at the same time
+        /// are persisted and will never expire. Parameter faceListId, largeFaceListId
+        /// and faceIds should not be provided at the same time。
+        /// </param>
+        /// <param name='largeFaceListId'>
+        /// An existing user-specified unique candidate large face list, created in
+        /// LargeFaceList - Create. Large face list contains a set of persistedFaceIds
+        /// which are persisted and will never expire. Parameter faceListId,
+        /// largeFaceListId and faceIds should not be provided at the same time.
         /// </param>
         /// <param name='faceIds'>
         /// An array of candidate faceIds. All of them are created by Face - Detect and
-        /// the faceIds will expire 24 hours after the detection call.
+        /// the faceIds will expire 24 hours after the detection call. The number of
+        /// faceIds is limited to 1000. Parameter faceListId, largeFaceListId and
+        /// faceIds should not be provided at the same time.
         /// </param>
         /// <param name='maxNumOfCandidatesReturned'>
         /// The number of top similar faces returned. The valid range is [1, 1000].
@@ -88,11 +96,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<SimilarFace>>> FindSimilarWithHttpMessagesAsync(System.Guid faceId, string faceListId = default(string), IList<System.Guid?> faceIds = default(IList<System.Guid?>), int? maxNumOfCandidatesReturned = 20, FindSimilarMatchMode mode = default(FindSimilarMatchMode), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<SimilarFace>>> FindSimilarWithHttpMessagesAsync(System.Guid faceId, string faceListId = default(string), string largeFaceListId = default(string), IList<System.Guid?> faceIds = default(IList<System.Guid?>), int? maxNumOfCandidatesReturned = 20, FindSimilarMatchMode mode = default(FindSimilarMatchMode), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (faceListId != null)
             {
                 if (faceListId.Length > 64)
@@ -102,6 +120,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 if (!System.Text.RegularExpressions.Regex.IsMatch(faceListId, "^[a-z0-9-_]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (largeFaceListId != null)
+            {
+                if (largeFaceListId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "largeFaceListId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(largeFaceListId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "largeFaceListId", "^[a-z0-9-_]+$");
                 }
             }
             if (faceIds != null)
@@ -120,10 +149,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "maxNumOfCandidatesReturned", 1);
             }
             FindSimilarRequest body = new FindSimilarRequest();
-            if (faceListId != null || faceIds != null || maxNumOfCandidatesReturned != null)
+            if (faceListId != null || largeFaceListId != null || faceIds != null || maxNumOfCandidatesReturned != null)
             {
                 body.FaceId = faceId;
                 body.FaceListId = faceListId;
+                body.LargeFaceListId = largeFaceListId;
                 body.FaceIds = faceIds;
                 body.MaxNumOfCandidatesReturned = maxNumOfCandidatesReturned;
                 body.Mode = mode;
@@ -142,7 +172,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "findsimilars";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -279,6 +309,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<GroupResult>> GroupWithHttpMessagesAsync(IList<System.Guid> faceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (faceIds == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceIds");
@@ -309,7 +343,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "group";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -417,15 +451,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Identify unknown faces from a person group.
+        /// 1-to-many identification to find the closest matches of the specific query
+        /// person face from a person group or large person group.
         /// </summary>
-        /// <param name='personGroupId'>
-        /// PersonGroupId of the target person group, created by PersonGroups.Create
-        /// </param>
         /// <param name='faceIds'>
         /// Array of query faces faceIds, created by the Face - Detect. Each of the
         /// faces are identified independently. The valid number of faceIds is between
         /// [1, 10].
+        /// </param>
+        /// <param name='personGroupId'>
+        /// PersonGroupId of the target person group, created by PersonGroup - Create.
+        /// Parameter personGroupId and largePersonGroupId should not be provided at
+        /// the same time.
+        /// </param>
+        /// <param name='largePersonGroupId'>
+        /// LargePersonGroupId of the target large person group, created by
+        /// LargePersonGroup - Create. Parameter personGroupId and largePersonGroupId
+        /// should not be provided at the same time.
         /// </param>
         /// <param name='maxNumOfCandidatesReturned'>
         /// The range of maxNumOfCandidatesReturned is between 1 and 5 (default is 1).
@@ -456,22 +498,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<IdentifyResult>>> IdentifyWithHttpMessagesAsync(string personGroupId, IList<System.Guid> faceIds, int? maxNumOfCandidatesReturned = 1, double? confidenceThreshold = default(double?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<IdentifyResult>>> IdentifyWithHttpMessagesAsync(IList<System.Guid> faceIds, string personGroupId = default(string), string largePersonGroupId = default(string), int? maxNumOfCandidatesReturned = 1, double? confidenceThreshold = default(double?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (personGroupId == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personGroupId");
-            }
-            if (personGroupId != null)
-            {
-                if (personGroupId.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "personGroupId", 64);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(personGroupId, "^[a-z0-9-_]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "personGroupId", "^[a-z0-9-_]+$");
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (faceIds == null)
             {
@@ -484,6 +515,28 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                     throw new ValidationException(ValidationRules.MaxItems, "faceIds", 10);
                 }
             }
+            if (personGroupId != null)
+            {
+                if (personGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "personGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(personGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "personGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (largePersonGroupId != null)
+            {
+                if (largePersonGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "largePersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
             if (maxNumOfCandidatesReturned > 5)
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "maxNumOfCandidatesReturned", 5);
@@ -493,10 +546,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "maxNumOfCandidatesReturned", 1);
             }
             IdentifyRequest body = new IdentifyRequest();
-            if (personGroupId != null || faceIds != null || maxNumOfCandidatesReturned != null || confidenceThreshold != null)
+            if (faceIds != null || personGroupId != null || largePersonGroupId != null || maxNumOfCandidatesReturned != null || confidenceThreshold != null)
             {
-                body.PersonGroupId = personGroupId;
                 body.FaceIds = faceIds;
+                body.PersonGroupId = personGroupId;
+                body.LargePersonGroupId = largePersonGroupId;
                 body.MaxNumOfCandidatesReturned = maxNumOfCandidatesReturned;
                 body.ConfidenceThreshold = confidenceThreshold;
             }
@@ -514,7 +568,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "identify";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -643,11 +697,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<HttpOperationResponse<VerifyResult>> VerifyFaceToFaceWithHttpMessagesAsync(System.Guid faceId1, System.Guid faceId2, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             VerifyFaceToFaceRequest body = new VerifyFaceToFaceRequest();
             body.FaceId1 = faceId1;
             body.FaceId2 = faceId2;
@@ -665,7 +729,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "verify";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -777,6 +841,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// with faceIds, landmarks, and attributes.
         /// </summary>
         /// <param name='url'>
+        /// Publicly reachable URL of an image
         /// </param>
         /// <param name='returnFaceId'>
         /// A value indicating whether the operation should return faceIds of detected
@@ -816,6 +881,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithUrlWithHttpMessagesAsync(string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "url");
@@ -842,7 +911,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "detect";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (returnFaceId != null)
             {
@@ -971,15 +1040,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Person Id
         /// </summary>
         /// <param name='faceId'>
-        /// FaceId the face, comes from Face - Detect
+        /// FaceId of the face, comes from Face - Detect
+        /// </param>
+        /// <param name='personId'>
+        /// Specify a certain person in a person group or a large person group.
+        /// personId is created in PersonGroup Person - Create or LargePersonGroup
+        /// Person - Create.
         /// </param>
         /// <param name='personGroupId'>
         /// Using existing personGroupId and personId for fast loading a specified
-        /// person. personGroupId is created in Person Groups.Create.
+        /// person. personGroupId is created in PersonGroup - Create. Parameter
+        /// personGroupId and largePersonGroupId should not be provided at the same
+        /// time.
         /// </param>
-        /// <param name='personId'>
-        /// Specify a certain person in a person group. personId is created in
-        /// Persons.Create.
+        /// <param name='largePersonGroupId'>
+        /// Using existing largePersonGroupId and personId for fast loading a specified
+        /// person. largePersonGroupId is created in LargePersonGroup - Create.
+        /// Parameter personGroupId and largePersonGroupId should not be provided at
+        /// the same time.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1002,11 +1080,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<VerifyResult>> VerifyFaceToPersonWithHttpMessagesAsync(System.Guid faceId, string personGroupId, System.Guid personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<VerifyResult>> VerifyFaceToPersonWithHttpMessagesAsync(System.Guid faceId, System.Guid personId, string personGroupId = default(string), string largePersonGroupId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (personGroupId == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personGroupId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (personGroupId != null)
             {
@@ -1019,11 +1097,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                     throw new ValidationException(ValidationRules.Pattern, "personGroupId", "^[a-z0-9-_]+$");
                 }
             }
+            if (largePersonGroupId != null)
+            {
+                if (largePersonGroupId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "largePersonGroupId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
             VerifyFaceToPersonRequest body = new VerifyFaceToPersonRequest();
-            if (personGroupId != null)
+            if (personGroupId != null || largePersonGroupId != null)
             {
                 body.FaceId = faceId;
                 body.PersonGroupId = personGroupId;
+                body.LargePersonGroupId = largePersonGroupId;
                 body.PersonId = personId;
             }
             // Tracing
@@ -1040,7 +1130,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "verify";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -1192,6 +1282,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithStreamWithHttpMessagesAsync(Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (image == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
@@ -1213,7 +1307,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "detect";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (returnFaceId != null)
             {

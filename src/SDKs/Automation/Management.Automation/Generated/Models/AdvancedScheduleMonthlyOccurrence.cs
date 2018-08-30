@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="occurrence">Occurrence of the week within the month.
         /// Must be between 1 and 5</param>
         /// <param name="day">Day of the occurrence. Must be one of monday,
-        /// tuesday, wednesday,thursday, friday, saturday, sunday. Possible
+        /// tuesday, wednesday, thursday, friday, saturday, sunday. Possible
         /// values include: 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
         /// 'Friday', 'Saturday', 'Sunday'</param>
         public AdvancedScheduleMonthlyOccurrence(int? occurrence = default(int?), string day = default(string))
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Automation.Models
 
         /// <summary>
         /// Gets or sets day of the occurrence. Must be one of monday, tuesday,
-        /// wednesday,thursday, friday, saturday, sunday. Possible values
+        /// wednesday, thursday, friday, saturday, sunday. Possible values
         /// include: 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
         /// 'Saturday', 'Sunday'
         /// </summary>

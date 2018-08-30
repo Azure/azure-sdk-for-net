@@ -28,15 +28,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='connectionTypeName'>
             /// The name of connectiontype.
             /// </param>
-            public static void Delete(this IConnectionTypeOperations operations, string automationAccountName, string connectionTypeName)
+            public static void Delete(this IConnectionTypeOperations operations, string resourceGroupName, string automationAccountName, string connectionTypeName)
             {
-                operations.DeleteAsync(automationAccountName, connectionTypeName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, automationAccountName, connectionTypeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -46,8 +49,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='connectionTypeName'>
             /// The name of connectiontype.
@@ -55,9 +61,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IConnectionTypeOperations operations, string automationAccountName, string connectionTypeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IConnectionTypeOperations operations, string resourceGroupName, string automationAccountName, string connectionTypeName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(automationAccountName, connectionTypeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, automationAccountName, connectionTypeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -67,15 +73,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='connectionTypeName'>
             /// The name of connectiontype.
             /// </param>
-            public static ConnectionType Get(this IConnectionTypeOperations operations, string automationAccountName, string connectionTypeName)
+            public static ConnectionType Get(this IConnectionTypeOperations operations, string resourceGroupName, string automationAccountName, string connectionTypeName)
             {
-                return operations.GetAsync(automationAccountName, connectionTypeName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, automationAccountName, connectionTypeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -85,8 +94,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='connectionTypeName'>
             /// The name of connectiontype.
@@ -94,9 +106,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ConnectionType> GetAsync(this IConnectionTypeOperations operations, string automationAccountName, string connectionTypeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConnectionType> GetAsync(this IConnectionTypeOperations operations, string resourceGroupName, string automationAccountName, string connectionTypeName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(automationAccountName, connectionTypeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, connectionTypeName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -109,8 +121,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='connectionTypeName'>
             /// The parameters supplied to the create or update connectiontype operation.
@@ -118,9 +133,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='parameters'>
             /// The parameters supplied to the create or update connectiontype operation.
             /// </param>
-            public static ConnectionType CreateOrUpdate(this IConnectionTypeOperations operations, string automationAccountName, string connectionTypeName, ConnectionTypeCreateOrUpdateParameters parameters)
+            public static ConnectionType CreateOrUpdate(this IConnectionTypeOperations operations, string resourceGroupName, string automationAccountName, string connectionTypeName, ConnectionTypeCreateOrUpdateParameters parameters)
             {
-                return operations.CreateOrUpdateAsync(automationAccountName, connectionTypeName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, automationAccountName, connectionTypeName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,8 +145,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='connectionTypeName'>
             /// The parameters supplied to the create or update connectiontype operation.
@@ -142,9 +160,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ConnectionType> CreateOrUpdateAsync(this IConnectionTypeOperations operations, string automationAccountName, string connectionTypeName, ConnectionTypeCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConnectionType> CreateOrUpdateAsync(this IConnectionTypeOperations operations, string resourceGroupName, string automationAccountName, string connectionTypeName, ConnectionTypeCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(automationAccountName, connectionTypeName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, automationAccountName, connectionTypeName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -157,12 +175,15 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
-            public static IPage<ConnectionType> ListByAutomationAccount(this IConnectionTypeOperations operations, string automationAccountName)
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            public static IPage<ConnectionType> ListByAutomationAccount(this IConnectionTypeOperations operations, string resourceGroupName, string automationAccountName)
             {
-                return operations.ListByAutomationAccountAsync(automationAccountName).GetAwaiter().GetResult();
+                return operations.ListByAutomationAccountAsync(resourceGroupName, automationAccountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -172,15 +193,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ConnectionType>> ListByAutomationAccountAsync(this IConnectionTypeOperations operations, string automationAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ConnectionType>> ListByAutomationAccountAsync(this IConnectionTypeOperations operations, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(automationAccountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(resourceGroupName, automationAccountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

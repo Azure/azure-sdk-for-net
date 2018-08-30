@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Xunit;
 
 namespace Compute.Tests
@@ -34,8 +34,23 @@ namespace Compute.Tests
             return vmExtension;
         }
 
+        VirtualMachineExtensionUpdate GetTestVMUpdateExtension()
+        {
+            var vmExtensionUpdate = new VirtualMachineExtensionUpdate
+            {
+                Tags =
+                    new Dictionary<string, string>
+                    {
+                        {"extensionTag1", "1"},
+                        {"extensionTag2", "2"},
+                        {"extensionTag3", "3"}
+                    }
+            };
+
+            return vmExtensionUpdate;
+        }
+
         [Fact]
-        [Trait("Failure", "Password policy")]
         public void TestVMExtensionOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -68,9 +83,22 @@ namespace Compute.Tests
                     var getVMExtResponse = m_CrpClient.VirtualMachineExtensions.Get(rgName, vm.Name, vmExtension.Name);
                     ValidateVMExtension(vmExtension, getVMExtResponse);
 
+                    // Perform a GetExtensions on the VM
+                    var getVMExtsResponse = m_CrpClient.VirtualMachineExtensions.List(rgName, vm.Name);
+                    Assert.Equal(1, getVMExtsResponse.Value.Count);
+                    Assert.Equal("vmext01", getVMExtsResponse.Value[0].Name);
+                    ValidateVMExtension(vmExtension, getVMExtsResponse.Value[0]);
+
                     // Validate Get InstanceView for the extension
                     var getVMExtInstanceViewResponse = m_CrpClient.VirtualMachineExtensions.Get(rgName, vm.Name, vmExtension.Name, "instanceView");
                     ValidateVMExtensionInstanceView(getVMExtInstanceViewResponse.InstanceView);
+
+                    // Update extension on the VM
+                    var vmExtensionUpdate = GetTestVMUpdateExtension();
+                    m_CrpClient.VirtualMachineExtensions.Update(rgName, vm.Name, vmExtension.Name, vmExtensionUpdate);
+                    vmExtension.Tags["extensionTag3"] = "3";
+                    getVMExtResponse = m_CrpClient.VirtualMachineExtensions.Get(rgName, vm.Name, vmExtension.Name);
+                    ValidateVMExtension(vmExtension, getVMExtResponse);
 
                     // Validate the extension in the VM info
                     var getVMResponse = m_CrpClient.VirtualMachines.Get(rgName, vm.Name);
@@ -102,6 +130,7 @@ namespace Compute.Tests
             Assert.True(vmExtExpected.TypeHandlerVersion == vmExtReturned.TypeHandlerVersion);
             Assert.True(vmExtExpected.Settings.ToString() == vmExtReturned.Settings.ToString());
             Assert.True(vmExtExpected.ForceUpdateTag == vmExtReturned.ForceUpdateTag);
+            Assert.True(vmExtExpected.Tags.SequenceEqual(vmExtReturned.Tags));
         }
 
         private void ValidateVMExtensionInstanceView(VirtualMachineExtensionInstanceView vmExtInstanceView)

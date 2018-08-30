@@ -40,8 +40,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="appServicePlanName">Name for the App Service
-        /// plan.</param>
         /// <param name="workerTierName">Target worker tier assigned to the App
         /// Service plan.</param>
         /// <param name="status">App Service plan status. Possible values
@@ -65,18 +63,24 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Service Plan owns spot instances.</param>
         /// <param name="spotExpirationTime">The time when the server farm
         /// expires. Valid only if it is a spot server farm.</param>
+        /// <param name="freeOfferExpirationTime">The time when the server farm
+        /// free offer expires.</param>
         /// <param name="resourceGroup">Resource group of the App Service
         /// plan.</param>
-        /// <param name="reserved">Reserved.</param>
+        /// <param name="reserved">If Linux app service plan
+        /// &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;
+        /// otherwise.</param>
+        /// <param name="isXenon">If Hyper-V container app service plan
+        /// &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;
+        /// otherwise.</param>
         /// <param name="targetWorkerCount">Scaling worker count.</param>
         /// <param name="targetWorkerSizeId">Scaling worker size ID.</param>
         /// <param name="provisioningState">Provisioning state of the App
         /// Service Environment. Possible values include: 'Succeeded',
         /// 'Failed', 'Canceled', 'InProgress', 'Deleting'</param>
-        public AppServicePlan(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string appServicePlanName = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), string adminSiteName = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), SkuDescription sku = default(SkuDescription))
+        public AppServicePlan(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), string adminSiteName = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), System.DateTime? freeOfferExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), SkuDescription sku = default(SkuDescription))
             : base(location, id, name, kind, type, tags)
         {
-            AppServicePlanName = appServicePlanName;
             WorkerTierName = workerTierName;
             Status = status;
             Subscription = subscription;
@@ -88,8 +92,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
             NumberOfSites = numberOfSites;
             IsSpot = isSpot;
             SpotExpirationTime = spotExpirationTime;
+            FreeOfferExpirationTime = freeOfferExpirationTime;
             ResourceGroup = resourceGroup;
             Reserved = reserved;
+            IsXenon = isXenon;
             TargetWorkerCount = targetWorkerCount;
             TargetWorkerSizeId = targetWorkerSizeId;
             ProvisioningState = provisioningState;
@@ -101,12 +107,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets name for the App Service plan.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string AppServicePlanName { get; set; }
 
         /// <summary>
         /// Gets or sets target worker tier assigned to the App Service plan.
@@ -183,16 +183,32 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public System.DateTime? SpotExpirationTime { get; set; }
 
         /// <summary>
+        /// Gets or sets the time when the server farm free offer expires.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.freeOfferExpirationTime")]
+        public System.DateTime? FreeOfferExpirationTime { get; set; }
+
+        /// <summary>
         /// Gets resource group of the App Service plan.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGroup")]
         public string ResourceGroup { get; private set; }
 
         /// <summary>
-        /// Gets or sets reserved.
+        /// Gets or sets if Linux app service plan
+        /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;,
+        /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; otherwise.
         /// </summary>
         [JsonProperty(PropertyName = "properties.reserved")]
         public bool? Reserved { get; set; }
+
+        /// <summary>
+        /// Gets or sets if Hyper-V container app service plan
+        /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;,
+        /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; otherwise.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isXenon")]
+        public bool? IsXenon { get; set; }
 
         /// <summary>
         /// Gets or sets scaling worker count.

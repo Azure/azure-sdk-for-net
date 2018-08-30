@@ -1,7 +1,7 @@
     {
       "Name": "ComputeNode",
       "ProtocolName": "Models.ComputeNode",
-      "Comment": "Summarizes the state of a compute node.",
+      "SummaryComment": "Summarizes the state of a compute node.",
       "ParentPathVariables": [ "parentPoolId" ],
       "IsTopLevelObject": true,
       "IsConstructorPublic": false,
@@ -241,6 +241,20 @@
             "UnboundAccess": "none"
           },
           "Value": null
+        },
+        {
+          "Key": {
+            "Type": "NodeAgentInformation",
+            "Name": "NodeAgentInformation",
+            "SummaryComment": "Information about the node agent version and the time the node upgraded to a new version.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": {
+            "Type": "NodeAgentInformation",
+            "Name": "NodeAgentInfo"
+          }
         }
       ]
     }

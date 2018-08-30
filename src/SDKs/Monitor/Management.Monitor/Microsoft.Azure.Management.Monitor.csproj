@@ -6,7 +6,7 @@
 	<PropertyGroup>
 		<Description>Microsoft Azure Monitor Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Monitor</AssemblyName>
-		<Version>0.19.1-preview</Version>
+		<Version>0.20.1-preview</Version>
 		<PackageId>Microsoft.Azure.Management.Monitor</PackageId>
 		<PackageTags>Management.Monitor;Management.Monitoring;metrics;alerts;autoscale;activityLogs;events;operations;logs;</PackageTags>
 		<PackageReleaseNotes>See https://aka.ms/azure-sdk-for-net/monitor/changelog for release notes.</PackageReleaseNotes>

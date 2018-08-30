@@ -1,32 +1,38 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!-- <Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" /> -->
   <PropertyGroup>
     <Description>Microsoft.Azure.Test.HttpRecorder</Description>
     <AssemblyTitle>HttpRecorder Library for recording Clinet/Server communication in Azure</AssemblyTitle>
-    <VersionPrefix>1.8.1</VersionPrefix>
+    <Version>1.11.0</Version>
     <AssemblyName>Microsoft.Azure.Test.HttpRecorder</AssemblyName>
     <PackageId>Microsoft.Azure.Test.HttpRecorder</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime HttpRecorder REST;$(CommonNugetPackageTags)</PackageTags>
+    <DefaultItemExcludes>$(DefaultItemExcludes);HttpRecorder.csproj</DefaultItemExcludes>
+    <PackageReleaseNotes>
+      <![CDATA[
+      1) Optimizing recorded files for LRO scenarios
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>net452;net461;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <!--<PackageReference Include="Newtonsoft.Json" Version="9.0.1" />-->
-  </ItemGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
-
     <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
   </ItemGroup>
-  
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <PackageReference Include="System.AppDomain" Version="2.0.11" />
-    
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+  
 </Project>

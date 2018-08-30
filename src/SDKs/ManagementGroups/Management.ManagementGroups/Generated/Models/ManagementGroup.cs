@@ -47,15 +47,18 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// 00000000-0000-0000-0000-000000000000</param>
         /// <param name="displayName">The friendly name of the management
         /// group.</param>
+        /// <param name="roles">The role definitions associated with the
+        /// management group.</param>
         /// <param name="details">Details</param>
         /// <param name="children">The list of children.</param>
-        public ManagementGroup(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string), ManagementGroupDetails details = default(ManagementGroupDetails), IList<ManagementGroupChildInfo> children = default(IList<ManagementGroupChildInfo>))
+        public ManagementGroup(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string), IList<string> roles = default(IList<string>), ManagementGroupDetails details = default(ManagementGroupDetails), IList<ManagementGroupChildInfo> children = default(IList<ManagementGroupChildInfo>))
         {
             Id = id;
             Type = type;
             Name = name;
             TenantId = tenantId;
             DisplayName = displayName;
+            Roles = roles;
             Details = details;
             Children = children;
             CustomInit();
@@ -99,6 +102,13 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the role definitions associated with the management
+        /// group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.roles")]
+        public IList<string> Roles { get; set; }
 
         /// <summary>
         /// Gets or sets details

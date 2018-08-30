@@ -112,7 +112,9 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment 
         /// variable expansion. If you want to take advantage of such features, you should invoke the shell in the command 
-        /// line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line 
+        /// refers to file paths, it should use a relative path (relative to the task working directory), or use the Batch 
+        /// provided environment variables (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
         /// </remarks>
         public string CommandLine
         {

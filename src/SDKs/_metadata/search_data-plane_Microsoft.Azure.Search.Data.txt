@@ -1,10 +1,17 @@
-2018-03-02 03:24:06 UTC
-
+﻿Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/search/data-plane/Microsoft.Azure.Search.Data/readme.md --csharp --csharp-sdks-folder=E:\github\azure-sdk-for-net\tools\..\src\SDKs\ --version=latest --reflect-api-versions
+2018-04-13 17:26:02 UTC
 1) azure-rest-api-specs repository information
-GitHub user: Azure
+GitHub fork: Azure
 Branch:      master
+Commit:      f8e8f17d186921ac4fdd139c4058b579ec828b1a
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\brjohnst\AppData\Roaming\npm `-- autorest@2.0.4245  
+Bootstrapper version:    C:\Users\brjohnst\AppData\Roaming\npm  `-- autorest@2.0.4262
+
+
 Latest installed version:    
+.\tools\generate.ps1 was invoked by generate.ps1
+
+

@@ -21,5 +21,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string AES128 = "AES128";
         public const string AES192 = "AES192";
         public const string AES256 = "AES256";
+        public const string GCMAES256 = "GCMAES256";
+        public const string GCMAES128 = "GCMAES128";
     }
 }

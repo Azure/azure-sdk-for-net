@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Version related deatils.
+    /// Version related details.
     /// </summary>
     public partial class VersionDetails
     {
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="status">A value indicating whether security update
         /// required. Possible values include: 'Supported', 'NotSupported',
         /// 'Deprecated', 'UpdateRequired', 'SecurityUpdateRequired'</param>
-        public VersionDetails(string version = default(string), System.DateTime? expiryDate = default(System.DateTime?), AgentVersionStatus? status = default(AgentVersionStatus?))
+        public VersionDetails(string version = default(string), System.DateTime? expiryDate = default(System.DateTime?), string status = default(string))
         {
             Version = version;
             ExpiryDate = expiryDate;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'UpdateRequired', 'SecurityUpdateRequired'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public AgentVersionStatus? Status { get; set; }
+        public string Status { get; set; }
 
     }
 }

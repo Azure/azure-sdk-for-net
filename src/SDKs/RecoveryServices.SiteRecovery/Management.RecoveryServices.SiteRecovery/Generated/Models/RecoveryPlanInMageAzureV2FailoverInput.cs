@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="useMultiVmSyncPoint">A value indicating whether multi
         /// VM sync enabled VMs should use multi VM sync points for
         /// failover.</param>
-        public RecoveryPlanInMageAzureV2FailoverInput(string vaultLocation, InMageV2RpRecoveryPointType recoveryPointType, string useMultiVmSyncPoint = default(string))
+        public RecoveryPlanInMageAzureV2FailoverInput(string vaultLocation, string recoveryPointType, string useMultiVmSyncPoint = default(string))
         {
             VaultLocation = vaultLocation;
             RecoveryPointType = recoveryPointType;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'LatestProcessed'
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointType")]
-        public InMageV2RpRecoveryPointType RecoveryPointType { get; set; }
+        public string RecoveryPointType { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether multi VM sync enabled VMs
@@ -85,6 +85,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             if (VaultLocation == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "VaultLocation");
+            }
+            if (RecoveryPointType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RecoveryPointType");
             }
         }
     }

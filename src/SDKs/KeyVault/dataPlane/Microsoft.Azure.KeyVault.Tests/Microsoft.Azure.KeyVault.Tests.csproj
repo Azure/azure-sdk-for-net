@@ -3,12 +3,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.KeyVault.Tests</PackageId>
     <Description>Microsoft.Azure.KeyVault.Tests Class Library</Description>
-    <VersionPrefix>2.0.2</VersionPrefix>
+    <VersionPrefix>3.0.0-alpha</VersionPrefix>
     <AssemblyName>Microsoft.Azure.KeyVault.Tests</AssemblyName>
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
   
   <ItemGroup>  
     <None Update="appsettings.json">
@@ -24,8 +24,8 @@
     <ProjectReference Include="..\Microsoft.Azure.KeyVault.TestFramework\Microsoft.Azure.KeyVault.TestFramework.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.13.9" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.14.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// This constant is used as the default package version to place in the user agent.
         /// It should mirror the package version in the project.json file.
         /// </summary>
-        internal const string PackageVersion = "3.3.0-preview";
+        internal const string PackageVersion = "3.5.0-preview";
 
         internal const string DefaultAdlaDnsSuffix = "azuredatalakeanalytics.net";
 

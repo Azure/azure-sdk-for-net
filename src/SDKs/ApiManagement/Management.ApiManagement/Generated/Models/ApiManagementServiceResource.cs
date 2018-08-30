@@ -71,12 +71,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="hostnameConfigurations">Custom hostname configuration
         /// of the API Management service.</param>
         /// <param name="publicIPAddresses">Public Static Load Balanced IP
-        /// addresses of the API Management service. Available only for Basic,
-        /// Standard and Premium SKU.</param>
+        /// addresses of the API Management service in Primary region.
+        /// Available only for Basic, Standard and Premium SKU.</param>
         /// <param name="privateIPAddresses">Private Static Load Balanced IP
-        /// addresses of the API Management service which is deployed in an
-        /// Internal Virtual Network. Available only for Basic, Standard and
-        /// Premium SKU.</param>
+        /// addresses of the API Management service in Primary region which is
+        /// deployed in an Internal Virtual Network. Available only for Basic,
+        /// Standard and Premium SKU.</param>
         /// <param name="virtualNetworkConfiguration">Virtual network
         /// configuration of the API Management service.</param>
         /// <param name="additionalLocations">Additional datacenter locations
@@ -209,15 +209,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets public Static Load Balanced IP addresses of the API Management
-        /// service. Available only for Basic, Standard and Premium SKU.
+        /// service in Primary region. Available only for Basic, Standard and
+        /// Premium SKU.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddresses")]
         public IList<string> PublicIPAddresses { get; private set; }
 
         /// <summary>
         /// Gets private Static Load Balanced IP addresses of the API
-        /// Management service which is deployed in an Internal Virtual
-        /// Network. Available only for Basic, Standard and Premium SKU.
+        /// Management service in Primary region which is deployed in an
+        /// Internal Virtual Network. Available only for Basic, Standard and
+        /// Premium SKU.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAddresses")]
         public IList<string> PrivateIPAddresses { get; private set; }

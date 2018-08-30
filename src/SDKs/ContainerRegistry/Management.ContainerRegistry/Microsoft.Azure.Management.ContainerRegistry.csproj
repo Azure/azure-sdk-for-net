@@ -6,14 +6,14 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.ContainerRegistry</PackageId>
 		<Description>Provides management capabilities for Azure Container Registry.</Description>
-		<Version>2.0.0</Version>
+		<Version>2.8.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.ContainerRegistry</AssemblyName>
 		<PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        1) Added support for managed registries that can be created with Basic, Standard, Premium SKU.
-        2) Bring your own storage registries can still be created with Classic SKU.
-        3) Added support for webhooks and replications.
+        1) Added support for Azure Container Registry Build service.
+        2) Added support for registry policy.
+        3) Added support for image import.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

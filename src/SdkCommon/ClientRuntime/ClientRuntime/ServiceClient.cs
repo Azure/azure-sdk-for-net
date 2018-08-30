@@ -11,6 +11,7 @@ namespace Microsoft.Rest
     using System.Reflection;
     using Microsoft.Rest.TransientFaultHandling;
     using System.Text.RegularExpressions;
+    using Microsoft.Rest.Utilities;
 #if FullNetFx
     using Microsoft.Win32;
 #endif
@@ -112,6 +113,14 @@ namespace Microsoft.Rest
         /// <returns>Value for provided HKLM key</returns>
         private string ReadHKLMRegistry(string path, string key)
         {
+            switch (Environment.OSVersion.Platform)
+            {
+                case PlatformID.Unix:
+                case PlatformID.MacOSX:
+                case PlatformID.Xbox:
+                    return string.Empty;
+            }
+
             try
             {
                 using (RegistryKey rk = Registry.LocalMachine.OpenSubKey(path))
@@ -234,7 +243,7 @@ namespace Microsoft.Rest
         /// pipeline).
         /// </summary>
         protected HttpClientHandler HttpClientHandler { get; set; }
-        
+
         /// <summary>
         /// Initializes a new instance of the ServiceClient class.
         /// </summary>
@@ -243,10 +252,9 @@ namespace Microsoft.Rest
             "CA2000:Dispose objects before losing scope",
             Justification = "The created objects should be disposed on caller's side")]
         protected ServiceClient()
-            : this(CreateRootHandler())
-        {
-        }
-
+            : this(serviceHttpClient: null, rootHandler: CreateRootHandler(), disposeHttpClient: true, delHandlers: null) { }
+            //: this(CreateRootHandler())
+        
         /// <summary>
         /// Initializes a new instance of the ServiceClient class.
         /// </summary>
@@ -256,12 +264,9 @@ namespace Microsoft.Rest
             "Microsoft.Reliability",
             "CA2000:Dispose objects before losing scope",
             Justification = "The created objects should be disposed on caller's side")]
-        protected ServiceClient(HttpClient httpClient, bool disposeHttpClient = true)
-        {
-            _disposeHttpClient = disposeHttpClient;
-            InitializeHttpClient(httpClient, null);
-        }
-        
+        protected ServiceClient(HttpClient httpClient, bool disposeHttpClient = true) : 
+            this(serviceHttpClient: httpClient, rootHandler: null, disposeHttpClient: disposeHttpClient, delHandlers: null) { }
+
         /// <summary>
         /// Initializes a new instance of the ServiceClient class.
         /// </summary>
@@ -271,9 +276,8 @@ namespace Microsoft.Rest
             "CA2000:Dispose objects before losing scope",
             Justification = "The created objects should be disposed on caller's side")]
         protected ServiceClient(params DelegatingHandler[] handlers)
-            : this(CreateRootHandler(), handlers)
-        {
-        }
+            : this(serviceHttpClient: null, rootHandler: CreateRootHandler(), disposeHttpClient: true, delHandlers: handlers) { }
+            //: this(CreateRootHandler(), handlers) { }
 
         /// <summary>
         /// Initializes ServiceClient using base HttpClientHandler and list of handlers.
@@ -281,8 +285,15 @@ namespace Microsoft.Rest
         /// <param name="rootHandler">Base HttpClientHandler.</param>
         /// <param name="handlers">List of handlers from top to bottom (outer handler is the first in the list)</param>
         protected ServiceClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers)
+            : this(serviceHttpClient: null, rootHandler: rootHandler, disposeHttpClient: true, delHandlers: handlers) { }
+
+        private ServiceClient(HttpClient httpClient, HttpClientHandler rootHandler, params DelegatingHandler[] handlers)
+            : this(serviceHttpClient: null, rootHandler: rootHandler, disposeHttpClient: true, delHandlers: handlers) { }
+
+        private ServiceClient(HttpClient serviceHttpClient, HttpClientHandler rootHandler, bool disposeHttpClient, params DelegatingHandler[] delHandlers)
         {
-            InitializeHttpClient(rootHandler, handlers);
+            _disposeHttpClient = disposeHttpClient;
+            InitializeHttpClient(serviceHttpClient, rootHandler, delHandlers);
         }
 
         /// <summary>
@@ -384,7 +395,7 @@ namespace Microsoft.Rest
                 {
                     HttpClient.Dispose();
                     HttpClient = null;
-                }                
+                }
                 
                 FirstMessageHandler = null;
                 HttpClientHandler = null;
@@ -414,16 +425,18 @@ namespace Microsoft.Rest
         /// <param name="handlers">List of handlers from top to bottom (outer handler is the first in the list)</param>
         protected void InitializeHttpClient(HttpClient httpClient, HttpClientHandler httpClientHandler, params DelegatingHandler[] handlers)
         {
-           if (httpClient == null)
+            if (httpClient == null)
             {
-                if(httpClientHandler == null)
+                if (httpClientHandler == null)
                 {
                     httpClientHandler = CreateRootHandler();
                 }
 
                 HttpClientHandler = httpClientHandler;
-                DelegatingHandler currentHandler = new RetryDelegatingHandler();
-                currentHandler.InnerHandler = HttpClientHandler;
+                // Now, the RetryAfterDelegatingHandler should be the absoulte outermost handler 
+                // because it's extremely lightweight and non-interfering
+                DelegatingHandler currentHandler =
+                    new RetryDelegatingHandler(new RetryAfterDelegatingHandler {InnerHandler = httpClientHandler});
 
                 if (handlers != null)
                 {
@@ -449,7 +462,9 @@ namespace Microsoft.Rest
             {
                 HttpClient = httpClient;
             }
-            
+
+            MergeUserAgentInfo(DefaultUserAgentInfoList);
+            //DefaultUserAgentInfoList.ForEach((pInfo) => HttpClient.DefaultRequestHeaders.UserAgent.Add(pInfo));
             SetUserAgent(this.GetType().FullName, ClientVersion);
         }
         
@@ -469,11 +484,10 @@ namespace Microsoft.Rest
         /// <param name="version">Version of the product to be used in the user agent</param>
         public bool SetUserAgent(string productName, string version)
         {
-            if (!_disposed && HttpClient != null)
+            if (!_disposed && HttpClient != null && !string.IsNullOrWhiteSpace(version))
             {
-                MergeUserAgentInfo(DefaultUserAgentInfoList);
-                string cleanedProductName = CleanUserAgentInfoEntry(productName);                
-                HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(cleanedProductName, version));
+                string cleanedProductName = CleanUserAgentInfoEntry(productName);
+                AddUserAgentEntry(new ProductInfoHeaderValue(cleanedProductName, version));
                 return true;
             }
 
@@ -488,10 +502,19 @@ namespace Microsoft.Rest
         /// <returns></returns>
         private string CleanUserAgentInfoEntry(string infoEntry)
         {
-            Regex pattern = new Regex("[~`!@#$%^&*(), ]");            
+            Regex pattern = new Regex("[~`!@#$%^&*(),<>?{} ]");            
             infoEntry = pattern.Replace(infoEntry, "");
 
             return infoEntry;
+        }
+
+        private void AddUserAgentEntry(ProductInfoHeaderValue pInfoHeaderValue)
+        {
+            if (!HttpClient.DefaultRequestHeaders.UserAgent.Contains<ProductInfoHeaderValue>(pInfoHeaderValue,
+                new ObjectComparer<ProductInfoHeaderValue>((left, right) => left.Product.Name.Equals(right.Product.Name, StringComparison.OrdinalIgnoreCase))))
+            {
+                HttpClient.DefaultRequestHeaders.UserAgent.Add(pInfoHeaderValue);
+            }
         }
 
         /// <summary>
@@ -502,10 +525,10 @@ namespace Microsoft.Rest
         private void MergeUserAgentInfo(List<ProductInfoHeaderValue> defaultUserAgentInfoList)
         {
             // If you want to log ProductName in userAgent, it has to be without spaces
-
             foreach(ProductInfoHeaderValue piHv in defaultUserAgentInfoList)
             {
-                if(!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase)));
+                if(!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase)) 
+                    && !string.IsNullOrWhiteSpace(piHv.Product.Version))
                 {
                     HttpClient.DefaultRequestHeaders.UserAgent.Add(piHv);
                 }

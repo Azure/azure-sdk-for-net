@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -33,7 +32,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     /// that a Job Manager task in one job does not have priority over tasks in
     /// other jobs. Across jobs, only job level priorities are observed. For
     /// example, if a Job Manager in a priority 0 job needs to be restarted, it
-    /// will not displace tasks of a priority 1 job.
+    /// will not displace tasks of a priority 1 job. Batch will retry tasks
+    /// when a recovery operation is triggered on a compute node. Examples of
+    /// recovery operations include (but are not limited to) when an unhealthy
+    /// compute node is rebooted or a compute node disappeared due to host
+    /// failure. Retries due to recovery operations are independent of and are
+    /// not counted against the maxTaskRetryCount. Even if the
+    /// maxTaskRetryCount is 0, an internal retry due to a recovery operation
+    /// may occur. Because of this, all tasks should be idempotent. This means
+    /// tasks need to tolerate being interrupted and restarted without causing
+    /// any corruption or duplicate data. The best practice for long running
+    /// tasks is to use some form of checkpointing.
     /// </remarks>
     public partial class JobManagerTask
     {
@@ -134,7 +143,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// take advantage of shell features such as environment variable
         /// expansion. If you want to take advantage of such features, you
         /// should invoke the shell in the command line, for example using "cmd
-        /// /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the
+        /// command line refers to file paths, it should use a relative path
+        /// (relative to the task working directory), or use the Batch provided
+        /// environment variable
+        /// (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
         /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
@@ -162,7 +175,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// Files listed under this element are located in the task's working
-        /// directory.
+        /// directory. There is a maximum size for the list of resource files.
+        /// When the max size is exceeded, the request will fail and the
+        /// response error code will be RequestEntityTooLarge. If this occurs,
+        /// the collection of ResourceFiles must be reduced in size. This can
+        /// be achieved using .zip files, Application Packages, or Docker
+        /// Containers.
         /// </remarks>
         [JsonProperty(PropertyName = "resourceFiles")]
         public IList<ResourceFile> ResourceFiles { get; set; }
@@ -277,71 +295,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node.
         /// </summary>
         /// <remarks>
-        /// The default value is false.
+        /// The default value is true.
         /// </remarks>
         [JsonProperty(PropertyName = "allowLowPriorityNode")]
         public bool? AllowLowPriorityNode { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
-            }
-            if (CommandLine == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
-            }
-            if (ContainerSettings != null)
-            {
-                ContainerSettings.Validate();
-            }
-            if (ResourceFiles != null)
-            {
-                foreach (var element in ResourceFiles)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (OutputFiles != null)
-            {
-                foreach (var element1 in OutputFiles)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (EnvironmentSettings != null)
-            {
-                foreach (var element2 in EnvironmentSettings)
-                {
-                    if (element2 != null)
-                    {
-                        element2.Validate();
-                    }
-                }
-            }
-            if (ApplicationPackageReferences != null)
-            {
-                foreach (var element3 in ApplicationPackageReferences)
-                {
-                    if (element3 != null)
-                    {
-                        element3.Validate();
-                    }
-                }
-            }
-        }
     }
 }

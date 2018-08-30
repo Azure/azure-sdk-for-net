@@ -7,14 +7,14 @@
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>Graph.RBAC.Tests</AssemblyName>    
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Graph.RBAC" Version="3.3.0-preview" />-->
     <ProjectReference Include="..\Graph.RBAC\Microsoft.Azure.Graph.RBAC.csproj" />
     
-    <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.1.0" />
+    <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
   </ItemGroup>
   
   <ItemGroup>

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// Definition of the module type.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Module : Resource
+    public partial class Module : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the Module class.
@@ -34,11 +34,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the Module class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="id">Fully qualified resource Id for the
+        /// resource</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource.</param>
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="location">The Azure Region where the resource
+        /// lives</param>
         /// <param name="isGlobal">Gets or sets the isGlobal flag of the
         /// module.</param>
         /// <param name="version">Gets or sets the version of the
@@ -62,9 +64,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="lastModifiedTime">Gets or sets the last modified
         /// time.</param>
         /// <param name="description">Gets or sets the description.</param>
+        /// <param name="isComposite">Gets or sets type of module, if its
+        /// composite or not.</param>
         /// <param name="etag">Gets or sets the etag of the resource.</param>
-        public Module(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? isGlobal = default(bool?), string version = default(string), long? sizeInBytes = default(long?), int? activityCount = default(int?), ModuleProvisioningState? provisioningState = default(ModuleProvisioningState?), ContentLink contentLink = default(ContentLink), ModuleErrorInfo error = default(ModuleErrorInfo), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string description = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public Module(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), bool? isGlobal = default(bool?), string version = default(string), long? sizeInBytes = default(long?), int? activityCount = default(int?), ModuleProvisioningState? provisioningState = default(ModuleProvisioningState?), ContentLink contentLink = default(ContentLink), ModuleErrorInfo error = default(ModuleErrorInfo), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string), bool? isComposite = default(bool?), string etag = default(string))
+            : base(id, name, type, tags, location)
         {
             IsGlobal = isGlobal;
             Version = version;
@@ -76,6 +80,7 @@ namespace Microsoft.Azure.Management.Automation.Models
             CreationTime = creationTime;
             LastModifiedTime = lastModifiedTime;
             Description = description;
+            IsComposite = isComposite;
             Etag = etag;
             CustomInit();
         }
@@ -137,19 +142,25 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the creation time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; set; }
+        public System.DateTimeOffset CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; set; }
+        public System.DateTimeOffset LastModifiedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the description.
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of module, if its composite or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isComposite")]
+        public bool? IsComposite { get; set; }
 
         /// <summary>
         /// Gets or sets the etag of the resource.
@@ -163,9 +174,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (ContentLink != null)
             {
                 ContentLink.Validate();

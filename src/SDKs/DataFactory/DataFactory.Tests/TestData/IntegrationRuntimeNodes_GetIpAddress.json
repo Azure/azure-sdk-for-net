@@ -1,21 +1,23 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "integrationRuntimeName": "exampleIntegrationRuntime",
     "nodeName": "Node_1",
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Tue, 14 Nov 2017 03:29:46 GMT",
-        "x-ms-request-id": "6ba794e4-da5a-4760-afa8-1c68a2c9f487",
-        "X-Content-Type-Options": "nosniff"
+        "Date": "Thu, 14 Jun 2018 15:36:39 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "f01265af-9f38-44b8-81a1-b67f567ea728",
+        "x-ms-correlation-request-id": "f01265af-9f38-44b8-81a1-b67f567ea728"
       },
       "body": {
-        "ipAddress": "***"
+        "ipAddress": "**********"
       }
     }
   }

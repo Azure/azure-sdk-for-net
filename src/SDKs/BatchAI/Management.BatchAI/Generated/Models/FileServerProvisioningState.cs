@@ -10,69 +10,16 @@
 
 namespace Microsoft.Azure.Management.BatchAI.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for FileServerProvisioningState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum FileServerProvisioningState
+    public static class FileServerProvisioningState
     {
-        [EnumMember(Value = "creating")]
-        Creating,
-        [EnumMember(Value = "updating")]
-        Updating,
-        [EnumMember(Value = "deleting")]
-        Deleting,
-        [EnumMember(Value = "succeeded")]
-        Succeeded,
-        [EnumMember(Value = "failed")]
-        Failed
-    }
-    internal static class FileServerProvisioningStateEnumExtension
-    {
-        internal static string ToSerializedValue(this FileServerProvisioningState? value)
-        {
-            return value == null ? null : ((FileServerProvisioningState)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this FileServerProvisioningState value)
-        {
-            switch( value )
-            {
-                case FileServerProvisioningState.Creating:
-                    return "creating";
-                case FileServerProvisioningState.Updating:
-                    return "updating";
-                case FileServerProvisioningState.Deleting:
-                    return "deleting";
-                case FileServerProvisioningState.Succeeded:
-                    return "succeeded";
-                case FileServerProvisioningState.Failed:
-                    return "failed";
-            }
-            return null;
-        }
-
-        internal static FileServerProvisioningState? ParseFileServerProvisioningState(this string value)
-        {
-            switch( value )
-            {
-                case "creating":
-                    return FileServerProvisioningState.Creating;
-                case "updating":
-                    return FileServerProvisioningState.Updating;
-                case "deleting":
-                    return FileServerProvisioningState.Deleting;
-                case "succeeded":
-                    return FileServerProvisioningState.Succeeded;
-                case "failed":
-                    return FileServerProvisioningState.Failed;
-            }
-            return null;
-        }
+        public const string Creating = "creating";
+        public const string Updating = "updating";
+        public const string Deleting = "deleting";
+        public const string Succeeded = "succeeded";
+        public const string Failed = "failed";
     }
 }

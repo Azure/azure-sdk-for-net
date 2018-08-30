@@ -1,7 +1,7 @@
 {
     "Name": "NetworkSecurityGroupRule",
     "ProtocolName": "Models.NetworkSecurityGroupRule",
-    "Comment": "A network security group rule to apply to an inbound endpoint.",
+    "SummaryComment": "A network security group rule to apply to an inbound endpoint.",
     "IsUsedInCollections": true,
     "Properties": [
         {

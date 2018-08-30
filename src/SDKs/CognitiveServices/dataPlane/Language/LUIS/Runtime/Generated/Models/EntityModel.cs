@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
+namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// matched entity within the utterance.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        public EntityModel(string entity, string type, double startIndex, double endIndex, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
+        public EntityModel(string entity, string type, int startIndex, int endIndex, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
         {
             AdditionalProperties = additionalProperties;
             Entity = entity;
@@ -80,14 +80,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// entity within the utterance.
         /// </summary>
         [JsonProperty(PropertyName = "startIndex")]
-        public double StartIndex { get; set; }
+        public int StartIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the position of the last character of the matched
         /// entity within the utterance.
         /// </summary>
         [JsonProperty(PropertyName = "endIndex")]
-        public double EndIndex { get; set; }
+        public int EndIndex { get; set; }
 
         /// <summary>
         /// Validate the object.
