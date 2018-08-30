@@ -17,7 +17,7 @@
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFrameworks>v4.5.2;netstandard1.4</TargetFrameworks>
+		<TargetFrameworks>v452;netstandard1.4</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->
