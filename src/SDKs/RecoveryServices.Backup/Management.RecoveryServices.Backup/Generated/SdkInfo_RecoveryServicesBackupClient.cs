@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 new Tuple<string, string, string>("RecoveryServices", "JobDetails", "2017-07-01"),
                 new Tuple<string, string, string>("RecoveryServices", "JobOperationResults", "2016-12-01"),
                 new Tuple<string, string, string>("RecoveryServices", "Jobs", "2017-07-01"),
+                new Tuple<string, string, string>("RecoveryServices", "Operation", "2017-07-01"),
                 new Tuple<string, string, string>("RecoveryServices", "Operations", "2016-08-10"),
                 new Tuple<string, string, string>("RecoveryServices", "ProtectableContainers", "2016-12-01"),
                 new Tuple<string, string, string>("RecoveryServices", "ProtectedItemOperationResults", "2016-12-01"),

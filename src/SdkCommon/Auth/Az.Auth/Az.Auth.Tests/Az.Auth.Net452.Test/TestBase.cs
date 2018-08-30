@@ -6,17 +6,38 @@ namespace Az.Auth.Net452.Test
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using System.Threading.Tasks;
 
 
-    public class AuthFullDesktopTestBase
+    public class AuthNet452TestBase
     {
         private bool IsLiteralDirty = false;
         private string _literalCnnString;
         private ConnectionString _cs;
         private TestEndpoints _cloudEndPoints;
+        string _testOutputDir;
+
+        public string TestOutputDir
+        {
+            get
+            {
+                if(string.IsNullOrEmpty(_testOutputDir))
+                {
+                    string codeBasePath = Assembly.GetExecutingAssembly().CodeBase;
+                    var uri = new UriBuilder(codeBasePath);
+                    string path = Uri.UnescapeDataString(uri.Path);
+                    _testOutputDir = Path.GetDirectoryName(path);
+                }
+
+                return _testOutputDir;
+            }
+        }
+
+        public string TestOutputAssemblyLocation { get; set; }
 
         public string LiteralCnnString
         {
@@ -85,11 +106,13 @@ namespace Az.Auth.Net452.Test
         }
 
 
-        public AuthFullDesktopTestBase(string connectionString)
+        public AuthNet452TestBase(string connectionString)
         {
             LiteralCnnString = connectionString;
+            TestOutputAssemblyLocation = Assembly.GetExecutingAssembly().CodeBase;
+            //TestOutputDir = Path.GetDirectoryName(TestOutputAssemblyLocation);
         }
 
-        public AuthFullDesktopTestBase() { LiteralCnnString = string.Empty; }
+        public AuthNet452TestBase() : this(connectionString: string.Empty) { }
     }
 }

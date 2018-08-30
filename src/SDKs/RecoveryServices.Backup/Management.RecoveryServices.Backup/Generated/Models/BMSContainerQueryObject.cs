@@ -39,9 +39,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'IaasVMServiceContainer', 'DPMContainer',
         /// 'AzureBackupServerContainer', 'MABContainer', 'Cluster',
         /// 'AzureSqlContainer', 'Windows', 'VCenter', 'VMAppContainer',
-        /// 'SQLAGWorkLoadContainer', 'StorageContainer', 'GenericContainer',
-        /// 'SqlCluster', 'ExchangeDAG', 'SharepointFarm', 'HyperVCluster',
-        /// 'WindowsClient'</param>
+        /// 'SQLAGWorkLoadContainer', 'StorageContainer',
+        /// 'GenericContainer'</param>
         /// <param name="backupEngineName">Backup engine name</param>
         /// <param name="fabricName">Fabric name for filter</param>
         /// <param name="status">Status of registration of this container with
@@ -78,8 +77,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DPMContainer', 'AzureBackupServerContainer', 'MABContainer',
         /// 'Cluster', 'AzureSqlContainer', 'Windows', 'VCenter',
         /// 'VMAppContainer', 'SQLAGWorkLoadContainer', 'StorageContainer',
-        /// 'GenericContainer', 'SqlCluster', 'ExchangeDAG', 'SharepointFarm',
-        /// 'HyperVCluster', 'WindowsClient'
+        /// 'GenericContainer'
         /// </summary>
         [JsonProperty(PropertyName = "containerType")]
         public string ContainerType { get; set; }

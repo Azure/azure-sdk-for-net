@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Monitor
               {
                 new Tuple<string, string, string>("Insights", "MetricAlerts", "2018-03-01"),
                 new Tuple<string, string, string>("Insights", "MetricAlertsStatus", "2018-03-01"),
-                new Tuple<string, string, string>("insights", "ActionGroups", "2017-04-01"),
+                new Tuple<string, string, string>("insights", "ActionGroups", "2018-03-01"),
                 new Tuple<string, string, string>("insights", "ActivityLogAlerts", "2017-04-01"),
                 new Tuple<string, string, string>("insights", "ActivityLogs", "2015-04-01"),
                 new Tuple<string, string, string>("insights", "AlertRuleIncidents", "2016-03-01"),
@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.Monitor
                 new Tuple<string, string, string>("insights", "MetricDefinitions", "2018-01-01"),
                 new Tuple<string, string, string>("insights", "Metrics", "2018-01-01"),
                 new Tuple<string, string, string>("insights", "Operations", "2015-04-01"),
+                new Tuple<string, string, string>("insights", "ScheduledQueryRules", "2018-04-16"),
                 new Tuple<string, string, string>("insights", "TenantActivityLogs", "2015-04-01"),
               }.AsEnumerable();
           }

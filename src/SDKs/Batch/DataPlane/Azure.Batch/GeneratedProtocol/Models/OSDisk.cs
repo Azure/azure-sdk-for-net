@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the type of caching to enable for the OS disk.
         /// </summary>
         /// <remarks>
-        /// The default value for caching is none. For information about the
-        /// caching options see:
+        /// The default value for caching is readwrite. For information about
+        /// the caching options see:
         /// https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
         /// Possible values include: 'none', 'readOnly', 'readWrite'
         /// </remarks>

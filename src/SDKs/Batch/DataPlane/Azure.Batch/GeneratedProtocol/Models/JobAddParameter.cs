@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -238,58 +237,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "usesTaskDependencies")]
         public bool? UsesTaskDependencies { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
-            }
-            if (PoolInfo == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PoolInfo");
-            }
-            if (JobManagerTask != null)
-            {
-                JobManagerTask.Validate();
-            }
-            if (JobPreparationTask != null)
-            {
-                JobPreparationTask.Validate();
-            }
-            if (JobReleaseTask != null)
-            {
-                JobReleaseTask.Validate();
-            }
-            if (CommonEnvironmentSettings != null)
-            {
-                foreach (var element in CommonEnvironmentSettings)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (PoolInfo != null)
-            {
-                PoolInfo.Validate();
-            }
-            if (Metadata != null)
-            {
-                foreach (var element1 in Metadata)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-        }
     }
 }

@@ -26,8 +26,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     {
         /// <summary>
         /// Provides a pageable list of protectable objects within your
-        /// subscription according to the query filter and the pagination
-        /// parameters.
+        /// subscription according to the query filter and the
+        /// pagination parameters.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<AzureOperationResponse<IPage<WorkloadProtectableItemResource>>> ListWithHttpMessagesAsync(string vaultName, string resourceGroupName, ODataQuery<BMSPOQueryObject> odataQuery = default(ODataQuery<BMSPOQueryObject>), string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Provides a pageable list of protectable objects within your
-        /// subscription according to the query filter and the pagination
-        /// parameters.
+        /// subscription according to the query filter and the
+        /// pagination parameters.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

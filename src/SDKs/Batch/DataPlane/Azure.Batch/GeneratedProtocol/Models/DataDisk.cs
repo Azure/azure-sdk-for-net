@@ -65,8 +65,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the type of caching to be enabled for the data disks.
         /// </summary>
         /// <remarks>
-        /// The default value for caching is none. For information about the
-        /// caching options see:
+        /// The default value for caching is readwrite. For information about
+        /// the caching options see:
         /// https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
         /// Possible values include: 'none', 'readOnly', 'readWrite'
         /// </remarks>
@@ -89,14 +89,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "storageAccountType")]
         public StorageAccountType? StorageAccountType { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-        }
     }
 }

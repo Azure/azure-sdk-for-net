@@ -27,14 +27,6 @@ namespace Microsoft.CognitiveServices.ContentModerator
     /// Text can be at most 1024 characters long.
     /// If the content passed to the text API or the image API exceeds the size
     /// limits, the API will return an error code that informs about the issue.
-    ///
-    /// This API is currently available in:
-    ///
-    /// * West US - westus.api.cognitive.microsoft.com
-    /// * East US 2 - eastus2.api.cognitive.microsoft.com
-    /// * West Central US - westcentralus.api.cognitive.microsoft.com
-    /// * West Europe - westeurope.api.cognitive.microsoft.com
-    /// * Southeast Asia - southeastasia.api.cognitive.microsoft.com .
     /// </summary>
     public partial class ContentModeratorClient : ServiceClient<ContentModeratorClient>, IContentModeratorClient
     {
@@ -54,22 +46,10 @@ namespace Microsoft.CognitiveServices.ContentModerator
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
-        /// Supported Azure regions for Content Moderator endpoints. Possible values
-        /// include: 'westus.api.cognitive.microsoft.com',
-        /// 'westus2.api.cognitive.microsoft.com',
-        /// 'eastus.api.cognitive.microsoft.com',
-        /// 'eastus2.api.cognitive.microsoft.com',
-        /// 'westcentralus.api.cognitive.microsoft.com',
-        /// 'southcentralus.api.cognitive.microsoft.com',
-        /// 'westeurope.api.cognitive.microsoft.com',
-        /// 'northeurope.api.cognitive.microsoft.com',
-        /// 'southeastasia.api.cognitive.microsoft.com',
-        /// 'eastasia.api.cognitive.microsoft.com',
-        /// 'australiaeast.api.cognitive.microsoft.com',
-        /// 'brazilsouth.api.cognitive.microsoft.com',
-        /// 'contentmoderatortest.azure-api.net'
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://westus.api.cognitive.microsoft.com).
         /// </summary>
-        public string BaseUrl { get; set; }
+        public string Endpoint { get; set; }
 
         /// <summary>
         /// Subscription credentials which uniquely identify client subscription.
@@ -110,6 +90,19 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// Gets the IReviews.
         /// </summary>
         public virtual IReviews Reviews { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the ContentModeratorClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ContentModeratorClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected ContentModeratorClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ContentModeratorClient class.
@@ -167,6 +160,33 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
         /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ContentModeratorClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public ContentModeratorClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ContentModeratorClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
         /// </param>
@@ -205,7 +225,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             ListManagementImage = new ListManagementImage(this);
             ListManagementTerm = new ListManagementTerm(this);
             Reviews = new Reviews(this);
-            BaseUri = "https://{baseUrl}";
+            BaseUri = "{Endpoint}";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,

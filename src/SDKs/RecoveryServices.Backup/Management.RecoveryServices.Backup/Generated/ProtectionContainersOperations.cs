@@ -268,7 +268,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <summary>
         /// Registers the container with Recovery Services vault.
         /// This is an asynchronous operation. To track the operation status, use
-        /// location header to call get latest status of the operation.
+        /// location header to call get latest status of
+        /// the operation.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -495,10 +496,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
 
         /// <summary>
-        /// Unregisters the given container from your Recovery Services Vault.
-        /// This is an asynchronous operation. To determine whether the backend service
-        /// has finished processing the request, call Get Container Operation Result
-        /// API.
+        /// Unregisters the given container from your Recovery Services Vault. This is
+        /// an asynchronous operation. To determine
+        /// whether the backend service has finished processing the request, call Get
+        /// Container Operation Result API.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -901,8 +902,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
         /// <summary>
         /// Discovers all the containers in the subscription that can be backed up to
-        /// Recovery Services Vault. This is an asynchronous operation. To know the
-        /// status of the operation, call GetRefreshOperationResult API.
+        /// Recovery Services Vault. This is an
+        /// asynchronous operation. To know the status of the operation, call
+        /// GetRefreshOperationResult API.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.

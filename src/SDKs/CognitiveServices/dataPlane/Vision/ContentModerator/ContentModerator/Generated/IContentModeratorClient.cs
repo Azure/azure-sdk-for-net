@@ -22,14 +22,6 @@ namespace Microsoft.CognitiveServices.ContentModerator
     /// Text can be at most 1024 characters long.
     /// If the content passed to the text API or the image API exceeds the size
     /// limits, the API will return an error code that informs about the issue.
-    ///
-    /// This API is currently available in:
-    ///
-    /// * West US - westus.api.cognitive.microsoft.com
-    /// * East US 2 - eastus2.api.cognitive.microsoft.com
-    /// * West Central US - westcentralus.api.cognitive.microsoft.com
-    /// * West Europe - westeurope.api.cognitive.microsoft.com
-    /// * Southeast Asia - southeastasia.api.cognitive.microsoft.com .
     /// </summary>
     public partial interface IContentModeratorClient : System.IDisposable
     {
@@ -48,22 +40,10 @@ namespace Microsoft.CognitiveServices.ContentModerator
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
-        /// Supported Azure regions for Content Moderator endpoints. Possible
-        /// values include: 'westus.api.cognitive.microsoft.com',
-        /// 'westus2.api.cognitive.microsoft.com',
-        /// 'eastus.api.cognitive.microsoft.com',
-        /// 'eastus2.api.cognitive.microsoft.com',
-        /// 'westcentralus.api.cognitive.microsoft.com',
-        /// 'southcentralus.api.cognitive.microsoft.com',
-        /// 'westeurope.api.cognitive.microsoft.com',
-        /// 'northeurope.api.cognitive.microsoft.com',
-        /// 'southeastasia.api.cognitive.microsoft.com',
-        /// 'eastasia.api.cognitive.microsoft.com',
-        /// 'australiaeast.api.cognitive.microsoft.com',
-        /// 'brazilsouth.api.cognitive.microsoft.com',
-        /// 'contentmoderatortest.azure-api.net'
+        /// Supported Cognitive Services endpoints (protocol and hostname, for
+        /// example: https://westus.api.cognitive.microsoft.com).
         /// </summary>
-        string BaseUrl { get; set; }
+        string Endpoint { get; set; }
 
         /// <summary>
         /// Subscription credentials which uniquely identify client

@@ -49,19 +49,20 @@ namespace Microsoft.Azure.Management.Sql
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running
-        /// Operations. Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default
+        /// value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated
-        /// and included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When
+        /// set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
@@ -325,6 +326,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedDatabasesOperations.
         /// </summary>
         IManagedDatabasesOperations ManagedDatabases { get; }
+
+        /// <summary>
+        /// Gets the ISensitivityLabelsOperations.
+        /// </summary>
+        ISensitivityLabelsOperations SensitivityLabels { get; }
 
         /// <summary>
         /// Gets the IServerAutomaticTuningOperations.

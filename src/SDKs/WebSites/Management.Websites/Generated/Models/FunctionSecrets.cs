@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets trigger URL.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.triggerUrl")]
+        [JsonProperty(PropertyName = "properties.trigger_url")]
         public string TriggerUrl { get; set; }
 
     }

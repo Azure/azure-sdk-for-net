@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// information.</param>
         /// <param name="target">Detailed error description and debugging
         /// information.</param>
-        public DefaultErrorResponseErrorDetailsItem(string code, string message, string target = default(string))
+        public DefaultErrorResponseErrorDetailsItem(string code = default(string), string message = default(string), string target = default(string))
         {
             Code = code;
             Message = message;
@@ -68,15 +68,5 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "target")]
         public string Target { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

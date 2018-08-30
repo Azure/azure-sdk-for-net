@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "connectionName");
             }
-            string apiVersion = "2018-06-01";
+            string apiVersion = "2018-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
             }
-            string apiVersion = "2018-06-01";
+            string apiVersion = "2018-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -550,7 +550,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vpnConnectionParameters");
             }
-            string apiVersion = "2018-06-01";
+            string apiVersion = "2018-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -770,7 +770,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "connectionName");
             }
-            string apiVersion = "2018-06-01";
+            string apiVersion = "2018-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

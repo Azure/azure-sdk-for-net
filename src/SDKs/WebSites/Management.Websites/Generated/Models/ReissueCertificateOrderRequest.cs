@@ -13,15 +13,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Class representing certificate reissue request.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ReissueCertificateOrderRequest : Resource
+    public partial class ReissueCertificateOrderRequest : ProxyOnlyResource
     {
         /// <summary>
         /// Initializes a new instance of the ReissueCertificateOrderRequest
@@ -36,12 +34,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the ReissueCertificateOrderRequest
         /// class.
         /// </summary>
-        /// <param name="location">Resource Location.</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="tags">Resource tags.</param>
         /// <param name="keySize">Certificate Key Size.</param>
         /// <param name="delayExistingRevokeInHours">Delay in hours to revoke
         /// existing certificate after the new certificate is issued.</param>
@@ -49,8 +45,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="isPrivateKeyExternal">Should we change the ASC type
         /// (from managed private key to external private key and vice
         /// versa).</param>
-        public ReissueCertificateOrderRequest(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? keySize = default(int?), int? delayExistingRevokeInHours = default(int?), string csr = default(string), bool? isPrivateKeyExternal = default(bool?))
-            : base(location, id, name, kind, type, tags)
+        public ReissueCertificateOrderRequest(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? keySize = default(int?), int? delayExistingRevokeInHours = default(int?), string csr = default(string), bool? isPrivateKeyExternal = default(bool?))
+            : base(id, name, kind, type)
         {
             KeySize = keySize;
             DelayExistingRevokeInHours = delayExistingRevokeInHours;
@@ -90,15 +86,5 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.isPrivateKeyExternal")]
         public bool? IsPrivateKeyExternal { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

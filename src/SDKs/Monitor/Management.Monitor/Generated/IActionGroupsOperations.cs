@@ -170,7 +170,8 @@ namespace Microsoft.Azure.Management.Monitor
         Task<AzureOperationResponse<IEnumerable<ActionGroupResource>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Enable a receiver in an action group. This changes the receiver's
-        /// status from Disabled to Enabled.
+        /// status from Disabled to Enabled. This operation is only supported
+        /// for Email or SMS receivers.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

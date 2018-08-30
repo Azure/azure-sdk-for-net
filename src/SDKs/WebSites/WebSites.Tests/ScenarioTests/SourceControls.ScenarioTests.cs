@@ -12,7 +12,7 @@ using Xunit;
 namespace WebSites.Tests.ScenarioTests
 {
     public class SourceControlsScenarioTests : TestBase
-    {
+    {/*
         private static readonly SourceControl GitHubSourceControl = new SourceControl()
         {
             SourceControlName = "GitHub",
@@ -28,7 +28,7 @@ namespace WebSites.Tests.ScenarioTests
         [Fact(Skip = "Obsolete API")]
         public void TestUpdateSourceControlUpdates()
         {
-            /*
+   
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var webSitesClient = this.GetWebSiteManagementClient(context);
@@ -48,7 +48,7 @@ namespace WebSites.Tests.ScenarioTests
                 var bitbucket = sourceControlListResponse.Value.FirstOrDefault(s => s.Name == "Bitbucket");
                 AssertSourceControl(BitbucketSourceControl, bitbucket);
             }
-            */
+            
         }
 
         private static void AssertSourceControl(SourceControl expectedSourceControl, SourceControl actualSourceControl)
@@ -57,5 +57,6 @@ namespace WebSites.Tests.ScenarioTests
             Assert.Equal(expectedSourceControl.Token, actualSourceControl.Token);
             Assert.Equal(expectedSourceControl.TokenSecret, actualSourceControl.TokenSecret);
         }
+        */
     }
 }

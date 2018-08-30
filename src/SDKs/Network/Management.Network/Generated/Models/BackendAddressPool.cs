@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// to IP addresses defined in network interfaces.</param>
         /// <param name="loadBalancingRules">Gets load balancing rules that use
         /// this backend address pool.</param>
-        /// <param name="outboundNatRule">Gets outbound rules that use this
+        /// <param name="outboundRule">Gets outbound rules that use this
         /// backend address pool.</param>
         /// <param name="provisioningState">Get provisioning state of the
         /// public IP resource. Possible values are: 'Updating', 'Deleting',
@@ -49,12 +49,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public BackendAddressPool(string id = default(string), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundNatRule = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public BackendAddressPool(string id = default(string), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundRule = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             BackendIPConfigurations = backendIPConfigurations;
             LoadBalancingRules = loadBalancingRules;
-            OutboundNatRule = outboundNatRule;
+            OutboundRule = outboundRule;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -82,8 +82,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets outbound rules that use this backend address pool.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.outboundNatRule")]
-        public SubResource OutboundNatRule { get; private set; }
+        [JsonProperty(PropertyName = "properties.outboundRule")]
+        public SubResource OutboundRule { get; private set; }
 
         /// <summary>
         /// Gets or sets get provisioning state of the public IP resource.

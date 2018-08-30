@@ -38,12 +38,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task TestBatchClientDefaultHttpClientTimeoutInfinite()
         {
-             BatchSharedKeyCredentials credentials = new BatchSharedKeyCredentials(
-                ClientUnitTestCommon.DummyBaseUrl,
-                ClientUnitTestCommon.DummyAccountName,
-                ClientUnitTestCommon.DummyAccountKey);
-
-            BatchClient batchClient = await BatchClient.OpenAsync(credentials);
+            BatchClient batchClient = ClientUnitTestCommon.CreateDummyClient();
 
             Protocol.BatchServiceClient restClient = (Protocol.BatchServiceClient)typeof(ProtocolLayer).GetField("_client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(batchClient.ProtocolLayer);
             Assert.Equal(Timeout.InfiniteTimeSpan, restClient.HttpClient.Timeout);
@@ -103,9 +98,8 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task TestDefaultBatchRequestTimeoutSet()
         {
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
             TimeSpan requestTimeout = TimeSpan.MinValue;
-            using (BatchClient client = await BatchClient.OpenAsync(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(req =>
                     {
@@ -142,8 +136,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task TestCancellationViaParameter()
         {
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            using (BatchClient client = await BatchClient.OpenAsync(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 List<IInheritedBehaviors> objectsToExamineForMethods = new List<IInheritedBehaviors>()
                     {
@@ -174,8 +167,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task TestCancellationViaParameterForLists()
         {
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            using (BatchClient client = await BatchClient.OpenAsync(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 List<IInheritedBehaviors> objectsToExamineForMethods = new List<IInheritedBehaviors>()
                     {
@@ -236,12 +228,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task TestBatchRequestCannotBeModifiedAfterExecutionStarted()
         {
-            BatchSharedKeyCredentials credentials = new BatchSharedKeyCredentials(
-               ClientUnitTestCommon.DummyBaseUrl,
-               ClientUnitTestCommon.DummyAccountName,
-               ClientUnitTestCommon.DummyAccountKey);
-
-            using (BatchClient batchClient = await BatchClient.OpenAsync(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient batchClient = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(req =>
                     {
@@ -288,9 +275,6 @@
             int? expectedMaxRetries = null)
         {
             TimeSpan timeoutViaCancellationTokenValue = clientRequestTimeoutViaCustomToken ?? TimeSpan.Zero;
-
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-
             TimeSpan? cancellationDuration = null;
 
             DateTime startTime = DateTime.UtcNow;
@@ -323,7 +307,7 @@
                     Assert.True(false, "Both clientRequestTimeoutViaCustomToken and clientRequestTimeoutViaTimeout cannot be null");
                 }
 
-                using (BatchClient client = await BatchClient.OpenAsync(credentials))
+                using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
                 {
                     //Add a retry policy to the client if required
                     if (retryPolicy != null)

@@ -124,7 +124,7 @@ namespace Azure.Batch.Unit.Tests
             // properties" call to the Batch service and instead builds a fake NodeFile.
             BatchClientBehavior getFakeNodeFile = CreateFakeNodeFileInterceptor<TPropertiesRequest, TPropertiesOptions, TPropertiesHeaders>();
 
-            using (BatchClient client = await BatchClient.OpenAsync(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 client.CustomBehaviors.Add(confirmByteRangeIsSet);
                 client.CustomBehaviors.Add(getFakeNodeFile);

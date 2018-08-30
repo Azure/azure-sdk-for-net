@@ -43,27 +43,24 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Stopped'</param>
         /// <param name="detailedStatus">Detailed status.</param>
         /// <param name="logUrl">Log URL.</param>
-        /// <param name="continuousWebJobName">Job name. Used as job identifier
-        /// in ARM resource URI.</param>
         /// <param name="runCommand">Run command.</param>
         /// <param name="url">Job URL.</param>
         /// <param name="extraInfoUrl">Extra Info URL.</param>
-        /// <param name="jobType">Job type. Possible values include:
+        /// <param name="webJobType">Job type. Possible values include:
         /// 'Continuous', 'Triggered'</param>
         /// <param name="error">Error information.</param>
         /// <param name="usingSdk">Using SDK?</param>
         /// <param name="settings">Job settings.</param>
-        public ContinuousWebJob(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), ContinuousWebJobStatus? status = default(ContinuousWebJobStatus?), string detailedStatus = default(string), string logUrl = default(string), string continuousWebJobName = default(string), string runCommand = default(string), string url = default(string), string extraInfoUrl = default(string), WebJobType? jobType = default(WebJobType?), string error = default(string), bool? usingSdk = default(bool?), IDictionary<string, object> settings = default(IDictionary<string, object>))
+        public ContinuousWebJob(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), ContinuousWebJobStatus? status = default(ContinuousWebJobStatus?), string detailedStatus = default(string), string logUrl = default(string), string runCommand = default(string), string url = default(string), string extraInfoUrl = default(string), WebJobType? webJobType = default(WebJobType?), string error = default(string), bool? usingSdk = default(bool?), IDictionary<string, object> settings = default(IDictionary<string, object>))
             : base(id, name, kind, type)
         {
             Status = status;
             DetailedStatus = detailedStatus;
             LogUrl = logUrl;
-            ContinuousWebJobName = continuousWebJobName;
             RunCommand = runCommand;
             Url = url;
             ExtraInfoUrl = extraInfoUrl;
-            JobType = jobType;
+            WebJobType = webJobType;
             Error = error;
             UsingSdk = usingSdk;
             Settings = settings;
@@ -85,25 +82,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets detailed status.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.detailedStatus")]
+        [JsonProperty(PropertyName = "properties.detailed_status")]
         public string DetailedStatus { get; set; }
 
         /// <summary>
         /// Gets or sets log URL.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.logUrl")]
+        [JsonProperty(PropertyName = "properties.log_url")]
         public string LogUrl { get; set; }
-
-        /// <summary>
-        /// Gets job name. Used as job identifier in ARM resource URI.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string ContinuousWebJobName { get; private set; }
 
         /// <summary>
         /// Gets or sets run command.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.runCommand")]
+        [JsonProperty(PropertyName = "properties.run_command")]
         public string RunCommand { get; set; }
 
         /// <summary>
@@ -115,15 +106,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets extra Info URL.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.extraInfoUrl")]
+        [JsonProperty(PropertyName = "properties.extra_info_url")]
         public string ExtraInfoUrl { get; set; }
 
         /// <summary>
         /// Gets or sets job type. Possible values include: 'Continuous',
         /// 'Triggered'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.jobType")]
-        public WebJobType? JobType { get; set; }
+        [JsonProperty(PropertyName = "properties.web_job_type")]
+        public WebJobType? WebJobType { get; set; }
 
         /// <summary>
         /// Gets or sets error information.
@@ -134,7 +125,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets using SDK?
         /// </summary>
-        [JsonProperty(PropertyName = "properties.usingSdk")]
+        [JsonProperty(PropertyName = "properties.using_sdk")]
         public bool? UsingSdk { get; set; }
 
         /// <summary>

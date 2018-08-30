@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     {
             /// <summary>
             /// Provides the details of the backed up item. This is an asynchronous
-            /// operation. To know the status of the operation, call the
-            /// GetItemOperationResult API.
+            /// operation. To know the status of the operation,
+            /// call the GetItemOperationResult API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
             /// <summary>
             /// Provides the details of the backed up item. This is an asynchronous
-            /// operation. To know the status of the operation, call the
-            /// GetItemOperationResult API.
+            /// operation. To know the status of the operation,
+            /// call the GetItemOperationResult API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -94,8 +94,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
             /// <summary>
             /// Enables backup of an item or to modifies the backup policy information of
-            /// an already backed up item. This is an asynchronous operation. To know the
-            /// status of the operation, call the GetItemOperationResult API.
+            /// an already backed up item. This is an
+            /// asynchronous operation. To know the status of the operation, call the
+            /// GetItemOperationResult API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -126,8 +127,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
             /// <summary>
             /// Enables backup of an item or to modifies the backup policy information of
-            /// an already backed up item. This is an asynchronous operation. To know the
-            /// status of the operation, call the GetItemOperationResult API.
+            /// an already backed up item. This is an
+            /// asynchronous operation. To know the status of the operation, call the
+            /// GetItemOperationResult API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -161,8 +163,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
             /// <summary>
             /// Used to disable backup of an item within a container. This is an
-            /// asynchronous operation. To know the status of the request, call the
-            /// GetItemOperationResult API.
+            /// asynchronous operation. To know the status of the
+            /// request, call the GetItemOperationResult API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -190,8 +192,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
             /// <summary>
             /// Used to disable backup of an item within a container. This is an
-            /// asynchronous operation. To know the status of the request, call the
-            /// GetItemOperationResult API.
+            /// asynchronous operation. To know the status of the
+            /// request, call the GetItemOperationResult API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
