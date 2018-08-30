@@ -176,7 +176,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var principalId = Guid.NewGuid;
+                var principalId = Guid.NewGuid();
 
                 var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var roleDefinition = client.RoleDefinitions.List(scope, null).ElementAt(1);
@@ -187,6 +187,8 @@ namespace Authorization.Tests
                     PrincipalType = "ServicePrincipal",
                     CanDelegate = false
                 };
+
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestByIdNew");
 
                 var createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
                 Assert.NotNull(createResult);
