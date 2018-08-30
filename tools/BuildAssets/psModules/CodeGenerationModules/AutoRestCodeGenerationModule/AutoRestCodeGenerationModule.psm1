@@ -205,11 +205,13 @@ function Populate-Metadata {
     $metadataTemplate = $metadataTemplate.Replace("{{CodeGenerationErrors}}", "")
     $metadataTemplate= $metadataTemplate.TrimEnd()
     $metadataTemplate = $metadataTemplate.Replace('\', '\\')
+    $metadataTemplate = $metadataTemplate + "`n"
     return $metadataTemplate
 }
 
 function Get-MetadataCode {
-    param([string] $sdkInfo)
+    param([string] $sdkInfo,
+          [string] $metadataTemplate)
         # If there is no regex match, we need to insert it for the first time
         # We need to find the third } which is where we now insert the template
         $substr = $sdkInfo
@@ -295,8 +297,7 @@ function Start-MetadataGeneration {
             $metadataDict.Add("{{AutoRestVersion}}", $AutoRestVersion)
             $metadataDict.Add("{{AutoRestCmdExecuted}}", $AutoRestCommandExecuted)
             $metadataDict.Add("{{AutoRestBootStrapperVersion}}", $ver)
-            $metadataTemplate = Populate-Metadata $metadataTemplate $metadataDict
-                
+            $metadataTemplate = Populate-Metadata $metadataTemplate $metadataDict 
             $sdkInfo = Get-Content $sdkInfoFile -Raw
             if($sdkInfo -cmatch '(.*)\/\/ BEGIN: Code Generation Metadata Section(\n|.)*\/\/ END: Code Generation Metadata Section')
             {
@@ -309,14 +310,14 @@ function Start-MetadataGeneration {
                 {
                     Foreach($info in $sdkInfo)
                     {
-                        $newSdkInfo = Get-MetadataCode $info
-                        Set-Content -Path $sdkInfoFile -Value $newSdkInfo.Trim()
+                        $newSdkInfo = Get-MetadataCode $info $metadataTemplate
+                        Set-Content -Path $sdkInfoFile -Value $newSdkInfo
                     }
                 }
                 else 
                 {
-                    $sdkInfo = Get-MetadataCode $sdkInfo $
-                    Set-Content -Path $sdkInfoFile -Value $sdkInfo.Trim()
+                    $sdkInfo = Get-MetadataCode $sdkInfo $metadataTemplate
+                    Set-Content -Path $sdkInfoFile -Value $sdkInfo
                 }
             }
         }        

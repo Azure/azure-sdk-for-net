@@ -8,3 +8,4 @@
       public static readonly String CodeGenerationErrors = "{{CodeGenerationErrors}}";
       public static readonly String GithubRepoName = "{{GithubRepoName}}";
       // END: Code Generation Metadata Section
+      
