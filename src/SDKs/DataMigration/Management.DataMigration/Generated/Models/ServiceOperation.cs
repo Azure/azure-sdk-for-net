@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     using System.Linq;
 
     /// <summary>
-    /// Description of an action supported by the Data Migration Service
+    /// Description of an action supported by the Database Migration Service
     /// </summary>
     public partial class ServiceOperation
     {

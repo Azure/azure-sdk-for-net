@@ -25,8 +25,8 @@ namespace Microsoft.Azure.Management.DataMigration
             /// Get available resource provider actions (operations)
             /// </summary>
             /// <remarks>
-            /// Lists all available actions exposed by the Data Migration Service resource
-            /// provider.
+            /// Lists all available actions exposed by the Database Migration Service
+            /// resource provider.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.DataMigration
             /// Get available resource provider actions (operations)
             /// </summary>
             /// <remarks>
-            /// Lists all available actions exposed by the Data Migration Service resource
-            /// provider.
+            /// Lists all available actions exposed by the Database Migration Service
+            /// resource provider.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,8 +61,8 @@ namespace Microsoft.Azure.Management.DataMigration
             /// Get available resource provider actions (operations)
             /// </summary>
             /// <remarks>
-            /// Lists all available actions exposed by the Data Migration Service resource
-            /// provider.
+            /// Lists all available actions exposed by the Database Migration Service
+            /// resource provider.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -79,8 +79,8 @@ namespace Microsoft.Azure.Management.DataMigration
             /// Get available resource provider actions (operations)
             /// </summary>
             /// <remarks>
-            /// Lists all available actions exposed by the Data Migration Service resource
-            /// provider.
+            /// Lists all available actions exposed by the Database Migration Service
+            /// resource provider.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

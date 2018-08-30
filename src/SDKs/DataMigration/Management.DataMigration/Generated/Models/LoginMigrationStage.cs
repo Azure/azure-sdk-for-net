@@ -10,93 +10,20 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for LoginMigrationStage.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum LoginMigrationStage
+    public static class LoginMigrationStage
     {
-        [EnumMember(Value = "None")]
-        None,
-        [EnumMember(Value = "Initialize")]
-        Initialize,
-        [EnumMember(Value = "LoginMigration")]
-        LoginMigration,
-        [EnumMember(Value = "EstablishUserMapping")]
-        EstablishUserMapping,
-        [EnumMember(Value = "AssignRoleMembership")]
-        AssignRoleMembership,
-        [EnumMember(Value = "AssignRoleOwnership")]
-        AssignRoleOwnership,
-        [EnumMember(Value = "EstablishServerPermissions")]
-        EstablishServerPermissions,
-        [EnumMember(Value = "EstablishObjectPermissions")]
-        EstablishObjectPermissions,
-        [EnumMember(Value = "Completed")]
-        Completed
-    }
-    internal static class LoginMigrationStageEnumExtension
-    {
-        internal static string ToSerializedValue(this LoginMigrationStage? value)
-        {
-            return value == null ? null : ((LoginMigrationStage)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this LoginMigrationStage value)
-        {
-            switch( value )
-            {
-                case LoginMigrationStage.None:
-                    return "None";
-                case LoginMigrationStage.Initialize:
-                    return "Initialize";
-                case LoginMigrationStage.LoginMigration:
-                    return "LoginMigration";
-                case LoginMigrationStage.EstablishUserMapping:
-                    return "EstablishUserMapping";
-                case LoginMigrationStage.AssignRoleMembership:
-                    return "AssignRoleMembership";
-                case LoginMigrationStage.AssignRoleOwnership:
-                    return "AssignRoleOwnership";
-                case LoginMigrationStage.EstablishServerPermissions:
-                    return "EstablishServerPermissions";
-                case LoginMigrationStage.EstablishObjectPermissions:
-                    return "EstablishObjectPermissions";
-                case LoginMigrationStage.Completed:
-                    return "Completed";
-            }
-            return null;
-        }
-
-        internal static LoginMigrationStage? ParseLoginMigrationStage(this string value)
-        {
-            switch( value )
-            {
-                case "None":
-                    return LoginMigrationStage.None;
-                case "Initialize":
-                    return LoginMigrationStage.Initialize;
-                case "LoginMigration":
-                    return LoginMigrationStage.LoginMigration;
-                case "EstablishUserMapping":
-                    return LoginMigrationStage.EstablishUserMapping;
-                case "AssignRoleMembership":
-                    return LoginMigrationStage.AssignRoleMembership;
-                case "AssignRoleOwnership":
-                    return LoginMigrationStage.AssignRoleOwnership;
-                case "EstablishServerPermissions":
-                    return LoginMigrationStage.EstablishServerPermissions;
-                case "EstablishObjectPermissions":
-                    return LoginMigrationStage.EstablishObjectPermissions;
-                case "Completed":
-                    return LoginMigrationStage.Completed;
-            }
-            return null;
-        }
+        public const string None = "None";
+        public const string Initialize = "Initialize";
+        public const string LoginMigration = "LoginMigration";
+        public const string EstablishUserMapping = "EstablishUserMapping";
+        public const string AssignRoleMembership = "AssignRoleMembership";
+        public const string AssignRoleOwnership = "AssignRoleOwnership";
+        public const string EstablishServerPermissions = "EstablishServerPermissions";
+        public const string EstablishObjectPermissions = "EstablishObjectPermissions";
+        public const string Completed = "Completed";
     }
 }

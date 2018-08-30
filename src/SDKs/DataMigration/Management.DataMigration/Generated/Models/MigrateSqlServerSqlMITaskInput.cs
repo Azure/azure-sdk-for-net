@@ -46,7 +46,11 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="selectedAgentJobs">Agent Jobs to migrate.</param>
         /// <param name="backupFileShare">Backup file share information for all
         /// selected databases.</param>
-        public MigrateSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, BlobShare backupBlobShare, IList<string> selectedLogins = default(IList<string>), IList<string> selectedAgentJobs = default(IList<string>), FileShare backupFileShare = default(FileShare))
+        /// <param name="backupMode">Backup Mode to specify whether to use
+        /// existing backup or create new backup. If using existing backups,
+        /// backup file paths are required to be provided in selectedDatabases.
+        /// Possible values include: 'CreateBackup', 'ExistingBackup'</param>
+        public MigrateSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, BlobShare backupBlobShare, IList<string> selectedLogins = default(IList<string>), IList<string> selectedAgentJobs = default(IList<string>), FileShare backupFileShare = default(FileShare), string backupMode = default(string))
             : base(sourceConnectionInfo, targetConnectionInfo)
         {
             SelectedDatabases = selectedDatabases;
@@ -54,6 +58,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             SelectedAgentJobs = selectedAgentJobs;
             BackupFileShare = backupFileShare;
             BackupBlobShare = backupBlobShare;
+            BackupMode = backupMode;
             CustomInit();
         }
 
@@ -93,6 +98,15 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "backupBlobShare")]
         public BlobShare BackupBlobShare { get; set; }
+
+        /// <summary>
+        /// Gets or sets backup Mode to specify whether to use existing backup
+        /// or create new backup. If using existing backups, backup file paths
+        /// are required to be provided in selectedDatabases. Possible values
+        /// include: 'CreateBackup', 'ExistingBackup'
+        /// </summary>
+        [JsonProperty(PropertyName = "backupMode")]
+        public string BackupMode { get; set; }
 
         /// <summary>
         /// Validate the object.
