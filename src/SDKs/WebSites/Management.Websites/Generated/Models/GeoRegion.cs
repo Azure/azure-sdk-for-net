@@ -36,13 +36,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="geoRegionName">Region name.</param>
         /// <param name="description">Region description.</param>
         /// <param name="displayName">Display name for region.</param>
-        public GeoRegion(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string geoRegionName = default(string), string description = default(string), string displayName = default(string))
+        public GeoRegion(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string description = default(string), string displayName = default(string))
             : base(id, name, kind, type)
         {
-            GeoRegionName = geoRegionName;
             Description = description;
             DisplayName = displayName;
             CustomInit();
@@ -52,12 +50,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets region name.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string GeoRegionName { get; private set; }
 
         /// <summary>
         /// Gets region description.

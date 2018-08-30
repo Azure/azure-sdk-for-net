@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f380ceda-7c81-4469-9788-4b6b2b64fad9"
+          "0e0f975f-3dd6-462a-9917-bd2170771589"
         ],
         "accept-language": [
           "en-US"
@@ -22,7 +22,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:20:55 GMT"
+          "Wed, 22 Aug 2018 21:02:53 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -31,16 +31,16 @@
           "gateway"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11999"
         ],
         "x-ms-request-id": [
-          "a815dcab-2ab3-47c7-ad03-88b0906333f0"
+          "321ee683-7a34-463c-bcc7-a82fa284fbd2"
         ],
         "x-ms-correlation-request-id": [
-          "a815dcab-2ab3-47c7-ad03-88b0906333f0"
+          "321ee683-7a34-463c-bcc7-a82fa284fbd2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022055Z:a815dcab-2ab3-47c7-ad03-88b0906333f0"
+          "NORTHCENTRALUS:20180822T210254Z:321ee683-7a34-463c-bcc7-a82fa284fbd2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -68,7 +68,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5e34ccbb-23b3-489f-bd0f-b1fe9c9091e7"
+          "5308c64d-715a-4086-93b3-fcd655802c24"
         ],
         "accept-language": [
           "en-US"
@@ -83,22 +83,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:26 GMT"
+          "Wed, 22 Aug 2018 21:03:50 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11998"
         ],
         "x-ms-request-id": [
-          "35897bcc-c2e7-4477-80e0-0e14e7c2c62b"
+          "047ac841-b75b-4833-900c-34abe742d9a5"
         ],
         "x-ms-correlation-request-id": [
-          "35897bcc-c2e7-4477-80e0-0e14e7c2c62b"
+          "047ac841-b75b-4833-900c-34abe742d9a5"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022227Z:35897bcc-c2e7-4477-80e0-0e14e7c2c62b"
+          "NORTHCENTRALUS:20180822T210351Z:047ac841-b75b-4833-900c-34abe742d9a5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -116,17 +116,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9\",\r\n  \"name\": \"e2etests-res-f978ade9\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"e2etests-res-f978ade9\": \"2018-07-28 02:20:55Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9\",\r\n  \"name\": \"e2etests-res-f978ade9\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"e2etests-res-f978ade9\": \"2018-08-22 21:02:54Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/e2etests-res-f978ade9?api-version=2015-11-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlZ3JvdXBzL2UyZXRlc3RzLXJlcy1mOTc4YWRlOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"SoutheastAsia\",\r\n  \"tags\": {\r\n    \"e2etests-res-f978ade9\": \"2018-07-28 02:20:55Z\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"SoutheastAsia\",\r\n  \"tags\": {\r\n    \"e2etests-res-f978ade9\": \"2018-08-22 21:02:54Z\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ef155a28-f13e-41ed-bf57-012d7f07ee98"
+          "b8fec564-0cc1-4e2c-b763-be11c79299d4"
         ],
         "accept-language": [
           "en-US"
@@ -147,7 +147,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:20:58 GMT"
+          "Wed, 22 Aug 2018 21:02:57 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -156,13 +156,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "2ca663b3-a6cf-4533-8f8b-93a945ef91fa"
+          "84919c34-4046-464c-8e65-aa90c06d8f38"
         ],
         "x-ms-correlation-request-id": [
-          "2ca663b3-a6cf-4533-8f8b-93a945ef91fa"
+          "84919c34-4046-464c-8e65-aa90c06d8f38"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022058Z:2ca663b3-a6cf-4533-8f8b-93a945ef91fa"
+          "NORTHCENTRALUS:20180822T210258Z:84919c34-4046-464c-8e65-aa90c06d8f38"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -180,7 +180,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9\",\r\n  \"name\": \"e2etests-res-f978ade9\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"e2etests-res-f978ade9\": \"2018-07-28 02:20:55Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9\",\r\n  \"name\": \"e2etests-res-f978ade9\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"e2etests-res-f978ade9\": \"2018-08-22 21:02:54Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -190,7 +190,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "06cf6389-ead2-44bb-a248-bc7281ff6b56"
+          "9277c16f-3a20-4a1b-825a-7ab719436747"
         ],
         "accept-language": [
           "en-US"
@@ -205,22 +205,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:20:59 GMT"
+          "Wed, 22 Aug 2018 21:02:58 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11999"
         ],
         "x-ms-request-id": [
-          "6ea452c0-76ab-4d87-b684-704b1918ca08"
+          "247b4ec0-7758-4f57-9c57-9361c479c525"
         ],
         "x-ms-correlation-request-id": [
-          "6ea452c0-76ab-4d87-b684-704b1918ca08"
+          "247b4ec0-7758-4f57-9c57-9361c479c525"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022059Z:6ea452c0-76ab-4d87-b684-704b1918ca08"
+          "NORTHCENTRALUS:20180822T210258Z:247b4ec0-7758-4f57-9c57-9361c479c525"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -248,7 +248,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "29230eab-b94d-4068-8ad2-1ddbdda99b11"
+          "a791f62b-723a-4877-99de-17a891ca232d"
         ],
         "accept-language": [
           "en-US"
@@ -263,7 +263,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:23 GMT"
+          "Wed, 22 Aug 2018 21:03:48 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -272,19 +272,19 @@
           "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "006aaf50-006f-4b9e-a4fb-272e680146c1"
+          "b20c1a1b-022f-4740-8497-cf9e47358f4f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "11996"
         ],
         "x-ms-correlation-request-id": [
-          "8e791c2d-e7e5-4193-aed9-12258e5046ab"
+          "a13135b2-6302-4d61-8225-0b63f3899639"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022224Z:8e791c2d-e7e5-4193-aed9-12258e5046ab"
+          "NORTHCENTRALUS:20180822T210348Z:a13135b2-6302-4d61-8225-0b63f3899639"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -299,7 +299,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Storage/storageAccounts/e2etestsstof978ade9\",\r\n      \"name\": \"e2etestsstof978ade9\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"location\": \"southeastasia\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_GRS\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"creationTime\": \"2018-07-28T02:21:02.6305185Z\",\r\n        \"primaryEndpoints\": {\r\n          \"blob\": \"https://e2etestsstof978ade9.blob.core.windows.net/\",\r\n          \"queue\": \"https://e2etestsstof978ade9.queue.core.windows.net/\",\r\n          \"table\": \"https://e2etestsstof978ade9.table.core.windows.net/\",\r\n          \"file\": \"https://e2etestsstof978ade9.file.core.windows.net/\"\r\n        },\r\n        \"primaryLocation\": \"southeastasia\",\r\n        \"statusOfPrimary\": \"available\",\r\n        \"secondaryLocation\": \"eastasia\",\r\n        \"statusOfSecondary\": \"available\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Storage/storageAccounts/e2etestsstof978ade9\",\r\n      \"name\": \"e2etestsstof978ade9\",\r\n      \"type\": \"Microsoft.Storage/storageAccounts\",\r\n      \"location\": \"southeastasia\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"accountType\": \"Standard_GRS\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"creationTime\": \"2018-08-22T21:03:01.6114957Z\",\r\n        \"primaryEndpoints\": {\r\n          \"blob\": \"https://e2etestsstof978ade9.blob.core.windows.net/\",\r\n          \"queue\": \"https://e2etestsstof978ade9.queue.core.windows.net/\",\r\n          \"table\": \"https://e2etestsstof978ade9.table.core.windows.net/\",\r\n          \"file\": \"https://e2etestsstof978ade9.file.core.windows.net/\"\r\n        },\r\n        \"primaryLocation\": \"southeastasia\",\r\n        \"statusOfPrimary\": \"available\",\r\n        \"secondaryLocation\": \"eastasia\",\r\n        \"statusOfSecondary\": \"available\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -309,7 +309,7 @@
       "RequestBody": "{\r\n  \"location\": \"SoutheastAsia\",\r\n  \"properties\": {\r\n    \"accountType\": \"Standard_GRS\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4d00a5c2-fa2b-436e-a416-9a21f75a23ca"
+          "b68e5e49-512a-440e-bd85-3702721bfed7"
         ],
         "accept-language": [
           "en-US"
@@ -330,13 +330,13 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:21:03 GMT"
+          "Wed, 22 Aug 2018 21:03:02 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Storage/locations/southeastasia/asyncoperations/9ec8c40a-d7f8-456f-9ff2-a3db8b53c674?monitor=true&api-version=2015-06-15"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Storage/locations/southeastasia/asyncoperations/c5844164-1098-4508-bd6e-83f9914fbb43?monitor=true&api-version=2015-06-15"
         ],
         "Retry-After": [
           "17"
@@ -345,7 +345,7 @@
           "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "9ec8c40a-d7f8-456f-9ff2-a3db8b53c674"
+          "c5844164-1098-4508-bd6e-83f9914fbb43"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -354,10 +354,10 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "678a62d5-afdb-4997-a415-0fd1fc3198d8"
+          "9af6d9fb-857e-4dc2-af9a-46a35edf8f91"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022104Z:678a62d5-afdb-4997-a415-0fd1fc3198d8"
+          "NORTHCENTRALUS:20180822T210303Z:9af6d9fb-857e-4dc2-af9a-46a35edf8f91"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -376,8 +376,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Storage/locations/southeastasia/asyncoperations/9ec8c40a-d7f8-456f-9ff2-a3db8b53c674?monitor=true&api-version=2015-06-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9hc3luY29wZXJhdGlvbnMvOWVjOGM0MGEtZDdmOC00NTZmLTlmZjItYTNkYjhiNTNjNjc0P21vbml0b3I9dHJ1ZSZhcGktdmVyc2lvbj0yMDE1LTA2LTE1",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Storage/locations/southeastasia/asyncoperations/c5844164-1098-4508-bd6e-83f9914fbb43?monitor=true&api-version=2015-06-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9hc3luY29wZXJhdGlvbnMvYzU4NDQxNjQtMTA5OC00NTA4LWJkNmUtODNmOTkxNGZiYjQzP21vbml0b3I9dHJ1ZSZhcGktdmVyc2lvbj0yMDE1LTA2LTE1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -385,10 +385,10 @@
           "PUT"
         ],
         "LroSessionId": [
-          "636683160644225613"
+          "636705433834095243"
         ],
         "LroPollingId": [
-          "636683160644225613.636683160644251279.1"
+          "636705433834095243.636705433834126845.1"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
@@ -400,13 +400,13 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:21:21 GMT"
+          "Wed, 22 Aug 2018 21:03:20 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Storage/locations/southeastasia/asyncoperations/9ec8c40a-d7f8-456f-9ff2-a3db8b53c674?monitor=true&api-version=2015-06-15"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Storage/locations/southeastasia/asyncoperations/c5844164-1098-4508-bd6e-83f9914fbb43?monitor=true&api-version=2015-06-15"
         ],
         "Retry-After": [
           "17"
@@ -415,19 +415,19 @@
           "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "aa415998-6169-4de5-9e84-569165f0ab86"
+          "1902d3b0-6720-4b69-a4a5-657aac4664e1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "11998"
         ],
         "x-ms-correlation-request-id": [
-          "33965928-a659-4b8e-b664-ca3270c68352"
+          "dad302ea-3160-4c29-b20c-1eb46f4c0fc4"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022121Z:33965928-a659-4b8e-b664-ca3270c68352"
+          "NORTHCENTRALUS:20180822T210320Z:dad302ea-3160-4c29-b20c-1eb46f4c0fc4"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -446,8 +446,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Storage/locations/southeastasia/asyncoperations/9ec8c40a-d7f8-456f-9ff2-a3db8b53c674?monitor=true&api-version=2015-06-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9hc3luY29wZXJhdGlvbnMvOWVjOGM0MGEtZDdmOC00NTZmLTlmZjItYTNkYjhiNTNjNjc0P21vbml0b3I9dHJ1ZSZhcGktdmVyc2lvbj0yMDE1LTA2LTE1",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Storage/locations/southeastasia/asyncoperations/c5844164-1098-4508-bd6e-83f9914fbb43?monitor=true&api-version=2015-06-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9hc3luY29wZXJhdGlvbnMvYzU4NDQxNjQtMTA5OC00NTA4LWJkNmUtODNmOTkxNGZiYjQzP21vbml0b3I9dHJ1ZSZhcGktdmVyc2lvbj0yMDE1LTA2LTE1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -455,10 +455,10 @@
           "PUT"
         ],
         "LroPollingId": [
-          "636683160644225613.636683160644251279.2"
+          "636705433834095243.636705433834126845.2"
         ],
         "LroSessionId": [
-          "636683160644225613"
+          "636705433834095243"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
@@ -470,153 +470,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:21:38 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Storage/locations/southeastasia/asyncoperations/9ec8c40a-d7f8-456f-9ff2-a3db8b53c674?monitor=true&api-version=2015-06-15"
-        ],
-        "Retry-After": [
-          "17"
-        ],
-        "Server": [
-          "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-request-id": [
-          "6ee10629-a7f6-4bf5-9ecd-960dfb3ec39d"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
-        ],
-        "x-ms-correlation-request-id": [
-          "5dc1e834-01d8-4559-b1d0-a1d9994f9dec"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022139Z:5dc1e834-01d8-4559-b1d0-a1d9994f9dec"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Content-Type": [
-          "text/plain; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Storage/locations/southeastasia/asyncoperations/9ec8c40a-d7f8-456f-9ff2-a3db8b53c674?monitor=true&api-version=2015-06-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9hc3luY29wZXJhdGlvbnMvOWVjOGM0MGEtZDdmOC00NTZmLTlmZjItYTNkYjhiNTNjNjc0P21vbml0b3I9dHJ1ZSZhcGktdmVyc2lvbj0yMDE1LTA2LTE1",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "LroOperation": [
-          "PUT"
-        ],
-        "LroSessionId": [
-          "636683160644225613"
-        ],
-        "LroPollingId": [
-          "636683160644225613.636683160644251279.3"
-        ],
-        "RecordPlaybackPerfImpact": [
-          "true"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.Storage.StorageManagementClient/4.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sat, 28 Jul 2018 02:21:56 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Storage/locations/southeastasia/asyncoperations/9ec8c40a-d7f8-456f-9ff2-a3db8b53c674?monitor=true&api-version=2015-06-15"
-        ],
-        "Retry-After": [
-          "17"
-        ],
-        "Server": [
-          "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-request-id": [
-          "9ce7f18f-3aef-498b-a58a-b4d02f02da14"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
-        ],
-        "x-ms-correlation-request-id": [
-          "0ee2ef30-6075-47e9-a519-c97c8a0922a7"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022156Z:0ee2ef30-6075-47e9-a519-c97c8a0922a7"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Content-Type": [
-          "text/plain; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Storage/locations/southeastasia/asyncoperations/9ec8c40a-d7f8-456f-9ff2-a3db8b53c674?monitor=true&api-version=2015-06-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9hc3luY29wZXJhdGlvbnMvOWVjOGM0MGEtZDdmOC00NTZmLTlmZjItYTNkYjhiNTNjNjc0P21vbml0b3I9dHJ1ZSZhcGktdmVyc2lvbj0yMDE1LTA2LTE1",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "LroOperation": [
-          "PUT"
-        ],
-        "LroPollingId": [
-          "636683160644225613.636683160644251279.4"
-        ],
-        "LroSessionId": [
-          "636683160644225613"
-        ],
-        "RecordPlaybackPerfImpact": [
-          "true"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.Storage.StorageManagementClient/4.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sat, 28 Jul 2018 02:22:13 GMT"
+          "Wed, 22 Aug 2018 21:03:37 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -625,19 +479,19 @@
           "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "3987c882-f883-44ae-a973-d7c753eeb4af"
+          "9fd001ca-3277-4060-8fc6-5359dc849e96"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "11997"
         ],
         "x-ms-correlation-request-id": [
-          "83313a20-bab2-48fa-a381-1cda0c9e0c26"
+          "cf063816-605b-404f-8d53-4294c9e82d2c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022213Z:83313a20-bab2-48fa-a381-1cda0c9e0c26"
+          "NORTHCENTRALUS:20180822T210338Z:cf063816-605b-404f-8d53-4294c9e82d2c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -662,7 +516,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "787c91b6-d3f8-4b61-a938-a374899c9361"
+          "a01e4bde-115f-4477-a68d-61b741774e95"
         ],
         "accept-language": [
           "en-US"
@@ -677,7 +531,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:24 GMT"
+          "Wed, 22 Aug 2018 21:03:48 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -686,19 +540,19 @@
           "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "4ba8618c-6364-429e-b26e-a3d39d36bdb4"
+          "77736013-ec9d-4ee5-aa0c-b86247d11493"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "11995"
         ],
         "x-ms-correlation-request-id": [
-          "54ec260f-eff4-447f-9a11-79550d050623"
+          "3aa2442c-31ab-4633-a063-8d2af3b265ee"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022224Z:54ec260f-eff4-447f-9a11-79550d050623"
+          "NORTHCENTRALUS:20180822T210348Z:3aa2442c-31ab-4633-a063-8d2af3b265ee"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -713,7 +567,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Storage/storageAccounts/e2etestsstof978ade9\",\r\n  \"name\": \"e2etestsstof978ade9\",\r\n  \"type\": \"Microsoft.Storage/storageAccounts\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"accountType\": \"Standard_GRS\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"creationTime\": \"2018-07-28T02:21:02.6305185Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://e2etestsstof978ade9.blob.core.windows.net/\",\r\n      \"queue\": \"https://e2etestsstof978ade9.queue.core.windows.net/\",\r\n      \"table\": \"https://e2etestsstof978ade9.table.core.windows.net/\",\r\n      \"file\": \"https://e2etestsstof978ade9.file.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"southeastasia\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"secondaryLocation\": \"eastasia\",\r\n    \"statusOfSecondary\": \"available\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Storage/storageAccounts/e2etestsstof978ade9\",\r\n  \"name\": \"e2etestsstof978ade9\",\r\n  \"type\": \"Microsoft.Storage/storageAccounts\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"accountType\": \"Standard_GRS\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"creationTime\": \"2018-08-22T21:03:01.6114957Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://e2etestsstof978ade9.blob.core.windows.net/\",\r\n      \"queue\": \"https://e2etestsstof978ade9.queue.core.windows.net/\",\r\n      \"table\": \"https://e2etestsstof978ade9.table.core.windows.net/\",\r\n      \"file\": \"https://e2etestsstof978ade9.file.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"southeastasia\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"secondaryLocation\": \"eastasia\",\r\n    \"statusOfSecondary\": \"available\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -723,7 +577,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b0eea0a5-fcb8-4c66-b2ff-1329cd6c711f"
+          "dd3be531-0d25-437f-af95-9d2aaeb512f0"
         ],
         "accept-language": [
           "en-US"
@@ -738,7 +592,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:25 GMT"
+          "Wed, 22 Aug 2018 21:03:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -754,16 +608,16 @@
           "9fc414ea-410e-4600-9f7c-71bc36416f3f_131750919435434783"
         ],
         "x-ms-request-id": [
-          "53500dd7-f244-43f5-854a-de751514bd39"
+          "9b9f80ab-4016-4b7e-98a8-9ff114c1a575"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "048d5ebf-c988-4a93-9c94-2edb13613b6d"
+          "2893b46c-4e27-4977-8226-87fcb67d4c4f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022225Z:048d5ebf-c988-4a93-9c94-2edb13613b6d"
+          "NORTHCENTRALUS:20180822T210350Z:2893b46c-4e27-4977-8226-87fcb67d4c4f"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -788,7 +642,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "653c1769-dbd5-471f-bf13-01a9f4dd4fd4"
+          "58637050-8ef4-467a-8d30-fc3ac022589b"
         ],
         "accept-language": [
           "en-US"
@@ -803,7 +657,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:26 GMT"
+          "Wed, 22 Aug 2018 21:03:51 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -812,13 +666,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "534df362-ccf5-4671-a542-eadffdab1536"
+          "a00d5ed4-99db-4d78-a1eb-3a5ed5cecb26"
         ],
         "x-ms-correlation-request-id": [
-          "534df362-ccf5-4671-a542-eadffdab1536"
+          "a00d5ed4-99db-4d78-a1eb-3a5ed5cecb26"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022226Z:534df362-ccf5-4671-a542-eadffdab1536"
+          "NORTHCENTRALUS:20180822T210351Z:a00d5ed4-99db-4d78-a1eb-3a5ed5cecb26"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -858,7 +712,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:29:50 GMT"
+          "Wed, 22 Aug 2018 21:10:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -868,25 +722,25 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/LowCostGet3Min;4199,Microsoft.Compute/LowCostGet30Min;33599"
+          "Microsoft.Compute/LowCostGet3Min;3999,Microsoft.Compute/LowCostGet30Min;31999"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131771043179625553"
+          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131790205440839258"
         ],
         "x-ms-request-id": [
-          "e724f48b-8459-42ac-8cbe-c9c1f587ed0b"
+          "0f44e3be-b5c5-49b2-a14e-df67e05a91f2"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14969"
+          "11971"
         ],
         "x-ms-correlation-request-id": [
-          "b27b9221-af8b-4e16-a619-053ba71e784a"
+          "f109e8e0-d99a-4b89-81d9-d60aa3c031af"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022950Z:b27b9221-af8b-4e16-a619-053ba71e784a"
+          "NORTHCENTRALUS:20180822T211035Z:f109e8e0-d99a-4b89-81d9-d60aa3c031af"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -901,7 +755,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"vmId\": \"8f838075-efdf-4958-88e7-7d52289dc517\",\r\n    \"availabilitySet\": {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/availabilitySets/AS5913\"\r\n    },\r\n    \"hardwareProfile\": {\r\n      \"vmSize\": \"Standard_A0\"\r\n    },\r\n    \"storageProfile\": {\r\n      \"imageReference\": {\r\n        \"publisher\": \"MicrosoftWindowsServer\",\r\n        \"offer\": \"WindowsServer\",\r\n        \"sku\": \"2012-R2-Datacenter\",\r\n        \"version\": \"4.127.20170406\"\r\n      },\r\n      \"osDisk\": {\r\n        \"osType\": \"Windows\",\r\n        \"name\": \"test\",\r\n        \"createOption\": \"FromImage\",\r\n        \"vhd\": {\r\n          \"uri\": \"https://e2etestsstof978ade9.blob.core.windows.net/cont5913/osvhdcont5913.vhd\"\r\n        },\r\n        \"caching\": \"None\",\r\n        \"diskSizeGB\": 127\r\n      },\r\n      \"dataDisks\": []\r\n    },\r\n    \"osProfile\": {\r\n      \"computerName\": \"test\",\r\n      \"adminUsername\": \"Foo12\",\r\n      \"windowsConfiguration\": {\r\n        \"provisionVMAgent\": true,\r\n        \"enableAutomaticUpdates\": true\r\n      },\r\n      \"secrets\": []\r\n    },\r\n    \"networkProfile\": {\r\n      \"networkInterfaces\": [\r\n        {\r\n          \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\"\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.Compute/virtualMachines\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"RG\": \"rg\",\r\n    \"testTag\": \"1\"\r\n  },\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/virtualMachines/e2etests-vm-f978ade9\",\r\n  \"name\": \"e2etests-vm-f978ade9\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"vmId\": \"81dc5dc1-0f01-4fd3-8bfe-c5b61c3b834c\",\r\n    \"availabilitySet\": {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/availabilitySets/AS5913\"\r\n    },\r\n    \"hardwareProfile\": {\r\n      \"vmSize\": \"Standard_A0\"\r\n    },\r\n    \"storageProfile\": {\r\n      \"imageReference\": {\r\n        \"publisher\": \"MicrosoftWindowsServer\",\r\n        \"offer\": \"WindowsServer\",\r\n        \"sku\": \"2012-R2-Datacenter\",\r\n        \"version\": \"4.127.20170406\"\r\n      },\r\n      \"osDisk\": {\r\n        \"osType\": \"Windows\",\r\n        \"name\": \"test\",\r\n        \"createOption\": \"FromImage\",\r\n        \"vhd\": {\r\n          \"uri\": \"https://e2etestsstof978ade9.blob.core.windows.net/cont5913/osvhdcont5913.vhd\"\r\n        },\r\n        \"caching\": \"None\",\r\n        \"diskSizeGB\": 127\r\n      },\r\n      \"dataDisks\": []\r\n    },\r\n    \"osProfile\": {\r\n      \"computerName\": \"test\",\r\n      \"adminUsername\": \"Foo12\",\r\n      \"windowsConfiguration\": {\r\n        \"provisionVMAgent\": true,\r\n        \"enableAutomaticUpdates\": true\r\n      },\r\n      \"secrets\": []\r\n    },\r\n    \"networkProfile\": {\r\n      \"networkInterfaces\": [\r\n        {\r\n          \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\"\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.Compute/virtualMachines\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"RG\": \"rg\",\r\n    \"testTag\": \"1\"\r\n  },\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/virtualMachines/e2etests-vm-f978ade9\",\r\n  \"name\": \"e2etests-vm-f978ade9\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -911,7 +765,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "adfa9f02-a794-4c84-bfd6-82d3875521e2"
+          "921141f0-5833-4896-8c97-4c627989fcc1"
         ],
         "accept-language": [
           "en-US"
@@ -926,7 +780,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:29:50 GMT"
+          "Wed, 22 Aug 2018 21:10:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -936,25 +790,25 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/LowCostGet3Min;4198,Microsoft.Compute/LowCostGet30Min;33598"
+          "Microsoft.Compute/LowCostGet3Min;3998,Microsoft.Compute/LowCostGet30Min;31998"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131771043179625553"
+          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131790205440839258"
         ],
         "x-ms-request-id": [
-          "694f71d6-2bb3-4bc8-86f3-6c7fcd5e4242"
+          "f77cdfe5-2dba-4d4c-b390-1411f55ac08f"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14968"
+          "11970"
         ],
         "x-ms-correlation-request-id": [
-          "2baf805b-56b8-4729-a94c-872f0227901c"
+          "598b6bbb-8164-4283-9eb6-ef36aaf03ee6"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022951Z:2baf805b-56b8-4729-a94c-872f0227901c"
+          "NORTHCENTRALUS:20180822T211036Z:598b6bbb-8164-4283-9eb6-ef36aaf03ee6"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -969,7 +823,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"vmId\": \"8f838075-efdf-4958-88e7-7d52289dc517\",\r\n    \"availabilitySet\": {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/availabilitySets/AS5913\"\r\n    },\r\n    \"hardwareProfile\": {\r\n      \"vmSize\": \"Standard_A0\"\r\n    },\r\n    \"storageProfile\": {\r\n      \"imageReference\": {\r\n        \"publisher\": \"MicrosoftWindowsServer\",\r\n        \"offer\": \"WindowsServer\",\r\n        \"sku\": \"2012-R2-Datacenter\",\r\n        \"version\": \"4.127.20170406\"\r\n      },\r\n      \"osDisk\": {\r\n        \"osType\": \"Windows\",\r\n        \"name\": \"test\",\r\n        \"createOption\": \"FromImage\",\r\n        \"vhd\": {\r\n          \"uri\": \"https://e2etestsstof978ade9.blob.core.windows.net/cont5913/osvhdcont5913.vhd\"\r\n        },\r\n        \"caching\": \"None\",\r\n        \"diskSizeGB\": 127\r\n      },\r\n      \"dataDisks\": []\r\n    },\r\n    \"osProfile\": {\r\n      \"computerName\": \"test\",\r\n      \"adminUsername\": \"Foo12\",\r\n      \"windowsConfiguration\": {\r\n        \"provisionVMAgent\": true,\r\n        \"enableAutomaticUpdates\": true\r\n      },\r\n      \"secrets\": []\r\n    },\r\n    \"networkProfile\": {\r\n      \"networkInterfaces\": [\r\n        {\r\n          \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\"\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.Compute/virtualMachines\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"RG\": \"rg\",\r\n    \"testTag\": \"1\"\r\n  },\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/virtualMachines/e2etests-vm-f978ade9\",\r\n  \"name\": \"e2etests-vm-f978ade9\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"vmId\": \"81dc5dc1-0f01-4fd3-8bfe-c5b61c3b834c\",\r\n    \"availabilitySet\": {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/availabilitySets/AS5913\"\r\n    },\r\n    \"hardwareProfile\": {\r\n      \"vmSize\": \"Standard_A0\"\r\n    },\r\n    \"storageProfile\": {\r\n      \"imageReference\": {\r\n        \"publisher\": \"MicrosoftWindowsServer\",\r\n        \"offer\": \"WindowsServer\",\r\n        \"sku\": \"2012-R2-Datacenter\",\r\n        \"version\": \"4.127.20170406\"\r\n      },\r\n      \"osDisk\": {\r\n        \"osType\": \"Windows\",\r\n        \"name\": \"test\",\r\n        \"createOption\": \"FromImage\",\r\n        \"vhd\": {\r\n          \"uri\": \"https://e2etestsstof978ade9.blob.core.windows.net/cont5913/osvhdcont5913.vhd\"\r\n        },\r\n        \"caching\": \"None\",\r\n        \"diskSizeGB\": 127\r\n      },\r\n      \"dataDisks\": []\r\n    },\r\n    \"osProfile\": {\r\n      \"computerName\": \"test\",\r\n      \"adminUsername\": \"Foo12\",\r\n      \"windowsConfiguration\": {\r\n        \"provisionVMAgent\": true,\r\n        \"enableAutomaticUpdates\": true\r\n      },\r\n      \"secrets\": []\r\n    },\r\n    \"networkProfile\": {\r\n      \"networkInterfaces\": [\r\n        {\r\n          \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\"\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.Compute/virtualMachines\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"RG\": \"rg\",\r\n    \"testTag\": \"1\"\r\n  },\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/virtualMachines/e2etests-vm-f978ade9\",\r\n  \"name\": \"e2etests-vm-f978ade9\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -979,7 +833,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fd823e4e-88a4-4649-980f-5cbe90915b71"
+          "3173949d-db5c-4a32-8e48-c6f2ae3614b2"
         ],
         "accept-language": [
           "en-US"
@@ -994,7 +848,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:28 GMT"
+          "Wed, 22 Aug 2018 21:03:52 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1003,13 +857,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "d6cd20ac-8822-4768-a3f6-90dbcc849db5"
+          "59225548-7f59-4b28-9d0b-2ab2297cb8e5"
         ],
         "x-ms-correlation-request-id": [
-          "d6cd20ac-8822-4768-a3f6-90dbcc849db5"
+          "59225548-7f59-4b28-9d0b-2ab2297cb8e5"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022228Z:d6cd20ac-8822-4768-a3f6-90dbcc849db5"
+          "NORTHCENTRALUS:20180822T210352Z:59225548-7f59-4b28-9d0b-2ab2297cb8e5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1049,32 +903,32 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:39 GMT"
+          "Wed, 22 Aug 2018 21:04:03 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"1c491c69-fa85-450d-80d5-b60e8c75498b\""
+          "W/\"9c8b4585-a3e2-4e34-a73b-8f4090b18a39\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "3b5ca13c-80b4-44dd-9850-37204615cd95"
+          "7151e815-ce04-42f2-9add-565274edf9fd"
         ],
         "x-ms-correlation-request-id": [
-          "0c9cd1ca-cba7-46ac-9e25-fe4516a16236"
+          "81f70265-c523-459b-b526-9881a77ede8e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
+          "11997"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022239Z:0c9cd1ca-cba7-46ac-9e25-fe4516a16236"
+          "NORTHCENTRALUS:20180822T210404Z:81f70265-c523-459b-b526-9881a77ede8e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1089,7 +943,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"pip5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/publicIPAddresses/pip5913\",\r\n  \"etag\": \"W/\\\"1c491c69-fa85-450d-80d5-b60e8c75498b\\\"\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"6a27a8c8-7857-41cd-b21b-f10efa1b3237\",\r\n    \"publicIPAddressVersion\": \"IPv4\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"dn5913\",\r\n      \"fqdn\": \"dn5913.southeastasia.cloudapp.azure.com\"\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.Network/publicIPAddresses\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"pip5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/publicIPAddresses/pip5913\",\r\n  \"etag\": \"W/\\\"9c8b4585-a3e2-4e34-a73b-8f4090b18a39\\\"\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"d7c7b8e0-2fb7-4acd-bde8-1da5272766db\",\r\n    \"publicIPAddressVersion\": \"IPv4\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"dn5913\",\r\n      \"fqdn\": \"dn5913.southeastasia.cloudapp.azure.com\"\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.Network/publicIPAddresses\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1099,7 +953,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3c1a497f-9a52-4929-b60d-62e5af14824c"
+          "4f9f69b8-ef1d-4540-87ae-465ae9f5a1c7"
         ],
         "accept-language": [
           "en-US"
@@ -1114,32 +968,32 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:39 GMT"
+          "Wed, 22 Aug 2018 21:04:04 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"1c491c69-fa85-450d-80d5-b60e8c75498b\""
+          "W/\"9c8b4585-a3e2-4e34-a73b-8f4090b18a39\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "4fbbba35-1f6c-4c35-9c11-25b324defacf"
+          "b125fdbf-416e-4fe6-af8d-5798456c0160"
         ],
         "x-ms-correlation-request-id": [
-          "a883729b-18c8-4d93-a89c-cdcbc7413508"
+          "501d23b7-014f-48fe-bad5-7e22b0dfe07d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "11996"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022239Z:a883729b-18c8-4d93-a89c-cdcbc7413508"
+          "NORTHCENTRALUS:20180822T210405Z:501d23b7-014f-48fe-bad5-7e22b0dfe07d"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1154,7 +1008,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"pip5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/publicIPAddresses/pip5913\",\r\n  \"etag\": \"W/\\\"1c491c69-fa85-450d-80d5-b60e8c75498b\\\"\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"6a27a8c8-7857-41cd-b21b-f10efa1b3237\",\r\n    \"publicIPAddressVersion\": \"IPv4\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"dn5913\",\r\n      \"fqdn\": \"dn5913.southeastasia.cloudapp.azure.com\"\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.Network/publicIPAddresses\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"pip5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/publicIPAddresses/pip5913\",\r\n  \"etag\": \"W/\\\"9c8b4585-a3e2-4e34-a73b-8f4090b18a39\\\"\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"d7c7b8e0-2fb7-4acd-bde8-1da5272766db\",\r\n    \"publicIPAddressVersion\": \"IPv4\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"dn5913\",\r\n      \"fqdn\": \"dn5913.southeastasia.cloudapp.azure.com\"\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.Network/publicIPAddresses\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1164,7 +1018,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"dn5913\"\r\n    }\r\n  },\r\n  \"location\": \"SoutheastAsia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ba0e092f-cd72-4877-9b8f-c1962256bcfb"
+          "e4ec6485-bf2d-4859-b7ff-ec274233b65e"
         ],
         "accept-language": [
           "en-US"
@@ -1185,7 +1039,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:34 GMT"
+          "Wed, 22 Aug 2018 21:03:59 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1198,13 +1052,13 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "9c97be0a-d0c3-4a4d-81ad-053bda1870a3"
+          "fd30a604-1f00-4a70-b278-17be6c97a2e4"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/southeastasia/operations/9c97be0a-d0c3-4a4d-81ad-053bda1870a3?api-version=2016-06-01"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/southeastasia/operations/fd30a604-1f00-4a70-b278-17be6c97a2e4?api-version=2016-06-01"
         ],
         "x-ms-correlation-request-id": [
-          "228a9ae8-86ba-485f-bf74-4ce2d47aaac8"
+          "c8a2ea6b-32a7-47a1-bc86-01e126d82551"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1213,7 +1067,7 @@
           "1199"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022235Z:228a9ae8-86ba-485f-bf74-4ce2d47aaac8"
+          "NORTHCENTRALUS:20180822T210400Z:c8a2ea6b-32a7-47a1-bc86-01e126d82551"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1228,12 +1082,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"pip5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/publicIPAddresses/pip5913\",\r\n  \"etag\": \"W/\\\"4dede251-a596-4721-86c8-253431e72df0\\\"\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"resourceGuid\": \"6a27a8c8-7857-41cd-b21b-f10efa1b3237\",\r\n    \"publicIPAddressVersion\": \"IPv4\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"dn5913\",\r\n      \"fqdn\": \"dn5913.southeastasia.cloudapp.azure.com\"\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.Network/publicIPAddresses\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"pip5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/publicIPAddresses/pip5913\",\r\n  \"etag\": \"W/\\\"1a016f36-ef87-4eb2-b109-186524a549ee\\\"\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"resourceGuid\": \"d7c7b8e0-2fb7-4acd-bde8-1da5272766db\",\r\n    \"publicIPAddressVersion\": \"IPv4\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"dn5913\",\r\n      \"fqdn\": \"dn5913.southeastasia.cloudapp.azure.com\"\r\n    }\r\n  },\r\n  \"type\": \"Microsoft.Network/publicIPAddresses\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/southeastasia/operations/9c97be0a-d0c3-4a4d-81ad-053bda1870a3?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzljOTdiZTBhLWQwYzMtNGE0ZC04MWFkLTA1M2JkYTE4NzBhMz9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/southeastasia/operations/fd30a604-1f00-4a70-b278-17be6c97a2e4?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zL2ZkMzBhNjA0LTFmMDAtNGE3MC1iMjc4LTE3YmU2Yzk3YTJlND9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1241,10 +1095,10 @@
           "PUT"
         ],
         "LroSessionId": [
-          "636683161553996130"
+          "636705434404992093"
         ],
         "LroPollingId": [
-          "636683161553996130.636683161553997594.1"
+          "636705434404992093.636705434404992940.1"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
@@ -1256,7 +1110,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:38 GMT"
+          "Wed, 22 Aug 2018 21:04:03 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1266,19 +1120,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "5517f5d4-09de-44a6-92f4-8df03ed952fb"
+          "77181222-dbaf-4a2a-b3f1-8437ce5df40d"
         ],
         "x-ms-correlation-request-id": [
-          "2536cfaf-5002-4dbe-a05b-791474afd0d7"
+          "6b698075-8ed4-4af5-8e60-1323b1f9e002"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "11998"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022239Z:2536cfaf-5002-4dbe-a05b-791474afd0d7"
+          "NORTHCENTRALUS:20180822T210404Z:6b698075-8ed4-4af5-8e60-1323b1f9e002"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1303,7 +1157,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d8e74b01-f692-4ea7-ae4d-75796cd39395"
+          "d4def7e8-2843-4110-aa0a-f8d9400fd417"
         ],
         "accept-language": [
           "en-US"
@@ -1318,7 +1172,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:39 GMT"
+          "Wed, 22 Aug 2018 21:04:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1327,13 +1181,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "c43c822d-e5b3-496f-82e8-c7d6337aee6f"
+          "11f38d92-7ba9-48cd-9bb5-ecf7cd54cd7f"
         ],
         "x-ms-correlation-request-id": [
-          "c43c822d-e5b3-496f-82e8-c7d6337aee6f"
+          "11f38d92-7ba9-48cd-9bb5-ecf7cd54cd7f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022240Z:c43c822d-e5b3-496f-82e8-c7d6337aee6f"
+          "NORTHCENTRALUS:20180822T210405Z:11f38d92-7ba9-48cd-9bb5-ecf7cd54cd7f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1361,7 +1215,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9128c9e9-4952-4841-ae41-9d2036ddd47b"
+          "ec8190f4-5cce-4326-815a-1b727b8ac448"
         ],
         "accept-language": [
           "en-US"
@@ -1376,38 +1230,38 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:55 GMT"
+          "Wed, 22 Aug 2018 21:04:23 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"db9824a7-925f-4db2-a4dc-d17d110111f1\""
+          "W/\"d994c273-9758-4ec2-a3a4-2b90711af45d\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "0686cc63-075e-4884-9077-b107488dd7d5"
+          "bb3cfb44-062d-4bc8-952e-74579348e160"
         ],
         "x-ms-correlation-request-id": [
-          "dd577652-acd4-482f-a40b-d5ac27065a02"
+          "55e3be18-cf10-42ba-9ba9-16b1b22348be"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14991"
+          "11991"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022256Z:dd577652-acd4-482f-a40b-d5ac27065a02"
+          "NORTHCENTRALUS:20180822T210423Z:55e3be18-cf10-42ba-9ba9-16b1b22348be"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "348"
+          "404"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1416,7 +1270,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"sn5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\",\r\n  \"etag\": \"W/\\\"db9824a7-925f-4db2-a4dc-d17d110111f1\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"addressPrefix\": \"10.0.0.0/24\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"sn5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\",\r\n  \"etag\": \"W/\\\"d994c273-9758-4ec2-a3a4-2b90711af45d\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"addressPrefix\": \"10.0.0.0/24\"\r\n  },\r\n  \"type\": \"Microsoft.Network/virtualNetworks/subnets\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1426,7 +1280,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"addressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n    },\r\n    \"dhcpOptions\": {\r\n      \"dnsServers\": [\r\n        \"10.1.1.1\",\r\n        \"10.1.2.4\"\r\n      ]\r\n    },\r\n    \"subnets\": [\r\n      {\r\n        \"properties\": {\r\n          \"addressPrefix\": \"10.0.0.0/24\"\r\n        },\r\n        \"name\": \"sn5913\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"SoutheastAsia\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "60ce0510-8ac1-4b0c-9f42-1528c57846ff"
+          "89524ec0-b539-482b-9814-65732981c258"
         ],
         "accept-language": [
           "en-US"
@@ -1447,7 +1301,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:41 GMT"
+          "Wed, 22 Aug 2018 21:04:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1460,13 +1314,13 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "752c4325-a26b-47a4-a74c-2e7280fc4ad0"
+          "d59eab00-72af-4ed1-9199-3f1c8526e749"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/southeastasia/operations/752c4325-a26b-47a4-a74c-2e7280fc4ad0?api-version=2016-06-01"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/southeastasia/operations/d59eab00-72af-4ed1-9199-3f1c8526e749?api-version=2016-06-01"
         ],
         "x-ms-correlation-request-id": [
-          "d478942f-11eb-4dce-beaa-4092fddbb96f"
+          "9a2a14c7-5a74-42a1-bea5-a30ed3cb2412"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1475,13 +1329,13 @@
           "1198"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022242Z:d478942f-11eb-4dce-beaa-4092fddbb96f"
+          "NORTHCENTRALUS:20180822T210408Z:9a2a14c7-5a74-42a1-bea5-a30ed3cb2412"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "1094"
+          "1156"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1490,12 +1344,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"vn5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913\",\r\n  \"etag\": \"W/\\\"505ba218-773d-42a2-bbe3-8ac269d2da7a\\\"\",\r\n  \"type\": \"Microsoft.Network/virtualNetworks\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"resourceGuid\": \"3dc72fd5-2e7b-44dc-aed0-9eccfd11a55e\",\r\n    \"addressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n    },\r\n    \"dhcpOptions\": {\r\n      \"dnsServers\": [\r\n        \"10.1.1.1\",\r\n        \"10.1.2.4\"\r\n      ]\r\n    },\r\n    \"subnets\": [\r\n      {\r\n        \"name\": \"sn5913\",\r\n        \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\",\r\n        \"etag\": \"W/\\\"505ba218-773d-42a2-bbe3-8ac269d2da7a\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Updating\",\r\n          \"addressPrefix\": \"10.0.0.0/24\"\r\n        }\r\n      }\r\n    ],\r\n    \"virtualNetworkPeerings\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"vn5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913\",\r\n  \"etag\": \"W/\\\"6cf66c58-5374-47fe-80df-a9485a53ba89\\\"\",\r\n  \"type\": \"Microsoft.Network/virtualNetworks\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"resourceGuid\": \"be306496-0209-4dc0-bb7c-1b3ebba71fa2\",\r\n    \"addressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n    },\r\n    \"dhcpOptions\": {\r\n      \"dnsServers\": [\r\n        \"10.1.1.1\",\r\n        \"10.1.2.4\"\r\n      ]\r\n    },\r\n    \"subnets\": [\r\n      {\r\n        \"name\": \"sn5913\",\r\n        \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\",\r\n        \"etag\": \"W/\\\"6cf66c58-5374-47fe-80df-a9485a53ba89\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Updating\",\r\n          \"addressPrefix\": \"10.0.0.0/24\"\r\n        },\r\n        \"type\": \"Microsoft.Network/virtualNetworks/subnets\"\r\n      }\r\n    ],\r\n    \"virtualNetworkPeerings\": []\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/southeastasia/operations/752c4325-a26b-47a4-a74c-2e7280fc4ad0?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzc1MmM0MzI1LWEyNmItNDdhNC1hNzRjLTJlNzI4MGZjNGFkMD9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/southeastasia/operations/d59eab00-72af-4ed1-9199-3f1c8526e749?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zL2Q1OWVhYjAwLTcyYWYtNGVkMS05MTk5LTNmMWM4NTI2ZTc0OT9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1503,10 +1357,10 @@
           "PUT"
         ],
         "LroSessionId": [
-          "636683161625811284"
+          "636705434484191681"
         ],
         "LroPollingId": [
-          "636683161625811284.636683161625811975.1"
+          "636705434484191681.636705434484192304.1"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
@@ -1518,7 +1372,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:45 GMT"
+          "Wed, 22 Aug 2018 21:04:11 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1531,19 +1385,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "2768f63a-0540-459e-aa0f-aef1e88e84d9"
+          "64052898-6e4c-4f90-9b35-8b9c86557ac1"
         ],
         "x-ms-correlation-request-id": [
-          "73fc3144-75fa-4f06-8ad0-8286b9936333"
+          "84a25582-998f-41a4-8ef5-d98013cc61af"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "11994"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022245Z:73fc3144-75fa-4f06-8ad0-8286b9936333"
+          "NORTHCENTRALUS:20180822T210411Z:84a25582-998f-41a4-8ef5-d98013cc61af"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1562,8 +1416,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/southeastasia/operations/752c4325-a26b-47a4-a74c-2e7280fc4ad0?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzc1MmM0MzI1LWEyNmItNDdhNC1hNzRjLTJlNzI4MGZjNGFkMD9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/southeastasia/operations/d59eab00-72af-4ed1-9199-3f1c8526e749?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zL2Q1OWVhYjAwLTcyYWYtNGVkMS05MTk5LTNmMWM4NTI2ZTc0OT9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1571,10 +1425,10 @@
           "PUT"
         ],
         "LroPollingId": [
-          "636683161625811284.636683161625811975.2"
+          "636705434484191681.636705434484192304.2"
         ],
         "LroSessionId": [
-          "636683161625811284"
+          "636705434484191681"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
@@ -1586,7 +1440,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:55 GMT"
+          "Wed, 22 Aug 2018 21:04:21 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1596,19 +1450,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "4198babb-801d-48c9-916a-0436a8a9c727"
+          "5232ad99-0cda-4957-aac6-f505639cb02c"
         ],
         "x-ms-correlation-request-id": [
-          "cd09733d-511b-4583-a4bf-e3e19f782ebf"
+          "dc019d65-b46b-4cb3-bf28-81cabad16ce1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "11993"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022256Z:cd09733d-511b-4583-a4bf-e3e19f782ebf"
+          "NORTHCENTRALUS:20180822T210422Z:dc019d65-b46b-4cb3-bf28-81cabad16ce1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1645,38 +1499,38 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:55 GMT"
+          "Wed, 22 Aug 2018 21:04:22 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"db9824a7-925f-4db2-a4dc-d17d110111f1\""
+          "W/\"d994c273-9758-4ec2-a3a4-2b90711af45d\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "beaa1744-ae65-4cbc-8914-27f641fd3321"
+          "37ce7348-324a-4e90-a915-d1c9ef1790b6"
         ],
         "x-ms-correlation-request-id": [
-          "ce1e86b2-03f0-4a8b-9081-643a40c443f8"
+          "7c7e5cef-1474-452d-8199-2bc7290df92e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
+          "11992"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022256Z:ce1e86b2-03f0-4a8b-9081-643a40c443f8"
+          "NORTHCENTRALUS:20180822T210422Z:7c7e5cef-1474-452d-8199-2bc7290df92e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "1096"
+          "1158"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1685,7 +1539,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"vn5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913\",\r\n  \"etag\": \"W/\\\"db9824a7-925f-4db2-a4dc-d17d110111f1\\\"\",\r\n  \"type\": \"Microsoft.Network/virtualNetworks\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"3dc72fd5-2e7b-44dc-aed0-9eccfd11a55e\",\r\n    \"addressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n    },\r\n    \"dhcpOptions\": {\r\n      \"dnsServers\": [\r\n        \"10.1.1.1\",\r\n        \"10.1.2.4\"\r\n      ]\r\n    },\r\n    \"subnets\": [\r\n      {\r\n        \"name\": \"sn5913\",\r\n        \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\",\r\n        \"etag\": \"W/\\\"db9824a7-925f-4db2-a4dc-d17d110111f1\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"addressPrefix\": \"10.0.0.0/24\"\r\n        }\r\n      }\r\n    ],\r\n    \"virtualNetworkPeerings\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"vn5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913\",\r\n  \"etag\": \"W/\\\"d994c273-9758-4ec2-a3a4-2b90711af45d\\\"\",\r\n  \"type\": \"Microsoft.Network/virtualNetworks\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"be306496-0209-4dc0-bb7c-1b3ebba71fa2\",\r\n    \"addressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n    },\r\n    \"dhcpOptions\": {\r\n      \"dnsServers\": [\r\n        \"10.1.1.1\",\r\n        \"10.1.2.4\"\r\n      ]\r\n    },\r\n    \"subnets\": [\r\n      {\r\n        \"name\": \"sn5913\",\r\n        \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\",\r\n        \"etag\": \"W/\\\"d994c273-9758-4ec2-a3a4-2b90711af45d\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"addressPrefix\": \"10.0.0.0/24\"\r\n        },\r\n        \"type\": \"Microsoft.Network/virtualNetworks/subnets\"\r\n      }\r\n    ],\r\n    \"virtualNetworkPeerings\": []\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -1695,7 +1549,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0b368ab8-4d26-4aa1-aa9d-d9c3da59e137"
+          "7f8eb565-f080-42f3-91a0-3f5353ccbb9f"
         ],
         "accept-language": [
           "en-US"
@@ -1710,7 +1564,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:56 GMT"
+          "Wed, 22 Aug 2018 21:04:23 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1719,13 +1573,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "59d99f07-9c08-427f-a30c-48fed55b2545"
+          "4ddc76dc-6d56-48eb-864d-228a5a6e5ba9"
         ],
         "x-ms-correlation-request-id": [
-          "59d99f07-9c08-427f-a30c-48fed55b2545"
+          "4ddc76dc-6d56-48eb-864d-228a5a6e5ba9"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022257Z:59d99f07-9c08-427f-a30c-48fed55b2545"
+          "NORTHCENTRALUS:20180822T210423Z:4ddc76dc-6d56-48eb-864d-228a5a6e5ba9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1765,38 +1619,38 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:23:00 GMT"
+          "Wed, 22 Aug 2018 21:04:26 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"89c8da91-8c12-4bfe-a95f-d7c9bd6598c1\""
+          "W/\"f5fcd4c7-fc37-4cde-95d9-042584ce1ed6\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "f3c5365b-be41-4267-ba0c-8643759ec827"
+          "85331c53-a280-4295-8550-4fa850ea8ad1"
         ],
         "x-ms-correlation-request-id": [
-          "fe8ef3e4-2c62-4bfa-88ba-4f495c190594"
+          "f371648c-46b2-44a9-861d-cadae6f968a7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
+          "11989"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022300Z:fe8ef3e4-2c62-4bfa-88ba-4f495c190594"
+          "NORTHCENTRALUS:20180822T210427Z:f371648c-46b2-44a9-861d-cadae6f968a7"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "1521"
+          "1594"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1805,7 +1659,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"nic5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\",\r\n  \"etag\": \"W/\\\"89c8da91-8c12-4bfe-a95f-d7c9bd6598c1\\\"\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"a94236c8-915a-4feb-9c31-1d67c441d812\",\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"name\": \"ip5913\",\r\n        \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913/ipConfigurations/ip5913\",\r\n        \"etag\": \"W/\\\"89c8da91-8c12-4bfe-a95f-d7c9bd6598c1\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"privateIPAddress\": \"10.0.0.4\",\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"subnet\": {\r\n            \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\"\r\n          },\r\n          \"primary\": true,\r\n          \"privateIPAddressVersion\": \"IPv4\",\r\n          \"isInUseWithService\": false\r\n        }\r\n      }\r\n    ],\r\n    \"dnsSettings\": {\r\n      \"dnsServers\": [],\r\n      \"appliedDnsServers\": [],\r\n      \"internalDomainNameSuffix\": \"0ux2opl1f1oejlwqt1gp0enflg.ix.internal.cloudapp.net\"\r\n    },\r\n    \"enableIPForwarding\": false\r\n  },\r\n  \"type\": \"Microsoft.Network/networkInterfaces\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"nic5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\",\r\n  \"etag\": \"W/\\\"f5fcd4c7-fc37-4cde-95d9-042584ce1ed6\\\"\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"6319ac0b-3993-4229-9f2a-99d6bfe45a28\",\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"name\": \"ip5913\",\r\n        \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913/ipConfigurations/ip5913\",\r\n        \"etag\": \"W/\\\"f5fcd4c7-fc37-4cde-95d9-042584ce1ed6\\\"\",\r\n        \"type\": \"Microsoft.Network/networkInterfaces/ipConfigurations\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"privateIPAddress\": \"10.0.0.4\",\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"subnet\": {\r\n            \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\"\r\n          },\r\n          \"primary\": true,\r\n          \"privateIPAddressVersion\": \"IPv4\",\r\n          \"isInUseWithService\": false\r\n        }\r\n      }\r\n    ],\r\n    \"dnsSettings\": {\r\n      \"dnsServers\": [],\r\n      \"appliedDnsServers\": [],\r\n      \"internalDomainNameSuffix\": \"szsdbpqjalae1o12dm5lxjy5uc.ix.internal.cloudapp.net\"\r\n    },\r\n    \"enableIPForwarding\": false\r\n  },\r\n  \"type\": \"Microsoft.Network/networkInterfaces\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1815,7 +1669,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ba7ed7f8-a518-4265-a6d5-5f1516ff1d2c"
+          "d22bd7bd-debd-49de-b5fd-e95969bdc43c"
         ],
         "accept-language": [
           "en-US"
@@ -1830,38 +1684,38 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:23:00 GMT"
+          "Wed, 22 Aug 2018 21:04:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"89c8da91-8c12-4bfe-a95f-d7c9bd6598c1\""
+          "W/\"f5fcd4c7-fc37-4cde-95d9-042584ce1ed6\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "4208e7ef-5422-4830-b79e-b6d994b5271a"
+          "eec3275e-d2ff-4ba2-87c6-3220d7f16b72"
         ],
         "x-ms-correlation-request-id": [
-          "7bb6d6a3-daea-4260-9e7c-1da6726f45b9"
+          "ad3bf7c5-749c-4c8a-8e70-22bc123c3c79"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14988"
+          "11988"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022300Z:7bb6d6a3-daea-4260-9e7c-1da6726f45b9"
+          "NORTHCENTRALUS:20180822T210427Z:ad3bf7c5-749c-4c8a-8e70-22bc123c3c79"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "1521"
+          "1594"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1870,17 +1724,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"nic5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\",\r\n  \"etag\": \"W/\\\"89c8da91-8c12-4bfe-a95f-d7c9bd6598c1\\\"\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"a94236c8-915a-4feb-9c31-1d67c441d812\",\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"name\": \"ip5913\",\r\n        \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913/ipConfigurations/ip5913\",\r\n        \"etag\": \"W/\\\"89c8da91-8c12-4bfe-a95f-d7c9bd6598c1\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"privateIPAddress\": \"10.0.0.4\",\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"subnet\": {\r\n            \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\"\r\n          },\r\n          \"primary\": true,\r\n          \"privateIPAddressVersion\": \"IPv4\",\r\n          \"isInUseWithService\": false\r\n        }\r\n      }\r\n    ],\r\n    \"dnsSettings\": {\r\n      \"dnsServers\": [],\r\n      \"appliedDnsServers\": [],\r\n      \"internalDomainNameSuffix\": \"0ux2opl1f1oejlwqt1gp0enflg.ix.internal.cloudapp.net\"\r\n    },\r\n    \"enableIPForwarding\": false\r\n  },\r\n  \"type\": \"Microsoft.Network/networkInterfaces\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"nic5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\",\r\n  \"etag\": \"W/\\\"f5fcd4c7-fc37-4cde-95d9-042584ce1ed6\\\"\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"6319ac0b-3993-4229-9f2a-99d6bfe45a28\",\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"name\": \"ip5913\",\r\n        \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913/ipConfigurations/ip5913\",\r\n        \"etag\": \"W/\\\"f5fcd4c7-fc37-4cde-95d9-042584ce1ed6\\\"\",\r\n        \"type\": \"Microsoft.Network/networkInterfaces/ipConfigurations\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"privateIPAddress\": \"10.0.0.4\",\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"subnet\": {\r\n            \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\"\r\n          },\r\n          \"primary\": true,\r\n          \"privateIPAddressVersion\": \"IPv4\",\r\n          \"isInUseWithService\": false\r\n        }\r\n      }\r\n    ],\r\n    \"dnsSettings\": {\r\n      \"dnsServers\": [],\r\n      \"appliedDnsServers\": [],\r\n      \"internalDomainNameSuffix\": \"szsdbpqjalae1o12dm5lxjy5uc.ix.internal.cloudapp.net\"\r\n    },\r\n    \"enableIPForwarding\": false\r\n  },\r\n  \"type\": \"Microsoft.Network/networkInterfaces\"\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913?api-version=2016-06-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL2UyZXRlc3RzLXJlcy1mOTc4YWRlOS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbmV0d29ya0ludGVyZmFjZXMvbmljNTkxMz9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"properties\": {\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"subnet\": {\r\n            \"properties\": {\r\n              \"addressPrefix\": \"10.0.0.0/24\",\r\n              \"provisioningState\": \"Succeeded\"\r\n            },\r\n            \"name\": \"sn5913\",\r\n            \"etag\": \"W/\\\"db9824a7-925f-4db2-a4dc-d17d110111f1\\\"\",\r\n            \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\"\r\n          }\r\n        },\r\n        \"name\": \"ip5913\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"SoutheastAsia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"properties\": {\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"subnet\": {\r\n            \"properties\": {\r\n              \"addressPrefix\": \"10.0.0.0/24\",\r\n              \"provisioningState\": \"Succeeded\"\r\n            },\r\n            \"name\": \"sn5913\",\r\n            \"etag\": \"W/\\\"d994c273-9758-4ec2-a3a4-2b90711af45d\\\"\",\r\n            \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\"\r\n          }\r\n        },\r\n        \"name\": \"ip5913\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"SoutheastAsia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "078eb8fb-930a-4c43-8e2a-d1bfb178b741"
+          "3f3d64b0-407e-4fe9-ab10-f930211b9607"
         ],
         "accept-language": [
           "en-US"
@@ -1901,7 +1755,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:22:58 GMT"
+          "Wed, 22 Aug 2018 21:04:26 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1911,13 +1765,13 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "df130bb5-369f-408e-96e6-3ed5bb49476a"
+          "43ba8260-86e5-4fcf-8974-84ec763ad864"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/southeastasia/operations/df130bb5-369f-408e-96e6-3ed5bb49476a?api-version=2016-06-01"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/southeastasia/operations/43ba8260-86e5-4fcf-8974-84ec763ad864?api-version=2016-06-01"
         ],
         "x-ms-correlation-request-id": [
-          "f526e235-a1a5-40be-ad26-08dd82430694"
+          "de0bb99f-1988-4ade-9bb3-6db75bc5de5e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1926,13 +1780,13 @@
           "1197"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022259Z:f526e235-a1a5-40be-ad26-08dd82430694"
+          "NORTHCENTRALUS:20180822T210426Z:de0bb99f-1988-4ade-9bb3-6db75bc5de5e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "1521"
+          "1594"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1941,7 +1795,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"nic5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\",\r\n  \"etag\": \"W/\\\"89c8da91-8c12-4bfe-a95f-d7c9bd6598c1\\\"\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"a94236c8-915a-4feb-9c31-1d67c441d812\",\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"name\": \"ip5913\",\r\n        \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913/ipConfigurations/ip5913\",\r\n        \"etag\": \"W/\\\"89c8da91-8c12-4bfe-a95f-d7c9bd6598c1\\\"\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"privateIPAddress\": \"10.0.0.4\",\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"subnet\": {\r\n            \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\"\r\n          },\r\n          \"primary\": true,\r\n          \"privateIPAddressVersion\": \"IPv4\",\r\n          \"isInUseWithService\": false\r\n        }\r\n      }\r\n    ],\r\n    \"dnsSettings\": {\r\n      \"dnsServers\": [],\r\n      \"appliedDnsServers\": [],\r\n      \"internalDomainNameSuffix\": \"0ux2opl1f1oejlwqt1gp0enflg.ix.internal.cloudapp.net\"\r\n    },\r\n    \"enableIPForwarding\": false\r\n  },\r\n  \"type\": \"Microsoft.Network/networkInterfaces\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"nic5913\",\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\",\r\n  \"etag\": \"W/\\\"f5fcd4c7-fc37-4cde-95d9-042584ce1ed6\\\"\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"6319ac0b-3993-4229-9f2a-99d6bfe45a28\",\r\n    \"ipConfigurations\": [\r\n      {\r\n        \"name\": \"ip5913\",\r\n        \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913/ipConfigurations/ip5913\",\r\n        \"etag\": \"W/\\\"f5fcd4c7-fc37-4cde-95d9-042584ce1ed6\\\"\",\r\n        \"type\": \"Microsoft.Network/networkInterfaces/ipConfigurations\",\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\",\r\n          \"privateIPAddress\": \"10.0.0.4\",\r\n          \"privateIPAllocationMethod\": \"Dynamic\",\r\n          \"subnet\": {\r\n            \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/virtualNetworks/vn5913/subnets/sn5913\"\r\n          },\r\n          \"primary\": true,\r\n          \"privateIPAddressVersion\": \"IPv4\",\r\n          \"isInUseWithService\": false\r\n        }\r\n      }\r\n    ],\r\n    \"dnsSettings\": {\r\n      \"dnsServers\": [],\r\n      \"appliedDnsServers\": [],\r\n      \"internalDomainNameSuffix\": \"szsdbpqjalae1o12dm5lxjy5uc.ix.internal.cloudapp.net\"\r\n    },\r\n    \"enableIPForwarding\": false\r\n  },\r\n  \"type\": \"Microsoft.Network/networkInterfaces\"\r\n}",
       "StatusCode": 201
     },
     {
@@ -1951,7 +1805,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0c5c1770-02f8-42d1-aaed-9f6cb17c9351"
+          "4ae3032f-d059-4e2a-8414-035c54495768"
         ],
         "accept-language": [
           "en-US"
@@ -1966,7 +1820,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:23:00 GMT"
+          "Wed, 22 Aug 2018 21:04:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1975,13 +1829,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "e0c5801a-5968-4d9d-9a5e-2314f4d37256"
+          "9d8ee1fe-bae9-4d3b-8e4f-32c044bb5de1"
         ],
         "x-ms-correlation-request-id": [
-          "e0c5801a-5968-4d9d-9a5e-2314f4d37256"
+          "9d8ee1fe-bae9-4d3b-8e4f-32c044bb5de1"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022300Z:e0c5801a-5968-4d9d-9a5e-2314f4d37256"
+          "NORTHCENTRALUS:20180822T210427Z:9d8ee1fe-bae9-4d3b-8e4f-32c044bb5de1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2009,7 +1863,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"platformUpdateDomainCount\": 5,\r\n    \"platformFaultDomainCount\": 3\r\n  },\r\n  \"location\": \"SoutheastAsia\",\r\n  \"tags\": {\r\n    \"RG\": \"rg\",\r\n    \"testTag\": \"1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "61606b61-3385-4610-9368-aeb97d7d0512"
+          "30b484c8-f0be-402c-af66-5869edc17631"
         ],
         "accept-language": [
           "en-US"
@@ -2030,7 +1884,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:23:05 GMT"
+          "Wed, 22 Aug 2018 21:04:31 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2046,19 +1900,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131771043179625553"
+          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131790205440839258"
         ],
         "x-ms-request-id": [
-          "75d1db19-1e67-4eda-9b10-b1a70c6caf8c"
+          "7b779b14-5060-4ae2-b5ac-196c25816b59"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "2106ae35-c7c5-4b54-83be-4c2701adf8ea"
+          "d09d58a1-6972-4815-9608-c19a9dc0b6de"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022305Z:2106ae35-c7c5-4b54-83be-4c2701adf8ea"
+          "NORTHCENTRALUS:20180822T210432Z:d09d58a1-6972-4815-9608-c19a9dc0b6de"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2083,7 +1937,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"hardwareProfile\": {\r\n      \"vmSize\": \"Standard_A0\"\r\n    },\r\n    \"storageProfile\": {\r\n      \"imageReference\": {\r\n        \"publisher\": \"MicrosoftWindowsServer\",\r\n        \"offer\": \"WindowsServer\",\r\n        \"sku\": \"2012-R2-Datacenter\",\r\n        \"version\": \"4.127.20170406\"\r\n      },\r\n      \"osDisk\": {\r\n        \"name\": \"test\",\r\n        \"vhd\": {\r\n          \"uri\": \"https://e2etestsstof978ade9.blob.core.windows.net/cont5913/osvhdcont5913.vhd\"\r\n        },\r\n        \"caching\": \"None\",\r\n        \"createOption\": \"fromImage\"\r\n      }\r\n    },\r\n    \"osProfile\": {\r\n      \"computerName\": \"test\",\r\n      \"adminUsername\": \"Foo12\",\r\n      \"adminPassword\": \"BaR@123e2etests-res-f978ade9\"\r\n    },\r\n    \"networkProfile\": {\r\n      \"networkInterfaces\": [\r\n        {\r\n          \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\"\r\n        }\r\n      ]\r\n    },\r\n    \"availabilitySet\": {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/availabilitySets/as5913\"\r\n    }\r\n  },\r\n  \"location\": \"SoutheastAsia\",\r\n  \"tags\": {\r\n    \"RG\": \"rg\",\r\n    \"testTag\": \"1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6ca9991a-4d16-42d6-a85a-47f62bc2f207"
+          "e27749ab-560d-430c-a19e-e8a0aa092a1e"
         ],
         "accept-language": [
           "en-US"
@@ -2104,7 +1958,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:23:08 GMT"
+          "Wed, 22 Aug 2018 21:04:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2117,7 +1971,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/operations/6baf357c-b46b-4c17-9b4b-5b8a84640b59?api-version=2016-04-30-preview"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/operations/5af03306-0ce8-4e7b-b21e-589531eea010?api-version=2016-04-30-preview"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/PutVM3Min;238,Microsoft.Compute/PutVM30Min;1198"
@@ -2126,19 +1980,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131771043179625553"
+          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131790205440839258"
         ],
         "x-ms-request-id": [
-          "6baf357c-b46b-4c17-9b4b-5b8a84640b59"
+          "5af03306-0ce8-4e7b-b21e-589531eea010"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "791dcf0f-4518-44e0-aecd-f51d7afcc15f"
+          "287c55ae-850f-4331-8409-8465ecd21164"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022308Z:791dcf0f-4518-44e0-aecd-f51d7afcc15f"
+          "NORTHCENTRALUS:20180822T210435Z:287c55ae-850f-4331-8409-8465ecd21164"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2153,7 +2007,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"vmId\": \"8f838075-efdf-4958-88e7-7d52289dc517\",\r\n    \"availabilitySet\": {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/availabilitySets/AS5913\"\r\n    },\r\n    \"hardwareProfile\": {\r\n      \"vmSize\": \"Standard_A0\"\r\n    },\r\n    \"storageProfile\": {\r\n      \"imageReference\": {\r\n        \"publisher\": \"MicrosoftWindowsServer\",\r\n        \"offer\": \"WindowsServer\",\r\n        \"sku\": \"2012-R2-Datacenter\",\r\n        \"version\": \"4.127.20170406\"\r\n      },\r\n      \"osDisk\": {\r\n        \"osType\": \"Windows\",\r\n        \"name\": \"test\",\r\n        \"createOption\": \"FromImage\",\r\n        \"vhd\": {\r\n          \"uri\": \"https://e2etestsstof978ade9.blob.core.windows.net/cont5913/osvhdcont5913.vhd\"\r\n        },\r\n        \"caching\": \"None\"\r\n      },\r\n      \"dataDisks\": []\r\n    },\r\n    \"osProfile\": {\r\n      \"computerName\": \"test\",\r\n      \"adminUsername\": \"Foo12\",\r\n      \"windowsConfiguration\": {\r\n        \"provisionVMAgent\": true,\r\n        \"enableAutomaticUpdates\": true\r\n      },\r\n      \"secrets\": []\r\n    },\r\n    \"networkProfile\": {\r\n      \"networkInterfaces\": [\r\n        {\r\n          \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\"\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Creating\"\r\n  },\r\n  \"type\": \"Microsoft.Compute/virtualMachines\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"RG\": \"rg\",\r\n    \"testTag\": \"1\"\r\n  },\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/virtualMachines/e2etests-vm-f978ade9\",\r\n  \"name\": \"e2etests-vm-f978ade9\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"vmId\": \"81dc5dc1-0f01-4fd3-8bfe-c5b61c3b834c\",\r\n    \"availabilitySet\": {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/availabilitySets/AS5913\"\r\n    },\r\n    \"hardwareProfile\": {\r\n      \"vmSize\": \"Standard_A0\"\r\n    },\r\n    \"storageProfile\": {\r\n      \"imageReference\": {\r\n        \"publisher\": \"MicrosoftWindowsServer\",\r\n        \"offer\": \"WindowsServer\",\r\n        \"sku\": \"2012-R2-Datacenter\",\r\n        \"version\": \"4.127.20170406\"\r\n      },\r\n      \"osDisk\": {\r\n        \"osType\": \"Windows\",\r\n        \"name\": \"test\",\r\n        \"createOption\": \"FromImage\",\r\n        \"vhd\": {\r\n          \"uri\": \"https://e2etestsstof978ade9.blob.core.windows.net/cont5913/osvhdcont5913.vhd\"\r\n        },\r\n        \"caching\": \"None\"\r\n      },\r\n      \"dataDisks\": []\r\n    },\r\n    \"osProfile\": {\r\n      \"computerName\": \"test\",\r\n      \"adminUsername\": \"Foo12\",\r\n      \"windowsConfiguration\": {\r\n        \"provisionVMAgent\": true,\r\n        \"enableAutomaticUpdates\": true\r\n      },\r\n      \"secrets\": []\r\n    },\r\n    \"networkProfile\": {\r\n      \"networkInterfaces\": [\r\n        {\r\n          \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\"\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Creating\"\r\n  },\r\n  \"type\": \"Microsoft.Compute/virtualMachines\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"RG\": \"rg\",\r\n    \"testTag\": \"1\"\r\n  },\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/virtualMachines/e2etests-vm-f978ade9\",\r\n  \"name\": \"e2etests-vm-f978ade9\"\r\n}",
       "StatusCode": 201
     },
     {
@@ -2163,7 +2017,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"hardwareProfile\": {\r\n      \"vmSize\": \"Standard_A0\"\r\n    },\r\n    \"storageProfile\": {\r\n      \"imageReference\": {\r\n        \"publisher\": \"MicrosoftWindowsServer\",\r\n        \"offer\": \"WindowsServer\",\r\n        \"sku\": \"2012-R2-Datacenter\",\r\n        \"version\": \"4.127.20170406\"\r\n      },\r\n      \"osDisk\": {\r\n        \"osType\": \"Windows\",\r\n        \"name\": \"test\",\r\n        \"vhd\": {\r\n          \"uri\": \"https://e2etestsstof978ade9.blob.core.windows.net/cont5913/osvhdcont5913.vhd\"\r\n        },\r\n        \"caching\": \"None\",\r\n        \"createOption\": \"fromImage\",\r\n        \"diskSizeGB\": 127\r\n      },\r\n      \"dataDisks\": []\r\n    },\r\n    \"osProfile\": {\r\n      \"computerName\": \"test\",\r\n      \"adminUsername\": \"Foo12\",\r\n      \"windowsConfiguration\": {\r\n        \"provisionVMAgent\": true,\r\n        \"enableAutomaticUpdates\": true\r\n      },\r\n      \"secrets\": []\r\n    },\r\n    \"networkProfile\": {\r\n      \"networkInterfaces\": [\r\n        {\r\n          \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\"\r\n        }\r\n      ]\r\n    },\r\n    \"availabilitySet\": {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/availabilitySets/AS5913\"\r\n    }\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"RG\": \"rg\",\r\n    \"testTag\": \"1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e17e272e-435f-4002-be80-45d0206879c8"
+          "bc0f082c-9382-4172-af22-2e99f32ff048"
         ],
         "accept-language": [
           "en-US"
@@ -2184,7 +2038,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:29:54 GMT"
+          "Wed, 22 Aug 2018 21:10:40 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2194,7 +2048,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/operations/ee4066a0-8a14-43b0-ac5d-df54394ac0d5?api-version=2016-04-30-preview"
+          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/operations/90d2a9a8-edec-4aed-b608-f85404ba1da7?api-version=2016-04-30-preview"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/PutVM3Min;239,Microsoft.Compute/PutVM30Min;1197"
@@ -2203,19 +2057,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131771043179625553"
+          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131790205440839258"
         ],
         "x-ms-request-id": [
-          "ee4066a0-8a14-43b0-ac5d-df54394ac0d5"
+          "90d2a9a8-edec-4aed-b608-f85404ba1da7"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "6669174a-e442-492e-aa6c-8a1d8de13971"
+          "f177d51b-66ed-47e6-b9d8-de3a246f684c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022954Z:6669174a-e442-492e-aa6c-8a1d8de13971"
+          "NORTHCENTRALUS:20180822T211040Z:f177d51b-66ed-47e6-b9d8-de3a246f684c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2230,12 +2084,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"vmId\": \"8f838075-efdf-4958-88e7-7d52289dc517\",\r\n    \"availabilitySet\": {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/availabilitySets/AS5913\"\r\n    },\r\n    \"hardwareProfile\": {\r\n      \"vmSize\": \"Standard_A0\"\r\n    },\r\n    \"storageProfile\": {\r\n      \"imageReference\": {\r\n        \"publisher\": \"MicrosoftWindowsServer\",\r\n        \"offer\": \"WindowsServer\",\r\n        \"sku\": \"2012-R2-Datacenter\",\r\n        \"version\": \"4.127.20170406\"\r\n      },\r\n      \"osDisk\": {\r\n        \"osType\": \"Windows\",\r\n        \"name\": \"test\",\r\n        \"createOption\": \"FromImage\",\r\n        \"vhd\": {\r\n          \"uri\": \"https://e2etestsstof978ade9.blob.core.windows.net/cont5913/osvhdcont5913.vhd\"\r\n        },\r\n        \"caching\": \"None\",\r\n        \"diskSizeGB\": 127\r\n      },\r\n      \"dataDisks\": []\r\n    },\r\n    \"osProfile\": {\r\n      \"computerName\": \"test\",\r\n      \"adminUsername\": \"Foo12\",\r\n      \"windowsConfiguration\": {\r\n        \"provisionVMAgent\": true,\r\n        \"enableAutomaticUpdates\": true\r\n      },\r\n      \"secrets\": []\r\n    },\r\n    \"networkProfile\": {\r\n      \"networkInterfaces\": [\r\n        {\r\n          \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\"\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Updating\"\r\n  },\r\n  \"type\": \"Microsoft.Compute/virtualMachines\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"RG\": \"rg\",\r\n    \"testTag\": \"1\"\r\n  },\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/virtualMachines/e2etests-vm-f978ade9\",\r\n  \"name\": \"e2etests-vm-f978ade9\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"vmId\": \"81dc5dc1-0f01-4fd3-8bfe-c5b61c3b834c\",\r\n    \"availabilitySet\": {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/availabilitySets/AS5913\"\r\n    },\r\n    \"hardwareProfile\": {\r\n      \"vmSize\": \"Standard_A0\"\r\n    },\r\n    \"storageProfile\": {\r\n      \"imageReference\": {\r\n        \"publisher\": \"MicrosoftWindowsServer\",\r\n        \"offer\": \"WindowsServer\",\r\n        \"sku\": \"2012-R2-Datacenter\",\r\n        \"version\": \"4.127.20170406\"\r\n      },\r\n      \"osDisk\": {\r\n        \"osType\": \"Windows\",\r\n        \"name\": \"test\",\r\n        \"createOption\": \"FromImage\",\r\n        \"vhd\": {\r\n          \"uri\": \"https://e2etestsstof978ade9.blob.core.windows.net/cont5913/osvhdcont5913.vhd\"\r\n        },\r\n        \"caching\": \"None\",\r\n        \"diskSizeGB\": 127\r\n      },\r\n      \"dataDisks\": []\r\n    },\r\n    \"osProfile\": {\r\n      \"computerName\": \"test\",\r\n      \"adminUsername\": \"Foo12\",\r\n      \"windowsConfiguration\": {\r\n        \"provisionVMAgent\": true,\r\n        \"enableAutomaticUpdates\": true\r\n      },\r\n      \"secrets\": []\r\n    },\r\n    \"networkProfile\": {\r\n      \"networkInterfaces\": [\r\n        {\r\n          \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Network/networkInterfaces/nic5913\"\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Updating\"\r\n  },\r\n  \"type\": \"Microsoft.Compute/virtualMachines\",\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {\r\n    \"RG\": \"rg\",\r\n    \"testTag\": \"1\"\r\n  },\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/e2etests-res-f978ade9/providers/Microsoft.Compute/virtualMachines/e2etests-vm-f978ade9\",\r\n  \"name\": \"e2etests-vm-f978ade9\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/operations/6baf357c-b46b-4c17-9b4b-5b8a84640b59?api-version=2016-04-30-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzZiYWYzNTdjLWI0NmItNGMxNy05YjRiLTViOGE4NDY0MGI1OT9hcGktdmVyc2lvbj0yMDE2LTA0LTMwLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/operations/5af03306-0ce8-4e7b-b21e-589531eea010?api-version=2016-04-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzVhZjAzMzA2LTBjZTgtNGU3Yi1iMjFlLTU4OTUzMWVlYTAxMD9hcGktdmVyc2lvbj0yMDE2LTA0LTMwLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2243,10 +2097,10 @@
           "PUT"
         ],
         "LroSessionId": [
-          "636683161886012562"
+          "636705434756750045"
         ],
         "LroPollingId": [
-          "636683161886012562.636683161886013432.1"
+          "636705434756750045.636705434756750838.1"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
@@ -2258,7 +2112,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:23:24 GMT"
+          "Wed, 22 Aug 2018 21:04:51 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2274,19 +2128,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131771043179625553"
+          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131790205440839258"
         ],
         "x-ms-request-id": [
-          "a3326496-7102-4100-ad33-b8b41ba0f4a7"
+          "ed2f9a94-d344-4bbc-beb6-3dbd18df7cc7"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "11996"
         ],
         "x-ms-correlation-request-id": [
-          "ffaa2102-094e-4b49-8328-a5c3d9f06211"
+          "5d63047b-4728-4ac8-8a74-c7de3875882c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022325Z:ffaa2102-094e-4b49-8328-a5c3d9f06211"
+          "NORTHCENTRALUS:20180822T210452Z:5d63047b-4728-4ac8-8a74-c7de3875882c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2301,12 +2155,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2018-07-27T19:23:06.9694437-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"6baf357c-b46b-4c17-9b4b-5b8a84640b59\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2018-08-22T14:04:34.1072789-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"5af03306-0ce8-4e7b-b21e-589531eea010\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/operations/6baf357c-b46b-4c17-9b4b-5b8a84640b59?api-version=2016-04-30-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzZiYWYzNTdjLWI0NmItNGMxNy05YjRiLTViOGE4NDY0MGI1OT9hcGktdmVyc2lvbj0yMDE2LTA0LTMwLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/operations/5af03306-0ce8-4e7b-b21e-589531eea010?api-version=2016-04-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzVhZjAzMzA2LTBjZTgtNGU3Yi1iMjFlLTU4OTUzMWVlYTAxMD9hcGktdmVyc2lvbj0yMDE2LTA0LTMwLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2314,10 +2168,10 @@
           "PUT"
         ],
         "LroPollingId": [
-          "636683161886012562.636683161886013432.2"
+          "636705434756750045.636705434756750838.2"
         ],
         "LroSessionId": [
-          "636683161886012562"
+          "636705434756750045"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
@@ -2329,7 +2183,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:23:34 GMT"
+          "Wed, 22 Aug 2018 21:05:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2345,19 +2199,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131771043179625553"
+          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131790205440839258"
         ],
         "x-ms-request-id": [
-          "29de1922-138b-4944-8833-4d3f2f678ad7"
+          "119c23c7-54a0-4d65-a700-52c1a46c18a3"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "11995"
         ],
         "x-ms-correlation-request-id": [
-          "8827ba75-db94-4224-8dbd-a0546662b493"
+          "7750510a-5e80-4032-bd86-a5388f5868d0"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022335Z:8827ba75-db94-4224-8dbd-a0546662b493"
+          "NORTHCENTRALUS:20180822T210502Z:7750510a-5e80-4032-bd86-a5388f5868d0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2372,12 +2226,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2018-07-27T19:23:06.9694437-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"6baf357c-b46b-4c17-9b4b-5b8a84640b59\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2018-08-22T14:04:34.1072789-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"5af03306-0ce8-4e7b-b21e-589531eea010\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/operations/6baf357c-b46b-4c17-9b4b-5b8a84640b59?api-version=2016-04-30-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzZiYWYzNTdjLWI0NmItNGMxNy05YjRiLTViOGE4NDY0MGI1OT9hcGktdmVyc2lvbj0yMDE2LTA0LTMwLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/operations/5af03306-0ce8-4e7b-b21e-589531eea010?api-version=2016-04-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzVhZjAzMzA2LTBjZTgtNGU3Yi1iMjFlLTU4OTUzMWVlYTAxMD9hcGktdmVyc2lvbj0yMDE2LTA0LTMwLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2385,10 +2239,10 @@
           "PUT"
         ],
         "LroPollingId": [
-          "636683161886012562.636683161886013432.26"
+          "636705434756750045.636705434756750838.24"
         ],
         "LroSessionId": [
-          "636683161886012562"
+          "636705434756750045"
         ],
         "RecordPlaybackPerfImpact": [
           "true"
@@ -2403,7 +2257,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:29:34 GMT"
+          "Wed, 22 Aug 2018 21:10:18 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2413,25 +2267,25 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperation3Min;14977,Microsoft.Compute/GetOperation30Min;29954"
+          "Microsoft.Compute/GetOperation3Min;14979,Microsoft.Compute/GetOperation30Min;29959"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131771043179625553"
+          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131790205440839258"
         ],
         "x-ms-request-id": [
-          "4773e954-8834-43cf-99a4-698dea9bbc10"
+          "13533378-dcca-4abd-a54c-aa561733e80f"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14971"
+          "11973"
         ],
         "x-ms-correlation-request-id": [
-          "8e736e5b-3742-4cf2-92b7-aea20fc7f77b"
+          "b32ebda2-b83a-4749-a497-f90f5e156d44"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022934Z:8e736e5b-3742-4cf2-92b7-aea20fc7f77b"
+          "NORTHCENTRALUS:20180822T211019Z:b32ebda2-b83a-4749-a497-f90f5e156d44"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2446,12 +2300,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2018-07-27T19:23:06.9694437-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"6baf357c-b46b-4c17-9b4b-5b8a84640b59\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2018-08-22T14:04:34.1072789-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"5af03306-0ce8-4e7b-b21e-589531eea010\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/operations/6baf357c-b46b-4c17-9b4b-5b8a84640b59?api-version=2016-04-30-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzZiYWYzNTdjLWI0NmItNGMxNy05YjRiLTViOGE4NDY0MGI1OT9hcGktdmVyc2lvbj0yMDE2LTA0LTMwLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/operations/5af03306-0ce8-4e7b-b21e-589531eea010?api-version=2016-04-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvc291dGhlYXN0YXNpYS9vcGVyYXRpb25zLzVhZjAzMzA2LTBjZTgtNGU3Yi1iMjFlLTU4OTUzMWVlYTAxMD9hcGktdmVyc2lvbj0yMDE2LTA0LTMwLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2459,10 +2313,10 @@
           "PUT"
         ],
         "LroSessionId": [
-          "636683161886012562"
+          "636705434756750045"
         ],
         "LroPollingId": [
-          "636683161886012562.636683161886013432.27"
+          "636705434756750045.636705434756750838.25"
         ],
         "RecordPlaybackPerfImpact": [
           "true"
@@ -2477,7 +2331,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:29:50 GMT"
+          "Wed, 22 Aug 2018 21:10:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2487,31 +2341,31 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperation3Min;14978,Microsoft.Compute/GetOperation30Min;29952"
+          "Microsoft.Compute/GetOperation3Min;14977,Microsoft.Compute/GetOperation30Min;29957"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131771043179625553"
+          "85c356f1-cea7-4776-af2e-87f9e0dcf952_131790205440839258"
         ],
         "x-ms-request-id": [
-          "eb216311-8972-4747-b2c5-b9694fa68cd3"
+          "b5d76f8a-9859-42f4-90de-69ec73319bce"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14970"
+          "11972"
         ],
         "x-ms-correlation-request-id": [
-          "71cea5e7-8af3-4d99-8750-c73c43761a39"
+          "1339c6ef-590e-4aed-918b-8ae43aff20ca"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022950Z:71cea5e7-8af3-4d99-8750-c73c43761a39"
+          "NORTHCENTRALUS:20180822T211035Z:1339c6ef-590e-4aed-918b-8ae43aff20ca"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "184"
+          "183"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2520,7 +2374,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2018-07-27T19:23:06.9694437-07:00\",\r\n  \"endTime\": \"2018-07-27T19:29:43.6317307-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"6baf357c-b46b-4c17-9b4b-5b8a84640b59\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2018-08-22T14:04:34.1072789-07:00\",\r\n  \"endTime\": \"2018-08-22T14:10:35.219537-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"name\": \"5af03306-0ce8-4e7b-b21e-589531eea010\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2530,7 +2384,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "13d1e4ce-f70e-4546-92bc-08c1097c1f92"
+          "13da568f-4a18-47a0-ad0d-9632bc18a66e"
         ],
         "accept-language": [
           "en-US"
@@ -2545,7 +2399,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:29:59 GMT"
+          "Wed, 22 Aug 2018 21:10:44 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2560,13 +2414,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "2b79421f-62f0-4e81-993a-2082af3971aa"
+          "0b5db67d-d8a6-4c22-a8d1-b8c114a52d1d"
         ],
         "x-ms-correlation-request-id": [
-          "2b79421f-62f0-4e81-993a-2082af3971aa"
+          "0b5db67d-d8a6-4c22-a8d1-b8c114a52d1d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T022959Z:2b79421f-62f0-4e81-993a-2082af3971aa"
+          "NORTHCENTRALUS:20180822T211044Z:0b5db67d-d8a6-4c22-a8d1-b8c114a52d1d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2594,10 +2448,10 @@
           "DELETE"
         ],
         "LroSessionId": [
-          "636683165994298652"
+          "636705438450057200"
         ],
         "LroPollingId": [
-          "636683165994298652.636683165994302449.1"
+          "636705438450057200.636705438450060563.1"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
@@ -2609,7 +2463,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:30:14 GMT"
+          "Wed, 22 Aug 2018 21:11:00 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2621,16 +2475,16 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11999"
         ],
         "x-ms-request-id": [
-          "02ec3a21-26ae-4196-892e-c147ecc0e68f"
+          "cb842590-690e-454b-931f-56d3bb732748"
         ],
         "x-ms-correlation-request-id": [
-          "02ec3a21-26ae-4196-892e-c147ecc0e68f"
+          "cb842590-690e-454b-931f-56d3bb732748"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T023014Z:02ec3a21-26ae-4196-892e-c147ecc0e68f"
+          "NORTHCENTRALUS:20180822T211100Z:cb842590-690e-454b-931f-56d3bb732748"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2658,10 +2512,10 @@
           "DELETE"
         ],
         "LroPollingId": [
-          "636683165994298652.636683165994302449.2"
+          "636705438450057200.636705438450060563.2"
         ],
         "LroSessionId": [
-          "636683165994298652"
+          "636705438450057200"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
@@ -2673,7 +2527,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:30:29 GMT"
+          "Wed, 22 Aug 2018 21:11:15 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2685,16 +2539,16 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "11998"
         ],
         "x-ms-request-id": [
-          "4a0c1d72-b475-4abf-87ff-c197229a4b1a"
+          "d6f0bb24-1f7d-4c5b-ab39-16468f6bdb48"
         ],
         "x-ms-correlation-request-id": [
-          "4a0c1d72-b475-4abf-87ff-c197229a4b1a"
+          "d6f0bb24-1f7d-4c5b-ab39-16468f6bdb48"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T023030Z:4a0c1d72-b475-4abf-87ff-c197229a4b1a"
+          "NORTHCENTRALUS:20180822T211116Z:d6f0bb24-1f7d-4c5b-ab39-16468f6bdb48"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2721,11 +2575,11 @@
         "LroOperation": [
           "DELETE"
         ],
-        "LroSessionId": [
-          "636683165994298652"
-        ],
         "LroPollingId": [
-          "636683165994298652.636683165994302449.25"
+          "636705438450057200.636705438450060563.28"
+        ],
+        "LroSessionId": [
+          "636705438450057200"
         ],
         "RecordPlaybackPerfImpact": [
           "true"
@@ -2740,7 +2594,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:36:27 GMT"
+          "Wed, 22 Aug 2018 21:18:06 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2752,16 +2606,16 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14975"
+          "11986"
         ],
         "x-ms-request-id": [
-          "54c81751-c43e-4a01-b571-18893265389e"
+          "570d42be-5077-4243-b635-1fc80a02e187"
         ],
         "x-ms-correlation-request-id": [
-          "54c81751-c43e-4a01-b571-18893265389e"
+          "570d42be-5077-4243-b635-1fc80a02e187"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T023628Z:54c81751-c43e-4a01-b571-18893265389e"
+          "NORTHCENTRALUS:20180822T211806Z:570d42be-5077-4243-b635-1fc80a02e187"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2788,11 +2642,11 @@
         "LroOperation": [
           "DELETE"
         ],
-        "LroPollingId": [
-          "636683165994298652.636683165994302449.26"
-        ],
         "LroSessionId": [
-          "636683165994298652"
+          "636705438450057200"
+        ],
+        "LroPollingId": [
+          "636705438450057200.636705438450060563.29"
         ],
         "RecordPlaybackPerfImpact": [
           "true"
@@ -2807,22 +2661,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:36:43 GMT"
+          "Wed, 22 Aug 2018 21:18:21 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14974"
+          "11985"
         ],
         "x-ms-request-id": [
-          "d5e9d947-74ee-4fcc-bf8c-776a3680f640"
+          "f3d931cc-10cd-427f-95c8-8d730c032326"
         ],
         "x-ms-correlation-request-id": [
-          "d5e9d947-74ee-4fcc-bf8c-776a3680f640"
+          "f3d931cc-10cd-427f-95c8-8d730c032326"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T023643Z:d5e9d947-74ee-4fcc-bf8c-776a3680f640"
+          "NORTHCENTRALUS:20180822T211821Z:f3d931cc-10cd-427f-95c8-8d730c032326"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2859,22 +2713,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 28 Jul 2018 02:36:43 GMT"
+          "Wed, 22 Aug 2018 21:18:21 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14973"
+          "11984"
         ],
         "x-ms-request-id": [
-          "f32afaa9-0fda-4a70-8f6d-613298691090"
+          "6ba1adca-43f6-406b-8d62-000bbec215c3"
         ],
         "x-ms-correlation-request-id": [
-          "f32afaa9-0fda-4a70-8f6d-613298691090"
+          "6ba1adca-43f6-406b-8d62-000bbec215c3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180728T023644Z:f32afaa9-0fda-4a70-8f6d-613298691090"
+          "NORTHCENTRALUS:20180822T211822Z:6ba1adca-43f6-406b-8d62-000bbec215c3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2895,7 +2749,7 @@
   ],
   "Names": {
     "CreateDefaultVMInput": [
-      "Microsoft.Compute/virtualMachines435"
+      "Microsoft.Compute/virtualMachines6635"
     ]
   },
   "Variables": {

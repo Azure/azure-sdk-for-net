@@ -10,13 +10,16 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// A deleted app.
     /// </summary>
-    public partial class DeletedSite
+    [Rest.Serialization.JsonTransformation]
+    public partial class DeletedSite : ProxyOnlyResource
     {
         /// <summary>
         /// Initializes a new instance of the DeletedSite class.
@@ -29,23 +32,30 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the DeletedSite class.
         /// </summary>
-        /// <param name="id">Numeric id for the deleted site</param>
+        /// <param name="id">Resource Id.</param>
+        /// <param name="name">Resource Name.</param>
+        /// <param name="kind">Kind of resource.</param>
+        /// <param name="type">Resource type.</param>
+        /// <param name="deletedSiteId">Numeric id for the deleted site</param>
         /// <param name="deletedTimestamp">Time in UTC when the app was
         /// deleted.</param>
         /// <param name="subscription">Subscription containing the deleted
         /// site</param>
         /// <param name="resourceGroup">ResourceGroup that contained the
         /// deleted site</param>
-        /// <param name="name">Name of the deleted site</param>
+        /// <param name="deletedSiteName">Name of the deleted site</param>
         /// <param name="slot">Slot of the deleted site</param>
-        public DeletedSite(int? id = default(int?), string deletedTimestamp = default(string), string subscription = default(string), string resourceGroup = default(string), string name = default(string), string slot = default(string))
+        /// <param name="deletedSiteKind">Kind of site that was deleted</param>
+        public DeletedSite(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? deletedSiteId = default(int?), string deletedTimestamp = default(string), string subscription = default(string), string resourceGroup = default(string), string deletedSiteName = default(string), string slot = default(string), string deletedSiteKind = default(string))
+            : base(id, name, kind, type)
         {
-            Id = id;
+            DeletedSiteId = deletedSiteId;
             DeletedTimestamp = deletedTimestamp;
             Subscription = subscription;
             ResourceGroup = resourceGroup;
-            Name = name;
+            DeletedSiteName = deletedSiteName;
             Slot = slot;
+            DeletedSiteKind = deletedSiteKind;
             CustomInit();
         }
 
@@ -55,40 +65,46 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets numeric id for the deleted site
+        /// Gets numeric id for the deleted site
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public int? Id { get; set; }
+        [JsonProperty(PropertyName = "properties.deletedSiteId")]
+        public int? DeletedSiteId { get; private set; }
 
         /// <summary>
         /// Gets time in UTC when the app was deleted.
         /// </summary>
-        [JsonProperty(PropertyName = "deletedTimestamp")]
+        [JsonProperty(PropertyName = "properties.deletedTimestamp")]
         public string DeletedTimestamp { get; private set; }
 
         /// <summary>
         /// Gets subscription containing the deleted site
         /// </summary>
-        [JsonProperty(PropertyName = "subscription")]
+        [JsonProperty(PropertyName = "properties.subscription")]
         public string Subscription { get; private set; }
 
         /// <summary>
         /// Gets resourceGroup that contained the deleted site
         /// </summary>
-        [JsonProperty(PropertyName = "resourceGroup")]
+        [JsonProperty(PropertyName = "properties.resourceGroup")]
         public string ResourceGroup { get; private set; }
 
         /// <summary>
         /// Gets name of the deleted site
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        [JsonProperty(PropertyName = "properties.deletedSiteName")]
+        public string DeletedSiteName { get; private set; }
 
         /// <summary>
         /// Gets slot of the deleted site
         /// </summary>
-        [JsonProperty(PropertyName = "slot")]
+        [JsonProperty(PropertyName = "properties.slot")]
         public string Slot { get; private set; }
+
+        /// <summary>
+        /// Gets kind of site that was deleted
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.kind")]
+        public string DeletedSiteKind { get; private set; }
 
     }
 }

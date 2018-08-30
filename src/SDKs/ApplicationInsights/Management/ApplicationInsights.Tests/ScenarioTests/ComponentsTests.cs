@@ -111,7 +111,7 @@ namespace ApplicationInsights.Tests.Scenarios
                                                     .GetResult();
 
                 //get component again, should get an exception
-                Assert.Throws(typeof(CloudException), () =>
+                Assert.Throws<CloudException>(() =>
                 {
                     getComponentResponse = insightsClient
                                                         .Components

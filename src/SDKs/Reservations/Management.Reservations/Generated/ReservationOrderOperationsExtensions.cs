@@ -68,7 +68,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             public static ReservationOrderResponse Get(this IReservationOrderOperations operations, string reservationOrderId)
             {
@@ -86,7 +85,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

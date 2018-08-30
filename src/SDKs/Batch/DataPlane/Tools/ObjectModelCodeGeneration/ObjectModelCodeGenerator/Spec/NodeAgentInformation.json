@@ -1,0 +1,31 @@
+{
+    "Name": "NodeAgentInformation",
+    "ProtocolName": "Models.NodeAgentInformation",
+    "SummaryComment": "Information about the node agent",
+    "RemarksComment": "The Batch node agent is a program that runs on each node in the pool and provides Batch capability on the compute node.",
+    "IsConstructorPublic": false,
+    "Properties": [
+        {
+            "Key": {
+                "Type": "string",
+                "Name": "Version",
+                "SummaryComment": "The version of the Batch node agent running on the compute node.",
+                "RemarksComment": "This version number can be checked against the node agent release notes located at https://github.com/Azure/Batch/blob/master/changelogs/nodeagent/CHANGELOG.md.",
+                "BoundAccess": "read",
+                "UnboundAccess": "none"
+            },
+            "Value": null
+        },
+        {
+            "Key": {
+                "Type": "DateTime",
+                "Name": "LastUpdateTime",
+                "SummaryComment": "The time when the node agent was updated on the compute node.",
+                "RemarksComment": "This is the most recent time that the node agent was updated to a new version.",
+                "BoundAccess": "read",
+                "UnboundAccess": "none"
+            },
+            "Value": null
+        }
+    ]
+}

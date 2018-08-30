@@ -117,18 +117,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "terminateReason")]
         public string TerminateReason { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (SchedulingError != null)
-            {
-                SchedulingError.Validate();
-            }
-        }
     }
 }

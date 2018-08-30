@@ -25,6 +25,23 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         }
 
         [Fact]
+        public void ClientDefaultHeaderValuesTest()
+        {
+            var fakeClient = new FakeServiceClient(new HttpClientHandler(), new BadResponseDelegatingHandler());
+            var arr = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Where(pihv => String.IsNullOrWhiteSpace(pihv.Product.Version)).ToArray();
+            Assert.Empty(arr);
+        }
+
+        [Fact]
+        public void ClientEmptyProductHeaderValuesTest()
+        {
+            var fakeClient = new FakeServiceClient(new HttpClientHandler(), new BadResponseDelegatingHandler());
+            fakeClient.SetUserAgent("MySpecialHeader", string.Empty);
+            var arr = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Where(pihv => (pihv.Product.Name == "MySpecialHeader")).ToArray();
+            Assert.Empty(arr);
+        }
+
+        [Fact]
         public void ClientAddHandlersToPipelineAddSingleHandler()
         {
             var fakeClient = new FakeServiceClient(new HttpClientHandler(),

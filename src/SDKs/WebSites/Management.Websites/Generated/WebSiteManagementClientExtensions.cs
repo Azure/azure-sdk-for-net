@@ -216,6 +216,52 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets a list of meters for a given location.
+            /// </summary>
+            /// <remarks>
+            /// Gets a list of meters for a given location.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingLocation'>
+            /// Azure Location of billable resource
+            /// </param>
+            /// <param name='osType'>
+            /// App Service OS type meters used for
+            /// </param>
+            public static IPage<BillingMeter> ListBillingMeters(this IWebSiteManagementClient operations, string billingLocation = default(string), string osType = default(string))
+            {
+                return operations.ListBillingMetersAsync(billingLocation, osType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of meters for a given location.
+            /// </summary>
+            /// <remarks>
+            /// Gets a list of meters for a given location.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingLocation'>
+            /// Azure Location of billable resource
+            /// </param>
+            /// <param name='osType'>
+            /// App Service OS type meters used for
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<BillingMeter>> ListBillingMetersAsync(this IWebSiteManagementClient operations, string billingLocation = default(string), string osType = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBillingMetersWithHttpMessagesAsync(billingLocation, osType, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Check if a resource name is available.
             /// </summary>
             /// <remarks>
@@ -229,7 +275,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='type'>
             /// Resource type used for verification. Possible values include: 'Site',
-            /// 'Slot', 'HostingEnvironment'
+            /// 'Slot', 'HostingEnvironment', 'PublishingUser', 'Microsoft.Web/sites',
+            /// 'Microsoft.Web/sites/slots', 'Microsoft.Web/hostingEnvironments',
+            /// 'Microsoft.Web/publishingUsers'
             /// </param>
             /// <param name='isFqdn'>
             /// Is fully qualified domain name.
@@ -253,7 +301,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='type'>
             /// Resource type used for verification. Possible values include: 'Site',
-            /// 'Slot', 'HostingEnvironment'
+            /// 'Slot', 'HostingEnvironment', 'PublishingUser', 'Microsoft.Web/sites',
+            /// 'Microsoft.Web/sites/slots', 'Microsoft.Web/hostingEnvironments',
+            /// 'Microsoft.Web/publishingUsers'
             /// </param>
             /// <param name='isFqdn'>
             /// Is fully qualified domain name.
@@ -314,16 +364,20 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='sku'>
             /// Name of SKU used to filter the regions. Possible values include: 'Free',
-            /// 'Shared', 'Basic', 'Standard', 'Premium', 'PremiumV2', 'Dynamic',
-            /// 'Isolated'
+            /// 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic', 'Isolated',
+            /// 'PremiumV2'
             /// </param>
             /// <param name='linuxWorkersEnabled'>
             /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions
             /// that support Linux workers.
             /// </param>
-            public static IPage<GeoRegion> ListGeoRegions(this IWebSiteManagementClient operations, string sku = default(string), bool? linuxWorkersEnabled = default(bool?))
+            /// <param name='xenonWorkersEnabled'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions
+            /// that support Xenon workers.
+            /// </param>
+            public static IPage<GeoRegion> ListGeoRegions(this IWebSiteManagementClient operations, string sku = default(string), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?))
             {
-                return operations.ListGeoRegionsAsync(sku, linuxWorkersEnabled).GetAwaiter().GetResult();
+                return operations.ListGeoRegionsAsync(sku, linuxWorkersEnabled, xenonWorkersEnabled).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -337,19 +391,63 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='sku'>
             /// Name of SKU used to filter the regions. Possible values include: 'Free',
-            /// 'Shared', 'Basic', 'Standard', 'Premium', 'PremiumV2', 'Dynamic',
-            /// 'Isolated'
+            /// 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic', 'Isolated',
+            /// 'PremiumV2'
             /// </param>
             /// <param name='linuxWorkersEnabled'>
             /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions
             /// that support Linux workers.
             /// </param>
+            /// <param name='xenonWorkersEnabled'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions
+            /// that support Xenon workers.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<GeoRegion>> ListGeoRegionsAsync(this IWebSiteManagementClient operations, string sku = default(string), bool? linuxWorkersEnabled = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<GeoRegion>> ListGeoRegionsAsync(this IWebSiteManagementClient operations, string sku = default(string), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListGeoRegionsWithHttpMessagesAsync(sku, linuxWorkersEnabled, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListGeoRegionsWithHttpMessagesAsync(sku, linuxWorkersEnabled, xenonWorkersEnabled, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all apps that are assigned to a hostname.
+            /// </summary>
+            /// <remarks>
+            /// List all apps that are assigned to a hostname.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nameIdentifier'>
+            /// Hostname information.
+            /// </param>
+            public static IPage<Identifier> ListSiteIdentifiersAssignedToHostName(this IWebSiteManagementClient operations, NameIdentifier nameIdentifier)
+            {
+                return operations.ListSiteIdentifiersAssignedToHostNameAsync(nameIdentifier).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all apps that are assigned to a hostname.
+            /// </summary>
+            /// <remarks>
+            /// List all apps that are assigned to a hostname.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nameIdentifier'>
+            /// Hostname information.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Identifier>> ListSiteIdentifiersAssignedToHostNameAsync(this IWebSiteManagementClient operations, NameIdentifier nameIdentifier, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSiteIdentifiersAssignedToHostNameWithHttpMessagesAsync(nameIdentifier, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -640,6 +738,46 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets a list of meters for a given location.
+            /// </summary>
+            /// <remarks>
+            /// Gets a list of meters for a given location.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<BillingMeter> ListBillingMetersNext(this IWebSiteManagementClient operations, string nextPageLink)
+            {
+                return operations.ListBillingMetersNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of meters for a given location.
+            /// </summary>
+            /// <remarks>
+            /// Gets a list of meters for a given location.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<BillingMeter>> ListBillingMetersNextAsync(this IWebSiteManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBillingMetersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get a list of available geographical regions.
             /// </summary>
             /// <remarks>
@@ -674,6 +812,46 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IPage<GeoRegion>> ListGeoRegionsNextAsync(this IWebSiteManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListGeoRegionsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all apps that are assigned to a hostname.
+            /// </summary>
+            /// <remarks>
+            /// List all apps that are assigned to a hostname.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Identifier> ListSiteIdentifiersAssignedToHostNameNext(this IWebSiteManagementClient operations, string nextPageLink)
+            {
+                return operations.ListSiteIdentifiersAssignedToHostNameNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all apps that are assigned to a hostname.
+            /// </summary>
+            /// <remarks>
+            /// List all apps that are assigned to a hostname.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Identifier>> ListSiteIdentifiersAssignedToHostNameNextAsync(this IWebSiteManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSiteIdentifiersAssignedToHostNameNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

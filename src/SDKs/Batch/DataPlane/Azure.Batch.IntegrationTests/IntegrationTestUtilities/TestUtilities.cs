@@ -39,7 +39,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
         public static async Task<BatchClient> OpenBatchClientAsync(BatchSharedKeyCredentials sharedKeyCredentials, bool addDefaultRetryPolicy = true)
         {
-            BatchClient client = await BatchClient.OpenAsync(sharedKeyCredentials);
+            BatchClient client = BatchClient.Open(sharedKeyCredentials);
 
             //Force us to get exception if the server returns something we don't expect
             //TODO: To avoid including this test assembly via "InternalsVisibleTo" we resort to some reflection trickery... maybe this property
@@ -48,10 +48,9 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             //TODO: Disabled for now because the swagger spec does not accurately reflect all properties returned by the server
             //SetDeserializationSettings(client);
 
-            //Set up some common stuff like a retry policy
-            if (addDefaultRetryPolicy)
+            if (!addDefaultRetryPolicy)
             {
-                client.CustomBehaviors.Add(RetryPolicyProvider.LinearRetryProvider(TimeSpan.FromSeconds(3), 5));
+                client.CustomBehaviors = client.CustomBehaviors.Where(behavior => !(behavior is RetryPolicyProvider)).ToList();
             }
 
             return client;

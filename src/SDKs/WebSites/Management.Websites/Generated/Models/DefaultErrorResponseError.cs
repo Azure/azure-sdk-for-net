@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="target">Detailed error description and debugging
         /// information.</param>
         /// <param name="innererror">More information to debug error.</param>
-        public DefaultErrorResponseError(string code, string message, string target = default(string), IList<DefaultErrorResponseErrorDetailsItem> details = default(IList<DefaultErrorResponseErrorDetailsItem>), string innererror = default(string))
+        public DefaultErrorResponseError(string code = default(string), string message = default(string), string target = default(string), IList<DefaultErrorResponseErrorDetailsItem> details = default(IList<DefaultErrorResponseErrorDetailsItem>), string innererror = default(string))
         {
             Code = code;
             Message = message;
@@ -82,24 +82,5 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "innererror")]
         public string Innererror { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Details != null)
-            {
-                foreach (var element in Details)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-        }
     }
 }

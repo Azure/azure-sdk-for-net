@@ -56,7 +56,7 @@ namespace ApplicationInsights.Tests.Scenarios
                                                 .GetAwaiter()
                                                 .GetResult();
 
-                Assert.Equal(1, getAllAPIKeys.Body.Count());
+                Assert.Single(getAllAPIKeys.Body);
                 AreEqual(apiKeyProperties, getAllAPIKeys.Body.ElementAt(0));
 
                 string fullkeyId = getAllAPIKeys.Body.ElementAt(0).Id;
@@ -85,7 +85,7 @@ namespace ApplicationInsights.Tests.Scenarios
                                                         .GetResult();
 
                 //get API again, should get an NOT found exception
-                Assert.Throws(typeof(CloudException), () =>
+                Assert.Throws<CloudException>(() =>
                 {
                     getAPIKey = insightsClient
                                             .APIKeys
@@ -109,12 +109,13 @@ namespace ApplicationInsights.Tests.Scenarios
             Assert.True(response.LinkedWriteProperties.Count >= request.LinkedWriteProperties.Count);
             foreach (var readaccess in request.LinkedReadProperties)
             {
-                Assert.True(response.LinkedReadProperties.Any(r => r == readaccess));
+                Assert.Contains(response.LinkedReadProperties, r => r == readaccess);
+
             }
 
             foreach (var writeaccess in request.LinkedWriteProperties)
             {
-                Assert.True(response.LinkedWriteProperties.Any(w => w == writeaccess));
+                Assert.Contains(response.LinkedWriteProperties, w => w == writeaccess);
             }
         }
 
