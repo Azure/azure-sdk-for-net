@@ -32,44 +32,22 @@ namespace Microsoft.Azure.Batch
         public BatchClientDisposableStateBox(BatchClient parentBatchClient)
         {
             this._parentBatchClient = parentBatchClient;
-
             this._applicationOperations = new Lazy<ApplicationOperations>(() => new ApplicationOperations(this._parentBatchClient, this.CustomBehaviors));
             this._certificateOperations = new Lazy<CertificateOperations>(() => new CertificateOperations(this._parentBatchClient, this.CustomBehaviors));
             this._jobOperations = new Lazy<JobOperations>(() => new JobOperations(this._parentBatchClient, this.CustomBehaviors));
             this._jobScheduleOperations = new Lazy<JobScheduleOperations>(() => new JobScheduleOperations(this._parentBatchClient, this.CustomBehaviors));
             this._poolOperations = new Lazy<PoolOperations>(() => new PoolOperations(this._parentBatchClient, this.CustomBehaviors));
             this._utilities = new Lazy<Utilities>(() => new Utilities(this._parentBatchClient, this.CustomBehaviors));
+
+            this.CustomBehaviors = new List<BatchClientBehavior>();
         }
 
-        public ApplicationOperations ApplicationOperations
-        {
-            get { return this._applicationOperations.Value; }
-        }
-
-        public CertificateOperations CertificateOperations
-        {
-            get { return this._certificateOperations.Value; }
-        }
-
-        public JobOperations JobOperations
-        {
-            get { return this._jobOperations.Value; }
-        }
-
-        public JobScheduleOperations JobScheduleOperations
-        {
-            get { return this._jobScheduleOperations.Value; }
-        }
-
-        public PoolOperations PoolOperations
-        {
-            get { return this._poolOperations.Value; }
-        }
-
-        public Utilities Utilities
-        {
-            get { return this._utilities.Value; }
-        }
+        public ApplicationOperations ApplicationOperations => this._applicationOperations.Value;
+        public CertificateOperations CertificateOperations => this._certificateOperations.Value;
+        public JobOperations JobOperations => this._jobOperations.Value;
+        public JobScheduleOperations JobScheduleOperations => this._jobScheduleOperations.Value;
+        public PoolOperations PoolOperations => this._poolOperations.Value;
+        public Utilities Utilities => this._utilities.Value;
     }
 
     /// <summary>
@@ -79,7 +57,7 @@ namespace Microsoft.Azure.Batch
     {
         private BatchClientDisposableStateBox _disposableStateBox;  // null state box signals that the instance is closed
         private bool _disposed = false;  // used for dispose pattern
-        private object _closeLocker = new object();
+        private readonly object _closeLocker = new object();
 
 #region // constructors
 
@@ -87,12 +65,10 @@ namespace Microsoft.Azure.Batch
         {
             _disposableStateBox = new BatchClientDisposableStateBox(this);
 
-            // prepopulate the custom behaviors
-            _disposableStateBox.CustomBehaviors = new List<BatchClientBehavior>();
-
             //
             // Add custom behaviors which are by default on every batch client
             //
+            this.CustomBehaviors.Add(RetryPolicyProvider.ExponentialRetryProvider(TimeSpan.FromSeconds(1), 6));
 
             //Add default AddTaskResultHandler
             this.CustomBehaviors.Add(new AddTaskCollectionResultHandler(AddTaskCollectionResultHandler.DefaultAddTaskCollectionResultHandler));
@@ -156,136 +132,61 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets an <see cref="ApplicationOperations"/> for performing application-related operations on the associated account.
         /// </summary>
-        public ApplicationOperations ApplicationOperations
-        {
-            get { return GetStateThrowIfNotOpen().ApplicationOperations; }
-        }
+        public ApplicationOperations ApplicationOperations => GetStateThrowIfNotOpen().ApplicationOperations;
 
         /// <summary>
         /// Gets a <see cref="CertificateOperations"/> for performing certificate-related operations on the associated account.
         /// </summary>
-        public CertificateOperations CertificateOperations
-        {
-            get { return GetStateThrowIfNotOpen().CertificateOperations; }
-        }
+        public CertificateOperations CertificateOperations => GetStateThrowIfNotOpen().CertificateOperations;
 
         /// <summary>
         /// Gets a <see cref="JobOperations"/> for performing job-related operations on the associated account.
         /// </summary>
-        public JobOperations JobOperations 
-        {
-            get { return GetStateThrowIfNotOpen().JobOperations; }
-        }
+        public JobOperations JobOperations => GetStateThrowIfNotOpen().JobOperations;
 
         /// <summary>
         /// Gets a <see cref="JobScheduleOperations"/> for performing job schedule-related operations on the associated account.
         /// </summary>
-        public JobScheduleOperations JobScheduleOperations
-        {
-            get { return GetStateThrowIfNotOpen().JobScheduleOperations; }
-        }
+        public JobScheduleOperations JobScheduleOperations => GetStateThrowIfNotOpen().JobScheduleOperations;
 
         /// <summary>
         /// Gets a <see cref="PoolOperations"/> for performing pool-related operations on the associated account.
         /// </summary>
-        public PoolOperations PoolOperations
-        {
-            get { return GetStateThrowIfNotOpen().PoolOperations; }
-        }
+        public PoolOperations PoolOperations => GetStateThrowIfNotOpen().PoolOperations;
 
         /// <summary>
         /// Gets a <see cref="Utilities"/> object containing utility methods for orchestrating multiple Batch operations.
         /// </summary>
-        public Utilities Utilities
-        {
-            get { return GetStateThrowIfNotOpen().Utilities; }
-        }
-        
-        /// <summary>
-        /// Creates an instance of <see cref="BatchClient"/> associated with the specified credentials.
-        /// </summary>
-        /// <param name="credentials">The Batch account credentials.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
-        public static System.Threading.Tasks.Task<BatchClient> OpenAsync(Auth.BatchSharedKeyCredentials credentials)
-        {
-            if (null == credentials)
-            {
-                throw new ArgumentNullException(nameof(credentials));
-            }
-
-            BatchClient newBatchCli = new BatchClient(credentials);
-            System.Threading.Tasks.Task<BatchClient> retTask = System.Threading.Tasks.Task.FromResult<BatchClient>(newBatchCli);
-
-            return retTask;
-        }
+        public Utilities Utilities => GetStateThrowIfNotOpen().Utilities;
 
         /// <summary>
         /// Creates an instance of <see cref="BatchClient" />.
         /// </summary>
-        /// <remarks>
-        /// This is a blocking call. For a non-blocking equivalent, see <see cref="OpenAsync(Auth.BatchSharedKeyCredentials)"/>
-        /// </remarks>
         /// <param name="credentials">The Batch account credentials.</param>
         /// <returns>An instance of <see cref="Microsoft.Azure.Batch.Protocol.BatchServiceClient"/>.</returns>
         public static BatchClient Open(Auth.BatchSharedKeyCredentials credentials)
         {
-            // wait for completion
-            BatchClient bc = OpenAsync(credentials).WaitAndUnaggregateException();
+            if (null == credentials)
+            {
+                throw new ArgumentNullException(nameof(credentials));
+            }
 
-            return bc;
+            return new BatchClient(credentials);
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="BatchClient"/>.
+        /// Creates an instance of <see cref="BatchClient" />.
         /// </summary>
         /// <param name="credentials">The Azure Active Directory Batch account credentials.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
-        public static System.Threading.Tasks.Task<BatchClient> OpenAsync(Auth.BatchTokenCredentials credentials)
+        /// <returns>An instance of <see cref="Microsoft.Azure.Batch.Protocol.BatchServiceClient"/>.</returns>
+        public static BatchClient Open(Auth.BatchTokenCredentials credentials)
         {
             if (null == credentials)
             {
                 throw new ArgumentNullException(nameof(credentials));
             }
 
-            BatchClient newBatchCli = new BatchClient(credentials);
-            System.Threading.Tasks.Task<BatchClient> retTask = System.Threading.Tasks.Task.FromResult<BatchClient>(newBatchCli);
-            return retTask;
-        }
-
-        /// <summary>
-        /// Creates an instance of <see cref="BatchClient" />.
-        /// </summary>
-        /// <remarks>
-        /// This is a blocking call. For a non-blocking equivalent, see <see cref="OpenAsync(Auth.BatchTokenCredentials)"/>
-        /// </remarks>
-        /// <param name="credentials">The Azure Active Directory Batch account credentials.</param>
-        /// <returns>An instance of <see cref="Microsoft.Azure.Batch.Protocol.BatchServiceClient"/>.</returns>
-        public static BatchClient Open(Auth.BatchTokenCredentials credentials)
-        {
-            Task<BatchClient> asyncTask = OpenAsync(credentials);
-
-            // wait for completion
-            BatchClient bc = asyncTask.WaitAndUnaggregateException();
-
-            return bc;
-        }
-
-        /// <summary>
-        /// Creates an instance of <see cref="BatchClient"/> associated with the specified <see cref="Microsoft.Azure.Batch.Protocol.BatchServiceClient"/>.
-        /// </summary>
-        /// <param name="restClient">The instance of <see cref="Microsoft.Azure.Batch.Protocol.BatchServiceClient"/> to use for all calls made to the Batch Service. It will not be disposed when BatchClient is disposed.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
-        public static System.Threading.Tasks.Task<BatchClient> OpenAsync(Protocol.BatchServiceClient restClient)
-        {
-            if (null == restClient)
-            {
-                throw new ArgumentNullException(nameof(restClient));
-            }
-
-            BatchClient newBatchCli = new BatchClient(restClient);
-            System.Threading.Tasks.Task<BatchClient> retTask = System.Threading.Tasks.Task.FromResult<BatchClient>(newBatchCli);
-
-            return retTask;
+            return new BatchClient(credentials);
         }
 
         /// <summary>
@@ -295,49 +196,12 @@ namespace Microsoft.Azure.Batch
         /// <returns>An instance of <see cref="Microsoft.Azure.Batch.Protocol.BatchServiceClient"/>.</returns>
         public static BatchClient Open(Protocol.BatchServiceClient restClient)
         {
-            Task<BatchClient> asyncTask = OpenAsync(restClient);
-
-            // wait for completion
-            BatchClient bc = asyncTask.WaitAndUnaggregateException();
-
-            return bc;
-        }
-
-        /// <summary>
-        /// Starts an asynchronous operation to close the current instance of <see cref="Microsoft.Azure.Batch.BatchClient"/>.  
-        /// Closed instances of <see cref="Microsoft.Azure.Batch.BatchClient"/> are unable to make calls to the Batch Service and the behavior and values of any other methods or properties are undefined. 
-        /// These restrictions also apply immediately to any objects that can trace instantation back to this <see cref="Microsoft.Azure.Batch.BatchClient"/>.
-        /// This method is threadsafe and can be called any number of times.
-        /// </summary>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
-        public System.Threading.Tasks.Task CloseAsync()
-        {
-            lock (this._closeLocker)
+            if (null == restClient)
             {
-                if (this._disposableStateBox != null)
-                {
-                    IProtocolLayer localProto = this.ProtocolLayer;
-                    localProto.Dispose();
-
-                    this._disposableStateBox = null; // null state box signals that the instance is closed
-                }
+                throw new ArgumentNullException(nameof(restClient));
             }
 
-            return Utils.Async.CompletedTask;
-        }
-
-        /// <summary>
-        /// Closes the current instance of <see cref="Microsoft.Azure.Batch.BatchClient"/>.  
-        /// Closed instances of <see cref="Microsoft.Azure.Batch.BatchClient"/> are unable to make calls to the Batch Service and the behavior and values of any other methods or properties are undefined. 
-        /// These restrictions also apply immediately to any objects that can trace instantation back to this <see cref="Microsoft.Azure.Batch.BatchClient"/>.
-        /// This method is threadsafe and can be called any number of times.
-        /// </summary>
-        public void Close()
-        {
-            Task asyncTask = CloseAsync();
-
-            // blocking wait for completion
-            asyncTask.WaitAndUnaggregateException();
+            return new BatchClient(restClient);
         }
 
 #endregion // BatchClient
@@ -345,7 +209,7 @@ namespace Microsoft.Azure.Batch
 #region // IDisposable
 
         /// <summary>
-        /// Calls <see cref="Microsoft.Azure.Batch.BatchClient.Close()"/> and releases the unmanaged resources and disposes of the managed resources used by the <see cref="Microsoft.Azure.Batch.BatchClient"/>.
+        /// Releases the unmanaged resources and disposes of the managed resources used by the <see cref="Microsoft.Azure.Batch.BatchClient"/>.
         /// </summary>
         public void Dispose()
         {
@@ -371,7 +235,16 @@ namespace Microsoft.Azure.Batch
             {
                 // IDisposable only section
 
-                this.Close();
+                lock (this._closeLocker)
+                {
+                    if (this._disposableStateBox != null)
+                    {
+                        IProtocolLayer localProto = this.ProtocolLayer;
+                        localProto.Dispose();
+
+                        this._disposableStateBox = null; // null state box signals that the instance is closed
+                    }
+                }
             }
 
             _disposed = true;

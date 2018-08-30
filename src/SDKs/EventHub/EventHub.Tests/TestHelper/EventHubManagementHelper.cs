@@ -24,17 +24,16 @@ namespace EventHub.Tests.TestHelper
         internal const string NamespacePrefix = "sdk-Namespace-";
         internal const string AuthorizationRulesPrefix = "sdk-Authrules-";
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
-        internal const string EventHubPrefix = "sdk-EventHub-";
-        internal const string ConsumerGroupPrefix = "sdk-ConsumerGroup-";
-        internal const string DisasterRecoveryPrefix = "sdk-DisasterRecovery-";
+        internal const string IPFilterRulesPrefix = "sdk-IPFilterRules-";
+        internal const string VirtualNetworkRulesPrefix = "sdk-VirtualNetworkRules-";
 
 
-        public static EventHubManagementClient GetEventHubManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        public static EventHub2018PreviewManagementClient GetEventHubManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             if (handler != null)
             {
                 handler.IsPassThrough = true;
-                EventHubManagementClient nhManagementClient = context.GetServiceClient<EventHubManagementClient>(handlers: handler);
+                EventHub2018PreviewManagementClient nhManagementClient = context.GetServiceClient<EventHub2018PreviewManagementClient>(handlers: handler);
                 return nhManagementClient;
             }
 

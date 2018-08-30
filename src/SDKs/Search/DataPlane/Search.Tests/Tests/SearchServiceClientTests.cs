@@ -96,6 +96,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Collection(
                 indexClient.HttpMessageHandlers,
                 h => Assert.IsType<RetryDelegatingHandler>(h),
+                h => Assert.IsType<RetryAfterDelegatingHandler>(h),
                 h => Assert.Same(testClientHandler, h));
         }
 

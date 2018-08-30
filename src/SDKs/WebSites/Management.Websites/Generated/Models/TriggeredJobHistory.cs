@@ -39,12 +39,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="triggeredJobRuns">List of triggered web job
-        /// runs.</param>
-        public TriggeredJobHistory(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IList<TriggeredJobRun> triggeredJobRuns = default(IList<TriggeredJobRun>))
+        /// <param name="runs">List of triggered web job runs.</param>
+        public TriggeredJobHistory(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IList<TriggeredJobRun> runs = default(IList<TriggeredJobRun>))
             : base(id, name, kind, type)
         {
-            TriggeredJobRuns = triggeredJobRuns;
+            Runs = runs;
             CustomInit();
         }
 
@@ -56,8 +55,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets list of triggered web job runs.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.triggeredJobRuns")]
-        public IList<TriggeredJobRun> TriggeredJobRuns { get; set; }
+        [JsonProperty(PropertyName = "properties.runs")]
+        public IList<TriggeredJobRun> Runs { get; set; }
 
     }
 }

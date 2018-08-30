@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// returns all recommendations.
             /// </param>
             /// <param name='filter'>
-            /// Filter is specified by using OData syntax. Example: $filter=channels eq
-            /// 'Api' or channel eq 'Notification' and startTime eq '2014-01-01T00:00:00Z'
-            /// and endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
+            /// Filter is specified by using OData syntax. Example: $filter=channel eq
+            /// 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z
+            /// and endTime eq 2014-12-31T23:59:59Z and timeGrain eq
             /// duration'[PT1H|PT1M|P1D]
             /// </param>
             public static IPage<Recommendation> List(this IRecommendationsOperations operations, bool? featured = default(bool?), string filter = default(string))
@@ -61,9 +61,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// returns all recommendations.
             /// </param>
             /// <param name='filter'>
-            /// Filter is specified by using OData syntax. Example: $filter=channels eq
-            /// 'Api' or channel eq 'Notification' and startTime eq '2014-01-01T00:00:00Z'
-            /// and endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
+            /// Filter is specified by using OData syntax. Example: $filter=channel eq
+            /// 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z
+            /// and endTime eq 2014-12-31T23:59:59Z and timeGrain eq
             /// duration'[PT1H|PT1M|P1D]
             /// </param>
             /// <param name='cancellationToken'>
@@ -166,15 +166,20 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='siteName'>
             /// Name of the app.
             /// </param>
+            /// <param name='expiredOnly'>
+            /// Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The
+            /// default is &lt;code&gt;true&lt;/code&gt;, which returns only expired
+            /// recommendations.
+            /// </param>
             /// <param name='filter'>
-            /// Filter is specified by using OData syntax. Example: $filter=channels eq
-            /// 'Api' or channel eq 'Notification' and startTime eq '2014-01-01T00:00:00Z'
-            /// and endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
+            /// Filter is specified by using OData syntax. Example: $filter=channel eq
+            /// 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z
+            /// and endTime eq 2014-12-31T23:59:59Z and timeGrain eq
             /// duration'[PT1H|PT1M|P1D]
             /// </param>
-            public static IPage<Recommendation> ListHistoryForWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string filter = default(string))
+            public static IPage<Recommendation> ListHistoryForWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName, bool? expiredOnly = default(bool?), string filter = default(string))
             {
-                return operations.ListHistoryForWebAppAsync(resourceGroupName, siteName, filter).GetAwaiter().GetResult();
+                return operations.ListHistoryForWebAppAsync(resourceGroupName, siteName, expiredOnly, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -194,18 +199,23 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='siteName'>
             /// Name of the app.
             /// </param>
+            /// <param name='expiredOnly'>
+            /// Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The
+            /// default is &lt;code&gt;true&lt;/code&gt;, which returns only expired
+            /// recommendations.
+            /// </param>
             /// <param name='filter'>
-            /// Filter is specified by using OData syntax. Example: $filter=channels eq
-            /// 'Api' or channel eq 'Notification' and startTime eq '2014-01-01T00:00:00Z'
-            /// and endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
+            /// Filter is specified by using OData syntax. Example: $filter=channel eq
+            /// 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z
+            /// and endTime eq 2014-12-31T23:59:59Z and timeGrain eq
             /// duration'[PT1H|PT1M|P1D]
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Recommendation>> ListHistoryForWebAppAsync(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Recommendation>> ListHistoryForWebAppAsync(this IRecommendationsOperations operations, string resourceGroupName, string siteName, bool? expiredOnly = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListHistoryForWebAppWithHttpMessagesAsync(resourceGroupName, siteName, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListHistoryForWebAppWithHttpMessagesAsync(resourceGroupName, siteName, expiredOnly, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -233,7 +243,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='filter'>
             /// Return only channels specified in the filter. Filter is specified by using
-            /// OData syntax. Example: $filter=channels eq 'Api' or channel eq
+            /// OData syntax. Example: $filter=channel eq 'Api' or channel eq
             /// 'Notification'
             /// </param>
             public static IPage<Recommendation> ListRecommendedRulesForWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName, bool? featured = default(bool?), string filter = default(string))
@@ -263,7 +273,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='filter'>
             /// Return only channels specified in the filter. Filter is specified by using
-            /// OData syntax. Example: $filter=channels eq 'Api' or channel eq
+            /// OData syntax. Example: $filter=channel eq 'Api' or channel eq
             /// 'Notification'
             /// </param>
             /// <param name='cancellationToken'>

@@ -33,6 +33,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<string> IPAddressProperty;
             public readonly PropertyAccessor<bool?> IsDedicatedProperty;
             public readonly PropertyAccessor<DateTime?> LastBootTimeProperty;
+            public readonly PropertyAccessor<NodeAgentInformation> NodeAgentInformationProperty;
             public readonly PropertyAccessor<IReadOnlyList<TaskInformation>> RecentTasksProperty;
             public readonly PropertyAccessor<int?> RunningTasksCountProperty;
             public readonly PropertyAccessor<Common.SchedulingState?> SchedulingStateProperty;
@@ -81,6 +82,10 @@ namespace Microsoft.Azure.Batch
                 this.LastBootTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.LastBootTime,
                     nameof(LastBootTime),
+                    BindingAccess.Read);
+                this.NodeAgentInformationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NodeAgentInfo, o => new NodeAgentInformation(o).Freeze()),
+                    nameof(NodeAgentInformation),
                     BindingAccess.Read);
                 this.RecentTasksProperty = this.CreatePropertyAccessor(
                     TaskInformation.ConvertFromProtocolCollectionReadOnly(protocolObject.RecentTasks),
@@ -244,6 +249,14 @@ namespace Microsoft.Azure.Batch
         public DateTime? LastBootTime
         {
             get { return this.propertyContainer.LastBootTimeProperty.Value; }
+        }
+
+        /// <summary>
+        /// Gets information about the node agent version and the time the node upgraded to a new version.
+        /// </summary>
+        public NodeAgentInformation NodeAgentInformation
+        {
+            get { return this.propertyContainer.NodeAgentInformationProperty.Value; }
         }
 
         /// <summary>

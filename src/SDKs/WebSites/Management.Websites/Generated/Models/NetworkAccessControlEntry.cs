@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         /// <param name="action">Action object. Possible values include:
         /// 'Permit', 'Deny'</param>
-        /// <param name="description">Description.</param>
+        /// <param name="description">Description of network access control
+        /// entry.</param>
         /// <param name="order">Order of precedence.</param>
         /// <param name="remoteSubnet">Remote subnet.</param>
         public NetworkAccessControlEntry(AccessControlEntryAction? action = default(AccessControlEntryAction?), string description = default(string), int? order = default(int?), string remoteSubnet = default(string))
@@ -56,7 +57,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public AccessControlEntryAction? Action { get; set; }
 
         /// <summary>
-        /// Gets or sets description.
+        /// Gets or sets description of network access control entry.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }

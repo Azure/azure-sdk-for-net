@@ -96,10 +96,6 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "task");
             }
-            if (task != null)
-            {
-                task.Validate();
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -612,11 +608,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// The ID of the job to which the task collection is to be added.
         /// </param>
         /// <param name='value'>
-        /// The collection of tasks to add. The total serialized size of this
-        /// collection must be less than 4MB. If it is greater than 4MB (for example if
-        /// each task has 100's of resource files or environment variables), the
-        /// request will fail with code 'RequestBodyTooLarge' and should be retried
-        /// again with fewer tasks.
+        /// The collection of tasks to add. The maximum count of tasks is 100. The
+        /// total serialized size of this collection must be less than 1MB. If it is
+        /// greater than 1MB (for example if each task has 100's of resource files or
+        /// environment variables), the request will fail with code
+        /// 'RequestBodyTooLarge' and should be retried again with fewer tasks.
         /// </param>
         /// <param name='taskAddCollectionOptions'>
         /// Additional parameters for the operation
@@ -655,20 +651,6 @@ namespace Microsoft.Azure.Batch.Protocol
             if (value == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "value");
-            }
-            if (value != null)
-            {
-                if (value.Count > 100)
-                {
-                    throw new ValidationException(ValidationRules.MaxItems, "value", 100);
-                }
-                foreach (var element in value)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
             int? timeout = default(int?);
             if (taskAddCollectionOptions != null)

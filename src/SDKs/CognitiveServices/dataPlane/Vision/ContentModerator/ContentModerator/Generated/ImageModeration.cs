@@ -76,9 +76,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<FoundFaces>> FindFacesWithHttpMessagesAsync(bool? cacheImage = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -94,7 +94,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessImage/FindFaces";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (cacheImage != null)
             {
@@ -246,9 +246,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<OCR>> OCRMethodWithHttpMessagesAsync(string language, bool? cacheImage = default(bool?), bool? enhanced = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (language == null)
             {
@@ -270,7 +270,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessImage/OCR";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
@@ -418,9 +418,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<Evaluate>> EvaluateMethodWithHttpMessagesAsync(bool? cacheImage = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -436,7 +436,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessImage/Evaluate";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (cacheImage != null)
             {
@@ -587,9 +587,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<MatchResponse>> MatchMethodWithHttpMessagesAsync(string listId = default(string), bool? cacheImage = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -606,7 +606,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessImage/Match";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (listId != null)
             {
@@ -753,9 +753,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<FoundFaces>> FindFacesFileInputWithHttpMessagesAsync(Stream imageStream, bool? cacheImage = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (imageStream == null)
             {
@@ -776,7 +776,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessImage/FindFaces";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (cacheImage != null)
             {
@@ -931,9 +931,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<FoundFaces>> FindFacesUrlInputWithHttpMessagesAsync(string contentType, BodyModel imageUrl, bool? cacheImage = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (contentType == null)
             {
@@ -959,7 +959,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessImage/FindFaces";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (cacheImage != null)
             {
@@ -1123,9 +1123,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<OCR>> OCRUrlInputWithHttpMessagesAsync(string language, string contentType, BodyModel imageUrl, bool? cacheImage = default(bool?), bool? enhanced = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (language == null)
             {
@@ -1157,7 +1157,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessImage/OCR";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
@@ -1326,9 +1326,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<OCR>> OCRFileInputWithHttpMessagesAsync(string language, Stream imageStream, bool? cacheImage = default(bool?), bool? enhanced = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (language == null)
             {
@@ -1355,7 +1355,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessImage/OCR";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
@@ -1515,9 +1515,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<Evaluate>> EvaluateFileInputWithHttpMessagesAsync(Stream imageStream, bool? cacheImage = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (imageStream == null)
             {
@@ -1538,7 +1538,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessImage/Evaluate";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (cacheImage != null)
             {
@@ -1693,9 +1693,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<Evaluate>> EvaluateUrlInputWithHttpMessagesAsync(string contentType, BodyModel imageUrl, bool? cacheImage = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (contentType == null)
             {
@@ -1721,7 +1721,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessImage/Evaluate";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (cacheImage != null)
             {
@@ -1884,9 +1884,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<MatchResponse>> MatchUrlInputWithHttpMessagesAsync(string contentType, BodyModel imageUrl, string listId = default(string), bool? cacheImage = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (contentType == null)
             {
@@ -1913,7 +1913,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessImage/Match";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (listId != null)
             {
@@ -2077,9 +2077,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<MatchResponse>> MatchFileInputWithHttpMessagesAsync(Stream imageStream, string listId = default(string), bool? cacheImage = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (imageStream == null)
             {
@@ -2101,7 +2101,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessImage/Match";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (listId != null)
             {

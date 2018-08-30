@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the
         /// AppServiceCertificateOrderPatchResource class.
         /// </summary>
+        /// <param name="productType">Certificate product type. Possible values
+        /// include: 'StandardDomainValidatedSsl',
+        /// 'StandardDomainValidatedWildCardSsl'</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
@@ -48,9 +51,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="validityInYears">Duration in years (must be between 1
         /// and 3).</param>
         /// <param name="keySize">Certificate key size.</param>
-        /// <param name="productType">Certificate product type. Possible values
-        /// include: 'StandardDomainValidatedSsl',
-        /// 'StandardDomainValidatedWildCardSsl'</param>
         /// <param name="autoRenew">&lt;code&gt;true&lt;/code&gt; if the
         /// certificate should be automatically renewed when it expires;
         /// otherwise, &lt;code&gt;false&lt;/code&gt;.</param>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// moment.</param>
         /// <param name="nextAutoRenewalTimeStamp">Time stamp when the
         /// certificate would be auto renewed next</param>
-        public AppServiceCertificateOrderPatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, AppServiceCertificate> certificates = default(IDictionary<string, AppServiceCertificate>), string distinguishedName = default(string), string domainVerificationToken = default(string), int? validityInYears = default(int?), int? keySize = default(int?), CertificateProductType? productType = default(CertificateProductType?), bool? autoRenew = default(bool?), ProvisioningState? provisioningState = default(ProvisioningState?), CertificateOrderStatus? status = default(CertificateOrderStatus?), CertificateDetails signedCertificate = default(CertificateDetails), string csr = default(string), CertificateDetails intermediate = default(CertificateDetails), CertificateDetails root = default(CertificateDetails), string serialNumber = default(string), System.DateTime? lastCertificateIssuanceTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), bool? isPrivateKeyExternal = default(bool?), IList<string> appServiceCertificateNotRenewableReasons = default(IList<string>), System.DateTime? nextAutoRenewalTimeStamp = default(System.DateTime?))
+        public AppServiceCertificateOrderPatchResource(CertificateProductType productType, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, AppServiceCertificate> certificates = default(IDictionary<string, AppServiceCertificate>), string distinguishedName = default(string), string domainVerificationToken = default(string), int? validityInYears = default(int?), int? keySize = default(int?), bool? autoRenew = default(bool?), ProvisioningState? provisioningState = default(ProvisioningState?), CertificateOrderStatus? status = default(CertificateOrderStatus?), CertificateDetails signedCertificate = default(CertificateDetails), string csr = default(string), CertificateDetails intermediate = default(CertificateDetails), CertificateDetails root = default(CertificateDetails), string serialNumber = default(string), System.DateTime? lastCertificateIssuanceTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), bool? isPrivateKeyExternal = default(bool?), IList<string> appServiceCertificateNotRenewableReasons = default(IList<string>), System.DateTime? nextAutoRenewalTimeStamp = default(System.DateTime?))
             : base(id, name, kind, type)
         {
             Certificates = certificates;
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'StandardDomainValidatedSsl', 'StandardDomainValidatedWildCardSsl'
         /// </summary>
         [JsonProperty(PropertyName = "properties.productType")]
-        public CertificateProductType? ProductType { get; set; }
+        public CertificateProductType ProductType { get; set; }
 
         /// <summary>
         /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if the
