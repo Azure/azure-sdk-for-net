@@ -103,7 +103,7 @@ namespace ApplicationInsights.Tests.Scenarios
                                                 .GetResult();
 
                 //get webtest again, should get an exception
-                Assert.Throws(typeof(CloudException), () =>
+                Assert.Throws<CloudException>(() =>
                 {
                     getWebTestResponse = insightsClient
                                                 .WebTests

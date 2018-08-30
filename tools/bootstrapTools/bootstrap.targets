@@ -2,7 +2,7 @@
 	<UsingTask TaskName="GetBuildTools" AssemblyFile="taskBinaries\Microsoft.Azure.Build.BootstrapTasks.dll" />
 	
   <Target Name="GetLatestBuildTools">
-	  <GetBuildTools LocalBranchRootDir="$(LibraryRoot)" RemoteRootDir="$(RemoteRootDir)" DebugTrace="$(DebugTrace)" WhatIf="$(WhatIf)" OverrideLocal="$(OverrideLocal)" />
+	  <GetBuildTools LocalBranchRootDir="$(LibraryRoot)" RemoteRootDir="$(RemoteRootDir)" UseLatest="$(UseLatest)" DebugTrace="$(DebugTrace)" WhatIf="$(WhatIf)" OverrideLocal="$(OverrideLocal)" />
   </Target>
   
   <Target Name="Init" DependsOnTargets="GetLatestBuildTools">

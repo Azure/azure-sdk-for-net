@@ -35,15 +35,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the Domain class.
         /// </summary>
         /// <param name="location">Resource Location.</param>
+        /// <param name="contactAdmin">Administrative contact.</param>
+        /// <param name="contactBilling">Billing contact.</param>
+        /// <param name="contactRegistrant">Registrant contact.</param>
+        /// <param name="contactTech">Technical contact.</param>
+        /// <param name="consent">Legal agreement consent.</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="contactAdmin">Administrative contact.</param>
-        /// <param name="contactBilling">Billing contact.</param>
-        /// <param name="contactRegistrant">Registrant contact.</param>
-        /// <param name="contactTech">Technical contact.</param>
         /// <param name="registrationStatus">Domain registration status.
         /// Possible values include: 'Active', 'Awaiting', 'Cancelled',
         /// 'Confiscated', 'Disabled', 'Excluded', 'Expired', 'Failed', 'Held',
@@ -74,7 +75,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// to.</param>
         /// <param name="managedHostNames">All hostnames derived from the
         /// domain and assigned to Azure resources.</param>
-        /// <param name="consent">Legal agreement consent.</param>
         /// <param name="domainNotRenewableReasons">Reasons why domain is not
         /// renewable.</param>
         /// <param name="dnsType">Current DNS type. Possible values include:
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="targetDnsType">Target DNS type (would be used for
         /// migration). Possible values include: 'AzureDns',
         /// 'DefaultDomainRegistrarDns'</param>
-        public Domain(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Contact contactAdmin = default(Contact), Contact contactBilling = default(Contact), Contact contactRegistrant = default(Contact), Contact contactTech = default(Contact), DomainStatus? registrationStatus = default(DomainStatus?), ProvisioningState? provisioningState = default(ProvisioningState?), IList<string> nameServers = default(IList<string>), bool? privacy = default(bool?), System.DateTime? createdTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), System.DateTime? lastRenewedTime = default(System.DateTime?), bool? autoRenew = default(bool?), bool? readyForDnsRecordManagement = default(bool?), IList<HostName> managedHostNames = default(IList<HostName>), DomainPurchaseConsent consent = default(DomainPurchaseConsent), IList<string> domainNotRenewableReasons = default(IList<string>), DnsType? dnsType = default(DnsType?), string dnsZoneId = default(string), DnsType? targetDnsType = default(DnsType?), string authCode = default(string))
+        public Domain(string location, Contact contactAdmin, Contact contactBilling, Contact contactRegistrant, Contact contactTech, DomainPurchaseConsent consent, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DomainStatus? registrationStatus = default(DomainStatus?), ProvisioningState? provisioningState = default(ProvisioningState?), IList<string> nameServers = default(IList<string>), bool? privacy = default(bool?), System.DateTime? createdTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), System.DateTime? lastRenewedTime = default(System.DateTime?), bool? autoRenew = default(bool?), bool? readyForDnsRecordManagement = default(bool?), IList<HostName> managedHostNames = default(IList<HostName>), IList<string> domainNotRenewableReasons = default(IList<string>), DnsType? dnsType = default(DnsType?), string dnsZoneId = default(string), DnsType? targetDnsType = default(DnsType?), string authCode = default(string))
             : base(location, id, name, kind, type, tags)
         {
             ContactAdmin = contactAdmin;
@@ -259,6 +259,26 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public override void Validate()
         {
             base.Validate();
+            if (ContactAdmin == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ContactAdmin");
+            }
+            if (ContactBilling == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ContactBilling");
+            }
+            if (ContactRegistrant == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ContactRegistrant");
+            }
+            if (ContactTech == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ContactTech");
+            }
+            if (Consent == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Consent");
+            }
             if (ContactAdmin != null)
             {
                 ContactAdmin.Validate();

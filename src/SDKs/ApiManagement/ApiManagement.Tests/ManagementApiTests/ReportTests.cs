@@ -16,7 +16,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class ReportTests : TestBase
     {
         [Fact]
-        public async Task Query()
+        public void Query()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
