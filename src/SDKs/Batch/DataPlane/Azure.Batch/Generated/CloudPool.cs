@@ -513,7 +513,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets a list of errors encountered while performing the last resize on the <see cref="CloudPool"/>. Errors are 
         /// returned only when the Batch service encountered an error while resizing the pool, and when the pool's <see cref="CloudPool.AllocationState"/> 
-        /// is <see cref="AllocationState">Steady</see>.
+        /// is <see cref="Common.AllocationState.Steady">Steady</see>.
         /// </summary>
         public IReadOnlyList<ResizeError> ResizeErrors
         {

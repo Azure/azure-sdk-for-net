@@ -33,6 +33,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Initializes a new instance of the MetricAlertStatusProperties
         /// class.
         /// </summary>
+        /// <param name="dimensions">An object describing the type of the
+        /// dimensions.</param>
         /// <param name="status">status value</param>
         /// <param name="timestamp">UTC time when the status was
         /// checked.</param>
@@ -50,6 +52,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets an object describing the type of the dimensions.
         /// </summary>
         [JsonProperty(PropertyName = "dimensions")]
         public IDictionary<string, string> Dimensions { get; set; }

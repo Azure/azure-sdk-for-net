@@ -42,11 +42,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// names.</param>
         /// <param name="appSettingNames">List of application settings
         /// names.</param>
-        public SlotConfigNamesResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IList<string> connectionStringNames = default(IList<string>), IList<string> appSettingNames = default(IList<string>))
+        /// <param name="azureStorageConfigNames">List of external Azure
+        /// storage account identifiers.</param>
+        public SlotConfigNamesResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IList<string> connectionStringNames = default(IList<string>), IList<string> appSettingNames = default(IList<string>), IList<string> azureStorageConfigNames = default(IList<string>))
             : base(id, name, kind, type)
         {
             ConnectionStringNames = connectionStringNames;
             AppSettingNames = appSettingNames;
+            AzureStorageConfigNames = azureStorageConfigNames;
             CustomInit();
         }
 
@@ -66,6 +69,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.appSettingNames")]
         public IList<string> AppSettingNames { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of external Azure storage account identifiers.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.azureStorageConfigNames")]
+        public IList<string> AzureStorageConfigNames { get; set; }
 
     }
 }

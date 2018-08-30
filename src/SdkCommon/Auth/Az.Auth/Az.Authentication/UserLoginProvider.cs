@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-#if FullNetFx
+//#if FullNetFx
 namespace Microsoft.Rest.Azure.Authentication
 {
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
@@ -16,6 +16,12 @@ namespace Microsoft.Rest.Azure.Authentication
         #region Net 452
         // Interactive authentication is not implemented for CoreCLR.
 #if net452
+        /// <summary>
+        /// The id of the active directory common tenant.
+        /// </summary>
+        //public const string UserCommonTenantId = "common";
+
+        #region InteractiveLogin
         /// <summary>
         /// Log in to Azure active directory common tenant with user account and authentication provided by the user.  Authentication is automatically scoped to the default azure management endpoint. 
         /// This call may display a credentials dialog, depending on the supplied client settings and the state of the token cache and user cookies.
@@ -286,6 +292,7 @@ namespace Microsoft.Rest.Azure.Authentication
                 authResult.TenantId,
                 authResult.UserInfo.DisplayableId);
         }
+        #endregion end of InteractiveLogin
 
         /// <summary>
         /// Log in to azure active directory in non-interactive mode using organizational id credentials and the default token cache. Default service 
@@ -371,4 +378,4 @@ namespace Microsoft.Rest.Azure.Authentication
         #endregion Net 452
     }
 }
-#endif
+//#endif

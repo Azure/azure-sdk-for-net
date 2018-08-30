@@ -46,18 +46,13 @@
         }
 
 #region // constructors
-        private ProtocolLayer()
-        {
-        }
 
         /// <summary>
         /// instantiate based on creds and base url
         /// </summary>
-        /// <param name="baseURL"></param>
-        /// <param name="credentials"></param>
-        internal ProtocolLayer(string baseURL, ServiceClientCredentials credentials)
+        internal ProtocolLayer(string baseUrl, ServiceClientCredentials credentials)
         {
-            this._client = new Protocol.BatchServiceClient(new Uri(baseURL), credentials);
+            this._client = new Protocol.BatchServiceClient(new Uri(baseUrl), credentials);
             this._client.HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(InternalConstants.UserAgentProductName, typeof(ProtocolLayer).GetTypeInfo().Assembly.GetName().Version.ToString()));
 
             this._client.HttpClient.Timeout = Timeout.InfiniteTimeSpan; //Client side timeout will be set per-request

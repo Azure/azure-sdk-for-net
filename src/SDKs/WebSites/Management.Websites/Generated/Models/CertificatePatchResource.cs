@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the CertificatePatchResource class.
         /// </summary>
+        /// <param name="password">Certificate password.</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
@@ -49,7 +50,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="issuer">Certificate issuer.</param>
         /// <param name="issueDate">Certificate issue Date.</param>
         /// <param name="expirationDate">Certificate expriration date.</param>
-        /// <param name="password">Certificate password.</param>
         /// <param name="thumbprint">Certificate thumbprint.</param>
         /// <param name="valid">Is the certificate valid?.</param>
         /// <param name="cerBlob">Raw bytes of .cer file</param>
@@ -65,11 +65,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'AzureServiceUnauthorizedToAccessKeyVault', 'KeyVaultDoesNotExist',
         /// 'KeyVaultSecretDoesNotExist', 'UnknownError', 'ExternalPrivateKey',
         /// 'Unknown'</param>
-        /// <param name="geoRegion">Region of the certificate.</param>
         /// <param name="serverFarmId">Resource ID of the associated App
         /// Service plan, formatted as:
         /// "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".</param>
-        public CertificatePatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), byte[] pfxBlob = default(byte[]), string siteName = default(string), string selfLink = default(string), string issuer = default(string), System.DateTime? issueDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), string password = default(string), string thumbprint = default(string), bool? valid = default(bool?), byte[] cerBlob = default(byte[]), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string keyVaultId = default(string), string keyVaultSecretName = default(string), KeyVaultSecretStatus? keyVaultSecretStatus = default(KeyVaultSecretStatus?), string geoRegion = default(string), string serverFarmId = default(string))
+        public CertificatePatchResource(string password, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), byte[] pfxBlob = default(byte[]), string siteName = default(string), string selfLink = default(string), string issuer = default(string), System.DateTime? issueDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), string thumbprint = default(string), bool? valid = default(bool?), byte[] cerBlob = default(byte[]), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string keyVaultId = default(string), string keyVaultSecretName = default(string), KeyVaultSecretStatus? keyVaultSecretStatus = default(KeyVaultSecretStatus?), string serverFarmId = default(string))
             : base(id, name, kind, type)
         {
             FriendlyName = friendlyName;
@@ -90,7 +89,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;
             KeyVaultSecretStatus = keyVaultSecretStatus;
-            GeoRegion = geoRegion;
             ServerFarmId = serverFarmId;
             CustomInit();
         }
@@ -215,12 +213,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public KeyVaultSecretStatus? KeyVaultSecretStatus { get; private set; }
 
         /// <summary>
-        /// Gets region of the certificate.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.geoRegion")]
-        public string GeoRegion { get; private set; }
-
-        /// <summary>
         /// Gets or sets resource ID of the associated App Service plan,
         /// formatted as:
         /// "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".
@@ -228,5 +220,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.serverFarmId")]
         public string ServerFarmId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Password == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Password");
+            }
+        }
     }
 }

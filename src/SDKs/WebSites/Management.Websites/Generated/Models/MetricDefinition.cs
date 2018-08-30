@@ -38,17 +38,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="metricDefinitionName">Name of the metric.</param>
         /// <param name="unit">Unit of the metric.</param>
         /// <param name="primaryAggregationType">Primary aggregation
         /// type.</param>
         /// <param name="metricAvailabilities">List of time grains supported
         /// for the metric together with retention period.</param>
         /// <param name="displayName">Friendly name shown in the UI.</param>
-        public MetricDefinition(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string metricDefinitionName = default(string), string unit = default(string), string primaryAggregationType = default(string), IList<MetricAvailabilily> metricAvailabilities = default(IList<MetricAvailabilily>), string displayName = default(string))
+        public MetricDefinition(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string unit = default(string), string primaryAggregationType = default(string), IList<MetricAvailabilily> metricAvailabilities = default(IList<MetricAvailabilily>), string displayName = default(string))
             : base(id, name, kind, type)
         {
-            MetricDefinitionName = metricDefinitionName;
             Unit = unit;
             PrimaryAggregationType = primaryAggregationType;
             MetricAvailabilities = metricAvailabilities;
@@ -60,12 +58,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets name of the metric.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string MetricDefinitionName { get; private set; }
 
         /// <summary>
         /// Gets unit of the metric.

@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     {
             /// <summary>
             /// Restores the specified backed up data. This is an asynchronous operation.
-            /// To know the status of this API call, use GetProtectedItemOperationResult
-            /// API.
+            /// To know the status of this API call, use
+            /// GetProtectedItemOperationResult API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
             /// <summary>
             /// Restores the specified backed up data. This is an asynchronous operation.
-            /// To know the status of this API call, use GetProtectedItemOperationResult
-            /// API.
+            /// To know the status of this API call, use
+            /// GetProtectedItemOperationResult API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

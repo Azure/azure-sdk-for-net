@@ -45,6 +45,9 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the type of caching to enable for the OS disk.
         /// </summary>
+        /// <remarks>
+        /// If omitted, the default is <see cref="Common.CachingType.ReadWrite" />.
+        /// </remarks>
         public Common.CachingType? Caching { get; }
 
         #endregion // OSDisk

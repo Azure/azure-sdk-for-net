@@ -12,6 +12,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// Action descriptor.
+    /// </summary>
     public partial class Action
     {
         /// <summary>

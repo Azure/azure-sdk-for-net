@@ -7,6 +7,8 @@
 namespace Microsoft.CognitiveServices.ContentModerator.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     public partial class Body
@@ -25,7 +27,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <param name="name">Name of the list.</param>
         /// <param name="description">Description of the list.</param>
         /// <param name="metadata">Metadata of the list.</param>
-        public Body(string name = default(string), string description = default(string), BodyMetadata metadata = default(BodyMetadata))
+        public Body(string name = default(string), string description = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>))
         {
             Name = name;
             Description = description;
@@ -54,7 +56,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// Gets or sets metadata of the list.
         /// </summary>
         [JsonProperty(PropertyName = "Metadata")]
-        public BodyMetadata Metadata { get; set; }
+        public IDictionary<string, string> Metadata { get; set; }
 
     }
 }

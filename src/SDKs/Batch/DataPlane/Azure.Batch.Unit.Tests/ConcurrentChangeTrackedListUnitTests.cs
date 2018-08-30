@@ -27,7 +27,7 @@
         {
             const string testName = "Bug1910530_ConcurrentChangeTrackedListThreadsafeTest";
 
-            using(BatchClient batchCli = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using(BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
             {
                 JobScheduleOperations jobScheduleOperations = batchCli.JobScheduleOperations;
                 

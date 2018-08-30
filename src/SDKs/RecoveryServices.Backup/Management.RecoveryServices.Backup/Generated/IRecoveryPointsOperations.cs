@@ -64,9 +64,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<AzureOperationResponse<IPage<RecoveryPointResource>>> ListWithHttpMessagesAsync(string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, ODataQuery<BMSRPQueryObject> odataQuery = default(ODataQuery<BMSRPQueryObject>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Provides the information of the backed up data identified using
-        /// RecoveryPointID. This is an asynchronous operation. To know the
-        /// status of the operation, call the GetProtectedItemOperationResult
-        /// API.
+        /// RecoveryPointID. This is an asynchronous operation.
+        /// To know the status of the operation, call the
+        /// GetProtectedItemOperationResult API.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.

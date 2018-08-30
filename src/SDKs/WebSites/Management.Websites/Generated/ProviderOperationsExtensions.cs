@@ -30,9 +30,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static object GetAvailableStacks(this IProviderOperations operations)
+            /// <param name='osTypeSelected'>
+            /// Possible values include: 'Windows', 'Linux'
+            /// </param>
+            public static IPage<ApplicationStack> GetAvailableStacks(this IProviderOperations operations, string osTypeSelected = default(string))
             {
-                return operations.GetAvailableStacksAsync().GetAwaiter().GetResult();
+                return operations.GetAvailableStacksAsync(osTypeSelected).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -44,12 +47,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='osTypeSelected'>
+            /// Possible values include: 'Windows', 'Linux'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetAvailableStacksAsync(this IProviderOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ApplicationStack>> GetAvailableStacksAsync(this IProviderOperations operations, string osTypeSelected = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAvailableStacksWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAvailableStacksWithHttpMessagesAsync(osTypeSelected, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -102,9 +108,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static object GetAvailableStacksOnPrem(this IProviderOperations operations)
+            /// <param name='osTypeSelected'>
+            /// Possible values include: 'Windows', 'Linux'
+            /// </param>
+            public static IPage<ApplicationStack> GetAvailableStacksOnPrem(this IProviderOperations operations, string osTypeSelected = default(string))
             {
-                return operations.GetAvailableStacksOnPremAsync().GetAwaiter().GetResult();
+                return operations.GetAvailableStacksOnPremAsync(osTypeSelected).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -116,12 +125,55 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='osTypeSelected'>
+            /// Possible values include: 'Windows', 'Linux'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetAvailableStacksOnPremAsync(this IProviderOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ApplicationStack>> GetAvailableStacksOnPremAsync(this IProviderOperations operations, string osTypeSelected = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAvailableStacksOnPremWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAvailableStacksOnPremWithHttpMessagesAsync(osTypeSelected, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get available application frameworks and their versions
+            /// </summary>
+            /// <remarks>
+            /// Get available application frameworks and their versions
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ApplicationStack> GetAvailableStacksNext(this IProviderOperations operations, string nextPageLink)
+            {
+                return operations.GetAvailableStacksNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get available application frameworks and their versions
+            /// </summary>
+            /// <remarks>
+            /// Get available application frameworks and their versions
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApplicationStack>> GetAvailableStacksNextAsync(this IProviderOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAvailableStacksNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -166,6 +218,46 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IPage<CsmOperationDescription>> ListOperationsNextAsync(this IProviderOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListOperationsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get available application frameworks and their versions
+            /// </summary>
+            /// <remarks>
+            /// Get available application frameworks and their versions
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ApplicationStack> GetAvailableStacksOnPremNext(this IProviderOperations operations, string nextPageLink)
+            {
+                return operations.GetAvailableStacksOnPremNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get available application frameworks and their versions
+            /// </summary>
+            /// <remarks>
+            /// Get available application frameworks and their versions
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApplicationStack>> GetAvailableStacksOnPremNextAsync(this IProviderOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAvailableStacksOnPremNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

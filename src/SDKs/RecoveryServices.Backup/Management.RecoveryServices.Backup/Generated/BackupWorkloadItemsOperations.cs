@@ -53,7 +53,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
         /// <summary>
         /// Provides a pageable list of workload item of a specific container according
-        /// to the query filter and the pagination parameters.
+        /// to the query filter and the pagination
+        /// parameters.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -287,7 +288,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
         /// <summary>
         /// Provides a pageable list of workload item of a specific container according
-        /// to the query filter and the pagination parameters.
+        /// to the query filter and the pagination
+        /// parameters.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

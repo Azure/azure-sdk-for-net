@@ -40,14 +40,24 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="evaluationState">Connectivity analysis evaluation
         /// state. Possible values include: 'NotStarted', 'InProgress',
         /// 'Completed'</param>
+        /// <param name="avgLatencyInMs">Average latency in ms.</param>
+        /// <param name="minLatencyInMs">Minimum latency in ms.</param>
+        /// <param name="maxLatencyInMs">Maximum latency in ms.</param>
+        /// <param name="probesSent">The number of sent probes.</param>
+        /// <param name="probesFailed">The number of failed probes.</param>
         /// <param name="hops">List of hops between the source and the
         /// destination.</param>
-        public ConnectionStateSnapshot(string connectionState = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string evaluationState = default(string), IList<ConnectivityHop> hops = default(IList<ConnectivityHop>))
+        public ConnectionStateSnapshot(string connectionState = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string evaluationState = default(string), int? avgLatencyInMs = default(int?), int? minLatencyInMs = default(int?), int? maxLatencyInMs = default(int?), int? probesSent = default(int?), int? probesFailed = default(int?), IList<ConnectivityHop> hops = default(IList<ConnectivityHop>))
         {
             ConnectionState = connectionState;
             StartTime = startTime;
             EndTime = endTime;
             EvaluationState = evaluationState;
+            AvgLatencyInMs = avgLatencyInMs;
+            MinLatencyInMs = minLatencyInMs;
+            MaxLatencyInMs = maxLatencyInMs;
+            ProbesSent = probesSent;
+            ProbesFailed = probesFailed;
             Hops = hops;
             CustomInit();
         }
@@ -82,6 +92,36 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "evaluationState")]
         public string EvaluationState { get; set; }
+
+        /// <summary>
+        /// Gets or sets average latency in ms.
+        /// </summary>
+        [JsonProperty(PropertyName = "avgLatencyInMs")]
+        public int? AvgLatencyInMs { get; set; }
+
+        /// <summary>
+        /// Gets or sets minimum latency in ms.
+        /// </summary>
+        [JsonProperty(PropertyName = "minLatencyInMs")]
+        public int? MinLatencyInMs { get; set; }
+
+        /// <summary>
+        /// Gets or sets maximum latency in ms.
+        /// </summary>
+        [JsonProperty(PropertyName = "maxLatencyInMs")]
+        public int? MaxLatencyInMs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of sent probes.
+        /// </summary>
+        [JsonProperty(PropertyName = "probesSent")]
+        public int? ProbesSent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of failed probes.
+        /// </summary>
+        [JsonProperty(PropertyName = "probesFailed")]
+        public int? ProbesFailed { get; set; }
 
         /// <summary>
         /// Gets list of hops between the source and the destination.
