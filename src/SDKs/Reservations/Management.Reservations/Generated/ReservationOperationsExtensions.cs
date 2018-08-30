@@ -36,7 +36,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='body'>
             /// Information needed to Split a reservation item
@@ -59,7 +58,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='body'>
             /// Information needed to Split a reservation item
@@ -87,7 +85,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='body'>
             /// Information needed for commercial request for a reservation
@@ -109,7 +106,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='body'>
             /// Information needed for commercial request for a reservation
@@ -136,7 +132,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             public static IPage<ReservationResponse> List(this IReservationOperations operations, string reservationOrderId)
             {
@@ -154,7 +149,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -181,7 +175,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             public static ReservationResponse Get(this IReservationOperations operations, string reservationId, string reservationOrderId)
             {
@@ -202,7 +195,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -226,7 +218,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='reservationId'>
             /// Id of the Reservation Item
@@ -250,7 +241,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='reservationId'>
             /// Id of the Reservation Item
@@ -284,7 +274,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             public static IPage<ReservationResponse> ListRevisions(this IReservationOperations operations, string reservationId, string reservationOrderId)
             {
@@ -306,7 +295,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -332,7 +320,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='body'>
             /// Information needed to Split a reservation item
@@ -355,7 +342,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='body'>
             /// Information needed to Split a reservation item
@@ -383,7 +369,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='body'>
             /// Information needed for commercial request for a reservation
@@ -405,7 +390,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='body'>
             /// Information needed for commercial request for a reservation
@@ -432,7 +416,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='reservationId'>
             /// Id of the Reservation Item
@@ -456,7 +439,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </param>
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
-            ///
             /// </param>
             /// <param name='reservationId'>
             /// Id of the Reservation Item
