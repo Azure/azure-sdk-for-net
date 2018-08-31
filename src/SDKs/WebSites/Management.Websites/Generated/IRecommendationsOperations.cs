@@ -35,10 +35,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// &lt;code&gt;false&lt;/code&gt;, which returns all recommendations.
         /// </param>
         /// <param name='filter'>
-        /// Filter is specified by using OData syntax. Example:
-        /// $filter=channels eq 'Api' or channel eq 'Notification' and
-        /// startTime eq '2014-01-01T00:00:00Z' and endTime eq
-        /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[PT1H|PT1M|P1D]
+        /// Filter is specified by using OData syntax. Example: $filter=channel
+        /// eq 'Api' or channel eq 'Notification' and startTime eq
+        /// 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
+        /// timeGrain eq duration'[PT1H|PT1M|P1D]
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -113,11 +113,16 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='siteName'>
         /// Name of the app.
         /// </param>
+        /// <param name='expiredOnly'>
+        /// Specify &lt;code&gt;false&lt;/code&gt; to return all
+        /// recommendations. The default is &lt;code&gt;true&lt;/code&gt;,
+        /// which returns only expired recommendations.
+        /// </param>
         /// <param name='filter'>
-        /// Filter is specified by using OData syntax. Example:
-        /// $filter=channels eq 'Api' or channel eq 'Notification' and
-        /// startTime eq '2014-01-01T00:00:00Z' and endTime eq
-        /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[PT1H|PT1M|P1D]
+        /// Filter is specified by using OData syntax. Example: $filter=channel
+        /// eq 'Api' or channel eq 'Notification' and startTime eq
+        /// 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
+        /// timeGrain eq duration'[PT1H|PT1M|P1D]
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -125,7 +130,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -134,7 +139,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Recommendation>>> ListHistoryForWebAppWithHttpMessagesAsync(string resourceGroupName, string siteName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Recommendation>>> ListHistoryForWebAppWithHttpMessagesAsync(string resourceGroupName, string siteName, bool? expiredOnly = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all recommendations for an app.
         /// </summary>
@@ -154,8 +159,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         /// <param name='filter'>
         /// Return only channels specified in the filter. Filter is specified
-        /// by using OData syntax. Example: $filter=channels eq 'Api' or
-        /// channel eq 'Notification'
+        /// by using OData syntax. Example: $filter=channel eq 'Api' or channel
+        /// eq 'Notification'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -163,7 +168,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -252,7 +257,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -305,7 +310,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -332,7 +337,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -357,7 +362,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

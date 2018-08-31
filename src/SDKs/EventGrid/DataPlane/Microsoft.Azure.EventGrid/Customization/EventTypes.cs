@@ -19,6 +19,8 @@ namespace Microsoft.Azure.EventGrid
         // Device events
         public const string IoTHubDeviceCreatedEvent = "Microsoft.Devices.DeviceCreated";
         public const string IoTHubDeviceDeletedEvent = "Microsoft.Devices.DeviceDeleted";
+        public const string IoTHubDeviceConnectedEvent = "Microsoft.Devices.DeviceConnected";
+        public const string IoTHubDeviceDisconnectedEvent = "Microsoft.Devices.DeviceDisconnected";
 
         // EventGrid events
         public const string EventGridSubscriptionValidationEvent = "Microsoft.EventGrid.SubscriptionValidationEvent";
@@ -37,6 +39,9 @@ namespace Microsoft.Azure.EventGrid
         public const string ResourceDeleteSuccessEvent = "Microsoft.Resources.ResourceDeleteSuccess";
         public const string ResourceDeleteFailureEvent = "Microsoft.Resources.ResourceDeleteFailure";
         public const string ResourceDeleteCancelEvent = "Microsoft.Resources.ResourceDeleteCancel";
+        public const string ResourceActionSuccessEvent = "Microsoft.Resources.ResourceActionSuccess";
+        public const string ResourceActionFailureEvent = "Microsoft.Resources.ResourceActionFailure";
+        public const string ResourceActionCancelEvent = "Microsoft.Resources.ResourceActionCancel";
 
         // ServiceBus events
         public const string ServiceBusActiveMessagesAvailableWithNoListenersEvent = "Microsoft.ServiceBus.ActiveMessagesAvailableWithNoListeners";

@@ -33,7 +33,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the AccountListPoolNodeCountsOptions
         /// class.
         /// </summary>
-        /// <param name="filter">An OData $filter clause.</param>
+        /// <param name="filter">An OData $filter clause. For more information
+        /// on constructing this filter, see
+        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch.</param>
         /// <param name="maxResults">The maximum number of items to return in
         /// the response.</param>
         /// <param name="timeout">The maximum time that the server can spend
@@ -64,7 +66,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets an OData $filter clause.
+        /// Gets or sets an OData $filter clause. For more information on
+        /// constructing this filter, see
+        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public string Filter { get; set; }

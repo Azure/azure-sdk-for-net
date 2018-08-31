@@ -1289,10 +1289,6 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "jobScheduleUpdateParameter");
             }
-            if (jobScheduleUpdateParameter != null)
-            {
-                jobScheduleUpdateParameter.Validate();
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -2422,10 +2418,6 @@ namespace Microsoft.Azure.Batch.Protocol
             if (cloudJobSchedule == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "cloudJobSchedule");
-            }
-            if (cloudJobSchedule != null)
-            {
-                cloudJobSchedule.Validate();
             }
             if (Client.ApiVersion == null)
             {

@@ -89,8 +89,8 @@ The job output container name is formed according to the following rules:
 * Otherwise:
   * Calculate the SHA1 hash of the normalized ID, and express it
     as a 40-character hex string.
-  * Replace all sequences of one or more hyphens or underscores in the
-    normalized ID by single hyphens, then remove any leading or trailing
+  * Replace all underscores, colons, and sequences of one or more hyphens in 
+    the normalized ID by single hyphens, then remove any leading or trailing
     hyphens.
   * If the resulting string is empty, use the string "job" instead.
   * If the resulting string is longer than 15 characters, truncate it

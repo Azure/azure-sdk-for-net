@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="fax">Fax number.</param>
         /// <param name="jobTitle">Job title.</param>
         /// <param name="nameMiddle">Middle name.</param>
-        /// <param name="organization">Organization.</param>
+        /// <param name="organization">Organization contact belongs to.</param>
         public Contact(string email, string nameFirst, string nameLast, string phone, Address addressMailing = default(Address), string fax = default(string), string jobTitle = default(string), string nameMiddle = default(string), string organization = default(string))
         {
             AddressMailing = addressMailing;
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string NameMiddle { get; set; }
 
         /// <summary>
-        /// Gets or sets organization.
+        /// Gets or sets organization contact belongs to.
         /// </summary>
         [JsonProperty(PropertyName = "organization")]
         public string Organization { get; set; }

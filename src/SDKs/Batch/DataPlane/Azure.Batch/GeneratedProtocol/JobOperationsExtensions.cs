@@ -673,11 +673,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <remarks>
             /// Task counts provide a count of the tasks by active, running or completed
             /// task state, and a count of tasks which succeeded or failed. Tasks in the
-            /// preparing state are counted as running. If the validationStatus is
-            /// unvalidated, then the Batch service has not been able to check state counts
-            /// against the task states as reported in the List Tasks API. The
-            /// validationStatus may be unvalidated if the job contains more than 200,000
-            /// tasks.
+            /// preparing state are counted as running.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -699,11 +695,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <remarks>
             /// Task counts provide a count of the tasks by active, running or completed
             /// task state, and a count of tasks which succeeded or failed. Tasks in the
-            /// preparing state are counted as running. If the validationStatus is
-            /// unvalidated, then the Batch service has not been able to check state counts
-            /// against the task states as reported in the List Tasks API. The
-            /// validationStatus may be unvalidated if the job contains more than 200,000
-            /// tasks.
+            /// preparing state are counted as running.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

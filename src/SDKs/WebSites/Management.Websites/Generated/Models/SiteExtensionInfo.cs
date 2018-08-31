@@ -38,10 +38,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="siteExtensionInfoId">Site extension ID.</param>
-        /// <param name="title">Site extension title.</param>
-        /// <param name="siteExtensionInfoType">Site extension type. Possible
-        /// values include: 'Gallery', 'WebRoot'</param>
+        /// <param name="extensionId">Site extension ID.</param>
+        /// <param name="extensionType">Site extension type. Possible values
+        /// include: 'Gallery', 'WebRoot'</param>
         /// <param name="summary">Summary description.</param>
         /// <param name="description">Detailed description.</param>
         /// <param name="version">Version information.</param>
@@ -51,7 +50,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="licenseUrl">License URL.</param>
         /// <param name="feedUrl">Feed URL.</param>
         /// <param name="authors">List of authors.</param>
-        /// <param name="installationArgs">Installer command line
+        /// <param name="installerCommandLineParams">Installer command line
         /// parameters.</param>
         /// <param name="publishedDateTime">Published timestamp.</param>
         /// <param name="downloadCount">Count of downloads.</param>
@@ -62,12 +61,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="installedDateTime">Installed timestamp.</param>
         /// <param name="provisioningState">Provisioning state.</param>
         /// <param name="comment">Site Extension comment.</param>
-        public SiteExtensionInfo(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string siteExtensionInfoId = default(string), string title = default(string), SiteExtensionType? siteExtensionInfoType = default(SiteExtensionType?), string summary = default(string), string description = default(string), string version = default(string), string extensionUrl = default(string), string projectUrl = default(string), string iconUrl = default(string), string licenseUrl = default(string), string feedUrl = default(string), IList<string> authors = default(IList<string>), string installationArgs = default(string), System.DateTime? publishedDateTime = default(System.DateTime?), int? downloadCount = default(int?), bool? localIsLatestVersion = default(bool?), string localPath = default(string), System.DateTime? installedDateTime = default(System.DateTime?), string provisioningState = default(string), string comment = default(string))
+        public SiteExtensionInfo(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string extensionId = default(string), string title = default(string), SiteExtensionType? extensionType = default(SiteExtensionType?), string summary = default(string), string description = default(string), string version = default(string), string extensionUrl = default(string), string projectUrl = default(string), string iconUrl = default(string), string licenseUrl = default(string), string feedUrl = default(string), IList<string> authors = default(IList<string>), string installerCommandLineParams = default(string), System.DateTime? publishedDateTime = default(System.DateTime?), int? downloadCount = default(int?), bool? localIsLatestVersion = default(bool?), string localPath = default(string), System.DateTime? installedDateTime = default(System.DateTime?), string provisioningState = default(string), string comment = default(string))
             : base(id, name, kind, type)
         {
-            SiteExtensionInfoId = siteExtensionInfoId;
+            ExtensionId = extensionId;
             Title = title;
-            SiteExtensionInfoType = siteExtensionInfoType;
+            ExtensionType = extensionType;
             Summary = summary;
             Description = description;
             Version = version;
@@ -77,7 +76,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             LicenseUrl = licenseUrl;
             FeedUrl = feedUrl;
             Authors = authors;
-            InstallationArgs = installationArgs;
+            InstallerCommandLineParams = installerCommandLineParams;
             PublishedDateTime = publishedDateTime;
             DownloadCount = downloadCount;
             LocalIsLatestVersion = localIsLatestVersion;
@@ -96,11 +95,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets site extension ID.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.id")]
-        public string SiteExtensionInfoId { get; set; }
+        [JsonProperty(PropertyName = "properties.extension_id")]
+        public string ExtensionId { get; set; }
 
         /// <summary>
-        /// Gets or sets site extension title.
         /// </summary>
         [JsonProperty(PropertyName = "properties.title")]
         public string Title { get; set; }
@@ -109,8 +107,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Gets or sets site extension type. Possible values include:
         /// 'Gallery', 'WebRoot'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.type")]
-        public SiteExtensionType? SiteExtensionInfoType { get; set; }
+        [JsonProperty(PropertyName = "properties.extension_type")]
+        public SiteExtensionType? ExtensionType { get; set; }
 
         /// <summary>
         /// Gets or sets summary description.
@@ -133,31 +131,31 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets extension URL.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.extensionUrl")]
+        [JsonProperty(PropertyName = "properties.extension_url")]
         public string ExtensionUrl { get; set; }
 
         /// <summary>
         /// Gets or sets project URL.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.projectUrl")]
+        [JsonProperty(PropertyName = "properties.project_url")]
         public string ProjectUrl { get; set; }
 
         /// <summary>
         /// Gets or sets icon URL.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.iconUrl")]
+        [JsonProperty(PropertyName = "properties.icon_url")]
         public string IconUrl { get; set; }
 
         /// <summary>
         /// Gets or sets license URL.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.licenseUrl")]
+        [JsonProperty(PropertyName = "properties.license_url")]
         public string LicenseUrl { get; set; }
 
         /// <summary>
         /// Gets or sets feed URL.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.feedUrl")]
+        [JsonProperty(PropertyName = "properties.feed_url")]
         public string FeedUrl { get; set; }
 
         /// <summary>
@@ -169,19 +167,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets installer command line parameters.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.installationArgs")]
-        public string InstallationArgs { get; set; }
+        [JsonProperty(PropertyName = "properties.installer_command_line_params")]
+        public string InstallerCommandLineParams { get; set; }
 
         /// <summary>
         /// Gets or sets published timestamp.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publishedDateTime")]
+        [JsonProperty(PropertyName = "properties.published_date_time")]
         public System.DateTime? PublishedDateTime { get; set; }
 
         /// <summary>
         /// Gets or sets count of downloads.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.downloadCount")]
+        [JsonProperty(PropertyName = "properties.download_count")]
         public int? DownloadCount { get; set; }
 
         /// <summary>
@@ -189,19 +187,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// local version is the latest version;
         /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; otherwise.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.localIsLatestVersion")]
+        [JsonProperty(PropertyName = "properties.local_is_latest_version")]
         public bool? LocalIsLatestVersion { get; set; }
 
         /// <summary>
         /// Gets or sets local path.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.localPath")]
+        [JsonProperty(PropertyName = "properties.local_path")]
         public string LocalPath { get; set; }
 
         /// <summary>
         /// Gets or sets installed timestamp.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.installedDateTime")]
+        [JsonProperty(PropertyName = "properties.installed_date_time")]
         public System.DateTime? InstalledDateTime { get; set; }
 
         /// <summary>

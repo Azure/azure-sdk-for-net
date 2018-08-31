@@ -157,12 +157,11 @@
                         //
                         
                         //Delete single file
-                        const string stdOutFileName = "stdout.txt";
-                        NodeFile file = batchCli.JobOperations.GetNodeFile(jobId, taskId, stdOutFileName);
+                        NodeFile file = batchCli.JobOperations.GetNodeFile(jobId, taskId, Constants.StandardOutFileName);
                         file.Delete();
 
                         //Ensure delete succeeded
-                        TestUtilities.AssertThrows<BatchException>(() => batchCli.JobOperations.GetNodeFile(jobId, taskId, stdOutFileName));
+                        TestUtilities.AssertThrows<BatchException>(() => batchCli.JobOperations.GetNodeFile(jobId, taskId, Constants.StandardOutFileName));
 
                         //Delete directory
 
@@ -176,12 +175,11 @@
                         //
                         // JobScheduleOperations delete task file
                         //
-                        const string stdErrFileName = "stderr.txt";
-                        batchCli.JobOperations.GetNodeFile(jobId, taskId, stdErrFileName);
-                        batchCli.JobOperations.DeleteNodeFile(jobId, taskId, stdErrFileName);
+                        batchCli.JobOperations.GetNodeFile(jobId, taskId, Constants.StandardErrorFileName);
+                        batchCli.JobOperations.DeleteNodeFile(jobId, taskId, Constants.StandardErrorFileName);
 
                         //Ensure delete succeeded
-                        TestUtilities.AssertThrows<BatchException>(() => batchCli.JobOperations.GetNodeFile(jobId, taskId, stdErrFileName));
+                        TestUtilities.AssertThrows<BatchException>(() => batchCli.JobOperations.GetNodeFile(jobId, taskId, Constants.StandardErrorFileName));
 
                         //Delete directory
                         directory = batchCli.JobOperations.ListNodeFiles(jobId, directoryCreationTaskId2, recursive: true).First(item => item.Path.Contains(directoryNameTwo));
@@ -203,13 +201,13 @@
         
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
-        public void Bug1771166_1771181_1771038_GetListDeleteNodeFile()
+        public void TestNode_GetListDeleteFiles()
         {
             Action test = () =>
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
                 {
-                    string jobId = "Bug1771166Job-" + TestUtilities.GetMyName();
+                    string jobId = "TestNodeGetListDeleteFiles-" + TestUtilities.GetMyName();
 
                     try
                     {
@@ -246,10 +244,10 @@
                         TaskStateMonitor taskStateMonitor = utilities.CreateTaskStateMonitor();
 
                         taskStateMonitor.WaitAll(
-                                    boundJob.ListTasks(),
-                                    Microsoft.Azure.Batch.Common.TaskState.Completed,
-                                    TimeSpan.FromMinutes(3));
-                        
+                            boundJob.ListTasks(),
+                            Microsoft.Azure.Batch.Common.TaskState.Completed,
+                            TimeSpan.FromMinutes(3));
+
                         CloudTask boundTask = boundJob.GetTask(taskId);
                         //Since the compute node name comes back as "Node:<computeNodeId>" we need to split on : to get the actual compute node name
                         string computeNodeId = boundTask.ComputeNodeInformation.AffinityId.Split(':')[1];
@@ -312,12 +310,22 @@
                         //
                         // Get file from operations
                         //
-                        string filePathToGet = fileListFromComputeNode.First(f => !f.IsDirectory.Value).Path;
+                        string filePathToGet = fileListFromComputeNode.First(f => !f.IsDirectory.Value && f.Properties.ContentLength > 0).Path;
                         this.testOutputHelper.WriteLine("Getting file: {0}", filePathToGet);
                         NodeFile computeNodeFileFromManager = batchCli.PoolOperations.GetNodeFile(this.poolFixture.PoolId, computeNodeId, filePathToGet);
                         this.testOutputHelper.WriteLine("Successfully retrieved file: {0}", filePathToGet);
                         this.testOutputHelper.WriteLine("---- File data: ----");
-                        this.testOutputHelper.WriteLine(computeNodeFileFromManager.ReadAsString());
+                        var computeNodeFileContentFromManager = computeNodeFileFromManager.ReadAsString();
+                        this.testOutputHelper.WriteLine(computeNodeFileContentFromManager);
+                        Assert.NotEmpty(computeNodeFileContentFromManager);
+
+                        //
+                        // Get file directly from operations (bypassing the properties call)
+                        //
+                        var computeNodeFileContentDirect = batchCli.PoolOperations.CopyNodeFileContentToString(this.poolFixture.PoolId, computeNodeId, filePathToGet);
+                        this.testOutputHelper.WriteLine("---- File data: ----");
+                        this.testOutputHelper.WriteLine(computeNodeFileContentDirect);
+                        Assert.NotEmpty(computeNodeFileContentDirect);
 
                         //
                         // Get file from compute node
@@ -326,13 +334,22 @@
                         NodeFile fileFromComputeNode = computeNode.GetNodeFile(filePathToGet);
                         this.testOutputHelper.WriteLine("Successfully retrieved file: {0}", filePathToGet);
                         this.testOutputHelper.WriteLine("---- File data: ----");
-                        this.testOutputHelper.WriteLine(fileFromComputeNode.ReadAsString());
+                        var computeNodeFileContentFromNode = fileFromComputeNode.ReadAsString();
+                        this.testOutputHelper.WriteLine(computeNodeFileContentFromNode);
+                        Assert.NotEmpty(computeNodeFileContentFromNode);
+
+                        //
+                        // Get file from compute node (bypassing the properties call)
+                        //
+                        computeNodeFileContentDirect = computeNode.CopyNodeFileContentToString(filePathToGet);
+                        this.testOutputHelper.WriteLine("---- File data: ----");
+                        this.testOutputHelper.WriteLine(computeNodeFileContentDirect);
+                        Assert.NotEmpty(computeNodeFileContentDirect);
 
                         //
                         // NodeFile delete
                         //
-                        const string stdOutFileName = "stdout.txt";
-                        string filePath = Path.Combine(@"workitems", jobId, "job-1", taskId, stdOutFileName);
+                        string filePath = Path.Combine(@"workitems", jobId, "job-1", taskId, Constants.StandardOutFileName);
                         NodeFile nodeFile = batchCli.PoolOperations.GetNodeFile(this.poolFixture.PoolId, computeNodeId, filePath);
 
                         nodeFile.Delete();
@@ -353,14 +370,13 @@
                         //
                         // PoolManager delete node file
                         //
-                        const string stdErrFileName = "stderr.txt";
-                        filePath = Path.Combine(@"workitems", jobId, "job-1", taskId, stdErrFileName);
+                        filePath = Path.Combine(@"workitems", jobId, "job-1", taskId, Constants.StandardErrorFileName);
 
-                        NodeFile file = batchCli.JobOperations.GetNodeFile(jobId, taskId, stdErrFileName);
+                        NodeFile file = batchCli.JobOperations.GetNodeFile(jobId, taskId, Constants.StandardErrorFileName);
                         batchCli.PoolOperations.DeleteNodeFile(this.poolFixture.PoolId, computeNodeId, filePath);
 
                         //Ensure delete succeeded
-                        TestUtilities.AssertThrows<BatchException>(() => batchCli.JobOperations.GetNodeFile(jobId, taskId, stdErrFileName));
+                        TestUtilities.AssertThrows<BatchException>(() => batchCli.JobOperations.GetNodeFile(jobId, taskId, Constants.StandardErrorFileName));
 
                         //Delete directory
                         directory = batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).First(item => item.Path.Contains(directoryNameTwo));
@@ -485,17 +501,16 @@
                         //
                         // NodeFile by task
                         //
-                        const string stdOutFileName = "stdout.txt";
-                        NodeFile file = batchCli.JobOperations.GetNodeFile(jobId, taskId, stdOutFileName);
+                        NodeFile file = batchCli.JobOperations.GetNodeFile(jobId, taskId, Constants.StandardOutFileName);
 
-                        this.testOutputHelper.WriteLine("File {0} has content length: {1}", stdOutFileName, file.Properties.ContentLength);
-                        this.testOutputHelper.WriteLine("File {0} has content type: {1}", stdOutFileName, file.Properties.ContentType);
+                        this.testOutputHelper.WriteLine("File {0} has content length: {1}", Constants.StandardOutFileName, file.Properties.ContentLength);
+                        this.testOutputHelper.WriteLine("File {0} has content type: {1}", Constants.StandardOutFileName, file.Properties.ContentType);
 
-                        this.testOutputHelper.WriteLine("File {0} has creation time: {1}", stdOutFileName, file.Properties.CreationTime);
-                        this.testOutputHelper.WriteLine("File {0} has last modified time: {1}", stdOutFileName, file.Properties.LastModified);
+                        this.testOutputHelper.WriteLine("File {0} has creation time: {1}", Constants.StandardOutFileName, file.Properties.CreationTime);
+                        this.testOutputHelper.WriteLine("File {0} has last modified time: {1}", Constants.StandardOutFileName, file.Properties.LastModified);
 
                         Assert.Equal(expectedFileSize, file.Properties.ContentLength);
-                        Assert.Equal("application/octet-stream", file.Properties.ContentType);
+                        Assert.Equal("text/plain", file.Properties.ContentType);
 
                         //
                         // NodeFile by node
@@ -513,7 +528,7 @@
                             this.testOutputHelper.WriteLine("Found file: {0}", nodeFile.Path);
                         }
 
-                        string filePathToGet = string.Format("workitems/{0}/{1}/{2}/{3}", jobId, "job-1", taskId, stdOutFileName);
+                        string filePathToGet = string.Format("workitems/{0}/{1}/{2}/{3}", jobId, "job-1", taskId, Constants.StandardOutFileName);
                         file = computeNode.GetNodeFile(filePathToGet);
 
                         this.testOutputHelper.WriteLine("File {0} has content length: {1}", filePathToGet, file.Properties.ContentLength);
@@ -523,7 +538,7 @@
                         this.testOutputHelper.WriteLine("File {0} has last modified time: {1}", filePathToGet, file.Properties.LastModified);
 
                         Assert.Equal(expectedFileSize, file.Properties.ContentLength);
-                        Assert.Equal("application/octet-stream", file.Properties.ContentType);
+                        Assert.Equal("text/plain", file.Properties.ContentType);
                     }
                     finally
                     {
@@ -537,7 +552,7 @@
         
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
-        public void Bug1501413TestGetNodeFileByTask()
+        public void TestGetNodeFileByTask()
         {
             Action test = () =>
             {
@@ -545,7 +560,7 @@
                 {
                     JobOperations jobOperations = batchCli.JobOperations;
 
-                    string jobId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-Bug1501413TestGetNodeFileByTask";
+                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-" + nameof(TestGetNodeFileByTask);
                     try
                     {
                         //
@@ -585,7 +600,6 @@
                         TaskStateMonitor taskStateMonitor = utilities.CreateTaskStateMonitor();
 
                         //Wait for the task state to be running
-
                         taskStateMonitor.WaitAll(
                             jobOperations.ListTasks(jobId),
                             TaskState.Completed,
@@ -593,12 +607,14 @@
 
                         //Download the data
                         this.testOutputHelper.WriteLine("Downloading the stdout for the file");
-                        NodeFile file = jobOperations.GetNodeFile(jobId, taskId, "stdout.txt");
-
-                        string data = file.ReadAsString(encoding: Encoding.UTF8);
-
+                        NodeFile file = jobOperations.GetNodeFile(jobId, taskId, Constants.StandardOutFileName);
+                        string data = file.ReadAsString();
                         this.testOutputHelper.WriteLine("Data: {0}", data);
+                        Assert.Contains(taskMessage, data);
 
+                        // Download the data again using the JobOperations read file content helper
+                        data = batchCli.JobOperations.CopyNodeFileContentToString(jobId, taskId, Constants.StandardOutFileName);
+                        this.testOutputHelper.WriteLine("Data: {0}", data);
                         Assert.Contains(taskMessage, data);
                     }
                     finally
