@@ -29,8 +29,7 @@ namespace ContentModeratorTests
             TestSetUpConfiguration();
         }
 
-        
-        public void TestCleanup()
+        internal void TestCleanup()
         {
             TestCleanupConfiguration();
         }

@@ -29,7 +29,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Verify operations are returned
                 Assert.NotNull(operations);
-                Assert.NotEqual(0, operations.Count());
+                Assert.NotEmpty(operations);
             }
         }
     }

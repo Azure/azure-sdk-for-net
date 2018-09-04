@@ -19,7 +19,7 @@ namespace ContentModeratorTests
         static ContentModeratorAPI api;
         public static List<TermList> allTermLists;
         public static Terms allTerms;
-        string TermListIdToDelete, TermListIdToUpdate, TermListId, terms;
+        string TermListIdToUpdate;
 
         public TextListManagement()
         {
