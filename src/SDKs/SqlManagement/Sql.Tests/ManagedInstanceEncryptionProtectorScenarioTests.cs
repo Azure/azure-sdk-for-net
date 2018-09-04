@@ -17,7 +17,7 @@ namespace Sql.Tests
         //Test will fail if the managedinstance does not have system assigned identity
         private const string ManagedInstanceName = "midemoinstancebc";
 
-        [Fact]
+        [Fact(Skip = "Manual test due to long setup time required")]
         public void TestUpdateEncryptionProtector()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
