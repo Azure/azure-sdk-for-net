@@ -13,6 +13,11 @@
 			<![CDATA[
 New features:
 - Support database sensitivity labels.
+- Support sever level auditing settings.
+- Support sever level extended auditing settings.
+- Support database level auditing settings.
+- Support database level extended auditing settings.
+- Added aps used to manage tde keys for ManagedInstance and to set TDE encryption protector for managed instances.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

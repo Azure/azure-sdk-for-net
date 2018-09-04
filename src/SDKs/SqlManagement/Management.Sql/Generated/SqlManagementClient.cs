@@ -398,6 +398,16 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IManagedInstanceTdeCertificatesOperations ManagedInstanceTdeCertificates { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedInstanceKeysOperations.
+        /// </summary>
+        public virtual IManagedInstanceKeysOperations ManagedInstanceKeys { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceEncryptionProtectorsOperations.
+        /// </summary>
+        public virtual IManagedInstanceEncryptionProtectorsOperations ManagedInstanceEncryptionProtectors { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -703,6 +713,8 @@ namespace Microsoft.Azure.Management.Sql
             BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
             TdeCertificates = new TdeCertificatesOperations(this);
             ManagedInstanceTdeCertificates = new ManagedInstanceTdeCertificatesOperations(this);
+            ManagedInstanceKeys = new ManagedInstanceKeysOperations(this);
+            ManagedInstanceEncryptionProtectors = new ManagedInstanceEncryptionProtectorsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
