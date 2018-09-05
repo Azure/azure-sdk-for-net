@@ -47,7 +47,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// pipeline.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Pipeline.</param>
-        public PipelineResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<Activity> activities = default(IList<Activity>), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), int? concurrency = default(int?), IList<object> annotations = default(IList<object>))
+        /// <param name="folder">The folder that this Pipeline is in. If not
+        /// specified, Pipeline will appear at the root level.</param>
+        public PipelineResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<Activity> activities = default(IList<Activity>), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), int? concurrency = default(int?), IList<object> annotations = default(IList<object>), PipelineFolder folder = default(PipelineFolder))
             : base(id, name, type, etag)
         {
             AdditionalProperties = additionalProperties;
@@ -56,6 +58,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Parameters = parameters;
             Concurrency = concurrency;
             Annotations = annotations;
+            Folder = folder;
             CustomInit();
         }
 
@@ -101,6 +104,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.annotations")]
         public IList<object> Annotations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the folder that this Pipeline is in. If not specified,
+        /// Pipeline will appear at the root level.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.folder")]
+        public PipelineFolder Folder { get; set; }
 
         /// <summary>
         /// Validate the object.
