@@ -21,38 +21,36 @@
 namespace Microsoft.Azure.Management.ServiceBus.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The Resource definition.
+    /// Single item in a List or Get VirtualNetworkRules operation
     /// </summary>
-    public partial class TrackedResource : Resource
+    [Rest.Serialization.JsonTransformation]
+    public partial class VirtualNetworkRule : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the TrackedResource class.
+        /// Initializes a new instance of the VirtualNetworkRule class.
         /// </summary>
-        public TrackedResource()
+        public VirtualNetworkRule()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TrackedResource class.
+        /// Initializes a new instance of the VirtualNetworkRule class.
         /// </summary>
-        /// <param name="location">The Geo-location where the resource
-        /// lives</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
-        public TrackedResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="virtualNetworkSubnetId">ARM ID of Virtual Network
+        /// Subnet</param>
+        public VirtualNetworkRule(string id = default(string), string name = default(string), string type = default(string), string virtualNetworkSubnetId = default(string))
             : base(id, name, type)
         {
-            Location = location;
-            Tags = tags;
+            VirtualNetworkSubnetId = virtualNetworkSubnetId;
             CustomInit();
         }
 
@@ -62,29 +60,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Geo-location where the resource lives
+        /// Gets or sets ARM ID of Virtual Network Subnet
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        [JsonProperty(PropertyName = "properties.virtualNetworkSubnetId")]
+        public string VirtualNetworkSubnetId { get; set; }
 
-        /// <summary>
-        /// Gets or sets resource tags
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-        }
     }
 }

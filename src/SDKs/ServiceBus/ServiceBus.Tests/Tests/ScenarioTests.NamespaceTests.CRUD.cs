@@ -31,10 +31,7 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 // Create Namespace
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
-
-                //Check namespace name available
-                var checknamespaceavailable = ServiceBusManagementClient.Namespaces.CheckNameAvailabilityMethod(new CheckNameAvailability() { Name = namespaceName });
-
+                
                 var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
                     new SBNamespace()
                     {
