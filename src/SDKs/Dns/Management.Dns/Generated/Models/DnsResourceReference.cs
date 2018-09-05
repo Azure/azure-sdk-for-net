@@ -33,6 +33,8 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// Initializes a new instance of the DnsResourceReference class.
         /// </summary>
         /// <param name="dnsResources">A list of dns Records </param>
+        /// <param name="targetResource">A reference to an azure resource from
+        /// where the dns resource value is taken.</param>
         public DnsResourceReference(IList<SubResource> dnsResources = default(IList<SubResource>), SubResource targetResource = default(SubResource))
         {
             DnsResources = dnsResources;
@@ -52,6 +54,8 @@ namespace Microsoft.Azure.Management.Dns.Models
         public IList<SubResource> DnsResources { get; set; }
 
         /// <summary>
+        /// Gets or sets a reference to an azure resource from where the dns
+        /// resource value is taken.
         /// </summary>
         [JsonProperty(PropertyName = "targetResource")]
         public SubResource TargetResource { get; set; }

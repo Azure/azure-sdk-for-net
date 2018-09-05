@@ -49,6 +49,8 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// set.</param>
         /// <param name="provisioningState">provisioning State of the record
         /// set.</param>
+        /// <param name="targetResource">A reference to an azure resource from
+        /// where the dns resource value is taken.</param>
         /// <param name="aRecords">The list of A records in the record
         /// set.</param>
         /// <param name="aaaaRecords">The list of AAAA records in the record
@@ -147,6 +149,8 @@ namespace Microsoft.Azure.Management.Dns.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets or sets a reference to an azure resource from where the dns
+        /// resource value is taken.
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetResource")]
         public SubResource TargetResource { get; set; }

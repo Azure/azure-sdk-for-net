@@ -18,6 +18,9 @@ namespace Microsoft.Azure.Management.Dns.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Represents the properties of the Dns Resource Reference Request.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class DnsResourceReferenceRequest
     {
