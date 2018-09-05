@@ -13,13 +13,13 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
 
   internal static partial class SdkInfo
   {
-      public static IEnumerable<Tuple<string, string, string>> ApiInfo_CustomImageSearchAPI
+      public static IEnumerable<Tuple<string, string, string>> ApiInfo_CustomImageSearchClient
       {
           get
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("CustomImageSearchAPI", "CustomInstance", "1.0"),
+                new Tuple<string, string, string>("CustomImageSearchClient", "CustomInstance", "1.0"),
               }.AsEnumerable();
           }
       }

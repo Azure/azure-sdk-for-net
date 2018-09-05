@@ -20,7 +20,7 @@ namespace SearchSDK.Tests
                 HttpMockServer.Initialize(this.GetType().FullName, "CustomSearch");
                 
                 ICustomSearchAPI client = new CustomSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
-                var resp = client.CustomInstance.SearchAsync(query: "tom cruise", customConfig: 0).Result;
+                var resp = client.CustomInstance.SearchAsync(query: "tom cruise", customConfig: "0").Result;
 
                 Assert.NotNull(resp);
                 Assert.NotNull(resp.WebPages);

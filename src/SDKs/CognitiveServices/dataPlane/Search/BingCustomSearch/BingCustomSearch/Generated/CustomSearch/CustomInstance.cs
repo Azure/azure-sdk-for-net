@@ -276,11 +276,11 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomSearch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<SearchResponse>> SearchWithHttpMessagesAsync(long customConfig, string query, string acceptLanguage = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), int? count = default(int?), string market = "en-us", int? offset = default(int?), string safeSearch = default(string), string setLang = default(string), bool? textDecorations = default(bool?), string textFormat = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<SearchResponse>> SearchWithHttpMessagesAsync(string customConfig, string query, string acceptLanguage = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), int? count = default(int?), string market = "en-us", int? offset = default(int?), string safeSearch = default(string), string setLang = default(string), bool? textDecorations = default(bool?), string textFormat = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (customConfig < 0)
+            if (customConfig == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "customConfig", 0);
+                throw new ValidationException(ValidationRules.CannotBeNull, "customConfig");
             }
             if (query == null)
             {
