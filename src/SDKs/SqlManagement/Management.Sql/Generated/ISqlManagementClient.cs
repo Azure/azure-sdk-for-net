@@ -392,5 +392,15 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IManagedInstanceTdeCertificatesOperations ManagedInstanceTdeCertificates { get; }
 
+        /// <summary>
+        /// Gets the IManagedInstanceKeysOperations.
+        /// </summary>
+        IManagedInstanceKeysOperations ManagedInstanceKeys { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceEncryptionProtectorsOperations.
+        /// </summary>
+        IManagedInstanceEncryptionProtectorsOperations ManagedInstanceEncryptionProtectors { get; }
+
     }
 }

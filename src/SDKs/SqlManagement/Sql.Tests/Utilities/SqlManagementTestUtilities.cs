@@ -352,6 +352,14 @@ namespace Sql.Tests
             Assert.Equal(expectedUri, actual.Uri);
         }
 
+        public static void ValidateManagedInstanceKey(ManagedInstanceKey actual, string expectedName, string expectedKeyType, string expectedUri)
+        {
+            Assert.NotNull(actual);
+            Assert.Equal(expectedName, actual.Name);
+            Assert.Equal(expectedKeyType, actual.ServerKeyType);
+            Assert.Equal(expectedUri, actual.Uri);
+        }
+
         public static void ValidateVirtualNetworkRule(VirtualNetworkRule expected, VirtualNetworkRule actual, string name)
         {
             Assert.NotNull(actual.Id);
@@ -440,39 +448,77 @@ namespace Sql.Tests
                 throw new InvalidOperationException("Server has no identity");
             }
 
+            return CreateKeyVaultKeyAccessibleByIdentity(context, resourceGroup, server.Identity);
+        }
+
+        /// <summary>
+        /// Creates a key vault, grants the managed instance and current user access to that vault,
+        /// and creates a key in the vault.
+        /// </summary>
+        internal static KeyBundle CreateKeyVaultKeyWithManagedInstanceAccess(
+            SqlManagementTestContext context,
+            ResourceGroup resourceGroup,
+            ManagedInstance managedInstance)
+        {
+            if (managedInstance.Identity == null)
+            {
+                throw new InvalidOperationException("managedInstance has no identity");
+            }
+
+            return CreateKeyVaultKeyAccessibleByIdentity(context, resourceGroup, managedInstance.Identity);
+        }
+
+        private static KeyBundle CreateKeyVaultKeyAccessibleByIdentity(SqlManagementTestContext context,
+            ResourceGroup resourceGroup, ResourceIdentity identity)
+        {
             var sqlClient = context.GetClient<SqlManagementClient>();
             var keyVaultManagementClient = context.GetClient<KeyVaultManagementClient>();
             var keyVaultClient = TestEnvironmentUtilities.GetKeyVaultClient();
 
             // Prepare vault permissions for the server
-            var serverPermissions = new Permissions()
+            var permissions = new Permissions()
             {
-                Keys = new List<string>() { KeyPermissions.WrapKey, KeyPermissions.UnwrapKey, KeyPermissions.Get, KeyPermissions.List }
+                Keys = new List<string>()
+                {
+                    KeyPermissions.WrapKey,
+                    KeyPermissions.UnwrapKey,
+                    KeyPermissions.Get,
+                    KeyPermissions.List
+                }
             };
-            var aclEntryServer = new AccessPolicyEntry(server.Identity.TenantId.Value, server.Identity.PrincipalId.Value.ToString(), serverPermissions);
+
+            var aclEntry = new AccessPolicyEntry(identity.TenantId.Value,
+                identity.PrincipalId.Value.ToString(), permissions);
 
             // Prepare vault permissions for the app used in this test
             var appPermissions = new Permissions()
             {
-                Keys = new List<string>() { KeyPermissions.Create, KeyPermissions.Delete, KeyPermissions.Get, KeyPermissions.List }
+                Keys = new List<string>()
+                {
+                    KeyPermissions.Create,
+                    KeyPermissions.Delete,
+                    KeyPermissions.Get,
+                    KeyPermissions.List
+                }
             };
             string authObjectId = TestEnvironmentUtilities.GetUserObjectId();
-            var aclEntryUser = new AccessPolicyEntry(server.Identity.TenantId.Value, authObjectId, appPermissions);
+            var aclEntryUser = new AccessPolicyEntry(identity.TenantId.Value, authObjectId, appPermissions);
 
             // Create a vault
-            var accessPolicy = new List<AccessPolicyEntry>() { aclEntryServer, aclEntryUser };
+            var accessPolicy = new List<AccessPolicyEntry>() {aclEntry, aclEntryUser};
             string vaultName = SqlManagementTestUtilities.GenerateName();
-            string vaultLocation = "centralus";
-            var vault = keyVaultManagementClient.Vaults.CreateOrUpdate(resourceGroup.Name, vaultName, new VaultCreateOrUpdateParameters()
-            {
-                Location = vaultLocation,
-                Properties = new VaultProperties()
+            string vaultLocation = TestEnvironmentUtilities.DefaultLocation;
+            var vault = keyVaultManagementClient.Vaults.CreateOrUpdate(resourceGroup.Name, vaultName,
+                new VaultCreateOrUpdateParameters()
                 {
-                    AccessPolicies = accessPolicy,
-                    TenantId = server.Identity.TenantId.Value,
-                    EnableSoftDelete = true
-                }
-            });
+                    Location = vaultLocation,
+                    Properties = new VaultProperties()
+                    {
+                        AccessPolicies = accessPolicy,
+                        TenantId = identity.TenantId.Value,
+                        EnableSoftDelete = true
+                    }
+                });
 
             // Create a key
             // This can be flaky if attempted immediately after creating the vault. Adding short sleep to improve robustness.
