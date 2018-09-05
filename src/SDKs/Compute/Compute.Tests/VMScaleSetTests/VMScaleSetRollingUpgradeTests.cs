@@ -338,5 +338,75 @@ namespace Compute.Tests
                 }
             }
         }
+
+        // Does the following operations:
+        // Create ResourceGroup
+        // Create StorageAccount
+        // Create VMSS in Automatic Mode
+        // Perform an extension rolling upgrade
+        // Delete ResourceGroup
+        [Fact(Skip = "TODO: Re-record due to version update")]
+        [Trait("Name", "TestVMScaleSetExtensionUpgradeAPIs")]
+        public void TestVMScaleSetExtensionUpgradeAPIs()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+                
+                string rgName = TestUtilities.GenerateName(TestPrefix);
+                string vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                    EnsureClientsInitialized(context);
+
+                    // Windows VM image
+                    ImageReference imageRef = GetPlatformVMImage(true);
+                    imageRef.Version = "latest";
+                    var extension = GetTestVMSSVMExtension();
+                    VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
+                    {
+                        Extensions = new List<VirtualMachineScaleSetExtension>()
+                    {
+                        extension,
+                    }
+                    };
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+
+                    var getResponse = CreateVMScaleSet_NoAsyncTracking(
+                        rgName,
+                        vmssName,
+                        storageAccountOutput,
+                        imageRef,
+                        out inputVMScaleSet,
+                        extensionProfile,
+                        (vmScaleSet) =>
+                        {
+                            vmScaleSet.Overprovision = false;
+                            vmScaleSet.UpgradePolicy.Mode = UpgradeMode.Automatic;
+                        },
+                        createWithManagedDisks: true,
+                        createWithPublicIpAddress: false,
+                        createWithHealthProbe: true);
+
+                    ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+
+                    m_CrpClient.VirtualMachineScaleSetRollingUpgrades.StartExtensionUpgrade(rgName, vmssName);
+                    var rollingUpgradeStatus = m_CrpClient.VirtualMachineScaleSetRollingUpgrades.GetLatest(rgName, vmssName);
+                    Assert.Equal(inputVMScaleSet.Sku.Capacity, rollingUpgradeStatus.Progress.SuccessfulInstanceCount);
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    // Cleanup resource group and revert default location to the original location
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
     }
 }

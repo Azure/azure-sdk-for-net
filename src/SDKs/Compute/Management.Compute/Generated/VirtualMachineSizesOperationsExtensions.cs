@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Management.Compute
     public static partial class VirtualMachineSizesOperationsExtensions
     {
             /// <summary>
-            /// Lists all available virtual machine sizes for a subscription in a location.
+            /// This API is deprecated. Use [Resources
+            /// Skus](https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,7 +39,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Lists all available virtual machine sizes for a subscription in a location.
+            /// This API is deprecated. Use [Resources
+            /// Skus](https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
