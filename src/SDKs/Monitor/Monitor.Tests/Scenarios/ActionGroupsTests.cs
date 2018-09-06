@@ -25,7 +25,7 @@ namespace Monitor.Tests.Scenarios
             handler = new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = HttpStatusCode.OK };
         }
 
-        [Fact]
+        [Fact(Skip="Needs to be recorded again.")]
         [Trait("Category", "Scenario")]
         public void CreateEnableListDeleteActionGroup()
         {

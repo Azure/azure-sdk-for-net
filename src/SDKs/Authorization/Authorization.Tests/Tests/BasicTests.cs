@@ -56,8 +56,8 @@ namespace Authorization.Tests
                 {
                     Assert.NotNull(classicAdmin);
                     Assert.NotNull(classicAdmin.Id);
-                    Assert.True(classicAdmin.Id.Contains("/providers/Microsoft.Authorization/classicAdministrators/"));
-                    Assert.True(classicAdmin.Id.Contains("/subscriptions/" + client.SubscriptionId));
+                    Assert.Contains("/providers/Microsoft.Authorization/classicAdministrators/", classicAdmin.Id);
+                    Assert.Contains("/subscriptions/" + client.SubscriptionId, classicAdmin.Id);
                     Assert.NotNull(classicAdmin.Name);
                     Assert.NotNull(classicAdmin.Type);
                     Assert.Equal("Microsoft.Authorization/classicAdministrators", classicAdmin.Type);
@@ -436,7 +436,7 @@ namespace Authorization.Tests
                     var nextPage = client.RoleAssignments.ListNext(firstPage.NextPageLink);
 
                     Assert.NotNull(nextPage);
-                    Assert.NotEqual(0, nextPage.Count());
+                    Assert.NotEmpty(nextPage);
 
                     foreach (var roleAssignment in nextPage)
                     {

@@ -32,7 +32,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <param name="advancedInfo">Advanced info list.</param>
         /// <param name="status">Refresh index status.</param>
         /// <param name="trackingId">Tracking Id.</param>
-        public RefreshIndex(string contentSourceId = default(string), bool? isUpdateSuccess = default(bool?), IList<RefreshIndexAdvancedInfoItem> advancedInfo = default(IList<RefreshIndexAdvancedInfoItem>), Status status = default(Status), string trackingId = default(string))
+        public RefreshIndex(string contentSourceId = default(string), bool? isUpdateSuccess = default(bool?), IList<IDictionary<string, string>> advancedInfo = default(IList<IDictionary<string, string>>), Status status = default(Status), string trackingId = default(string))
         {
             ContentSourceId = contentSourceId;
             IsUpdateSuccess = isUpdateSuccess;
@@ -63,7 +63,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// Gets or sets advanced info list.
         /// </summary>
         [JsonProperty(PropertyName = "AdvancedInfo")]
-        public IList<RefreshIndexAdvancedInfoItem> AdvancedInfo { get; set; }
+        public IList<IDictionary<string, string>> AdvancedInfo { get; set; }
 
         /// <summary>
         /// Gets or sets refresh index status.

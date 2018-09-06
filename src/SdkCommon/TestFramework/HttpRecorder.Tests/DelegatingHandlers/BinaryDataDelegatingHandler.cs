@@ -75,6 +75,12 @@ namespace HttpRecorder.Tests.DelegatingHandlers
                             response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("audio/png");
                             break;
                         }
+                    case ContentMimeType.Null:
+                        {
+                            response.Content = new StringContent(@"");
+                            response.Content.Headers.ContentType = null;
+                            break;
+                        }
                 }
 
                 return response;
@@ -139,6 +145,7 @@ namespace HttpRecorder.Tests.DelegatingHandlers
         Video,
         Image,
         OctetStream,
-        MultipartFormData
+        MultipartFormData,
+        Null
     }
 }

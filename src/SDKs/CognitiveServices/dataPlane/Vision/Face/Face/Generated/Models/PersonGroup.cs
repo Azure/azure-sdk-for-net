@@ -30,8 +30,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Initializes a new instance of the PersonGroup class.
         /// </summary>
-        /// <param name="personGroupId">PersonGroupId of the existing person
-        /// groups.</param>
+        /// <param name="personGroupId">PersonGroupId of the target person
+        /// group.</param>
         /// <param name="name">User defined name, maximum length is
         /// 128.</param>
         /// <param name="userData">User specified data. Length should not
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets personGroupId of the existing person groups.
+        /// Gets or sets personGroupId of the target person group.
         /// </summary>
         [JsonProperty(PropertyName = "personGroupId")]
         public string PersonGroupId { get; set; }

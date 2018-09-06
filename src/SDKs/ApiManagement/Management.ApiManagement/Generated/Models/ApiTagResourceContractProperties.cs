@@ -50,6 +50,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// revision.</param>
         /// <param name="isOnline">Indicates if API revision is accessible via
         /// the gateway.</param>
+        /// <param name="apiRevisionDescription">Description of the Api
+        /// Revision.</param>
+        /// <param name="apiVersionDescription">Description of the Api
+        /// Version.</param>
         /// <param name="apiVersionSetId">A resource identifier for the related
         /// ApiVersionSet.</param>
         /// <param name="id">API identifier in the form /apis/{apiId}.</param>
@@ -63,8 +67,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// API.</param>
         /// <param name="protocols">Describes on which protocols the operations
         /// in this API can be invoked.</param>
-        public ApiTagResourceContractProperties(string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiVersionSetId = default(string), string id = default(string), string name = default(string), string serviceUrl = default(string), string path = default(string), IList<Protocol?> protocols = default(IList<Protocol?>))
-            : base(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiVersionSetId)
+        public ApiTagResourceContractProperties(string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), string id = default(string), string name = default(string), string serviceUrl = default(string), string path = default(string), IList<Protocol?> protocols = default(IList<Protocol?>))
+            : base(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId)
         {
             Id = id;
             Name = name;

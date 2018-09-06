@@ -33,13 +33,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the ManagedIntegrationRuntimeError
         /// class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="time">The time when the error occurred.</param>
         /// <param name="code">Error code.</param>
         /// <param name="parameters">Managed integration runtime error
         /// parameters.</param>
         /// <param name="message">Error message.</param>
-        public ManagedIntegrationRuntimeError(System.DateTime? time = default(System.DateTime?), string code = default(string), IList<string> parameters = default(IList<string>), string message = default(string))
+        public ManagedIntegrationRuntimeError(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), System.DateTime? time = default(System.DateTime?), string code = default(string), IList<string> parameters = default(IList<string>), string message = default(string))
         {
+            AdditionalProperties = additionalProperties;
             Time = time;
             Code = code;
             Parameters = parameters;
@@ -51,6 +54,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets the time when the error occurred.

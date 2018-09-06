@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the StatusCodesBasedTrigger class.
         /// </summary>
         /// <param name="status">HTTP status code.</param>
-        /// <param name="subStatus">SubStatus.</param>
+        /// <param name="subStatus">Request Sub Status.</param>
         /// <param name="win32Status">Win32 error code.</param>
-        /// <param name="count">Count.</param>
+        /// <param name="count">Request Count.</param>
         /// <param name="timeInterval">Time interval.</param>
         public StatusCodesBasedTrigger(int? status = default(int?), int? subStatus = default(int?), int? win32Status = default(int?), int? count = default(int?), string timeInterval = default(string))
         {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public int? Status { get; set; }
 
         /// <summary>
-        /// Gets or sets subStatus.
+        /// Gets or sets request Sub Status.
         /// </summary>
         [JsonProperty(PropertyName = "subStatus")]
         public int? SubStatus { get; set; }
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public int? Win32Status { get; set; }
 
         /// <summary>
-        /// Gets or sets count.
+        /// Gets or sets request Count.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
         public int? Count { get; set; }

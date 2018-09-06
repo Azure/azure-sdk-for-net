@@ -46,8 +46,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
 
             /// <summary>
-            /// Delete an existing person group. Persisted face images of all people in the
-            /// person group will also be deleted.
+            /// Delete an existing person group. Persisted face features of all people in
+            /// the person group will also be deleted.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

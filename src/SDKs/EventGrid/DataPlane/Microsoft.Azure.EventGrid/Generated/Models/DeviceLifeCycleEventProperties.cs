@@ -35,21 +35,16 @@ namespace Microsoft.Azure.EventGrid.Models
         /// <param name="deviceId">The unique identifier of the device. This
         /// case-sensitive string can be up to 128 characters long, and
         /// supports ASCII 7-bit alphanumeric characters plus the following
-        /// special characters: - : . + % _ # * ? ! ( ) , = @ ; $ '.</param>
+        /// special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $
+        /// '.</param>
         /// <param name="hubName">Name of the IoT Hub where the device was
         /// created or deleted.</param>
-        /// <param name="opType">The event type specified for this operation by
-        /// the IoT Hub.</param>
-        /// <param name="operationTimestamp">The ISO8601 timestamp of the
-        /// operation.</param>
         /// <param name="twin">Information about the device twin, which is the
-        /// cloud represenation of application device metadata.</param>
-        public DeviceLifeCycleEventProperties(string deviceId = default(string), string hubName = default(string), string opType = default(string), string operationTimestamp = default(string), DeviceTwinInfo twin = default(DeviceTwinInfo))
+        /// cloud representation of application device metadata.</param>
+        public DeviceLifeCycleEventProperties(string deviceId = default(string), string hubName = default(string), DeviceTwinInfo twin = default(DeviceTwinInfo))
         {
             DeviceId = deviceId;
             HubName = hubName;
-            OpType = opType;
-            OperationTimestamp = operationTimestamp;
             Twin = twin;
             CustomInit();
         }
@@ -63,7 +58,8 @@ namespace Microsoft.Azure.EventGrid.Models
         /// Gets or sets the unique identifier of the device. This
         /// case-sensitive string can be up to 128 characters long, and
         /// supports ASCII 7-bit alphanumeric characters plus the following
-        /// special characters: - : . + % _ # * ? ! ( ) , = @ ; $ '.
+        /// special characters: - : . + % _ &amp;amp;#35; * ? ! ( ) , = @ ; $
+        /// '.
         /// </summary>
         [JsonProperty(PropertyName = "deviceId")]
         public string DeviceId { get; set; }
@@ -76,21 +72,8 @@ namespace Microsoft.Azure.EventGrid.Models
         public string HubName { get; set; }
 
         /// <summary>
-        /// Gets or sets the event type specified for this operation by the IoT
-        /// Hub.
-        /// </summary>
-        [JsonProperty(PropertyName = "opType")]
-        public string OpType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the ISO8601 timestamp of the operation.
-        /// </summary>
-        [JsonProperty(PropertyName = "operationTimestamp")]
-        public string OperationTimestamp { get; set; }
-
-        /// <summary>
         /// Gets or sets information about the device twin, which is the cloud
-        /// represenation of application device metadata.
+        /// representation of application device metadata.
         /// </summary>
         [JsonProperty(PropertyName = "twin")]
         public DeviceTwinInfo Twin { get; set; }

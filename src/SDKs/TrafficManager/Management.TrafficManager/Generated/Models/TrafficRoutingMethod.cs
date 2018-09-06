@@ -10,15 +10,104 @@
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for TrafficRoutingMethod.
     /// </summary>
-    public static class TrafficRoutingMethod
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(TrafficRoutingMethodConverter))]
+    public struct TrafficRoutingMethod : System.IEquatable<TrafficRoutingMethod>
     {
-        public const string Performance = "Performance";
-        public const string Priority = "Priority";
-        public const string Weighted = "Weighted";
-        public const string Geographic = "Geographic";
+        private TrafficRoutingMethod(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly TrafficRoutingMethod Performance = "Performance";
+
+        public static readonly TrafficRoutingMethod Priority = "Priority";
+
+        public static readonly TrafficRoutingMethod Weighted = "Weighted";
+
+        public static readonly TrafficRoutingMethod Geographic = "Geographic";
+
+        public static readonly TrafficRoutingMethod MultiValue = "MultiValue";
+
+        public static readonly TrafficRoutingMethod Subnet = "Subnet";
+
+
+        /// <summary>
+        /// Underlying value of enum TrafficRoutingMethod
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for TrafficRoutingMethod
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type TrafficRoutingMethod
+        /// </summary>
+        public bool Equals(TrafficRoutingMethod e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to TrafficRoutingMethod
+        /// </summary>
+        public static implicit operator TrafficRoutingMethod(string value)
+        {
+            return new TrafficRoutingMethod(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert TrafficRoutingMethod to string
+        /// </summary>
+        public static implicit operator string(TrafficRoutingMethod e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum TrafficRoutingMethod
+        /// </summary>
+        public static bool operator == (TrafficRoutingMethod e1, TrafficRoutingMethod e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum TrafficRoutingMethod
+        /// </summary>
+        public static bool operator != (TrafficRoutingMethod e1, TrafficRoutingMethod e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for TrafficRoutingMethod
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is TrafficRoutingMethod && Equals((TrafficRoutingMethod)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode TrafficRoutingMethod
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

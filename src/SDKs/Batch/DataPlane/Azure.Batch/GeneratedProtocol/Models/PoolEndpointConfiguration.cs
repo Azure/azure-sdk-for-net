@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -58,28 +57,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "inboundNATPools")]
         public IList<InboundNATPool> InboundNATPools { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (InboundNATPools == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "InboundNATPools");
-            }
-            if (InboundNATPools != null)
-            {
-                foreach (var element in InboundNATPools)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-        }
     }
 }

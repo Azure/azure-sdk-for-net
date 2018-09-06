@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="userProperties">Activity user properties.</param>
-        public ControlActivity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>))
+        public ControlActivity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>))
             : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             CustomInit();

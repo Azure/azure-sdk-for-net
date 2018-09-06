@@ -59,10 +59,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="channels">List of channels that this recommendation
         /// can apply. Possible values include: 'Notification', 'Api', 'Email',
         /// 'Webhook', 'All'</param>
-        /// <param name="tags">The list of category tags that this
+        /// <param name="categoryTags">The list of category tags that this
         /// recommendation belongs to.</param>
         /// <param name="actionName">Name of action recommended by this
         /// object.</param>
+        /// <param name="enabled">True if this recommendation is still valid
+        /// (i.e. "actionable"). False if it is invalid.</param>
+        /// <param name="states">The list of states of this recommendation. If
+        /// it's null then it shoud be considered "Active".</param>
         /// <param name="startTime">The beginning time in UTC of a range that
         /// the recommendation refers to.</param>
         /// <param name="endTime">The end time in UTC of a range that the
@@ -83,7 +87,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="bladeName">Deep link to a blade on the portal.</param>
         /// <param name="forwardLink">Forward link to an external document
         /// associated with the rule.</param>
-        public Recommendation(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), System.DateTime? creationTime = default(System.DateTime?), System.Guid? recommendationId = default(System.Guid?), string resourceId = default(string), string resourceScope = default(string), string ruleName = default(string), string displayName = default(string), string message = default(string), NotificationLevel? level = default(NotificationLevel?), Channels? channels = default(Channels?), IList<string> tags = default(IList<string>), string actionName = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.DateTime? nextNotificationTime = default(System.DateTime?), System.DateTime? notificationExpirationTime = default(System.DateTime?), System.DateTime? notifiedTime = default(System.DateTime?), double? score = default(double?), bool? isDynamic = default(bool?), string extensionName = default(string), string bladeName = default(string), string forwardLink = default(string))
+        public Recommendation(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), System.DateTime? creationTime = default(System.DateTime?), System.Guid? recommendationId = default(System.Guid?), string resourceId = default(string), string resourceScope = default(string), string ruleName = default(string), string displayName = default(string), string message = default(string), NotificationLevel? level = default(NotificationLevel?), Channels? channels = default(Channels?), IList<string> categoryTags = default(IList<string>), string actionName = default(string), int? enabled = default(int?), IList<string> states = default(IList<string>), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.DateTime? nextNotificationTime = default(System.DateTime?), System.DateTime? notificationExpirationTime = default(System.DateTime?), System.DateTime? notifiedTime = default(System.DateTime?), double? score = default(double?), bool? isDynamic = default(bool?), string extensionName = default(string), string bladeName = default(string), string forwardLink = default(string))
             : base(id, name, kind, type)
         {
             CreationTime = creationTime;
@@ -95,8 +99,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
             Message = message;
             Level = level;
             Channels = channels;
-            Tags = tags;
+            CategoryTags = categoryTags;
             ActionName = actionName;
+            Enabled = enabled;
+            States = states;
             StartTime = startTime;
             EndTime = endTime;
             NextNotificationTime = nextNotificationTime;
@@ -178,17 +184,30 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public Channels? Channels { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of category tags that this recommendation
-        /// belongs to.
+        /// Gets the list of category tags that this recommendation belongs to.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.tags")]
-        public IList<string> Tags { get; set; }
+        [JsonProperty(PropertyName = "properties.categoryTags")]
+        public IList<string> CategoryTags { get; private set; }
 
         /// <summary>
         /// Gets or sets name of action recommended by this object.
         /// </summary>
         [JsonProperty(PropertyName = "properties.actionName")]
         public string ActionName { get; set; }
+
+        /// <summary>
+        /// Gets or sets true if this recommendation is still valid (i.e.
+        /// "actionable"). False if it is invalid.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enabled")]
+        public int? Enabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of states of this recommendation. If it's
+        /// null then it shoud be considered "Active".
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.states")]
+        public IList<string> States { get; set; }
 
         /// <summary>
         /// Gets or sets the beginning time in UTC of a range that the

@@ -175,24 +175,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='siteEnvelope'>
             /// A JSON representation of the app properties. See example.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation.
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS.
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name.
-            /// </param>
-            public static Site CreateOrUpdate(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string))
+            public static Site CreateOrUpdate(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, name, siteEnvelope, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, name, siteEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -216,27 +201,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='siteEnvelope'>
             /// A JSON representation of the app properties. See example.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation.
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS.
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Site> CreateOrUpdateAsync(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Site> CreateOrUpdateAsync(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, siteEnvelope, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, siteEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -265,12 +235,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// you want to delete the empty App Service plan. By default, the empty App
             /// Service plan is not deleted.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true, DNS registration is skipped.
-            /// </param>
-            public static void Delete(this IWebAppsOperations operations, string resourceGroupName, string name, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?), bool? skipDnsRegistration = default(bool?))
+            public static void Delete(this IWebAppsOperations operations, string resourceGroupName, string name, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?))
             {
-                operations.DeleteAsync(resourceGroupName, name, deleteMetrics, deleteEmptyServerFarm, skipDnsRegistration).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, name, deleteMetrics, deleteEmptyServerFarm).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -296,15 +263,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// you want to delete the empty App Service plan. By default, the empty App
             /// Service plan is not deleted.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true, DNS registration is skipped.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IWebAppsOperations operations, string resourceGroupName, string name, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?), bool? skipDnsRegistration = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IWebAppsOperations operations, string resourceGroupName, string name, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, deleteMetrics, deleteEmptyServerFarm, skipDnsRegistration, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, deleteMetrics, deleteEmptyServerFarm, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -328,24 +292,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='siteEnvelope'>
             /// A JSON representation of the app properties. See example.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation.
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS.
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name.
-            /// </param>
-            public static Site Update(this IWebAppsOperations operations, string resourceGroupName, string name, SitePatchResource siteEnvelope, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string))
+            public static Site Update(this IWebAppsOperations operations, string resourceGroupName, string name, SitePatchResource siteEnvelope)
             {
-                return operations.UpdateAsync(resourceGroupName, name, siteEnvelope, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, name, siteEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -369,27 +318,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='siteEnvelope'>
             /// A JSON representation of the app properties. See example.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation.
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS.
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Site> UpdateAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SitePatchResource siteEnvelope, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Site> UpdateAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SitePatchResource siteEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, siteEnvelope, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, siteEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -601,64 +535,6 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage.
-            /// </summary>
-            /// <remarks>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='request'>
-            /// A RestoreRequest object that includes Azure storage URL and blog name for
-            /// discovery of backup.
-            /// </param>
-            public static RestoreRequest DiscoverRestore(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request)
-            {
-                return operations.DiscoverRestoreAsync(resourceGroupName, name, request).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage.
-            /// </summary>
-            /// <remarks>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='request'>
-            /// A RestoreRequest object that includes Azure storage URL and blog name for
-            /// discovery of backup.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RestoreRequest> DiscoverRestoreAsync(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.DiscoverRestoreWithHttpMessagesAsync(resourceGroupName, name, request, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets a backup of an app by its ID.
             /// </summary>
             /// <remarks>
@@ -852,9 +728,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='request'>
             /// Information on restore request .
             /// </param>
-            public static RestoreResponse Restore(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request)
+            public static void Restore(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request)
             {
-                return operations.RestoreAsync(resourceGroupName, name, backupId, request).GetAwaiter().GetResult();
+                operations.RestoreAsync(resourceGroupName, name, backupId, request).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -883,12 +759,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RestoreResponse> RestoreAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RestoreAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RestoreWithHttpMessagesAsync(resourceGroupName, name, backupId, request, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.RestoreWithHttpMessagesAsync(resourceGroupName, name, backupId, request, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1132,6 +1005,104 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<SiteAuthSettings> GetAuthSettingsAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAuthSettingsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the Azure storage account configurations of an app.
+            /// </summary>
+            /// <remarks>
+            /// Updates the Azure storage account configurations of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='azureStorageAccounts'>
+            /// Azure storage accounts of the app.
+            /// </param>
+            public static AzureStoragePropertyDictionaryResource UpdateAzureStorageAccounts(this IWebAppsOperations operations, string resourceGroupName, string name, AzureStoragePropertyDictionaryResource azureStorageAccounts)
+            {
+                return operations.UpdateAzureStorageAccountsAsync(resourceGroupName, name, azureStorageAccounts).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the Azure storage account configurations of an app.
+            /// </summary>
+            /// <remarks>
+            /// Updates the Azure storage account configurations of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='azureStorageAccounts'>
+            /// Azure storage accounts of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AzureStoragePropertyDictionaryResource> UpdateAzureStorageAccountsAsync(this IWebAppsOperations operations, string resourceGroupName, string name, AzureStoragePropertyDictionaryResource azureStorageAccounts, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateAzureStorageAccountsWithHttpMessagesAsync(resourceGroupName, name, azureStorageAccounts, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the Azure storage account configurations of an app.
+            /// </summary>
+            /// <remarks>
+            /// Gets the Azure storage account configurations of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static AzureStoragePropertyDictionaryResource ListAzureStorageAccounts(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.ListAzureStorageAccountsAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the Azure storage account configurations of an app.
+            /// </summary>
+            /// <remarks>
+            /// Gets the Azure storage account configurations of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AzureStoragePropertyDictionaryResource> ListAzureStorageAccountsAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAzureStorageAccountsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1819,6 +1790,227 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<SlotConfigNamesResource> UpdateSlotConfigurationNamesAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SlotConfigNamesResource slotConfigNames, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateSlotConfigurationNamesWithHttpMessagesAsync(resourceGroupName, name, slotConfigNames, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a Swift Virtual Network connection.
+            /// </summary>
+            /// <remarks>
+            /// Gets a Swift Virtual Network connection.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static SwiftVirtualNetwork GetSwiftVirtualNetworkConnection(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetSwiftVirtualNetworkConnectionAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a Swift Virtual Network connection.
+            /// </summary>
+            /// <remarks>
+            /// Gets a Swift Virtual Network connection.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SwiftVirtualNetwork> GetSwiftVirtualNetworkConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSwiftVirtualNetworkConnectionWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            public static SwiftVirtualNetwork CreateOrUpdateSwiftVirtualNetworkConnection(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope)
+            {
+                return operations.CreateOrUpdateSwiftVirtualNetworkConnectionAsync(resourceGroupName, name, connectionEnvelope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SwiftVirtualNetwork> CreateOrUpdateSwiftVirtualNetworkConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateSwiftVirtualNetworkConnectionWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </summary>
+            /// <remarks>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static void DeleteSwiftVirtualNetwork(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                operations.DeleteSwiftVirtualNetworkAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </summary>
+            /// <remarks>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteSwiftVirtualNetworkAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteSwiftVirtualNetworkWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            public static SwiftVirtualNetwork UpdateSwiftVirtualNetworkConnection(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope)
+            {
+                return operations.UpdateSwiftVirtualNetworkConnectionAsync(resourceGroupName, name, connectionEnvelope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SwiftVirtualNetwork> UpdateSwiftVirtualNetworkConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateSwiftVirtualNetworkConnectionWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2722,6 +2914,68 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<Deployment> ListDeploymentLogAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListDeploymentLogWithHttpMessagesAsync(resourceGroupName, name, id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Discovers an existing app backup that can be restored from a blob in Azure
+            /// storage. Use this to get information about the databases stored in a
+            /// backup.
+            /// </summary>
+            /// <remarks>
+            /// Discovers an existing app backup that can be restored from a blob in Azure
+            /// storage. Use this to get information about the databases stored in a
+            /// backup.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='request'>
+            /// A RestoreRequest object that includes Azure storage URL and blog name for
+            /// discovery of backup.
+            /// </param>
+            public static RestoreRequest DiscoverBackup(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request)
+            {
+                return operations.DiscoverBackupAsync(resourceGroupName, name, request).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Discovers an existing app backup that can be restored from a blob in Azure
+            /// storage. Use this to get information about the databases stored in a
+            /// backup.
+            /// </summary>
+            /// <remarks>
+            /// Discovers an existing app backup that can be restored from a blob in Azure
+            /// storage. Use this to get information about the databases stored in a
+            /// backup.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='request'>
+            /// A RestoreRequest object that includes Azure storage URL and blog name for
+            /// discovery of backup.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RestoreRequest> DiscoverBackupAsync(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DiscoverBackupWithHttpMessagesAsync(resourceGroupName, name, request, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -5162,8 +5416,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only metrics specified in the filter (using OData syntax). For
             /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z'
-            /// and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
+            /// timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             public static IPage<ResourceMetric> ListMetrics(this IWebAppsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
             {
@@ -5192,8 +5446,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only metrics specified in the filter (using OData syntax). For
             /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z'
-            /// and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
+            /// timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -5596,8 +5850,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(startTime eq '2014-01-01T00:00:00Z' and
-            /// endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
+            /// odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and
+            /// endTime eq 2014-12-31T23:59:59Z and timeGrain eq
             /// duration'[Hour|Minute|Day]'.
             /// </param>
             public static IPage<PerfMonResponse> ListPerfMonCounters(this IWebAppsOperations operations, string resourceGroupName, string name, string filter = default(string))
@@ -5622,8 +5876,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(startTime eq '2014-01-01T00:00:00Z' and
-            /// endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
+            /// odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and
+            /// endTime eq 2014-12-31T23:59:59Z and timeGrain eq
             /// duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
@@ -5886,6 +6140,170 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task DeletePremierAddOnAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string premierAddOnName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeletePremierAddOnWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Updates a named add-on of an app.
+            /// </summary>
+            /// <remarks>
+            /// Updates a named add-on of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='premierAddOnName'>
+            /// Add-on name.
+            /// </param>
+            /// <param name='premierAddOn'>
+            /// A JSON representation of the edited premier add-on.
+            /// </param>
+            public static PremierAddOn UpdatePremierAddOn(this IWebAppsOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnPatchResource premierAddOn)
+            {
+                return operations.UpdatePremierAddOnAsync(resourceGroupName, name, premierAddOnName, premierAddOn).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a named add-on of an app.
+            /// </summary>
+            /// <remarks>
+            /// Updates a named add-on of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='premierAddOnName'>
+            /// Add-on name.
+            /// </param>
+            /// <param name='premierAddOn'>
+            /// A JSON representation of the edited premier add-on.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PremierAddOn> UpdatePremierAddOnAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdatePremierAddOnWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, premierAddOn, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </summary>
+            /// <remarks>
+            /// Gets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            public static PrivateAccess GetPrivateAccess(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetPrivateAccessAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </summary>
+            /// <remarks>
+            /// Gets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateAccess> GetPrivateAccessAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateAccessWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Sets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </summary>
+            /// <remarks>
+            /// Sets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='access'>
+            /// The information for the private access
+            /// </param>
+            public static PrivateAccess PutPrivateAccessVnet(this IWebAppsOperations operations, string resourceGroupName, string name, PrivateAccess access)
+            {
+                return operations.PutPrivateAccessVnetAsync(resourceGroupName, name, access).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Sets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </summary>
+            /// <remarks>
+            /// Sets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='access'>
+            /// The information for the private access
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateAccess> PutPrivateAccessVnetAsync(this IWebAppsOperations operations, string resourceGroupName, string name, PrivateAccess access, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PutPrivateAccessVnetWithHttpMessagesAsync(resourceGroupName, name, access, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -6603,57 +7021,6 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Recovers a web app to a previous snapshot.
-            /// </summary>
-            /// <remarks>
-            /// Recovers a web app to a previous snapshot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app.
-            /// </param>
-            /// <param name='recoveryEntity'>
-            /// Snapshot data used for web app recovery. Snapshot information can be
-            /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
-            /// </param>
-            public static void Recover(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRecoveryRequest recoveryEntity)
-            {
-                operations.RecoverAsync(resourceGroupName, name, recoveryEntity).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Recovers a web app to a previous snapshot.
-            /// </summary>
-            /// <remarks>
-            /// Recovers a web app to a previous snapshot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app.
-            /// </param>
-            /// <param name='recoveryEntity'>
-            /// Snapshot data used for web app recovery. Snapshot information can be
-            /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task RecoverAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRecoveryRequest recoveryEntity, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.RecoverWithHttpMessagesAsync(resourceGroupName, name, recoveryEntity, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Resets the configuration settings of the current slot if they were
             /// previously modified by calling the API with POST.
             /// </summary>
@@ -6757,6 +7124,155 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task RestartAsync(this IWebAppsOperations operations, string resourceGroupName, string name, bool? softRestart = default(bool?), bool? synchronous = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RestartWithHttpMessagesAsync(resourceGroupName, name, softRestart, synchronous, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Restores an app from a backup blob in Azure Storage.
+            /// </summary>
+            /// <remarks>
+            /// Restores an app from a backup blob in Azure Storage.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='request'>
+            /// Information on restore request .
+            /// </param>
+            public static void RestoreFromBackupBlob(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request)
+            {
+                operations.RestoreFromBackupBlobAsync(resourceGroupName, name, request).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restores an app from a backup blob in Azure Storage.
+            /// </summary>
+            /// <remarks>
+            /// Restores an app from a backup blob in Azure Storage.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='request'>
+            /// Information on restore request .
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RestoreFromBackupBlobAsync(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RestoreFromBackupBlobWithHttpMessagesAsync(resourceGroupName, name, request, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Restores a deleted web app to this web app.
+            /// </summary>
+            /// <remarks>
+            /// Restores a deleted web app to this web app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Deleted web app restore information.
+            /// </param>
+            public static void RestoreFromDeletedApp(this IWebAppsOperations operations, string resourceGroupName, string name, DeletedAppRestoreRequest restoreRequest)
+            {
+                operations.RestoreFromDeletedAppAsync(resourceGroupName, name, restoreRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restores a deleted web app to this web app.
+            /// </summary>
+            /// <remarks>
+            /// Restores a deleted web app to this web app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Deleted web app restore information.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RestoreFromDeletedAppAsync(this IWebAppsOperations operations, string resourceGroupName, string name, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RestoreFromDeletedAppWithHttpMessagesAsync(resourceGroupName, name, restoreRequest, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Restores a web app from a snapshot.
+            /// </summary>
+            /// <remarks>
+            /// Restores a web app from a snapshot.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Snapshot restore settings. Snapshot information can be obtained by calling
+            /// GetDeletedSites or GetSiteSnapshots API.
+            /// </param>
+            public static void RestoreSnapshot(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRestoreRequest restoreRequest)
+            {
+                operations.RestoreSnapshotAsync(resourceGroupName, name, restoreRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restores a web app from a snapshot.
+            /// </summary>
+            /// <remarks>
+            /// Restores a web app from a snapshot.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Snapshot restore settings. Snapshot information can be obtained by calling
+            /// GetDeletedSites or GetSiteSnapshots API.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RestoreSnapshotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RestoreSnapshotWithHttpMessagesAsync(resourceGroupName, name, restoreRequest, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -7087,24 +7603,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot to create or update. By default, this API
             /// attempts to create or modify the production slot.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation.
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS.
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name.
-            /// </param>
-            public static Site CreateOrUpdateSlot(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, string slot, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string))
+            public static Site CreateOrUpdateSlot(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, string slot)
             {
-                return operations.CreateOrUpdateSlotAsync(resourceGroupName, name, siteEnvelope, slot, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateSlotAsync(resourceGroupName, name, siteEnvelope, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -7132,27 +7633,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot to create or update. By default, this API
             /// attempts to create or modify the production slot.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation.
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS.
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Site> CreateOrUpdateSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, string slot, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Site> CreateOrUpdateSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateSlotWithHttpMessagesAsync(resourceGroupName, name, siteEnvelope, slot, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateSlotWithHttpMessagesAsync(resourceGroupName, name, siteEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -7185,12 +7671,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// you want to delete the empty App Service plan. By default, the empty App
             /// Service plan is not deleted.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true, DNS registration is skipped.
-            /// </param>
-            public static void DeleteSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?), bool? skipDnsRegistration = default(bool?))
+            public static void DeleteSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?))
             {
-                operations.DeleteSlotAsync(resourceGroupName, name, slot, deleteMetrics, deleteEmptyServerFarm, skipDnsRegistration).GetAwaiter().GetResult();
+                operations.DeleteSlotAsync(resourceGroupName, name, slot, deleteMetrics, deleteEmptyServerFarm).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -7220,15 +7703,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// you want to delete the empty App Service plan. By default, the empty App
             /// Service plan is not deleted.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true, DNS registration is skipped.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?), bool? skipDnsRegistration = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteSlotWithHttpMessagesAsync(resourceGroupName, name, slot, deleteMetrics, deleteEmptyServerFarm, skipDnsRegistration, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteSlotWithHttpMessagesAsync(resourceGroupName, name, slot, deleteMetrics, deleteEmptyServerFarm, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -7256,24 +7736,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot to create or update. By default, this API
             /// attempts to create or modify the production slot.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation.
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS.
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name.
-            /// </param>
-            public static Site UpdateSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SitePatchResource siteEnvelope, string slot, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string))
+            public static Site UpdateSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SitePatchResource siteEnvelope, string slot)
             {
-                return operations.UpdateSlotAsync(resourceGroupName, name, siteEnvelope, slot, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds).GetAwaiter().GetResult();
+                return operations.UpdateSlotAsync(resourceGroupName, name, siteEnvelope, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -7301,27 +7766,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot to create or update. By default, this API
             /// attempts to create or modify the production slot.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation.
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS.
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Site> UpdateSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SitePatchResource siteEnvelope, string slot, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Site> UpdateSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SitePatchResource siteEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateSlotWithHttpMessagesAsync(resourceGroupName, name, siteEnvelope, slot, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateSlotWithHttpMessagesAsync(resourceGroupName, name, siteEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -7565,72 +8015,6 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage.
-            /// </summary>
-            /// <remarks>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='request'>
-            /// A RestoreRequest object that includes Azure storage URL and blog name for
-            /// discovery of backup.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// perform discovery for the production slot.
-            /// </param>
-            public static RestoreRequest DiscoverRestoreSlot(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request, string slot)
-            {
-                return operations.DiscoverRestoreSlotAsync(resourceGroupName, name, request, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage.
-            /// </summary>
-            /// <remarks>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='request'>
-            /// A RestoreRequest object that includes Azure storage URL and blog name for
-            /// discovery of backup.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// perform discovery for the production slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RestoreRequest> DiscoverRestoreSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.DiscoverRestoreSlotWithHttpMessagesAsync(resourceGroupName, name, request, slot, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets a backup of an app by its ID.
             /// </summary>
             /// <remarks>
@@ -7852,9 +8236,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// restore a backup of the production slot.
             /// </param>
-            public static RestoreResponse RestoreSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request, string slot)
+            public static void RestoreSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request, string slot)
             {
-                return operations.RestoreSlotAsync(resourceGroupName, name, backupId, request, slot).GetAwaiter().GetResult();
+                operations.RestoreSlotAsync(resourceGroupName, name, backupId, request, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -7887,12 +8271,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RestoreResponse> RestoreSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RestoreSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RestoreSlotWithHttpMessagesAsync(resourceGroupName, name, backupId, request, slot, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.RestoreSlotWithHttpMessagesAsync(resourceGroupName, name, backupId, request, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -8176,6 +8557,120 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<SiteAuthSettings> GetAuthSettingsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAuthSettingsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the Azure storage account configurations of an app.
+            /// </summary>
+            /// <remarks>
+            /// Updates the Azure storage account configurations of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='azureStorageAccounts'>
+            /// Azure storage accounts of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// update the Azure storage account configurations for the production slot.
+            /// </param>
+            public static AzureStoragePropertyDictionaryResource UpdateAzureStorageAccountsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, AzureStoragePropertyDictionaryResource azureStorageAccounts, string slot)
+            {
+                return operations.UpdateAzureStorageAccountsSlotAsync(resourceGroupName, name, azureStorageAccounts, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the Azure storage account configurations of an app.
+            /// </summary>
+            /// <remarks>
+            /// Updates the Azure storage account configurations of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='azureStorageAccounts'>
+            /// Azure storage accounts of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// update the Azure storage account configurations for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AzureStoragePropertyDictionaryResource> UpdateAzureStorageAccountsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, AzureStoragePropertyDictionaryResource azureStorageAccounts, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateAzureStorageAccountsSlotWithHttpMessagesAsync(resourceGroupName, name, azureStorageAccounts, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the Azure storage account configurations of an app.
+            /// </summary>
+            /// <remarks>
+            /// Gets the Azure storage account configurations of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// update the Azure storage account configurations for the production slot.
+            /// </param>
+            public static AzureStoragePropertyDictionaryResource ListAzureStorageAccountsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.ListAzureStorageAccountsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the Azure storage account configurations of an app.
+            /// </summary>
+            /// <remarks>
+            /// Gets the Azure storage account configurations of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// update the Azure storage account configurations for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AzureStoragePropertyDictionaryResource> ListAzureStorageAccountsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAzureStorageAccountsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -8853,6 +9348,259 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<PushSettings> ListSitePushSettingsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSitePushSettingsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a Swift Virtual Network connection.
+            /// </summary>
+            /// <remarks>
+            /// Gets a Swift Virtual Network connection.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get a
+            /// gateway for the production slot's Virtual Network.
+            /// </param>
+            public static SwiftVirtualNetwork GetSwiftVirtualNetworkConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a Swift Virtual Network connection.
+            /// </summary>
+            /// <remarks>
+            /// Gets a Swift Virtual Network connection.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get a
+            /// gateway for the production slot's Virtual Network.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SwiftVirtualNetwork> GetSwiftVirtualNetworkConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will add
+            /// or update connections for the production slot.
+            /// </param>
+            public static SwiftVirtualNetwork CreateOrUpdateSwiftVirtualNetworkConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot)
+            {
+                return operations.CreateOrUpdateSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, connectionEnvelope, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will add
+            /// or update connections for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SwiftVirtualNetwork> CreateOrUpdateSwiftVirtualNetworkConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </summary>
+            /// <remarks>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// delete the connection for the production slot.
+            /// </param>
+            public static void DeleteSwiftVirtualNetworkSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                operations.DeleteSwiftVirtualNetworkSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </summary>
+            /// <remarks>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// delete the connection for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteSwiftVirtualNetworkSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteSwiftVirtualNetworkSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will add
+            /// or update connections for the production slot.
+            /// </param>
+            public static SwiftVirtualNetwork UpdateSwiftVirtualNetworkConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot)
+            {
+                return operations.UpdateSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, connectionEnvelope, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will add
+            /// or update connections for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SwiftVirtualNetwork> UpdateSwiftVirtualNetworkConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -9900,6 +10648,76 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<Deployment> ListDeploymentLogSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string id, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListDeploymentLogSlotWithHttpMessagesAsync(resourceGroupName, name, id, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Discovers an existing app backup that can be restored from a blob in Azure
+            /// storage. Use this to get information about the databases stored in a
+            /// backup.
+            /// </summary>
+            /// <remarks>
+            /// Discovers an existing app backup that can be restored from a blob in Azure
+            /// storage. Use this to get information about the databases stored in a
+            /// backup.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='request'>
+            /// A RestoreRequest object that includes Azure storage URL and blog name for
+            /// discovery of backup.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// perform discovery for the production slot.
+            /// </param>
+            public static RestoreRequest DiscoverBackupSlot(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request, string slot)
+            {
+                return operations.DiscoverBackupSlotAsync(resourceGroupName, name, request, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Discovers an existing app backup that can be restored from a blob in Azure
+            /// storage. Use this to get information about the databases stored in a
+            /// backup.
+            /// </summary>
+            /// <remarks>
+            /// Discovers an existing app backup that can be restored from a blob in Azure
+            /// storage. Use this to get information about the databases stored in a
+            /// backup.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='request'>
+            /// A RestoreRequest object that includes Azure storage URL and blog name for
+            /// discovery of backup.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// perform discovery for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RestoreRequest> DiscoverBackupSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DiscoverBackupSlotWithHttpMessagesAsync(resourceGroupName, name, request, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -12684,8 +13502,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only metrics specified in the filter (using OData syntax). For
             /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z'
-            /// and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
+            /// timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             public static IPage<ResourceMetric> ListMetricsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string))
             {
@@ -12718,8 +13536,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only metrics specified in the filter (using OData syntax). For
             /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z'
-            /// and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
+            /// timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -13050,8 +13868,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(startTime eq '2014-01-01T00:00:00Z' and
-            /// endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
+            /// odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and
+            /// endTime eq 2014-12-31T23:59:59Z and timeGrain eq
             /// duration'[Hour|Minute|Day]'.
             /// </param>
             public static IPage<PerfMonResponse> ListPerfMonCountersSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string filter = default(string))
@@ -13080,8 +13898,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(startTime eq '2014-01-01T00:00:00Z' and
-            /// endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
+            /// odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and
+            /// endTime eq 2014-12-31T23:59:59Z and timeGrain eq
             /// duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
@@ -13384,6 +14202,190 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task DeletePremierAddOnSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string premierAddOnName, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeletePremierAddOnSlotWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Updates a named add-on of an app.
+            /// </summary>
+            /// <remarks>
+            /// Updates a named add-on of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='premierAddOnName'>
+            /// Add-on name.
+            /// </param>
+            /// <param name='premierAddOn'>
+            /// A JSON representation of the edited premier add-on.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// update the named add-on for the production slot.
+            /// </param>
+            public static PremierAddOn UpdatePremierAddOnSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnPatchResource premierAddOn, string slot)
+            {
+                return operations.UpdatePremierAddOnSlotAsync(resourceGroupName, name, premierAddOnName, premierAddOn, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a named add-on of an app.
+            /// </summary>
+            /// <remarks>
+            /// Updates a named add-on of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='premierAddOnName'>
+            /// Add-on name.
+            /// </param>
+            /// <param name='premierAddOn'>
+            /// A JSON representation of the edited premier add-on.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// update the named add-on for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PremierAddOn> UpdatePremierAddOnSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnPatchResource premierAddOn, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdatePremierAddOnSlotWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, premierAddOn, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </summary>
+            /// <remarks>
+            /// Gets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for the web app.
+            /// </param>
+            public static PrivateAccess GetPrivateAccessSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetPrivateAccessSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </summary>
+            /// <remarks>
+            /// Gets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for the web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateAccess> GetPrivateAccessSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateAccessSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Sets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </summary>
+            /// <remarks>
+            /// Sets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='access'>
+            /// The information for the private access
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for the web app.
+            /// </param>
+            public static PrivateAccess PutPrivateAccessVnetSlot(this IWebAppsOperations operations, string resourceGroupName, string name, PrivateAccess access, string slot)
+            {
+                return operations.PutPrivateAccessVnetSlotAsync(resourceGroupName, name, access, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Sets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </summary>
+            /// <remarks>
+            /// Sets data around private site access enablement and authorized Virtual
+            /// Networks that can access the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='access'>
+            /// The information for the private access
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for the web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateAccess> PutPrivateAccessVnetSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, PrivateAccess access, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PutPrivateAccessVnetSlotWithHttpMessagesAsync(resourceGroupName, name, access, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -14205,65 +15207,6 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Recovers a web app to a previous snapshot.
-            /// </summary>
-            /// <remarks>
-            /// Recovers a web app to a previous snapshot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app.
-            /// </param>
-            /// <param name='recoveryEntity'>
-            /// Snapshot data used for web app recovery. Snapshot information can be
-            /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            public static void RecoverSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRecoveryRequest recoveryEntity, string slot)
-            {
-                operations.RecoverSlotAsync(resourceGroupName, name, recoveryEntity, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Recovers a web app to a previous snapshot.
-            /// </summary>
-            /// <remarks>
-            /// Recovers a web app to a previous snapshot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app.
-            /// </param>
-            /// <param name='recoveryEntity'>
-            /// Snapshot data used for web app recovery. Snapshot information can be
-            /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task RecoverSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRecoveryRequest recoveryEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.RecoverSlotWithHttpMessagesAsync(resourceGroupName, name, recoveryEntity, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Resets the configuration settings of the current slot if they were
             /// previously modified by calling the API with POST.
             /// </summary>
@@ -14383,6 +15326,179 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task RestartSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? softRestart = default(bool?), bool? synchronous = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RestartSlotWithHttpMessagesAsync(resourceGroupName, name, slot, softRestart, synchronous, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Restores an app from a backup blob in Azure Storage.
+            /// </summary>
+            /// <remarks>
+            /// Restores an app from a backup blob in Azure Storage.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='request'>
+            /// Information on restore request .
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// restore a backup of the production slot.
+            /// </param>
+            public static void RestoreFromBackupBlobSlot(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request, string slot)
+            {
+                operations.RestoreFromBackupBlobSlotAsync(resourceGroupName, name, request, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restores an app from a backup blob in Azure Storage.
+            /// </summary>
+            /// <remarks>
+            /// Restores an app from a backup blob in Azure Storage.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='request'>
+            /// Information on restore request .
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// restore a backup of the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RestoreFromBackupBlobSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RestoreFromBackupBlobSlotWithHttpMessagesAsync(resourceGroupName, name, request, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Restores a deleted web app to this web app.
+            /// </summary>
+            /// <remarks>
+            /// Restores a deleted web app to this web app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Deleted web app restore information.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static void RestoreFromDeletedAppSlot(this IWebAppsOperations operations, string resourceGroupName, string name, DeletedAppRestoreRequest restoreRequest, string slot)
+            {
+                operations.RestoreFromDeletedAppSlotAsync(resourceGroupName, name, restoreRequest, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restores a deleted web app to this web app.
+            /// </summary>
+            /// <remarks>
+            /// Restores a deleted web app to this web app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Deleted web app restore information.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RestoreFromDeletedAppSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, DeletedAppRestoreRequest restoreRequest, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RestoreFromDeletedAppSlotWithHttpMessagesAsync(resourceGroupName, name, restoreRequest, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Restores a web app from a snapshot.
+            /// </summary>
+            /// <remarks>
+            /// Restores a web app from a snapshot.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Snapshot restore settings. Snapshot information can be obtained by calling
+            /// GetDeletedSites or GetSiteSnapshots API.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static void RestoreSnapshotSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRestoreRequest restoreRequest, string slot)
+            {
+                operations.RestoreSnapshotSlotAsync(resourceGroupName, name, restoreRequest, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restores a web app from a snapshot.
+            /// </summary>
+            /// <remarks>
+            /// Restores a web app from a snapshot.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Snapshot restore settings. Snapshot information can be obtained by calling
+            /// GetDeletedSites or GetSiteSnapshots API.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RestoreSnapshotSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRestoreRequest restoreRequest, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RestoreSnapshotSlotWithHttpMessagesAsync(resourceGroupName, name, restoreRequest, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -15600,8 +16716,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only information specified in the filter (using OData syntax). For
             /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z'
-            /// and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
+            /// timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             public static IPage<CsmUsageQuota> ListUsagesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string filter = default(string))
             {
@@ -15632,8 +16748,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only information specified in the filter (using OData syntax). For
             /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z'
-            /// and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
+            /// timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -17131,8 +18247,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only information specified in the filter (using OData syntax). For
             /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z'
-            /// and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
+            /// timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             public static IPage<CsmUsageQuota> ListUsages(this IWebAppsOperations operations, string resourceGroupName, string name, string filter = default(string))
             {
@@ -17159,8 +18275,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only information specified in the filter (using OData syntax). For
             /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z'
-            /// and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
+            /// timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -17757,24 +18873,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='siteEnvelope'>
             /// A JSON representation of the app properties. See example.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation.
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS.
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name.
-            /// </param>
-            public static Site BeginCreateOrUpdate(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string))
+            public static Site BeginCreateOrUpdate(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, name, siteEnvelope, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, name, siteEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -17798,27 +18899,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='siteEnvelope'>
             /// A JSON representation of the app properties. See example.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation.
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS.
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Site> BeginCreateOrUpdateAsync(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Site> BeginCreateOrUpdateAsync(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, siteEnvelope, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, siteEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -17847,9 +18933,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='request'>
             /// Information on restore request .
             /// </param>
-            public static RestoreResponse BeginRestore(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request)
+            public static void BeginRestore(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request)
             {
-                return operations.BeginRestoreAsync(resourceGroupName, name, backupId, request).GetAwaiter().GetResult();
+                operations.BeginRestoreAsync(resourceGroupName, name, backupId, request).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -17878,12 +18964,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RestoreResponse> BeginRestoreAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginRestoreAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginRestoreWithHttpMessagesAsync(resourceGroupName, name, backupId, request, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginRestoreWithHttpMessagesAsync(resourceGroupName, name, backupId, request, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -18211,10 +19294,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Recovers a web app to a previous snapshot.
+            /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
-            /// Recovers a web app to a previous snapshot.
+            /// Restores an app from a backup blob in Azure Storage.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18223,22 +19306,21 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the resource group to which the resource belongs.
             /// </param>
             /// <param name='name'>
-            /// Name of web app.
+            /// Name of the app.
             /// </param>
-            /// <param name='recoveryEntity'>
-            /// Snapshot data used for web app recovery. Snapshot information can be
-            /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
+            /// <param name='request'>
+            /// Information on restore request .
             /// </param>
-            public static void BeginRecover(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRecoveryRequest recoveryEntity)
+            public static void BeginRestoreFromBackupBlob(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request)
             {
-                operations.BeginRecoverAsync(resourceGroupName, name, recoveryEntity).GetAwaiter().GetResult();
+                operations.BeginRestoreFromBackupBlobAsync(resourceGroupName, name, request).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Recovers a web app to a previous snapshot.
+            /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
-            /// Recovers a web app to a previous snapshot.
+            /// Restores an app from a backup blob in Azure Storage.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18247,18 +19329,117 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the resource group to which the resource belongs.
             /// </param>
             /// <param name='name'>
-            /// Name of web app.
+            /// Name of the app.
             /// </param>
-            /// <param name='recoveryEntity'>
-            /// Snapshot data used for web app recovery. Snapshot information can be
-            /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
+            /// <param name='request'>
+            /// Information on restore request .
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginRecoverAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRecoveryRequest recoveryEntity, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginRestoreFromBackupBlobAsync(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginRecoverWithHttpMessagesAsync(resourceGroupName, name, recoveryEntity, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginRestoreFromBackupBlobWithHttpMessagesAsync(resourceGroupName, name, request, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Restores a deleted web app to this web app.
+            /// </summary>
+            /// <remarks>
+            /// Restores a deleted web app to this web app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Deleted web app restore information.
+            /// </param>
+            public static void BeginRestoreFromDeletedApp(this IWebAppsOperations operations, string resourceGroupName, string name, DeletedAppRestoreRequest restoreRequest)
+            {
+                operations.BeginRestoreFromDeletedAppAsync(resourceGroupName, name, restoreRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restores a deleted web app to this web app.
+            /// </summary>
+            /// <remarks>
+            /// Restores a deleted web app to this web app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Deleted web app restore information.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRestoreFromDeletedAppAsync(this IWebAppsOperations operations, string resourceGroupName, string name, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRestoreFromDeletedAppWithHttpMessagesAsync(resourceGroupName, name, restoreRequest, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Restores a web app from a snapshot.
+            /// </summary>
+            /// <remarks>
+            /// Restores a web app from a snapshot.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Snapshot restore settings. Snapshot information can be obtained by calling
+            /// GetDeletedSites or GetSiteSnapshots API.
+            /// </param>
+            public static void BeginRestoreSnapshot(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRestoreRequest restoreRequest)
+            {
+                operations.BeginRestoreSnapshotAsync(resourceGroupName, name, restoreRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restores a web app from a snapshot.
+            /// </summary>
+            /// <remarks>
+            /// Restores a web app from a snapshot.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Snapshot restore settings. Snapshot information can be obtained by calling
+            /// GetDeletedSites or GetSiteSnapshots API.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRestoreSnapshotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRestoreSnapshotWithHttpMessagesAsync(resourceGroupName, name, restoreRequest, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -18338,24 +19519,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot to create or update. By default, this API
             /// attempts to create or modify the production slot.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation.
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS.
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name.
-            /// </param>
-            public static Site BeginCreateOrUpdateSlot(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, string slot, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string))
+            public static Site BeginCreateOrUpdateSlot(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, string slot)
             {
-                return operations.BeginCreateOrUpdateSlotAsync(resourceGroupName, name, siteEnvelope, slot, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateSlotAsync(resourceGroupName, name, siteEnvelope, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -18383,27 +19549,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot to create or update. By default, this API
             /// attempts to create or modify the production slot.
             /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation.
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS.
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Site> BeginCreateOrUpdateSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, string slot, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Site> BeginCreateOrUpdateSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, Site siteEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateSlotWithHttpMessagesAsync(resourceGroupName, name, siteEnvelope, slot, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateSlotWithHttpMessagesAsync(resourceGroupName, name, siteEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -18436,9 +19587,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// restore a backup of the production slot.
             /// </param>
-            public static RestoreResponse BeginRestoreSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request, string slot)
+            public static void BeginRestoreSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request, string slot)
             {
-                return operations.BeginRestoreSlotAsync(resourceGroupName, name, backupId, request, slot).GetAwaiter().GetResult();
+                operations.BeginRestoreSlotAsync(resourceGroupName, name, backupId, request, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -18471,12 +19622,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RestoreResponse> BeginRestoreSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginRestoreSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginRestoreSlotWithHttpMessagesAsync(resourceGroupName, name, backupId, request, slot, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginRestoreSlotWithHttpMessagesAsync(resourceGroupName, name, backupId, request, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -18726,10 +19874,67 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Recovers a web app to a previous snapshot.
+            /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
-            /// Recovers a web app to a previous snapshot.
+            /// Restores an app from a backup blob in Azure Storage.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='request'>
+            /// Information on restore request .
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// restore a backup of the production slot.
+            /// </param>
+            public static void BeginRestoreFromBackupBlobSlot(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request, string slot)
+            {
+                operations.BeginRestoreFromBackupBlobSlotAsync(resourceGroupName, name, request, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restores an app from a backup blob in Azure Storage.
+            /// </summary>
+            /// <remarks>
+            /// Restores an app from a backup blob in Azure Storage.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='request'>
+            /// Information on restore request .
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// restore a backup of the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRestoreFromBackupBlobSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRestoreFromBackupBlobSlotWithHttpMessagesAsync(resourceGroupName, name, request, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Restores a deleted web app to this web app.
+            /// </summary>
+            /// <remarks>
+            /// Restores a deleted web app to this web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18740,24 +19945,23 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app.
             /// </param>
-            /// <param name='recoveryEntity'>
-            /// Snapshot data used for web app recovery. Snapshot information can be
-            /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
+            /// <param name='restoreRequest'>
+            /// Deleted web app restore information.
             /// </param>
             /// <param name='slot'>
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static void BeginRecoverSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRecoveryRequest recoveryEntity, string slot)
+            public static void BeginRestoreFromDeletedAppSlot(this IWebAppsOperations operations, string resourceGroupName, string name, DeletedAppRestoreRequest restoreRequest, string slot)
             {
-                operations.BeginRecoverSlotAsync(resourceGroupName, name, recoveryEntity, slot).GetAwaiter().GetResult();
+                operations.BeginRestoreFromDeletedAppSlotAsync(resourceGroupName, name, restoreRequest, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Recovers a web app to a previous snapshot.
+            /// Restores a deleted web app to this web app.
             /// </summary>
             /// <remarks>
-            /// Recovers a web app to a previous snapshot.
+            /// Restores a deleted web app to this web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18768,9 +19972,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app.
             /// </param>
-            /// <param name='recoveryEntity'>
-            /// Snapshot data used for web app recovery. Snapshot information can be
-            /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
+            /// <param name='restoreRequest'>
+            /// Deleted web app restore information.
             /// </param>
             /// <param name='slot'>
             /// Name of web app slot. If not specified then will default to production
@@ -18779,9 +19982,68 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginRecoverSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRecoveryRequest recoveryEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginRestoreFromDeletedAppSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, DeletedAppRestoreRequest restoreRequest, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginRecoverSlotWithHttpMessagesAsync(resourceGroupName, name, recoveryEntity, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginRestoreFromDeletedAppSlotWithHttpMessagesAsync(resourceGroupName, name, restoreRequest, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Restores a web app from a snapshot.
+            /// </summary>
+            /// <remarks>
+            /// Restores a web app from a snapshot.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Snapshot restore settings. Snapshot information can be obtained by calling
+            /// GetDeletedSites or GetSiteSnapshots API.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static void BeginRestoreSnapshotSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRestoreRequest restoreRequest, string slot)
+            {
+                operations.BeginRestoreSnapshotSlotAsync(resourceGroupName, name, restoreRequest, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restores a web app from a snapshot.
+            /// </summary>
+            /// <remarks>
+            /// Restores a web app from a snapshot.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='restoreRequest'>
+            /// Snapshot restore settings. Snapshot information can be obtained by calling
+            /// GetDeletedSites or GetSiteSnapshots API.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRestoreSnapshotSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRestoreRequest restoreRequest, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRestoreSnapshotSlotWithHttpMessagesAsync(resourceGroupName, name, restoreRequest, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

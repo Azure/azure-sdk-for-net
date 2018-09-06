@@ -73,7 +73,7 @@ namespace WebSites.Tests.ScenarioTests
                         RetentionPeriodInDays = 26,
                         StartTime = DateTime.Now.AddDays(5)
                     },
-                    BackupRequestName = "abc",
+                    BackupName = "abc",
                     StorageAccountUrl = storageUrl
                 };
 
@@ -85,7 +85,7 @@ namespace WebSites.Tests.ScenarioTests
                 Assert.Equal(sr.BackupSchedule.FrequencyInterval, backupConfiguration.BackupSchedule.FrequencyInterval);
                 Assert.Equal(sr.BackupSchedule.FrequencyUnit, backupConfiguration.BackupSchedule.FrequencyUnit);
                 Assert.Equal(sr.BackupSchedule.KeepAtLeastOneBackup, backupConfiguration.BackupSchedule.KeepAtLeastOneBackup);
-                Assert.Equal(sr.BackupRequestName, backupConfiguration.BackupRequestName);
+                Assert.Equal(sr.BackupName, backupConfiguration.BackupName);
 
                 webSitesClient.WebApps.Delete(resourceGroupName, siteName, deleteMetrics: true);
 

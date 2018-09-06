@@ -89,5 +89,10 @@ namespace Microsoft.Azure.Management.TrafficManager
         /// </summary>
         IHeatMapOperations HeatMap { get; }
 
+        /// <summary>
+        /// Gets the ITrafficManagerUserMetricsKeysOperations.
+        /// </summary>
+        ITrafficManagerUserMetricsKeysOperations TrafficManagerUserMetricsKeys { get; }
+
     }
 }

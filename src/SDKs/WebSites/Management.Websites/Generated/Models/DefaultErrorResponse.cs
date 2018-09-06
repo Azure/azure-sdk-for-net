@@ -47,18 +47,5 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "error")]
         public DefaultErrorResponseError Error { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Error != null)
-            {
-                Error.Validate();
-            }
-        }
     }
 }

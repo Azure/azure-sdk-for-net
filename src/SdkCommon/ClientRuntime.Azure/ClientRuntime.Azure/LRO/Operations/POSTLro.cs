@@ -120,6 +120,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                     }
                 }
             }
+#if DEBUG
+            RemoveLroHeaders(removeOperation: true);
+#endif
         }
     }
 }

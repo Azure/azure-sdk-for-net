@@ -22,8 +22,13 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public static bool IsHttpContentBinary(HttpContent content)
         {
+            bool isBinary = false;
             var contentType = content?.Headers?.ContentType?.MediaType;
-            return ((content != null) && binaryMimeRegex.IsMatch(contentType));
+
+            if (contentType != null)
+                isBinary = ( (content != null) && (binaryMimeRegex.IsMatch(contentType)) );
+
+            return isBinary;
         }
 
         public static string SerializeBinary(byte[] content)
@@ -179,7 +184,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
                 path, JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings
                 {
                     TypeNameAssemblyFormat = 0, // Simple = 0, Full = 1 (we have an issue with duplicate namespace between newtonsoft and System.Runtime.Serialization. Once we upgrade to newtonsoft 11.x, we can start using TypeNameAssemblyFormatHandling instead)
-                    TypeNameHandling = TypeNameHandling.None,
+                    TypeNameHandling = TypeNameHandling.None
                 }));
         }
 
@@ -214,8 +219,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
             {
                 HttpMockServer.FileSystemUtilsObject.CreateDirectory(dir);
             }
-        }
-        
+        }        
         public static string EncodeUriAsBase64(Uri requestUri)
         {
             return RecorderUtilities.EncodeUriAsBase64(requestUri.PathAndQuery);

@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Language.TextAnalytics</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Language APIs.</Description>
-    <Version>2.0.0-preview</Version>
+    <Version>2.1.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Language.TextAnalytics</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Text Analytics API;Text Analytics;REST HTTP client;netcore451511</PackageTags>
     <PackageReleaseNotes>
@@ -16,7 +16,7 @@
     Note: This package is the successor to the Microsoft.Azure.CognitiveServices.Language NuGet package.
 
     Changes in this release:
-    1. Support customizing service endpoints. 
+    1. Support customizing service endpoints by assigning the endpoint string to TextAnalyticsClient.Endpoint. The endpoint string can be found on Azure Portal, it should contain only protocol and hostname, for example: https://westus.api.cognitive.microsoft.com
     ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

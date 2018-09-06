@@ -80,9 +80,47 @@ namespace ApiManagement.Tests.ResourceProviderTests
 
                 Assert.NotNull(createdService.HostnameConfigurations);
                 Assert.Equal(3, createdService.HostnameConfigurations.Count());
-                foreach(HostnameConfiguration hostnameConfig in testBase.serviceProperties.HostnameConfigurations)
+                foreach(HostnameConfiguration hostnameConfig in createdService.HostnameConfigurations)
                 {
                     var hostnameConfiguration = createdService.HostnameConfigurations
+                        .SingleOrDefault(h => hostnameConfig.HostName.Equals(h.HostName));
+                    Assert.NotNull(hostnameConfiguration);
+                    Assert.Equal(hostnameConfig.Type, hostnameConfiguration.Type);
+                    Assert.NotNull(hostnameConfiguration.Certificate);
+                    Assert.NotNull(hostnameConfiguration.Certificate.Subject);
+                    Assert.Equal(cert.Thumbprint, hostnameConfiguration.Certificate.Thumbprint);
+                    if (HostnameType.Proxy == hostnameConfiguration.Type)
+                    {
+                        Assert.True(hostnameConfiguration.DefaultSslBinding);
+                    }
+                    else
+                    {
+                        Assert.False(hostnameConfiguration.DefaultSslBinding);
+                    }
+
+                    if (hostnameConfig2.HostName.Equals(hostnameConfiguration.HostName))
+                    {
+                        Assert.True(hostnameConfiguration.NegotiateClientCertificate);
+                    }
+                    else
+                    {
+                        Assert.False(hostnameConfiguration.NegotiateClientCertificate);
+                    }
+                }
+
+                // update the service
+                int intialTagsCount = createdService.Tags.Count;
+                createdService.Tags.Add("client", "test");
+                var updatedService = testBase.client.ApiManagementService.CreateOrUpdate(testBase.rgName,
+                     testBase.serviceName,
+                     createdService);
+                Assert.NotNull(updatedService);
+                Assert.NotEmpty(updatedService.Tags);
+                Assert.Equal(intialTagsCount + 1, updatedService.Tags.Count);
+                Assert.Equal(3, updatedService.HostnameConfigurations.Count());
+                foreach (HostnameConfiguration hostnameConfig in updatedService.HostnameConfigurations)
+                {
+                    var hostnameConfiguration = updatedService.HostnameConfigurations
                         .SingleOrDefault(h => hostnameConfig.HostName.Equals(h.HostName));
                     Assert.NotNull(hostnameConfiguration);
                     Assert.Equal(hostnameConfig.Type, hostnameConfiguration.Type);

@@ -8,7 +8,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     using System.Net;
     using System.Net.Http;
     using CR.Azure.NetCore.Tests.Redis;
-    using CR.Azure.NetCore.Tests.Redis.Models;
+    //using CR.Azure.NetCore.Tests.Redis.Models;
     using CR.Azure.NetCore.Tests.Fakes;
     using Xunit;
     using Microsoft.Rest.Azure;
@@ -17,6 +17,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     using LROFailedResponses = CR.Azure.NetCore.Tests.LROOperationFailedTestResponses;
     using LROMultipleHeaders = CR.Azure.NetCore.Tests.LROOperationMultipleHeaderResponses;
     using Xunit.Abstractions;
+    using CR.Azure.NetCore.Tests;
+    using CR.Azure.NetCore.Tests.TestClients.RedisClient;
+    using CR.Azure.NetCore.Tests.TestClients.Models;
 
     /// <summary>
     /// 
@@ -488,8 +491,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
 
         }
 
-        
-
 
         /// <summary>
         /// Test
@@ -580,6 +581,161 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal(HttpMethod.Put, handler.Requests[0].Method);
             Assert.Equal(HttpMethod.Get, handler.Requests[1].Method);
         }
+
+        #region Provisiong State Tests
+        [Fact]
+        public void TestDeleteWithEmptyStringProvisioningState()
+        {
+            string DeleteOriginalResourceRequestUrl = @"https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redist";
+            string Delete201_LocationHeaderUrl = @"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/RedisCreateUpdate2536/providers/Microsoft.Cache/redis/RedisCreateUpdate9076?api-version=2017-10-01";
+
+            var handler = new PlaybackTestHandler(LROOpertionTestResponses.Location201FinalGet404WithEmptyStringProviState());
+            var fakeClient = GetClient(handler);
+            fakeClient.RedisOperations.Delete("rg", "redist", "1234");
+
+            VerifyHttpMethod("DELETE", handler, requestIndex: 0);
+            VerifyRequestUrl(DeleteOriginalResourceRequestUrl, handler, 0);
+            VerifyRequestUrl(Delete201_LocationHeaderUrl, handler, requestIndex: 1);
+            VerifyRequestUrl(Delete201_LocationHeaderUrl, handler, requestIndex: 2);
+
+            Assert.Equal(4, handler.Requests.Count);
+        }
+
+        [Fact]
+        public void TestDeleteWithEmptyProvisioningState()
+        {
+            string DeleteOriginalResourceRequestUrl = @"https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redist";
+            string Delete201_LocationHeaderUrl = @"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/RedisCreateUpdate2536/providers/Microsoft.Cache/redis/RedisCreateUpdate9076?api-version=2017-10-01";
+
+            var handler = new PlaybackTestHandler(LROOpertionTestResponses.Location201FinalGet404WithEmptyProviState());
+            var fakeClient = GetClient(handler);
+            fakeClient.RedisOperations.Delete("rg", "redist", "1234");
+
+            VerifyHttpMethod("DELETE", handler, requestIndex: 0);
+            VerifyRequestUrl(DeleteOriginalResourceRequestUrl, handler, 0);
+            VerifyRequestUrl(Delete201_LocationHeaderUrl, handler, requestIndex: 1);
+            VerifyRequestUrl(Delete201_LocationHeaderUrl, handler, requestIndex: 2);
+
+            Assert.Equal(4, handler.Requests.Count);
+        }
+
+        [Fact]
+        public void TestDeleteWithNoValueProvisioningState()
+        {
+            string DeleteOriginalResourceRequestUrl = @"https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redist";
+            string Delete201_LocationHeaderUrl = @"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/RedisCreateUpdate2536/providers/Microsoft.Cache/redis/RedisCreateUpdate9076?api-version=2017-10-01";
+
+            var handler = new PlaybackTestHandler(LROOpertionTestResponses.Location201FinalGet404WithNoValueProviState());
+            var fakeClient = GetClient(handler);
+            fakeClient.RedisOperations.Delete("rg", "redist", "1234");
+
+            VerifyHttpMethod("DELETE", handler, requestIndex: 0);
+            VerifyRequestUrl(DeleteOriginalResourceRequestUrl, handler, 0);
+            VerifyRequestUrl(Delete201_LocationHeaderUrl, handler, requestIndex: 1);
+            VerifyRequestUrl(Delete201_LocationHeaderUrl, handler, requestIndex: 2);
+
+            Assert.Equal(4, handler.Requests.Count);
+        }
+
+        [Fact]
+        public void TestDeleteWithNullStringProvisioningState()
+        {
+            string DeleteOriginalResourceRequestUrl = @"https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redist";
+            string Delete201_LocationHeaderUrl = @"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/RedisCreateUpdate2536/providers/Microsoft.Cache/redis/RedisCreateUpdate9076?api-version=2017-10-01";
+
+            var handler = new PlaybackTestHandler(LROOpertionTestResponses.Location201FinalGet404WithNullStringProviState());
+            var fakeClient = GetClient(handler);
+            fakeClient.RedisOperations.Delete("rg", "redist", "1234");
+
+            VerifyHttpMethod("DELETE", handler, requestIndex: 0);
+            VerifyRequestUrl(DeleteOriginalResourceRequestUrl, handler, 0);
+            VerifyRequestUrl(Delete201_LocationHeaderUrl, handler, requestIndex: 1);
+            VerifyRequestUrl(Delete201_LocationHeaderUrl, handler, requestIndex: 2);
+
+            Assert.Equal(4, handler.Requests.Count);
+        }
+
+        [Fact]
+        public void TestDeleteWithLocation200NullProvisioningState()
+        {
+            string DeleteOriginalResourceRequestUrl = @"https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redist";
+            string Delete201_LocationHeaderUrl = @"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/RedisCreateUpdate2536/providers/Microsoft.Cache/redis/RedisCreateUpdate9076?api-version=2017-10-01";
+
+            var handler = new PlaybackTestHandler(LROOpertionTestResponses.Location200WithNullProviState());
+            var fakeClient = GetClient(handler);
+            fakeClient.RedisOperations.Delete("rg", "redist", "1234");
+
+            VerifyHttpMethod("DELETE", handler, requestIndex: 0);
+            Assert.Equal(1, handler.Requests.Count);
+        }
+
+        [Fact]
+        public void TestDeleteWithMissingProvisioningState()
+        {
+            string DeleteOriginalResourceRequestUrl = @"https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redist";
+            string Delete201_LocationHeaderUrl = @"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/RedisCreateUpdate2536/providers/Microsoft.Cache/redis/RedisCreateUpdate9076?api-version=2017-10-01";
+
+            var handler = new PlaybackTestHandler(LROOpertionTestResponses.Location201FinalGet404WithMissingProviState());
+            var fakeClient = GetClient(handler);
+            fakeClient.RedisOperations.Delete("rg", "redist", "1234");
+
+            VerifyHttpMethod("DELETE", handler, requestIndex: 0);
+            VerifyRequestUrl(DeleteOriginalResourceRequestUrl, handler, 0);
+            VerifyRequestUrl(Delete201_LocationHeaderUrl, handler, requestIndex: 1);
+            VerifyRequestUrl(Delete201_LocationHeaderUrl, handler, requestIndex: 2);
+
+            Assert.Equal(4, handler.Requests.Count);
+        }
+
+        private static RedisManagementClient GetClient(DelegatingHandler handlerToAdd)
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var fakeClient = new RedisManagementClient(tokenCredentials, handlerToAdd);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+            return fakeClient;
+        }
+
+        private static void VerifyRequestCount(string httpStrMethod, PlaybackTestHandler handler, int putCount = 0, int patchCount = 0)
+        {
+            if (httpStrMethod.Equals("PUT"))
+                Assert.Equal(putCount, handler.Requests.Count);
+            else if (httpStrMethod.Equals("PATCH"))
+                Assert.Equal(patchCount, handler.Requests.Count);
+        }
+
+        private static void VerifyHttpMethod(string expectedStrMethod, PlaybackTestHandler handler, int requestIndex = 0)
+        {
+            HttpMethod expMethod = null;
+
+            switch (expectedStrMethod)
+            {
+                case "PUT":
+                    expMethod = HttpMethod.Put;
+                    break;
+
+                case "PATCH":
+                    expMethod = new HttpMethod("PATCH");
+                    break;
+
+                case "POST":
+                    expMethod = HttpMethod.Post;
+                    break;
+
+                case "DELETE":
+                    expMethod = HttpMethod.Delete;
+                    break;
+            }
+
+            Assert.Equal(expMethod, handler.Requests[requestIndex].Method);
+        }
+
+        private static void VerifyRequestUrl(string expectedUrl, PlaybackTestHandler handler, int requestIndex = 0)
+        {
+            Assert.Equal(expectedUrl, handler.Requests[requestIndex].RequestUri.ToString());
+        }
+
+        #endregion
+
     }
 
     /// <summary>
@@ -658,7 +814,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             fakeClient.LongRunningOperationRetryTimeout = 1;    // Set LRO retry time out to 1, so that Retry-After can be set during test mode
             var before = DateTime.Now;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-            Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(7));
+            Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(6));
         }
 
         /// <summary>

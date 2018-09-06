@@ -88,6 +88,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </return>
         public async Task<HttpOperationResponse<EnqueueTrainingResponse>> TrainVersionWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -105,8 +109,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "TrainVersion", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/train").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/train";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -245,6 +250,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </return>
         public async Task<HttpOperationResponse<IList<ModelTrainingInfo>>> GetStatusWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -262,8 +271,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetStatus", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/train").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/train";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects

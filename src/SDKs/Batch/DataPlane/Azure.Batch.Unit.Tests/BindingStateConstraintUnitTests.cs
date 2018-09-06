@@ -35,8 +35,7 @@ namespace Azure.Batch.Unit.Tests
             const string cloudPoolDisplayName = "pool-display-name-test";
             MetadataItem metadataItem = new MetadataItem("foo", "bar");
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 CloudPool cloudPool = client.PoolOperations.CreatePool(cloudPoolId, virtualMachineSize, new CloudServiceConfiguration(osFamily));
                 cloudPool.DisplayName = cloudPoolDisplayName;
@@ -78,8 +77,7 @@ namespace Azure.Batch.Unit.Tests
             const string cloudPoolDisplayName = "pool-display-name-test";
             MetadataItem metadataItem = new MetadataItem("foo", "bar");
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Models.CloudPool protoPool = new Models.CloudPool(id: cloudPoolId, displayName: cloudPoolDisplayName, metadata: new[]
                 {
@@ -114,8 +112,7 @@ namespace Azure.Batch.Unit.Tests
             const string displayName = "DisplayNameFoo";
             MetadataItem metadataItem = new MetadataItem("foo", "bar");
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 CloudJobSchedule jobSchedule = client.JobScheduleOperations.CreateJobSchedule();
                 jobSchedule.Id = jobScheduleId;
@@ -163,8 +160,7 @@ namespace Azure.Batch.Unit.Tests
             const string displayName = "DisplayNameFoo";
             MetadataItem metadataItem = new MetadataItem("foo", "bar");
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 DateTime creationTime = DateTime.Now;
 
@@ -216,8 +212,7 @@ namespace Azure.Batch.Unit.Tests
             const string applicationId = "testApp";
             const string applicationVersion = "beta";
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 CloudJob cloudJob = client.JobOperations.CreateJob(jobId, new PoolInformation { AutoPoolSpecification = new AutoPoolSpecification { KeepAlive = false }});
                 cloudJob.Id = jobId;
@@ -266,9 +261,7 @@ namespace Azure.Batch.Unit.Tests
             const int priority = 0;
             var onAllTasksComplete = OnAllTasksComplete.TerminateJob;
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 DateTime creationTime = DateTime.Now;
 
@@ -286,8 +279,6 @@ namespace Azure.Batch.Unit.Tests
                     onAllTasksComplete: Models.OnAllTasksComplete.NoAction);
 
                 CloudJob boundJob = client.JobOperations.GetJob(jobId, additionalBehaviors: InterceptorFactory.CreateGetJobRequestInterceptor(protoJob));
-
-
 
                 Assert.Equal(jobId, boundJob.Id); // reading is allowed from a job that is returned from the server.
                 Assert.Equal(creationTime, boundJob.CreationTime);
@@ -324,8 +315,7 @@ namespace Azure.Batch.Unit.Tests
                 DependencyAction = Models.DependencyAction.Satisfy
             };
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Models.CloudTask cloudTask = new Models.CloudTask()
                 {

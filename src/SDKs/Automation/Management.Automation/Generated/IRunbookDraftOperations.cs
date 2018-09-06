@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.Automation
     using Models;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -51,7 +52,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<string>> GetContentWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Stream>> GetContentWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Replaces the runbook draft content.
         /// <see href="http://aka.ms/azureautomationsdk/runbookdraftoperations" />
@@ -66,7 +67,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The runbook name.
         /// </param>
         /// <param name='runbookContent'>
-        /// The runbook draft content.
+        /// The runbook draft content.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -83,7 +84,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<string,RunbookDraftReplaceContentHeaders>> ReplaceContentWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, string runbookContent, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Stream,RunbookDraftReplaceContentHeaders>> ReplaceContentWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Stream runbookContent, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve the runbook draft identified by runbook name.
         /// <see href="http://aka.ms/azureautomationsdk/runbookdraftoperations" />
@@ -183,7 +184,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The runbook name.
         /// </param>
         /// <param name='runbookContent'>
-        /// The runbook draft content.
+        /// The runbook draft content.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -200,7 +201,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<string,RunbookDraftReplaceContentHeaders>> BeginReplaceContentWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, string runbookContent, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Stream,RunbookDraftReplaceContentHeaders>> BeginReplaceContentWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Stream runbookContent, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Publish runbook draft.
         /// <see href="http://aka.ms/azureautomationsdk/runbookdraftoperations" />

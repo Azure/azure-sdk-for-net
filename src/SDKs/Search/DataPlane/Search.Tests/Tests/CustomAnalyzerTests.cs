@@ -539,7 +539,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact(Skip = "Assert failing")]
+        [Fact]
         public void CanUseAllAnalysisComponentOptions()
         {
             Run(() =>

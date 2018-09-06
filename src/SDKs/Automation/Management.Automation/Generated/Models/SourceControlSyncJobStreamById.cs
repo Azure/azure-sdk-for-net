@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Automation.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,19 +37,18 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// class.
         /// </summary>
         /// <param name="id">Resource id.</param>
-        /// <param name="syncJobStreamId">Gets the sync job stream id.</param>
-        /// <param name="summary">Gets the summary of the sync job
-        /// stream.</param>
-        /// <param name="time">Gets the time of the sync job stream.</param>
-        /// <param name="streamType">Gets the type of the sync job stream.
-        /// Possible values include: 'Error', 'Output'</param>
-        /// <param name="streamText">Gets the text of the sync job
-        /// stream.</param>
-        /// <param name="value">Gets the value of the sync job stream.</param>
-        public SourceControlSyncJobStreamById(string id = default(string), string syncJobStreamId = default(string), string summary = default(string), System.DateTimeOffset? time = default(System.DateTimeOffset?), string streamType = default(string), string streamText = default(string), string value = default(string))
+        /// <param name="sourceControlSyncJobStreamId">The sync job stream
+        /// id.</param>
+        /// <param name="summary">The summary of the sync job stream.</param>
+        /// <param name="time">The time of the sync job stream.</param>
+        /// <param name="streamType">The type of the sync job stream. Possible
+        /// values include: 'Error', 'Output'</param>
+        /// <param name="streamText">The text of the sync job stream.</param>
+        /// <param name="value">The values of the job stream.</param>
+        public SourceControlSyncJobStreamById(string id = default(string), string sourceControlSyncJobStreamId = default(string), string summary = default(string), System.DateTimeOffset? time = default(System.DateTimeOffset?), string streamType = default(string), string streamText = default(string), IDictionary<string, object> value = default(IDictionary<string, object>))
         {
             Id = id;
-            SyncJobStreamId = syncJobStreamId;
+            SourceControlSyncJobStreamId = sourceControlSyncJobStreamId;
             Summary = summary;
             Time = time;
             StreamType = streamType;
@@ -68,13 +69,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the sync job stream id.
+        /// Gets or sets the sync job stream id.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.syncJobStreamId")]
-        public string SyncJobStreamId { get; set; }
+        [JsonProperty(PropertyName = "properties.sourceControlSyncJobStreamId")]
+        public string SourceControlSyncJobStreamId { get; set; }
 
         /// <summary>
-        /// Gets the summary of the sync job stream.
+        /// Gets or sets the summary of the sync job stream.
         /// </summary>
         [JsonProperty(PropertyName = "properties.summary")]
         public string Summary { get; set; }
@@ -86,23 +87,23 @@ namespace Microsoft.Azure.Management.Automation.Models
         public System.DateTimeOffset? Time { get; private set; }
 
         /// <summary>
-        /// Gets the type of the sync job stream. Possible values include:
-        /// 'Error', 'Output'
+        /// Gets or sets the type of the sync job stream. Possible values
+        /// include: 'Error', 'Output'
         /// </summary>
         [JsonProperty(PropertyName = "properties.streamType")]
         public string StreamType { get; set; }
 
         /// <summary>
-        /// Gets the text of the sync job stream.
+        /// Gets or sets the text of the sync job stream.
         /// </summary>
         [JsonProperty(PropertyName = "properties.streamText")]
         public string StreamText { get; set; }
 
         /// <summary>
-        /// Gets the value of the sync job stream.
+        /// Gets or sets the values of the job stream.
         /// </summary>
         [JsonProperty(PropertyName = "properties.value")]
-        public string Value { get; set; }
+        public IDictionary<string, object> Value { get; set; }
 
     }
 }

@@ -29,9 +29,7 @@ namespace Azure.Batch.Unit.Tests
 
             IList<string> versions = new[] { "1.0", "1.5" };
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-
-            using (BatchClient client = await BatchClient.OpenAsync(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
                     {
@@ -77,9 +75,7 @@ namespace Azure.Batch.Unit.Tests
 
             IList<string> versions = new[] { "1.0", "1.5" };
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-
-            using (BatchClient client = await BatchClient.OpenAsync(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
                     baseRequest =>
@@ -121,10 +117,7 @@ namespace Azure.Batch.Unit.Tests
 
             IList<string> versions = new[] { "1.0", "1.5" };
 
-
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
                 {

@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// used.</param>
         /// <param name="libraries">A list of libraries to be installed on the
         /// cluster that will execute the job.</param>
-        public DatabricksNotebookActivity(string name, object notebookPath, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IDictionary<string, object> baseParameters = default(IDictionary<string, object>), IList<IDictionary<string, object>> libraries = default(IList<IDictionary<string, object>>))
+        public DatabricksNotebookActivity(string name, object notebookPath, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IDictionary<string, object> baseParameters = default(IDictionary<string, object>), IList<IDictionary<string, object>> libraries = default(IList<IDictionary<string, object>>))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             NotebookPath = notebookPath;

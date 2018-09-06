@@ -57,9 +57,8 @@ namespace Management.HDInsight.Tests
                     }
                     finally
                     {
-                        Parallel.Invoke(
-                            () => client.Clusters.BeginDelete(rgName, clusterName1),
-                            () => client.Clusters.BeginDelete(rgName, clusterName2));
+                        client.Clusters.BeginDelete(rgName, clusterName1);
+                        client.Clusters.BeginDelete(rgName, clusterName2);
                     }
                 });
         }
@@ -101,9 +100,8 @@ namespace Management.HDInsight.Tests
                 }
                 finally
                 {
-                    Parallel.Invoke(
-                        () => resourceClient.ResourceGroups.BeginDelete(rgName1),
-                        () => resourceClient.ResourceGroups.BeginDelete(rgName2));
+                    resourceClient.ResourceGroups.BeginDelete(rgName1);
+                    resourceClient.ResourceGroups.BeginDelete(rgName2);
                 }
             }
         }

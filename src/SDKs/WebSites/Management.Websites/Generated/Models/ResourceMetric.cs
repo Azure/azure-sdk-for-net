@@ -40,7 +40,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="resourceId">Metric resource Id.</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="metricValues">Metric values.</param>
-        /// <param name="properties">Properties.</param>
+        /// <param name="properties">Resource metric properties
+        /// collection.</param>
         public ResourceMetric(ResourceMetricName name = default(ResourceMetricName), string unit = default(string), string timeGrain = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string resourceId = default(string), string id = default(string), IList<ResourceMetricValue> metricValues = default(IList<ResourceMetricValue>), IList<ResourceMetricProperty> properties = default(IList<ResourceMetricProperty>))
         {
             Name = name;
@@ -109,7 +110,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public IList<ResourceMetricValue> MetricValues { get; private set; }
 
         /// <summary>
-        /// Gets properties.
+        /// Gets resource metric properties collection.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public IList<ResourceMetricProperty> Properties { get; private set; }

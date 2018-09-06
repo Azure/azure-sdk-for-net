@@ -79,9 +79,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<Review>> GetReviewWithHttpMessagesAsync(string teamName, string reviewId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (teamName == null)
             {
@@ -106,7 +106,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/review/v1.0/teams/{teamName}/reviews/{reviewId}";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
             _url = _url.Replace("{reviewId}", System.Uri.EscapeDataString(reviewId));
             // Create HTTP transport objects
@@ -241,9 +241,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<Job>> GetJobDetailsWithHttpMessagesAsync(string teamName, string jobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (teamName == null)
             {
@@ -268,7 +268,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/review/v1.0/teams/{teamName}/jobs/{JobId}";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
             _url = _url.Replace("{JobId}", System.Uri.EscapeDataString(jobId));
             // Create HTTP transport objects
@@ -434,9 +434,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<IList<string>>> CreateReviewsWithHttpMessagesAsync(string urlContentType, string teamName, IList<CreateReviewBodyItem> createReviewBody, string subTeam = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (urlContentType == null)
             {
@@ -477,7 +477,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/review/v1.0/teams/{teamName}/reviews";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
             List<string> _queryParameters = new List<string>();
             if (subTeam != null)
@@ -700,9 +700,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<JobId>> CreateJobWithHttpMessagesAsync(string teamName, string contentType, string contentId, string workflowName, string jobContentType, Content content, string callBackEndpoint = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (teamName == null)
             {
@@ -752,12 +752,12 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/review/v1.0/teams/{teamName}/jobs";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
             List<string> _queryParameters = new List<string>();
             if (contentType != null)
             {
-                _queryParameters.Add(string.Format("ContentType={0}", System.Uri.EscapeDataString(contentType)));
+                _queryParameters.Add(string.Format("ContentType={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(contentType, Client.SerializationSettings).Trim('"'))));
             }
             if (contentId != null)
             {
@@ -938,9 +938,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse> AddVideoFrameWithHttpMessagesAsync(string teamName, string reviewId, int? timescale = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (teamName == null)
             {
@@ -966,7 +966,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/review/v1.0/teams/{teamName}/reviews/{reviewId}/frames";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
             _url = _url.Replace("{reviewId}", System.Uri.EscapeDataString(reviewId));
             List<string> _queryParameters = new List<string>();
@@ -1126,9 +1126,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<Frames>> GetVideoFramesWithHttpMessagesAsync(string teamName, string reviewId, int? startSeed = default(int?), int? noOfRecords = default(int?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (teamName == null)
             {
@@ -1156,7 +1156,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/review/v1.0/teams/{teamName}/reviews/{reviewId}/frames";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
             _url = _url.Replace("{reviewId}", System.Uri.EscapeDataString(reviewId));
             List<string> _queryParameters = new List<string>();
@@ -1305,9 +1305,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse> PublishVideoReviewWithHttpMessagesAsync(string teamName, string reviewId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (teamName == null)
             {
@@ -1332,7 +1332,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/review/v1.0/teams/{teamName}/reviews/{reviewId}/publish";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
             _url = _url.Replace("{reviewId}", System.Uri.EscapeDataString(reviewId));
             // Create HTTP transport objects
@@ -1455,9 +1455,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse> AddVideoTranscriptModerationResultWithHttpMessagesAsync(string contentType, string teamName, string reviewId, IList<TranscriptModerationBodyItem> transcriptModerationBody, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (contentType == null)
             {
@@ -1502,7 +1502,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/review/v1.0/teams/{teamName}/reviews/{reviewId}/transcriptmoderationresult";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
             _url = _url.Replace("{reviewId}", System.Uri.EscapeDataString(reviewId));
             // Create HTTP transport objects
@@ -1626,9 +1626,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse> AddVideoTranscriptWithHttpMessagesAsync(string teamName, string reviewId, Stream vTTfile, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (teamName == null)
             {
@@ -1660,7 +1660,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/review/v1.0/teams/{teamName}/reviews/{reviewId}/transcript";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
             _url = _url.Replace("{reviewId}", System.Uri.EscapeDataString(reviewId));
             // Create HTTP transport objects
@@ -1817,9 +1817,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<IList<string>>> CreateVideoReviewsWithHttpMessagesAsync(string contentType, string teamName, IList<CreateVideoReviewsBodyItem> createVideoReviewsBody, string subTeam = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (contentType == null)
             {
@@ -1860,7 +1860,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/review/v1.0/teams/{teamName}/reviews";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
             List<string> _queryParameters = new List<string>();
             if (subTeam != null)
@@ -2019,9 +2019,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse> AddVideoFrameUrlWithHttpMessagesAsync(string contentType, string teamName, string reviewId, IList<VideoFrameBodyItem> videoFrameBody, int? timescale = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (contentType == null)
             {
@@ -2067,7 +2067,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/review/v1.0/teams/{teamName}/reviews/{reviewId}/frames";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
             _url = _url.Replace("{reviewId}", System.Uri.EscapeDataString(reviewId));
             List<string> _queryParameters = new List<string>();
@@ -2212,9 +2212,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse> AddVideoFrameStreamWithHttpMessagesAsync(string contentType, string teamName, string reviewId, Stream frameImageZip, string frameMetadata, int? timescale = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (contentType == null)
             {
@@ -2255,7 +2255,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/review/v1.0/teams/{teamName}/reviews/{reviewId}/frames";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{teamName}", System.Uri.EscapeDataString(teamName));
             _url = _url.Replace("{reviewId}", System.Uri.EscapeDataString(reviewId));
             List<string> _queryParameters = new List<string>();
@@ -2294,14 +2294,22 @@ namespace Microsoft.CognitiveServices.ContentModerator
             {
                 StreamContent _frameImageZip = new StreamContent(frameImageZip);
                 _frameImageZip.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                FileStream _frameImageZipAsFileStream = frameImageZip as FileStream;
-                if (_frameImageZipAsFileStream != null)
+                ContentDispositionHeaderValue _contentDispositionHeaderValue = new ContentDispositionHeaderValue("form-data");
+                _contentDispositionHeaderValue.Name = "frameImageZip";
+                // get filename from stream if it's a file otherwise, just use  'unknown'
+                var _fileStream = frameImageZip as FileStream;
+                var _fileName = (_fileStream != null ? _fileStream.Name : null) ?? "unknown";
+                if(System.Linq.Enumerable.Any(_fileName, c => c > 127) )
                 {
-                    ContentDispositionHeaderValue _contentDispositionHeaderValue = new ContentDispositionHeaderValue("form-data");
-                    _contentDispositionHeaderValue.Name = "frameImageZip";
-                    _contentDispositionHeaderValue.FileName = _frameImageZipAsFileStream.Name;
-                    _frameImageZip.Headers.ContentDisposition = _contentDispositionHeaderValue;
+                    // non ASCII chars detected, need UTF encoding:
+                    _contentDispositionHeaderValue.FileNameStar = _fileName;
                 }
+                else
+                {
+                    // ASCII only
+                    _contentDispositionHeaderValue.FileName = _fileName;
+                }
+                _frameImageZip.Headers.ContentDisposition = _contentDispositionHeaderValue;
                 _multiPartContent.Add(_frameImageZip, "frameImageZip");
             }
             if (frameMetadata != null)

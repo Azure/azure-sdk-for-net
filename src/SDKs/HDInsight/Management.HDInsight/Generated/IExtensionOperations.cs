@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -107,6 +107,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='clusterName'>
         /// The name of the cluster.
         /// </param>
+        /// <param name='extensionName'>
+        /// The name of the cluster extension.
+        /// </param>
         /// <param name='parameters'>
         /// The cluster extensions create request.
         /// </param>
@@ -116,13 +119,13 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Extension parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string extensionName, Extension parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the extension properties for the specified HDInsight cluster
         /// extension.
@@ -133,13 +136,16 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='clusterName'>
         /// The name of the cluster.
         /// </param>
+        /// <param name='extensionName'>
+        /// The name of the cluster extension.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -148,7 +154,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Extension>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Extension>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, string extensionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified extension for HDInsight cluster.
         /// </summary>
@@ -158,19 +164,22 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='clusterName'>
         /// The name of the cluster.
         /// </param>
+        /// <param name='extensionName'>
+        /// The name of the cluster extension.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, string extensionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Enables the Operations Management Suite (OMS) on the HDInsight
         /// cluster.
@@ -190,7 +199,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -213,7 +222,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
