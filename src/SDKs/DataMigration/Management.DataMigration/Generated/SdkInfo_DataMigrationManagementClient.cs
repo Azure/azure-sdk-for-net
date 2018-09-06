@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.DataMigration
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datamigration/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=F:\\Git\\Sync\\azure-sdk-for-net\\src\\SDKs";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "15929694cc9babeb19c0e834f8babe23af323b75";
+      public static readonly String GithubCommidId = "c0c706d70aee360958be4ae9dee85bff7c5da2db";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
