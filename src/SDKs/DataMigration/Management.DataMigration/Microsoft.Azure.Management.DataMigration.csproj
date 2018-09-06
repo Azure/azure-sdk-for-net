@@ -17,7 +17,6 @@
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-		<AssemblyVersion>0.4.0.0</AssemblyVersion>
 		<FileVersion>0.4.0.0</FileVersion>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
 	</PropertyGroup>

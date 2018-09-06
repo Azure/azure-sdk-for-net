@@ -30,7 +30,6 @@ namespace DataMigration.Tests.ScenarioTests
                 var project = CreateDMSProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
                 var task = CreateDMSTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
             }
-
             // Wait for resource group deletion to complete.
             Utilities.WaitIfNotInPlaybackMode();
         }
@@ -50,7 +49,6 @@ namespace DataMigration.Tests.ScenarioTests
                 var task = CreateDMSTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
                 var getResult = dmsClient.Tasks.Get(resourceGroup.Name, service.Name, project.Name, task.Name);
             }
-
             // Wait for resource group deletion to complete.
             Utilities.WaitIfNotInPlaybackMode();
         }
@@ -72,6 +70,9 @@ namespace DataMigration.Tests.ScenarioTests
                 do
                 {
                     var getResult = dmsClient.Tasks.Get(resourceGroup.Name, service.Name, project.Name, task.Name, "output");
+
+                    Assert.True(getResult.Properties.State.Equals(TaskState.Queued) || getResult.Properties.State.Equals(TaskState.Running));
+
                     MigrateSqlServerSqlDbSyncTaskProperties properties = (MigrateSqlServerSqlDbSyncTaskProperties)getResult.Properties;
                     var databaseLevelResult = (MigrateSqlServerSqlDbSyncTaskOutputDatabaseLevel)properties.Output.Where(o => o.GetType() == typeof(MigrateSqlServerSqlDbSyncTaskOutputDatabaseLevel)).FirstOrDefault();
                     if (databaseLevelResult != null && databaseLevelResult.MigrationState == SyncDatabaseMigrationReportingState.READYTOCOMPLETE)
@@ -92,7 +93,6 @@ namespace DataMigration.Tests.ScenarioTests
                 var command = dmsClient.Tasks.Command(resourceGroup.Name, service.Name, project.Name, task.Name, commandProperties);
                 Assert.Equal(command.State, CommandState.Accepted);
             }
-
             // Wait for resource group deletion to complete.
             Utilities.WaitIfNotInPlaybackMode();
         }
@@ -118,7 +118,6 @@ namespace DataMigration.Tests.ScenarioTests
                 var x = Assert.Throws<ApiErrorException>(() => dmsClient.Tasks.Get(resourceGroup.Name, service.Name, project.Name, task.Name));
                 Assert.Equal(HttpStatusCode.NotFound, x.Response.StatusCode);
             }
-
             // Wait for resource group deletion to complete.
             Utilities.WaitIfNotInPlaybackMode();
         }
@@ -165,28 +164,28 @@ namespace DataMigration.Tests.ScenarioTests
                 Input = new MigrateSqlServerSqlDbSyncTaskInput(
                     new SqlConnectionInfo
                     {
-                        DataSource = @"datasource",
+                        DataSource = @"steven-work.redmond.corp.microsoft.com\stevenf16,12345",
                         EncryptConnection = true,
                         TrustServerCertificate = true,
                         UserName = "testuser",
-                        Password = "testuserpw",
+                        Password = "Dr22VHg@_,P3",
                         Authentication = AuthenticationType.SqlAuthentication,
                     },
                     new SqlConnectionInfo
                     {
-                        DataSource = "datasource",
+                        DataSource = "shuhuandmsdbs.database.windows.net",
                         EncryptConnection = true,
                         TrustServerCertificate = true,
                         UserName = "testuser",
-                        Password = "testuserpw",
+                        Password = "Dr22VHg@_,P3",
                         Authentication = AuthenticationType.SqlAuthentication,
                     },
                     new List<MigrateSqlServerSqlDbSyncDatabaseInput>
                     {
                         new MigrateSqlServerSqlDbSyncDatabaseInput
                         {
-                            Name = "DatabaseName",
-                            TargetDatabaseName = "DatabaseName",
+                            Name = "JasmineTest",
+                            TargetDatabaseName = "JasmineTest",
                             TableMap = new Dictionary<string, string> { { "dbo.TestTable1", "dbo.TestTable1" }, { "dbo.TestTable2", "dbo.TestTable2" } }
                         }
                     })

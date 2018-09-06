@@ -26,7 +26,6 @@ namespace DataMigration.Tests.ScenarioTests
                 var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
                 var project = CreateDMSProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
             }
-
             // Wait for resource group deletion to complete.
             Utilities.WaitIfNotInPlaybackMode();
         }
@@ -45,7 +44,6 @@ namespace DataMigration.Tests.ScenarioTests
                 var project = CreateDMSProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
                 var getResult = dmsClient.Projects.Get(resourceGroup.Name, service.Name, project.Name);
             }
-
             // Wait for resource group deletion to complete.
             Utilities.WaitIfNotInPlaybackMode();
         }
@@ -68,7 +66,6 @@ namespace DataMigration.Tests.ScenarioTests
                 var x = Assert.Throws<ApiErrorException>(() => dmsClient.Projects.Get(resourceGroup.Name, service.Name, project.Name));
                 Assert.Equal(HttpStatusCode.NotFound, x.Response.StatusCode);
             }
-
             // Wait for resource group deletion to complete.
             Utilities.WaitIfNotInPlaybackMode();
         }

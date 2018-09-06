@@ -4,7 +4,7 @@
     <PackageId>DataMigration.Tests</PackageId>
     <Description>DataMigration.Tests Class Library</Description>
     <AssemblyName>DataMigration.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>    
+    <VersionPrefix>1.0.0</VersionPrefix>    
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
@@ -30,7 +30,7 @@
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.1" />
+    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.3" />
   </ItemGroup>
   
 </Project>
