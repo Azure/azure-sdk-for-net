@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="name">The name of the SKU</param>
         /// <param name="family">SKU family</param>
         /// <param name="size">SKU size</param>
-        /// <param name="tier">The tier of the SKU, such as "Free", "Basic",
-        /// "Standard", or "Premium"</param>
+        /// <param name="tier">The tier of the SKU, such as "Basic", "General
+        /// Purpose", or "Business Critical"</param>
         public AvailableServiceSkuSku(string name = default(string), string family = default(string), string size = default(string), string tier = default(string))
         {
             Name = name;
@@ -67,8 +67,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public string Size { get; set; }
 
         /// <summary>
-        /// Gets or sets the tier of the SKU, such as "Free", "Basic",
-        /// "Standard", or "Premium"
+        /// Gets or sets the tier of the SKU, such as "Basic", "General
+        /// Purpose", or "Business Critical"
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }

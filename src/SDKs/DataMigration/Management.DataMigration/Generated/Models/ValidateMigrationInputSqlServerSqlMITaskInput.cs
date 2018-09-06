@@ -35,19 +35,28 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Initializes a new instance of the
         /// ValidateMigrationInputSqlServerSqlMITaskInput class.
         /// </summary>
+        /// <param name="sourceConnectionInfo">Information for connecting to
+        /// source</param>
         /// <param name="targetConnectionInfo">Information for connecting to
         /// target</param>
         /// <param name="selectedDatabases">Databases to migrate</param>
         /// <param name="backupBlobShare">SAS URI of Azure Storage Account
         /// Container to be used for storing backup files.</param>
+        /// <param name="selectedLogins">Logins to migrate</param>
         /// <param name="backupFileShare">Backup file share information for all
         /// selected databases.</param>
-        public ValidateMigrationInputSqlServerSqlMITaskInput(SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, BlobShare backupBlobShare, FileShare backupFileShare = default(FileShare))
+        /// <param name="backupMode">Backup Mode to specify whether to use
+        /// existing backup or create new backup. Possible values include:
+        /// 'CreateBackup', 'ExistingBackup'</param>
+        public ValidateMigrationInputSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, BlobShare backupBlobShare, IList<string> selectedLogins = default(IList<string>), FileShare backupFileShare = default(FileShare), string backupMode = default(string))
         {
+            SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
             SelectedDatabases = selectedDatabases;
+            SelectedLogins = selectedLogins;
             BackupFileShare = backupFileShare;
             BackupBlobShare = backupBlobShare;
+            BackupMode = backupMode;
             CustomInit();
         }
 
@@ -55,6 +64,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets information for connecting to source
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceConnectionInfo")]
+        public SqlConnectionInfo SourceConnectionInfo { get; set; }
 
         /// <summary>
         /// Gets or sets information for connecting to target
@@ -67,6 +82,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "selectedDatabases")]
         public IList<MigrateSqlServerSqlMIDatabaseInput> SelectedDatabases { get; set; }
+
+        /// <summary>
+        /// Gets or sets logins to migrate
+        /// </summary>
+        [JsonProperty(PropertyName = "selectedLogins")]
+        public IList<string> SelectedLogins { get; set; }
 
         /// <summary>
         /// Gets or sets backup file share information for all selected
@@ -83,6 +104,14 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public BlobShare BackupBlobShare { get; set; }
 
         /// <summary>
+        /// Gets or sets backup Mode to specify whether to use existing backup
+        /// or create new backup. Possible values include: 'CreateBackup',
+        /// 'ExistingBackup'
+        /// </summary>
+        [JsonProperty(PropertyName = "backupMode")]
+        public string BackupMode { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -90,6 +119,10 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (SourceConnectionInfo == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SourceConnectionInfo");
+            }
             if (TargetConnectionInfo == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "TargetConnectionInfo");
@@ -101,6 +134,10 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             if (BackupBlobShare == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "BackupBlobShare");
+            }
+            if (SourceConnectionInfo != null)
+            {
+                SourceConnectionInfo.Validate();
             }
             if (TargetConnectionInfo != null)
             {
