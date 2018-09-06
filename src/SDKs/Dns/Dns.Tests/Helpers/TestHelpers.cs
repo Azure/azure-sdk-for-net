@@ -93,7 +93,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                        && AreEqual(first.PtrRecords, second.PtrRecords)
                        && AreEqual(first.SrvRecords, second.SrvRecords)
                        && AreEqual(first.CnameRecord, second.CnameRecord)
-                       && AreEqual(first.SoaRecord, second.SoaRecord);
+                       && AreEqual(first.SoaRecord, second.SoaRecord)
+                       && AreEqual(first.TargetResource, second.TargetResource);
             }
 
             return true;
@@ -316,6 +317,18 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         return false;
                     }
                 }
+            }
+
+            return true;
+        }
+
+        public static bool AreEqual(
+            SubResource first,
+            SubResource second)
+        {
+            if (first != null && second != null)
+            {
+                return first.Id == second.Id;
             }
 
             return true;
