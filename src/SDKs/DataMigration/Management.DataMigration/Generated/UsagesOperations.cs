@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// This method returns region-specific quotas and resource usage information
-        /// for the Data Migration Service.
+        /// for the Database Migration Service.
         /// </remarks>
         /// <param name='location'>
         /// The Azure region of the operation
@@ -91,10 +91,7 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2018-07-15-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -103,6 +100,7 @@ namespace Microsoft.Azure.Management.DataMigration
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -112,9 +110,9 @@ namespace Microsoft.Azure.Management.DataMigration
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -241,7 +239,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// This method returns region-specific quotas and resource usage information
-        /// for the Data Migration Service.
+        /// for the Database Migration Service.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

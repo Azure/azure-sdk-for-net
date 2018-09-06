@@ -154,7 +154,6 @@ namespace Compute.Tests
         /// RunCommand VMScaleSetVM
         /// Delete VMScaleSetVM
         /// Delete RG
-        /// </summary>
         [Fact]
         public void TestVMScaleSetVMOperations_RunCommand()
         {

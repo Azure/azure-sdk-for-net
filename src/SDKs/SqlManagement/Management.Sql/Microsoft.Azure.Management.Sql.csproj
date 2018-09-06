@@ -13,6 +13,7 @@
 			<![CDATA[
 New features:
 - Support database sensitivity labels.
+- Added support for Managed Instance keys and encryption protectors.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

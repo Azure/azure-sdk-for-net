@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. The PUT method creates a new service or
+        /// Database Migration Service. The PUT method creates a new service or
         /// updates an existing one. When a service is updated, existing child
         /// resources (i.e. tasks) are unaffected. Services currently support a
         /// single kind, "vm", which refers to a VM-based service, although
@@ -69,8 +69,8 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. The GET method retrieves information about
-        /// a service instance.
+        /// Database Migration Service. The GET method retrieves information
+        /// about a service instance.
         /// </remarks>
         /// <param name='groupName'>
         /// Name of the resource group
@@ -99,8 +99,8 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. The DELETE method deletes a service. Any
-        /// running tasks will be canceled.
+        /// Database Migration Service. The DELETE method deletes a service.
+        /// Any running tasks will be canceled.
         /// </remarks>
         /// <param name='groupName'>
         /// Name of the resource group
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. The PATCH method updates an existing
+        /// Database Migration Service. The PATCH method updates an existing
         /// service. This method can change the kind, SKU, and network of the
         /// service, but if tasks are currently running (i.e. the service is
         /// busy), this will fail with 400 Bad Request ("ServiceIsBusy").
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. This action performs a health check and
+        /// Database Migration Service. This action performs a health check and
         /// returns the status of the service and virtual machine size.
         /// </remarks>
         /// <param name='groupName'>
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. This action starts the service and the
+        /// Database Migration Service. This action starts the service and the
         /// service can be used for data migration.
         /// </remarks>
         /// <param name='groupName'>
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. This action stops the service and the
+        /// Database Migration Service. This action stops the service and the
         /// service cannot be used for data migration. The service owner won't
         /// be billed when the service is stopped.
         /// </remarks>
@@ -249,8 +249,8 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. The skus action returns the list of SKUs
-        /// that a service resource can be updated to.
+        /// Database Migration Service. The skus action returns the list of
+        /// SKUs that a service resource can be updated to.
         /// </remarks>
         /// <param name='groupName'>
         /// Name of the resource group
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The Services resource is the top-level resource that represents the
-        /// Data Migration Service. This method returns a list of service
+        /// Database Migration Service. This method returns a list of service
         /// resources in a resource group.
         /// </remarks>
         /// <param name='groupName'>
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. This method returns a list of service
+        /// Database Migration Service. This method returns a list of service
         /// resources in a subscription.
         /// </remarks>
         /// <param name='customHeaders'>
@@ -391,7 +391,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. The PUT method creates a new service or
+        /// Database Migration Service. The PUT method creates a new service or
         /// updates an existing one. When a service is updated, existing child
         /// resources (i.e. tasks) are unaffected. Services currently support a
         /// single kind, "vm", which refers to a VM-based service, although
@@ -432,8 +432,8 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. The DELETE method deletes a service. Any
-        /// running tasks will be canceled.
+        /// Database Migration Service. The DELETE method deletes a service.
+        /// Any running tasks will be canceled.
         /// </remarks>
         /// <param name='groupName'>
         /// Name of the resource group
@@ -462,7 +462,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. The PATCH method updates an existing
+        /// Database Migration Service. The PATCH method updates an existing
         /// service. This method can change the kind, SKU, and network of the
         /// service, but if tasks are currently running (i.e. the service is
         /// busy), this will fail with 400 Bad Request ("ServiceIsBusy").
@@ -497,7 +497,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. This action starts the service and the
+        /// Database Migration Service. This action starts the service and the
         /// service can be used for data migration.
         /// </remarks>
         /// <param name='groupName'>
@@ -524,7 +524,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. This action stops the service and the
+        /// Database Migration Service. This action stops the service and the
         /// service cannot be used for data migration. The service owner won't
         /// be billed when the service is stopped.
         /// </remarks>
@@ -552,8 +552,8 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. The skus action returns the list of SKUs
-        /// that a service resource can be updated to.
+        /// Database Migration Service. The skus action returns the list of
+        /// SKUs that a service resource can be updated to.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -579,7 +579,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The Services resource is the top-level resource that represents the
-        /// Data Migration Service. This method returns a list of service
+        /// Database Migration Service. This method returns a list of service
         /// resources in a resource group.
         /// </remarks>
         /// <param name='nextPageLink'>
@@ -606,7 +606,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. This method returns a list of service
+        /// Database Migration Service. This method returns a list of service
         /// resources in a subscription.
         /// </remarks>
         /// <param name='nextPageLink'>

@@ -44,7 +44,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// settings</param>
         /// <param name="trustServerCertificate">Whether to trust the server
         /// certificate</param>
-        public SqlConnectionInfo(string dataSource, string userName = default(string), string password = default(string), string authentication = default(string), bool? encryptConnection = default(bool?), string additionalSettings = default(string), bool? trustServerCertificate = default(bool?))
+        /// <param name="platform">Server platform type for connection.
+        /// Possible values include: 'SqlOnPrem'</param>
+        public SqlConnectionInfo(string dataSource, string userName = default(string), string password = default(string), string authentication = default(string), bool? encryptConnection = default(bool?), string additionalSettings = default(string), bool? trustServerCertificate = default(bool?), string platform = default(string))
             : base(userName, password)
         {
             DataSource = dataSource;
@@ -52,6 +54,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             EncryptConnection = encryptConnection;
             AdditionalSettings = additionalSettings;
             TrustServerCertificate = trustServerCertificate;
+            Platform = platform;
             CustomInit();
         }
 
@@ -93,6 +96,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "trustServerCertificate")]
         public bool? TrustServerCertificate { get; set; }
+
+        /// <summary>
+        /// Gets or sets server platform type for connection. Possible values
+        /// include: 'SqlOnPrem'
+        /// </summary>
+        [JsonProperty(PropertyName = "platform")]
+        public string Platform { get; set; }
 
         /// <summary>
         /// Validate the object.

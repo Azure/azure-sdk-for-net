@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Management.Compute
     public partial interface IVirtualMachineSizesOperations
     {
         /// <summary>
-        /// Lists all available virtual machine sizes for a subscription in a
-        /// location.
+        /// This API is deprecated. Use [Resources
+        /// Skus](https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list)
         /// </summary>
         /// <param name='location'>
         /// The location upon which virtual-machine-sizes is queried.
