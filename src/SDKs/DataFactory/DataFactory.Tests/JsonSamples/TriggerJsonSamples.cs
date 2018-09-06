@@ -172,17 +172,19 @@ namespace DataFactory.Tests.JsonSamples
         type: ""TumblingWindowTriggerDependencyReference"",
         referenceTrigger: {
           type: ""TriggerReference"",
-          referenceName: ""myDemoTWTrigger1"",
-          offset: ""00:00:00"",
-          size: ""02:00:00""
+          referenceName: ""myDemoTWTrigger1""
+        },
+        offset: ""00:00:00"",
+        size: ""02:00:00""
       },
       {
         type: ""TumblingWindowTriggerDependencyReference"",
         referenceTrigger: {
           type: ""TriggerReference"",
-          referenceName: ""myDemoTWTrigger2"",
-          offset: ""-00:30:00"",
-          size: ""00:30:00""
+          referenceName: ""myDemoTWTrigger2""
+        },
+        offset: ""-00:30:00"",
+        size: ""00:30:00""
       }]
     },
     pipeline: {
