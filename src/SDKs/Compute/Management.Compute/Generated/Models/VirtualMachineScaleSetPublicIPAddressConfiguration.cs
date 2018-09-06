@@ -44,12 +44,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// publicIP addresses .</param>
         /// <param name="ipTags">The list of IP tags associated with the public
         /// IP address.</param>
-        public VirtualMachineScaleSetPublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes = default(int?), VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings), IList<VirtualMachineScaleSetIpTag> ipTags = default(IList<VirtualMachineScaleSetIpTag>))
+        /// <param name="publicIPPrefix">The PublicIPPrefix from which to
+        /// allocate publicIP addresses.</param>
+        public VirtualMachineScaleSetPublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes = default(int?), VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings), IList<VirtualMachineScaleSetIpTag> ipTags = default(IList<VirtualMachineScaleSetIpTag>), SubResource publicIPPrefix = default(SubResource))
         {
             Name = name;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DnsSettings = dnsSettings;
             IpTags = ipTags;
+            PublicIPPrefix = publicIPPrefix;
             CustomInit();
         }
 
@@ -83,6 +86,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipTags")]
         public IList<VirtualMachineScaleSetIpTag> IpTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PublicIPPrefix from which to allocate publicIP
+        /// addresses.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicIPPrefix")]
+        public SubResource PublicIPPrefix { get; set; }
 
         /// <summary>
         /// Validate the object.
