@@ -63,7 +63,9 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <param name="serverPort">The publicly accessibly port of the
         /// SignalR service which is designed for customer server side
         /// usage.</param>
-        public SignalRResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceSku sku = default(ResourceSku), string hostNamePrefix = default(string), string provisioningState = default(string), string externalIP = default(string), string hostName = default(string), int? publicPort = default(int?), int? serverPort = default(int?))
+        /// <param name="version">Version of the SignalR resource. Probably you
+        /// need the same or higher version of client SDKs.</param>
+        public SignalRResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceSku sku = default(ResourceSku), string hostNamePrefix = default(string), string provisioningState = default(string), string externalIP = default(string), string hostName = default(string), int? publicPort = default(int?), int? serverPort = default(int?), string version = default(string))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
@@ -73,6 +75,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
             HostName = hostName;
             PublicPort = publicPort;
             ServerPort = serverPort;
+            Version = version;
             CustomInit();
         }
 
@@ -130,6 +133,13 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.serverPort")]
         public int? ServerPort { get; private set; }
+
+        /// <summary>
+        /// Gets or sets version of the SignalR resource. Probably you need the
+        /// same or higher version of client SDKs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.version")]
+        public string Version { get; set; }
 
         /// <summary>
         /// Validate the object.
