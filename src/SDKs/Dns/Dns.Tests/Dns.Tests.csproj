@@ -17,7 +17,7 @@
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SdkCommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
+    <!--<ProjectReference Include="..\..\..\SdkCommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />-->
     <ProjectReference Include="..\Management.Dns\Microsoft.Azure.Management.Dns.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +35,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.2" />
+    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.3" />
   </ItemGroup>
 </Project>
