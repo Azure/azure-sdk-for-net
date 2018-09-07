@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="lastStopTime">The integration runtime node last stop
         /// time.</param>
         /// <param name="lastUpdateResult">The result of the last integration
-        /// runtime node update. Possible values include: 'Succeed',
+        /// runtime node update. Possible values include: 'None', 'Succeed',
         /// 'Fail'</param>
         /// <param name="lastStartUpdateTime">The last time for the integration
         /// runtime node update start.</param>
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets the result of the last integration runtime node update.
-        /// Possible values include: 'Succeed', 'Fail'
+        /// Possible values include: 'None', 'Succeed', 'Fail'
         /// </summary>
         [JsonProperty(PropertyName = "lastUpdateResult")]
         public string LastUpdateResult { get; private set; }

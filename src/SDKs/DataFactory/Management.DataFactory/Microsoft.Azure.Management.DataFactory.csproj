@@ -11,8 +11,8 @@
 		<PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        - Added support for AzureBlob AAD Authentication
-		- Added support for AzureStorage 2 new Linked Service type: AzureBlobStorage, AzureTableStorage
+        - Added folders to Pipeline and Dataset
+		- Added TumblingWindowTrigger dependsOn, offset and size properties
     
             ]]>
 		</PackageReleaseNotes>
