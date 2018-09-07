@@ -1,6 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
 ## Current version
+
+## Version 2.2.0
+
+###  Feature Additions
         - Added folders to Pipeline and Dataset
         - Added TumblingWindowTrigger dependsOn, offset and size properties
         - Added new API to get GitHub access token
