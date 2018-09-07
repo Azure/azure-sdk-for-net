@@ -1,1 +1,18 @@
-﻿
+. : The term 'd:\xshell\user.config.ps1' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a 
+path was included, verify that the path is correct and try again.
+At C:\Users\neaggarw\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1:3 char:3
++ . d:\xshell\user.config.ps1
++   ~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (d:\xshell\user.config.ps1:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+2018-09-07 21:21:27 UTC
+
+1) azure-rest-api-specs repository information
+GitHub user: neha
+Branch:      vtapswaggerupdate
+
+2) AutoRest information
+Requested version: latest
+Bootstrapper version:    C:\Users\neaggarw\AppData\Roaming\npm `-- autorest@2.0.4283  
+Latest installed version:    
