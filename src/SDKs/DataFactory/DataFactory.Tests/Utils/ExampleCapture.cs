@@ -535,7 +535,7 @@ namespace DataFactory.Tests.Utils
             {
                 client.IntegrationRuntimes.Delete(secrets.ResourceGroupName, secrets.FactoryName + "-linked", integrationRuntimeName + "-linked");
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }
@@ -547,7 +547,7 @@ namespace DataFactory.Tests.Utils
             {
                 client.IntegrationRuntimes.RemoveLinks(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, new LinkedIntegrationRuntimeRequest(secrets.FactoryName + "-linked"));
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }

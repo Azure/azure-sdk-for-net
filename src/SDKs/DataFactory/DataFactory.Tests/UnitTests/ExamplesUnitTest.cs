@@ -652,7 +652,7 @@ namespace DataFactory.Tests.UnitTests
         {
             // Compares original raw json captured "expected" response against strongly typed "actual" response from SDK method
             // Issues with workarounds noted inline
-            Assert.NotNull(response);
+            Assert.NotNull(response as Object);
             object expectedObject = example.Responses[responseCode.ToString()].Body;
             string expectedJson = SafeJsonConvert.SerializeObject(expectedObject);
             JToken expectedJToken = JToken.Parse(expectedJson);
