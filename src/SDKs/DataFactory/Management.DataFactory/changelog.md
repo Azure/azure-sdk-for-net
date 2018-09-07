@@ -1,19 +1,17 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
 ## Current version
+        - Added folders to Pipeline and Dataset
+        - Added TumblingWindowTrigger dependsOn, offset and size properties
+        - Added new API to get GitHub access token
+        - Added new property on Databricks linked Service to set Spark environment variables
+        - Fixed the casing in JSON for FactoryGitHubConfiguration 
 
 ## Version 2.1.0
 
 ###  Feature Additions
 * Added support for AzureBlob AAD Authentication
 * Added support for AzureStorage 2 new Linked Service type: AzureBlobStorage, AzureTableStorage
-
-## Version 2.0.0
-
-###  Feature Additions
-
-### Breaking Changes
-* Updated UserProperties type in Activities
 
 ## Version 2.0.0
 
