@@ -74,7 +74,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// node. If false, the node is a low-priority node.</param>
         /// <param name="endpointConfiguration">The endpoint configuration for
         /// the compute node.</param>
-        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), System.DateTime? stateTransitionTime = default(System.DateTime?), System.DateTime? lastBootTime = default(System.DateTime?), System.DateTime? allocationTime = default(System.DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? totalTasksSucceeded = default(int?), IList<TaskInformation> recentTasks = default(IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ComputeNodeError> errors = default(IList<ComputeNodeError>), bool? isDedicated = default(bool?), ComputeNodeEndpointConfiguration endpointConfiguration = default(ComputeNodeEndpointConfiguration))
+        /// <param name="nodeAgentInfo">Information about the node agent
+        /// version and the time the node upgraded to a new version.</param>
+        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), System.DateTime? stateTransitionTime = default(System.DateTime?), System.DateTime? lastBootTime = default(System.DateTime?), System.DateTime? allocationTime = default(System.DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? totalTasksSucceeded = default(int?), IList<TaskInformation> recentTasks = default(IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ComputeNodeError> errors = default(IList<ComputeNodeError>), bool? isDedicated = default(bool?), ComputeNodeEndpointConfiguration endpointConfiguration = default(ComputeNodeEndpointConfiguration), NodeAgentInformation nodeAgentInfo = default(NodeAgentInformation))
         {
             Id = id;
             Url = url;
@@ -96,6 +98,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             Errors = errors;
             IsDedicated = isDedicated;
             EndpointConfiguration = endpointConfiguration;
+            NodeAgentInfo = nodeAgentInfo;
             CustomInit();
         }
 
@@ -198,20 +201,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// node.
         /// </summary>
         /// <remarks>
-        /// For information about available sizes of virtual machines for Cloud
-        /// Services pools (pools created with cloudServiceConfiguration), see
-        /// Sizes for Cloud Services
-        /// (http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
-        /// Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2
-        /// and A2V2. For information about available VM sizes for pools using
-        /// images from the Virtual Machines Marketplace (pools created with
-        /// virtualMachineConfiguration) see Sizes for Virtual Machines (Linux)
-        /// (https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/)
-        /// or Sizes for Virtual Machines (Windows)
-        /// (https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/).
-        /// Batch supports all Azure VM sizes except STANDARD_A0 and those with
-        /// premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2
-        /// series).
+        /// For information about available sizes of virtual machines in pools,
+        /// see Choose a VM size for compute nodes in an Azure Batch pool
+        /// (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).
         /// </remarks>
         [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
@@ -304,45 +296,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public ComputeNodeEndpointConfiguration EndpointConfiguration { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets information about the node agent version and the time
+        /// the node upgraded to a new version.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (RecentTasks != null)
-            {
-                foreach (var element in RecentTasks)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (StartTask != null)
-            {
-                StartTask.Validate();
-            }
-            if (StartTaskInfo != null)
-            {
-                StartTaskInfo.Validate();
-            }
-            if (CertificateReferences != null)
-            {
-                foreach (var element1 in CertificateReferences)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (EndpointConfiguration != null)
-            {
-                EndpointConfiguration.Validate();
-            }
-        }
+        [JsonProperty(PropertyName = "nodeAgentInfo")]
+        public NodeAgentInformation NodeAgentInfo { get; set; }
+
     }
 }

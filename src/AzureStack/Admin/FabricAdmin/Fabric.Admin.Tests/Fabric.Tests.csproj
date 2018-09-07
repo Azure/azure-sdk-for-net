@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+
+  <PropertyGroup>
+    <PackageId>Fabric.Admin.Tests</PackageId>
+    <Description>Fabric.Admin.Tests Class Library</Description>
+    <AssemblyName>Fabric.Admin.Tests</AssemblyName>
+    <VersionPrefix>1.0.0</VersionPrefix>
+  </PropertyGroup>
+
+  <!--<PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>-->
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fabric.Admin\Microsoft.AzureStack.Management.Fabric.Admin.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+</Project>

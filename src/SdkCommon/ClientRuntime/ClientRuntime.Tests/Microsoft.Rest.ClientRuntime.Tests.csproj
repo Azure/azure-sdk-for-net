@@ -2,18 +2,16 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />
   <PropertyGroup>
     <Description>Test Project for Microsoft.Rest.ClientRuntime</Description>
-    <VersionPrefix>2.0.0</VersionPrefix>
+    <Version>2.0.0</Version>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Tests</AssemblyName>
     <PackageId>Microsoft.Rest.ClientRuntime.Tests</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime REST</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
-    <TestProjectType>true</TestProjectType>
+    <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <!--<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.6,3.0)" />-->
     <ProjectReference Include="..\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
   </ItemGroup>
 
@@ -24,9 +22,6 @@
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.Serialization" />
-    
-    
-
   </ItemGroup>
   
   <!--Do not remove until VS Test Tools fixes #472-->

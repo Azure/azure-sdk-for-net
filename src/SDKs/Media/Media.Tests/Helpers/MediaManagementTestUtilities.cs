@@ -22,8 +22,6 @@ namespace Media.Tests.Helpers
         // These should be filled in only if test tenant is true
         public static string certName = null;
         public static string certPassword = null;
-        private static string testSubscription = null;
-        private static Uri testUri = null;
         public static SkuName DefaultSkuName = SkuName.StandardGRS;
         public static Kind DefaultKind = Kind.Storage;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
@@ -33,7 +31,7 @@ namespace Media.Tests.Helpers
         };
 
         // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? null : "East US";
+        public static string DefaultLocation = IsTestTenant ? null : "West US 2";
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
@@ -49,9 +47,9 @@ namespace Media.Tests.Helpers
             }
         }
 
-        public static MediaServicesManagementClient GetMediaManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        public static AzureMediaServicesClient GetMediaManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            MediaServicesManagementClient mediaClient;
+            AzureMediaServicesClient mediaClient;
             if (IsTestTenant)
             {
                 return null;
@@ -59,7 +57,7 @@ namespace Media.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                mediaClient = context.GetServiceClient<MediaServicesManagementClient>(handlers: handler);
+                mediaClient = context.GetServiceClient<AzureMediaServicesClient>(handlers: handler);
             }
             return mediaClient;
         }
@@ -146,7 +144,7 @@ namespace Media.Tests.Helpers
         public static string TryGetLocation(ResourceManagementClient resourceClient, string preferedLocationName = null)
         {
             var providers = resourceClient.Providers.List();
-            var provider = providers.FirstOrDefault(x => x.NamespaceProperty.Contains("Cdn"));
+            var provider = providers.FirstOrDefault(x => x.NamespaceProperty.Contains("Microsoft.Media"));
             if (provider == null)
             {
                 return string.Empty;
@@ -158,7 +156,7 @@ namespace Media.Tests.Helpers
                 return string.Empty;
             }
 
-            var locations = resourceTypes.First().Locations;
+            var locations = resourceTypes.Where(t => t.ResourceType == "mediaservices").First().Locations;
             if (locations == null || locations.Count == 0)
             {
                 return string.Empty;

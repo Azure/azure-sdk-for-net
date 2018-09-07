@@ -1,47 +1,16 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
-    <LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
-    <LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>	
-    <LibraryNugetPackageFolder>$(LibraryRoot)restoredPackages</LibraryNugetPackageFolder>
-    <LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
-    <AuthenticationSolution>src\Authentication\Authentication.sln</AuthenticationSolution>
-    <ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
-    <BinariesFolder>$(LibraryRoot)binaries</BinariesFolder>
-	<BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
-    <PoliCheckOutputDir>$(LibraryRoot)PolicheckOutput</PoliCheckOutputDir>
-    <BuiltPackageOutputDir>$(BinariesFolder)\packages</BuiltPackageOutputDir>
-    <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
-    <CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
-    <Scope Condition=" '$(Scope)' == '' ">All</Scope>
-    <NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
-    <NuGetKey Condition=" '$(NuGetKey)' == '' ">1234</NuGetKey>
-    <BuildInParallel>true</BuildInParallel>
-	<SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
-    <NugetPackageName/>
-    <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
-  </PropertyGroup>
-  <PropertyGroup>
-    <CIToolsPath>$(OnPremiseBuildTasks)</CIToolsPath>
-    <OnPremiseBuild Condition=" Exists($(OnPremiseBuildTasks)) ">true</OnPremiseBuild>
-    <OnPremiseBuild Condition=" ! Exists($(OnPremiseBuildTasks)) ">false</OnPremiseBuild>
-  </PropertyGroup>
-
-  <PropertyGroup Label="Well Known Properties">
-    <ClientRuntimeRootDir>$(LibraryRoot)src\UpgradeVS17\SdkCommon\ClientRuntime</ClientRuntimeRootDir>
-    <SdkCommonRootDir>$(LibraryRoot)src\UpgradeVS17\SdkCommon\ClientRuntime</SdkCommonRootDir>
-  </PropertyGroup>
- 
-   <PropertyGroup>
-	<NetSdkBuildTargetsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)\targets</NetSdkBuildTargetsDir>
-	<NetSdkBuildTargetsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildTargetsDir)' == '' ">$(SdkBuildToolsDir)\targets</NetSdkBuildTargetsDir>
-	<!-- <NetSdkBuildTargetsDir Condition=" '$(NetSdkBuildTargetsDir)' == '' ">$(LibraryToolsFolder)\buildTargets</NetSdkBuildTargetsDir> -->
-	
-	<NetSdkBuildToolsDir Condition="Exists('$(BuildAssetsDir)')">$(BuildAssetsDir)</NetSdkBuildToolsDir>
-	<NetSdkBuildToolsDir Condition="Exists('$(SdkBuildToolsDir)')">$(SdkBuildToolsDir)</NetSdkBuildToolsDir>
-	<!-- <NetSdkBuildToolsDir Condition=" '$(NetSdkBuildToolsDir)' == '' ">$(LibraryToolsFolder)\buildTargets</NetSdkBuildToolsDir> -->
-  </PropertyGroup>
- 
-	<Import Condition="Exists('$(NetSdkBuildTargetsDir)\common.Build.props')" Project="$(NetSdkBuildTargetsDir)\common.Build.props"/>
-	<Import Condition="Exists('$(NetSdkBuildTargetsDir)\common.NugetPackage.props')" Project="$(NetSdkBuildTargetsDir)\common.NugetPackage.props"/>
+	<PropertyGroup>
+		<LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
+		<LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
+		<BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
+		<SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
+	</PropertyGroup>
+	<PropertyGroup>
+		<NetSdkBuildTargetsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)\targets</NetSdkBuildTargetsDir>
+		<NetSdkBuildTargetsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildTargetsDir)' == '' ">$(SdkBuildToolsDir)\targets</NetSdkBuildTargetsDir>		
+		<NetSdkBuildToolsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)</NetSdkBuildToolsDir>
+		<NetSdkBuildToolsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildToolsDir)' == '' ">$(SdkBuildToolsDir)</NetSdkBuildToolsDir>
+	</PropertyGroup>
+  
+	<Import Project="$(NetSdkBuildTargetsDir)\core\_Directory.Build.props" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_Directory.Build.props') "/>
 </Project>

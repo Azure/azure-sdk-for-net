@@ -8,7 +8,7 @@
     <Description>Provides ApiManagement management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure API Management Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.ApiManagement</AssemblyName>
-    <Version>4.0.0-preview</Version>
+    <Version>4.0.4-preview</Version>
     <PackageTags>Microsoft Azure ApiManagement management;API Management;</PackageTags>
     <PackageReleaseNotes>Refer https://aka.ms/apimdotnetsdkchangelog for release notes.</PackageReleaseNotes>
   </PropertyGroup>

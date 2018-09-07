@@ -23,10 +23,10 @@ namespace Automation.Tests.ScenarioTests
             {
                 using (var testFixture = new AutomationTestBase(context))
                 {
-                    var runbookName = RunbookDefinition.TestFasterWorkflow.RunbookName;
-                    var runbookContent = RunbookDefinition.TestFasterWorkflow.PsScript;
+                    var runbookName = RunbookDefinition.TestPSScript.RunbookName;
+                    var runbookContent = RunbookDefinition.TestPSScript.PsScript;
 
-                    testFixture.CreateRunbook(runbookName, runbookContent);
+                    testFixture.CreatePSScriptRunbook(runbookName, runbookContent);
                     var runbook = testFixture.GetRunbook(runbookName);
                     Assert.NotNull(runbook);
 
@@ -44,9 +44,8 @@ namespace Automation.Tests.ScenarioTests
                     Assert.False(runbook.LogVerbose);
                     Assert.Equal(runbook.Description, updatedRunbook.Description);
 
-                    var runbookContentV2 = RunbookDefinition.TestFasterWorkflowV2.PsScript;
+                    var runbookContentV2 = RunbookDefinition.TestPSScriptV2.PsScript;
                     testFixture.UpdateRunbookContent(runbookName, runbookContentV2);
-
                     var updatedContent = testFixture.GetRunbookContent(runbookName);
                     var reader = new StreamReader(updatedContent);
                     Assert.Equal(runbookContentV2, reader.ReadToEnd());
@@ -61,7 +60,7 @@ namespace Automation.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Waiting on webservice deployment")]
         public void CanCreateUpdateDeleteSchedule()
         {
             using (var context = MockContext.Start(GetType().FullName))
@@ -370,6 +369,112 @@ namespace Automation.Tests.ScenarioTests
                         deleteCompleted = true;
                     }
                     Assert.True(deleteCompleted);
+                }
+            }
+        }
+
+        [Fact]
+        public void CanCreateUpdateDeleteSourceControl()
+        {
+            using (var context = MockContext.Start(GetType().FullName))
+            {
+                using (var testFixture = new AutomationTestBase(context))
+                {
+
+                    var sourceControlName = SourceControlDefinition.TestSimpleSourceControlDefinition.SourceControlName;
+                    var repoUrl = SourceControlDefinition.TestSimpleSourceControlDefinition.RepoUrl;
+                    var branch = SourceControlDefinition.TestSimpleSourceControlDefinition.Branch;
+                    var folderPath = SourceControlDefinition.TestSimpleSourceControlDefinition.FolderPath;
+                    var autoSync = SourceControlDefinition.TestSimpleSourceControlDefinition.AutoSync;
+                    var publishRunbook = SourceControlDefinition.TestSimpleSourceControlDefinition.PublishRunbook;
+                    var sourceType = SourceControlDefinition.TestSimpleSourceControlDefinition.SourceType;
+                    var accessToken = SourceControlDefinition.TestSimpleSourceControlDefinition.AccessToken;
+                    var description = SourceControlDefinition.TestSimpleSourceControlDefinition.Description;
+                    var updateBranchName = SourceControlDefinition.TestSimpleSourceControlDefinition.UpdateBranchName;
+                    var updateAutoPublish = SourceControlDefinition.TestSimpleSourceControlDefinition.UpdateAutoPublish;
+
+                    var sourceControl = 
+                        testFixture.CreateSourceControl(sourceControlName, repoUrl, branch, folderPath, autoSync, publishRunbook,
+                                                        sourceType, accessToken, description);
+
+                    var retrievedSourceControl = testFixture.GetSourceControl(sourceControlName);
+
+                    Assert.NotNull(retrievedSourceControl);
+                    Assert.Equal(retrievedSourceControl.RepoUrl, sourceControl.RepoUrl);
+                    Assert.Equal(retrievedSourceControl.Branch, sourceControl.Branch);
+                    Assert.Equal(retrievedSourceControl.FolderPath, sourceControl.FolderPath);
+                    Assert.Equal(retrievedSourceControl.AutoSync, sourceControl.AutoSync);
+                    Assert.Equal(retrievedSourceControl.PublishRunbook, sourceControl.PublishRunbook);
+                    Assert.Equal(retrievedSourceControl.SourceType, sourceControl.SourceType);
+                    Assert.Equal(retrievedSourceControl.Description, sourceControl.Description);
+
+                    var updatedSourceControl = 
+                        testFixture.UpdateSourceControl(sourceControlName, updateBranchName, updateAutoPublish);
+
+                    Assert.NotNull(updatedSourceControl);
+                    Assert.Equal(updatedSourceControl.Branch, updateBranchName);
+                    Assert.Equal(updatedSourceControl.AutoSync, updateAutoPublish);
+
+                    var sourceControlList = testFixture.GetSourceControls();
+
+                    Assert.NotNull(sourceControlList);
+                    Assert.Single(sourceControlList.ToList());
+                    sourceControl = sourceControlList.ToList()[0];
+                    Assert.Equal(sourceControlName, sourceControl.Name);
+
+                    testFixture.DeleteSourceControl(sourceControlName);
+
+                    Assert.Throws<ErrorResponseException>(() =>
+                    {
+                        sourceControl = testFixture.GetSourceControl(sourceControlName);
+                    });
+                }
+            }
+        }
+
+        [Fact(Skip = "Waiting on webservice deployment")]
+        public void CanCreateSourceControlSyncJob()
+        {
+            using (var context = MockContext.Start(GetType().FullName))
+            {
+                using (var testFixture = new AutomationTestBase(context))
+                {
+                    var sourceControlName = SourceControlDefinition.TestSimpleSourceControlDefinition.SourceControlName;
+                    var repoUrl = SourceControlDefinition.TestSimpleSourceControlDefinition.RepoUrl;
+                    var branch = SourceControlDefinition.TestSimpleSourceControlDefinition.Branch;
+                    var folderPath = SourceControlDefinition.TestSimpleSourceControlDefinition.FolderPath;
+                    var autoSync = SourceControlDefinition.TestSimpleSourceControlDefinition.AutoSync;
+                    var publishRunbook = SourceControlDefinition.TestSimpleSourceControlDefinition.PublishRunbook;
+                    var sourceControlType = SourceControlDefinition.TestSimpleSourceControlDefinition.SourceType;
+                    var securityToken = SourceControlDefinition.TestSimpleSourceControlDefinition.AccessToken;
+                    var description = SourceControlDefinition.TestSimpleSourceControlDefinition.Description;
+                    var updateBranchName = SourceControlDefinition.TestSimpleSourceControlDefinition.UpdateBranchName;
+                    var SourceControlSyncJobId = TestUtilities.GenerateGuid("jobId");
+
+                    var sourceControl = testFixture.CreateSourceControl(sourceControlName, repoUrl, branch, folderPath, autoSync, publishRunbook,
+                                                                        sourceControlType, securityToken, description);
+
+                    var retrievedSourceControl = testFixture.GetSourceControl(sourceControlName);
+                    Assert.NotNull(retrievedSourceControl);
+
+                    var syncJob = testFixture.CreateSourceControlSyncJob(sourceControlName, SourceControlSyncJobId);
+
+                    var retrievedSyncJob = testFixture.GetSourceControlSyncJob(sourceControlName, SourceControlSyncJobId);
+
+                    Assert.NotNull(retrievedSyncJob);
+                    Assert.Equal(retrievedSyncJob.SourceControlSyncJobId, SourceControlSyncJobId.ToString());
+                    Assert.Equal(retrievedSyncJob.CreationTime, syncJob.CreationTime);
+                    Assert.Equal(retrievedSyncJob.ProvisioningState, syncJob.ProvisioningState);
+                    Assert.Equal(retrievedSyncJob.StartTime, syncJob.StartTime);
+                    Assert.Equal(retrievedSyncJob.EndTime, syncJob.EndTime);
+                    //Assert.Equal(retrievedSyncJob.SyncType, syncJob.SyncType);
+
+                    var syncJobList = testFixture.GetSourceControlSyncJobs(sourceControlName);
+
+                    Assert.NotNull(syncJobList);
+                    Assert.Single(syncJobList.ToList());
+                    syncJob = syncJobList.ToList()[0];
+                    Assert.Equal(syncJob.SourceControlSyncJobId, syncJob.SourceControlSyncJobId);
                 }
             }
         }

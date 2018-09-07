@@ -115,8 +115,8 @@ namespace ResourceGroups.Tests
                     resourceType => string.Equals(resourceType.ResourceType, "virtualMachines", StringComparison.OrdinalIgnoreCase));
 
                 Assert.NotEmpty(virtualMachinesType.Aliases);
-                Assert.Equal("Microsoft.Compute/virtualMachines/sku.name", virtualMachinesType.Aliases[0].Name);
-                Assert.Equal("properties.hardwareProfile.vmSize", virtualMachinesType.Aliases[0].Paths[0].Path);
+                Assert.Equal("Microsoft.Compute/licenseType", virtualMachinesType.Aliases[0].Name);
+                Assert.Equal("properties.licenseType", virtualMachinesType.Aliases[0].Paths[0].Path);
 
                 computeProvider = client.Providers.Get(resourceProviderNamespace: computeNamespace, expand: "resourceTypes/aliases");
 
@@ -125,8 +125,8 @@ namespace ResourceGroups.Tests
                     resourceType => string.Equals(resourceType.ResourceType, "virtualMachines", StringComparison.OrdinalIgnoreCase));
 
                 Assert.NotEmpty(virtualMachinesType.Aliases);
-                Assert.Equal("Microsoft.Compute/virtualMachines/sku.name", virtualMachinesType.Aliases[0].Name);
-                Assert.Equal("properties.hardwareProfile.vmSize", virtualMachinesType.Aliases[0].Paths[0].Path);
+                Assert.Equal("Microsoft.Compute/licenseType", virtualMachinesType.Aliases[0].Name);
+                Assert.Equal("properties.licenseType", virtualMachinesType.Aliases[0].Paths[0].Path);
             }
         }
 

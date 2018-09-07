@@ -32,8 +32,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// MigrateSqlServerSqlMITaskOutputAgentJobLevel class.
         /// </summary>
         /// <param name="id">Result identifier</param>
-        /// <param name="name">AgentJob name.</param>
-        /// <param name="isEnabled">The state of the original AgentJob.</param>
+        /// <param name="name">Agent Job name.</param>
+        /// <param name="isEnabled">The state of the original Agent
+        /// Job.</param>
         /// <param name="state">Current state of migration. Possible values
         /// include: 'None', 'InProgress', 'Failed', 'Warning', 'Completed',
         /// 'Skipped', 'Stopped'</param>
@@ -61,13 +62,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets agentJob name.
+        /// Gets agent Job name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the state of the original AgentJob.
+        /// Gets the state of the original Agent Job.
         /// </summary>
         [JsonProperty(PropertyName = "isEnabled")]
         public bool? IsEnabled { get; private set; }

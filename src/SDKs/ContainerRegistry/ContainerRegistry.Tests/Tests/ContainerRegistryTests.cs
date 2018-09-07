@@ -130,7 +130,7 @@ namespace ContainerRegistry.Tests
             var registriesByResourceGroup = registryClient.Registries.ListByResourceGroup(resourceGroup.Name);
             registry = registriesByResourceGroup.First(
                 r => StringComparer.OrdinalIgnoreCase.Equals(r.Name, registry.Name));
-            Assert.Equal(1, registriesByResourceGroup.Count());
+            Assert.Single(registriesByResourceGroup);
             ContainerRegistryTestUtilities.ValidateResourceDefaultTags(registry);
 
             // Get the container registry
@@ -249,7 +249,7 @@ namespace ContainerRegistry.Tests
                 var webhooks = registryClient.Webhooks.List(resourceGroup.Name, registry.Name);
                 webhook = webhooks.First(
                     w => StringComparer.OrdinalIgnoreCase.Equals(w.Name, webhook.Name));
-                Assert.Equal(1, webhooks.Count());
+                Assert.Single(webhooks);
                 ContainerRegistryTestUtilities.ValidateResourceDefaultTags(webhook);
 
                 // Get the webhook

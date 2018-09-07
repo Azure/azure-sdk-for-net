@@ -34,7 +34,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the JobSchedule class.
         /// </summary>
-        /// <param name="id">Gets or sets the id of the resource.</param>
+        /// <param name="id">Gets the id of the resource.</param>
+        /// <param name="name">Gets the name of the variable.</param>
+        /// <param name="type">Resource type</param>
         /// <param name="jobScheduleId">Gets or sets the id of job
         /// schedule.</param>
         /// <param name="schedule">Gets or sets the schedule.</param>
@@ -43,9 +45,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// scheduled job should run on.</param>
         /// <param name="parameters">Gets or sets the parameters of the job
         /// schedule.</param>
-        public JobSchedule(string id = default(string), string jobScheduleId = default(string), ScheduleAssociationProperty schedule = default(ScheduleAssociationProperty), RunbookAssociationProperty runbook = default(RunbookAssociationProperty), string runOn = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>))
+        public JobSchedule(string id = default(string), string name = default(string), string type = default(string), string jobScheduleId = default(string), ScheduleAssociationProperty schedule = default(ScheduleAssociationProperty), RunbookAssociationProperty runbook = default(RunbookAssociationProperty), string runOn = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>))
         {
             Id = id;
+            Name = name;
+            Type = type;
             JobScheduleId = jobScheduleId;
             Schedule = schedule;
             Runbook = runbook;
@@ -60,10 +64,22 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the id of the resource.
+        /// Gets the id of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the variable.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets resource type
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
         /// Gets or sets the id of job schedule.

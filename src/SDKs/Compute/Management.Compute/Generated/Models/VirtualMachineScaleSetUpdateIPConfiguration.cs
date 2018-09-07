@@ -52,11 +52,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'IPv4', 'IPv6'</param>
         /// <param name="applicationGatewayBackendAddressPools">The application
         /// gateway backend address pools.</param>
+        /// <param name="applicationSecurityGroups">Specifies an array of
+        /// references to application security group.</param>
         /// <param name="loadBalancerBackendAddressPools">The load balancer
         /// backend address pools.</param>
         /// <param name="loadBalancerInboundNatPools">The load balancer inbound
         /// nat pools.</param>
-        public VirtualMachineScaleSetUpdateIPConfiguration(string id = default(string), string name = default(string), ApiEntityReference subnet = default(ApiEntityReference), bool? primary = default(bool?), VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetUpdatePublicIPAddressConfiguration), string privateIPAddressVersion = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
+        public VirtualMachineScaleSetUpdateIPConfiguration(string id = default(string), string name = default(string), ApiEntityReference subnet = default(ApiEntityReference), bool? primary = default(bool?), VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetUpdatePublicIPAddressConfiguration), string privateIPAddressVersion = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> applicationSecurityGroups = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
             : base(id)
         {
             Name = name;
@@ -65,6 +67,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             PublicIPAddressConfiguration = publicIPAddressConfiguration;
             PrivateIPAddressVersion = privateIPAddressVersion;
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
+            ApplicationSecurityGroups = applicationSecurityGroups;
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
             LoadBalancerInboundNatPools = loadBalancerInboundNatPools;
             CustomInit();
@@ -114,6 +117,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.applicationGatewayBackendAddressPools")]
         public IList<SubResource> ApplicationGatewayBackendAddressPools { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies an array of references to application
+        /// security group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicationSecurityGroups")]
+        public IList<SubResource> ApplicationSecurityGroups { get; set; }
 
         /// <summary>
         /// Gets or sets the load balancer backend address pools.

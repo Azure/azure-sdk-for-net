@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Initializes a new instance of the ServiceSku class.
         /// </summary>
         /// <param name="name">The unique name of the SKU, such as 'P3'</param>
-        /// <param name="tier">The tier of the SKU, such as 'Free', 'Basic',
-        /// 'Standard', or 'Premium'</param>
+        /// <param name="tier">The tier of the SKU, such as 'Basic', 'General
+        /// Purpose', or 'Business Critical'</param>
         /// <param name="family">The SKU family, used when the service has
         /// multiple performance classes within a tier, such as 'A', 'D', etc.
         /// for virtual machines</param>
@@ -63,8 +63,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the tier of the SKU, such as 'Free', 'Basic',
-        /// 'Standard', or 'Premium'
+        /// Gets or sets the tier of the SKU, such as 'Basic', 'General
+        /// Purpose', or 'Business Critical'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }

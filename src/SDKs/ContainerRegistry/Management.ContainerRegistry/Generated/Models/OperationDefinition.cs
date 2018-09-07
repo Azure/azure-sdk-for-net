@@ -10,12 +10,15 @@
 
 namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The definition of a container registry operation.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class OperationDefinition
     {
         /// <summary>
@@ -29,14 +32,20 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the OperationDefinition class.
         /// </summary>
+        /// <param name="origin">The origin information of the container
+        /// registry operation.</param>
         /// <param name="name">Operation name:
         /// {provider}/{resource}/{operation}.</param>
         /// <param name="display">The display information for the container
         /// registry operation.</param>
-        public OperationDefinition(string name = default(string), OperationDisplayDefinition display = default(OperationDisplayDefinition))
+        /// <param name="serviceSpecification">The definition of Azure
+        /// Monitoring service.</param>
+        public OperationDefinition(string origin = default(string), string name = default(string), OperationDisplayDefinition display = default(OperationDisplayDefinition), OperationServiceSpecificationDefinition serviceSpecification = default(OperationServiceSpecificationDefinition))
         {
+            Origin = origin;
             Name = name;
             Display = display;
+            ServiceSpecification = serviceSpecification;
             CustomInit();
         }
 
@@ -44,6 +53,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the origin information of the container registry
+        /// operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; set; }
 
         /// <summary>
         /// Gets or sets operation name: {provider}/{resource}/{operation}.
@@ -57,6 +73,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplayDefinition Display { get; set; }
+
+        /// <summary>
+        /// Gets or sets the definition of Azure Monitoring service.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.serviceSpecification")]
+        public OperationServiceSpecificationDefinition ServiceSpecification { get; set; }
 
     }
 }

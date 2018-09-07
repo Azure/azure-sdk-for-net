@@ -25,7 +25,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     /// <summary>
     /// PersonGroupOperations operations.
     /// </summary>
-    public partial class PersonGroupOperations : IServiceOperations<FaceAPI>, IPersonGroupOperations
+    public partial class PersonGroupOperations : IServiceOperations<FaceClient>, IPersonGroupOperations
     {
         /// <summary>
         /// Initializes a new instance of the PersonGroupOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public PersonGroupOperations(FaceAPI client)
+        public PersonGroupOperations(FaceClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Gets a reference to the FaceAPI
+        /// Gets a reference to the FaceClient
         /// </summary>
-        public FaceAPI Client { get; private set; }
+        public FaceClient Client { get; private set; }
 
         /// <summary>
         /// Create a new person group with specified personGroupId, name and
@@ -83,6 +83,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> CreateWithHttpMessagesAsync(string personGroupId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (personGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "personGroupId");
@@ -133,7 +137,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -224,8 +228,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Delete an existing person group. Persisted face images of all people in the
-        /// person group will also be deleted.
+        /// Delete an existing person group. Persisted face features of all people in
+        /// the person group will also be deleted.
         /// </summary>
         /// <param name='personGroupId'>
         /// Id referencing a particular person group.
@@ -250,6 +254,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string personGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (personGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "personGroupId");
@@ -279,7 +287,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -393,6 +401,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<PersonGroup>> GetWithHttpMessagesAsync(string personGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (personGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "personGroupId");
@@ -422,7 +434,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -557,6 +569,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> UpdateWithHttpMessagesAsync(string personGroupId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (personGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "personGroupId");
@@ -607,7 +623,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -726,6 +742,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<TrainingStatus>> GetTrainingStatusWithHttpMessagesAsync(string personGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (personGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "personGroupId");
@@ -755,7 +775,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/training";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -878,11 +898,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<HttpOperationResponse<IList<PersonGroup>>> ListWithHttpMessagesAsync(string start = default(string), int? top = 1000, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (start != null)
             {
                 if (start.Length > 64)
@@ -913,7 +943,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (start != null)
             {
@@ -1054,6 +1084,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> TrainWithHttpMessagesAsync(string personGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (personGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "personGroupId");
@@ -1083,7 +1117,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/train";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();

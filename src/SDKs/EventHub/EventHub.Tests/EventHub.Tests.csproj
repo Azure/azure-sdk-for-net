@@ -6,10 +6,20 @@
     <Description>EventHub.Tests Class Library</Description>
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>EventHub.Tests</AssemblyName>    
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>  
+  <ItemGroup>
+    <Compile Remove="Tests\ScenarioTests.ConsumergroupsTests.CRUD_Length.cs" />
+    <Compile Remove="Tests\ScenarioTests.DisasterRecoveryAlertnateNameTests.CRUD.cs" />
+    <Compile Remove="Tests\ScenarioTests.DisasterRecoveryTests.CRUD.cs" />
+    <Compile Remove="Tests\ScenarioTests.EventHubskiptopTests.cs" />
+    <Compile Remove="Tests\ScenarioTests.EventHubsTests.CRUDAuthorizationRules.cs" />
+    <Compile Remove="Tests\ScenarioTests.EventHubsTests.CRUDAuthorizationRules_Length.cs" />
+    <Compile Remove="Tests\ScenarioTests.EventHubTests.CRUD.cs" />
+    <Compile Remove="Tests\ScenarioTests.NamespaceTests.CRUDAuthorizationRules.cs" />
+  </ItemGroup>
+  <!--<PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>-->  
 
 
   <ItemGroup>

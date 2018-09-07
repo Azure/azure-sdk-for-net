@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the InputDirectory class.
         /// </summary>
-        /// <param name="id">The id for the input directory.</param>
-        /// <param name="path">The path to the input directory.</param>
+        /// <param name="id">ID.</param>
+        /// <param name="path">Path.</param>
         public InputDirectory(string id, string path)
         {
             Id = id;
@@ -45,19 +45,22 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the id for the input directory.
+        /// Gets or sets ID.
         /// </summary>
         /// <remarks>
-        /// The path of the input directory will be available as a value of an
-        /// environment variable with AZ_BATCHAI_INPUT_<id> name, where <id> is
-        /// the value of id attribute.
+        /// The ID for the input directory. The job can use
+        /// AZ_BATCHAI_INPUT_<id> environment variable to find the directory
+        /// path, where <id> is the value of id attribute.
         /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the path to the input directory.
+        /// Gets or sets path.
         /// </summary>
+        /// <remarks>
+        /// The path to the input directory.
+        /// </remarks>
         [JsonProperty(PropertyName = "path")]
         public string Path { get; set; }
 

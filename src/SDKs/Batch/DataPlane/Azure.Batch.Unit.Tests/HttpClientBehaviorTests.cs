@@ -46,7 +46,7 @@ namespace Azure.Batch.Unit.Tests
             }
         }
 
-        private static IEnumerable<object[]> HttpMethods()
+        public static IEnumerable<object[]> HttpMethods()
         {
             yield return new[] { HttpMethod.Delete };
             yield return new[] { HttpMethod.Post };
@@ -74,12 +74,8 @@ namespace Azure.Batch.Unit.Tests
             }
             else if (httpMethod == HttpMethod.Delete || httpMethod == new HttpMethod("PATCH") || httpMethod == HttpMethod.Options)
             {
-#if !FullNetFx
-                Assert.DoesNotContain(ctx.Request.Headers.Keys, str => str == "Content-Length");
-#else
                 Assert.Contains(ctx.Request.Headers.Keys, str => str == "Content-Length");
                 Assert.Equal("0", ctx.Request.Headers["Content-Length"].Single());
-#endif
             }
             else if (httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Put)
             {

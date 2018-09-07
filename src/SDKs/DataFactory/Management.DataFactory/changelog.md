@@ -2,10 +2,54 @@
 
 ## Current version
 
+## Version 2.1.0
+
+###  Feature Additions
+* Added support for AzureBlob AAD Authentication
+* Added support for AzureStorage 2 new Linked Service type: AzureBlobStorage, AzureTableStorage
+
+## Version 2.0.0
+
+###  Feature Additions
+
+### Breaking Changes
+* Updated UserProperties type in Activities
+
+## Version 1.1.0
+
+###  Feature Additions
+* Added support for sharing self-hosted integration runtime across data factories and subscriptions
+* Added support for Databricks Spark Jar and Databricks Spark Python activities
+
+## Version 1.0.0
+
+### Feature Additions
+* Azure Data Factory new capabilities now fall under General Availability SLA. ADF has made cloud data integration easier than ever before. Build, schedule and manage data integration at scale wherever your data lives, in cloud or on-premises, with enterprise-grade security. Accelerate your data integration projects with over 70 data source connectors available, please refer to https://docs.microsoft.com/en-us/azure/data-factory/copy-activity-overview. Transform raw data into finished, shaped data that is ready for consumption by BI tools or custom applications. Easily lift your SQL Server Integration Services (SSIS) packages to Azure and let ADF manage your resources for you so you can increase productivity and lower TCO, please refer to https://docs.microsoft.com/en-us/sql/integration-services/lift-shift/ssis-azure-lift-shift-ssis-packages-overview?view=sql-server-2017. Meet your security and compliance needs while taking advantage of extensive capabilities and paying only for what you use. The ADF GA SDK changes include the following:
+        -	The API 'removeNode’ on IR has been removed and replaced with DELETE API on IR node.
+        -	The API 'POST pipelineRuns’ was renamed to 'POST queryPipelineRuns’ and 'PipelineRunFilterParameters’ was renamed to 'RunFilterParameters’.
+        -	The API 'GET activityRuns’ using pipeline run id has been replaced with 'POST queryActivityRuns’. It also takes RunFilterParameters object in the body to provide more options to query and order the result.
+        -	The API 'GET triggerRuns’ has been replaced with 'POST queryTriggerRuns’ and was moved to factory scope. This one too takes RunFilterParameters object in the body similar to previous query runs APIs.
+        -	The API 'cancelPipelineRun’ has been moved to PipelineRuns operations and renamed to 'Cancel’.
+        -	The property 'vstsConfiguration’ on factory resource has been renamed to repoConfiguration.
+        -	Pipeline has new properties called 'userProperties’ which can be used to improve the run monitoring experience
+        -	The error response format has been changed. It is now compliant with other Azure ARM services. Before the API-s were returning ErrorResponse object with code, message, target and details. Now, it returns CloudError object with another 'error’ object nested inside that contains code, message, target and details.
+        -	Added If-Match header support on put calls and If-None-Match header support for get calls for ADF resources and sub resources.
+        -	The response of 'PATCH' API on IR has been fixed to return the IR resource.
+        - The 'cloudDataMovementUnits' property of Copy activity has been renamed to 'dataIntegrationUnits'
+
+* Remove maxParallelExecutionsPerNode limitation
+
+## Version 0.8.0-preview
+
+### Feature Additions
+* Added Configure factory repository operation
+* Updated QuickBooks LinkedService to expose consumerKey and consumerSecret properties
+* Updated Several model types from SecretBase to Object
+* Added Blob Events trigger
+
 ## Version 0.7.0-preview
 
 ### Feature Additions
-
 * Added execution parameters and connection managers property on ExecuteSSISPackage Activity
 * Updated PostgreSql, MySql llinked service to use full connection string instead of server, database, schema, username and password
 * Removed the schema from DB2 linked service

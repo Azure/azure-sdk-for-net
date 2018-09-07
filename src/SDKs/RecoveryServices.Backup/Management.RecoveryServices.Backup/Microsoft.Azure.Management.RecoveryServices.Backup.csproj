@@ -6,10 +6,15 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.RecoveryServices.Backup</PackageId>
 		<Description>Provides developers with libraries for the updated recovery services backup feature under Azure Resource manager.</Description>
-		<Version>2.1.1-preview</Version>
+		<Version>3.1.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices.Backup</AssemblyName>
 		<PackageTags>Recoveryservices;Backup;</PackageTags>
-		<PackageReleaseNotes/>
+		<PackageReleaseNotes>
+			<![CDATA[
+New features:
+- Backup Validate Operation API
+      ]]>
+		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

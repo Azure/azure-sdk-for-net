@@ -22,23 +22,27 @@ namespace Management.HDInsight.Tests
     using Microsoft.Rest.Azure;
     using System.Net;
 
+    [Collection("ScenarioTests")]
     public class CreateClusterTests
     {
         [Fact]
         public void TestCreateHumboldtClusterWithPremiumTier()
         {
-            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
+            string testName = "TestCreateHumboldtClusterWithPremiumTier";
+
+            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
             parameters.ClusterTier = Tier.Premium;
 
-            RunCreateClusterTestInNewResourceGroup(GetType().FullName, "TestCreateHumboldtClusterWithPremiumTier", "hdisdk-premium", parameters);
+            RunCreateClusterTestInNewResourceGroup(GetType().FullName, testName, "hdisdk-premium", parameters);
         }
 
         [Fact]
         public void TestCreateHumboldtCluster()
         {
-            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
+            string testName = "TestCreateHumboldtCluster";
+            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
 
-            RunCreateClusterTestInNewResourceGroup(GetType().FullName, "TestCreateHumboldtCluster", "hdisdk-humboldt", parameters);
+            RunCreateClusterTestInNewResourceGroup(GetType().FullName, testName, "hdisdk-humboldt", parameters);
         }
 
         [Fact]
@@ -49,7 +53,7 @@ namespace Management.HDInsight.Tests
             HDInsightManagementTestUtilities.RunTestInNewResourceGroup(GetType().FullName, "TestCreateWithEmptyExtendedParameters",
                 (resClient, client, rgName) =>
             {
-                CloudException ex = Assert.Throws<CloudException>(() => client.Clusters.Create(rgName, clusterName, new ClusterCreateParametersExtended()));
+                ErrorResponseException ex = Assert.Throws<ErrorResponseException>(() => client.Clusters.Create(rgName, clusterName, new ClusterCreateParametersExtended()));
                 Assert.Equal(HttpStatusCode.BadRequest, ex.Response.StatusCode);
             });
         }
@@ -62,7 +66,7 @@ namespace Management.HDInsight.Tests
             HDInsightManagementTestUtilities.RunTestInNewResourceGroup(GetType().FullName, "TestCreateWithEmptyParameters",
                 (resClient, client, rgName) =>
             {
-                CloudException ex = Assert.Throws<CloudException>(() => client.Clusters.Create(rgName, clusterName, new ClusterCreateParameters()));
+                ErrorResponseException ex = Assert.Throws<ErrorResponseException>(() => client.Clusters.Create(rgName, clusterName, new ClusterCreateParameters()));
                 Assert.Equal(HttpStatusCode.BadRequest, ex.Response.StatusCode);
             });
         }
@@ -70,29 +74,30 @@ namespace Management.HDInsight.Tests
         [Fact]
         public void TestCreateHumboldtClusterWithCustomVMSizes()
         {
-            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
+            string testName = "TestCreateHumboldtClusterWithCustomVMSizes";
+            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
             parameters.HeadNodeSize = "ExtraLarge";
             parameters.ZookeeperNodeSize = "Medium";
 
-            RunCreateClusterTestInNewResourceGroup(GetType().FullName, "TestCreateHumboldtClusterWithCustomVMSizes",
-                "hdisdk-customvmsizes", parameters);
+            RunCreateClusterTestInNewResourceGroup(GetType().FullName, testName, "hdisdk-customvmsizes", parameters);
         }
 
         [Fact]
         public void TestCreateLinuxSparkClusterWithComponentVersion()
         {
-            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
+            string testName = "TestCreateLinuxSparkClusterWithComponentVersion";
+            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
             parameters.ClusterType = "Spark";
-            parameters.ComponentVersion.Add("Spark", "2.0");
+            parameters.ComponentVersion.Add("Spark", "2.2");
 
-            RunCreateClusterTestInNewResourceGroup(GetType().FullName, "TestCreateLinuxSparkClusterWithComponentVersion",
-                "hdisdk-sparkcomponentversions", parameters);
+            RunCreateClusterTestInNewResourceGroup(GetType().FullName, testName, "hdisdk-sparkcomponentversions", parameters);
         }
 
         [Fact]
         public void TestCreateKafkaClusterWithManagedDisks()
         {
-            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
+            string testName = "TestCreateKafkaClusterWithManagedDisks";
+            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
             parameters.ClusterType = "Kafka";
             parameters.WorkerNodeDataDisksGroups = new List<DataDisksGroups>
             {
@@ -102,16 +107,37 @@ namespace Management.HDInsight.Tests
                 }
             };
 
-            RunCreateClusterTestInNewResourceGroup(GetType().FullName, "TestCreateKafkaClusterWithManagedDisks",
-                "hdisdk-kafka", parameters);
+            RunCreateClusterTestInNewResourceGroup(GetType().FullName, testName, "hdisdk-kafka", parameters);
         }
 
         [Fact]
         public void TestCreateWithDataLakeStorage()
         {
-            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersForAdl();
+            string testName = "TestCreateWithDataLakeStorage";
+            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersForAdl(testName);
 
-            RunCreateClusterTestInNewResourceGroup(GetType().FullName, "TestCreateWithDataLakeStorage", "hdisdk-adl", parameters);
+            RunCreateClusterTestInNewResourceGroup(GetType().FullName, testName, "hdisdk-adl", parameters);
+        }
+
+        [Fact]
+        public void TestCreateRServerCluster()
+        {
+            string testName = "TestCreateRServerCluster";
+            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
+            parameters.ClusterType = "RServer";
+
+            RunCreateClusterTestInNewResourceGroup(GetType().FullName, testName, "hdisdk-rserver", parameters);
+        }
+
+        [Fact]
+        public void TestCreateMLServicesCluster()
+        {
+            string testName = "TestCreateMLServicesCluster";
+            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
+            parameters.Version = "3.6";
+            parameters.ClusterType = "MLServices";
+
+            RunCreateClusterTestInNewResourceGroup(GetType().FullName, testName, "hdisdk-mlservices", parameters);
         }
 
         private static void RunCreateClusterTestInNewResourceGroup(string suiteName, string testName, string clusterName,

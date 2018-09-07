@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v1.2/Training/projects/e222c033-5f5d-4a23-bde9-8343f19c0a01/images/untagged?take=50&skip=0",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4yL1RyYWluaW5nL3Byb2plY3RzL2UyMjJjMDMzLTVmNWQtNGEyMy1iZGU5LTgzNDNmMTljMGEwMS9pbWFnZXMvdW50YWdnZWQ/dGFrZT01MCZza2lwPTA=",
+      "RequestUri": "/customvision/v2.1/Training/projects/e55e8b06-6bab-4622-ad1b-32ee6e45b0c9/images/untagged?take=50&skip=0",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL3Byb2plY3RzL2U1NWU4YjA2LTZiYWItNDYyMi1hZDFiLTMyZWU2ZTQ1YjBjOS9pbWFnZXMvdW50YWdnZWQ/dGFrZT01MCZza2lwPTA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -11,7 +11,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/1.0.2.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
         ]
       },
       "ResponseBody": "[]",
@@ -23,10 +23,10 @@
           "application/json; charset=utf-8"
         ],
         "Date": [
-          "Thu, 22 Feb 2018 15:34:46 GMT"
+          "Thu, 12 Jul 2018 15:22:20 GMT"
         ],
         "apim-request-id": [
-          "2991a364-bb69-4adc-bdd0-1dad234c351d"
+          "a4168915-470a-4bac-af57-d4a18d33cd1c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -36,6 +36,40 @@
         ]
       },
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/customvision/v2.1/Training/projects/e55e8b06-6bab-4622-ad1b-32ee6e45b0c9",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL3Byb2plY3RzL2U1NWU4YjA2LTZiYWItNDYyMi1hZDFiLTMyZWU2ZTQ1YjBjOQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Date": [
+          "Thu, 12 Jul 2018 15:22:20 GMT"
+        ],
+        "apim-request-id": [
+          "903eee60-fce8-4b24-9336-1bf2fd0adf73"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 204
     }
   ],
   "Names": {},

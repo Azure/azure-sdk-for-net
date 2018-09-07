@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v1.2/Training/projects?name=Test%20Project&description=This%20is%20a%20test%20project&domainId=c151d5b5-dd07-472a-acc8-15d29dea8518",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4yL1RyYWluaW5nL3Byb2plY3RzP25hbWU9VGVzdCUyMFByb2plY3QmZGVzY3JpcHRpb249VGhpcyUyMGlzJTIwYSUyMHRlc3QlMjBwcm9qZWN0JmRvbWFpbklkPWMxNTFkNWI1LWRkMDctNDcyYS1hY2M4LTE1ZDI5ZGVhODUxOA==",
+      "RequestUri": "/customvision/v2.1/Training/projects?name=Test%20Project&description=This%20is%20a%20test%20project&domainId=c151d5b5-dd07-472a-acc8-15d29dea8518",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL3Byb2plY3RzP25hbWU9VGVzdCUyMFByb2plY3QmZGVzY3JpcHRpb249VGhpcyUyMGlzJTIwYSUyMHRlc3QlMjBwcm9qZWN0JmRvbWFpbklkPWMxNTFkNWI1LWRkMDctNDcyYS1hY2M4LTE1ZDI5ZGVhODUxOA==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -11,22 +11,22 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/1.0.2.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"Id\": \"a5b93d43-ae76-447e-8d3b-4b2df9ab14cb\",\r\n  \"Name\": \"Test Project (7)\",\r\n  \"Description\": \"This is a test project\",\r\n  \"Settings\": {\r\n    \"DomainId\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n    \"Classification\": \"MultiLabel\",\r\n    \"UseNegativeSet\": true\r\n  },\r\n  \"CurrentIterationId\": \"8bbf8c4f-2064-488e-af69-d32e6370a093\",\r\n  \"Created\": \"2018-02-22T16:45:58.43\",\r\n  \"LastModified\": \"2018-02-22T16:45:58.4464801Z\",\r\n  \"ThumbnailUri\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"140fd86d-c9bb-472e-bfbb-d9d4233f40e1\",\r\n  \"name\": \"Test Project (1)\",\r\n  \"description\": \"This is a test project\",\r\n  \"settings\": {\r\n    \"domainId\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"useNegativeSet\": true,\r\n    \"detectionParameters\": null\r\n  },\r\n  \"created\": \"2018-07-12T15:23:24.6766667\",\r\n  \"lastModified\": \"2018-07-12T15:23:24.6766667\",\r\n  \"thumbnailUri\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "386"
+          "361"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Date": [
-          "Thu, 22 Feb 2018 16:45:58 GMT"
+          "Thu, 12 Jul 2018 15:23:24 GMT"
         ],
         "apim-request-id": [
-          "6690cb7c-c92c-4117-85a2-4baebd472727"
+          "4bf14949-d162-4432-a5b9-d280cff8ed7f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -38,8 +38,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v1.2/Training/projects/a5b93d43-ae76-447e-8d3b-4b2df9ab14cb",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4yL1RyYWluaW5nL3Byb2plY3RzL2E1YjkzZDQzLWFlNzYtNDQ3ZS04ZDNiLTRiMmRmOWFiMTRjYg==",
+      "RequestUri": "/customvision/v2.1/Training/projects/140fd86d-c9bb-472e-bfbb-d9d4233f40e1",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL3Byb2plY3RzLzE0MGZkODZkLWM5YmItNDcyZS1iZmJiLWQ5ZDQyMzNmNDBlMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -48,7 +48,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/1.0.2.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
         ]
       },
       "ResponseBody": "",
@@ -57,10 +57,10 @@
           "0"
         ],
         "Date": [
-          "Thu, 22 Feb 2018 16:45:58 GMT"
+          "Thu, 12 Jul 2018 15:23:24 GMT"
         ],
         "apim-request-id": [
-          "3a94d7de-83e3-4f12-899c-e75076f677cb"
+          "155b9be7-0ff6-4a93-96dc-ef54299deabf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

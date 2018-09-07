@@ -31,6 +31,7 @@ namespace Management.HDInsight.Tests.UnitTests
             Assert.Equal(createParams.Version, extendedParams.Properties.ClusterVersion);
             Assert.Equal(OSType.Linux, extendedParams.Properties.OsType);
             Assert.Equal(createParams.SecurityProfile, extendedParams.Properties.SecurityProfile);
+            ValidateStorageProfile(createParams.DefaultStorageInfo, extendedParams.Properties.StorageProfile);
 
             //Validate configurations.
             Dictionary<string, Dictionary<string, string>> configurations = extendedParams.Properties.ClusterDefinition.Configurations as Dictionary<string, Dictionary<string, string>>;
@@ -43,6 +44,22 @@ namespace Management.HDInsight.Tests.UnitTests
 
             //Validate roles.
             ValidateRoles(extendedParams.Properties.ComputeProfile.Roles, createParams);
+        }
+
+        public static void ValidateStorageProfile(StorageInfo inputStorageInfo, StorageProfile convertedStorageProfile)
+        {
+            // Note: WASB and ADLS Gen 1 details are validated in configuration validation
+            AzureDataLakeStoreGen2Info adlsGen2Info = inputStorageInfo as AzureDataLakeStoreGen2Info;
+            if (adlsGen2Info != null)
+            {
+                Assert.NotNull(convertedStorageProfile);
+                Assert.NotNull(convertedStorageProfile.Storageaccounts);
+                Assert.NotEmpty(convertedStorageProfile.Storageaccounts);
+                StorageAccount defaultStorageAccount = convertedStorageProfile.Storageaccounts.Single(storageAccount => storageAccount.IsDefault.Value);
+                Assert.Equal(adlsGen2Info.StorageAccountName, defaultStorageAccount.Name);
+                Assert.Equal(adlsGen2Info.StorageAccountKey, defaultStorageAccount.Key);
+                Assert.Equal(adlsGen2Info.StorageFileSystem, defaultStorageAccount.FileSystem);
+            }
         }
 
         public static void ValidateRoles(IList<Role> roleCollection, ClusterCreateParameters createParams)
@@ -86,8 +103,8 @@ namespace Management.HDInsight.Tests.UnitTests
             Assert.NotNull(zookeepernode);
             Assert.Equal(3, zookeepernode.TargetInstanceCount);
 
-            //RServer clustes contain an additional edge node. Return if not RServer.
-            if (!createParams.ClusterType.Equals("RServer", StringComparison.OrdinalIgnoreCase))
+            //RServer & MLServices clusters contain an additional edge node. Return if not RServer or not MLServices.
+            if (!new []{ "RServer", "MLServices" }.Contains(createParams.ClusterType, StringComparer.OrdinalIgnoreCase))
             {
                 Assert.Equal(3, roleCollection.Count);
                 return;
@@ -258,26 +275,32 @@ namespace Management.HDInsight.Tests.UnitTests
         public static void ValidateStorageConfigurations(IReadOnlyDictionary<string, Dictionary<string, string>> configurations, StorageInfo defaultStorageInfo,
             Dictionary<string, string> additionalStorageAccounts)
         {
-            Assert.True(configurations.ContainsKey(ConfigurationKey.CoreSite));
-            Dictionary<string, string> coreConfig = configurations[ConfigurationKey.CoreSite];
-            Assert.True(coreConfig.ContainsKey(Constants.StorageConfigurations.DefaultFsKey));
             AzureStorageInfo azureStorage = defaultStorageInfo as AzureStorageInfo;
             AzureDataLakeStoreInfo adlStorage = defaultStorageInfo as AzureDataLakeStoreInfo;
-            if (azureStorage != null)
-            {
-                Assert.True(coreConfig.ContainsKey(string.Format(Constants.StorageConfigurations.WasbStorageAccountKeyFormat, azureStorage.StorageAccountName)));
-            }
-            else if (adlStorage != null)
-            {
-                Assert.True(coreConfig.ContainsKey(Constants.StorageConfigurations.AdlHostNameKey));
-                Assert.True(coreConfig.ContainsKey(Constants.StorageConfigurations.AdlMountPointKey));
-            }
 
-            if (additionalStorageAccounts != null && additionalStorageAccounts.Any())
+            bool shouldValidateCoreConfig = azureStorage != null || adlStorage != null || additionalStorageAccounts.Any();
+            if (shouldValidateCoreConfig)
             {
-                foreach (KeyValuePair<string, string> additionalStorageAccount in additionalStorageAccounts)
+                Assert.True(configurations.ContainsKey(ConfigurationKey.CoreSite));
+                Dictionary<string, string> coreConfig = configurations[ConfigurationKey.CoreSite];
+                Assert.True(coreConfig.ContainsKey(Constants.StorageConfigurations.DefaultFsKey));
+                
+                if (azureStorage != null)
                 {
-                    Assert.True(coreConfig.ContainsKey(string.Format(Constants.StorageConfigurations.WasbStorageAccountKeyFormat, additionalStorageAccount.Key)));
+                    Assert.True(coreConfig.ContainsKey(string.Format(Constants.StorageConfigurations.WasbStorageAccountKeyFormat, azureStorage.StorageAccountName)));
+                }
+                else if (adlStorage != null)
+                {
+                    Assert.True(coreConfig.ContainsKey(Constants.StorageConfigurations.AdlHostNameKey));
+                    Assert.True(coreConfig.ContainsKey(Constants.StorageConfigurations.AdlMountPointKey));
+                }
+
+                if (additionalStorageAccounts != null && additionalStorageAccounts.Any())
+                {
+                    foreach (KeyValuePair<string, string> additionalStorageAccount in additionalStorageAccounts)
+                    {
+                        Assert.True(coreConfig.ContainsKey(string.Format(Constants.StorageConfigurations.WasbStorageAccountKeyFormat, additionalStorageAccount.Key)));
+                    }
                 }
             }
         }

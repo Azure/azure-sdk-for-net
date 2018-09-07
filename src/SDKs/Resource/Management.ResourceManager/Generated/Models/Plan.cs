@@ -33,12 +33,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="publisher">The publisher ID.</param>
         /// <param name="product">The offer ID.</param>
         /// <param name="promotionCode">The promotion code.</param>
-        public Plan(string name = default(string), string publisher = default(string), string product = default(string), string promotionCode = default(string))
+        /// <param name="version">The plan's version.</param>
+        public Plan(string name = default(string), string publisher = default(string), string product = default(string), string promotionCode = default(string), string version = default(string))
         {
             Name = name;
             Publisher = publisher;
             Product = product;
             PromotionCode = promotionCode;
+            Version = version;
             CustomInit();
         }
 
@@ -70,6 +72,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "promotionCode")]
         public string PromotionCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the plan's version.
+        /// </summary>
+        [JsonProperty(PropertyName = "version")]
+        public string Version { get; set; }
 
     }
 }

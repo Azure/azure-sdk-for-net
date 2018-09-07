@@ -6,16 +6,24 @@
     <Description>Use this package if you're developing a .NET application using Azure Search, and you only need to query or update documents in your indexes. If you also need to create or update indexes, synonym maps, or other service-level resources, use the Microsoft.Azure.Search package instead.</Description>
     <AssemblyTitle>Microsoft Azure Search Data Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Search.Data</AssemblyName>
-    <VersionPrefix>5.0.0</VersionPrefix>
-    <PackageReleaseNotes>See the Microsoft.Azure.Search package for detailed release notes on the entire Azure Search .NET SDK.</PackageReleaseNotes>
+    <Version>5.0.2</Version>
+    <PackageReleaseNotes>See the Microsoft.Azure.Search package for detailed release notes on the entire Azure Search .NET SDK.</PackageReleaseNotes>	
   </PropertyGroup>
+
+  	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+		<!--There are certain projects that needs internals visible for test purpose -->
+		<SignAssembly>true</SignAssembly>
+		<DelaySign>true</DelaySign>
+		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+	</PropertyGroup>
+	
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Common.cs" Link="Properties\AssemblyInfo.Common.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Spatial" Version="7.2.0" />
-    <PackageReference Include="Microsoft.Azure.Search.Common" Version="[5.0.0, 6.0.0)" />
+    <PackageReference Include="Microsoft.Azure.Search.Common" Version="[5.0.2, 6.0.0)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.Search.Common\Microsoft.Azure.Search.Common.csproj" />

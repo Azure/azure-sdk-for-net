@@ -28,8 +28,11 @@ namespace Microsoft.Azure.Management.Automation
         /// activity name.
         /// <see href="http://aka.ms/azureautomationsdk/activityoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='moduleName'>
         /// The name of module.
@@ -52,14 +55,17 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Activity>> GetWithHttpMessagesAsync(string automationAccountName, string moduleName, string activityName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Activity>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string moduleName, string activityName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of activities in the module identified by module
         /// name.
         /// <see href="http://aka.ms/azureautomationsdk/activityoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='moduleName'>
         /// The name of module.
@@ -79,7 +85,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Activity>>> ListByModuleWithHttpMessagesAsync(string automationAccountName, string moduleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Activity>>> ListByModuleWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string moduleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of activities in the module identified by module
         /// name.

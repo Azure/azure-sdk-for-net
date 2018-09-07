@@ -1,7 +1,7 @@
     {
       "Name": "RecentJob",
       "ProtocolName": "Models.RecentJob",
-      "Comment": "Information about the most recent job under a job schedule.",
+      "SummaryComment": "Information about the most recent job under a job schedule.",
       "IsConstructorPublic": false,
       "Properties": [
         {

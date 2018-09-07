@@ -3,7 +3,7 @@
   
   <PropertyGroup>
     <PackageId>ContentModerator.Tests</PackageId>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.ContentModerator.Tests</AssemblyName>
     <Description>ContentModerator.Tests Class Library</Description>
   </PropertyGroup>

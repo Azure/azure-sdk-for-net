@@ -1,7 +1,7 @@
     {
       "Name": "JobReleaseTask",
       "ProtocolName": "Models.JobReleaseTask",
-      "Comment": "A Job Release task to run on job completion on any compute node where the job has run.",
+      "SummaryComment": "A Job Release task to run on job completion on any compute node where the job has run.",
       "Properties": [
         {
           "Key": {
@@ -19,7 +19,7 @@
             "Type": "string",
             "Name": "CommandLine",
             "SummaryComment": "The command line of the task.",
-            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux.",
+            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux. If the command line refers to file paths, it should use a relative path (relative to the task working directory), or use the Batch provided environment variables (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).",
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
             "ConstructorArgumentType": "Required"
@@ -31,7 +31,7 @@
             "Type": "IList<ResourceFile>",
             "Name": "ResourceFiles",
             "SummaryComment": "A list of files that the Batch service will download to the compute node before running the command line.",
-            "RemarksComment": null,
+            "RemarksComment": "There is a maximum size for the list of resource files. When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of resource files must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers.",
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },

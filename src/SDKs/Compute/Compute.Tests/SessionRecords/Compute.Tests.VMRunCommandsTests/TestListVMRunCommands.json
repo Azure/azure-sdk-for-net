@@ -1,28 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/providers/Microsoft.Compute/locations/SoutheastAsia/runCommands?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTM5M2Y5MTktYTY4YS00M2QwLTkwNjMtNGIyYmRhNmJmZmRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9ydW5Db21tYW5kcz9hcGktdmVyc2lvbj0yMDE3LTEyLTAx",
+      "RequestUri": "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/SoutheastAsia/runCommands?api-version=2018-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjRmYjIzZTMtNmJhMy00MWYwLTliNmUtZTQxMTMxZDVkNjFlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9ydW5Db21tYW5kcz9hcGktdmVyc2lvbj0yMDE4LTA2LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1557001a-2e16-497e-b632-416fdb99584c"
+          "37f602bb-7310-47a3-8982-d11229fdf46a"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.7.2600.0",
-          "OSName/Windows_10_Enterprise",
-          "OSVersion/6.3.16299",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.942.0"
+          "FxVersion/4.7.3132.0",
+          "OSName/Windows10Enterprise",
+          "OSVersion/6.3.17134",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.2492.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"EnableRemotePS\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Enable remote PowerShell\",\r\n      \"description\": \"Configure the machine to enable remote PowerShell.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"IPConfig\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"List IP configuration\",\r\n      \"description\": \"Shows detailed information for the IP address, subnet mask and default gateway for each adapter bound to TCP/IP.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"RunPowerShellScript\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Executes a PowerShell script\",\r\n      \"description\": \"Custom multiline PowerShell script should be defined in script property. Optional parameters can be set in parameters property.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"RunShellScript\",\r\n      \"osType\": \"Linux\",\r\n      \"label\": \"Executes a Linux shell script\",\r\n      \"description\": \"Custom multiline shell script should be defined in script property. Optional parameters can be set in parameters property.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"ifconfig\",\r\n      \"osType\": \"Linux\",\r\n      \"label\": \"List network configuration\",\r\n      \"description\": \"Get the configuration of all network interfaces.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"EnableAdminAccount\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Enable administrator account\",\r\n      \"description\": \"Checks if the local Administrator account is disabled, and if so enables it.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"ResetAccountPassword\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Reset built-in Administrator account password\",\r\n      \"description\": \"Reset built-in Administrator account password.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"RDPSettings\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Verify RDP Listener Settings\",\r\n      \"description\": \"Checks registry settings and domain policy settings. Suggests policy actions if machine is part of a domain or modifies the settings to default values.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"SetRDPPort\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Set Remote Desktop port\",\r\n      \"description\": \"Sets the default or user specified port number for Remote Desktop connections. Enables firewall rule for inbound access to the port.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"ResetRDPCert\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Restore RDP Authentication mode to defaults\",\r\n      \"description\": \"Removes the SSL certificate tied to the RDP listener and restores the RDP listerner security to default. Use this script if you see any issues with the certificate.\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"EnableRemotePS\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Enable remote PowerShell\",\r\n      \"description\": \"Configure the machine to enable remote PowerShell.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"IPConfig\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"List IP configuration\",\r\n      \"description\": \"Shows detailed information for the IP address, subnet mask and default gateway for each adapter bound to TCP/IP.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"RunPowerShellScript\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Executes a PowerShell script\",\r\n      \"description\": \"Custom multiline PowerShell script should be defined in script property. Optional parameters can be set in parameters property.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"RunShellScript\",\r\n      \"osType\": \"Linux\",\r\n      \"label\": \"Executes a Linux shell script\",\r\n      \"description\": \"Custom multiline shell script should be defined in script property. Optional parameters can be set in parameters property.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"ifconfig\",\r\n      \"osType\": \"Linux\",\r\n      \"label\": \"List network configuration\",\r\n      \"description\": \"Get the configuration of all network interfaces.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"EnableAdminAccount\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Enable administrator account\",\r\n      \"description\": \"Checks if the local Administrator account is disabled, and if so enables it.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"ResetAccountPassword\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Reset built-in Administrator account password\",\r\n      \"description\": \"Reset built-in Administrator account password.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"RDPSettings\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Verify RDP Listener Settings\",\r\n      \"description\": \"Checks registry settings and domain policy settings. Suggests policy actions if machine is part of a domain or modifies the settings to default values.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"SetRDPPort\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Set Remote Desktop port\",\r\n      \"description\": \"Sets the default or user specified port number for Remote Desktop connections. Enables firewall rule for inbound access to the port.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"ResetRDPCert\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Restore RDP Authentication mode to defaults\",\r\n      \"description\": \"Removes the SSL certificate tied to the RDP listener and restores the RDP listener security to default. Use this script if you see any issues with the certificate.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"RemoveRunCommandWindowsExtension\",\r\n      \"osType\": \"Windows\",\r\n      \"label\": \"Removes the internal RunCommandWindows extension\",\r\n      \"description\": \"Removes RunCommandWindows extension deployed to execute previous RunCommand operations.\"\r\n    },\r\n    {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n      \"id\": \"RemoveRunCommandLinuxExtension\",\r\n      \"osType\": \"Linux\",\r\n      \"label\": \"Removes the internal RunCommandLinux extension\",\r\n      \"description\": \"Removes RunCommandLinux extension deployed to execute previous RunCommand operations.\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "3445"
+          "4164"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -34,16 +34,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/LowCostGet3Min;4799,Microsoft.Compute/LowCostGet30Min;38399"
+          "Microsoft.Compute/GetSubscriptionInfo3Min;419"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "c18570f4-edc2-4f83-9d5a-8a888cbd0148_131600023114504580"
+          "d8479ab9-b4a1-4ca4-bfe5-eb2106eeb54c_131790207339865786"
         ],
         "x-ms-request-id": [
-          "6d438d5e-e671-4ad8-81e9-4b5f2b7ceeb1"
+          "62a789b9-7256-4a29-900a-e89c93a60fce"
         ],
         "Cache-Control": [
           "no-cache"
@@ -53,37 +53,40 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "1530707d-5190-4fa4-bfa1-4505c019998e"
+          "033afe5f-99e1-40fb-bef4-be7ead7937ea"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180111T214846Z:1530707d-5190-4fa4-bfa1-4505c019998e"
+          "NORTHCENTRALUS:20180818T123743Z:033afe5f-99e1-40fb-bef4-be7ead7937ea"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ],
         "Date": [
-          "Thu, 11 Jan 2018 21:48:45 GMT"
+          "Sat, 18 Aug 2018 12:37:43 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/providers/Microsoft.Compute/locations/SoutheastAsia/runCommands/RunPowerShellScript?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTM5M2Y5MTktYTY4YS00M2QwLTkwNjMtNGIyYmRhNmJmZmRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9ydW5Db21tYW5kcy9SdW5Qb3dlclNoZWxsU2NyaXB0P2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
+      "RequestUri": "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/SoutheastAsia/runCommands/RunPowerShellScript?api-version=2018-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjRmYjIzZTMtNmJhMy00MWYwLTliNmUtZTQxMTMxZDVkNjFlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9ydW5Db21tYW5kcy9SdW5Qb3dlclNoZWxsU2NyaXB0P2FwaS12ZXJzaW9uPTIwMTgtMDYtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "562b98ac-b6bc-455e-b486-ddf8e685bc51"
+          "dcce1aee-2967-4595-93ee-0b58086451f0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.7.2600.0",
-          "OSName/Windows_10_Enterprise",
-          "OSVersion/6.3.16299",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.942.0"
+          "FxVersion/4.7.3132.0",
+          "OSName/Windows10Enterprise",
+          "OSVersion/6.3.17134",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.2492.0"
         ]
       },
       "ResponseBody": "{\r\n  \"script\": [\r\n    \"param(\",\r\n    \"    [string]$arg1,\",\r\n    \"    [string]$arg2\",\r\n    \")\",\r\n    \"Write-Host This is a sample script with parameters $arg1 $arg2\"\r\n  ],\r\n  \"parameters\": [\r\n    {\r\n      \"name\": \"arg1\",\r\n      \"type\": \"string\",\r\n      \"required\": false\r\n    },\r\n    {\r\n      \"name\": \"arg2\",\r\n      \"type\": \"string\",\r\n      \"required\": false\r\n    }\r\n  ],\r\n  \"$schema\": \"http://schema.management.azure.com/schemas/2016-11-17/runcommands.json\",\r\n  \"id\": \"RunPowerShellScript\",\r\n  \"osType\": \"Windows\",\r\n  \"label\": \"Executes a PowerShell script\",\r\n  \"description\": \"Custom multiline PowerShell script should be defined in script property. Optional parameters can be set in parameters property.\"\r\n}",
@@ -101,16 +104,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/LowCostGet3Min;4798,Microsoft.Compute/LowCostGet30Min;38398"
+          "Microsoft.Compute/GetSubscriptionInfo3Min;418"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "c18570f4-edc2-4f83-9d5a-8a888cbd0148_131600023114504580"
+          "d8479ab9-b4a1-4ca4-bfe5-eb2106eeb54c_131790207339865786"
         ],
         "x-ms-request-id": [
-          "93a04604-223e-45ac-b66b-bdc881fb3670"
+          "fc022b79-eb89-4bac-9e37-13f44ebdec50"
         ],
         "Cache-Control": [
           "no-cache"
@@ -120,16 +123,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "11998"
         ],
         "x-ms-correlation-request-id": [
-          "cefb9573-1477-48a2-857c-0af83b87a2d0"
+          "64a8879e-d559-493f-806f-e8987858d209"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180111T214846Z:cefb9573-1477-48a2-857c-0af83b87a2d0"
+          "NORTHCENTRALUS:20180818T123744Z:64a8879e-d559-493f-806f-e8987858d209"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ],
         "Date": [
-          "Thu, 11 Jan 2018 21:48:46 GMT"
+          "Sat, 18 Aug 2018 12:37:43 GMT"
         ]
       },
       "StatusCode": 200
@@ -137,6 +143,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "5393f919-a68a-43d0-9063-4b2bda6bffdf"
+    "SubscriptionId": "24fb23e3-6ba3-41f0-9b6e-e41131d5d61e"
   }
 }

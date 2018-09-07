@@ -54,8 +54,21 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <summary>
         /// Deletes a policy assignment.
         /// </summary>
+        /// <remarks>
+        /// This operation deletes a policy assignment, given its name and the scope it
+        /// was created in. The scope of a policy assignment is the part of its ID
+        /// preceding
+        /// '/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
+        /// </remarks>
         /// <param name='scope'>
-        /// The scope of the policy assignment.
+        /// The scope of the policy assignment. Valid scopes are: management group
+        /// (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
+        /// (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
+        /// resource (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
         /// </param>
         /// <param name='policyAssignmentName'>
         /// The name of the policy assignment to delete.
@@ -91,7 +104,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
             }
-            string apiVersion = "2017-06-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -101,7 +117,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("policyAssignmentName", policyAssignmentName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -111,9 +126,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{policyAssignmentName}", System.Uri.EscapeDataString(policyAssignmentName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -236,15 +251,23 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Creates a policy assignment.
+        /// Creates or updates a policy assignment.
         /// </summary>
         /// <remarks>
-        /// Policy assignments are inherited by child resources. For example, when you
-        /// apply a policy to a resource group that policy is assigned to all resources
-        /// in the group.
+        /// This operation creates or updates a policy assignment with the given scope
+        /// and name. Policy assignments apply to all resources contained within their
+        /// scope. For example, when you assign a policy at resource group scope, that
+        /// policy applies to all resources in the group.
         /// </remarks>
         /// <param name='scope'>
-        /// The scope of the policy assignment.
+        /// The scope of the policy assignment. Valid scopes are: management group
+        /// (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
+        /// (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
+        /// resource (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
         /// </param>
         /// <param name='policyAssignmentName'>
         /// The name of the policy assignment.
@@ -291,7 +314,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 parameters.Validate();
             }
-            string apiVersion = "2017-06-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -302,7 +328,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("policyAssignmentName", policyAssignmentName);
                 tracingParameters.Add("parameters", parameters);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
@@ -312,9 +337,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{policyAssignmentName}", System.Uri.EscapeDataString(policyAssignmentName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -443,10 +468,21 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a policy assignment.
+        /// Retrieves a policy assignment.
         /// </summary>
+        /// <remarks>
+        /// This operation retrieves a single policy assignment, given its name and the
+        /// scope it was created at.
+        /// </remarks>
         /// <param name='scope'>
-        /// The scope of the policy assignment.
+        /// The scope of the policy assignment. Valid scopes are: management group
+        /// (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
+        /// (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
+        /// resource (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
         /// </param>
         /// <param name='policyAssignmentName'>
         /// The name of the policy assignment to get.
@@ -482,7 +518,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
             }
-            string apiVersion = "2017-06-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -492,7 +531,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("policyAssignmentName", policyAssignmentName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -502,9 +540,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{policyAssignmentName}", System.Uri.EscapeDataString(policyAssignmentName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -627,13 +665,31 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets policy assignments for the resource group.
+        /// Retrieves all policy assignments that apply to a resource group.
         /// </summary>
+        /// <remarks>
+        /// This operation retrieves the list of all policy assignments associated with
+        /// the given resource group in the given subscription that match the optional
+        /// given $filter. Valid values for $filter are: 'atScope()' or
+        /// 'policyDefinitionId eq '{value}''. If $filter is not provided, the
+        /// unfiltered list includes all policy assignments associated with the
+        /// resource group, including those that apply directly or apply from
+        /// containing scopes, as well as any applied to resources contained within the
+        /// resource group. If $filter=atScope() is provided, the returned list
+        /// includes all policy assignments that apply to the resource group, which is
+        /// everything in the unfiltered list except those applied to resources
+        /// contained within the resource group. If $filter=policyDefinitionId eq
+        /// '{value}' is provided, the returned list includes only policy assignments
+        /// that apply to the resource group and assign the policy definition whose id
+        /// is {value}.
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains policy assignments.
         /// </param>
         /// <param name='filter'>
-        /// The filter to apply on the operation.
+        /// The filter to apply on the operation. Valid values for $filter are:
+        /// 'atScope()' or 'policyDefinitionId eq '{value}''. If $filter is not
+        /// provided, no filtering is performed.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -677,11 +733,14 @@ namespace Microsoft.Azure.Management.ResourceManager
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -691,7 +750,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListForResourceGroup", tracingParameters);
             }
@@ -705,9 +763,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _queryParameters.Add(string.Format("$filter={0}", filter));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -830,23 +888,54 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets policy assignments for a resource.
+        /// Retrieves all policy assignments that apply to a resource.
         /// </summary>
+        /// <remarks>
+        /// This operation retrieves the list of all policy assignments associated with
+        /// the specified resource in the given resource group and subscription that
+        /// match the optional given $filter. Valid values for $filter are: 'atScope()'
+        /// or 'policyDefinitionId eq '{value}''. If $filter is not provided, the
+        /// unfiltered list includes all policy assignments associated with the
+        /// resource, including those that apply directly or from all containing
+        /// scopes, as well as any applied to resources contained within the resource.
+        /// If $filter=atScope() is provided, the returned list includes all policy
+        /// assignments that apply to the resource, which is everything in the
+        /// unfiltered list except those applied to resources contained within the
+        /// resource. If $filter=policyDefinitionId eq '{value}' is provided, the
+        /// returned list includes only policy assignments that apply to the resource
+        /// and assign the policy definition whose id is {value}. Three parameters plus
+        /// the resource name are used to identify a specific resource. If the resource
+        /// is not part of a parent resource (the more common case), the parent
+        /// resource path should not be provided (or provided as ''). For example a web
+        /// app could be specified as ({resourceProviderNamespace} == 'Microsoft.Web',
+        /// {parentResourcePath} == '', {resourceType} == 'sites', {resourceName} ==
+        /// 'MyWebApp'). If the resource is part of a parent resource, then all
+        /// parameters should be provided. For example a virtual machine DNS name could
+        /// be specified as ({resourceProviderNamespace} == 'Microsoft.Compute',
+        /// {parentResourcePath} == 'virtualMachines/MyVirtualMachine', {resourceType}
+        /// == 'domainNames', {resourceName} == 'MyComputerName'). A convenient
+        /// alternative to providing the namespace and type name separately is to
+        /// provide both in the {resourceType} parameter, format:
+        /// ({resourceProviderNamespace} == '', {parentResourcePath} == '',
+        /// {resourceType} == 'Microsoft.Web/sites', {resourceName} == 'MyWebApp').
+        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group containing the resource. The name is case
-        /// insensitive.
+        /// The name of the resource group containing the resource.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// The namespace of the resource provider.
+        /// The namespace of the resource provider. For example, the namespace of a
+        /// virtual machine is Microsoft.Compute (from
+        /// Microsoft.Compute/virtualMachines)
         /// </param>
         /// <param name='parentResourcePath'>
-        /// The parent resource path.
+        /// The parent resource path. Use empty string if there is none.
         /// </param>
         /// <param name='resourceType'>
-        /// The resource type.
+        /// The resource type name. For example the type name of a web app is 'sites'
+        /// (from Microsoft.Web/sites).
         /// </param>
         /// <param name='resourceName'>
-        /// The name of the resource with policy assignments.
+        /// The name of the resource.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -872,7 +961,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        [System.Obsolete()]
         public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForResourceWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<PolicyAssignment> odataQuery = default(ODataQuery<PolicyAssignment>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
@@ -910,11 +998,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -928,7 +1019,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                 tracingParameters.Add("parentResourcePath", parentResourcePath);
                 tracingParameters.Add("resourceType", resourceType);
                 tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListForResource", tracingParameters);
             }
@@ -950,9 +1040,9 @@ namespace Microsoft.Azure.Management.ResourceManager
                     _queryParameters.Add(_odataFilter);
                 }
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1075,8 +1165,23 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets all the policy assignments for a subscription.
+        /// Retrieves all policy assignments that apply to a subscription.
         /// </summary>
+        /// <remarks>
+        /// This operation retrieves the list of all policy assignments associated with
+        /// the given subscription that match the optional given $filter. Valid values
+        /// for $filter are: 'atScope()' or 'policyDefinitionId eq '{value}''. If
+        /// $filter is not provided, the unfiltered list includes all policy
+        /// assignments associated with the subscription, including those that apply
+        /// directly or from management groups that contain the given subscription, as
+        /// well as any applied to objects contained within the subscription. If
+        /// $filter=atScope() is provided, the returned list includes all policy
+        /// assignments that apply to the subscription, which is everything in the
+        /// unfiltered list except those applied to objects contained within the
+        /// subscription. If $filter=policyDefinitionId eq '{value}' is provided, the
+        /// returned list includes only policy assignments that apply to the
+        /// subscription and assign the policy definition whose id is {value}.
+        /// </remarks>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
@@ -1103,11 +1208,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </return>
         public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListWithHttpMessagesAsync(ODataQuery<PolicyAssignment> odataQuery = default(ODataQuery<PolicyAssignment>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1116,7 +1224,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("odataQuery", odataQuery);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -1133,9 +1240,9 @@ namespace Microsoft.Azure.Management.ResourceManager
                     _queryParameters.Add(_odataFilter);
                 }
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1258,19 +1365,23 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Deletes a policy assignment by ID.
+        /// Deletes a policy assignment.
         /// </summary>
         /// <remarks>
-        /// When providing a scope for the assigment, use
-        /// '/subscriptions/{subscription-id}/' for subscriptions,
-        /// '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}' for
-        /// resource groups, and
-        /// '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider-namespace}/{resource-type}/{resource-name}'
-        /// for resources.
+        /// This operation deletes the policy with the given ID. Policy assignment IDs
+        /// have this format:
+        /// '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
+        /// Valid formats for {scope} are:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'
+        /// (management group), '/subscriptions/{subscriptionId}' (subscription),
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
+        /// (resource group), or
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'
+        /// (resource).
         /// </remarks>
         /// <param name='policyAssignmentId'>
         /// The ID of the policy assignment to delete. Use the format
-        /// '/{scope}/providers/Microsoft.Authorization/policyAssignments/{policy-assignment-name}'.
+        /// '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1299,7 +1410,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentId");
             }
-            string apiVersion = "2017-06-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1308,7 +1422,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyAssignmentId", policyAssignmentId);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteById", tracingParameters);
             }
@@ -1317,9 +1430,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{policyAssignmentId}").ToString();
             _url = _url.Replace("{policyAssignmentId}", policyAssignmentId);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1379,7 +1492,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1442,21 +1555,26 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Creates a policy assignment by ID.
+        /// Creates or updates a policy assignment.
         /// </summary>
         /// <remarks>
-        /// Policy assignments are inherited by child resources. For example, when you
-        /// apply a policy to a resource group that policy is assigned to all resources
-        /// in the group. When providing a scope for the assigment, use
-        /// '/subscriptions/{subscription-id}/' for subscriptions,
-        /// '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}' for
-        /// resource groups, and
-        /// '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider-namespace}/{resource-type}/{resource-name}'
-        /// for resources.
+        /// This operation creates or updates the policy assignment with the given ID.
+        /// Policy assignments made on a scope apply to all resources contained in that
+        /// scope. For example, when you assign a policy to a resource group that
+        /// policy applies to all resources in the group. Policy assignment IDs have
+        /// this format:
+        /// '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
+        /// Valid scopes are: management group (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
+        /// (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
+        /// resource (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
         /// </remarks>
         /// <param name='policyAssignmentId'>
         /// The ID of the policy assignment to create. Use the format
-        /// '/{scope}/providers/Microsoft.Authorization/policyAssignments/{policy-assignment-name}'.
+        /// '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
         /// </param>
         /// <param name='parameters'>
         /// Parameters for policy assignment.
@@ -1496,7 +1614,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 parameters.Validate();
             }
-            string apiVersion = "2017-06-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1506,7 +1627,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyAssignmentId", policyAssignmentId);
                 tracingParameters.Add("parameters", parameters);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateById", tracingParameters);
             }
@@ -1515,9 +1635,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{policyAssignmentId}").ToString();
             _url = _url.Replace("{policyAssignmentId}", policyAssignmentId);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1646,19 +1766,23 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a policy assignment by ID.
+        /// Retrieves the policy assignment with the given ID.
         /// </summary>
         /// <remarks>
-        /// When providing a scope for the assigment, use
-        /// '/subscriptions/{subscription-id}/' for subscriptions,
-        /// '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}' for
-        /// resource groups, and
-        /// '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider-namespace}/{resource-type}/{resource-name}'
-        /// for resources.
+        /// The operation retrieves the policy assignment with the given ID. Policy
+        /// assignment IDs have this format:
+        /// '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
+        /// Valid scopes are: management group (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}'), resource group
+        /// (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or
+        /// resource (format:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
         /// </remarks>
         /// <param name='policyAssignmentId'>
         /// The ID of the policy assignment to get. Use the format
-        /// '/{scope}/providers/Microsoft.Authorization/policyAssignments/{policy-assignment-name}'.
+        /// '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1687,7 +1811,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentId");
             }
-            string apiVersion = "2017-06-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1696,7 +1823,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyAssignmentId", policyAssignmentId);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetById", tracingParameters);
             }
@@ -1705,9 +1831,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{policyAssignmentId}").ToString();
             _url = _url.Replace("{policyAssignmentId}", policyAssignmentId);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1830,8 +1956,24 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets policy assignments for the resource group.
+        /// Retrieves all policy assignments that apply to a resource group.
         /// </summary>
+        /// <remarks>
+        /// This operation retrieves the list of all policy assignments associated with
+        /// the given resource group in the given subscription that match the optional
+        /// given $filter. Valid values for $filter are: 'atScope()' or
+        /// 'policyDefinitionId eq '{value}''. If $filter is not provided, the
+        /// unfiltered list includes all policy assignments associated with the
+        /// resource group, including those that apply directly or apply from
+        /// containing scopes, as well as any applied to resources contained within the
+        /// resource group. If $filter=atScope() is provided, the returned list
+        /// includes all policy assignments that apply to the resource group, which is
+        /// everything in the unfiltered list except those applied to resources
+        /// contained within the resource group. If $filter=policyDefinitionId eq
+        /// '{value}' is provided, the returned list includes only policy assignments
+        /// that apply to the resource group and assign the policy definition whose id
+        /// is {value}.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -1998,8 +2140,37 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets policy assignments for a resource.
+        /// Retrieves all policy assignments that apply to a resource.
         /// </summary>
+        /// <remarks>
+        /// This operation retrieves the list of all policy assignments associated with
+        /// the specified resource in the given resource group and subscription that
+        /// match the optional given $filter. Valid values for $filter are: 'atScope()'
+        /// or 'policyDefinitionId eq '{value}''. If $filter is not provided, the
+        /// unfiltered list includes all policy assignments associated with the
+        /// resource, including those that apply directly or from all containing
+        /// scopes, as well as any applied to resources contained within the resource.
+        /// If $filter=atScope() is provided, the returned list includes all policy
+        /// assignments that apply to the resource, which is everything in the
+        /// unfiltered list except those applied to resources contained within the
+        /// resource. If $filter=policyDefinitionId eq '{value}' is provided, the
+        /// returned list includes only policy assignments that apply to the resource
+        /// and assign the policy definition whose id is {value}. Three parameters plus
+        /// the resource name are used to identify a specific resource. If the resource
+        /// is not part of a parent resource (the more common case), the parent
+        /// resource path should not be provided (or provided as ''). For example a web
+        /// app could be specified as ({resourceProviderNamespace} == 'Microsoft.Web',
+        /// {parentResourcePath} == '', {resourceType} == 'sites', {resourceName} ==
+        /// 'MyWebApp'). If the resource is part of a parent resource, then all
+        /// parameters should be provided. For example a virtual machine DNS name could
+        /// be specified as ({resourceProviderNamespace} == 'Microsoft.Compute',
+        /// {parentResourcePath} == 'virtualMachines/MyVirtualMachine', {resourceType}
+        /// == 'domainNames', {resourceName} == 'MyComputerName'). A convenient
+        /// alternative to providing the namespace and type name separately is to
+        /// provide both in the {resourceType} parameter, format:
+        /// ({resourceProviderNamespace} == '', {parentResourcePath} == '',
+        /// {resourceType} == 'Microsoft.Web/sites', {resourceName} == 'MyWebApp').
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -2024,7 +2195,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        [System.Obsolete()]
         public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForResourceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
@@ -2167,8 +2337,23 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets all the policy assignments for a subscription.
+        /// Retrieves all policy assignments that apply to a subscription.
         /// </summary>
+        /// <remarks>
+        /// This operation retrieves the list of all policy assignments associated with
+        /// the given subscription that match the optional given $filter. Valid values
+        /// for $filter are: 'atScope()' or 'policyDefinitionId eq '{value}''. If
+        /// $filter is not provided, the unfiltered list includes all policy
+        /// assignments associated with the subscription, including those that apply
+        /// directly or from management groups that contain the given subscription, as
+        /// well as any applied to objects contained within the subscription. If
+        /// $filter=atScope() is provided, the returned list includes all policy
+        /// assignments that apply to the subscription, which is everything in the
+        /// unfiltered list except those applied to objects contained within the
+        /// subscription. If $filter=policyDefinitionId eq '{value}' is provided, the
+        /// returned list includes only policy assignments that apply to the
+        /// subscription and assign the policy definition whose id is {value}.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>

@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// the TenantConfiguration_Validate operation. It contains the log the
         /// entities which will be updated/created/deleted as part of the
         /// TenantConfiguration_Deploy operation.</param>
-        public OperationResultContract(string id = default(string), AsyncOperationStatus? status = default(AsyncOperationStatus?), System.DateTime? started = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), string resultInfo = default(string), ErrorResponse error = default(ErrorResponse), IList<OperationResultLogItemContract> actionLog = default(IList<OperationResultLogItemContract>))
+        public OperationResultContract(string id = default(string), AsyncOperationStatus? status = default(AsyncOperationStatus?), System.DateTime? started = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), string resultInfo = default(string), ErrorResponseBody error = default(ErrorResponseBody), IList<OperationResultLogItemContract> actionLog = default(IList<OperationResultLogItemContract>))
         {
             Id = id;
             Status = status;
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets or sets error Body Contract
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public ErrorResponse Error { get; set; }
+        public ErrorResponseBody Error { get; set; }
 
         /// <summary>
         /// Gets this property if only provided as part of the

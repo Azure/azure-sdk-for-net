@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     using System.Linq;
 
     /// <summary>
-    /// Request body for verify operation.
+    /// Request body for face to face verification.
     /// </summary>
     public partial class VerifyFaceToFaceRequest
     {

@@ -4,9 +4,8 @@
     <Description>AnalysisServices.Tests Class Library</Description>
     <AssemblyName>AnalysisServices.Tests</AssemblyName>
     <PackageId>AnalysisServices.Tests</PackageId>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

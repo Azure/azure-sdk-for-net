@@ -7,11 +7,11 @@
     <PackageId>Microsoft.Azure.Management.PolicyInsights</PackageId>
     <Description>Provides policy insights operations for Microsoft Azure.</Description>
     <AssemblyName>Microsoft.Azure.Management.PolicyInsights</AssemblyName>
-    <Version>0.9.0-preview</Version>
+    <Version>1.0.0</Version>
     <PackageTags>Azure;Policy;PolicyInsights;PolicyEvent;PolicyState;Compliance;</PackageTags>
     <PackageReleaseNotes>
          <![CDATA[ 
-          This is the public preview release of the Microsoft Azure Policy Insights SDK.
+          This is the public release of the Microsoft Azure Policy Insights SDK.
          ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

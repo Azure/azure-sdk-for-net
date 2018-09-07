@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// A collection of environment variables with secret values to set.
+    /// An environment variable with secret value definition.
     /// </summary>
     public partial class EnvironmentVariableWithSecretValue
     {
@@ -32,13 +32,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Initializes a new instance of the
         /// EnvironmentVariableWithSecretValue class.
         /// </summary>
-        /// <param name="name">The name of the environment variable to store
-        /// the secret value.</param>
-        /// <param name="value">The value of the environment variable. This
-        /// value will never be reported back by Batch AI.</param>
-        /// <param name="valueSecretReference">Specifies the location of the
-        /// Azure KeyVault secret which will be used as the environment
-        /// variable value.</param>
+        /// <param name="name">Name.</param>
+        /// <param name="value">Value.</param>
+        /// <param name="valueSecretReference">KeyVault secret
+        /// reference.</param>
         public EnvironmentVariableWithSecretValue(string name, string value = default(string), KeyVaultSecretReference valueSecretReference = default(KeyVaultSecretReference))
         {
             Name = name;
@@ -53,27 +50,31 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the environment variable to store the
-        /// secret value.
+        /// Gets or sets name.
         /// </summary>
+        /// <remarks>
+        /// The name of the environment variable to store the secret value.
+        /// </remarks>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of the environment variable. This value will
-        /// never be reported back by Batch AI.
+        /// Gets or sets value.
         /// </summary>
+        /// <remarks>
+        /// The value of the environment variable. This value will never be
+        /// reported back by Batch AI.
+        /// </remarks>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the location of the Azure KeyVault secret
-        /// which will be used as the environment variable value.
+        /// Gets or sets keyVault secret reference.
         /// </summary>
         /// <remarks>
-        /// Specifies KeyVault Store and Secret which contains the value for
-        /// the environment variable. One of value or valueSecretReference must
-        /// be provided.
+        /// KeyVault store and secret which contains the value for the
+        /// environment variable. One of value or valueSecretReference must be
+        /// provided.
         /// </remarks>
         [JsonProperty(PropertyName = "valueSecretReference")]
         public KeyVaultSecretReference ValueSecretReference { get; set; }

@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'PathBasedRouting'</param>
         /// <param name="backendAddressPool">Backend address pool resource of
         /// the application gateway. </param>
-        /// <param name="backendHttpSettings">Frontend port resource of the
-        /// application gateway.</param>
+        /// <param name="backendHttpSettings">Backend http settings resource of
+        /// the application gateway.</param>
         /// <param name="httpListener">Http listener resource of the
         /// application gateway. </param>
         /// <param name="urlPathMap">URL path map resource of the application
@@ -50,9 +50,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">Provisioning state of the request
         /// routing rule resource. Possible values are: 'Updating', 'Deleting',
         /// and 'Failed'.</param>
-        /// <param name="name">Name of the resource that is unique within a
-        /// resource group. This name can be used to access the
-        /// resource.</param>
+        /// <param name="name">Name of the request routing rule that is unique
+        /// within an Application Gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
@@ -92,7 +91,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource BackendAddressPool { get; set; }
 
         /// <summary>
-        /// Gets or sets frontend port resource of the application gateway.
+        /// Gets or sets backend http settings resource of the application
+        /// gateway.
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendHttpSettings")]
         public SubResource BackendHttpSettings { get; set; }
@@ -125,8 +125,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets or sets name of the resource that is unique within a resource
-        /// group. This name can be used to access the resource.
+        /// Gets or sets name of the request routing rule that is unique within
+        /// an Application Gateway.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

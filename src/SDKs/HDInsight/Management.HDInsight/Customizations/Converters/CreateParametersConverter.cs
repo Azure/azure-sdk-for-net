@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.HDInsight
     using Microsoft.Azure.Management.HDInsight.Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public static class CreateParametersConverter
     {
@@ -39,14 +40,15 @@ namespace Microsoft.Azure.Management.HDInsight
                         Roles = GetRoleCollection(clusterCreateParameters)
                     },
                     OsType = OSType.Linux,
-                    SecurityProfile = clusterCreateParameters.SecurityProfile
+                    SecurityProfile = clusterCreateParameters.SecurityProfile,
+                    StorageProfile = GetStorageProfile(clusterCreateParameters)
                 }
             };
 
             return extendedParams;
         }
 
-        internal static string GetNodeSize(ClusterCreateParameters createProperties, ClusterNodeType nodeType)
+        public static string GetNodeSize(ClusterCreateParameters createProperties, ClusterNodeType nodeType)
         {
             switch (nodeType)
             {
@@ -105,6 +107,8 @@ namespace Microsoft.Azure.Management.HDInsight
             //Get existing core configs.
             Dictionary<string, string> coreConfig = GetExistingConfigurationsForType(configurations, ConfigurationKey.CoreSite);
 
+            // Note: Only WASB and ADLS Gen 1 storage accounts will be populated directly into configurations.
+            //       Other storage account types will be populated into StorageProfile.
             AzureStorageInfo azureStorageAccountInfo = createProperties.DefaultStorageInfo as AzureStorageInfo;
             AzureDataLakeStoreInfo azureDataLakeStorageInfo = createProperties.DefaultStorageInfo as AzureDataLakeStoreInfo;
 
@@ -288,9 +292,9 @@ namespace Microsoft.Azure.Management.HDInsight
             Role zookeeperNode = GetRole(osProfile, vnetProfile, ClusterNodeType.ZookeeperNode, zookeeperNodeScriptActions, 3, zookeeperNodeSize);
             roles.Add(zookeeperNode);
 
-            //RServer clusters contain an additional edge node. Return here for all other types.
-            if (!createProperties.ClusterType.Equals("RServer", StringComparison.OrdinalIgnoreCase))
-            {
+            //RServer & MLServices clusters contain an additional edge node. Return here for all other types.
+            if (!new[] { "RServer", "MLServices" }.Contains(createProperties.ClusterType, StringComparer.OrdinalIgnoreCase))
+                {
                 return roles;
             }
 
@@ -372,6 +376,31 @@ namespace Microsoft.Azure.Management.HDInsight
                 VirtualNetworkProfile = vnetProfile,
                 OsProfile = osProfile,
                 ScriptActions = scriptActions
+            };
+        }
+
+        private static StorageProfile GetStorageProfile(ClusterCreateParameters createProperties)
+        {
+            // Note: Only WASB and ADLS Gen 1 storage accounts will be populated directly into configurations.
+            //       Other storage account types will be populated into StorageProfile.
+            AzureDataLakeStoreGen2Info adlsGen2Info = createProperties.DefaultStorageInfo as AzureDataLakeStoreGen2Info;
+            if (adlsGen2Info == null)
+            {
+                return null;
+            }
+
+            return new StorageProfile
+            {
+                Storageaccounts = new[]
+                {
+                    new StorageAccount
+                    {
+                        Name = adlsGen2Info.StorageAccountName,
+                        FileSystem = adlsGen2Info.StorageFileSystem,
+                        Key = adlsGen2Info.StorageAccountKey,
+                        IsDefault = true
+                    }
+                }
             };
         }
     }

@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
+namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// (float).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        public EntityWithScore(string entity, string type, double startIndex, double endIndex, double score, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
+        public EntityWithScore(string entity, string type, int startIndex, int endIndex, double score, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
             : base(entity, type, startIndex, endIndex, additionalProperties)
         {
             Score = score;

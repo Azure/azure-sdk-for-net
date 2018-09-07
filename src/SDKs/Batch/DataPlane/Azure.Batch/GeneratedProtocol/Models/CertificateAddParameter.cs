@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -98,26 +97,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Thumbprint == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Thumbprint");
-            }
-            if (ThumbprintAlgorithm == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ThumbprintAlgorithm");
-            }
-            if (Data == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Data");
-            }
-        }
     }
 }

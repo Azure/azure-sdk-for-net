@@ -24,28 +24,6 @@ namespace Microsoft.Azure.Management.EventHub
     public partial interface INamespacesOperations
     {
         /// <summary>
-        /// Check the give Namespace name availability.
-        /// </summary>
-        /// <param name='parameters'>
-        /// Parameters to check availability of the given Namespace name
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(CheckNameAvailabilityParameter parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Lists all the available Namespaces within a subscription,
         /// irrespective of the resource groups.
         /// </summary>
@@ -69,7 +47,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// Lists the available Namespaces within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -92,7 +70,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// resource manifest is immutable. This operation is idempotent.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The Namespace name
@@ -121,7 +99,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// associated resources under the namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The Namespace name
@@ -143,7 +121,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// Gets the description of the specified namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The Namespace name
@@ -169,7 +147,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// resource manifest is immutable. This operation is idempotent.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The Namespace name
@@ -194,10 +172,10 @@ namespace Microsoft.Azure.Management.EventHub
         /// </exception>
         Task<AzureOperationResponse<EHNamespace>> UpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, EHNamespace parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of authorization rules for a Namespace.
+        /// Gets a list of IP Filter rules for a Namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The Namespace name
@@ -217,21 +195,21 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AuthorizationRule>>> ListAuthorizationRulesWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IpFilterRule>>> ListIPFilterRulesWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates an AuthorizationRule for a Namespace.
+        /// Creates or updates an IpFilterRule for a Namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The Namespace name
         /// </param>
-        /// <param name='authorizationRuleName'>
-        /// The authorization rule name.
+        /// <param name='ipFilterRuleName'>
+        /// The IP Filter Rule name.
         /// </param>
         /// <param name='parameters'>
-        /// The shared access AuthorizationRule.
+        /// The Namespace IpFilterRule.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -248,18 +226,18 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AuthorizationRule>> CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, AuthorizationRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IpFilterRule>> CreateOrUpdateIpFilterRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string ipFilterRuleName, IpFilterRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an AuthorizationRule for a Namespace.
+        /// Deletes an IpFilterRule for a Namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The Namespace name
         /// </param>
-        /// <param name='authorizationRuleName'>
-        /// The authorization rule name.
+        /// <param name='ipFilterRuleName'>
+        /// The IP Filter Rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -273,47 +251,18 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteIpFilterRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string ipFilterRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets an AuthorizationRule for a Namespace by rule name.
+        /// Gets an IpFilterRule for a Namespace by rule name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The Namespace name
         /// </param>
-        /// <param name='authorizationRuleName'>
-        /// The authorization rule name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<AuthorizationRule>> GetAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the primary and secondary connection strings for the
-        /// Namespace.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// The Namespace name
-        /// </param>
-        /// <param name='authorizationRuleName'>
-        /// The authorization rule name.
+        /// <param name='ipFilterRuleName'>
+        /// The IP Filter Rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -330,22 +279,46 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AccessKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IpFilterRule>> GetIpFilterRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string ipFilterRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Regenerates the primary or secondary connection strings for the
-        /// specified Namespace.
+        /// Gets a list of VirtualNetwork rules for a Namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The Namespace name
         /// </param>
-        /// <param name='authorizationRuleName'>
-        /// The authorization rule name.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<VirtualNetworkRule>>> ListVirtualNetworkRulesWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates or updates an VirtualNetworkRule for a Namespace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the Azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The Namespace name
+        /// </param>
+        /// <param name='virtualNetworkRuleName'>
+        /// The Virtual Network Rule name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters required to regenerate the connection string.
+        /// The Namespace VirtualNetworkRule.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -362,13 +335,66 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AccessKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualNetworkRule>> CreateOrUpdateVirtualNetworkRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string virtualNetworkRuleName, VirtualNetworkRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes an VirtualNetworkRule for a Namespace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the Azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The Namespace name
+        /// </param>
+        /// <param name='virtualNetworkRuleName'>
+        /// The Virtual Network Rule name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteVirtualNetworkRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string virtualNetworkRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets an VirtualNetworkRule for a Namespace by rule name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the Azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The Namespace name
+        /// </param>
+        /// <param name='virtualNetworkRuleName'>
+        /// The Virtual Network Rule name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<VirtualNetworkRule>> GetVirtualNetworkRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string virtualNetworkRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates a namespace. Once created, this namespace's
         /// resource manifest is immutable. This operation is idempotent.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The Namespace name
@@ -397,7 +423,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// associated resources under the namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the azure subscription.
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The Namespace name
@@ -461,7 +487,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// </exception>
         Task<AzureOperationResponse<IPage<EHNamespace>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of authorization rules for a Namespace.
+        /// Gets a list of IP Filter rules for a Namespace.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -481,6 +507,28 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AuthorizationRule>>> ListAuthorizationRulesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IpFilterRule>>> ListIPFilterRulesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of VirtualNetwork rules for a Namespace.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<VirtualNetworkRule>>> ListVirtualNetworkRulesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

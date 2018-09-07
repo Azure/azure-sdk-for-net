@@ -6,12 +6,13 @@
     <AssemblyName>Resource.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.5.0-preview" />-->
+    <ProjectReference Include="..\..\ManagementGroups\Management.ManagementGroups\Management.ManagementGroups.csproj" />
     <ProjectReference Include="..\Management.ResourceManager\Microsoft.Azure.Management.ResourceManager.csproj" />
   </ItemGroup>
 
@@ -32,5 +33,11 @@
     <None Update="ScenarioTests\simple-storage-account.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="ScenarioTests\subscription_level_template.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\Policy.Tests.LivePolicyTests\" />
   </ItemGroup>
 </Project>

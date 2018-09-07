@@ -1,17 +1,20 @@
-﻿Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ContentModerator/readme.md --csharp --csharp-sdks-folder=C:\LatestSdk\tools\..\src\SDKs\ --version=latest --reflect-api-versions
-2018-04-17 23:04:14 UTC
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ContentModerator/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\azure-sdk-for-net\src\SDKs
+2018-08-21 17:38:47 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      9666a766d478b21b587210260fb7de342ae9980e
+Commit:      5edfea925fc41eeff87bfd09b91d0eb7b236616d
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\v-sodsou\AppData\Roaming\npm  `-- autorest@2.0.4262
+Bootstrapper version:    autorest@2.0.4283
 
 
 Latest installed version:    
-.\tools\generate.ps1 was invoked by generate.ps1
 
 

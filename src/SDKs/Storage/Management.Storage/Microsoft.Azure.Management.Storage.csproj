@@ -7,7 +7,7 @@
 		<PackageId>Microsoft.Azure.Management.Storage</PackageId>
 		<Description>Microsoft Azure Management Storage Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Storage</AssemblyName>
-		<Version>7.1.0-preview</Version>
+		<Version>8.1.0-preview</Version>
 		<PackageTags>Microsoft Azure Storage management;Storage;Storage management;</PackageTags>
 		<PackageReleaseNotes>See https://aka.ms/asdotnetsdkchangelog for release notes.</PackageReleaseNotes>
 	</PropertyGroup>

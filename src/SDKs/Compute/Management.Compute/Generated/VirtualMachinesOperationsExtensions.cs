@@ -118,6 +118,52 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// The operation to update a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update Virtual Machine operation.
+            /// </param>
+            public static VirtualMachine Update(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineUpdate parameters)
+            {
+                return operations.UpdateAsync(resourceGroupName, vmName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to update a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update Virtual Machine operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachine> UpdateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, vmName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// The operation to delete a virtual machine.
             /// </summary>
             /// <param name='operations'>
@@ -129,9 +175,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse Delete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void Delete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.DeleteAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -149,12 +195,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> DeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -260,9 +303,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse ConvertToManagedDisks(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void ConvertToManagedDisks(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.ConvertToManagedDisksAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.ConvertToManagedDisksAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -281,12 +324,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> ConvertToManagedDisksAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ConvertToManagedDisksAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ConvertToManagedDisksWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.ConvertToManagedDisksWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -302,9 +342,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse Deallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void Deallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.DeallocateAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.DeallocateAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -323,12 +363,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> DeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -343,9 +380,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse Generalize(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void Generalize(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.GeneralizeAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.GeneralizeAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -363,12 +400,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> GeneralizeAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task GeneralizeAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GeneralizeWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.GeneralizeWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -493,9 +527,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse PowerOff(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void PowerOff(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.PowerOffAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.PowerOffAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -515,12 +549,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> PowerOffAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PowerOffAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PowerOffWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.PowerOffWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -535,9 +566,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse Restart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void Restart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.RestartAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.RestartAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -555,12 +586,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> RestartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RestartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RestartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.RestartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -575,9 +603,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse Start(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void Start(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.StartAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.StartAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -595,12 +623,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> StartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task StartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.StartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.StartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -615,9 +640,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse Redeploy(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void Redeploy(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.RedeployAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.RedeployAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -635,12 +660,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> RedeployAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RedeployAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RedeployWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.RedeployWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -655,9 +677,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse PerformMaintenance(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void PerformMaintenance(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.PerformMaintenanceAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.PerformMaintenanceAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -675,12 +697,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> PerformMaintenanceAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PerformMaintenanceAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PerformMaintenanceWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.PerformMaintenanceWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -824,6 +843,52 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// The operation to update a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update Virtual Machine operation.
+            /// </param>
+            public static VirtualMachine BeginUpdate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineUpdate parameters)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, vmName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to update a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update Virtual Machine operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachine> BeginUpdateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, vmName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// The operation to delete a virtual machine.
             /// </summary>
             /// <param name='operations'>
@@ -835,9 +900,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse BeginDelete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void BeginDelete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.BeginDeleteAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -855,12 +920,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginDeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -876,9 +938,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse BeginConvertToManagedDisks(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void BeginConvertToManagedDisks(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.BeginConvertToManagedDisksAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.BeginConvertToManagedDisksAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -897,12 +959,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginConvertToManagedDisksAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginConvertToManagedDisksAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginConvertToManagedDisksWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginConvertToManagedDisksWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -918,9 +977,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse BeginDeallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void BeginDeallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.BeginDeallocateAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.BeginDeallocateAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -939,12 +998,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginDeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeallocateAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -961,9 +1017,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse BeginPowerOff(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void BeginPowerOff(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.BeginPowerOffAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.BeginPowerOffAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -983,12 +1039,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginPowerOffAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginPowerOffAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginPowerOffWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginPowerOffWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1003,9 +1056,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse BeginRestart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void BeginRestart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.BeginRestartAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.BeginRestartAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1023,12 +1076,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginRestartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginRestartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1043,9 +1093,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse BeginStart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void BeginStart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.BeginStartAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.BeginStartAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1063,12 +1113,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginStartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginStartAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1083,9 +1130,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse BeginRedeploy(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void BeginRedeploy(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.BeginRedeployAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.BeginRedeployAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1103,12 +1150,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginRedeployAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginRedeployAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginRedeployWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginRedeployWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1123,9 +1167,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static OperationStatusResponse BeginPerformMaintenance(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            public static void BeginPerformMaintenance(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
             {
-                return operations.BeginPerformMaintenanceAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.BeginPerformMaintenanceAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1143,12 +1187,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginPerformMaintenanceAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginPerformMaintenanceAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginPerformMaintenanceWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginPerformMaintenanceWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -20,6 +19,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     /// A task which is run when a compute node joins a pool in the Azure Batch
     /// service, or when the compute node is rebooted or reimaged.
     /// </summary>
+    /// <remarks>
+    /// Batch will retry tasks when a recovery operation is triggered on a
+    /// compute node. Examples of recovery operations include (but are not
+    /// limited to) when an unhealthy compute node is rebooted or a compute
+    /// node disappeared due to host failure. Retries due to recovery
+    /// operations are independent of and are not counted against the
+    /// maxTaskRetryCount. Even if the maxTaskRetryCount is 0, an internal
+    /// retry due to a recovery operation may occur. Because of this, all tasks
+    /// should be idempotent. This means tasks need to tolerate being
+    /// interrupted and restarted without causing any corruption or duplicate
+    /// data. The best practice for long running tasks is to use some form of
+    /// checkpointing.
+    /// </remarks>
     public partial class StartTask
     {
         /// <summary>
@@ -38,8 +50,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="containerSettings">The settings for the container
         /// under which the start task runs.</param>
         /// <param name="resourceFiles">A list of files that the Batch service
-        /// will download to the compute node before running the command
-        /// line.</param>
+        /// will download to the compute node before running the command line.
+        /// There is a maximum size for the list of resource files. When the
+        /// max size is exceeded, the request will fail and the response error
+        /// code will be RequestEntityTooLarge. If this occurs, the collection
+        /// of ResourceFiles must be reduced in size. This can be achieved
+        /// using .zip files, Application Packages, or Docker
+        /// Containers.</param>
         /// <param name="environmentSettings">A list of environment variable
         /// settings for the start task.</param>
         /// <param name="userIdentity">The user identity under which the start
@@ -75,7 +92,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// take advantage of shell features such as environment variable
         /// expansion. If you want to take advantage of such features, you
         /// should invoke the shell in the command line, for example using "cmd
-        /// /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the
+        /// command line refers to file paths, it should use a relative path
+        /// (relative to the task working directory), or use the Batch provided
+        /// environment variable
+        /// (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
         /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
@@ -96,7 +117,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
-        /// to the compute node before running the command line.
+        /// to the compute node before running the command line.  There is a
+        /// maximum size for the list of resource files. When the max size is
+        /// exceeded, the request will fail and the response error code will be
+        /// RequestEntityTooLarge. If this occurs, the collection of
+        /// ResourceFiles must be reduced in size. This can be achieved using
+        /// .zip files, Application Packages, or Docker Containers.
         /// </summary>
         /// <remarks>
         /// Files listed under this element are located in the task's working
@@ -159,42 +185,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (CommandLine == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
-            }
-            if (ContainerSettings != null)
-            {
-                ContainerSettings.Validate();
-            }
-            if (ResourceFiles != null)
-            {
-                foreach (var element in ResourceFiles)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (EnvironmentSettings != null)
-            {
-                foreach (var element1 in EnvironmentSettings)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-        }
     }
 }

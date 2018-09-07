@@ -20,28 +20,28 @@
 
                 // Create and get the first SUC (targeting 1 VMs)
                 var sucProperties = this.CreateSoftwareUpdateConfigurationModel(new[] { VM_01 });
-                var createResult = this.automationClient.SoftwareUpdateConfigurations.Create(updateConfigurationName_01, sucProperties);
+                var createResult = this.automationClient.SoftwareUpdateConfigurations.Create(ResourceGroupName, AutomationAccountName, updateConfigurationName_01, sucProperties);
                 Assert.NotNull(createResult);
 
-                var getResult = this.automationClient.SoftwareUpdateConfigurations.GetByName(updateConfigurationName_01);
+                var getResult = this.automationClient.SoftwareUpdateConfigurations.GetByName(ResourceGroupName, AutomationAccountName, updateConfigurationName_01);
                 Assert.NotNull(getResult);
 
                 // Create and get the second SUC (targeting 2 VMs)
-                sucProperties = this.CreateSoftwareUpdateConfigurationModel(new[] { VM_01, VM_02});
-                createResult = this.automationClient.SoftwareUpdateConfigurations.Create(updateConfigurationName_02, sucProperties);
+                sucProperties = this.CreateSoftwareUpdateConfigurationModel(new[] { VM_01, VM_02 });
+                createResult = this.automationClient.SoftwareUpdateConfigurations.Create(ResourceGroupName, AutomationAccountName, updateConfigurationName_02, sucProperties);
                 Assert.NotNull(createResult);
 
-                getResult = this.automationClient.SoftwareUpdateConfigurations.GetByName(updateConfigurationName_02);
+                getResult = this.automationClient.SoftwareUpdateConfigurations.GetByName(ResourceGroupName, AutomationAccountName, updateConfigurationName_02);
                 Assert.NotNull(getResult);
 
                 // List all SUCs
-                var listResult = this.automationClient.SoftwareUpdateConfigurations.List();
+                var listResult = this.automationClient.SoftwareUpdateConfigurations.List(ResourceGroupName, AutomationAccountName);
                 Assert.NotNull(listResult);
                 Assert.NotNull(listResult.Value);
                 Assert.Equal(9, listResult.Value.Count);
 
                 // List for specific VM
-                listResult = this.automationClient.SoftwareUpdateConfigurations.ListByAzureVirtualMachine(VM_01);
+                listResult = this.automationClient.SoftwareUpdateConfigurations.ListByAzureVirtualMachine(ResourceGroupName, AutomationAccountName, VM_01);
                 Assert.NotNull(listResult);
                 Assert.NotNull(listResult.Value);
                 Assert.Equal(6, listResult.Value.Count);
@@ -49,13 +49,19 @@
                 Assert.Equal(updateConfigurationName_01, suc.Name);
 
                 // Delete both
-                this.automationClient.SoftwareUpdateConfigurations.Delete(updateConfigurationName_01);
-                getResult = this.automationClient.SoftwareUpdateConfigurations.GetByName(updateConfigurationName_01);
-                Assert.Null(getResult);
+                this.automationClient.SoftwareUpdateConfigurations.Delete(ResourceGroupName, AutomationAccountName, updateConfigurationName_01);
 
-                this.automationClient.SoftwareUpdateConfigurations.Delete(updateConfigurationName_02);
-                getResult = this.automationClient.SoftwareUpdateConfigurations.GetByName(updateConfigurationName_02);
-                Assert.Null(getResult);
+                Assert.Throws<ErrorResponseException>(() =>
+                {
+                    this.automationClient.SoftwareUpdateConfigurations.GetByName(ResourceGroupName, AutomationAccountName, updateConfigurationName_01);
+                });
+                
+                this.automationClient.SoftwareUpdateConfigurations.Delete(ResourceGroupName, AutomationAccountName, updateConfigurationName_02);
+
+                Assert.Throws<ErrorResponseException>(() =>
+                {
+                    this.automationClient.SoftwareUpdateConfigurations.GetByName(ResourceGroupName, AutomationAccountName, updateConfigurationName_02);
+                });
             }
         }
 

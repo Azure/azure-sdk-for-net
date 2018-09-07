@@ -18,6 +18,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     /// <summary>
     /// An Azure Batch task.
     /// </summary>
+    /// <remarks>
+    /// Batch will retry tasks when a recovery operation is triggered on a
+    /// compute node. Examples of recovery operations include (but are not
+    /// limited to) when an unhealthy compute node is rebooted or a compute
+    /// node disappeared due to host failure. Retries due to recovery
+    /// operations are independent of and are not counted against the
+    /// maxTaskRetryCount. Even if the maxTaskRetryCount is 0, an internal
+    /// retry due to a recovery operation may occur. Because of this, all tasks
+    /// should be idempotent. This means tasks need to tolerate being
+    /// interrupted and restarted without causing any corruption or duplicate
+    /// data. The best practice for long running tasks is to use some form of
+    /// checkpointing.
+    /// </remarks>
     public partial class CloudTask
     {
         /// <summary>
@@ -224,7 +237,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// features such as environment variable expansion. If you want to
         /// take advantage of such features, you should invoke the shell in the
         /// command line, for example using "cmd /c MyCommand" in Windows or
-        /// "/bin/sh -c MyCommand" in Linux.
+        /// "/bin/sh -c MyCommand" in Linux. If the command line refers to file
+        /// paths, it should use a relative path (relative to the task working
+        /// directory), or use the Batch provided environment variable
+        /// (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
         /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
@@ -253,7 +269,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// For multi-instance tasks, the resource files will only be
         /// downloaded to the compute node on which the primary task is
-        /// executed.
+        /// executed. There is a maximum size for the list of resource files.
+        /// When the max size is exceeded, the request will fail and the
+        /// response error code will be RequestEntityTooLarge. If this occurs,
+        /// the collection of ResourceFiles must be reduced in size. This can
+        /// be achieved using .zip files, Application Packages, or Docker
+        /// Containers.
         /// </remarks>
         [JsonProperty(PropertyName = "resourceFiles")]
         public IList<ResourceFile> ResourceFiles { get; set; }
@@ -369,74 +390,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "authenticationTokenSettings")]
         public AuthenticationTokenSettings AuthenticationTokenSettings { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ContainerSettings != null)
-            {
-                ContainerSettings.Validate();
-            }
-            if (ResourceFiles != null)
-            {
-                foreach (var element in ResourceFiles)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (OutputFiles != null)
-            {
-                foreach (var element1 in OutputFiles)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (EnvironmentSettings != null)
-            {
-                foreach (var element2 in EnvironmentSettings)
-                {
-                    if (element2 != null)
-                    {
-                        element2.Validate();
-                    }
-                }
-            }
-            if (AffinityInfo != null)
-            {
-                AffinityInfo.Validate();
-            }
-            if (ExecutionInfo != null)
-            {
-                ExecutionInfo.Validate();
-            }
-            if (MultiInstanceSettings != null)
-            {
-                MultiInstanceSettings.Validate();
-            }
-            if (Stats != null)
-            {
-                Stats.Validate();
-            }
-            if (ApplicationPackageReferences != null)
-            {
-                foreach (var element3 in ApplicationPackageReferences)
-                {
-                    if (element3 != null)
-                    {
-                        element3.Validate();
-                    }
-                }
-            }
-        }
     }
 }

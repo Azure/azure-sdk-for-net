@@ -22,9 +22,8 @@ namespace Compute.Tests
         /// Delete VM
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         [Trait("Name", "TestVMBootDiagnostics")]
-        [Trait("Failure", "Password policy")]
         public void TestVMBootDiagnostics()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -50,7 +49,7 @@ namespace Compute.Tests
 
                     var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
                     ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
-                    
+
                     m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
                 }
                 finally

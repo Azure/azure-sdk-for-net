@@ -1,11 +1,14 @@
-2018-03-14 20:54:24 UTC
-
-1) azure-rest-api-specs repository information
-GitHub user: Azure
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/compute/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\hylee-sdk\august\src\SDKs
+2018-09-06 17:15:28 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
 Branch:      master
-Commit:      58409bca13e129632c26c9d3767f22f922af62dc
-
-2) AutoRest information
+Commit:      607f4971fda3a3604dd3540067b9221d2029bc8e
+AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\hylee\AppData\Roaming\npm `-- autorest@2.0.4245  
-Latest installed version:    
+Bootstrapper version:    autorest@2.0.4283

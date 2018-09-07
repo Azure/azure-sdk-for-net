@@ -15,9 +15,6 @@ namespace Microsoft.Azure.Management.Automation.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// Definition of the runbook type.
-    /// </summary>
     public partial class RunbookDraft
     {
         /// <summary>
@@ -43,7 +40,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// parameters.</param>
         /// <param name="outputTypes">Gets or sets the runbook output
         /// types.</param>
-        public RunbookDraft(bool? inEdit = default(bool?), ContentLink draftContentLink = default(ContentLink), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), IDictionary<string, RunbookParameter> parameters = default(IDictionary<string, RunbookParameter>), IList<string> outputTypes = default(IList<string>))
+        public RunbookDraft(bool? inEdit = default(bool?), ContentLink draftContentLink = default(ContentLink), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), IDictionary<string, RunbookParameter> parameters = default(IDictionary<string, RunbookParameter>), IList<string> outputTypes = default(IList<string>))
         {
             InEdit = inEdit;
             DraftContentLink = draftContentLink;
@@ -75,13 +72,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the creation time of the runbook draft.
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
-        public System.DateTime? CreationTime { get; set; }
+        public System.DateTimeOffset CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified time of the runbook draft.
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; set; }
+        public System.DateTimeOffset LastModifiedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the runbook draft parameters.

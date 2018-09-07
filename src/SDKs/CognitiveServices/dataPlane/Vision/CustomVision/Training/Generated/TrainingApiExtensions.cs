@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 {
+    using Microsoft.Rest;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -23,20 +24,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
     public static partial class TrainingApiExtensions
     {
             /// <summary>
-            /// Get basic information about your account
+            /// Get a list of the available domains
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Account> GetAccountInfoAsync(this ITrainingApi operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static IList<Domain> GetDomains(this ITrainingApi operations)
             {
-                using (var _result = await operations.GetAccountInfoWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return operations.GetDomainsAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -57,6 +52,34 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Get a list of the available domains
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<IList<Domain>> GetDomainsWithHttpMessages(this ITrainingApi operations, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetDomainsWithHttpMessagesAsync(customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get information about a specific domain
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='domainId'>
+            /// The id of the domain to get information about
+            /// </param>
+            public static Domain GetDomain(this ITrainingApi operations, System.Guid domainId)
+            {
+                return operations.GetDomainAsync(domainId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Get information about a specific domain
             /// </summary>
             /// <param name='operations'>
@@ -71,6 +94,109 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             public static async Task<Domain> GetDomainAsync(this ITrainingApi operations, System.Guid domainId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetDomainWithHttpMessagesAsync(domainId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get information about a specific domain
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='domainId'>
+            /// The id of the domain to get information about
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Domain> GetDomainWithHttpMessages(this ITrainingApi operations, System.Guid domainId, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetDomainWithHttpMessagesAsync(domainId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get tagged images for a given project iteration
+            /// </summary>
+            /// <remarks>
+            /// This API supports batching and range selection. By default it will only
+            /// return first 50 images matching images.
+            /// Use the {take} and {skip} parameters to control how many images to return
+            /// in a given batch.
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images. Defaults to all tagged images when
+            /// null. Limited to 20
+            /// </param>
+            /// <param name='orderBy'>
+            /// The ordering. Defaults to newest. Possible values include: 'Newest',
+            /// 'Oldest'
+            /// </param>
+            /// <param name='take'>
+            /// Maximum number of images to return. Defaults to 50, limited to 256
+            /// </param>
+            /// <param name='skip'>
+            /// Number of images to skip before beginning the image batch. Defaults to 0
+            /// </param>
+            public static IList<Image> GetTaggedImages(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0)
+            {
+                return operations.GetTaggedImagesAsync(projectId, iterationId, tagIds, orderBy, take, skip).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get tagged images for a given project iteration
+            /// </summary>
+            /// <remarks>
+            /// This API supports batching and range selection. By default it will only
+            /// return first 50 images matching images.
+            /// Use the {take} and {skip} parameters to control how many images to return
+            /// in a given batch.
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images. Defaults to all tagged images when
+            /// null. Limited to 20
+            /// </param>
+            /// <param name='orderBy'>
+            /// The ordering. Defaults to newest. Possible values include: 'Newest',
+            /// 'Oldest'
+            /// </param>
+            /// <param name='take'>
+            /// Maximum number of images to return. Defaults to 50, limited to 256
+            /// </param>
+            /// <param name='skip'>
+            /// Number of images to skip before beginning the image batch. Defaults to 0
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<Image>> GetTaggedImagesAsync(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetTaggedImagesWithHttpMessagesAsync(projectId, iterationId, tagIds, orderBy, take, skip, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -98,8 +224,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The iteration id. Defaults to workspace
             /// </param>
             /// <param name='tagIds'>
-            /// An list of tags ids to filter the images. Defaults to all tagged images
-            /// when null. Limited to 20
+            /// A list of tags ids to filter the images. Defaults to all tagged images when
+            /// null. Limited to 20
             /// </param>
             /// <param name='orderBy'>
             /// The ordering. Defaults to newest. Possible values include: 'Newest',
@@ -111,15 +237,45 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='skip'>
             /// Number of images to skip before beginning the image batch. Defaults to 0
             /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
             /// </param>
-            public static async Task<IList<Image>> GetTaggedImagesAsync(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0, CancellationToken cancellationToken = default(CancellationToken))
+            public static HttpOperationResponse<IList<Image>> GetTaggedImagesWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null)
             {
-                using (var _result = await operations.GetTaggedImagesWithHttpMessagesAsync(projectId, iterationId, tagIds, orderBy, take, skip, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return operations.GetTaggedImagesWithHttpMessagesAsync(projectId, iterationId, tagIds, orderBy, take, skip, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get untagged images for a given project iteration
+            /// </summary>
+            /// <remarks>
+            /// This API supports batching and range selection. By default it will only
+            /// return first 50 images matching images.
+            /// Use the {take} and {skip} parameters to control how many images to return
+            /// in a given batch.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='orderBy'>
+            /// The ordering. Defaults to newest. Possible values include: 'Newest',
+            /// 'Oldest'
+            /// </param>
+            /// <param name='take'>
+            /// Maximum number of images to return. Defaults to 50, limited to 256
+            /// </param>
+            /// <param name='skip'>
+            /// Number of images to skip before beginning the image batch. Defaults to 0
+            /// </param>
+            public static IList<Image> GetUntaggedImages(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), string orderBy = default(string), int? take = 50, int? skip = 0)
+            {
+                return operations.GetUntaggedImagesAsync(projectId, iterationId, orderBy, take, skip).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -162,6 +318,312 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Get untagged images for a given project iteration
+            /// </summary>
+            /// <remarks>
+            /// This API supports batching and range selection. By default it will only
+            /// return first 50 images matching images.
+            /// Use the {take} and {skip} parameters to control how many images to return
+            /// in a given batch.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='orderBy'>
+            /// The ordering. Defaults to newest. Possible values include: 'Newest',
+            /// 'Oldest'
+            /// </param>
+            /// <param name='take'>
+            /// Maximum number of images to return. Defaults to 50, limited to 256
+            /// </param>
+            /// <param name='skip'>
+            /// Number of images to skip before beginning the image batch. Defaults to 0
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<IList<Image>> GetUntaggedImagesWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetUntaggedImagesWithHttpMessagesAsync(projectId, iterationId, orderBy, take, skip, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the number of images tagged with the provided {tagIds}
+            /// </summary>
+            /// <remarks>
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images to count. Defaults to all tags when
+            /// null.
+            /// </param>
+            public static int? GetTaggedImageCount(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>))
+            {
+                return operations.GetTaggedImageCountAsync(projectId, iterationId, tagIds).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the number of images tagged with the provided {tagIds}
+            /// </summary>
+            /// <remarks>
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images to count. Defaults to all tags when
+            /// null.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<int?> GetTaggedImageCountAsync(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetTaggedImageCountWithHttpMessagesAsync(projectId, iterationId, tagIds, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the number of images tagged with the provided {tagIds}
+            /// </summary>
+            /// <remarks>
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images to count. Defaults to all tags when
+            /// null.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<int?> GetTaggedImageCountWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetTaggedImageCountWithHttpMessagesAsync(projectId, iterationId, tagIds, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the number of untagged images
+            /// </summary>
+            /// <remarks>
+            /// This API returns the images which have no tags for a given project and
+            /// optionally an iteration. If no iteration is specified the
+            /// current workspace is used.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            public static int? GetUntaggedImageCount(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?))
+            {
+                return operations.GetUntaggedImageCountAsync(projectId, iterationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the number of untagged images
+            /// </summary>
+            /// <remarks>
+            /// This API returns the images which have no tags for a given project and
+            /// optionally an iteration. If no iteration is specified the
+            /// current workspace is used.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<int?> GetUntaggedImageCountAsync(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetUntaggedImageCountWithHttpMessagesAsync(projectId, iterationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the number of untagged images
+            /// </summary>
+            /// <remarks>
+            /// This API returns the images which have no tags for a given project and
+            /// optionally an iteration. If no iteration is specified the
+            /// current workspace is used.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<int?> GetUntaggedImageCountWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetUntaggedImageCountWithHttpMessagesAsync(projectId, iterationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get images by id for a given project iteration
+            /// </summary>
+            /// <remarks>
+            /// This API will return a set of Images for the specified tags and optionally
+            /// iteration. If no iteration is specified the
+            /// current workspace is used.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageIds'>
+            /// The list of image ids to retrieve. Limited to 256
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            public static IList<Image> GetImagesByIds(this ITrainingApi operations, System.Guid projectId, IList<string> imageIds = default(IList<string>), System.Guid? iterationId = default(System.Guid?))
+            {
+                return operations.GetImagesByIdsAsync(projectId, imageIds, iterationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get images by id for a given project iteration
+            /// </summary>
+            /// <remarks>
+            /// This API will return a set of Images for the specified tags and optionally
+            /// iteration. If no iteration is specified the
+            /// current workspace is used.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageIds'>
+            /// The list of image ids to retrieve. Limited to 256
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<Image>> GetImagesByIdsAsync(this ITrainingApi operations, System.Guid projectId, IList<string> imageIds = default(IList<string>), System.Guid? iterationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetImagesByIdsWithHttpMessagesAsync(projectId, imageIds, iterationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get images by id for a given project iteration
+            /// </summary>
+            /// <remarks>
+            /// This API will return a set of Images for the specified tags and optionally
+            /// iteration. If no iteration is specified the
+            /// current workspace is used.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageIds'>
+            /// The list of image ids to retrieve. Limited to 256
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<IList<Image>> GetImagesByIdsWithHttpMessages(this ITrainingApi operations, System.Guid projectId, IList<string> imageIds = default(IList<string>), System.Guid? iterationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetImagesByIdsWithHttpMessagesAsync(projectId, imageIds, iterationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add the provided images to the set of training images
+            /// </summary>
+            /// <remarks>
+            /// This API accepts body content as multipart/form-data and
+            /// application/octet-stream. When using multipart
+            /// multiple image files can be sent at once, with a maximum of 64 files
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageData'>
+            /// </param>
+            /// <param name='tagIds'>
+            /// The tags ids with which to tag each image. Limited to 20
+            /// </param>
+            public static ImageCreateSummary CreateImagesFromData(this ITrainingApi operations, System.Guid projectId, Stream imageData, IList<string> tagIds = default(IList<string>))
+            {
+                return operations.CreateImagesFromDataAsync(projectId, imageData, tagIds).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Add the provided images to the set of training images
             /// </summary>
             /// <remarks>
@@ -192,6 +654,50 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Add the provided images to the set of training images
+            /// </summary>
+            /// <remarks>
+            /// This API accepts body content as multipart/form-data and
+            /// application/octet-stream. When using multipart
+            /// multiple image files can be sent at once, with a maximum of 64 files
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageData'>
+            /// </param>
+            /// <param name='tagIds'>
+            /// The tags ids with which to tag each image. Limited to 20
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImageCreateSummary> CreateImagesFromDataWithHttpMessages(this ITrainingApi operations, System.Guid projectId, Stream imageData, IList<string> tagIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.CreateImagesFromDataWithHttpMessagesAsync(projectId, imageData, tagIds, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete images from the set of training images
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageIds'>
+            /// Ids of the images to be deleted. Limted to 256 images per batch
+            /// </param>
+            public static void DeleteImages(this ITrainingApi operations, System.Guid projectId, IList<string> imageIds)
+            {
+                operations.DeleteImagesAsync(projectId, imageIds).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Delete images from the set of training images
             /// </summary>
             /// <param name='operations'>
@@ -212,8 +718,53 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Delete images from the set of training images
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageIds'>
+            /// Ids of the images to be deleted. Limted to 256 images per batch
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse DeleteImagesWithHttpMessages(this ITrainingApi operations, System.Guid projectId, IList<string> imageIds, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.DeleteImagesWithHttpMessagesAsync(projectId, imageIds, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Add the provided batch of images to the set of training images
             /// </summary>
+            /// <remarks>
+            /// This API accepts a batch of files, and optionally tags, to create images.
+            /// There is a limit of 64 images and 20 tags.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='batch'>
+            /// The batch of image files to add. Limited to 64 images and 20 tags per batch
+            /// </param>
+            public static ImageCreateSummary CreateImagesFromFiles(this ITrainingApi operations, System.Guid projectId, ImageFileCreateBatch batch)
+            {
+                return operations.CreateImagesFromFilesAsync(projectId, batch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add the provided batch of images to the set of training images
+            /// </summary>
+            /// <remarks>
+            /// This API accepts a batch of files, and optionally tags, to create images.
+            /// There is a limit of 64 images and 20 tags.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -235,8 +786,57 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Add the provided batch of images to the set of training images
+            /// </summary>
+            /// <remarks>
+            /// This API accepts a batch of files, and optionally tags, to create images.
+            /// There is a limit of 64 images and 20 tags.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='batch'>
+            /// The batch of image files to add. Limited to 64 images and 20 tags per batch
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImageCreateSummary> CreateImagesFromFilesWithHttpMessages(this ITrainingApi operations, System.Guid projectId, ImageFileCreateBatch batch, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.CreateImagesFromFilesWithHttpMessagesAsync(projectId, batch, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Add the provided images urls to the set of training images
             /// </summary>
+            /// <remarks>
+            /// This API accepts a batch of urls, and optionally tags, to create images.
+            /// There is a limit of 64 images and 20 tags.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='batch'>
+            /// Image urls and tag ids. Limited to 64 images and 20 tags per batch
+            /// </param>
+            public static ImageCreateSummary CreateImagesFromUrls(this ITrainingApi operations, System.Guid projectId, ImageUrlCreateBatch batch)
+            {
+                return operations.CreateImagesFromUrlsAsync(projectId, batch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add the provided images urls to the set of training images
+            /// </summary>
+            /// <remarks>
+            /// This API accepts a batch of urls, and optionally tags, to create images.
+            /// There is a limit of 64 images and 20 tags.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -258,8 +858,57 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Add the provided images urls to the set of training images
+            /// </summary>
+            /// <remarks>
+            /// This API accepts a batch of urls, and optionally tags, to create images.
+            /// There is a limit of 64 images and 20 tags.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='batch'>
+            /// Image urls and tag ids. Limited to 64 images and 20 tags per batch
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImageCreateSummary> CreateImagesFromUrlsWithHttpMessages(this ITrainingApi operations, System.Guid projectId, ImageUrlCreateBatch batch, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.CreateImagesFromUrlsWithHttpMessagesAsync(projectId, batch, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Add the specified predicted images to the set of training images
             /// </summary>
+            /// <remarks>
+            /// This API creates a batch of images from predicted images specified. There
+            /// is a limit of 64 images and 20 tags.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='batch'>
+            /// Image and tag ids. Limted to 64 images and 20 tags per batch
+            /// </param>
+            public static ImageCreateSummary CreateImagesFromPredictions(this ITrainingApi operations, System.Guid projectId, ImageIdCreateBatch batch)
+            {
+                return operations.CreateImagesFromPredictionsAsync(projectId, batch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add the specified predicted images to the set of training images
+            /// </summary>
+            /// <remarks>
+            /// This API creates a batch of images from predicted images specified. There
+            /// is a limit of 64 images and 20 tags.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -281,6 +930,47 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Add the specified predicted images to the set of training images
+            /// </summary>
+            /// <remarks>
+            /// This API creates a batch of images from predicted images specified. There
+            /// is a limit of 64 images and 20 tags.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='batch'>
+            /// Image and tag ids. Limted to 64 images and 20 tags per batch
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImageCreateSummary> CreateImagesFromPredictionsWithHttpMessages(this ITrainingApi operations, System.Guid projectId, ImageIdCreateBatch batch, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.CreateImagesFromPredictionsWithHttpMessagesAsync(projectId, batch, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Associate a set of images with a set of tags
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='batch'>
+            /// Batch of image tags. Limited to 128 tags per batch
+            /// </param>
+            public static ImageTagCreateSummary CreateImageTags(this ITrainingApi operations, System.Guid projectId, ImageTagCreateBatch batch)
+            {
+                return operations.CreateImageTagsAsync(projectId, batch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Associate a set of images with a set of tags
             /// </summary>
             /// <param name='operations'>
@@ -295,12 +985,52 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageTagCreateSummary> PostImageTagsAsync(this ITrainingApi operations, System.Guid projectId, ImageTagCreateBatch batch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageTagCreateSummary> CreateImageTagsAsync(this ITrainingApi operations, System.Guid projectId, ImageTagCreateBatch batch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostImageTagsWithHttpMessagesAsync(projectId, batch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateImageTagsWithHttpMessagesAsync(projectId, batch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Associate a set of images with a set of tags
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='batch'>
+            /// Batch of image tags. Limited to 128 tags per batch
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImageTagCreateSummary> CreateImageTagsWithHttpMessages(this ITrainingApi operations, System.Guid projectId, ImageTagCreateBatch batch, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.CreateImageTagsWithHttpMessagesAsync(projectId, batch, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Remove a set of tags from a set of images
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageIds'>
+            /// Image ids. Limited to 64 images
+            /// </param>
+            /// <param name='tagIds'>
+            /// Tags to be deleted from the specified images. Limted to 20 tags
+            /// </param>
+            public static void DeleteImageTags(this ITrainingApi operations, System.Guid projectId, IList<string> imageIds, IList<string> tagIds)
+            {
+                operations.DeleteImageTagsAsync(projectId, imageIds, tagIds).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -327,7 +1057,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
-            /// Get images that were sent to your prediction endpoint
+            /// Remove a set of tags from a set of images
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -335,18 +1065,242 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='projectId'>
             /// The project id
             /// </param>
-            /// <param name='query'>
-            /// Parameters used to query the predictions. Limited to combining 2 tags
+            /// <param name='imageIds'>
+            /// Image ids. Limited to 64 images
+            /// </param>
+            /// <param name='tagIds'>
+            /// Tags to be deleted from the specified images. Limted to 20 tags
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse DeleteImageTagsWithHttpMessages(this ITrainingApi operations, System.Guid projectId, IList<string> imageIds, IList<string> tagIds, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.DeleteImageTagsWithHttpMessagesAsync(projectId, imageIds, tagIds, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a set of image regions
+            /// </summary>
+            /// <remarks>
+            /// This API accepts a batch of image regions, and optionally tags, to update
+            /// existing images with region information.
+            /// There is a limit of 64 entries in the batch.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='batch'>
+            /// Batch of image regions which include a tag and bounding box. Limited to 64
+            /// </param>
+            public static ImageRegionCreateSummary CreateImageRegions(this ITrainingApi operations, System.Guid projectId, ImageRegionCreateBatch batch)
+            {
+                return operations.CreateImageRegionsAsync(projectId, batch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a set of image regions
+            /// </summary>
+            /// <remarks>
+            /// This API accepts a batch of image regions, and optionally tags, to update
+            /// existing images with region information.
+            /// There is a limit of 64 entries in the batch.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='batch'>
+            /// Batch of image regions which include a tag and bounding box. Limited to 64
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PredictionQuery> QueryPredictionResultsAsync(this ITrainingApi operations, System.Guid projectId, PredictionQueryToken query, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageRegionCreateSummary> CreateImageRegionsAsync(this ITrainingApi operations, System.Guid projectId, ImageRegionCreateBatch batch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.QueryPredictionResultsWithHttpMessagesAsync(projectId, query, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateImageRegionsWithHttpMessagesAsync(projectId, batch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Create a set of image regions
+            /// </summary>
+            /// <remarks>
+            /// This API accepts a batch of image regions, and optionally tags, to update
+            /// existing images with region information.
+            /// There is a limit of 64 entries in the batch.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='batch'>
+            /// Batch of image regions which include a tag and bounding box. Limited to 64
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImageRegionCreateSummary> CreateImageRegionsWithHttpMessages(this ITrainingApi operations, System.Guid projectId, ImageRegionCreateBatch batch, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.CreateImageRegionsWithHttpMessagesAsync(projectId, batch, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a set of image regions
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='regionIds'>
+            /// Regions to delete. Limited to 64
+            /// </param>
+            public static void DeleteImageRegions(this ITrainingApi operations, System.Guid projectId, IList<string> regionIds)
+            {
+                operations.DeleteImageRegionsAsync(projectId, regionIds).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a set of image regions
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='regionIds'>
+            /// Regions to delete. Limited to 64
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteImageRegionsAsync(this ITrainingApi operations, System.Guid projectId, IList<string> regionIds, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteImageRegionsWithHttpMessagesAsync(projectId, regionIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Delete a set of image regions
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='regionIds'>
+            /// Regions to delete. Limited to 64
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse DeleteImageRegionsWithHttpMessages(this ITrainingApi operations, System.Guid projectId, IList<string> regionIds, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.DeleteImageRegionsWithHttpMessagesAsync(projectId, regionIds, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get region proposals for an image. Returns empty array if no proposals are
+            /// found.
+            /// </summary>
+            /// <remarks>
+            /// This API will get region proposals for an image along with confidences for
+            /// the region. It returns an empty array if no proposals are found.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageId'>
+            /// The image id
+            /// </param>
+            public static ImageRegionProposal GetImageRegionProposals(this ITrainingApi operations, System.Guid projectId, System.Guid imageId)
+            {
+                return operations.GetImageRegionProposalsAsync(projectId, imageId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get region proposals for an image. Returns empty array if no proposals are
+            /// found.
+            /// </summary>
+            /// <remarks>
+            /// This API will get region proposals for an image along with confidences for
+            /// the region. It returns an empty array if no proposals are found.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageId'>
+            /// The image id
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ImageRegionProposal> GetImageRegionProposalsAsync(this ITrainingApi operations, System.Guid projectId, System.Guid imageId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetImageRegionProposalsWithHttpMessagesAsync(projectId, imageId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get region proposals for an image. Returns empty array if no proposals are
+            /// found.
+            /// </summary>
+            /// <remarks>
+            /// This API will get region proposals for an image along with confidences for
+            /// the region. It returns an empty array if no proposals are found.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageId'>
+            /// The image id
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImageRegionProposal> GetImageRegionProposalsWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid imageId, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetImageRegionProposalsWithHttpMessagesAsync(projectId, imageId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a set of predicted images and their associated prediction results
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='ids'>
+            /// The prediction ids. Limited to 64
+            /// </param>
+            public static void DeletePrediction(this ITrainingApi operations, System.Guid projectId, IList<string> ids)
+            {
+                operations.DeletePredictionAsync(projectId, ids).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -370,6 +1324,108 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Delete a set of predicted images and their associated prediction results
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='ids'>
+            /// The prediction ids. Limited to 64
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse DeletePredictionWithHttpMessages(this ITrainingApi operations, System.Guid projectId, IList<string> ids, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.DeletePredictionWithHttpMessagesAsync(projectId, ids, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get images that were sent to your prediction endpoint
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='query'>
+            /// Parameters used to query the predictions. Limited to combining 2 tags
+            /// </param>
+            public static PredictionQueryResult QueryPredictions(this ITrainingApi operations, System.Guid projectId, PredictionQueryToken query)
+            {
+                return operations.QueryPredictionsAsync(projectId, query).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get images that were sent to your prediction endpoint
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='query'>
+            /// Parameters used to query the predictions. Limited to combining 2 tags
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PredictionQueryResult> QueryPredictionsAsync(this ITrainingApi operations, System.Guid projectId, PredictionQueryToken query, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.QueryPredictionsWithHttpMessagesAsync(projectId, query, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get images that were sent to your prediction endpoint
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='query'>
+            /// Parameters used to query the predictions. Limited to combining 2 tags
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<PredictionQueryResult> QueryPredictionsWithHttpMessages(this ITrainingApi operations, System.Guid projectId, PredictionQueryToken query, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.QueryPredictionsWithHttpMessagesAsync(projectId, query, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Quick test an image url
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project to evaluate against
+            /// </param>
+            /// <param name='imageUrl'>
+            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
+            /// evaluated
+            /// </param>
+            /// <param name='iterationId'>
+            /// Optional. Specifies the id of a particular iteration to evaluate against.
+            /// The default iteration for the project will be used when not specified.
+            /// </param>
+            public static ImagePrediction QuickTestImageUrl(this ITrainingApi operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?))
+            {
+                return operations.QuickTestImageUrlAsync(projectId, imageUrl, iterationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Quick test an image url
             /// </summary>
             /// <param name='operations'>
@@ -389,12 +1445,57 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePredictionResult> QuickTestImageUrlAsync(this ITrainingApi operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> QuickTestImageUrlAsync(this ITrainingApi operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.QuickTestImageUrlWithHttpMessagesAsync(projectId, imageUrl, iterationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Quick test an image url
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project to evaluate against
+            /// </param>
+            /// <param name='imageUrl'>
+            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
+            /// evaluated
+            /// </param>
+            /// <param name='iterationId'>
+            /// Optional. Specifies the id of a particular iteration to evaluate against.
+            /// The default iteration for the project will be used when not specified.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImagePrediction> QuickTestImageUrlWithHttpMessages(this ITrainingApi operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.QuickTestImageUrlWithHttpMessagesAsync(projectId, imageUrl, iterationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Quick test an image
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageData'>
+            /// </param>
+            /// <param name='iterationId'>
+            /// Optional. Specifies the id of a particular iteration to evaluate against.
+            /// The default iteration for the project will be used when not specified.
+            /// </param>
+            public static ImagePrediction QuickTestImage(this ITrainingApi operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?))
+            {
+                return operations.QuickTestImageAsync(projectId, imageData, iterationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -415,12 +1516,97 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePredictionResult> QuickTestImageAsync(this ITrainingApi operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> QuickTestImageAsync(this ITrainingApi operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.QuickTestImageWithHttpMessagesAsync(projectId, imageData, iterationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Quick test an image
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageData'>
+            /// </param>
+            /// <param name='iterationId'>
+            /// Optional. Specifies the id of a particular iteration to evaluate against.
+            /// The default iteration for the project will be used when not specified.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImagePrediction> QuickTestImageWithHttpMessages(this ITrainingApi operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.QuickTestImageWithHttpMessagesAsync(projectId, imageData, iterationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Queues project for training
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            public static Iteration TrainProject(this ITrainingApi operations, System.Guid projectId)
+            {
+                return operations.TrainProjectAsync(projectId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Queues project for training
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Iteration> TrainProjectAsync(this ITrainingApi operations, System.Guid projectId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.TrainProjectWithHttpMessagesAsync(projectId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Queues project for training
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Iteration> TrainProjectWithHttpMessages(this ITrainingApi operations, System.Guid projectId, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.TrainProjectWithHttpMessagesAsync(projectId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get your projects
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IList<Project> GetProjects(this ITrainingApi operations)
+            {
+                return operations.GetProjectsAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -441,6 +1627,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Get your projects
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<IList<Project>> GetProjectsWithHttpMessages(this ITrainingApi operations, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetProjectsWithHttpMessagesAsync(customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Create a project
             /// </summary>
             /// <param name='operations'>
@@ -455,15 +1655,84 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='domainId'>
             /// The id of the domain to use for this project. Defaults to General
             /// </param>
+            /// <param name='classificationType'>
+            /// The type of classifier to create for this project. Possible values include:
+            /// 'Multiclass', 'Multilabel'
+            /// </param>
+            public static Project CreateProject(this ITrainingApi operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string))
+            {
+                return operations.CreateProjectAsync(name, description, domainId, classificationType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the project
+            /// </param>
+            /// <param name='description'>
+            /// The description of the project
+            /// </param>
+            /// <param name='domainId'>
+            /// The id of the domain to use for this project. Defaults to General
+            /// </param>
+            /// <param name='classificationType'>
+            /// The type of classifier to create for this project. Possible values include:
+            /// 'Multiclass', 'Multilabel'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Project> CreateProjectAsync(this ITrainingApi operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Project> CreateProjectAsync(this ITrainingApi operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateProjectWithHttpMessagesAsync(name, description, domainId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateProjectWithHttpMessagesAsync(name, description, domainId, classificationType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Create a project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the project
+            /// </param>
+            /// <param name='description'>
+            /// The description of the project
+            /// </param>
+            /// <param name='domainId'>
+            /// The id of the domain to use for this project. Defaults to General
+            /// </param>
+            /// <param name='classificationType'>
+            /// The type of classifier to create for this project. Possible values include:
+            /// 'Multiclass', 'Multilabel'
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Project> CreateProjectWithHttpMessages(this ITrainingApi operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.CreateProjectWithHttpMessagesAsync(name, description, domainId, classificationType, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a specific project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The id of the project to get
+            /// </param>
+            public static Project GetProject(this ITrainingApi operations, System.Guid projectId)
+            {
+                return operations.GetProjectAsync(projectId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -487,6 +1756,37 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Get a specific project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The id of the project to get
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Project> GetProjectWithHttpMessages(this ITrainingApi operations, System.Guid projectId, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetProjectWithHttpMessagesAsync(projectId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a specific project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            public static void DeleteProject(this ITrainingApi operations, System.Guid projectId)
+            {
+                operations.DeleteProjectAsync(projectId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Delete a specific project
             /// </summary>
             /// <param name='operations'>
@@ -501,6 +1801,40 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             public static async Task DeleteProjectAsync(this ITrainingApi operations, System.Guid projectId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteProjectWithHttpMessagesAsync(projectId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Delete a specific project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse DeleteProjectWithHttpMessages(this ITrainingApi operations, System.Guid projectId, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.DeleteProjectWithHttpMessagesAsync(projectId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a specific project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The id of the project to update
+            /// </param>
+            /// <param name='updatedProject'>
+            /// The updated project model
+            /// </param>
+            public static Project UpdateProject(this ITrainingApi operations, System.Guid projectId, Project updatedProject)
+            {
+                return operations.UpdateProjectAsync(projectId, updatedProject).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -527,7 +1861,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
-            /// Queues project for training
+            /// Update a specific project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The id of the project to update
+            /// </param>
+            /// <param name='updatedProject'>
+            /// The updated project model
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Project> UpdateProjectWithHttpMessages(this ITrainingApi operations, System.Guid projectId, Project updatedProject, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.UpdateProjectWithHttpMessagesAsync(projectId, updatedProject, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get iterations for the project
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -535,15 +1889,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='projectId'>
             /// The project id
             /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Iteration> TrainProjectAsync(this ITrainingApi operations, System.Guid projectId, CancellationToken cancellationToken = default(CancellationToken))
+            public static IList<Iteration> GetIterations(this ITrainingApi operations, System.Guid projectId)
             {
-                using (var _result = await operations.TrainProjectWithHttpMessagesAsync(projectId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return operations.GetIterationsAsync(projectId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -564,6 +1912,40 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Get iterations for the project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<IList<Iteration>> GetIterationsWithHttpMessages(this ITrainingApi operations, System.Guid projectId, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetIterationsWithHttpMessagesAsync(projectId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a specific iteration
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The id of the project the iteration belongs to
+            /// </param>
+            /// <param name='iterationId'>
+            /// The id of the iteration to get
+            /// </param>
+            public static Iteration GetIteration(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId)
+            {
+                return operations.GetIterationAsync(projectId, iterationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -590,6 +1972,43 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Get a specific iteration
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The id of the project the iteration belongs to
+            /// </param>
+            /// <param name='iterationId'>
+            /// The id of the iteration to get
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Iteration> GetIterationWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetIterationWithHttpMessagesAsync(projectId, iterationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a specific iteration of a project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id
+            /// </param>
+            public static void DeleteIteration(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId)
+            {
+                operations.DeleteIterationAsync(projectId, iterationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Delete a specific iteration of a project
             /// </summary>
             /// <param name='operations'>
@@ -607,6 +2026,46 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             public static async Task DeleteIterationAsync(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteIterationWithHttpMessagesAsync(projectId, iterationId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Delete a specific iteration of a project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse DeleteIterationWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.DeleteIterationWithHttpMessagesAsync(projectId, iterationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a specific iteration
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// Project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// Iteration id
+            /// </param>
+            /// <param name='updatedIteration'>
+            /// The updated iteration model
+            /// </param>
+            public static Iteration UpdateIteration(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, Iteration updatedIteration)
+            {
+                return operations.UpdateIterationAsync(projectId, iterationId, updatedIteration).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -636,7 +2095,333 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
-            /// Get detailed performance information about a trained iteration
+            /// Update a specific iteration
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// Project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// Iteration id
+            /// </param>
+            /// <param name='updatedIteration'>
+            /// The updated iteration model
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Iteration> UpdateIterationWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, Iteration updatedIteration, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.UpdateIterationWithHttpMessagesAsync(projectId, iterationId, updatedIteration, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get detailed performance information about an iteration
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The id of the project the iteration belongs to
+            /// </param>
+            /// <param name='iterationId'>
+            /// The id of the iteration to get
+            /// </param>
+            /// <param name='threshold'>
+            /// The threshold used to determine true predictions
+            /// </param>
+            /// <param name='overlapThreshold'>
+            /// If applicable, the bounding box overlap threshold used to determine true
+            /// predictions
+            /// </param>
+            public static IterationPerformance GetIterationPerformance(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, double? threshold = default(double?), double? overlapThreshold = default(double?))
+            {
+                return operations.GetIterationPerformanceAsync(projectId, iterationId, threshold, overlapThreshold).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get detailed performance information about an iteration
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The id of the project the iteration belongs to
+            /// </param>
+            /// <param name='iterationId'>
+            /// The id of the iteration to get
+            /// </param>
+            /// <param name='threshold'>
+            /// The threshold used to determine true predictions
+            /// </param>
+            /// <param name='overlapThreshold'>
+            /// If applicable, the bounding box overlap threshold used to determine true
+            /// predictions
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IterationPerformance> GetIterationPerformanceAsync(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, double? threshold = default(double?), double? overlapThreshold = default(double?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetIterationPerformanceWithHttpMessagesAsync(projectId, iterationId, threshold, overlapThreshold, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get detailed performance information about an iteration
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The id of the project the iteration belongs to
+            /// </param>
+            /// <param name='iterationId'>
+            /// The id of the iteration to get
+            /// </param>
+            /// <param name='threshold'>
+            /// The threshold used to determine true predictions
+            /// </param>
+            /// <param name='overlapThreshold'>
+            /// If applicable, the bounding box overlap threshold used to determine true
+            /// predictions
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<IterationPerformance> GetIterationPerformanceWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, double? threshold = default(double?), double? overlapThreshold = default(double?), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetIterationPerformanceWithHttpMessagesAsync(projectId, iterationId, threshold, overlapThreshold, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get image with its prediction for a given project iteration
+            /// </summary>
+            /// <remarks>
+            /// This API supports batching and range selection. By default it will only
+            /// return first 50 images matching images.
+            /// Use the {take} and {skip} parameters to control how many images to return
+            /// in a given batch.
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images. Defaults to all tagged images when
+            /// null. Limited to 20
+            /// </param>
+            /// <param name='orderBy'>
+            /// The ordering. Defaults to newest. Possible values include: 'Newest',
+            /// 'Oldest'
+            /// </param>
+            /// <param name='take'>
+            /// Maximum number of images to return. Defaults to 50, limited to 256
+            /// </param>
+            /// <param name='skip'>
+            /// Number of images to skip before beginning the image batch. Defaults to 0
+            /// </param>
+            public static IList<ImagePerformance> GetImagePerformances(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0)
+            {
+                return operations.GetImagePerformancesAsync(projectId, iterationId, tagIds, orderBy, take, skip).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get image with its prediction for a given project iteration
+            /// </summary>
+            /// <remarks>
+            /// This API supports batching and range selection. By default it will only
+            /// return first 50 images matching images.
+            /// Use the {take} and {skip} parameters to control how many images to return
+            /// in a given batch.
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images. Defaults to all tagged images when
+            /// null. Limited to 20
+            /// </param>
+            /// <param name='orderBy'>
+            /// The ordering. Defaults to newest. Possible values include: 'Newest',
+            /// 'Oldest'
+            /// </param>
+            /// <param name='take'>
+            /// Maximum number of images to return. Defaults to 50, limited to 256
+            /// </param>
+            /// <param name='skip'>
+            /// Number of images to skip before beginning the image batch. Defaults to 0
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<ImagePerformance>> GetImagePerformancesAsync(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetImagePerformancesWithHttpMessagesAsync(projectId, iterationId, tagIds, orderBy, take, skip, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get image with its prediction for a given project iteration
+            /// </summary>
+            /// <remarks>
+            /// This API supports batching and range selection. By default it will only
+            /// return first 50 images matching images.
+            /// Use the {take} and {skip} parameters to control how many images to return
+            /// in a given batch.
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images. Defaults to all tagged images when
+            /// null. Limited to 20
+            /// </param>
+            /// <param name='orderBy'>
+            /// The ordering. Defaults to newest. Possible values include: 'Newest',
+            /// 'Oldest'
+            /// </param>
+            /// <param name='take'>
+            /// Maximum number of images to return. Defaults to 50, limited to 256
+            /// </param>
+            /// <param name='skip'>
+            /// Number of images to skip before beginning the image batch. Defaults to 0
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<IList<ImagePerformance>> GetImagePerformancesWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetImagePerformancesWithHttpMessagesAsync(projectId, iterationId, tagIds, orderBy, take, skip, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the number of images tagged with the provided {tagIds} that have
+            /// prediction results from
+            /// training for the provided iteration {iterationId}
+            /// </summary>
+            /// <remarks>
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images to count. Defaults to all tags when
+            /// null.
+            /// </param>
+            public static int? GetImagePerformanceCount(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>))
+            {
+                return operations.GetImagePerformanceCountAsync(projectId, iterationId, tagIds).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the number of images tagged with the provided {tagIds} that have
+            /// prediction results from
+            /// training for the provided iteration {iterationId}
+            /// </summary>
+            /// <remarks>
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images to count. Defaults to all tags when
+            /// null.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<int?> GetImagePerformanceCountAsync(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetImagePerformanceCountWithHttpMessagesAsync(projectId, iterationId, tagIds, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the number of images tagged with the provided {tagIds} that have
+            /// prediction results from
+            /// training for the provided iteration {iterationId}
+            /// </summary>
+            /// <remarks>
+            /// The filtering is on an and/or relationship. For example, if the provided
+            /// tag ids are for the "Dog" and
+            /// "Cat" tags, then only images tagged with Dog and/or Cat will be returned
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='tagIds'>
+            /// A list of tags ids to filter the images to count. Defaults to all tags when
+            /// null.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<int?> GetImagePerformanceCountWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetImagePerformanceCountWithHttpMessagesAsync(projectId, iterationId, tagIds, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the list of exports for a specific iteration
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -645,20 +2430,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id
             /// </param>
             /// <param name='iterationId'>
-            /// The id of the trained iteration
+            /// The iteration id
             /// </param>
-            /// <param name='threshold'>
-            /// The 0 to 1 threshold to determine positive prediction
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IterationPerformance> GetIterationPerformanceAsync(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, double threshold, CancellationToken cancellationToken = default(CancellationToken))
+            public static IList<Export> GetExports(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId)
             {
-                using (var _result = await operations.GetIterationPerformanceWithHttpMessagesAsync(projectId, iterationId, threshold, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return operations.GetExportsAsync(projectId, iterationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -685,6 +2461,26 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Get the list of exports for a specific iteration
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<IList<Export>> GetExportsWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetExportsWithHttpMessagesAsync(projectId, iterationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Export a trained iteration
             /// </summary>
             /// <param name='operations'>
@@ -697,21 +2493,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The iteration id
             /// </param>
             /// <param name='platform'>
-            /// The target platform (coreml or tensorflow)
+            /// The target platform (coreml or tensorflow). Possible values include:
+            /// 'CoreML', 'TensorFlow', 'DockerFile', 'ONNX'
             /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
+            /// <param name='flavor'>
+            /// The flavor of the target platform (Windows, Linux, ARM, or GPU). Possible
+            /// values include: 'Linux', 'Windows'
             /// </param>
-            public static async Task<Export> ExportIterationAsync(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, string platform, CancellationToken cancellationToken = default(CancellationToken))
+            public static Export ExportIteration(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, string platform, string flavor = default(string))
             {
-                using (var _result = await operations.ExportIterationWithHttpMessagesAsync(projectId, iterationId, platform, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return operations.ExportIterationAsync(projectId, iterationId, platform, flavor).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get the tags for a given project and iteration
+            /// Export a trained iteration
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -720,21 +2515,29 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id
             /// </param>
             /// <param name='iterationId'>
-            /// The iteration id. Defaults to workspace
+            /// The iteration id
+            /// </param>
+            /// <param name='platform'>
+            /// The target platform (coreml or tensorflow). Possible values include:
+            /// 'CoreML', 'TensorFlow', 'DockerFile', 'ONNX'
+            /// </param>
+            /// <param name='flavor'>
+            /// The flavor of the target platform (Windows, Linux, ARM, or GPU). Possible
+            /// values include: 'Linux', 'Windows'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagList> GetTagsAsync(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Export> ExportIterationAsync(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, string platform, string flavor = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTagsWithHttpMessagesAsync(projectId, iterationId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ExportIterationWithHttpMessagesAsync(projectId, iterationId, platform, flavor, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create a tag for the project
+            /// Export a trained iteration
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -742,21 +2545,44 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='projectId'>
             /// The project id
             /// </param>
-            /// <param name='name'>
-            /// The tag name
+            /// <param name='iterationId'>
+            /// The iteration id
             /// </param>
-            /// <param name='description'>
-            /// Optional description for the tag
+            /// <param name='platform'>
+            /// The target platform (coreml or tensorflow). Possible values include:
+            /// 'CoreML', 'TensorFlow', 'DockerFile', 'ONNX'
             /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
+            /// <param name='flavor'>
+            /// The flavor of the target platform (Windows, Linux, ARM, or GPU). Possible
+            /// values include: 'Linux', 'Windows'
             /// </param>
-            public static async Task<Tag> CreateTagAsync(this ITrainingApi operations, System.Guid projectId, string name, string description = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Export> ExportIterationWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid iterationId, string platform, string flavor = default(string), Dictionary<string, List<string>> customHeaders = null)
             {
-                using (var _result = await operations.CreateTagWithHttpMessagesAsync(projectId, name, description, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return operations.ExportIterationWithHttpMessagesAsync(projectId, iterationId, platform, flavor, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get information about a specific tag
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project this tag belongs to
+            /// </param>
+            /// <param name='tagId'>
+            /// The tag id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration to retrieve this tag from. Optional, defaults to current
+            /// training set
+            /// </param>
+            public static Tag GetTag(this ITrainingApi operations, System.Guid projectId, System.Guid tagId, System.Guid? iterationId = default(System.Guid?))
+            {
+                return operations.GetTagAsync(projectId, tagId, iterationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -787,6 +2613,47 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Get information about a specific tag
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project this tag belongs to
+            /// </param>
+            /// <param name='tagId'>
+            /// The tag id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration to retrieve this tag from. Optional, defaults to current
+            /// training set
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Tag> GetTagWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid tagId, System.Guid? iterationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetTagWithHttpMessagesAsync(projectId, tagId, iterationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a tag from the project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='tagId'>
+            /// Id of the tag to be deleted
+            /// </param>
+            public static void DeleteTag(this ITrainingApi operations, System.Guid projectId, System.Guid tagId)
+            {
+                operations.DeleteTagAsync(projectId, tagId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Delete a tag from the project
             /// </summary>
             /// <param name='operations'>
@@ -804,6 +2671,46 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             public static async Task DeleteTagAsync(this ITrainingApi operations, System.Guid projectId, System.Guid tagId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteTagWithHttpMessagesAsync(projectId, tagId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Delete a tag from the project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='tagId'>
+            /// Id of the tag to be deleted
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse DeleteTagWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid tagId, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.DeleteTagWithHttpMessagesAsync(projectId, tagId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a tag
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='tagId'>
+            /// The id of the target tag
+            /// </param>
+            /// <param name='updatedTag'>
+            /// The updated tag model
+            /// </param>
+            public static Tag UpdateTag(this ITrainingApi operations, System.Guid projectId, System.Guid tagId, Tag updatedTag)
+            {
+                return operations.UpdateTagAsync(projectId, tagId, updatedTag).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -830,6 +2737,158 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Update a tag
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='tagId'>
+            /// The id of the target tag
+            /// </param>
+            /// <param name='updatedTag'>
+            /// The updated tag model
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Tag> UpdateTagWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid tagId, Tag updatedTag, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.UpdateTagWithHttpMessagesAsync(projectId, tagId, updatedTag, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the tags for a given project and iteration
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            public static IList<Tag> GetTags(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?))
+            {
+                return operations.GetTagsAsync(projectId, iterationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the tags for a given project and iteration
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<Tag>> GetTagsAsync(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetTagsWithHttpMessagesAsync(projectId, iterationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the tags for a given project and iteration
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id. Defaults to workspace
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<IList<Tag>> GetTagsWithHttpMessages(this ITrainingApi operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.GetTagsWithHttpMessagesAsync(projectId, iterationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a tag for the project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='name'>
+            /// The tag name
+            /// </param>
+            /// <param name='description'>
+            /// Optional description for the tag
+            /// </param>
+            public static Tag CreateTag(this ITrainingApi operations, System.Guid projectId, string name, string description = default(string))
+            {
+                return operations.CreateTagAsync(projectId, name, description).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a tag for the project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='name'>
+            /// The tag name
+            /// </param>
+            /// <param name='description'>
+            /// Optional description for the tag
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Tag> CreateTagAsync(this ITrainingApi operations, System.Guid projectId, string name, string description = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateTagWithHttpMessagesAsync(projectId, name, description, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create a tag for the project
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='name'>
+            /// The tag name
+            /// </param>
+            /// <param name='description'>
+            /// Optional description for the tag
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Tag> CreateTagWithHttpMessages(this ITrainingApi operations, System.Guid projectId, string name, string description = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.CreateTagWithHttpMessagesAsync(projectId, name, description, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

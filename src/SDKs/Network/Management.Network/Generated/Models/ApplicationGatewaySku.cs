@@ -31,9 +31,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="name">Name of an application gateway SKU. Possible
         /// values include: 'Standard_Small', 'Standard_Medium',
-        /// 'Standard_Large', 'WAF_Medium', 'WAF_Large'</param>
+        /// 'Standard_Large', 'WAF_Medium', 'WAF_Large', 'Standard_v2',
+        /// 'WAF_v2'</param>
         /// <param name="tier">Tier of an application gateway. Possible values
-        /// include: 'Standard', 'WAF'</param>
+        /// include: 'Standard', 'WAF', 'Standard_v2', 'WAF_v2'</param>
         /// <param name="capacity">Capacity (instance count) of an application
         /// gateway.</param>
         public ApplicationGatewaySku(string name = default(string), string tier = default(string), int? capacity = default(int?))
@@ -52,14 +53,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets name of an application gateway SKU. Possible values
         /// include: 'Standard_Small', 'Standard_Medium', 'Standard_Large',
-        /// 'WAF_Medium', 'WAF_Large'
+        /// 'WAF_Medium', 'WAF_Large', 'Standard_v2', 'WAF_v2'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets tier of an application gateway. Possible values
-        /// include: 'Standard', 'WAF'
+        /// include: 'Standard', 'WAF', 'Standard_v2', 'WAF_v2'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }

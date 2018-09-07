@@ -27,6 +27,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Initializes a new instance of the ImageUrl class.
         /// </summary>
+        /// <param name="url">Publicly reachable URL of an image</param>
         public ImageUrl(string url)
         {
             Url = url;
@@ -39,6 +40,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets publicly reachable URL of an image
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }

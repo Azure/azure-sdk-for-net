@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Automation
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -28,15 +29,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='jobScheduleId'>
             /// The job schedule name.
             /// </param>
-            public static void Delete(this IJobScheduleOperations operations, string automationAccountName, System.Guid jobScheduleId)
+            public static void Delete(this IJobScheduleOperations operations, string resourceGroupName, string automationAccountName, System.Guid jobScheduleId)
             {
-                operations.DeleteAsync(automationAccountName, jobScheduleId).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, automationAccountName, jobScheduleId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -46,8 +50,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='jobScheduleId'>
             /// The job schedule name.
@@ -55,9 +62,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IJobScheduleOperations operations, string automationAccountName, System.Guid jobScheduleId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IJobScheduleOperations operations, string resourceGroupName, string automationAccountName, System.Guid jobScheduleId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(automationAccountName, jobScheduleId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, automationAccountName, jobScheduleId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -67,15 +74,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='jobScheduleId'>
             /// The job schedule name.
             /// </param>
-            public static JobSchedule Get(this IJobScheduleOperations operations, string automationAccountName, System.Guid jobScheduleId)
+            public static JobSchedule Get(this IJobScheduleOperations operations, string resourceGroupName, string automationAccountName, System.Guid jobScheduleId)
             {
-                return operations.GetAsync(automationAccountName, jobScheduleId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, automationAccountName, jobScheduleId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -85,8 +95,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='jobScheduleId'>
             /// The job schedule name.
@@ -94,9 +107,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobSchedule> GetAsync(this IJobScheduleOperations operations, string automationAccountName, System.Guid jobScheduleId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobSchedule> GetAsync(this IJobScheduleOperations operations, string resourceGroupName, string automationAccountName, System.Guid jobScheduleId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(automationAccountName, jobScheduleId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, jobScheduleId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -109,8 +122,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='jobScheduleId'>
             /// The job schedule name.
@@ -118,9 +134,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='parameters'>
             /// The parameters supplied to the create job schedule operation.
             /// </param>
-            public static JobSchedule Create(this IJobScheduleOperations operations, string automationAccountName, System.Guid jobScheduleId, JobScheduleCreateParameters parameters)
+            public static JobSchedule Create(this IJobScheduleOperations operations, string resourceGroupName, string automationAccountName, System.Guid jobScheduleId, JobScheduleCreateParameters parameters)
             {
-                return operations.CreateAsync(automationAccountName, jobScheduleId, parameters).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, automationAccountName, jobScheduleId, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,8 +146,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='jobScheduleId'>
             /// The job schedule name.
@@ -142,9 +161,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobSchedule> CreateAsync(this IJobScheduleOperations operations, string automationAccountName, System.Guid jobScheduleId, JobScheduleCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobSchedule> CreateAsync(this IJobScheduleOperations operations, string resourceGroupName, string automationAccountName, System.Guid jobScheduleId, JobScheduleCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(automationAccountName, jobScheduleId, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, automationAccountName, jobScheduleId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -157,12 +176,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
-            public static IPage<JobSchedule> ListByAutomationAccount(this IJobScheduleOperations operations, string automationAccountName)
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static IPage<JobSchedule> ListByAutomationAccount(this IJobScheduleOperations operations, string resourceGroupName, string automationAccountName, ODataQuery<JobSchedule> odataQuery = default(ODataQuery<JobSchedule>))
             {
-                return operations.ListByAutomationAccountAsync(automationAccountName).GetAwaiter().GetResult();
+                return operations.ListByAutomationAccountAsync(resourceGroupName, automationAccountName, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -172,15 +197,21 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobSchedule>> ListByAutomationAccountAsync(this IJobScheduleOperations operations, string automationAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobSchedule>> ListByAutomationAccountAsync(this IJobScheduleOperations operations, string resourceGroupName, string automationAccountName, ODataQuery<JobSchedule> odataQuery = default(ODataQuery<JobSchedule>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(automationAccountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(resourceGroupName, automationAccountName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

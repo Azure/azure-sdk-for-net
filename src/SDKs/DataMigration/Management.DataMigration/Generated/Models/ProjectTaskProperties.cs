@@ -39,10 +39,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// submitted. Possible values include: 'Unknown', 'Queued', 'Running',
         /// 'Canceled', 'Succeeded', 'Failed', 'FailedInputValidation',
         /// 'Faulted'</param>
-        public ProjectTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string))
+        /// <param name="commands">Array of command properties.</param>
+        public ProjectTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), IList<CommandProperties> commands = default(IList<CommandProperties>))
         {
             Errors = errors;
             State = state;
+            Commands = commands;
             CustomInit();
         }
 
@@ -64,6 +66,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; private set; }
+
+        /// <summary>
+        /// Gets array of command properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "commands")]
+        public IList<CommandProperties> Commands { get; private set; }
 
     }
 }

@@ -334,6 +334,13 @@ CREATE TABLE {0}.dbo.{1}
 
 ALTER TABLE {0}.dbo.{1} ADD IF NOT EXISTS PARTITION (1);
 
+INSERT INTO {0}.dbo.{1}
+(UserId, Start, Region, Query, Duration, Urls, ClickedUrls)
+ON INTEGRITY VIOLATION MOVE TO PARTITION (1)
+VALUES
+(1, new DateTime(2018, 04, 25), ""US"", @""fake query"", 34, ""http://url1.fake.com"", ""http://clickedUrl1.fake.com""),
+(1, new DateTime(2018, 04, 26), ""EN"", @""fake query"", 23, ""http://url2.fake.com"", ""http://clickedUrl2.fake.com"");
+
 DROP FUNCTION IF EXISTS {0}.dbo.{2};
 
 //create table weblogs on space-delimited website log data

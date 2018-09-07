@@ -893,7 +893,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
         /// <summary>
         /// Deletes the specified firewall rule from the specified Data Lake Store
-        /// account
+        /// account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure resource group.

@@ -27,9 +27,7 @@
             const string applicationId = "blender.exe";
             const string version = "blender";
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
                     baseRequest =>
@@ -76,30 +74,27 @@
             const string poolId = "mock-pool";
             const string osFamily = "3";
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
-
-            Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
-                baseRequest =>
-                {
-                    Protocol.BatchRequests.PoolGetBatchRequest request = (Protocol.BatchRequests.PoolGetBatchRequest)baseRequest;
-
-                    request.ServiceRequestFunc = (token) =>
+                Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
+                    baseRequest =>
                     {
-                        var response = new AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>
+                        Protocol.BatchRequests.PoolGetBatchRequest request = (Protocol.BatchRequests.PoolGetBatchRequest)baseRequest;
+
+                        request.ServiceRequestFunc = (token) =>
                         {
-                            Body = new Protocol.Models.CloudPool
+                            var response = new AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>
                             {
-                                CurrentDedicatedNodes = 4,
-                                CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily),
-                                Id = poolId
-                            }
+                                Body = new Protocol.Models.CloudPool
+                                {
+                                    CurrentDedicatedNodes = 4,
+                                    CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily),
+                                    Id = poolId
+                                }
+                            };
+                            return Task.FromResult(response);
                         };
-                        return Task.FromResult(response);
-                    };
-                });
+                    });
 
                 Microsoft.Azure.Batch.CloudPool cloudPool = client.PoolOperations.GetPool("pool-id", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
 
@@ -141,9 +136,7 @@
             const string version = "blender";
             const string jobId = "mock-job";
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Microsoft.Azure.Batch.PoolInformation autoPoolSpecification = new Microsoft.Azure.Batch.PoolInformation
                 {
@@ -180,9 +173,7 @@
             const string version = "blender";
             const string jobId = "mock-job";
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
                     baseRequest =>
@@ -238,8 +229,7 @@
             const string version = "blender";
             const string poolName = "test-pool";
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
                 {
@@ -283,8 +273,7 @@
             const string applicationId = "app-1";
             const string version = "1.0";
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(baseRequest =>
                 {
@@ -411,9 +400,7 @@
             const string applicationId = "blender.exe";
             const string version = "blender";
 
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
-
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
                     baseRequest =>

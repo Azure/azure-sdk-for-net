@@ -5,10 +5,8 @@
     <Description>CustomerInsights.Tests Class Library</Description>
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>CustomerInsights.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <Version>1.0.0</Version>    
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

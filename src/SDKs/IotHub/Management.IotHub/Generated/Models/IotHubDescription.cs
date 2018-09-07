@@ -33,6 +33,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// Initializes a new instance of the IotHubDescription class.
         /// </summary>
         /// <param name="location">The resource location.</param>
+        /// <param name="sku">IotHub SKU info</param>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="type">The resource type.</param>
@@ -40,6 +41,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="etag">The Etag field is *not* required. If it is
         /// provided in the response body, it must also be provided as a header
         /// per the normal ETag convention.</param>
+        /// <param name="properties">IotHub properties</param>
         public IotHubDescription(string location, IotHubSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IotHubProperties properties = default(IotHubProperties))
             : base(location, id, name, type, tags)
         {
@@ -63,11 +65,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public string Etag { get; set; }
 
         /// <summary>
+        /// Gets or sets iotHub properties
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public IotHubProperties Properties { get; set; }
 
         /// <summary>
+        /// Gets or sets iotHub SKU info
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public IotHubSkuInfo Sku { get; set; }

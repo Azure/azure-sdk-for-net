@@ -58,19 +58,20 @@ namespace Microsoft.Azure.Management.DataFactory
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -123,6 +124,11 @@ namespace Microsoft.Azure.Management.DataFactory
         /// Gets the ITriggersOperations.
         /// </summary>
         public virtual ITriggersOperations Triggers { get; private set; }
+
+        /// <summary>
+        /// Gets the ITriggerRunsOperations.
+        /// </summary>
+        public virtual ITriggerRunsOperations TriggerRuns { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the DataFactoryManagementClient class.
@@ -335,8 +341,9 @@ namespace Microsoft.Azure.Management.DataFactory
             PipelineRuns = new PipelineRunsOperations(this);
             ActivityRuns = new ActivityRunsOperations(this);
             Triggers = new TriggersOperations(this);
+            TriggerRuns = new TriggerRunsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-09-01-preview";
+            ApiVersion = "2018-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -368,6 +375,8 @@ namespace Microsoft.Azure.Management.DataFactory
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SecretBase>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SecretBase>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FactoryRepoConfiguration>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FactoryRepoConfiguration>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<IntegrationRuntime>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<IntegrationRuntime>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<IntegrationRuntimeStatus>("type"));
@@ -392,8 +401,8 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopyTranslator>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopySink>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySink>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<LinkedIntegrationRuntimeProperties>("authorizationType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<LinkedIntegrationRuntimeProperties>("authorizationType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<LinkedIntegrationRuntimeType>("authorizationType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<LinkedIntegrationRuntimeType>("authorizationType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

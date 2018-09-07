@@ -10,69 +10,16 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for AgentVersionStatus.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AgentVersionStatus
+    public static class AgentVersionStatus
     {
-        [EnumMember(Value = "Supported")]
-        Supported,
-        [EnumMember(Value = "NotSupported")]
-        NotSupported,
-        [EnumMember(Value = "Deprecated")]
-        Deprecated,
-        [EnumMember(Value = "UpdateRequired")]
-        UpdateRequired,
-        [EnumMember(Value = "SecurityUpdateRequired")]
-        SecurityUpdateRequired
-    }
-    internal static class AgentVersionStatusEnumExtension
-    {
-        internal static string ToSerializedValue(this AgentVersionStatus? value)
-        {
-            return value == null ? null : ((AgentVersionStatus)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this AgentVersionStatus value)
-        {
-            switch( value )
-            {
-                case AgentVersionStatus.Supported:
-                    return "Supported";
-                case AgentVersionStatus.NotSupported:
-                    return "NotSupported";
-                case AgentVersionStatus.Deprecated:
-                    return "Deprecated";
-                case AgentVersionStatus.UpdateRequired:
-                    return "UpdateRequired";
-                case AgentVersionStatus.SecurityUpdateRequired:
-                    return "SecurityUpdateRequired";
-            }
-            return null;
-        }
-
-        internal static AgentVersionStatus? ParseAgentVersionStatus(this string value)
-        {
-            switch( value )
-            {
-                case "Supported":
-                    return AgentVersionStatus.Supported;
-                case "NotSupported":
-                    return AgentVersionStatus.NotSupported;
-                case "Deprecated":
-                    return AgentVersionStatus.Deprecated;
-                case "UpdateRequired":
-                    return AgentVersionStatus.UpdateRequired;
-                case "SecurityUpdateRequired":
-                    return AgentVersionStatus.SecurityUpdateRequired;
-            }
-            return null;
-        }
+        public const string Supported = "Supported";
+        public const string NotSupported = "NotSupported";
+        public const string Deprecated = "Deprecated";
+        public const string UpdateRequired = "UpdateRequired";
+        public const string SecurityUpdateRequired = "SecurityUpdateRequired";
     }
 }

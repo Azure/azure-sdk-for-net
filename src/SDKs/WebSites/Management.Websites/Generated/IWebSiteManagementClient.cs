@@ -51,19 +51,25 @@ namespace Microsoft.Azure.Management.WebSites
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// API Version
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
+        /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running
-        /// Operations. Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default
+        /// value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated
-        /// and included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When
+        /// set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
@@ -72,6 +78,11 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets the IAppServiceCertificateOrdersOperations.
         /// </summary>
         IAppServiceCertificateOrdersOperations AppServiceCertificateOrders { get; }
+
+        /// <summary>
+        /// Gets the ICertificateRegistrationProviderOperations.
+        /// </summary>
+        ICertificateRegistrationProviderOperations CertificateRegistrationProvider { get; }
 
         /// <summary>
         /// Gets the IDomainsOperations.
@@ -84,6 +95,11 @@ namespace Microsoft.Azure.Management.WebSites
         ITopLevelDomainsOperations TopLevelDomains { get; }
 
         /// <summary>
+        /// Gets the IDomainRegistrationProviderOperations.
+        /// </summary>
+        IDomainRegistrationProviderOperations DomainRegistrationProvider { get; }
+
+        /// <summary>
         /// Gets the ICertificatesOperations.
         /// </summary>
         ICertificatesOperations Certificates { get; }
@@ -94,6 +110,11 @@ namespace Microsoft.Azure.Management.WebSites
         IDeletedWebAppsOperations DeletedWebApps { get; }
 
         /// <summary>
+        /// Gets the IDiagnosticsOperations.
+        /// </summary>
+        IDiagnosticsOperations Diagnostics { get; }
+
+        /// <summary>
         /// Gets the IProviderOperations.
         /// </summary>
         IProviderOperations Provider { get; }
@@ -102,11 +123,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets the IRecommendationsOperations.
         /// </summary>
         IRecommendationsOperations Recommendations { get; }
-
-        /// <summary>
-        /// Gets the IResourceHealthMetadataOperations.
-        /// </summary>
-        IResourceHealthMetadataOperations ResourceHealthMetadata { get; }
 
         /// <summary>
         /// Gets the IWebAppsOperations.
@@ -122,6 +138,11 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets the IAppServicePlansOperations.
         /// </summary>
         IAppServicePlansOperations AppServicePlans { get; }
+
+        /// <summary>
+        /// Gets the IResourceHealthMetadataOperations.
+        /// </summary>
+        IResourceHealthMetadataOperations ResourceHealthMetadata { get; }
 
         /// <summary>
         /// Gets publishing user
@@ -206,6 +227,26 @@ namespace Microsoft.Azure.Management.WebSites
         Task<AzureOperationResponse<SourceControl>> UpdateSourceControlWithHttpMessagesAsync(string sourceControlType, SourceControl requestMessage, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Gets a list of meters for a given location.
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of meters for a given location.
+        /// </remarks>
+        /// <param name='billingLocation'>
+        /// Azure Location of billable resource
+        /// </param>
+        /// <param name='osType'>
+        /// App Service OS type meters used for
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BillingMeter>>> ListBillingMetersWithHttpMessagesAsync(string billingLocation = default(string), string osType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Check if a resource name is available.
         /// </summary>
         /// <remarks>
@@ -216,7 +257,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         /// <param name='type'>
         /// Resource type used for verification. Possible values include:
-        /// 'Site', 'Slot', 'HostingEnvironment'
+        /// 'Site', 'Slot', 'HostingEnvironment', 'PublishingUser',
+        /// 'Microsoft.Web/sites', 'Microsoft.Web/sites/slots',
+        /// 'Microsoft.Web/hostingEnvironments',
+        /// 'Microsoft.Web/publishingUsers'
         /// </param>
         /// <param name='isFqdn'>
         /// Is fully qualified domain name.
@@ -251,12 +295,16 @@ namespace Microsoft.Azure.Management.WebSites
         /// </remarks>
         /// <param name='sku'>
         /// Name of SKU used to filter the regions. Possible values include:
-        /// 'Free', 'Shared', 'Basic', 'Standard', 'Premium', 'PremiumV2',
-        /// 'Dynamic', 'Isolated'
+        /// 'Free', 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic',
+        /// 'Isolated', 'PremiumV2'
         /// </param>
         /// <param name='linuxWorkersEnabled'>
         /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only
         /// regions that support Linux workers.
+        /// </param>
+        /// <param name='xenonWorkersEnabled'>
+        /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only
+        /// regions that support Xenon workers.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -264,7 +312,24 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<GeoRegion>>> ListGeoRegionsWithHttpMessagesAsync(string sku = default(string), bool? linuxWorkersEnabled = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<GeoRegion>>> ListGeoRegionsWithHttpMessagesAsync(string sku = default(string), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List all apps that are assigned to a hostname.
+        /// </summary>
+        /// <remarks>
+        /// List all apps that are assigned to a hostname.
+        /// </remarks>
+        /// <param name='nameIdentifier'>
+        /// Hostname information.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<Identifier>>> ListSiteIdentifiersAssignedToHostNameWithHttpMessagesAsync(NameIdentifier nameIdentifier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List all premier add-on offers.
@@ -391,6 +456,23 @@ namespace Microsoft.Azure.Management.WebSites
         Task<AzureOperationResponse<IPage<SourceControl>>> ListSourceControlsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Gets a list of meters for a given location.
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of meters for a given location.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BillingMeter>>> ListBillingMetersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Get a list of available geographical regions.
         /// </summary>
         /// <remarks>
@@ -406,6 +488,23 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IPage<GeoRegion>>> ListGeoRegionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List all apps that are assigned to a hostname.
+        /// </summary>
+        /// <remarks>
+        /// List all apps that are assigned to a hostname.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<Identifier>>> ListSiteIdentifiersAssignedToHostNameNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List all premier add-on offers.

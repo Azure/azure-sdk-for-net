@@ -39,9 +39,19 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='subscriptionName'>
             /// The subscription name.
             /// </param>
-            public static IPage<Rule> ListBySubscriptions(this IRulesOperations operations, string resourceGroupName, string namespaceName, string topicName, string subscriptionName)
+            /// <param name='skip'>
+            /// Skip is only used if a previous operation returned a partial result. If a
+            /// previous response contains a nextLink element, the value of the nextLink
+            /// element will include a skip parameter that specifies a starting point to
+            /// use for subsequent calls.
+            /// </param>
+            /// <param name='top'>
+            /// May be used to limit the number of results to the most recent N
+            /// usageDetails.
+            /// </param>
+            public static IPage<Rule> ListBySubscriptions(this IRulesOperations operations, string resourceGroupName, string namespaceName, string topicName, string subscriptionName, int? skip = default(int?), int? top = default(int?))
             {
-                return operations.ListBySubscriptionsAsync(resourceGroupName, namespaceName, topicName, subscriptionName).GetAwaiter().GetResult();
+                return operations.ListBySubscriptionsAsync(resourceGroupName, namespaceName, topicName, subscriptionName, skip, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -62,12 +72,22 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='subscriptionName'>
             /// The subscription name.
             /// </param>
+            /// <param name='skip'>
+            /// Skip is only used if a previous operation returned a partial result. If a
+            /// previous response contains a nextLink element, the value of the nextLink
+            /// element will include a skip parameter that specifies a starting point to
+            /// use for subsequent calls.
+            /// </param>
+            /// <param name='top'>
+            /// May be used to limit the number of results to the most recent N
+            /// usageDetails.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Rule>> ListBySubscriptionsAsync(this IRulesOperations operations, string resourceGroupName, string namespaceName, string topicName, string subscriptionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Rule>> ListBySubscriptionsAsync(this IRulesOperations operations, string resourceGroupName, string namespaceName, string topicName, string subscriptionName, int? skip = default(int?), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBySubscriptionsWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, subscriptionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionsWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, subscriptionName, skip, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

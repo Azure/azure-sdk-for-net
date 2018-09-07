@@ -10,63 +10,15 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for A2ARpRecoveryPointType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum A2ARpRecoveryPointType
+    public static class A2ARpRecoveryPointType
     {
-        [EnumMember(Value = "Latest")]
-        Latest,
-        [EnumMember(Value = "LatestApplicationConsistent")]
-        LatestApplicationConsistent,
-        [EnumMember(Value = "LatestCrashConsistent")]
-        LatestCrashConsistent,
-        [EnumMember(Value = "LatestProcessed")]
-        LatestProcessed
-    }
-    internal static class A2ARpRecoveryPointTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this A2ARpRecoveryPointType? value)
-        {
-            return value == null ? null : ((A2ARpRecoveryPointType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this A2ARpRecoveryPointType value)
-        {
-            switch( value )
-            {
-                case A2ARpRecoveryPointType.Latest:
-                    return "Latest";
-                case A2ARpRecoveryPointType.LatestApplicationConsistent:
-                    return "LatestApplicationConsistent";
-                case A2ARpRecoveryPointType.LatestCrashConsistent:
-                    return "LatestCrashConsistent";
-                case A2ARpRecoveryPointType.LatestProcessed:
-                    return "LatestProcessed";
-            }
-            return null;
-        }
-
-        internal static A2ARpRecoveryPointType? ParseA2ARpRecoveryPointType(this string value)
-        {
-            switch( value )
-            {
-                case "Latest":
-                    return A2ARpRecoveryPointType.Latest;
-                case "LatestApplicationConsistent":
-                    return A2ARpRecoveryPointType.LatestApplicationConsistent;
-                case "LatestCrashConsistent":
-                    return A2ARpRecoveryPointType.LatestCrashConsistent;
-                case "LatestProcessed":
-                    return A2ARpRecoveryPointType.LatestProcessed;
-            }
-            return null;
-        }
+        public const string Latest = "Latest";
+        public const string LatestApplicationConsistent = "LatestApplicationConsistent";
+        public const string LatestCrashConsistent = "LatestCrashConsistent";
+        public const string LatestProcessed = "LatestProcessed";
     }
 }

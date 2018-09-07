@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Language.LUIS
+namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
 {
     using Microsoft.Rest;
     using Models;
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
     /// <summary>
     /// Prediction operations.
     /// </summary>
-    public partial class Prediction : IServiceOperations<LuisRuntimeAPI>, IPrediction
+    public partial class Prediction : IServiceOperations<LUISRuntimeClient>, IPrediction
     {
         /// <summary>
         /// Initializes a new instance of the Prediction class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public Prediction(LuisRuntimeAPI client)
+        public Prediction(LUISRuntimeClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         }
 
         /// <summary>
-        /// Gets a reference to the LuisRuntimeAPI
+        /// Gets a reference to the LUISRuntimeClient
         /// </summary>
-        public LuisRuntimeAPI Client { get; private set; }
+        public LUISRuntimeClient Client { get; private set; }
 
         /// <summary>
         /// Gets predictions for a given utterance, in the form of intents and
@@ -101,6 +101,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// </return>
         public async Task<HttpOperationResponse<LuisResult>> ResolveWithHttpMessagesAsync(string appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (appId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "appId");
@@ -136,8 +140,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{appId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
             List<string> _queryParameters = new List<string>();
             if (timezoneOffset != null)

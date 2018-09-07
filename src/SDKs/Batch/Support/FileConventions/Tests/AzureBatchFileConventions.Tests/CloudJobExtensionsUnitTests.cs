@@ -40,9 +40,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         }
 
         [Fact]
-        public async Task CannotCreateOutputStorageForNullStorageAccount()
+        public void CannotCreateOutputStorageForNullStorageAccount()
         {
-            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient()))
+            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
             {
                 CloudJob job = batchClient.JobOperations.CreateJob();
                 job.Id = "fakejob";
@@ -92,9 +92,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         }
 
         [Fact]
-        public async Task CannotGetOutputStorageUrlForNullStorageAccount()
+        public void CannotGetOutputStorageUrlForNullStorageAccount()
         {
-            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient()))
+            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
             {
                 CloudJob job = batchClient.JobOperations.CreateJob();
                 job.Id = "fakejob";
@@ -105,9 +105,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         }
 
         [Fact]
-        public async Task CannotGetOutputStorageUrlWithZeroExpiryTime()
+        public void CannotGetOutputStorageUrlWithZeroExpiryTime()
         {
-            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient()))
+            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
             {
                 CloudJob job = batchClient.JobOperations.CreateJob();
                 job.Id = "fakejob";
@@ -118,9 +118,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         }
 
         [Fact]
-        public async Task CannotGetOutputStorageUrlWithNegativeExpiryTime()
+        public void CannotGetOutputStorageUrlWithNegativeExpiryTime()
         {
-            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient()))
+            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
             {
                 CloudJob job = batchClient.JobOperations.CreateJob();
                 job.Id = "fakejob";

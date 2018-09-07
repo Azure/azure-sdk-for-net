@@ -1,5 +1,24 @@
 ## Microsoft.Azure.Management.Monitor release notes
 
+### Changes in 0.20.1-preview
+
+**Notes**
+
+- Fixing issue #3585 [Monitor] Breaking change found in AutoScale spec (Swagger spec)
+- Fixing issue #3293 [Monitor] Add serviceBusRuleId to the DiagnosticSettings resource (Swagger spec)
+- Adding ListBySubscription operations to Autoscale and Alerts APIs
+- New api-version for ActionGroups: 2018-03-01
+- New api for ScheduledQueryRules: 2018-04-16
+- Adding the most recent changes to the Swagger spec: several model classes added due to the new api and the update in ActionGroups
+
+### Changes in 0.20.0-preview
+
+**Notes**
+
+- Approx. date of publication (2018-06)
+- Adding MetricAlerts APIs and their unit tests
+- Adding scenario tests for MetricAlerts and recorded them
+
 ### Changes in 0.19.1-preview
 
 **Notes**

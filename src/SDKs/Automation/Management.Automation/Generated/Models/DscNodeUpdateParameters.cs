@@ -30,12 +30,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Initializes a new instance of the DscNodeUpdateParameters class.
         /// </summary>
         /// <param name="nodeId">Gets or sets the id of the dsc node.</param>
-        /// <param name="nodeConfiguration">Gets or sets the configuration of
-        /// the node.</param>
-        public DscNodeUpdateParameters(string nodeId = default(string), DscNodeConfigurationAssociationProperty nodeConfiguration = default(DscNodeConfigurationAssociationProperty))
+        public DscNodeUpdateParameters(string nodeId = default(string), DscNodeUpdateParametersProperties properties = default(DscNodeUpdateParametersProperties))
         {
             NodeId = nodeId;
-            NodeConfiguration = nodeConfiguration;
+            Properties = properties;
             CustomInit();
         }
 
@@ -51,10 +49,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string NodeId { get; set; }
 
         /// <summary>
-        /// Gets or sets the configuration of the node.
         /// </summary>
-        [JsonProperty(PropertyName = "nodeConfiguration")]
-        public DscNodeConfigurationAssociationProperty NodeConfiguration { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public DscNodeUpdateParametersProperties Properties { get; set; }
 
     }
 }

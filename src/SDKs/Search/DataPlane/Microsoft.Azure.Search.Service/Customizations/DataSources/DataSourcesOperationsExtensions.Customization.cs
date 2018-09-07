@@ -16,8 +16,9 @@ namespace Microsoft.Azure.Search
     public static partial class DataSourcesOperationsExtensions
     {
         /// <summary>
-        /// Creates a new Azure Search datasource or updates a datasource if it
-        /// already exists.
+        /// Creates a new Azure Search datasource or updates a datasource if it already
+        /// exists.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Data-Source" />
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -26,19 +27,23 @@ namespace Microsoft.Azure.Search
         /// The definition of the datasource to create or update.
         /// </param>
         /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <param name='accessCondition'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
+        /// <returns>
+        /// The datasource that was created or updated.
+        /// </returns>
         public static DataSource CreateOrUpdate(this IDataSourcesOperations operations, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
         {
             return operations.CreateOrUpdateAsync(dataSource, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
         }
 
         /// <summary>
-        /// Creates a new Azure Search datasource or updates a datasource if it
-        /// already exists.
+        /// Creates a new Azure Search datasource or updates a datasource if it already
+        /// exists.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Data-Source" />
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -55,6 +60,9 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <returns>
+        /// The datasource that was created or updated.
+        /// </returns>
         public static async Task<DataSource> CreateOrUpdateAsync(this IDataSourcesOperations operations, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(dataSource, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
@@ -73,7 +81,7 @@ namespace Microsoft.Azure.Search
         /// The name of the data source.
         /// </param>
         /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <returns>
         /// <c>true</c> if the data source exists; <c>false</c> otherwise.
@@ -96,7 +104,7 @@ namespace Microsoft.Azure.Search
         /// The name of the data source.
         /// </param>
         /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.

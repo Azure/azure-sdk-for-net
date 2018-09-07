@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// SSH configuration settings for the VM
+    /// SSH configuration.
     /// </summary>
     public partial class SshConfiguration
     {
@@ -32,10 +32,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the SshConfiguration class.
         /// </summary>
-        /// <param name="userAccountSettings">Settings for user account to be
-        /// created on a node.</param>
-        /// <param name="publicIPsToAllow">List of source IP ranges to allow
-        /// SSH connection to a node.</param>
+        /// <param name="userAccountSettings">User account settings.</param>
+        /// <param name="publicIPsToAllow">Allowed public IPs.</param>
         public SshConfiguration(UserAccountSettings userAccountSettings, IList<string> publicIPsToAllow = default(IList<string>))
         {
             PublicIPsToAllow = publicIPsToAllow;
@@ -49,19 +47,23 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of source IP ranges to allow SSH connection to a
-        /// node.
+        /// Gets or sets allowed public IPs.
         /// </summary>
         /// <remarks>
-        /// Default value is '*' can be used to match all source IPs. Maximum
-        /// number of IP ranges that can be specified are 400.
+        /// List of source IP ranges to allow SSH connection from. The default
+        /// value is '*' (all source IPs are allowed). Maximum number of IP
+        /// ranges that can be specified is 400.
         /// </remarks>
         [JsonProperty(PropertyName = "publicIPsToAllow")]
         public IList<string> PublicIPsToAllow { get; set; }
 
         /// <summary>
-        /// Gets or sets settings for user account to be created on a node.
+        /// Gets or sets user account settings.
         /// </summary>
+        /// <remarks>
+        /// Settings for administrator user account to be created on a node.
+        /// The account can be used to establish SSH connection to the node.
+        /// </remarks>
         [JsonProperty(PropertyName = "userAccountSettings")]
         public UserAccountSettings UserAccountSettings { get; set; }
 

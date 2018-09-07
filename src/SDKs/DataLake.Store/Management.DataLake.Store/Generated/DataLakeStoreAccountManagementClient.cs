@@ -86,6 +86,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public virtual IFirewallRulesOperations FirewallRules { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualNetworkRulesOperations.
+        /// </summary>
+        public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
+
+        /// <summary>
         /// Gets the ITrustedIdProvidersOperations.
         /// </summary>
         public virtual ITrustedIdProvidersOperations TrustedIdProviders { get; private set; }
@@ -303,6 +308,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         {
             Accounts = new AccountsOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
+            VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             TrustedIdProviders = new TrustedIdProvidersOperations(this);
             Operations = new Operations(this);
             Locations = new LocationsOperations(this);

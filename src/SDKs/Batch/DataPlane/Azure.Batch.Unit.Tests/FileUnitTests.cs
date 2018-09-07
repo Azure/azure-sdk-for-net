@@ -31,7 +31,7 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task GetFilePropertiesFromTaskDoesNotThrowOutOfMemoryException()
         {
-            using (BatchClient client = await CreateBatchClientWithHandlerAsync())
+            using (BatchClient client = CreateBatchClientWithHandler())
             {
                 NodeFile file = await client.JobOperations.GetNodeFileAsync("Foo", "Bar", "Baz");
                 Assert.Equal(StreamUnitTests.StreamLengthInBytes, file.Properties.ContentLength);
@@ -42,14 +42,14 @@ namespace Azure.Batch.Unit.Tests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task GetFilePropertiesFromNodeDoesNotThrowOutOfMemoryException()
         {
-            using (BatchClient client = await CreateBatchClientWithHandlerAsync())
+            using (BatchClient client = CreateBatchClientWithHandler())
             {
                 NodeFile file = await client.PoolOperations.GetNodeFileAsync("Foo", "Bar", "Baz");
                 Assert.Equal(StreamUnitTests.StreamLengthInBytes, file.Properties.ContentLength);
             }
         }
 
-        private static Task<BatchClient> CreateBatchClientWithHandlerAsync()
+        private static BatchClient CreateBatchClientWithHandler()
         {
             HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -58,7 +58,7 @@ namespace Azure.Batch.Unit.Tests
             responseMessage.Content.Headers.ContentLength = StreamUnitTests.StreamLengthInBytes;
             ReplayDelegatingHandler handler = new ReplayDelegatingHandler(responseMessage);
 
-            return BatchClient.OpenAsync(new Protocol.BatchServiceClient(new TokenCredentials("xyz"), handler));
+            return BatchClient.Open(new Protocol.BatchServiceClient(new TokenCredentials("xyz"), handler));
         }
 
         private class ReplayDelegatingHandler : DelegatingHandler

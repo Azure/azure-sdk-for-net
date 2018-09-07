@@ -309,8 +309,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// instance.
         /// </param>
         /// <param name='apiId'>
-        /// API identifier. Must be unique in the current API Management service
-        /// instance.
+        /// API revision identifier. Must be unique in the current API Management
+        /// service instance. Non-current revision has ;rev=n as a suffix where n is
+        /// the revision number.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -380,17 +381,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (apiId != null)
             {
-                if (apiId.Length > 80)
+                if (apiId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "apiId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "apiId", 256);
                 }
                 if (apiId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -545,8 +546,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// instance.
         /// </param>
         /// <param name='apiId'>
-        /// API identifier. Must be unique in the current API Management service
-        /// instance.
+        /// API revision identifier. Must be unique in the current API Management
+        /// service instance. Non-current revision has ;rev=n as a suffix where n is
+        /// the revision number.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -619,17 +621,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (apiId != null)
             {
-                if (apiId.Length > 80)
+                if (apiId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "apiId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "apiId", 256);
                 }
                 if (apiId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -819,8 +821,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// instance.
         /// </param>
         /// <param name='apiId'>
-        /// API identifier. Must be unique in the current API Management service
-        /// instance.
+        /// API revision identifier. Must be unique in the current API Management
+        /// service instance. Non-current revision has ;rev=n as a suffix where n is
+        /// the revision number.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -890,17 +893,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (apiId != null)
             {
-                if (apiId.Length > 80)
+                if (apiId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "apiId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "apiId", 256);
                 }
                 if (apiId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)

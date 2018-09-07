@@ -7,9 +7,13 @@
 		<PackageId>Microsoft.Azure.Management.ResourceManager</PackageId>
 		<Description>Provides resource group and resource management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
-		<Version>1.7.0-preview</Version>
+		<Version>2.0.0-preview</Version>
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;</PackageTags>
-		<PackageReleaseNotes/>
+		<PackageReleaseNotes>
+      <![CDATA[
+        This is a public release of the Azure Resource Manager SDK. This release introduces managed identity support to policy assignments. 
+      ]]>
+    </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

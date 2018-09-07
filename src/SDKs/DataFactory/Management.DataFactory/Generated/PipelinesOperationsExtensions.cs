@@ -138,9 +138,14 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='pipelineName'>
             /// The pipeline name.
             /// </param>
-            public static PipelineResource Get(this IPipelinesOperations operations, string resourceGroupName, string factoryName, string pipelineName)
+            /// <param name='ifNoneMatch'>
+            /// ETag of the pipeline entity. Should only be specified for get. If the ETag
+            /// matches the existing entity tag, or if * was provided, then no content will
+            /// be returned.
+            /// </param>
+            public static PipelineResource Get(this IPipelinesOperations operations, string resourceGroupName, string factoryName, string pipelineName, string ifNoneMatch = default(string))
             {
-                return operations.GetAsync(resourceGroupName, factoryName, pipelineName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, factoryName, pipelineName, ifNoneMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,12 +163,17 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='pipelineName'>
             /// The pipeline name.
             /// </param>
+            /// <param name='ifNoneMatch'>
+            /// ETag of the pipeline entity. Should only be specified for get. If the ETag
+            /// matches the existing entity tag, or if * was provided, then no content will
+            /// be returned.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PipelineResource> GetAsync(this IPipelinesOperations operations, string resourceGroupName, string factoryName, string pipelineName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PipelineResource> GetAsync(this IPipelinesOperations operations, string resourceGroupName, string factoryName, string pipelineName, string ifNoneMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, factoryName, pipelineName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, factoryName, pipelineName, ifNoneMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -227,12 +237,17 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='pipelineName'>
             /// The pipeline name.
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters of the pipeline run.
+            /// <param name='referencePipelineRunId'>
+            /// The pipeline run identifier. If run ID is specified the parameters of the
+            /// the specified run will be used to create a new run.
             /// </param>
-            public static CreateRunResponse CreateRun(this IPipelinesOperations operations, string resourceGroupName, string factoryName, string pipelineName, IDictionary<string, object> parameters = default(IDictionary<string, object>))
+            /// <param name='parameters'>
+            /// Parameters of the pipeline run. These parameters will be used only if the
+            /// runId is not specified.
+            /// </param>
+            public static CreateRunResponse CreateRun(this IPipelinesOperations operations, string resourceGroupName, string factoryName, string pipelineName, string referencePipelineRunId = default(string), IDictionary<string, object> parameters = default(IDictionary<string, object>))
             {
-                return operations.CreateRunAsync(resourceGroupName, factoryName, pipelineName, parameters).GetAwaiter().GetResult();
+                return operations.CreateRunAsync(resourceGroupName, factoryName, pipelineName, referencePipelineRunId, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -250,15 +265,20 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='pipelineName'>
             /// The pipeline name.
             /// </param>
+            /// <param name='referencePipelineRunId'>
+            /// The pipeline run identifier. If run ID is specified the parameters of the
+            /// the specified run will be used to create a new run.
+            /// </param>
             /// <param name='parameters'>
-            /// Parameters of the pipeline run.
+            /// Parameters of the pipeline run. These parameters will be used only if the
+            /// runId is not specified.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CreateRunResponse> CreateRunAsync(this IPipelinesOperations operations, string resourceGroupName, string factoryName, string pipelineName, IDictionary<string, object> parameters = default(IDictionary<string, object>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CreateRunResponse> CreateRunAsync(this IPipelinesOperations operations, string resourceGroupName, string factoryName, string pipelineName, string referencePipelineRunId = default(string), IDictionary<string, object> parameters = default(IDictionary<string, object>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateRunWithHttpMessagesAsync(resourceGroupName, factoryName, pipelineName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateRunWithHttpMessagesAsync(resourceGroupName, factoryName, pipelineName, referencePipelineRunId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

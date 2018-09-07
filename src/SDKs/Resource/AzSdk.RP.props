@@ -1,7 +1,7 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--This file and it's contents are updated at build time moving or editing might result in build failure. Take due deligence while editing this file-->
   <PropertyGroup>
-    <AzureApiTag />
+    <AzureApiTag>Features_2015-12-01;ManagementLinkClient_2016-09-01;Resources_2016-09-01;Authorization_2016-09-01;Authorization_2018-05-01;Management_2018-05-01;PolicyClient_2018-05-01;ResourceManagementClient_2018-05-01;Resources_2018-05-01;SubscriptionClient_2016-06-01;</AzureApiTag>
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
   </PropertyGroup>
 </Project>

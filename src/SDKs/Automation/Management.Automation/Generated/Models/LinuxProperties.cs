@@ -36,10 +36,16 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// include: 'Unclassified', 'Critical', 'Security', 'Other'</param>
         /// <param name="excludedPackageNameMasks">packages excluded from the
         /// software update configuration.</param>
-        public LinuxProperties(string includedPackageClassifications = default(string), IList<string> excludedPackageNameMasks = default(IList<string>))
+        /// <param name="includedPackageNameMasks">packages included from the
+        /// software update configuration.</param>
+        /// <param name="rebootSetting">Reboot setting for the software update
+        /// configuration.</param>
+        public LinuxProperties(string includedPackageClassifications = default(string), IList<string> excludedPackageNameMasks = default(IList<string>), IList<string> includedPackageNameMasks = default(IList<string>), string rebootSetting = default(string))
         {
             IncludedPackageClassifications = includedPackageClassifications;
             ExcludedPackageNameMasks = excludedPackageNameMasks;
+            IncludedPackageNameMasks = includedPackageNameMasks;
+            RebootSetting = rebootSetting;
             CustomInit();
         }
 
@@ -62,6 +68,19 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "excludedPackageNameMasks")]
         public IList<string> ExcludedPackageNameMasks { get; set; }
+
+        /// <summary>
+        /// Gets or sets packages included from the software update
+        /// configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "includedPackageNameMasks")]
+        public IList<string> IncludedPackageNameMasks { get; set; }
+
+        /// <summary>
+        /// Gets or sets reboot setting for the software update configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "rebootSetting")]
+        public string RebootSetting { get; set; }
 
     }
 }

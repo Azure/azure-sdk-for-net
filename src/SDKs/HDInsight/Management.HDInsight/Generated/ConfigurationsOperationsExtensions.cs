@@ -35,12 +35,15 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
-            /// <param name='parameters'>
-            /// The name of the resource group.
+            /// <param name='configurationName'>
+            /// The name of the cluster configuration.
             /// </param>
-            public static void UpdateHTTPSettings(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, HttpConnectivitySettings parameters)
+            /// <param name='parameters'>
+            /// The cluster configurations.
+            /// </param>
+            public static void UpdateHTTPSettings(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters)
             {
-                operations.UpdateHTTPSettingsAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+                operations.UpdateHTTPSettingsAsync(resourceGroupName, clusterName, configurationName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -55,15 +58,18 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
+            /// <param name='configurationName'>
+            /// The name of the cluster configuration.
+            /// </param>
             /// <param name='parameters'>
-            /// The name of the resource group.
+            /// The cluster configurations.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateHTTPSettingsAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, HttpConnectivitySettings parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateHTTPSettingsAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateHTTPSettingsWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateHTTPSettingsWithHttpMessagesAsync(resourceGroupName, clusterName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -79,7 +85,7 @@ namespace Microsoft.Azure.Management.HDInsight
             /// The name of the cluster.
             /// </param>
             /// <param name='configurationName'>
-            /// The constant for configuration type of gateway.
+            /// The name of the cluster configuration.
             /// </param>
             public static IDictionary<string, string> Get(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName)
             {
@@ -99,7 +105,7 @@ namespace Microsoft.Azure.Management.HDInsight
             /// The name of the cluster.
             /// </param>
             /// <param name='configurationName'>
-            /// The constant for configuration type of gateway.
+            /// The name of the cluster configuration.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -124,12 +130,15 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
-            /// <param name='parameters'>
-            /// The name of the resource group.
+            /// <param name='configurationName'>
+            /// The name of the cluster configuration.
             /// </param>
-            public static void BeginUpdateHTTPSettings(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, HttpConnectivitySettings parameters)
+            /// <param name='parameters'>
+            /// The cluster configurations.
+            /// </param>
+            public static void BeginUpdateHTTPSettings(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters)
             {
-                operations.BeginUpdateHTTPSettingsAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+                operations.BeginUpdateHTTPSettingsAsync(resourceGroupName, clusterName, configurationName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -144,15 +153,18 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
+            /// <param name='configurationName'>
+            /// The name of the cluster configuration.
+            /// </param>
             /// <param name='parameters'>
-            /// The name of the resource group.
+            /// The cluster configurations.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginUpdateHTTPSettingsAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, HttpConnectivitySettings parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginUpdateHTTPSettingsAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginUpdateHTTPSettingsWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginUpdateHTTPSettingsWithHttpMessagesAsync(resourceGroupName, clusterName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

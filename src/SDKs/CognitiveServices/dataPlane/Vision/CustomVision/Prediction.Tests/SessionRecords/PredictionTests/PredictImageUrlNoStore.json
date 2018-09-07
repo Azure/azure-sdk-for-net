@@ -1,10 +1,10 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v1.1/Prediction/e222c033-5f5d-4a23-bde9-8343f19c0a01/url/nostore",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4xL1ByZWRpY3Rpb24vZTIyMmMwMzMtNWY1ZC00YTIzLWJkZTktODM0M2YxOWMwYTAxL3VybC9ub3N0b3Jl",
+      "RequestUri": "/customvision/v2.0/Prediction/1896e6d9-5090-4733-882f-4f14632fec37/url/nostore",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1ByZWRpY3Rpb24vMTg5NmU2ZDktNTA5MC00NzMzLTg4MmYtNGYxNDYzMmZlYzM3L3VybC9ub3N0b3Jl",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"Url\": \"https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -17,22 +17,22 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.PredictionEndpoint/1.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.PredictionEndpoint/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"Id\": \"cec12479-70b6-4c2b-a78c-5574338f288a\",\r\n  \"Project\": \"e222c033-5f5d-4a23-bde9-8343f19c0a01\",\r\n  \"Iteration\": \"015deca4-aa39-4d20-81fe-73de4efd6acf\",\r\n  \"Created\": \"2018-02-22T05:22:17.1888743Z\",\r\n  \"Predictions\": [\r\n    {\r\n      \"TagId\": \"f7304b5d-0318-4a29-b98c-114c6f90c81d\",\r\n      \"Tag\": \"Hemlock\",\r\n      \"Probability\": 1.0\r\n    },\r\n    {\r\n      \"TagId\": \"5408cebc-c28d-4578-8515-7a4718f5e0d3\",\r\n      \"Tag\": \"Japanese Cherry\",\r\n      \"Probability\": 3.60627153E-12\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"617d62c2-7fe3-4f1f-a692-463f490cce57\",\r\n  \"project\": \"1896e6d9-5090-4733-882f-4f14632fec37\",\r\n  \"iteration\": \"aaeb5238-fabd-4102-ae30-0455b03c593e\",\r\n  \"created\": \"2018-04-26T18:29:53.4806256Z\",\r\n  \"predictions\": [\r\n    {\r\n      \"probability\": 0.9999821,\r\n      \"tagId\": \"5bd06679-eb62-47f7-a76f-c9b33f505afa\",\r\n      \"tagName\": \"hemlock\"\r\n    },\r\n    {\r\n      \"probability\": 3.03306615E-06,\r\n      \"tagId\": \"24cbd7bc-f2cf-49ad-9c8f-63e3d03c3511\",\r\n      \"tagName\": \"cherry\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "387"
+          "392"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Date": [
-          "Thu, 22 Feb 2018 05:22:17 GMT"
+          "Thu, 26 Apr 2018 18:29:53 GMT"
         ],
         "apim-request-id": [
-          "3e485211-2411-4403-89af-057f3b1b690b"
+          "d57bef78-f821-435c-8146-441eb66f9188"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

@@ -33,18 +33,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         /// <param name="categories">An array indicating identified
         /// categories.</param>
-        /// <param name="adult">A property scoring on whether the image is
-        /// adult-oriented and/or racy.</param>
-        /// <param name="color">A property scoring on color spectrums.</param>
-        /// <param name="imageType">A property indicating type of image
-        /// (whether it's clipart or line drawing)</param>
         /// <param name="tags">A list of tags with confidence level.</param>
-        /// <param name="description">Description of the image.</param>
         /// <param name="faces">An array of possible faces within the
         /// image.</param>
         /// <param name="requestId">Id of the request for tracking
         /// purposes.</param>
-        /// <param name="metadata">Image metadata</param>
         public ImageAnalysis(IList<Category> categories = default(IList<Category>), AdultInfo adult = default(AdultInfo), ColorInfo color = default(ColorInfo), ImageType imageType = default(ImageType), IList<ImageTag> tags = default(IList<ImageTag>), ImageDescriptionDetails description = default(ImageDescriptionDetails), IList<FaceDescription> faces = default(IList<FaceDescription>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
             Categories = categories;
@@ -71,21 +64,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public IList<Category> Categories { get; set; }
 
         /// <summary>
-        /// Gets or sets a property scoring on whether the image is
-        /// adult-oriented and/or racy.
         /// </summary>
         [JsonProperty(PropertyName = "adult")]
         public AdultInfo Adult { get; set; }
 
         /// <summary>
-        /// Gets or sets a property scoring on color spectrums.
         /// </summary>
         [JsonProperty(PropertyName = "color")]
         public ColorInfo Color { get; set; }
 
         /// <summary>
-        /// Gets or sets a property indicating type of image (whether it's
-        /// clipart or line drawing)
         /// </summary>
         [JsonProperty(PropertyName = "imageType")]
         public ImageType ImageType { get; set; }
@@ -97,7 +85,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public IList<ImageTag> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets description of the image.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public ImageDescriptionDetails Description { get; set; }
@@ -115,7 +102,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public string RequestId { get; set; }
 
         /// <summary>
-        /// Gets or sets image metadata
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public ImageMetadata Metadata { get; set; }

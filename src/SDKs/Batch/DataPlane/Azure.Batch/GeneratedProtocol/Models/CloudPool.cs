@@ -94,7 +94,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="metadata">A list of name-value pairs associated with
         /// the pool as metadata.</param>
         /// <param name="stats">Utilization and resource usage statistics for
-        /// the entire lifetime of the pool.</param>
+        /// the entire lifetime of the pool. The statistics may not be
+        /// immediately available. The Batch service performs periodic roll-up
+        /// of statistics. The typical delay is about 30 minutes.</param>
         public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), IList<ResizeError> resizeErrors = default(IList<ResizeError>), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics))
         {
             Id = id;
@@ -235,20 +237,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// machines in a pool are the same size.
         /// </summary>
         /// <remarks>
-        /// For information about available sizes of virtual machines for Cloud
-        /// Services pools (pools created with cloudServiceConfiguration), see
-        /// Sizes for Cloud Services
-        /// (http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
-        /// Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2
-        /// and A2V2. For information about available VM sizes for pools using
-        /// images from the Virtual Machines Marketplace (pools created with
-        /// virtualMachineConfiguration) see Sizes for Virtual Machines (Linux)
-        /// (https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/)
-        /// or Sizes for Virtual Machines (Windows)
-        /// (https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/).
-        /// Batch supports all Azure VM sizes except STANDARD_A0 and those with
-        /// premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2
-        /// series).
+        /// For information about available sizes of virtual machines in pools,
+        /// see Choose a VM size for compute nodes in an Azure Batch pool
+        /// (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).
         /// </remarks>
         [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
@@ -468,87 +459,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets utilization and resource usage statistics for the
-        /// entire lifetime of the pool.
+        /// entire lifetime of the pool. The statistics may not be immediately
+        /// available. The Batch service performs periodic roll-up of
+        /// statistics. The typical delay is about 30 minutes.
         /// </summary>
         [JsonProperty(PropertyName = "stats")]
         public PoolStatistics Stats { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (CloudServiceConfiguration != null)
-            {
-                CloudServiceConfiguration.Validate();
-            }
-            if (VirtualMachineConfiguration != null)
-            {
-                VirtualMachineConfiguration.Validate();
-            }
-            if (AutoScaleRun != null)
-            {
-                AutoScaleRun.Validate();
-            }
-            if (NetworkConfiguration != null)
-            {
-                NetworkConfiguration.Validate();
-            }
-            if (StartTask != null)
-            {
-                StartTask.Validate();
-            }
-            if (CertificateReferences != null)
-            {
-                foreach (var element in CertificateReferences)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (ApplicationPackageReferences != null)
-            {
-                foreach (var element1 in ApplicationPackageReferences)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (TaskSchedulingPolicy != null)
-            {
-                TaskSchedulingPolicy.Validate();
-            }
-            if (UserAccounts != null)
-            {
-                foreach (var element2 in UserAccounts)
-                {
-                    if (element2 != null)
-                    {
-                        element2.Validate();
-                    }
-                }
-            }
-            if (Metadata != null)
-            {
-                foreach (var element3 in Metadata)
-                {
-                    if (element3 != null)
-                    {
-                        element3.Validate();
-                    }
-                }
-            }
-            if (Stats != null)
-            {
-                Stats.Validate();
-            }
-        }
     }
 }

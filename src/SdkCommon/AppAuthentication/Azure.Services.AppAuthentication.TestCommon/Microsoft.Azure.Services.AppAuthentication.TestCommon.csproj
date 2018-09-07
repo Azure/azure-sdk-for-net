@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+<Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />
+    <PropertyGroup>
+        <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>     
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Azure.Services.AppAuthentication\Microsoft.Azure.Services.AppAuthentication.csproj" />
+    </ItemGroup>  
+    <ItemGroup>
+        <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Update="TestFiles\*.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+</Project>

@@ -14,6 +14,7 @@ namespace Microsoft.Rest.TransientFaultHandling
         /// <summary>
         /// Returns true if status code in HttpRequestExceptionWithStatus exception is greater 
         /// than or equal to 500 and not NotImplemented (501) or HttpVersionNotSupported (505).
+        /// Or it's 429 (TOO MANY REQUESTS)
         /// </summary>
         /// <param name="ex">Exception to check against.</param>
         /// <returns>True if exception is transient otherwise false.</returns>
@@ -25,6 +26,7 @@ namespace Microsoft.Rest.TransientFaultHandling
                 if ((httpException = ex as HttpRequestWithStatusException) != null)
                 {
                     if (httpException.StatusCode == HttpStatusCode.RequestTimeout ||
+                        httpException.StatusCode == (HttpStatusCode)429 ||
                         (httpException.StatusCode >= HttpStatusCode.InternalServerError &&
                          httpException.StatusCode != HttpStatusCode.NotImplemented &&
                          httpException.StatusCode != HttpStatusCode.HttpVersionNotSupported))

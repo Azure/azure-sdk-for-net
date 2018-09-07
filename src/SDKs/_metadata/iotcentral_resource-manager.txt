@@ -1,0 +1,20 @@
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/iotcentral/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\src\azure-sdk-for-net\src\SDKs\IotCentral\Management.IotCentral
+2018-08-08 20:52:03 UTC
+1) azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      master
+Commit:      d788c1647971b92fbf6ae11901cb3691a6574f93
+
+2) AutoRest information
+Requested version: latest
+Bootstrapper version:    autorest@2.0.4283
+
+
+Latest installed version:    
+
+

@@ -15,8 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Provides required information, for the service to be able to mount
-    /// Azure Blob Storage container on the cluster nodes.
+    /// Azure Blob Storage Container mounting configuration.
     /// </summary>
     public partial class AzureBlobFileSystemReference
     {
@@ -33,17 +32,11 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Initializes a new instance of the AzureBlobFileSystemReference
         /// class.
         /// </summary>
-        /// <param name="accountName">Name of the Azure Blob Storage
-        /// account.</param>
-        /// <param name="containerName">Name of the Azure Blob Storage
-        /// container to mount on the cluster.</param>
-        /// <param name="credentials">Information of the Azure Blob Storage
-        /// account credentials.</param>
-        /// <param name="relativeMountPath">Specifies the relative path on the
-        /// compute node where the Azure Blob file system will be
-        /// mounted.</param>
-        /// <param name="mountOptions">Specifies the various mount options that
-        /// can be used to configure Blob file system.</param>
+        /// <param name="accountName">Account name.</param>
+        /// <param name="containerName">Container name.</param>
+        /// <param name="credentials">Credentials.</param>
+        /// <param name="relativeMountPath">Relative mount path.</param>
+        /// <param name="mountOptions">Mount options.</param>
         public AzureBlobFileSystemReference(string accountName, string containerName, AzureStorageCredentialsInfo credentials, string relativeMountPath, string mountOptions = default(string))
         {
             AccountName = accountName;
@@ -60,41 +53,50 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the Azure Blob Storage account.
+        /// Gets or sets account name.
         /// </summary>
+        /// <remarks>
+        /// Name of the Azure storage account.
+        /// </remarks>
         [JsonProperty(PropertyName = "accountName")]
         public string AccountName { get; set; }
 
         /// <summary>
-        /// Gets or sets name of the Azure Blob Storage container to mount on
-        /// the cluster.
+        /// Gets or sets container name.
         /// </summary>
+        /// <remarks>
+        /// Name of the Azure Blob Storage container to mount on the cluster.
+        /// </remarks>
         [JsonProperty(PropertyName = "containerName")]
         public string ContainerName { get; set; }
 
         /// <summary>
-        /// Gets or sets information of the Azure Blob Storage account
-        /// credentials.
+        /// Gets or sets credentials.
         /// </summary>
+        /// <remarks>
+        /// Information about the Azure storage credentials.
+        /// </remarks>
         [JsonProperty(PropertyName = "credentials")]
         public AzureStorageCredentialsInfo Credentials { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the relative path on the compute node where
-        /// the Azure Blob file system will be mounted.
+        /// Gets or sets relative mount path.
         /// </summary>
         /// <remarks>
-        /// Note that all cluster level blob file systems will be mounted under
-        /// $AZ_BATCHAI_MOUNT_ROOT location and all job level blob file systems
-        /// will be mounted under $AZ_BATCHAI_JOB_MOUNT_ROOT.
+        /// The relative path on the compute node where the Azure File
+        /// container will be mounted. Note that all cluster level containers
+        /// will be mounted under $AZ_BATCHAI_MOUNT_ROOT location and all job
+        /// level containers will be mounted under $AZ_BATCHAI_JOB_MOUNT_ROOT.
         /// </remarks>
         [JsonProperty(PropertyName = "relativeMountPath")]
         public string RelativeMountPath { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the various mount options that can be used
-        /// to configure Blob file system.
+        /// Gets or sets mount options.
         /// </summary>
+        /// <remarks>
+        /// Mount options for mounting blobfuse file system.
+        /// </remarks>
         [JsonProperty(PropertyName = "mountOptions")]
         public string MountOptions { get; set; }
 

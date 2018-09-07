@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the SlowRequestsBasedTrigger class.
         /// </summary>
         /// <param name="timeTaken">Time taken.</param>
-        /// <param name="count">Count.</param>
+        /// <param name="count">Request Count.</param>
         /// <param name="timeInterval">Time interval.</param>
         public SlowRequestsBasedTrigger(string timeTaken = default(string), int? count = default(int?), string timeInterval = default(string))
         {
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string TimeTaken { get; set; }
 
         /// <summary>
-        /// Gets or sets count.
+        /// Gets or sets request Count.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
         public int? Count { get; set; }

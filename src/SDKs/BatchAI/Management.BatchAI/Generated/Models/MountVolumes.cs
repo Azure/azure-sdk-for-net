@@ -31,14 +31,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the MountVolumes class.
         /// </summary>
-        /// <param name="azureFileShares">Azure File Share setup
-        /// configuration.</param>
-        /// <param name="azureBlobFileSystems">Azure Blob FileSystem setup
-        /// configuration.</param>
-        /// <param name="fileServers">References to a list of file servers that
-        /// are mounted to the cluster node.</param>
-        /// <param name="unmanagedFileSystems">References to a list of file
-        /// servers that are mounted to the cluster node.</param>
+        /// <param name="azureFileShares">Azure File Shares.</param>
+        /// <param name="azureBlobFileSystems">Azure Blob file systems.</param>
+        /// <param name="fileServers">File Servers.</param>
+        /// <param name="unmanagedFileSystems">Unmanaged file systems.</param>
         public MountVolumes(IList<AzureFileShareReference> azureFileShares = default(IList<AzureFileShareReference>), IList<AzureBlobFileSystemReference> azureBlobFileSystems = default(IList<AzureBlobFileSystemReference>), IList<FileServerReference> fileServers = default(IList<FileServerReference>), IList<UnmanagedFileSystemReference> unmanagedFileSystems = default(IList<UnmanagedFileSystemReference>))
         {
             AzureFileShares = azureFileShares;
@@ -54,36 +50,42 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets azure File Share setup configuration.
+        /// Gets or sets azure File Shares.
         /// </summary>
         /// <remarks>
-        /// References to Azure File Shares that are to be mounted to the
+        /// A collection of Azure File Shares that are to be mounted to the
         /// cluster nodes.
         /// </remarks>
         [JsonProperty(PropertyName = "azureFileShares")]
         public IList<AzureFileShareReference> AzureFileShares { get; set; }
 
         /// <summary>
-        /// Gets or sets azure Blob FileSystem setup configuration.
+        /// Gets or sets azure Blob file systems.
         /// </summary>
         /// <remarks>
-        /// References to Azure Blob FUSE that are to be mounted to the cluster
-        /// nodes.
+        /// A collection of Azure Blob Containers that are to be mounted to the
+        /// cluster nodes.
         /// </remarks>
         [JsonProperty(PropertyName = "azureBlobFileSystems")]
         public IList<AzureBlobFileSystemReference> AzureBlobFileSystems { get; set; }
 
         /// <summary>
-        /// Gets or sets references to a list of file servers that are mounted
-        /// to the cluster node.
+        /// Gets or sets file Servers.
         /// </summary>
+        /// <remarks>
+        /// A collection of Batch AI File Servers that are to be mounted to the
+        /// cluster nodes.
+        /// </remarks>
         [JsonProperty(PropertyName = "fileServers")]
         public IList<FileServerReference> FileServers { get; set; }
 
         /// <summary>
-        /// Gets or sets references to a list of file servers that are mounted
-        /// to the cluster node.
+        /// Gets or sets unmanaged file systems.
         /// </summary>
+        /// <remarks>
+        /// A collection of unmanaged file systems that are to be mounted to
+        /// the cluster nodes.
+        /// </remarks>
         [JsonProperty(PropertyName = "unmanagedFileSystems")]
         public IList<UnmanagedFileSystemReference> UnmanagedFileSystems { get; set; }
 

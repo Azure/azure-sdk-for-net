@@ -1,22 +1,35 @@
-﻿using Microsoft.Azure.Test.HttpRecorder;
-using System;
-using System.Net.Http;
-
-namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests
+﻿namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests
 {
+    using Microsoft.Azure.Test.HttpRecorder;
+    using System;
+    using System.IO;
+    using System.Net.Http;
+    using System.Reflection;
+
     public abstract class BaseTests
     {
-        private static readonly string PredictionKey;
+        private static readonly string PredictionKey = string.Empty;
         protected static readonly Guid ProjectId;
+        protected static HttpRecorderMode RecorderMode = HttpRecorderMode.Playback;
+
         static BaseTests()
         {
+            ProjectId = Guid.Parse("1896e6d9-5090-4733-882f-4f14632fec37");
+
+#if RECORD_MODE
             PredictionKey = "";
-            ProjectId = Guid.Parse("e222c033-5f5d-4a23-bde9-8343f19c0a01");
+
+            RecorderMode = HttpRecorderMode.Record;
+            HttpMockServer.FileSystemUtilsObject = new FileSystemUtils();
+
+            string executingAssemblyPath = typeof(BaseTests).GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), @"..\..\..\SessionRecords");
+#endif
         }
 
-        protected IPredictionEndpoint GetPredictionEndpointClient(DelegatingHandler handler)
+        protected IPredictionEndpoint GetPredictionClientClient()
         {
-            IPredictionEndpoint client = new PredictionEndpoint(handlers: handler)
+            IPredictionEndpoint client = new PredictionEndpoint(handlers: HttpMockServer.CreateInstance())
             {
                 ApiKey = PredictionKey
             };

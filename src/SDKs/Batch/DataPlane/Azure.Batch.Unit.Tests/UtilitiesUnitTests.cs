@@ -33,7 +33,7 @@
         {
             TimeSpan timeout = TimeSpan.FromSeconds(.5);
             const string dummyJobId = "Dummy";
-            using (BatchClient batchCli = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
             {
                 List<string> taskIds = new List<string>()
                     {
@@ -104,7 +104,7 @@
             TimeSpan timeout = TimeSpan.FromSeconds(0);
             const string dummyJobId = "Dummy";
 
-            using (BatchClient batchCli = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
             {
                 List<string> taskIds = new List<string>()
                     {
@@ -135,7 +135,7 @@
             TimeSpan timeout = TimeSpan.FromSeconds(0);
             const string dummyJobId = "Dummy";
 
-            using (BatchClient batchCli = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
             {
                 List<string> taskIds = new List<string>()
                     {

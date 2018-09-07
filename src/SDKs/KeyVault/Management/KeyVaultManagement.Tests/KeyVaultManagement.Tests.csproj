@@ -3,14 +3,14 @@
   <PropertyGroup>
     <PackageId>KeyVaultManagement.Tests</PackageId>
     <Description>KeyVault.Tests Class Library</Description>
-    <VersionPrefix>2.0.0-preview</VersionPrefix>
+    <VersionPrefix>2.1.1-alpha</VersionPrefix>
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>KeyVaultManagement.Tests</AssemblyName>    
   </PropertyGroup>
 
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.KeyVault" Version="2.1.0-ForTest" />-->

@@ -53,7 +53,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// pending for replication in MB at staging account.</param>
         /// <param name="dataPendingAtSourceAgentInMB">The data pending at
         /// source virtual machine in MB.</param>
-        public A2AProtectedDiskDetails(string diskUri = default(string), string recoveryAzureStorageAccountId = default(string), string primaryDiskAzureStorageAccountId = default(string), string recoveryDiskUri = default(string), string diskName = default(string), long? diskCapacityInBytes = default(long?), string primaryStagingAzureStorageAccountId = default(string), string diskType = default(string), bool? resyncRequired = default(bool?), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), double? dataPendingInStagingStorageAccountInMB = default(double?), double? dataPendingAtSourceAgentInMB = default(double?))
+        /// <param name="isDiskEncrypted">A value indicating whether vm has
+        /// encrypted os disk or not.</param>
+        /// <param name="secretIdentifier">The secret URL / identifier
+        /// (BEK).</param>
+        /// <param name="dekKeyVaultArmId">The KeyVault resource id for secret
+        /// (BEK).</param>
+        /// <param name="isDiskKeyEncrypted">A value indicating whether disk
+        /// key got encrypted or not.</param>
+        /// <param name="keyIdentifier">The key URL / identifier (KEK).</param>
+        /// <param name="kekKeyVaultArmId">The KeyVault resource id for key
+        /// (KEK).</param>
+        public A2AProtectedDiskDetails(string diskUri = default(string), string recoveryAzureStorageAccountId = default(string), string primaryDiskAzureStorageAccountId = default(string), string recoveryDiskUri = default(string), string diskName = default(string), long? diskCapacityInBytes = default(long?), string primaryStagingAzureStorageAccountId = default(string), string diskType = default(string), bool? resyncRequired = default(bool?), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), double? dataPendingInStagingStorageAccountInMB = default(double?), double? dataPendingAtSourceAgentInMB = default(double?), bool? isDiskEncrypted = default(bool?), string secretIdentifier = default(string), string dekKeyVaultArmId = default(string), bool? isDiskKeyEncrypted = default(bool?), string keyIdentifier = default(string), string kekKeyVaultArmId = default(string))
         {
             DiskUri = diskUri;
             RecoveryAzureStorageAccountId = recoveryAzureStorageAccountId;
@@ -68,6 +79,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             MonitoringJobType = monitoringJobType;
             DataPendingInStagingStorageAccountInMB = dataPendingInStagingStorageAccountInMB;
             DataPendingAtSourceAgentInMB = dataPendingAtSourceAgentInMB;
+            IsDiskEncrypted = isDiskEncrypted;
+            SecretIdentifier = secretIdentifier;
+            DekKeyVaultArmId = dekKeyVaultArmId;
+            IsDiskKeyEncrypted = isDiskKeyEncrypted;
+            KeyIdentifier = keyIdentifier;
+            KekKeyVaultArmId = kekKeyVaultArmId;
             CustomInit();
         }
 
@@ -157,6 +174,44 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "dataPendingAtSourceAgentInMB")]
         public double? DataPendingAtSourceAgentInMB { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether vm has encrypted os disk or
+        /// not.
+        /// </summary>
+        [JsonProperty(PropertyName = "isDiskEncrypted")]
+        public bool? IsDiskEncrypted { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secret URL / identifier (BEK).
+        /// </summary>
+        [JsonProperty(PropertyName = "secretIdentifier")]
+        public string SecretIdentifier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the KeyVault resource id for secret (BEK).
+        /// </summary>
+        [JsonProperty(PropertyName = "dekKeyVaultArmId")]
+        public string DekKeyVaultArmId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether disk key got encrypted or
+        /// not.
+        /// </summary>
+        [JsonProperty(PropertyName = "isDiskKeyEncrypted")]
+        public bool? IsDiskKeyEncrypted { get; set; }
+
+        /// <summary>
+        /// Gets or sets the key URL / identifier (KEK).
+        /// </summary>
+        [JsonProperty(PropertyName = "keyIdentifier")]
+        public string KeyIdentifier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the KeyVault resource id for key (KEK).
+        /// </summary>
+        [JsonProperty(PropertyName = "kekKeyVaultArmId")]
+        public string KekKeyVaultArmId { get; set; }
 
     }
 }

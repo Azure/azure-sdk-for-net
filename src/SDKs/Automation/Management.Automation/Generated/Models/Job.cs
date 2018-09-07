@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// Definition of the job.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Job
+    public partial class Job : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the Job class.
@@ -34,7 +34,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the Job class.
         /// </summary>
-        /// <param name="id">Gets or sets the id of the resource.</param>
+        /// <param name="id">Fully qualified resource Id for the
+        /// resource</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource.</param>
         /// <param name="runbook">Gets or sets the runbook.</param>
         /// <param name="startedBy">Gets or sets the job started by.</param>
         /// <param name="runOn">Gets or sets the runOn which specifies the
@@ -59,9 +62,12 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// modified time of the job.</param>
         /// <param name="parameters">Gets or sets the parameters of the
         /// job.</param>
-        public Job(string id = default(string), RunbookAssociationProperty runbook = default(RunbookAssociationProperty), string startedBy = default(string), string runOn = default(string), System.Guid? jobId = default(System.Guid?), System.DateTime? creationTime = default(System.DateTime?), string status = default(string), string statusDetails = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string exception = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), System.DateTime? lastStatusModifiedTime = default(System.DateTime?), IDictionary<string, string> parameters = default(IDictionary<string, string>))
+        /// <param name="provisioningState">The current provisioning state of
+        /// the job. Possible values include: 'Failed', 'Succeeded',
+        /// 'Suspended', 'Processing'</param>
+        public Job(string id = default(string), string name = default(string), string type = default(string), RunbookAssociationProperty runbook = default(RunbookAssociationProperty), string startedBy = default(string), string runOn = default(string), System.Guid jobId = default(System.Guid), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string status = default(string), string statusDetails = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string exception = default(string), System.DateTimeOffset? lastModifiedTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastStatusModifiedTime = default(System.DateTimeOffset?), IDictionary<string, string> parameters = default(IDictionary<string, string>), string provisioningState = default(string))
+            : base(id, name, type)
         {
-            Id = id;
             Runbook = runbook;
             StartedBy = startedBy;
             RunOn = runOn;
@@ -75,6 +81,7 @@ namespace Microsoft.Azure.Management.Automation.Models
             LastModifiedTime = lastModifiedTime;
             LastStatusModifiedTime = lastStatusModifiedTime;
             Parameters = parameters;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -82,12 +89,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the id of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the runbook.
@@ -112,13 +113,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the id of the job.
         /// </summary>
         [JsonProperty(PropertyName = "properties.jobId")]
-        public System.Guid? JobId { get; set; }
+        public System.Guid JobId { get; set; }
 
         /// <summary>
         /// Gets or sets the creation time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; set; }
+        public System.DateTimeOffset CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the status of the job. Possible values include: 'New',
@@ -139,13 +140,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the start time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startTime")]
-        public System.DateTime? StartTime { get; set; }
+        public System.DateTimeOffset? StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the end time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endTime")]
-        public System.DateTime? EndTime { get; set; }
+        public System.DateTimeOffset? EndTime { get; set; }
 
         /// <summary>
         /// Gets or sets the exception of the job.
@@ -157,19 +158,26 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the last modified time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; set; }
+        public System.DateTimeOffset? LastModifiedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the last status modified time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastStatusModifiedTime")]
-        public System.DateTime? LastStatusModifiedTime { get; set; }
+        public System.DateTimeOffset? LastStatusModifiedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the parameters of the job.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
         public IDictionary<string, string> Parameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current provisioning state of the job. Possible
+        /// values include: 'Failed', 'Succeeded', 'Suspended', 'Processing'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
 
     }
 }

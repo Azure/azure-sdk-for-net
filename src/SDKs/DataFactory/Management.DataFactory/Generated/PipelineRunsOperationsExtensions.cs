@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='filterParameters'>
             /// Parameters to filter the pipeline run.
             /// </param>
-            public static PipelineRunQueryResponse QueryByFactory(this IPipelineRunsOperations operations, string resourceGroupName, string factoryName, PipelineRunFilterParameters filterParameters)
+            public static PipelineRunsQueryResponse QueryByFactory(this IPipelineRunsOperations operations, string resourceGroupName, string factoryName, RunFilterParameters filterParameters)
             {
                 return operations.QueryByFactoryAsync(resourceGroupName, factoryName, filterParameters).GetAwaiter().GetResult();
             }
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PipelineRunQueryResponse> QueryByFactoryAsync(this IPipelineRunsOperations operations, string resourceGroupName, string factoryName, PipelineRunFilterParameters filterParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PipelineRunsQueryResponse> QueryByFactoryAsync(this IPipelineRunsOperations operations, string resourceGroupName, string factoryName, RunFilterParameters filterParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.QueryByFactoryWithHttpMessagesAsync(resourceGroupName, factoryName, filterParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -111,6 +111,49 @@ namespace Microsoft.Azure.Management.DataFactory
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Cancel a pipeline run by its run ID.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='runId'>
+            /// The pipeline run identifier.
+            /// </param>
+            public static void Cancel(this IPipelineRunsOperations operations, string resourceGroupName, string factoryName, string runId)
+            {
+                operations.CancelAsync(resourceGroupName, factoryName, runId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Cancel a pipeline run by its run ID.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='runId'>
+            /// The pipeline run identifier.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task CancelAsync(this IPipelineRunsOperations operations, string resourceGroupName, string factoryName, string runId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.CancelWithHttpMessagesAsync(resourceGroupName, factoryName, runId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

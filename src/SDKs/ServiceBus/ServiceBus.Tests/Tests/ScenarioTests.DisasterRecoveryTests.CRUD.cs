@@ -23,8 +23,8 @@ namespace ServiceBus.Tests.ScenarioTests
             {
                 InitializeClients(context);
 
-                var location = "South Central US";
-                var location2 = "North Central US";
+                var location = "West Central US";
+                var location2 = "West Central US";
 
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
                 if (string.IsNullOrWhiteSpace(resourceGroup))
@@ -55,7 +55,7 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
-                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                TestUtilities.Wait(TimeSpan.FromSeconds(30));
 
                 //var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
 
@@ -147,9 +147,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Equal(getAuthoRuleAliasResponse.Name, getNamespaceAuthorizationRulesResponse.Name);
 
                 var getAuthoruleListKeysResponse = ServiceBusManagementClient.DisasterRecoveryConfigs.ListKeys(resourceGroup, namespaceName, disasterRecoveryName, authorizationRuleName);
-                //Assert.Equal(getAuthoruleListKeysResponse.AliasPrimaryConnectionString, getNamespaceAuthorizationRulesListKeysResponse.AliasPrimaryConnectionString);
-                //Assert.Equal(getAuthoruleListKeysResponse.AliasSecondaryConnectionString, getNamespaceAuthorizationRulesListKeysResponse.AliasSecondaryConnectionString);
-                
+                                
                 var disasterRecoveryGetResponse_Accepted = ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName);
 
                 while (ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName).ProvisioningState != ProvisioningStateDR.Succeeded)

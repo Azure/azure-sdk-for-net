@@ -6,7 +6,7 @@
     <Description>Makes it easy to develop a .NET application that uses Azure Search.</Description>
     <AssemblyTitle>Microsoft Azure Search Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Search</AssemblyName>
-    <VersionPrefix>5.0.0</VersionPrefix>
+    <Version>5.0.2</Version>
     <PackageReleaseNotes>This is the newest major version of the Azure Search .NET SDK, based on version 2017-11-11 of the Azure Search REST API. New in this GA version is support for synonyms. See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade.</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Search.Data" Version="[5.0.0, 6.0.0)" />
-    <PackageReference Include="Microsoft.Azure.Search.Service" Version="[5.0.0, 6.0.0)" />
+    <PackageReference Include="Microsoft.Azure.Search.Data" Version="[5.0.2, 6.0.0)" />
+    <PackageReference Include="Microsoft.Azure.Search.Service" Version="[5.0.2, 6.0.0)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.Search.Data\Microsoft.Azure.Search.Data.csproj" />

@@ -397,6 +397,58 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Move an App Service Environment to a different VNET.
+            /// </summary>
+            /// <remarks>
+            /// Move an App Service Environment to a different VNET.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='vnetInfo'>
+            /// Details for the new virtual network.
+            /// </param>
+            public static IPage<Site> ChangeVnet(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, VirtualNetworkProfile vnetInfo)
+            {
+                return operations.ChangeVnetAsync(resourceGroupName, name, vnetInfo).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Move an App Service Environment to a different VNET.
+            /// </summary>
+            /// <remarks>
+            /// Move an App Service Environment to a different VNET.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='vnetInfo'>
+            /// Details for the new virtual network.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Site>> ChangeVnetAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, VirtualNetworkProfile vnetInfo, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ChangeVnetWithHttpMessagesAsync(resourceGroupName, name, vnetInfo, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get diagnostic information for an App Service Environment.
             /// </summary>
             /// <remarks>
@@ -562,8 +614,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq
+            /// 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             public static IPage<ResourceMetric> ListMetrics(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
             {
@@ -592,8 +644,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq
+            /// 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -999,8 +1051,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq
+            /// 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             public static IPage<ResourceMetric> ListMultiRoleMetrics(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), string filter = default(string))
             {
@@ -1038,8 +1090,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq
+            /// 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1441,8 +1493,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq
+            /// 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             public static IPage<CsmUsageQuota> ListUsages(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string filter = default(string))
             {
@@ -1467,8 +1519,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq
+            /// 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1787,8 +1839,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq
+            /// 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             public static IPage<ResourceMetric> ListWorkerPoolInstanceMetrics(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName, string instance, bool? details = default(bool?), string filter = default(string))
             {
@@ -1825,8 +1877,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq
+            /// 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1918,8 +1970,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq
+            /// 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             public static IPage<ResourceMetric> ListWebWorkerMetrics(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName, bool? details = default(bool?), string filter = default(string))
             {
@@ -1953,8 +2005,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq
+            /// 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -2174,6 +2226,58 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task BeginDeleteAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, bool? forceDelete = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, name, forceDelete, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Move an App Service Environment to a different VNET.
+            /// </summary>
+            /// <remarks>
+            /// Move an App Service Environment to a different VNET.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='vnetInfo'>
+            /// Details for the new virtual network.
+            /// </param>
+            public static IPage<Site> BeginChangeVnet(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, VirtualNetworkProfile vnetInfo)
+            {
+                return operations.BeginChangeVnetAsync(resourceGroupName, name, vnetInfo).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Move an App Service Environment to a different VNET.
+            /// </summary>
+            /// <remarks>
+            /// Move an App Service Environment to a different VNET.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the App Service Environment.
+            /// </param>
+            /// <param name='vnetInfo'>
+            /// Details for the new virtual network.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Site>> BeginChangeVnetAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, VirtualNetworkProfile vnetInfo, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginChangeVnetWithHttpMessagesAsync(resourceGroupName, name, vnetInfo, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -2497,6 +2601,46 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IPage<StampCapacity>> ListCapacitiesNextAsync(this IAppServiceEnvironmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListCapacitiesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Move an App Service Environment to a different VNET.
+            /// </summary>
+            /// <remarks>
+            /// Move an App Service Environment to a different VNET.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Site> ChangeVnetNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
+            {
+                return operations.ChangeVnetNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Move an App Service Environment to a different VNET.
+            /// </summary>
+            /// <remarks>
+            /// Move an App Service Environment to a different VNET.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Site>> ChangeVnetNextAsync(this IAppServiceEnvironmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ChangeVnetNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -3317,6 +3461,46 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IPage<Usage>> ListWebWorkerUsagesNextAsync(this IAppServiceEnvironmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWebWorkerUsagesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Move an App Service Environment to a different VNET.
+            /// </summary>
+            /// <remarks>
+            /// Move an App Service Environment to a different VNET.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Site> BeginChangeVnetNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
+            {
+                return operations.BeginChangeVnetNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Move an App Service Environment to a different VNET.
+            /// </summary>
+            /// <remarks>
+            /// Move an App Service Environment to a different VNET.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Site>> BeginChangeVnetNextAsync(this IAppServiceEnvironmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginChangeVnetNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

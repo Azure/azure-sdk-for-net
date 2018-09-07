@@ -25,7 +25,7 @@ namespace Compute.Tests
     public class VMTestBase
     {
         protected const string TestPrefix = "crptestar";
-        protected const string PLACEHOLDER = "[PLACEHOLDERr1]";
+        protected const string PLACEHOLDER = "[PLACEHOLDEr1]";
         protected const string ComputerName = "Test";
 
         protected ResourceManagementClient m_ResourcesClient;
@@ -100,7 +100,7 @@ namespace Compute.Tests
                 Trace.TraceInformation("Querying available Ubuntu image from PIR...");
                 // If this sku disappears, query latest with 
                 // GET https://management.azure.com/subscriptions/<subId>/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2015-06-15
-                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "17.04");
+                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "17.10");
             }
             return m_linuxImageReference;
         }
@@ -209,8 +209,8 @@ namespace Compute.Tests
             bool createWithPublicIpAddress = false,
             bool waitForCompletion = true,
             bool hasManagedDisks = false,
-            string vmSize = VirtualMachineSizeTypes.StandardA0,
-            string storageAccountType = StorageAccountTypes.StandardLRS,
+            string vmSize = "Standard_A0",
+            string storageAccountType = "Standard_LRS",
             bool? writeAcceleratorEnabled = null,
             IList<string> zones = null)
         {
@@ -295,6 +295,23 @@ namespace Compute.Tests
                 m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
                 throw;
             }
+        }
+
+        protected PublicIPPrefix CreatePublicIPPrefix(string rgName, int prefixLength)
+        {
+            string publicIpPrefixName = ComputeManagementTestUtilities.GenerateName("piprefix");
+
+            var publicIpPrefix = new PublicIPPrefix()
+            {
+                Sku = new PublicIPPrefixSku("Standard"),
+                Location = m_location,
+                PrefixLength = prefixLength
+            };
+
+            var putPublicIpPrefixResponse = m_NrpClient.PublicIPPrefixes.CreateOrUpdate(rgName, publicIpPrefixName, publicIpPrefix);
+            var getPublicIpPrefixResponse = m_NrpClient.PublicIPPrefixes.Get(rgName, publicIpPrefixName);
+
+            return getPublicIpPrefixResponse;
         }
 
         protected PublicIPAddress CreatePublicIP(string rgName)
@@ -731,7 +748,7 @@ namespace Compute.Tests
         }
 
         protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
-            string vmSize = VirtualMachineSizeTypes.StandardA0, string storageAccountType = StorageAccountTypes.StandardLRS, bool? writeAcceleratorEnabled = null)
+            string vmSize = "Standard_A0", string storageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = ComputeManagementTestUtilities.GenerateName(TestPrefix);

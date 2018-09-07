@@ -513,7 +513,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets a list of errors encountered while performing the last resize on the <see cref="CloudPool"/>. Errors are 
         /// returned only when the Batch service encountered an error while resizing the pool, and when the pool's <see cref="CloudPool.AllocationState"/> 
-        /// is <see cref="AllocationState">Steady</see>.
+        /// is <see cref="Common.AllocationState.Steady">Steady</see>.
         /// </summary>
         public IReadOnlyList<ResizeError> ResizeErrors
         {
@@ -560,7 +560,8 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <remarks>
         /// This property is populated only if the <see cref="CloudPool"/> was retrieved with an <see cref="ODATADetailLevel.ExpandClause"/> 
-        /// including the 'stats' attribute; otherwise it is null.
+        /// including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch 
+        /// service performs periodic roll-up of statistics. The typical delay is about 30 minutes.
         /// </remarks>
         public PoolStatistics Statistics
         {

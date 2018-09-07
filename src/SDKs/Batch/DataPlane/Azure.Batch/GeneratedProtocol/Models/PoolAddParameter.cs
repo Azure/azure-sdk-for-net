@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -138,7 +137,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// For information about available sizes of virtual machines for Cloud
         /// Services pools (pools created with cloudServiceConfiguration), see
         /// Sizes for Cloud Services
-        /// (http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
+        /// (https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
         /// Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2
         /// and A2V2. For information about available VM sizes for pools using
         /// images from the Virtual Machines Marketplace (pools created with
@@ -360,82 +359,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
-            }
-            if (VmSize == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "VmSize");
-            }
-            if (CloudServiceConfiguration != null)
-            {
-                CloudServiceConfiguration.Validate();
-            }
-            if (VirtualMachineConfiguration != null)
-            {
-                VirtualMachineConfiguration.Validate();
-            }
-            if (NetworkConfiguration != null)
-            {
-                NetworkConfiguration.Validate();
-            }
-            if (StartTask != null)
-            {
-                StartTask.Validate();
-            }
-            if (CertificateReferences != null)
-            {
-                foreach (var element in CertificateReferences)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (ApplicationPackageReferences != null)
-            {
-                foreach (var element1 in ApplicationPackageReferences)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (TaskSchedulingPolicy != null)
-            {
-                TaskSchedulingPolicy.Validate();
-            }
-            if (UserAccounts != null)
-            {
-                foreach (var element2 in UserAccounts)
-                {
-                    if (element2 != null)
-                    {
-                        element2.Validate();
-                    }
-                }
-            }
-            if (Metadata != null)
-            {
-                foreach (var element3 in Metadata)
-                {
-                    if (element3 != null)
-                    {
-                        element3.Validate();
-                    }
-                }
-            }
-        }
     }
 }

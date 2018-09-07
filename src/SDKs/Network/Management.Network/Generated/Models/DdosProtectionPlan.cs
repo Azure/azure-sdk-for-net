@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.Network.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
@@ -21,7 +22,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// A DDoS protection plan in a resource group.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DdosProtectionPlan : Resource
+    public partial class DdosProtectionPlan : IResource
     {
         /// <summary>
         /// Initializes a new instance of the DdosProtectionPlan class.
@@ -52,8 +53,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         public DdosProtectionPlan(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string resourceGuid = default(string), string provisioningState = default(string), IList<SubResource> virtualNetworks = default(IList<SubResource>), string etag = default(string))
-            : base(id, name, type, location, tags)
         {
+            Id = id;
+            Name = name;
+            Type = type;
+            Location = location;
+            Tags = tags;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             VirtualNetworks = virtualNetworks;
@@ -65,6 +70,36 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets resource ID.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets resource name.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource location.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets the resource GUID property of the DDoS protection plan

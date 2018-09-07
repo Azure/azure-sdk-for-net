@@ -6,12 +6,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Compute</PackageId>
     <Description>Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.</Description>
-    <Version>18.0.0</Version>
+    <Version>22.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release is updating DiskRP API version to 2018-04-01 and adding zone resilient property to image storage profile. 
+        This is a public release of the Azure Compute SDK. Included with this release is upgrading Compute API version to 2018-06-01 and adding VMSS extension rolling upgrade and VMSS with public IP prefix.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

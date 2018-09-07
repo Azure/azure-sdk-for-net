@@ -4,7 +4,8 @@ set -e
 base=`dirname {BASH_SOURCE[0]}`
 rootdir="$( cd "$base" && pwd )"
 netstd14="netstandard1.4"
-netcore11='netcoreapp1.1'
+#netcore11='netcoreapp1.1'
+netcore20='netcoreapp2.0'
 ubuntu1404="ubuntu.14.04-x64"
 nugetOrgSource="https://api.nuget.org/v3/index.json"
 localNugetFeed="./tools/LocalNugetFeed"
@@ -19,12 +20,14 @@ restoreBuildCR() {
     #dotnet restore src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj
     dotnet build src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj -f $netstd14
     dotnet build src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure/Microsoft.Rest.ClientRuntime.Azure.csproj -f $netstd14
-    dotnet build src/SdkCommon/ClientRuntime.Azure.Authentication/Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj -f $netstd14
+    dotnet build src/SdkCommon/Auth/Az.Auth/Az.Authentication/Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj -f $netstd14
 
-    echo "Running ClientRuntime Tests $netcore11"
-    #dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore11
-    dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore11
-    dotnet test src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure.Tests/Microsoft.Rest.ClientRuntime.Azure.Tests.csproj -f $netcore11
+    echo "Running ClientRuntime Tests $netcore20"
+    #dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore20
+    dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore20
+    dotnet test src/SdkCommon/ClientRuntime.Azure/Tests/CR.Azure.NetCore.Tests/CR.Azure.NetCore.Tests.csproj -f $netcore20
+    #dotnet test src/SdkCommon/Auth/Az.Auth/Az.Auth.Tests//ClientRuntime.Azure.Tests/Microsoft.Rest.ClientRuntime.Azure.Tests.csproj -f $netcore20
+    
 
 }
 
@@ -43,9 +46,9 @@ restoreBuildAzStack() {
             if [ -d $childDir/*.Tests ]; then
                 testProj=($childDir/*.Tests/*.csproj)
                 if [ -f $testProj ]; then
-                    printf "Test ------ $testProj for framework $netcore11\n"
-                    dotnet build $testProj -f $netcore11
-                    dotnet test $testProj -f $netcore11
+                    printf "Test ------ $testProj for framework $netcore20\n"
+                    dotnet build $testProj -f $netcore20
+                    dotnet test $testProj -f $netcore20
                 fi
             fi
         fi
@@ -74,9 +77,9 @@ restoreBuildRepo() {
                         skipTest=$( skip_Rps $tp )
                         printf "$skipRp\n"
                         if [ "$skipTest" == "false" ]; then
-                            printf "Test ------ $tp for framework $netcore11\n"
-                            dotnet build $tp -f $netcore11
-                            dotnet test $tp -f $netcore11
+                            printf "Test ------ $tp for framework $netcore20\n"
+                            dotnet build $tp -f $netcore20
+                            dotnet test $tp -f $netcore20
                         fi
                     done
                 fi
@@ -97,8 +100,8 @@ restoreBuildCog() {
 
     if [ -d $cogMgmtDir/*.Tests ]; then
         cogMgmtTestProj=($cogMgmtDir/*.Tests/*.csproj)
-        printf "Test ------ $cogMgmtTestProj for framework $netcore11\n"
-        dotnet test $cogMgmtTestProj -f $netcore11
+        printf "Test ------ $cogMgmtTestProj for framework $netcore20\n"
+        dotnet test $cogMgmtTestProj -f $netcore20
     fi
 
 
@@ -113,8 +116,8 @@ restoreBuildCog() {
         fi
         if [ -d $cogDir/*.Tests ]; then
             cogDataTestProj=($cogDir/*.Tests/*.csproj)
-            printf "Test ------ $cogDataTestProj for framework $netcore11\n"
-            dotnet test $cogDataTestProj -f $netcore11
+            printf "Test ------ $cogDataTestProj for framework $netcore20\n"
+            dotnet test $cogDataTestProj -f $netcore20
         fi
     done
 }
@@ -141,7 +144,7 @@ restoreBuildKV() {
                     if [ "$kvTProj" == "false" ]; then
                         printf "KV TestProject ... $kvTestProj\n"
                         dotnet restore $kvTestProj -r $ubuntu1404
-                        dotnet test $kvTestProj -f $netcore11
+                        dotnet test $kvTestProj -f $netcore20
                     fi
             else
                 if [ -f $kvDir/*.csproj ]; then
@@ -162,6 +165,8 @@ skip_Rps() {
     #printf "checking......$1\n"
     if [[ ("$1" =~ "Authorization")  || ( "$1" =~ "Gallery" ) || ("$1" =~ "Automation") || ( "$1" =~ "Intune" ) || ( "$1" =~ "DataLake.Store" ) 
                 || ( "$1" =~ "Monitor" ) || ( "$1" =~ "RedisCache" ) || ( "$1" =~ "Search" ) || ( "$1" =~ "KeyVault.Tests" ) 
+                || ( "$1" =~ "DeviceProvisioningServices") || ("$1" =~ "ServerManagement") || ( "$1" =~ "BotService")
+                || ("$1" =~ "Batch") || ("$1" =~ "KeyVault")
                 || ( "$1" =~ "KeyVault.TestFramework") || ( "$1" =~ "Subscription.FullDesktop.Tests") ]]; then                
         retVal=true
     fi
@@ -169,7 +174,7 @@ skip_Rps() {
 }
 
 getBuildTools() {
-    copyFromRootDir="https://raw.githubusercontent.com/Azure/azure-sdk-for-net/NetSdkBuild"
+    copyFromRootDir="https://raw.githubusercontent.com/Azure/azure-sdk-for-net/BuildToolsForSdk"                     
     printf "Updating Build tools .....\n"
     
     if [ ! -d ./tools/SdkBuildTools ]; then
@@ -177,6 +182,10 @@ getBuildTools() {
     fi
     if [ ! -d ./tools/SdkBuildTools/targets ]; then
         mkdir ./tools/SdkBuildTools/targets
+    fi
+
+    if [ ! -d ./tools/SdkBuildTools/targets/core ]; then
+        mkdir ./tools/SdkBuildTools/targets/core
     fi
 
     if [ ! -d ./tools/SdkBuildTools/tasks ]; then
@@ -193,12 +202,14 @@ getBuildTools() {
     curl -s $copyFromRootDir/tools/BuildAssets/targets/common.targets > ./tools/SdkBuildTools/targets/common.targets
     curl -s $copyFromRootDir/tools/BuildAssets/targets/signing.targets > ./tools/SdkBuildTools/targets/signing.targets
 	curl -s $copyFromRootDir/tools/BuildAssets/targets/ideCmd.targets > ./tools/SdkBuildTools/targets/ideCmd.targets
+    curl -s $copyFromRootDir/tools/BuildAssets/targets/utility.targets > ./tools/SdkBuildTools/targets/utility.targets
+    curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_AzSdk.props > ./tools/SdkBuildTools/targets/core/_AzSdk.props
+    curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_build.proj > ./tools/SdkBuildTools/targets/core/_build.proj
+    curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_Directory.Build.props > ./tools/SdkBuildTools/targets/core/_Directory.Build.props
+    curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_Directory.Build.targets > ./tools/SdkBuildTools/targets/core/_Directory.Build.targets
+    curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_test.props > ./tools/SdkBuildTools/targets/core/_test.props
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/common.tasks > ./tools/SdkBuildTools/tasks/common.tasks
-    #curl $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.dll
-    #curl $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.runtimeconfig.dev.json > ./tools/SdkBuildTools/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.runtimeconfig.dev.json
-    #curl $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.runtimeconfig.json > ./tools/SdkBuildTools/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.runtimeconfig.json
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.dll
-    #curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.runtimeconfig.dev.json > ./tools/SdkBuildTools/tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.runtimeconfig.dev.json
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Build.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Build.dll
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Build.Framework.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Build.Framework.dll
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Build.Tasks.Core.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Build.Tasks.Core.dll
@@ -206,8 +217,7 @@ getBuildTools() {
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Collections.Immutable.dll > ./tools/SdkBuildTools/tasks/net46/System.Collections.Immutable.dll
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Reflection.Metadata.dll > ./tools/SdkBuildTools/tasks/net46/System.Reflection.Metadata.dll
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Runtime.InteropServices.RuntimeInformation.dll > ./tools/SdkBuildTools/tasks/net46/System.Runtime.InteropServices.RuntimeInformation.dll
-    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Threading.Thread.dll > ./tools/SdkBuildTools/tasks/net46/System.Threading.Thread.dll
-    
+    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Threading.Thread.dll > ./tools/SdkBuildTools/tasks/net46/System.Threading.Thread.dll    
 }
 
 getBuildTools

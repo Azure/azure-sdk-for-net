@@ -1,19 +1,26 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.IO;
-using System.Linq;
-using Xunit;
-
-namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
+﻿namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
 {
+    using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
+    using Microsoft.Azure.Test.HttpRecorder;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Threading;
+    using Xunit;
+
     public class TrainingTests : BaseTests
     {
         private const string projName = "Test Project";
         private const string projDescription = "This is a test project";
         private const string tagName = "Test Tag 1";
         private const string tagDescription = "This is a test tag";
+
+        public TrainingTests(ProjectIdFixture fixture)
+            : base(fixture)
+        {
+        }
 
         [Fact]
         public async void CreateUpdateDeleteProject()
@@ -23,9 +30,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateUpdateDeleteProject");
+                HttpMockServer.Initialize(this.GetType().Name, "CreateUpdateDeleteProject", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                ITrainingApi client = GetTrainingClient();
                 var newProject = client.CreateProjectAsync(projName, projDescription).Result;
 
                 Assert.Contains(projName, newProject.Name);
@@ -50,12 +57,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
         [Fact]
         public async void CreateDeleteProjectWithDomain()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))            
+            using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateDeleteProjectWithDomain");
+                HttpMockServer.Initialize(this.GetType().Name, "CreateDeleteProjectWithDomain", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
-                var newProject = client.CreateProjectAsync(projName, projDescription, FoodDomain).Result;
+                ITrainingApi client = GetTrainingClient();
+                var newProject = await client.CreateProjectAsync(projName, projDescription, FoodDomain);
 
                 Assert.Contains(projName, newProject.Name);
                 Assert.Equal(projDescription, newProject.Description);
@@ -74,9 +81,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateImageFromUrl");
+                HttpMockServer.Initialize(this.GetType().Name, "CreateImageFromUrl", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                ITrainingApi client = GetTrainingClient();
                 var newProject = client.CreateProjectAsync(projName, projDescription, FoodDomain).Result;
                 var tag = client.CreateTagAsync(newProject.Id, tagName).Result;
                 var urlImages = new ImageUrlCreateEntry[] { new ImageUrlCreateEntry(imageUrl) };
@@ -104,12 +111,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromFiles");
+                HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromFiles", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                ITrainingApi client = GetTrainingClient();
                 var newProject = client.CreateProjectAsync(projName, projDescription, FoodDomain).Result;
                 var tag = client.CreateTagAsync(newProject.Id, tagName).Result;
-                var fileName = Path.Combine("TestImages", dataFileName);
+                var fileName = Path.Combine("TestImages", "tag1", dataFileName);
                 var fileImages = new ImageFileCreateEntry[] { new ImageFileCreateEntry(dataFileName, File.ReadAllBytes(fileName)) };
                 var tags = new Guid[] { tag.Id };
                 var imageCreatedFromFile = client.CreateImagesFromFilesAsync(newProject.Id, new ImageFileCreateBatch(fileImages, tags)).Result;
@@ -135,12 +142,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromData");
+                HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromData", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                ITrainingApi client = GetTrainingClient();
                 var newProject = client.CreateProjectAsync(projName, projDescription, FoodDomain).Result;
                 var tag = client.CreateTagAsync(newProject.Id, tagName).Result;
-                using (FileStream stream = new FileStream(Path.Combine("TestImages", dataFileName), FileMode.Open))
+                using (FileStream stream = new FileStream(Path.Combine("TestImages", "tag1", dataFileName), FileMode.Open))
                 {
                     var imageCreatedFromData = client.CreateImagesFromDataAsync(newProject.Id, stream, new string[] { tag.Id.ToString() }).Result;
 
@@ -158,58 +165,75 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
             }
         }
         [Fact]
-        public void ProjectRetrieval()
+        public async void ProjectRetrieval()
         {
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "ProjectRetrieval");
+                HttpMockServer.Initialize(this.GetType().Name, "ProjectRetrieval", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
-                var projects = client.GetProjectsAsync().Result;
+                ITrainingApi client = GetTrainingClient();
 
-                Assert.Equal(15, projects.Count);
+                var newProject = await client.CreateProjectAsync(projName, projDescription, FoodDomain);
+                var projects = await client.GetProjectsAsync();
 
-                var firstProject = client.GetProjectAsync(projects[0].Id).Result;
+                Assert.True(projects.Count > 0);
+                Assert.Contains(projects, p => p.Id == newProject.Id);
+
+                var firstProject = await client.GetProjectAsync(projects[0].Id);
 
                 Assert.Equal(projects[0].Id, firstProject.Id);
                 Assert.Equal(projects[0].Name, firstProject.Name);
                 Assert.Equal(projects[0].Description, firstProject.Description);
                 Assert.Equal(projects[0].Settings.DomainId, firstProject.Settings.DomainId);
+
+                await client.DeleteProjectAsync(newProject.Id);
             }
         }
 
-
         [Fact]
-        public void TagRetrieval()
+        public async void TagRetrieval()
         {
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "TagRetrieval");
+                HttpMockServer.Initialize(this.GetType().Name, "TagRetrieval", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
-                var tagList = client.GetTagsAsync(ProjectId).Result;
+                ITrainingApi client = GetTrainingClient();
 
-                Assert.Equal(2, tagList.Tags.Count);
+                var newProject = await client.CreateProjectAsync("TagRetrievalTest", projDescription, GeneralDomain);
+                var numTags = 4;
 
-                var firstTag = client.GetTagAsync(ProjectId, tagList.Tags[0].Id).Result;
+                for (var i = 0; i < numTags; i++)
+                {
+                    await client.CreateTagAsync(newProject.Id, "Tag #" + i.ToString(), string.Empty);
+                }
 
-                Assert.Equal(tagList.Tags[0].Id, firstTag.Id);
-                Assert.Equal(tagList.Tags[0].Name, firstTag.Name);
-                Assert.Equal(tagList.Tags[0].Description, firstTag.Description);
-                Assert.Equal(tagList.Tags[0].ImageCount, firstTag.ImageCount);
+                var tagList = await client.GetTagsAsync(newProject.Id);
+
+                Assert.Equal(numTags, tagList.Count);
+
+                foreach (var tag in tagList)
+                {
+                    Assert.NotEqual(Guid.Empty, tag.Id);
+                    Assert.Contains("Tag #", tag.Name);
+                    Assert.Null(tag.Description);
+                    Assert.Equal(0, tag.ImageCount);
+                }
+
+                await client.DeleteProjectAsync(newProject.Id);
             }
         }
+
         [Fact]
         public void DomainsApiTests()
         {
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "DomainsApiTests");
+                HttpMockServer.Initialize(this.GetType().Name, "DomainsApiTests", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                ITrainingApi client = GetTrainingClient();
 
                 var domains = client.GetDomainsAsync().Result;
-                Assert.Equal(8, domains.Count);
+                Assert.Equal(9, domains.Count);
 
                 var foodDomain = domains.FirstOrDefault(d => d.Id == FoodDomain);
                 Assert.NotNull(foodDomain);
@@ -231,11 +255,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateUpdateDeleteTag");
+                HttpMockServer.Initialize(this.GetType().Name, "CreateUpdateDeleteTag", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                ITrainingApi client = GetTrainingClient();
 
-                var tag = client.CreateTagAsync(ProjectId, tagName, tagDescription).Result;
+                var projectId = (await client.CreateProjectAsync(projName)).Id;
+
+                var tag = await client.CreateTagAsync(projectId, tagName, tagDescription);
 
                 Assert.Equal(tagName, tag.Name);
                 Assert.Equal(tagDescription, tag.Description);
@@ -243,11 +269,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
                 Assert.NotEqual(Guid.Empty, tag.Id);
 
 
-                var updatedTag = client.UpdateTagAsync(ProjectId, tag.Id, new Tag()
+                var updatedTag = await client.UpdateTagAsync(projectId, tag.Id, new Tag()
                 {
                     Name = updatedName,
                     Description = updatedDescription
-                }).Result;
+                });
 
                 Assert.Equal(updatedName, updatedTag.Name);
                 Assert.Equal(updatedDescription, updatedTag.Description);
@@ -255,119 +281,122 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
                 Assert.Equal(tag.Id, updatedTag.Id);
 
 
-                await client.DeleteTagAsync(ProjectId, tag.Id);
+                await client.DeleteTagAsync(projectId, tag.Id);
+                await client.DeleteProjectAsync(projectId);
             }
         }
 
         [Fact]
-        public void GetIterations()
+        public async void GetIterations()
         {
             var updatedName = "New Iteration Name";
 
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "GetIterations");
+                HttpMockServer.Initialize(this.GetType().Name, "GetIterations", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
-                var iterations = client.GetIterationsAsync(ProjectId).Result;
+                ITrainingApi client = GetTrainingClient();
 
-                Assert.Equal(2, iterations.Count);
+                var iterations = await client.GetIterationsAsync(projectId);
+
+                Assert.Equal(1, iterations.Count);
                 Assert.NotEmpty(iterations[0].Name);
                 Assert.NotEqual(Guid.Empty, iterations[0].DomainId);
                 Assert.NotEqual(Guid.Empty, iterations[0].Id);
-                Assert.Equal(ProjectId, iterations[0].ProjectId);
+                Assert.Equal(projectId, iterations[0].ProjectId);
                 Assert.True(iterations[0].IsDefault);
                 Assert.Equal("Completed", iterations[0].Status);
                 Assert.False(iterations[0].Exportable);
 
-                var iteration = client.GetIterationAsync(ProjectId, iterations[0].Id).Result;
+                var iteration = await client.GetIterationAsync(projectId, iterations[0].Id);
                 Assert.Equal(iteration.Name, iterations[0].Name);
                 Assert.Equal(iteration.Id, iterations[0].Id);
                 Assert.True(iterations[0].IsDefault);
 
-                var updatedIteration = client.UpdateIterationAsync(ProjectId, iteration.Id, new Iteration()
+                var updatedIteration = await client.UpdateIterationAsync(projectId, iteration.Id, new Iteration()
                 {
                     Name = updatedName,
                     IsDefault = !iterations[0].IsDefault,
-                }).Result;
+                });
 
                 Assert.Equal(updatedName, updatedIteration.Name);
                 Assert.Equal(!iteration.IsDefault, updatedIteration.IsDefault);
+
+                await client.DeleteProjectAsync(projectId);
             }
         }
 
         [Fact]
-        public void GetIterationPerformance()
+        public async void GetIterationPerformance()
         {
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "GetIterationPerformance");
+                HttpMockServer.Initialize(this.GetType().Name, "GetIterationPerformance", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
-                var iterations = client.GetIterationsAsync(ProjectId).Result;
+                ITrainingApi client = GetTrainingClient();
 
-                Assert.True(iterations.Count > 1);
+                var iterations = client.GetIterationsAsync(projectId).Result;
 
-                var iterationPerf = client.GetIterationPerformanceAsync(ProjectId, iterations[iterations.Count - 1].Id, 0.9).Result;
+                Assert.True(iterations.Count > 0);
+
+                var iterationPerf = client.GetIterationPerformanceAsync(projectId, iterations[iterations.Count - 1].Id, 0.9).Result;
                 Assert.Equal(1, iterationPerf.Recall);
                 Assert.Equal(0, iterationPerf.RecallStdDeviation);
                 Assert.Equal(1, iterationPerf.Precision);
                 Assert.Equal(0, iterationPerf.PrecisionStdDeviation);
                 Assert.Equal(2, iterationPerf.PerTagPerformance.Count);
-                Assert.Equal("Hemlock", iterationPerf.PerTagPerformance[0].Name);
+                Assert.Equal("Tag1", iterationPerf.PerTagPerformance[0].Name);
                 Assert.Equal(1, iterationPerf.PerTagPerformance[0].Recall);
                 Assert.Equal(0, iterationPerf.PerTagPerformance[0].RecallStdDeviation);
                 Assert.Equal(1, iterationPerf.PerTagPerformance[0].Precision);
                 Assert.Equal(0, iterationPerf.PerTagPerformance[0].PrecisionStdDeviation);
-                Assert.Equal("Japanese Cherry", iterationPerf.PerTagPerformance[1].Name);
+                Assert.Equal("Tag2", iterationPerf.PerTagPerformance[1].Name);
                 Assert.Equal(1, iterationPerf.PerTagPerformance[1].Recall);
                 Assert.Equal(0, iterationPerf.PerTagPerformance[1].RecallStdDeviation);
                 Assert.Equal(1, iterationPerf.PerTagPerformance[1].Precision);
                 Assert.Equal(0, iterationPerf.PerTagPerformance[1].PrecisionStdDeviation);
+
+                await client.DeleteProjectAsync(projectId);
             }
         }
 
         [Fact]
-        public void ExportIteration()
+        public async void ExportTests()
         {
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "ExportIteration");
+                HttpMockServer.Initialize(this.GetType().Name, "ExportTests", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                var projectId = CreateTrainedImageClassificationProjectAsync(ExportableDomain);
 
-                var iterations = client.GetIterationsAsync(ProjectId).Result;
+                ITrainingApi client = GetTrainingClient();
+
+                var iterations = await client.GetIterationsAsync(projectId);
                 var exportableIteration = iterations.FirstOrDefault(e => e.Exportable);
                 Assert.NotNull(exportableIteration);
 
-                var export = client.ExportIterationAsync(ProjectId, exportableIteration.Id, "TensorFlow").Result;
+                var export = await client.ExportIterationAsync(projectId, exportableIteration.Id, "TensorFlow");
 
                 Assert.Equal("Exporting", export.Status);
                 Assert.Null(export.DownloadUri);
                 Assert.Equal("TensorFlow", export.Platform);
-            }
-        }
+                Assert.False(export.NewerVersionAvailable);
 
-        [Fact]
-        public void GetExports()
-        {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
-            {
-                HttpMockServer.Initialize(this.GetType().Name, "GetExports");
+                while (export.Status != "Done")
+                {
+                    var exports = await client.GetExportsAsync(projectId, exportableIteration.Id);
+                    Assert.Equal(1, exports.Count);
+                    export = exports.Where(e => e.Platform == "TensorFlow").FirstOrDefault();
+                    Assert.NotNull(export);
+                    Thread.Sleep(1000);
+                }
+                Assert.NotEmpty(export.DownloadUri);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
-
-                var iterations = client.GetIterationsAsync(ProjectId).Result;
-                var exportableIteration = iterations.FirstOrDefault(e => e.Exportable);
-                Assert.NotNull(exportableIteration);
-
-                var exports = client.GetExportsAsync(ProjectId, exportableIteration.Id).Result;
-                Assert.Equal(1, exports.Count);
-                Assert.Equal("TensorFlow", exports[0].Platform);
-                Assert.NotEmpty(exports[0].DownloadUri);
-                Assert.Equal("Done", exports[0].Status);
+                await client.DeleteProjectAsync(projectId);
             }
         }
 
@@ -376,41 +405,47 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "TrainProject");
+                HttpMockServer.Initialize(this.GetType().Name, "TrainProject", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                var projectId = CreateTrainedImageClassificationProjectAsync();
+
+                ITrainingApi client = GetTrainingClient();
 
                 // Remove the last iteration so we can retrain
-                var iterations = client.GetIterationsAsync(ProjectId).Result;
+                var iterations = await client.GetIterationsAsync(projectId);
                 var iterationToDelete = iterations[iterations.Count - 1];
-                await client.DeleteIterationAsync(ProjectId, iterationToDelete.Id);
+                await client.DeleteIterationAsync(projectId, iterationToDelete.Id);
 
-                var trainedIteration = client.TrainProjectAsync(ProjectId).Result;
+                var trainedIteration = await client.TrainProjectAsync(projectId);
 
                 Assert.NotEqual(iterationToDelete.Name, trainedIteration.Name);
                 Assert.NotEqual(iterationToDelete.Id, trainedIteration.Id);
                 Assert.NotEqual(Guid.Empty, trainedIteration.Id);
                 Assert.False(trainedIteration.IsDefault);
-                Assert.Equal("Training", trainedIteration.Status);
+                Assert.True("Staging" == trainedIteration.Status || "Training" == trainedIteration.Status);
                 Assert.False(trainedIteration.Exportable);
+
+                await client.DeleteProjectAsync(projectId);
             }
         }
 
         [Fact]
-        public void GetTaggedImages()
+        public async void GetTaggedImages()
         {
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "GetTaggedImages");
+                HttpMockServer.Initialize(this.GetType().Name, "GetTaggedImages", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
-                var images = client.GetTaggedImagesAsync(ProjectId).Result;
+                ITrainingApi client = GetTrainingClient();
+
+                var images = client.GetTaggedImagesAsync(projectId).Result;
                 var tag1 = images[0].Tags[0].TagId;
 
                 var imagesWithTag1 = 0;
 
-                Assert.Equal(18, images.Count);
+                Assert.Equal(10, images.Count);
                 foreach (var image in images)
                 {
                     Assert.NotEqual(Guid.Empty, image.Id);
@@ -423,54 +458,64 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
                         imagesWithTag1++;
                 }
 
-                var tag1Images = client.GetTaggedImagesAsync(ProjectId, null, new string[] { tag1.ToString() }).Result;
+                var tag1Images = client.GetTaggedImagesAsync(projectId, null, new string[] { tag1.ToString() }).Result;
                 Assert.Equal(imagesWithTag1, tag1Images.Count);
+
+                await client.DeleteProjectAsync(projectId);
             }
         }
 
         [Fact]
-        public void GetUntaggedImages()
+        public async void GetUntaggedImages()
         {
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "GetUntaggedImages");
+                HttpMockServer.Initialize(this.GetType().Name, "GetUntaggedImages", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
-                var images = client.GetUntaggedImagesAsync(ProjectId).Result;
+                ITrainingApi client = GetTrainingClient();
+
+                var images = client.GetUntaggedImagesAsync(projectId).Result;
                 Assert.Equal(0, images.Count);
+
+                await client.DeleteProjectAsync(projectId);
             }
         }
 
         [Fact]
         public async void ImageTagManipulation()
-        {            
+        {
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "ImageTagManipulation");
+                HttpMockServer.Initialize(this.GetType().Name, "ImageTagManipulation", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
-                var untaggedImages = client.GetUntaggedImagesAsync(ProjectId).Result;
+                ITrainingApi client = GetTrainingClient();
+
+                var untaggedImages = client.GetUntaggedImagesAsync(projectId).Result;
                 Assert.Equal(0, untaggedImages.Count);
 
-                var taggedImages = client.GetTaggedImagesAsync(ProjectId).Result;
-                Assert.Equal(17, taggedImages.Count);
+                var taggedImages = client.GetTaggedImagesAsync(projectId).Result;
+                Assert.Equal(10, taggedImages.Count);
 
                 var imageToBeModified = taggedImages[0].Id;
                 var tagToBeModified = taggedImages[0].Tags[0].TagId;
 
-                await client.DeleteImageTagsAsync(ProjectId, new string[] { imageToBeModified.ToString() }, new string[] { tagToBeModified.ToString() });
+                await client.DeleteImageTagsAsync(projectId, new string[] { imageToBeModified.ToString() }, new string[] { tagToBeModified.ToString() });
 
-                untaggedImages = client.GetUntaggedImagesAsync(ProjectId).Result;
+                untaggedImages = client.GetUntaggedImagesAsync(projectId).Result;
                 Assert.Equal(1, untaggedImages.Count);
 
                 var imageTags = new ImageTagCreateEntry(imageToBeModified, tagToBeModified);
-                var result = client.PostImageTagsAsync(ProjectId, new ImageTagCreateBatch(new ImageTagCreateEntry[] { imageTags })).Result;
+                var result = client.CreateImageTagsAsync(projectId, new ImageTagCreateBatch(new ImageTagCreateEntry[] { imageTags })).Result;
 
                 Assert.Equal(1, result.Created.Count);
                 Assert.Equal(imageToBeModified, result.Created[0].ImageId);
                 Assert.Equal(tagToBeModified, result.Created[0].TagId);
+
+                await client.DeleteProjectAsync(projectId);
             }
         }
 
@@ -479,129 +524,298 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "DeleteImages");
+                HttpMockServer.Initialize(this.GetType().Name, "DeleteImages", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                ITrainingApi client = GetTrainingClient();
+
+                var projectId = (await client.CreateProjectAsync(projName)).Id;
 
                 string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
                 var urlImages = new ImageUrlCreateEntry[] { new ImageUrlCreateEntry(imageUrl) };
-                var result = client.CreateImagesFromUrlsAsync(ProjectId, new ImageUrlCreateBatch(urlImages)).Result;
+                var result = client.CreateImagesFromUrlsAsync(projectId, new ImageUrlCreateBatch(urlImages)).Result;
                 Assert.True(result.IsBatchSuccessful);
                 Assert.Equal(1, result.Images.Count);
 
-                await client.DeleteImagesAsync(ProjectId, new string[] { result.Images[0].Image.Id.ToString() });
+                await client.DeleteImagesAsync(projectId, new string[] { result.Images[0].Image.Id.ToString() });
+                await client.DeleteProjectAsync(projectId);
             }
         }
 
         [Fact]
-        public void QuickTestImage()
+        public async void QuickTests()
         {
             var dataFileName = "test_image.jpg";
 
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "QuickTestImage");
+                HttpMockServer.Initialize(this.GetType().Name, "QuickTests", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                var projectId = CreateTrainedImageClassificationProjectAsync();
+
+                ITrainingApi client = GetTrainingClient();
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", dataFileName), FileMode.Open))
-                {   
-                    var result = client.QuickTestImageAsync(ProjectId, stream).Result;
-                    Assert.NotEqual(Guid.Empty, result.Id);
-                    Assert.NotEqual(Guid.Empty, result.Iteration);
-                    Assert.Equal(ProjectId, result.Project);
-                    Assert.NotEqual(0, result.Predictions.Count);
-                    Assert.Equal(1, result.Predictions[0].Probability);
-                    Assert.Equal("Hemlock", result.Predictions[0].Tag);
+                {
+                    var imageResult = await client.QuickTestImageAsync(projectId, stream);
+                    Assert.NotEqual(Guid.Empty, imageResult.Id);
+                    Assert.NotEqual(Guid.Empty, imageResult.Iteration);
+                    Assert.Equal(projectId, imageResult.Project);
+                    Assert.NotEqual(0, imageResult.Predictions.Count);
+                    Assert.InRange(imageResult.Predictions[0].Probability, 0.9, 1);
+                    Assert.Equal("Tag1", imageResult.Predictions[0].TagName);
                 }
+
+                string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
+                var urlResult = await client.QuickTestImageUrlAsync(projectId, new ImageUrl(imageUrl));
+                Assert.NotEqual(Guid.Empty, urlResult.Id);
+                Assert.NotEqual(Guid.Empty, urlResult.Iteration);
+                Assert.Equal(projectId, urlResult.Project);
+                Assert.NotEqual(0, urlResult.Predictions.Count);
+                Assert.InRange(urlResult.Predictions[0].Probability, 0.9, 1);
+                Assert.Equal("Tag1", urlResult.Predictions[0].TagName);
+
+                await client.DeleteProjectAsync(projectId);
             }
         }
 
         [Fact]
-        public void QuickTestImageUrl()
+        public async void CreateImagesFromPredictions()
         {
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "QuickTestImageUrl");
+                HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromPredictions", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
-                string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
-                var result = client.QuickTestImageUrlAsync(ProjectId, new ImageUrl(imageUrl)).Result;
-                Assert.NotEqual(Guid.Empty, result.Id);
-                Assert.NotEqual(Guid.Empty, result.Iteration);
-                Assert.Equal(ProjectId, result.Project);
-                Assert.NotEqual(0, result.Predictions.Count);
-                Assert.Equal(1, result.Predictions[0].Probability);
-                Assert.Equal("Hemlock", result.Predictions[0].Tag);
-            }
-        }
-
-        [Fact]
-        public void CreateImagesFromPredictions()
-        {
-            using (MockContext context = MockContext.Start(this.GetType().Name))
-            {
-                HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromPredictions");
-
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                ITrainingApi client = GetTrainingClient();
 
                 string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
-                var predictionResult = client.QuickTestImageUrlAsync(ProjectId, new ImageUrl(imageUrl)).Result;
+                var predictionResult = client.QuickTestImageUrlAsync(projectId, new ImageUrl(imageUrl)).Result;
 
                 var i = new ImageIdCreateEntry[] { new ImageIdCreateEntry(predictionResult.Id) };
-                var result = client.CreateImagesFromPredictionsAsync(ProjectId, new ImageIdCreateBatch(i)).Result;
+                var result = client.CreateImagesFromPredictionsAsync(projectId, new ImageIdCreateBatch(i)).Result;
 
                 Assert.Equal(1, result.Images.Count);
                 Assert.NotEmpty(result.Images[0].SourceUrl);
+
+                await client.DeleteProjectAsync(projectId);
             }
         }
 
         [Fact]
-        public void QueryPredictionResults()
+        public async void QueryPredictionResults()
         {
             using (MockContext context = MockContext.Start(this.GetType().Name))
-            //using (MockContext context = new MockContext())
             {
-                HttpMockServer.Initialize(this.GetType().Name, "QueryPredictionResults");
+                HttpMockServer.Initialize(this.GetType().Name, "QueryPredictionResults", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                var projectId = CreateTrainedImageClassificationProjectAsync();
+
+                ITrainingApi client = GetTrainingClient();
 
                 var token = new PredictionQueryToken()
                 {
                     OrderBy = "Newest",
                 };
-                var result = client.QueryPredictionResultsAsync(ProjectId, token).Result;
+                var result = client.QueryPredictionsAsync(projectId, token).Result;
                 Assert.NotEqual(0, result.Results.Count);
                 foreach (var prediction in result.Results)
                 {
-                    Assert.Equal(ProjectId, prediction.Project);
+                    Assert.Equal(projectId, prediction.Project);
                     Assert.NotEqual(Guid.Empty, prediction.Id);
                     Assert.NotEqual(Guid.Empty, prediction.Iteration);
                     Assert.NotEmpty(prediction.ThumbnailUri);
                     Assert.NotEmpty(prediction.ImageUri);
                     Assert.NotEqual(0, prediction.Predictions.Count);
                 }
+
+                await client.DeleteProjectAsync(projectId);
             }
         }
 
         [Fact]
         public async void DeletePrediction()
         {
-            using (MockContext context = MockContext.Start(this.GetType().Name))            
+            using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "DeletePrediction");
+                HttpMockServer.Initialize(this.GetType().Name, "DeletePrediction", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient(HttpMockServer.CreateInstance());
+                var projectId = CreateTrainedImageClassificationProjectAsync();
+
+                ITrainingApi client = GetTrainingClient();
 
                 var token = new PredictionQueryToken()
                 {
                     OrderBy = "Newest",
                 };
-                var result = client.QueryPredictionResultsAsync(ProjectId, token).Result;
+                var result = client.QueryPredictionsAsync(projectId, token).Result;
                 Assert.NotEqual(0, result.Results.Count);
 
-                await client.DeletePredictionAsync(ProjectId, new string[] { result.Results[result.Results.Count - 1].Id.ToString() });
+                await client.DeletePredictionAsync(projectId, new string[] { result.Results[result.Results.Count - 1].Id.ToString() });
+                await client.DeleteProjectAsync(projectId);
+            }
+        }
+
+        [Fact]
+        public async void GetImagesByIds()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                HttpMockServer.Initialize(this.GetType().Name, "GetImagesByIds", RecorderMode);
+
+                var projectId = CreateTrainedImageClassificationProjectAsync();
+
+                ITrainingApi client = GetTrainingClient();
+
+                var tags = await client.GetTagsAsync(projectId);
+                var imagesForTag = await client.GetTaggedImagesAsync(projectId, null, new List<string>(new string[] { tags[0].Id.ToString() }));
+                Assert.Equal(5, imagesForTag.Count);
+
+                var images = await client.GetImagesByIdsAsync(projectId, imagesForTag.Select(img => img.Id.ToString()).ToList());
+                Assert.Equal(5, images.Count);
+
+                foreach (var image in images)
+                {
+                    Assert.Equal(1, image.Tags.Count);
+                    var tag = image.Tags[0];
+                    Assert.Equal(tags[0].Id, tag.TagId);
+                    Assert.Equal(tags[0].Name, tag.TagName);
+                    Assert.NotNull(image.ThumbnailUri);
+                    Assert.NotNull(image.ImageUri);
+                    Assert.True(image.Width > 0);
+                    Assert.True(image.Height > 0);
+                }
+
+                await client.DeleteProjectAsync(projectId);
+            }
+        }
+
+        [Fact]
+        public async void ImageCounts()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                HttpMockServer.Initialize(this.GetType().Name, "ImageCounts", RecorderMode);
+
+                var projectId = CreateTrainedImageClassificationProjectAsync();
+
+                ITrainingApi client = GetTrainingClient();
+
+                var taggedImageCount = await client.GetTaggedImageCountAsync(projectId);
+                Assert.Equal(10, taggedImageCount);
+
+                var untaggedImageCount = await client.GetUntaggedImageCountAsync(projectId);
+                Assert.Equal(0, untaggedImageCount);
+
+                var iterationId = (await client.GetIterationsAsync(projectId))[0].Id;
+                var imagePerfCount = await client.GetImagePerformanceCountAsync(projectId, iterationId);
+                Assert.Equal(10, imagePerfCount);
+
+                await client.DeleteProjectAsync(projectId);
+            }
+        }
+
+        [Fact]
+        public async void DownloadRegions()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                HttpMockServer.Initialize(this.GetType().Name, "DownloadRegions", RecorderMode);
+
+                var projectId = CreateTrainedObjDetectionProject();
+
+                ITrainingApi client = GetTrainingClient();
+
+                var images = await client.GetTaggedImagesAsync(projectId);
+                foreach (var img in images)
+                {
+                    Assert.NotNull(img.Regions);
+                    Assert.Equal(1, img.Regions.Count);
+                    Assert.InRange(img.Regions[0].Left, 0, 1);
+                    Assert.InRange(img.Regions[0].Top, 0, 1);
+                    Assert.InRange(img.Regions[0].Width, 0, 1);
+                    Assert.InRange(img.Regions[0].Height, 0, 1);
+                }
+            }
+        }
+
+        [Fact]
+        public async void RegionManipulation()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                HttpMockServer.Initialize(this.GetType().Name, "RegionManipulation", RecorderMode);
+
+                var projectId = CreateTrainedObjDetectionProject();
+
+                ITrainingApi client = GetTrainingClient();
+
+                var existingImage = (await client.GetTaggedImagesAsync(projectId)).First();
+                Assert.NotNull(existingImage);
+
+                var testTag = await client.CreateTagAsync(projectId, tagName);
+
+                var proposal = await client.GetImageRegionProposalsAsync(projectId, existingImage.Id);
+                Assert.True(proposal.Proposals.Count > 0);
+                Assert.Equal(projectId, proposal.ProjectId);
+                Assert.Equal(existingImage.Id, proposal.ImageId);
+                Assert.InRange(proposal.Proposals[0].Confidence, 0, 1);
+
+                var bbox = proposal.Proposals[0].BoundingBox;
+                List<ImageRegionCreateEntry> newRegions = new List<ImageRegionCreateEntry>();
+                newRegions.Add(new ImageRegionCreateEntry(existingImage.Id, testTag.Id, bbox.Left, bbox.Top, bbox.Width, bbox.Height));
+
+                var regions = await client.CreateImageRegionsAsync(projectId, new ImageRegionCreateBatch(newRegions));
+                Assert.Equal(1, regions.Created.Count);
+                Assert.Equal(0, regions.Duplicated.Count);
+                Assert.Equal(0, regions.Exceeded.Count);
+                Assert.Equal(bbox.Top, regions.Created[0].Top);
+                Assert.Equal(bbox.Left, regions.Created[0].Left);
+                Assert.Equal(bbox.Width, regions.Created[0].Width);
+                Assert.Equal(bbox.Height, regions.Created[0].Height);
+                Assert.Equal(existingImage.Id, regions.Created[0].ImageId);
+                Assert.Equal(testTag.Id, regions.Created[0].TagId);
+                Assert.NotEqual(Guid.Empty, regions.Created[0].RegionId);
+
+                var image = await client.GetImagesByIdsAsync(projectId, new List<string>(new string[] { existingImage.Id.ToString() }));
+                Assert.Equal(1, image.Count);
+                Assert.Equal(2, image[0].Regions.Count);
+
+                await client.DeleteImageRegionsAsync(projectId, new List<string>(new string[] { regions.Created[0].RegionId.ToString() }));
+
+                image = await client.GetImagesByIdsAsync(projectId, new List<string>(new string[] { existingImage.Id.ToString() }));
+                Assert.Equal(1, image.Count);
+                Assert.Equal(1, image[0].Regions.Count);
+
+                await client.DeleteTagAsync(projectId, testTag.Id);
+            }
+        }
+
+        [Fact]
+        public async void ObjDetectionPrediction()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                HttpMockServer.Initialize(this.GetType().Name, "ObjDetectionPrediction", RecorderMode);
+
+                var projectId = CreateTrainedObjDetectionProject();
+
+                ITrainingApi client = GetTrainingClient();
+
+                using (FileStream stream = new FileStream(Path.Combine("TestImages", "od_test_image.jpg"), FileMode.Open))
+                {
+                    var imageResult = await client.QuickTestImageAsync(projectId, stream);
+                    Assert.NotEqual(Guid.Empty, imageResult.Id);
+                    Assert.NotEqual(Guid.Empty, imageResult.Iteration);
+                    Assert.Equal(projectId, imageResult.Project);
+                    Assert.NotEqual(0, imageResult.Predictions.Count);
+                    Assert.InRange(imageResult.Predictions[0].Probability, 0.5, 1);
+                    Assert.NotNull(imageResult.Predictions[0].BoundingBox);
+                    Assert.InRange(imageResult.Predictions[0].BoundingBox.Left, 0, 1);
+                    Assert.InRange(imageResult.Predictions[0].BoundingBox.Top, 0, 1);
+                    Assert.InRange(imageResult.Predictions[0].BoundingBox.Width, 0, 1);
+                    Assert.InRange(imageResult.Predictions[0].BoundingBox.Height, 0, 1);
+                }
             }
         }
     }

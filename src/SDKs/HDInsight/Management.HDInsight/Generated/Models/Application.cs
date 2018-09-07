@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="etag">The ETag for the application</param>
         /// <param name="tags">The tags for the application.</param>
         /// <param name="properties">The properties of the application.</param>
-        public Application(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ApplicationGetProperties properties = default(ApplicationGetProperties))
+        public Application(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ApplicationProperties properties = default(ApplicationProperties))
             : base(id, name, type)
         {
             Etag = etag;
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// Gets or sets the properties of the application.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public ApplicationGetProperties Properties { get; set; }
+        public ApplicationProperties Properties { get; set; }
 
     }
 }

@@ -70,7 +70,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="executionInfo">The execution information for the
         /// job.</param>
         /// <param name="stats">Resource usage statistics for the entire
-        /// lifetime of the job.</param>
+        /// lifetime of the job. The statistics may not be immediately
+        /// available. The Batch service performs periodic roll-up of
+        /// statistics. The typical delay is about 30 minutes.</param>
         public CloudJob(string id = default(string), string displayName = default(string), bool? usesTaskDependencies = default(bool?), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), JobState? state = default(JobState?), System.DateTime? stateTransitionTime = default(System.DateTime?), JobState? previousState = default(JobState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), PoolInformation poolInfo = default(PoolInformation), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), IList<MetadataItem> metadata = default(IList<MetadataItem>), JobExecutionInformation executionInfo = default(JobExecutionInformation), JobStatistics stats = default(JobStatistics))
         {
             Id = id;
@@ -306,63 +308,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets resource usage statistics for the entire lifetime of
-        /// the job.
+        /// the job. The statistics may not be immediately available. The Batch
+        /// service performs periodic roll-up of statistics. The typical delay
+        /// is about 30 minutes.
         /// </summary>
         [JsonProperty(PropertyName = "stats")]
         public JobStatistics Stats { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (JobManagerTask != null)
-            {
-                JobManagerTask.Validate();
-            }
-            if (JobPreparationTask != null)
-            {
-                JobPreparationTask.Validate();
-            }
-            if (JobReleaseTask != null)
-            {
-                JobReleaseTask.Validate();
-            }
-            if (CommonEnvironmentSettings != null)
-            {
-                foreach (var element in CommonEnvironmentSettings)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (PoolInfo != null)
-            {
-                PoolInfo.Validate();
-            }
-            if (Metadata != null)
-            {
-                foreach (var element1 in Metadata)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (ExecutionInfo != null)
-            {
-                ExecutionInfo.Validate();
-            }
-            if (Stats != null)
-            {
-                Stats.Validate();
-            }
-        }
     }
 }

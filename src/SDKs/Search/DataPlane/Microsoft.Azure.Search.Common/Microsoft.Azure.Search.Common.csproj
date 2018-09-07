@@ -6,7 +6,7 @@
     <Description>Common types needed by the Azure Search .NET libraries. This is not the package you are looking for; It is only meant to be used as a dependency.</Description>
     <AssemblyTitle>Microsoft Azure Search Common Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Search.Common</AssemblyName>
-    <VersionPrefix>5.0.0</VersionPrefix>
+    <Version>5.0.2</Version>
     <PackageReleaseNotes>See the Microsoft.Azure.Search package for detailed release notes on the entire Azure Search .NET SDK.</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>

@@ -29,17 +29,12 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the NodeStateCounts class.
         /// </summary>
-        /// <param name="idleNodeCount">Number of compute nodes in idle
-        /// state.</param>
-        /// <param name="runningNodeCount">Number of compute nodes which are
-        /// running jobs.</param>
-        /// <param name="preparingNodeCount">Number of compute nodes which are
-        /// being prepared.</param>
-        /// <param name="unusableNodeCount">Number of compute nodes which are
-        /// unusable.</param>
-        /// <param name="leavingNodeCount">Number of compute nodes which are
-        /// leaving the cluster.</param>
-        public NodeStateCounts(int idleNodeCount, int runningNodeCount, int preparingNodeCount, int unusableNodeCount, int leavingNodeCount)
+        /// <param name="idleNodeCount">Idle node count.</param>
+        /// <param name="runningNodeCount">Running node count.</param>
+        /// <param name="preparingNodeCount">Preparing node count.</param>
+        /// <param name="unusableNodeCount">Unusable node count.</param>
+        /// <param name="leavingNodeCount">Leaving node count.</param>
+        public NodeStateCounts(int? idleNodeCount = default(int?), int? runningNodeCount = default(int?), int? preparingNodeCount = default(int?), int? unusableNodeCount = default(int?), int? leavingNodeCount = default(int?))
         {
             IdleNodeCount = idleNodeCount;
             RunningNodeCount = runningNodeCount;
@@ -55,44 +50,49 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets number of compute nodes in idle state.
+        /// Gets idle node count.
         /// </summary>
+        /// <remarks>
+        /// Number of compute nodes in idle state.
+        /// </remarks>
         [JsonProperty(PropertyName = "idleNodeCount")]
-        public int IdleNodeCount { get; set; }
+        public int? IdleNodeCount { get; private set; }
 
         /// <summary>
-        /// Gets or sets number of compute nodes which are running jobs.
+        /// Gets running node count.
         /// </summary>
+        /// <remarks>
+        /// Number of compute nodes which are running jobs.
+        /// </remarks>
         [JsonProperty(PropertyName = "runningNodeCount")]
-        public int RunningNodeCount { get; set; }
+        public int? RunningNodeCount { get; private set; }
 
         /// <summary>
-        /// Gets or sets number of compute nodes which are being prepared.
+        /// Gets preparing node count.
         /// </summary>
+        /// <remarks>
+        /// Number of compute nodes which are being prepared.
+        /// </remarks>
         [JsonProperty(PropertyName = "preparingNodeCount")]
-        public int PreparingNodeCount { get; set; }
+        public int? PreparingNodeCount { get; private set; }
 
         /// <summary>
-        /// Gets or sets number of compute nodes which are unusable.
+        /// Gets unusable node count.
         /// </summary>
+        /// <remarks>
+        /// Number of compute nodes which are in unusable state.
+        /// </remarks>
         [JsonProperty(PropertyName = "unusableNodeCount")]
-        public int UnusableNodeCount { get; set; }
+        public int? UnusableNodeCount { get; private set; }
 
         /// <summary>
-        /// Gets or sets number of compute nodes which are leaving the cluster.
+        /// Gets leaving node count.
         /// </summary>
+        /// <remarks>
+        /// Number of compute nodes which are leaving the cluster.
+        /// </remarks>
         [JsonProperty(PropertyName = "leavingNodeCount")]
-        public int LeavingNodeCount { get; set; }
+        public int? LeavingNodeCount { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

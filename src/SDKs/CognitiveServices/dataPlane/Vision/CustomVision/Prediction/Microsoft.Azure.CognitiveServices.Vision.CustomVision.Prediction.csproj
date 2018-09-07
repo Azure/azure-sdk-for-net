@@ -6,14 +6,22 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services CustomVision Prediction APIs.</Description>
-    <VersionPrefix>0.9.0-preview</VersionPrefix>
+    <Version>0.11.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Custom Vision;Custom Vision Prediction API;Custom Vision Prediction SDK;Vision;netcore451511</PackageTags>
-    <PackageReleaseNotes>This is a preview release of the Cognitive Services Custom Vision Prediction SDK.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+    <![CDATA[
+    This is a preview release of the Cognitive Services Custom Vision Prediction SDK.
+
+    Changes in this release:
+    1. Support customizing service endpoints. 
+    ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <PackageProjectUrl>http://customvision.ai</PackageProjectUrl>
   </PropertyGroup>
 
   <!-- Please do not move/edit code below this line -->

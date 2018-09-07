@@ -29,15 +29,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
             /// </param>
-            public static Stream GetContent(this IRunbookDraftOperations operations, string automationAccountName, string runbookName)
+            public static Stream GetContent(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
             {
-                return operations.GetContentAsync(automationAccountName, runbookName).GetAwaiter().GetResult();
+                return operations.GetContentAsync(resourceGroupName, automationAccountName, runbookName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -47,8 +50,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -56,56 +62,64 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Stream> GetContentAsync(this IRunbookDraftOperations operations, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Stream> GetContentAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetContentWithHttpMessagesAsync(automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false);
+                var _result = await operations.GetContentWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
                 return _result.Body;
             }
 
             /// <summary>
-            /// Updates the runbook draft with runbookStream as its content.
+            /// Replaces the runbook draft content.
             /// <see href="http://aka.ms/azureautomationsdk/runbookdraftoperations" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
             /// </param>
             /// <param name='runbookContent'>
-            /// The runbook draft content.
+            /// The runbook draft content.
             /// </param>
-            public static void CreateOrUpdate(this IRunbookDraftOperations operations, string automationAccountName, string runbookName, Stream runbookContent)
+            public static Stream ReplaceContent(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName, Stream runbookContent)
             {
-                operations.CreateOrUpdateAsync(automationAccountName, runbookName, runbookContent).GetAwaiter().GetResult();
+                return operations.ReplaceContentAsync(resourceGroupName, automationAccountName, runbookName, runbookContent).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates the runbook draft with runbookStream as its content.
+            /// Replaces the runbook draft content.
             /// <see href="http://aka.ms/azureautomationsdk/runbookdraftoperations" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
             /// </param>
             /// <param name='runbookContent'>
-            /// The runbook draft content.
+            /// The runbook draft content.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateOrUpdateAsync(this IRunbookDraftOperations operations, string automationAccountName, string runbookName, Stream runbookContent, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Stream> ReplaceContentAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName, Stream runbookContent, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CreateOrUpdateWithHttpMessagesAsync(automationAccountName, runbookName, runbookContent, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                var _result = await operations.ReplaceContentWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, runbookContent, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
             }
 
             /// <summary>
@@ -115,15 +129,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
             /// </param>
-            public static RunbookDraft Get(this IRunbookDraftOperations operations, string automationAccountName, string runbookName)
+            public static RunbookDraft Get(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
             {
-                return operations.GetAsync(automationAccountName, runbookName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, automationAccountName, runbookName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -133,8 +150,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -142,9 +162,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RunbookDraft> GetAsync(this IRunbookDraftOperations operations, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RunbookDraft> GetAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -157,15 +177,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The parameters supplied to the publish runbook operation.
             /// </param>
-            public static Runbook Publish(this IRunbookDraftOperations operations, string automationAccountName, string runbookName)
+            public static RunbookDraftPublishHeaders Publish(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
             {
-                return operations.PublishAsync(automationAccountName, runbookName).GetAwaiter().GetResult();
+                return operations.PublishAsync(resourceGroupName, automationAccountName, runbookName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -175,8 +198,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The parameters supplied to the publish runbook operation.
@@ -184,41 +210,47 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Runbook> PublishAsync(this IRunbookDraftOperations operations, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RunbookDraftPublishHeaders> PublishAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PublishWithHttpMessagesAsync(automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PublishWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Body;
+                    return _result.Headers;
                 }
             }
 
             /// <summary>
-            /// Retrieve the runbook identified by runbook name.
+            /// Undo draft edit to last known published state identified by runbook name.
             /// <see href="http://aka.ms/azureautomationsdk/runbookdraftoperations" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
             /// </param>
-            public static RunbookDraftUndoEditResult UndoEdit(this IRunbookDraftOperations operations, string automationAccountName, string runbookName)
+            public static RunbookDraftUndoEditResult UndoEdit(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
             {
-                return operations.UndoEditAsync(automationAccountName, runbookName).GetAwaiter().GetResult();
+                return operations.UndoEditAsync(resourceGroupName, automationAccountName, runbookName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Retrieve the runbook identified by runbook name.
+            /// Undo draft edit to last known published state identified by runbook name.
             /// <see href="http://aka.ms/azureautomationsdk/runbookdraftoperations" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -226,57 +258,65 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RunbookDraftUndoEditResult> UndoEditAsync(this IRunbookDraftOperations operations, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RunbookDraftUndoEditResult> UndoEditAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UndoEditWithHttpMessagesAsync(automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UndoEditWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Updates the runbook draft with runbookStream as its content.
+            /// Replaces the runbook draft content.
             /// <see href="http://aka.ms/azureautomationsdk/runbookdraftoperations" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
             /// </param>
             /// <param name='runbookContent'>
-            /// The runbook draft content.
+            /// The runbook draft content.
             /// </param>
-            public static void BeginCreateOrUpdate(this IRunbookDraftOperations operations, string automationAccountName, string runbookName, Stream runbookContent)
+            public static Stream BeginReplaceContent(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName, Stream runbookContent)
             {
-                operations.BeginCreateOrUpdateAsync(automationAccountName, runbookName, runbookContent).GetAwaiter().GetResult();
+                return operations.BeginReplaceContentAsync(resourceGroupName, automationAccountName, runbookName, runbookContent).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates the runbook draft with runbookStream as its content.
+            /// Replaces the runbook draft content.
             /// <see href="http://aka.ms/azureautomationsdk/runbookdraftoperations" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
             /// </param>
             /// <param name='runbookContent'>
-            /// The runbook draft content.
+            /// The runbook draft content.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginCreateOrUpdateAsync(this IRunbookDraftOperations operations, string automationAccountName, string runbookName, Stream runbookContent, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Stream> BeginReplaceContentAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName, Stream runbookContent, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginCreateOrUpdateWithHttpMessagesAsync(automationAccountName, runbookName, runbookContent, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                var _result = await operations.BeginReplaceContentWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, runbookContent, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
             }
 
             /// <summary>
@@ -286,15 +326,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The parameters supplied to the publish runbook operation.
             /// </param>
-            public static Runbook BeginPublish(this IRunbookDraftOperations operations, string automationAccountName, string runbookName)
+            public static RunbookDraftPublishHeaders BeginPublish(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
             {
-                return operations.BeginPublishAsync(automationAccountName, runbookName).GetAwaiter().GetResult();
+                return operations.BeginPublishAsync(resourceGroupName, automationAccountName, runbookName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -304,8 +347,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The parameters supplied to the publish runbook operation.
@@ -313,11 +359,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Runbook> BeginPublishAsync(this IRunbookDraftOperations operations, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RunbookDraftPublishHeaders> BeginPublishAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginPublishWithHttpMessagesAsync(automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginPublishWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Body;
+                    return _result.Headers;
                 }
             }
 

@@ -26,9 +26,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the ImageTag class.
         /// </summary>
-        public ImageTag(System.Guid tagId = default(System.Guid), System.DateTime created = default(System.DateTime))
+        public ImageTag(System.Guid tagId = default(System.Guid), string tagName = default(string), System.DateTime created = default(System.DateTime))
         {
             TagId = tagId;
+            TagName = tagName;
             Created = created;
             CustomInit();
         }
@@ -40,12 +41,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "TagId")]
+        [JsonProperty(PropertyName = "tagId")]
         public System.Guid TagId { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Created")]
+        [JsonProperty(PropertyName = "tagName")]
+        public string TagName { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "created")]
         public System.DateTime Created { get; private set; }
 
     }

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code above this line -->
+  
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.CognitiveServices.Search.CustomImageSearch</PackageId>
+    <Description>This client library provides access to the Microsoft Cognitive Services Custom Image Search API.</Description>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.Search.CustomImageSearch</AssemblyName>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;CustomImageSearch API;BingImageCustomSearch API;REST HTTPclient;CustomImageSearchSDK;BingCustomImageSearchSDK;netcore451511</PackageTags>
+    <PackageReleaseNotes>This is a public release of the Cognitive Services Search SDK. Included with this release is support for Custom Image Search API.</PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+  
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>

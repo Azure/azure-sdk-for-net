@@ -82,7 +82,7 @@ namespace ContentModeratorTests.Helpers
 
                 return contentType;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new Exception("Unable to file content Type");
             }
@@ -95,8 +95,8 @@ namespace ContentModeratorTests.Helpers
             try
             {
                 return expected.Name.Equals(actual.Name, StringComparison.InvariantCultureIgnoreCase)
-                    && expected.Metadata.KeyOne.Equals(actual.Metadata.KeyOne, StringComparison.InvariantCultureIgnoreCase)
-                    && expected.Metadata.KeyTwo.Equals(actual.Metadata.KeyTwo, StringComparison.InvariantCultureIgnoreCase);
+                    && expected.Metadata["Key One"].Equals(actual.Metadata["Key One"], StringComparison.InvariantCultureIgnoreCase)
+                    && expected.Metadata["Key Two"].Equals(actual.Metadata["Key Two"], StringComparison.InvariantCultureIgnoreCase);
             }
             catch (Exception e)
             {
@@ -111,8 +111,8 @@ namespace ContentModeratorTests.Helpers
             {
                 return expected.Id == Convert.ToDouble(actual.Id)
                     && expected.Name.Equals(actual.Name, StringComparison.InvariantCultureIgnoreCase)
-                    && expected.Metadata.KeyOne.Equals(actual.Metadata.KeyOne, StringComparison.InvariantCultureIgnoreCase)
-                    && expected.Metadata.KeyTwo.Equals(actual.Metadata.KeyTwo, StringComparison.InvariantCultureIgnoreCase);
+                    && expected.Metadata["Key One"].Equals(actual.Metadata["Key One"], StringComparison.InvariantCultureIgnoreCase)
+                    && expected.Metadata["Key Two"].Equals(actual.Metadata["Key Two"], StringComparison.InvariantCultureIgnoreCase);
             }
             catch (Exception e)
             {
@@ -126,8 +126,8 @@ namespace ContentModeratorTests.Helpers
             try
             {
                 return expected.Name.Equals(actual.Name, StringComparison.InvariantCultureIgnoreCase)
-                    && expected.Metadata.KeyOne.Equals(actual.Metadata.KeyOne, StringComparison.InvariantCultureIgnoreCase)
-                    && expected.Metadata.KeyTwo.Equals(actual.Metadata.KeyTwo, StringComparison.InvariantCultureIgnoreCase);
+                    && expected.Metadata["Key One"].Equals(actual.Metadata["Key One"], StringComparison.InvariantCultureIgnoreCase)
+                    && expected.Metadata["Key Two"].Equals(actual.Metadata["Key Two"], StringComparison.InvariantCultureIgnoreCase);
             }
             catch (Exception e)
             {
@@ -142,8 +142,8 @@ namespace ContentModeratorTests.Helpers
             {
                 return expected.Id == Convert.ToDouble(actual.Id)
                     && expected.Name.Equals(actual.Name, StringComparison.InvariantCultureIgnoreCase)
-                    && expected.Metadata.KeyOne.Equals(actual.Metadata.KeyOne, StringComparison.InvariantCultureIgnoreCase)
-                    && expected.Metadata.KeyTwo.Equals(actual.Metadata.KeyTwo, StringComparison.InvariantCultureIgnoreCase);
+                    && expected.Metadata["Key One"].Equals(actual.Metadata["Key One"], StringComparison.InvariantCultureIgnoreCase)
+                    && expected.Metadata["Key Two"].Equals(actual.Metadata["Key Two"], StringComparison.InvariantCultureIgnoreCase);
             }
             catch (Exception e)
             {
@@ -558,7 +558,7 @@ namespace ContentModeratorTests.Helpers
                 TestBase.ErrorMessage = error;
                 return string.IsNullOrEmpty(error);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                     TestBase.ErrorMessage += $"Unable to verify BadRequestResponse. Response {JsonConvert.SerializeObject(br)}";
                     return false;

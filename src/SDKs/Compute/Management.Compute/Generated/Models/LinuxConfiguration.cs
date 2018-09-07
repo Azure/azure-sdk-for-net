@@ -39,10 +39,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// password authentication should be disabled.</param>
         /// <param name="ssh">Specifies the ssh key configuration for a Linux
         /// OS.</param>
-        public LinuxConfiguration(bool? disablePasswordAuthentication = default(bool?), SshConfiguration ssh = default(SshConfiguration))
+        /// <param name="provisionVMAgent">Indicates whether virtual machine
+        /// agent should be provisioned on the virtual machine.
+        /// &lt;br&gt;&lt;br&gt; When this property is not specified in the
+        /// request body, default behavior is to set it to true.  This will
+        /// ensure that VM Agent is installed on the VM so that extensions can
+        /// be added to the VM later.</param>
+        public LinuxConfiguration(bool? disablePasswordAuthentication = default(bool?), SshConfiguration ssh = default(SshConfiguration), bool? provisionVMAgent = default(bool?))
         {
             DisablePasswordAuthentication = disablePasswordAuthentication;
             Ssh = ssh;
+            ProvisionVMAgent = provisionVMAgent;
             CustomInit();
         }
 
@@ -63,6 +70,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "ssh")]
         public SshConfiguration Ssh { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether virtual machine agent should be
+        /// provisioned on the virtual machine.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; When this property is not
+        /// specified in the request body, default behavior is to set it to
+        /// true.  This will ensure that VM Agent is installed on the VM so
+        /// that extensions can be added to the VM later.
+        /// </summary>
+        [JsonProperty(PropertyName = "provisionVMAgent")]
+        public bool? ProvisionVMAgent { get; set; }
 
     }
 }

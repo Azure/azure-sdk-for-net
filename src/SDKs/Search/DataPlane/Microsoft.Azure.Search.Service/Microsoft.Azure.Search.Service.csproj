@@ -6,7 +6,7 @@
     <Description>Use this package if you're developing automation in .NET to manage Azure Search indexes, synonym maps, indexers, data sources, or other service-level resources. If you only need to query or update documents in your indexes, use the Microsoft.Azure.Search.Data package instead. If you need all the functionality of Azure Search, use the Microsoft.Azure.Search package instead.</Description>
     <AssemblyTitle>Microsoft Azure Search Service Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Search.Service</AssemblyName>
-    <VersionPrefix>5.0.0</VersionPrefix>
+    <Version>5.0.2</Version>
     <PackageReleaseNotes>See the Microsoft.Azure.Search package for detailed release notes on the entire Azure Search .NET SDK.</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Spatial" Version="7.2.0" />
-    <PackageReference Include="Microsoft.Azure.Search.Common" Version="[5.0.0, 6.0.0)" />
+    <PackageReference Include="Microsoft.Azure.Search.Common" Version="[5.0.2, 6.0.0)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.Search.Common\Microsoft.Azure.Search.Common.csproj" />

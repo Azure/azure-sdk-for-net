@@ -5,11 +5,11 @@
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.EventGrid</PackageId>
-		<Description>Provides developers with a library to publish events to Azure Event Grid. </Description>
-		<Version>1.1.0-preview</Version>
+		<Description>This library can be used to publish events to Azure Event Grid and to consume events delivered by EventGrid. It also defines the event schemas for the events published to EventGrid by various Azure services. </Description>
+		<Version>2.0.0</Version>
 		<AssemblyName>Microsoft.Azure.EventGrid</AssemblyName>
 		<PackageTags>Microsoft Azure EventGrid;Event Grid;Event Grid Publishing;</PackageTags>
-		<PackageReleaseNotes>Added definitions for the event types being published to EventGrid.</PackageReleaseNotes>
+		<PackageReleaseNotes>Added models for new IoT event types (IoTDeviceConnected, IoTDeviceDisconnected), and new resource event types (ResourceActionSuccess, ResourceActionFailure, ResourceActionCancel) .</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

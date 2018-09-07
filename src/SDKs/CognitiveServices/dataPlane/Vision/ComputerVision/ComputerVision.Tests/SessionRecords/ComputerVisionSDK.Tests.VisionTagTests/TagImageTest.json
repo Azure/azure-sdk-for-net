@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/vision/v2.0/tag",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3RhZw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/house.jpg\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "186"
+        ]
+      },
+      "ResponseHeaders": {
+        "Connection": [
+          "close"
+        ],
+        "Date": [
+          "Mon, 30 Jul 2018 21:58:46 GMT"
+        ],
+        "apim-request-id": [
+          "1e6e49b7-1a60-47e1-bc2e-8755de2234c6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "570"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"tags\": [\r\n    {\r\n      \"name\": \"grass\",\r\n      \"confidence\": 0.9999992847442627\r\n    },\r\n    {\r\n      \"name\": \"outdoor\",\r\n      \"confidence\": 0.99983179569244385\r\n    },\r\n    {\r\n      \"name\": \"sky\",\r\n      \"confidence\": 0.994972825050354\r\n    },\r\n    {\r\n      \"name\": \"house\",\r\n      \"confidence\": 0.98920279741287231\r\n    },\r\n    {\r\n      \"name\": \"building\",\r\n      \"confidence\": 0.96683281660079956\r\n    },\r\n    {\r\n      \"name\": \"green\",\r\n      \"confidence\": 0.84886491298675537\r\n    },\r\n    {\r\n      \"name\": \"lawn\",\r\n      \"confidence\": 0.8137822151184082\r\n    },\r\n    {\r\n      \"name\": \"residential\",\r\n      \"confidence\": 0.41664695739746094\r\n    },\r\n    {\r\n      \"name\": \"grassy\",\r\n      \"confidence\": 0.40174955129623413\r\n    }\r\n  ],\r\n  \"requestId\": \"1e6e49b7-1a60-47e1-bc2e-8755de2234c6\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

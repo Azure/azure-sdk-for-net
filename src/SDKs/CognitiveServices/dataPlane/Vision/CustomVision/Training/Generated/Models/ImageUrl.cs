@@ -39,7 +39,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Url")]
+        [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
     }

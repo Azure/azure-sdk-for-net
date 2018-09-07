@@ -37,12 +37,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
-        public Activity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>))
+        /// <param name="userProperties">Activity user properties.</param>
+        public Activity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>))
         {
             AdditionalProperties = additionalProperties;
             Name = name;
             Description = description;
             DependsOn = dependsOn;
+            UserProperties = userProperties;
             CustomInit();
         }
 
@@ -77,6 +79,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public IList<ActivityDependency> DependsOn { get; set; }
 
         /// <summary>
+        /// Gets or sets activity user properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "userProperties")]
+        public IList<UserProperty> UserProperties { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -95,6 +103,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (UserProperties != null)
+            {
+                foreach (var element1 in UserProperties)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

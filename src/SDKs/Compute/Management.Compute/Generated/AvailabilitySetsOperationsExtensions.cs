@@ -70,6 +70,52 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Update an availability set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='availabilitySetName'>
+            /// The name of the availability set.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update Availability Set operation.
+            /// </param>
+            public static AvailabilitySet Update(this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, AvailabilitySetUpdate parameters)
+            {
+                return operations.UpdateAsync(resourceGroupName, availabilitySetName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update an availability set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='availabilitySetName'>
+            /// The name of the availability set.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update Availability Set operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AvailabilitySet> UpdateAsync(this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, AvailabilitySetUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, availabilitySetName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Delete an availability set.
             /// </summary>
             /// <param name='operations'>
@@ -81,9 +127,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='availabilitySetName'>
             /// The name of the availability set.
             /// </param>
-            public static OperationStatusResponse Delete(this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName)
+            public static void Delete(this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName)
             {
-                return operations.DeleteAsync(resourceGroupName, availabilitySetName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, availabilitySetName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -101,12 +147,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> DeleteAsync(this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, availabilitySetName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, availabilitySetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -150,6 +193,34 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Lists all availability sets in a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<AvailabilitySet> ListBySubscription(this IAvailabilitySetsOperations operations)
+            {
+                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all availability sets in a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AvailabilitySet>> ListBySubscriptionAsync(this IAvailabilitySetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all availability sets in a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -158,7 +229,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static IEnumerable<AvailabilitySet> List(this IAvailabilitySetsOperations operations, string resourceGroupName)
+            public static IPage<AvailabilitySet> List(this IAvailabilitySetsOperations operations, string resourceGroupName)
             {
                 return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
             }
@@ -175,7 +246,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<AvailabilitySet>> ListAsync(this IAvailabilitySetsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<AvailabilitySet>> ListAsync(this IAvailabilitySetsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -220,6 +291,74 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task<IEnumerable<VirtualMachineSize>> ListAvailableSizesAsync(this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAvailableSizesWithHttpMessagesAsync(resourceGroupName, availabilitySetName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all availability sets in a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<AvailabilitySet> ListBySubscriptionNext(this IAvailabilitySetsOperations operations, string nextPageLink)
+            {
+                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all availability sets in a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AvailabilitySet>> ListBySubscriptionNextAsync(this IAvailabilitySetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all availability sets in a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<AvailabilitySet> ListNext(this IAvailabilitySetsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all availability sets in a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AvailabilitySet>> ListNextAsync(this IAvailabilitySetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<!-- Please do not move/edit code below this line -->
 	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
 	<!-- Please do not move/edit code below this line -->
@@ -7,15 +7,15 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>18.0.1-preview</Version>
+		<Version>19.3.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-			- DDoS Protection Plans
-			- Express Route Circuit Connection
-			- Express Route Provider APIs
-			- GetTopologyOperation supports query parameter
-			- Custom IPsec/IKE policy for Virtual Network Gateway point-to-site clients
+			- Added PublicIpPrefix & ServiceEndpointPolicy resources
+			- Replaced LoadBalancer's unused OutboundNatRules property with OutboundRules
+			- Added property EnableTcpReset to LoadBalancingRule, InboundNatRule, Inbound NatPool
+			- Added property AllowGlobalReach to ExpressRouteCircuit
+			- Added property ExpressRouteGatewayBypass to VirtualNetworkGatewayConnection
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

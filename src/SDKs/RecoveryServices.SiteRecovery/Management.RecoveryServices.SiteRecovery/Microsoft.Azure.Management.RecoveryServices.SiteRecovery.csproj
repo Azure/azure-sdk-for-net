@@ -6,14 +6,14 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</PackageId>
 		<Description>Provides developers with libraries for the updated recovery services site recovery feature under Azure Resource manager.</Description>
-		<Version>1.1.0-preview</Version>
+		<Version>1.2.1-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</AssemblyName>
 		<PackageTags>Recoveryservices;SiteRecovery;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        Updates in this release:
-			- Fixes corresponding to ARM compliance in swagger introducing new API version (2018-01-10).
-      ]]>
+		        Updates in this release:
+			- Changes to support Azure Disk Encryption & Accelerated Networking are included.
+		      ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

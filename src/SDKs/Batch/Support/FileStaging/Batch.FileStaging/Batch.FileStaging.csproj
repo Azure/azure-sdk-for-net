@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>Azure.Batch.FileStaging</PackageId>
+    <PackageId>Microsoft.Azure.Batch.FileStaging</PackageId>
     <Description>This library simplifies uploading resource files for use by tasks in the Microsoft Azure Batch service.
 
 Visit our home page for more detail - http://azure.microsoft.com/services/batch/.
@@ -8,7 +8,7 @@ Visit our home page for more detail - http://azure.microsoft.com/services/batch/
 For technical overview, see http://azure.microsoft.com/documentation/articles/batch-technical-overview/.
 
 API reference can be found at http://go.microsoft.com/fwlink/?LinkId=717949.</Description>
-    <VersionPrefix>8.0.0</VersionPrefix>
+    <Version>8.1.0</Version>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>Microsoft.Azure.Batch.FileStaging</AssemblyName>
@@ -33,8 +33,8 @@ API reference can be found at http://go.microsoft.com/fwlink/?LinkId=717949.</De
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="WindowsAzure.Storage" Version="8.1.1" />
-    <PackageReference Include="Azure.Batch" Version="[8.0.0,9.0.0)" />
+    <PackageReference Include="WindowsAzure.Storage" Version="[8.1.1, 10.0.0)" />
+    <PackageReference Include="Microsoft.Azure.Batch" Version="[9.0.0,10.0.0)" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System.Web" />

@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
+namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// entities.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        public EntityWithResolution(string entity, string type, double startIndex, double endIndex, object resolution, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
+        public EntityWithResolution(string entity, string type, int startIndex, int endIndex, object resolution, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
             : base(entity, type, startIndex, endIndex, additionalProperties)
         {
             Resolution = resolution;

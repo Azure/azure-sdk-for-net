@@ -1,178 +1,179 @@
+{
+  "Name": "JobManagerTask",
+  "ProtocolName": "Models.JobManagerTask",
+  "SummaryComment": "Represents an Azure Batch JobManager task.",
+  "RemarksComment": "Batch will retry tasks when a recovery operation is triggered on a compute node. Examples of recovery operations include (but are not limited to) when an unhealthy compute node is rebooted or a compute node disappeared due to host failure. Retries due to recovery operations are independent of and are not counted against the <see cref=\"TaskConstraints.MaxTaskRetryCount\" />. Even if the <see cref=\"TaskConstraints.MaxTaskRetryCount\" /> is 0, an internal retry due to a recovery operation may occur. Because of this, all tasks should be idempotent. This means tasks need to tolerate being interrupted and restarted without causing any corruption or duplicate data. The best practice for long running tasks is to use some form of checkpointing.",
+  "Properties": [
     {
-      "Name": "JobManagerTask",
-      "ProtocolName": "Models.JobManagerTask",
-      "Comment": "Represents an Azure Batch JobManager task. ",
-      "Properties": [
-        {
-          "Key": {
-            "Type": "bool?",
-            "Name": "AllowLowPriorityNode",
-            "SummaryComment": "Whether the Job Manager task may run on a low-priority compute node. If omitted, the default is false.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "string",
-            "Name": "Id",
-            "SummaryComment": "The id of the task.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Required"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "string",
-            "Name": "CommandLine",
-            "SummaryComment": "The command line of the task.",
-            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux.",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Required"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "string",
-            "Name": "DisplayName",
-            "SummaryComment": "The display name of the JobManager task.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "IList<EnvironmentSetting>",
-            "Name": "EnvironmentSettings",
-            "SummaryComment": "A set of environment settings for the JobManager task.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": {
-            "Type": "IList<Models.EnvironmentSetting>",
-            "Name": "EnvironmentSettings"
-          }
-        },
-        {
-          "Key": {
-            "Type": "bool?",
-            "Name": "KillJobOnCompletion",
-            "SummaryComment": "A value that indicates whether to terminate all tasks in the job and complete the job when the job manager task completes.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "IList<ResourceFile>",
-            "Name": "ResourceFiles",
-            "SummaryComment": "A list of files that the Batch service will download to the compute node before running the command line.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": {
-            "Type": "IList<Models.ResourceFile>",
-            "Name": "ResourceFiles"
-          }
-        },
-        {
-          "Key": {
-            "Type": "IList<OutputFile>",
-            "Name": "OutputFiles",
-            "SummaryComment": "A list of files that the Batch service will upload from the compute node after running the command line.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": {
-            "Type": "IList<Models.OutputFile>",
-            "Name": "OutputFiles"
-          }
-        },
-        {
-          "Key": {
-            "Type": "UserIdentity",
-            "Name": "UserIdentity",
-            "SummaryComment": "The user identity under which the task runs.",
-            "RemarksComment": "If omitted, the task runs as a non-administrative user unique to the task.",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "bool?",
-            "Name": "RunExclusive",
-            "SummaryComment": "whether the Job Manager task requires exclusive use of the compute node where it runs.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "TaskConstraints",
-            "Name": "Constraints",
-            "SummaryComment": "The execution constraints for this JobManager task.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
-            "Type": "IList<ApplicationPackageReference>",
-            "Name": "ApplicationPackageReferences",
-            "SummaryComment": "A list of application packages that the Batch service will deploy to the compute node before running the command line.",
-            "RemarksComment": null,
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": {
-            "Type": "IList<Models.ApplicationPackageReference>",
-            "Name": "ApplicationPackageReferences"
-          }
-        },
-        {
-          "Key": {
-            "Type": "AuthenticationTokenSettings",
-            "Name": "AuthenticationTokenSettings",
-            "SummaryComment": "The settings for an authentication token that the task can use to perform Batch service operations.",
-            "RemarksComment": "If this property is set, the Batch service provides the task with an authentication token which can be used to authenticate Batch service operations without requiring an account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the task can carry out using the token depend on the settings. For example, a task can request job permissions in order to add other tasks to the job, or check the status of the job or of other tasks.",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
-          },
-          "Value": {
-            "Type": "Models.AuthenticationTokenSettings?",
-            "Name": "AuthenticationTokenSettings"
-          }
-        },
-        {
-          "Key": {
-            "Type": "TaskContainerSettings",
-            "Name": "ContainerSettings",
-            "SummaryComment": "The settings for the container under which the task runs.",
-            "RemarksComment": "If the pool that will run this task has <see cref=\"VirtualMachineConfiguration.ContainerConfiguration\"/> set, this must be set as well. If the pool that will run this task doesn't have <see cref=\"VirtualMachineConfiguration.ContainerConfiguration\"/> set, this must not be set. When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the node) are mapped into the container, all task environment variables are mapped into the container, and the task command line is executed in the container.",
-            "BoundAccess": "read",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        }
-      ]
+      "Key": {
+        "Type": "bool?",
+        "Name": "AllowLowPriorityNode",
+        "SummaryComment": "Whether the Job Manager task may run on a low-priority compute node. If omitted, the default is true.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "Id",
+        "SummaryComment": "The id of the task.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Required"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "CommandLine",
+        "SummaryComment": "The command line of the task.",
+        "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux. If the command line refers to file paths, it should use a relative path (relative to the task working directory), or use the Batch provided environment variables (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Required"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "DisplayName",
+        "SummaryComment": "The display name of the JobManager task.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "IList<EnvironmentSetting>",
+        "Name": "EnvironmentSettings",
+        "SummaryComment": "A set of environment settings for the JobManager task.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "IList<Models.EnvironmentSetting>",
+        "Name": "EnvironmentSettings"
+      }
+    },
+    {
+      "Key": {
+        "Type": "bool?",
+        "Name": "KillJobOnCompletion",
+        "SummaryComment": "A value that indicates whether to terminate all tasks in the job and complete the job when the job manager task completes.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "IList<ResourceFile>",
+        "Name": "ResourceFiles",
+        "SummaryComment": "A list of files that the Batch service will download to the compute node before running the command line.",
+        "RemarksComment": "There is a maximum size for the list of resource files. When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of resource files must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "IList<Models.ResourceFile>",
+        "Name": "ResourceFiles"
+      }
+    },
+    {
+      "Key": {
+        "Type": "IList<OutputFile>",
+        "Name": "OutputFiles",
+        "SummaryComment": "A list of files that the Batch service will upload from the compute node after running the command line.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "IList<Models.OutputFile>",
+        "Name": "OutputFiles"
+      }
+    },
+    {
+      "Key": {
+        "Type": "UserIdentity",
+        "Name": "UserIdentity",
+        "SummaryComment": "The user identity under which the task runs.",
+        "RemarksComment": "If omitted, the task runs as a non-administrative user unique to the task.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "bool?",
+        "Name": "RunExclusive",
+        "SummaryComment": "whether the Job Manager task requires exclusive use of the compute node where it runs.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "TaskConstraints",
+        "Name": "Constraints",
+        "SummaryComment": "The execution constraints for this JobManager task.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "IList<ApplicationPackageReference>",
+        "Name": "ApplicationPackageReferences",
+        "SummaryComment": "A list of application packages that the Batch service will deploy to the compute node before running the command line.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "IList<Models.ApplicationPackageReference>",
+        "Name": "ApplicationPackageReferences"
+      }
+    },
+    {
+      "Key": {
+        "Type": "AuthenticationTokenSettings",
+        "Name": "AuthenticationTokenSettings",
+        "SummaryComment": "The settings for an authentication token that the task can use to perform Batch service operations.",
+        "RemarksComment": "If this property is set, the Batch service provides the task with an authentication token which can be used to authenticate Batch service operations without requiring an account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the task can carry out using the token depend on the settings. For example, a task can request job permissions in order to add other tasks to the job, or check the status of the job or of other tasks.",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "Models.AuthenticationTokenSettings?",
+        "Name": "AuthenticationTokenSettings"
+      }
+    },
+    {
+      "Key": {
+        "Type": "TaskContainerSettings",
+        "Name": "ContainerSettings",
+        "SummaryComment": "The settings for the container under which the task runs.",
+        "RemarksComment": "If the pool that will run this task has <see cref=\"VirtualMachineConfiguration.ContainerConfiguration\"/> set, this must be set as well. If the pool that will run this task doesn't have <see cref=\"VirtualMachineConfiguration.ContainerConfiguration\"/> set, this must not be set. When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the node) are mapped into the container, all task environment variables are mapped into the container, and the task command line is executed in the container.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
     }
+  ]
+}
