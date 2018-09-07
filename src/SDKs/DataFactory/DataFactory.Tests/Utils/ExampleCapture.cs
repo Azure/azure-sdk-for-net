@@ -67,6 +67,7 @@ namespace DataFactory.Tests.Utils
                 CaptureFactories_Get(); // 200
                 CaptureFactories_ListByResourceGroup(); // 200
                 CaptureFactories_List();
+                CaptureFactories_GetGitHubAccessToken();// 200, needs real github code in order to return valid access token
 
                 // All Integration runtime operations, creating/deleting integration runtime
                 CaptureIntegrationRuntimes_Create(); // 200
@@ -278,6 +279,13 @@ namespace DataFactory.Tests.Utils
         {
             interceptor.CurrentExampleName = "Factories_Delete";
             client.Factories.Delete(secrets.ResourceGroupName, secrets.FactoryName);
+        }
+
+        private void CaptureFactories_GetGitHubAccessToken()
+        {
+            interceptor.CurrentExampleName = "Factories_GetGitHubAccessToken";
+            GitHubAccessTokenRequest request = new GitHubAccessTokenRequest("someCode", "https://github.com/login/oauth/access_token");//replace someCode with real code from GitHub
+            GitHubAccessTokenResponse response = client.Factories.GetGitHubAccessToken(secrets.ResourceGroupName, secrets.FactoryName, request);
         }
 
         private IntegrationRuntimeResource GetIntegrationRuntimeResource(string type, string description, string location = null, string resourceId = null)
