@@ -7,16 +7,15 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.1.0-preview</Version>
+		<Version>19.3.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Made VM reference in NIC readonly
-      - Added new VPN protocol
-			- Added examples for Express Route Circuit APIs
-			- AppGW FIPS mode enabled
-      - Added VirtualWan Swagger
-      - Removed enableRateLimiting property
+			- Added PublicIpPrefix & ServiceEndpointPolicy resources
+			- Replaced LoadBalancer's unused OutboundNatRules property with OutboundRules
+			- Added property EnableTcpReset to LoadBalancingRule, InboundNatRule, Inbound NatPool
+			- Added property AllowGlobalReach to ExpressRouteCircuit
+			- Added property ExpressRouteGatewayBypass to VirtualNetworkGatewayConnection
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

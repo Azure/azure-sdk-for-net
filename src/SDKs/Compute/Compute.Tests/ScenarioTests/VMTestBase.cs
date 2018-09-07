@@ -297,6 +297,23 @@ namespace Compute.Tests
             }
         }
 
+        protected PublicIPPrefix CreatePublicIPPrefix(string rgName, int prefixLength)
+        {
+            string publicIpPrefixName = ComputeManagementTestUtilities.GenerateName("piprefix");
+
+            var publicIpPrefix = new PublicIPPrefix()
+            {
+                Sku = new PublicIPPrefixSku("Standard"),
+                Location = m_location,
+                PrefixLength = prefixLength
+            };
+
+            var putPublicIpPrefixResponse = m_NrpClient.PublicIPPrefixes.CreateOrUpdate(rgName, publicIpPrefixName, publicIpPrefix);
+            var getPublicIpPrefixResponse = m_NrpClient.PublicIPPrefixes.Get(rgName, publicIpPrefixName);
+
+            return getPublicIpPrefixResponse;
+        }
+
         protected PublicIPAddress CreatePublicIP(string rgName)
         {
             // Create publicIP

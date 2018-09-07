@@ -218,7 +218,24 @@ namespace Policy.Tests
                 policyAssignment.Metadata = LivePolicyTests.BasicMetadata;
                 policyAssignment.DisplayName = $"Updated {policyAssignment.DisplayName}";
                 policyAssignment.Sku = LivePolicyTests.A1Standard;
+                policyAssignment.Location = "eastus";
+                policyAssignment.Identity = new Identity(type: ResourceIdentityType.SystemAssigned);
 
+                result = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
+                Assert.NotNull(result);
+
+                // validate results
+                getResult = client.PolicyAssignments.GetById(result.Id);
+                this.AssertValid(assignmentName, policyAssignment, getResult);
+
+                // Delete policy assignment and validate
+                client.PolicyAssignments.Delete(assignmentScope, assignmentName);
+                this.AssertThrowsErrorResponse(() => client.PolicyAssignments.Get(assignmentScope, assignmentName));
+                listResult = client.PolicyAssignments.List();
+                Assert.Empty(listResult.Where(p => p.Name.Equals(assignmentName)));
+
+                // Create brand new assignment with identity
+                assignmentName = TestUtilities.GenerateName();
                 result = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
                 Assert.NotNull(result);
 
@@ -595,7 +612,7 @@ namespace Policy.Tests
                 policyDefinition = this.CreatePolicyDefinition($"{thisTestName} - Bad Mode ${LivePolicyTests.NameTag}");
                 policyDefinition.Mode = "Foo";
 
-                this.AssertThrowsCloudException(() => client.PolicyDefinitions.CreateOrUpdate(definitionName, policyDefinition), "InvalidRequestContent");
+                this.AssertThrowsCloudException(() => client.PolicyDefinitions.CreateOrUpdate(definitionName, policyDefinition), "InvalidPolicyDefinitionMode");
 
                 // Unused parameter
                 policyDefinition = this.CreatePolicyDefinition($"{thisTestName} - Unused Parameter ${LivePolicyTests.NameTag}");
@@ -1033,7 +1050,7 @@ namespace Policy.Tests
             Assert.Equal(expected.PolicyDefinitions.Count, result.PolicyDefinitions.Count);
             foreach (var expectedRef in expected.PolicyDefinitions)
             {
-                Assert.Single(result.PolicyDefinitions.Where(pRef => pRef.PolicyDefinitionId == expectedRef.PolicyDefinitionId));
+                Assert.Equal(expected.PolicyDefinitions.Count(d => d.PolicyDefinitionId == expectedRef.PolicyDefinitionId), result.PolicyDefinitions.Count(d => d.PolicyDefinitionId == expectedRef.PolicyDefinitionId));
             }
         }
 
@@ -1079,6 +1096,17 @@ namespace Policy.Tests
             Assert.Equal(model.PolicyDefinitionId, result.PolicyDefinitionId);
             Assert.Equal(model.Sku.Name, result.Sku.Name);
             Assert.Equal(model.Sku.Tier, result.Sku.Tier);
+            Assert.Equal(model.Location, result.Location);
+            if (model.Identity != null)
+            {
+                Assert.Equal(model.Identity.Type, result.Identity.Type);
+                Assert.NotNull(result.Identity.PrincipalId);
+                Assert.NotNull(result.Identity.TenantId);
+            }
+            else
+            {
+                Assert.Null(result.Identity);
+            }
         }
 
         // validate that the given result policy assignment is equal to the expected one
@@ -1109,6 +1137,10 @@ namespace Policy.Tests
             Assert.Equal(expected.Scope, result.Scope);
             Assert.Equal(expected.Sku.ToString(), result.Sku.ToString());
             Assert.Equal(expected.Type, result.Type);
+            Assert.Equal(expected.Location, result.Location);
+            Assert.Equal(expected.Identity?.Type, result.Identity?.Type);
+            Assert.Equal(expected.Identity?.PrincipalId, result.Identity?.PrincipalId);
+            Assert.Equal(expected.Identity?.TenantId, result.Identity?.TenantId);
         }
 
         // validate that the given list result contains exactly one policy assignment matching the given name and model model

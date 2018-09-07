@@ -37,7 +37,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        public System.Uri BaseUri { get; set; }
+        internal string BaseUri {get; set;}
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -48,6 +48,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Gets or sets json deserialization settings.
         /// </summary>
         public JsonSerializerSettings DeserializationSettings { get; private set; }
+
+        /// <summary>
+        /// Supported Cognitive Services endpoints
+        /// </summary>
+        public string Endpoint { get; set; }
 
         /// <summary>
         /// Subscription credentials which uniquely identify client subscription.
@@ -77,51 +82,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         protected ComputerVisionClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the ComputerVisionClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        protected ComputerVisionClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            BaseUri = baseUri;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the ComputerVisionClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        protected ComputerVisionClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            BaseUri = baseUri;
         }
 
         /// <summary>
@@ -178,75 +138,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         }
 
         /// <summary>
-        /// Initializes a new instance of the ComputerVisionClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify client subscription.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public ComputerVisionClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            BaseUri = baseUri;
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the ComputerVisionClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify client subscription.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public ComputerVisionClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            BaseUri = baseUri;
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
         /// An optional partial-method to perform custom initialization.
         ///</summary>
         partial void CustomInitialize();
@@ -255,7 +146,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </summary>
         private void Initialize()
         {
-            BaseUri = new System.Uri("https://api.cognitive.microsoft.com/vision/v2.0");
+            BaseUri = "{Endpoint}/vision/v2.0";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -304,11 +195,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<HttpOperationResponse<ListModelsResult>> ListModelsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -320,8 +221,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "ListModels", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "models").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -480,6 +382,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </return>
         public async Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageWithHttpMessagesAsync(string url, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "url");
@@ -504,8 +410,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "AnalyzeImage", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "analyze").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "analyze";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             List<string> _queryParameters = new List<string>();
             if (visualFeatures != null)
             {
@@ -517,7 +424,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             }
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -675,6 +582,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </return>
         public async Task<HttpOperationResponse<Stream>> GenerateThumbnailWithHttpMessagesAsync(int width, int height, string url, bool? smartCropping = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (width > 1023)
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "width", 1023);
@@ -715,8 +626,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "GenerateThumbnail", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "generateThumbnail").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "generateThumbnail";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             List<string> _queryParameters = new List<string>();
             _queryParameters.Add(string.Format("width={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(width, SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("height={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(height, SerializationSettings).Trim('"'))));
@@ -861,6 +773,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </return>
         public async Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextWithHttpMessagesAsync(bool detectOrientation, string url, OcrLanguages language = default(OcrLanguages), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "url");
@@ -884,8 +800,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "RecognizePrintedText", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "ocr").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "ocr";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             List<string> _queryParameters = new List<string>();
             _queryParameters.Add(string.Format("detectOrientation={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(detectOrientation, SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
@@ -1044,8 +961,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImageDescription>> DescribeImageWithHttpMessagesAsync(string url, string maxCandidates = "1", string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImageDescription>> DescribeImageWithHttpMessagesAsync(string url, int? maxCandidates = 1, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "url");
@@ -1069,16 +990,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "DescribeImage", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "describe").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "describe";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             List<string> _queryParameters = new List<string>();
             if (maxCandidates != null)
             {
-                _queryParameters.Add(string.Format("maxCandidates={0}", System.Uri.EscapeDataString(maxCandidates)));
+                _queryParameters.Add(string.Format("maxCandidates={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(maxCandidates, SerializationSettings).Trim('"'))));
             }
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1233,6 +1155,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </return>
         public async Task<HttpOperationResponse<TagResult>> TagImageWithHttpMessagesAsync(string url, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "url");
@@ -1255,12 +1181,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "TagImage", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "tag").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "tag";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1418,6 +1345,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </return>
         public async Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainWithHttpMessagesAsync(string model, string url, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (model == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "model");
@@ -1445,13 +1376,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "AnalyzeImageByDomain", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "models/{model}/analyze").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models/{model}/analyze";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{model}", System.Uri.EscapeDataString(model));
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1596,6 +1528,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </return>
         public async Task<HttpOperationHeaderResponse<RecognizeTextHeaders>> RecognizeTextWithHttpMessagesAsync(string url, TextRecognitionMode mode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "url");
@@ -1618,8 +1554,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "RecognizeText", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "recognizeText").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "recognizeText";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             List<string> _queryParameters = new List<string>();
             _queryParameters.Add(string.Format("mode={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(mode, SerializationSettings).Trim('"'))));
             if (_queryParameters.Count > 0)
@@ -1758,6 +1695,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </return>
         public async Task<HttpOperationResponse<TextOperationResult>> GetTextOperationResultWithHttpMessagesAsync(string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (operationId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
@@ -1774,8 +1715,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "GetTextOperationResult", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "textOperations/{operationId}").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "textOperations/{operationId}";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{operationId}", System.Uri.EscapeDataString(operationId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -1901,7 +1843,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// A string indicating which domain-specific details to return. Multiple
         /// values should be comma-separated. Valid visual feature types
         /// include:Celebrities - identifies celebrities if detected in the image.
-        /// Possible values include: 'Celebrities', 'Landmarks'
         /// </param>
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is not
@@ -1931,8 +1872,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageInStreamWithHttpMessagesAsync(Stream image, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), string details = default(string), string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageInStreamWithHttpMessagesAsync(Stream image, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (image == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
@@ -1952,8 +1897,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "AnalyzeImageInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "analyze").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "analyze";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             List<string> _queryParameters = new List<string>();
             if (visualFeatures != null)
             {
@@ -1961,11 +1907,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             }
             if (details != null)
             {
-                _queryParameters.Add(string.Format("details={0}", System.Uri.EscapeDataString(details)));
+                _queryParameters.Add(string.Format("details={0}", System.Uri.EscapeDataString(string.Join(",", details))));
             }
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2126,6 +2072,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </return>
         public async Task<HttpOperationResponse<Stream>> GenerateThumbnailInStreamWithHttpMessagesAsync(int width, int height, Stream image, bool? smartCropping = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (width > 1023)
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "width", 1023);
@@ -2161,8 +2111,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "GenerateThumbnailInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "generateThumbnail").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "generateThumbnail";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             List<string> _queryParameters = new List<string>();
             _queryParameters.Add(string.Format("width={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(width, SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("height={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(height, SerializationSettings).Trim('"'))));
@@ -2310,6 +2261,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </return>
         public async Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextInStreamWithHttpMessagesAsync(bool detectOrientation, Stream image, OcrLanguages language = default(OcrLanguages), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (image == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
@@ -2328,8 +2283,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "RecognizePrintedTextInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "ocr").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "ocr";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             List<string> _queryParameters = new List<string>();
             _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("detectOrientation={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(detectOrientation, SerializationSettings).Trim('"'))));
@@ -2491,8 +2447,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImageDescription>> DescribeImageInStreamWithHttpMessagesAsync(Stream image, string maxCandidates = "1", string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImageDescription>> DescribeImageInStreamWithHttpMessagesAsync(Stream image, int? maxCandidates = 1, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (image == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
@@ -2511,16 +2471,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "DescribeImageInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "describe").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "describe";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             List<string> _queryParameters = new List<string>();
             if (maxCandidates != null)
             {
-                _queryParameters.Add(string.Format("maxCandidates={0}", System.Uri.EscapeDataString(maxCandidates)));
+                _queryParameters.Add(string.Format("maxCandidates={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(maxCandidates, SerializationSettings).Trim('"'))));
             }
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2678,6 +2639,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </return>
         public async Task<HttpOperationResponse<TagResult>> TagImageInStreamWithHttpMessagesAsync(Stream image, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (image == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
@@ -2695,12 +2660,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "TagImageInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "tag").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "tag";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2861,6 +2827,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </return>
         public async Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainInStreamWithHttpMessagesAsync(string model, Stream image, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (model == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "model");
@@ -2883,13 +2853,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "AnalyzeImageByDomainInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "models/{model}/analyze").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models/{model}/analyze";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{model}", System.Uri.EscapeDataString(model));
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
-                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3037,6 +3008,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </return>
         public async Task<HttpOperationHeaderResponse<RecognizeTextInStreamHeaders>> RecognizeTextInStreamWithHttpMessagesAsync(Stream image, TextRecognitionMode mode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (image == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
@@ -3054,8 +3029,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "RecognizeTextInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "recognizeText").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "recognizeText";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             List<string> _queryParameters = new List<string>();
             _queryParameters.Add(string.Format("mode={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(mode, SerializationSettings).Trim('"'))));
             if (_queryParameters.Count > 0)

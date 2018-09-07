@@ -54,19 +54,26 @@ namespace Microsoft.Azure.Management.Automation
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The type of counts to retrieve. Possible values include: 'status',
+        /// 'nodeconfiguration'
+        /// </summary>
+        public string CountType1 { get; set; }
+
+        /// <summary>
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -191,6 +198,11 @@ namespace Microsoft.Azure.Management.Automation
         public virtual IWebhookOperations Webhook { get; private set; }
 
         /// <summary>
+        /// Gets the IWatcherOperations.
+        /// </summary>
+        public virtual IWatcherOperations Watcher { get; private set; }
+
+        /// <summary>
         /// Gets the ISoftwareUpdateConfigurationsOperations.
         /// </summary>
         public virtual ISoftwareUpdateConfigurationsOperations SoftwareUpdateConfigurations { get; private set; }
@@ -261,9 +273,9 @@ namespace Microsoft.Azure.Management.Automation
         public virtual IDscNodeConfigurationOperations DscNodeConfiguration { get; private set; }
 
         /// <summary>
-        /// Gets the IWatcherOperations.
+        /// Gets the INodeCountInformationOperations.
         /// </summary>
-        public virtual IWatcherOperations Watcher { get; private set; }
+        public virtual INodeCountInformationOperations NodeCountInformation { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AutomationClient class.
@@ -490,6 +502,7 @@ namespace Microsoft.Azure.Management.Automation
             Schedule = new ScheduleOperations(this);
             Variable = new VariableOperations(this);
             Webhook = new WebhookOperations(this);
+            Watcher = new WatcherOperations(this);
             SoftwareUpdateConfigurations = new SoftwareUpdateConfigurationsOperations(this);
             SoftwareUpdateConfigurationRuns = new SoftwareUpdateConfigurationRunsOperations(this);
             SoftwareUpdateConfigurationMachineRuns = new SoftwareUpdateConfigurationMachineRunsOperations(this);
@@ -504,7 +517,7 @@ namespace Microsoft.Azure.Management.Automation
             DscCompilationJob = new DscCompilationJobOperations(this);
             DscCompilationJobStream = new DscCompilationJobStreamOperations(this);
             DscNodeConfiguration = new DscNodeConfigurationOperations(this);
-            Watcher = new WatcherOperations(this);
+            NodeCountInformation = new NodeCountInformationOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

@@ -60,7 +60,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// </remarks>
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
-        ///
         /// </param>
         /// <param name='body'>
         /// Information needed to Split a reservation item
@@ -87,7 +86,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// </remarks>
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
-        ///
         /// </param>
         /// <param name='body'>
         /// Information needed for commercial request for a reservation
@@ -113,7 +111,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// </remarks>
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
-        ///
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -297,7 +294,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// </param>
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
-        ///
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -484,7 +480,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// </remarks>
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
-        ///
         /// </param>
         /// <param name='reservationId'>
         /// Id of the Reservation Item
@@ -517,7 +512,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// </param>
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
-        ///
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -706,7 +700,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// </remarks>
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
-        ///
         /// </param>
         /// <param name='body'>
         /// Information needed to Split a reservation item
@@ -902,7 +895,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// </remarks>
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
-        ///
         /// </param>
         /// <param name='body'>
         /// Information needed for commercial request for a reservation
@@ -1097,7 +1089,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// </remarks>
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
-        ///
         /// </param>
         /// <param name='reservationId'>
         /// Id of the Reservation Item

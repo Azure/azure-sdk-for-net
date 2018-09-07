@@ -25,6 +25,8 @@ namespace Microsoft.Azure.EventGrid
             // IoTHub Device events
             { EventTypes.IoTHubDeviceCreatedEvent, typeof(IotHubDeviceCreatedEventData) },
             { EventTypes.IoTHubDeviceDeletedEvent, typeof(IotHubDeviceDeletedEventData) },
+            { EventTypes.IoTHubDeviceConnectedEvent, typeof(IotHubDeviceConnectedEventData) },
+            { EventTypes.IoTHubDeviceDisconnectedEvent, typeof(IotHubDeviceDisconnectedEventData) },
 
             // EventGrid events
             { EventTypes.EventGridSubscriptionValidationEvent, typeof(SubscriptionValidationEventData) },
@@ -43,6 +45,9 @@ namespace Microsoft.Azure.EventGrid
             { EventTypes.ResourceDeleteSuccessEvent, typeof(ResourceDeleteSuccessData) },
             { EventTypes.ResourceDeleteFailureEvent, typeof(ResourceDeleteFailureData) },
             { EventTypes.ResourceDeleteCancelEvent, typeof(ResourceDeleteCancelData) },
+            { EventTypes.ResourceActionSuccessEvent, typeof(ResourceActionSuccessData) },
+            { EventTypes.ResourceActionFailureEvent, typeof(ResourceActionFailureData) },
+            { EventTypes.ResourceActionCancelEvent, typeof(ResourceActionCancelData) },
 
             // ServiceBus events
             { EventTypes.ServiceBusActiveMessagesAvailableWithNoListenersEvent, typeof(ServiceBusActiveMessagesAvailableWithNoListenersEventData) },

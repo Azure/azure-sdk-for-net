@@ -27,6 +27,7 @@
         private readonly BehaviorManager _behaviorManager;
         private DateTime _timeToTimeoutAt;
         private int _hasRun; //Have to use an int because CompareExchange doesn't support bool
+        private int _maxTasks;
 
         private const int HasNotRun = 0;
         private const int HasRun = 1;
@@ -65,7 +66,7 @@
             this._pendingAsyncOperations = new List<Task>();
             this._customerVisibleFileStagingArtifacts = fileStagingArtifacts ?? new ConcurrentBag<ConcurrentDictionary<Type, IFileStagingArtifact>>();
             this._behaviorManager = bhMgr;
-
+            this._maxTasks = Constants.MaxTasksInSingleAddTaskCollectionRequest;
             this._hasRun = HasNotRun; //Has not run by default
             
             //Read the behavior manager and populate the collection
@@ -159,7 +160,8 @@
                 
                 //Attempt to take some items from the set of tasks remaining to be added and prepare it to be added
                 TrackedCloudTask taskToAdd;
-                while (nameToTaskMapping.Count < Constants.MaxTasksInSingleAddTaskCollectionRequest && this._remainingTasksToAdd.TryDequeue(out taskToAdd))
+                int tmpMaxTasks = this._maxTasks;
+                while (nameToTaskMapping.Count < tmpMaxTasks && this._remainingTasksToAdd.TryDequeue(out taskToAdd))
                 {
                     nameToTaskMapping.Add(taskToAdd.Task.Id, taskToAdd);
                 }
@@ -293,18 +295,48 @@
             //
             // Fire the protocol add collection request
             //
-            var asyncTask = this._jobOperations.ParentBatchClient.ProtocolLayer.AddTaskCollection(
-                this._jobId,
-                protoTasksToAdd,
-                this._behaviorManager,
-                this._parallelOptions.CancellationToken);
+            try
+            {
+                var asyncTask = this._jobOperations.ParentBatchClient.ProtocolLayer.AddTaskCollection(
+                    this._jobId,
+                    protoTasksToAdd,
+                    this._behaviorManager,
+                    this._parallelOptions.CancellationToken);
 
-            var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
-
-            //
-            // Process the results of the add task collection request
-            //
-            this.ProcessProtocolAddTaskResults(response.Body.Value, tasksToAdd);
+                var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
+                //
+                // Process the results of the add task collection request
+                //
+                this.ProcessProtocolAddTaskResults(response.Body.Value, tasksToAdd);
+            }
+            catch(Common.BatchException e)
+            {
+                if (e.InnerException is Models.BatchErrorException)
+                {
+                    Models.BatchError error = ((Models.BatchErrorException)e.InnerException).Body;
+                    int currLength = tasksToAdd.Count;
+                    if (error.Code == Common.BatchErrorCodeStrings.RequestBodyTooLarge && currLength != 1)
+                    {
+                        // Our chunk sizes were too large to fit in a request, so universally reduce size
+                        // This is an internal error due to us using greedy initial maximum chunk size,
+                        //   so do not increment retry counter.
+                        {
+                            int newLength = currLength / 2;
+                            int tmpMaxTasks = this._maxTasks;
+                            while (newLength < tmpMaxTasks)
+                            {
+                                tmpMaxTasks = Interlocked.CompareExchange(ref this._maxTasks, newLength, tmpMaxTasks);
+                            }
+                            foreach (TrackedCloudTask trackedTask in tasksToAdd.Values)
+                            {
+                                this._remainingTasksToAdd.Enqueue(trackedTask);
+                            }
+                            return;
+                        }
+                    }
+                }
+                throw;
+            }
         }
 
         /// <summary>

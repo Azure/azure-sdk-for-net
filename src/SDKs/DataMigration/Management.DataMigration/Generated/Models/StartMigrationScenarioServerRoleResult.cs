@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Server role migration result
+    /// </summary>
     public partial class StartMigrationScenarioServerRoleResult
     {
         /// <summary>

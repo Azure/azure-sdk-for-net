@@ -59,6 +59,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// revision.</param>
         /// <param name="isOnline">Indicates if API revision is accessible via
         /// the gateway.</param>
+        /// <param name="apiRevisionDescription">Description of the Api
+        /// Revision.</param>
+        /// <param name="apiVersionDescription">Description of the Api
+        /// Version.</param>
         /// <param name="apiVersionSetId">A resource identifier for the related
         /// ApiVersionSet.</param>
         /// <param name="displayName">API name.</param>
@@ -66,7 +70,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// implementing this API.</param>
         /// <param name="protocols">Describes on which protocols the operations
         /// in this API can be invoked.</param>
-        public ApiContract(string path, string id = default(string), string name = default(string), string type = default(string), string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiVersionSetId = default(string), string displayName = default(string), string serviceUrl = default(string), IList<Protocol?> protocols = default(IList<Protocol?>), ApiVersionSetContractDetails apiVersionSet = default(ApiVersionSetContractDetails))
+        public ApiContract(string path, string id = default(string), string name = default(string), string type = default(string), string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), string displayName = default(string), string serviceUrl = default(string), IList<Protocol?> protocols = default(IList<Protocol?>), ApiVersionSetContractDetails apiVersionSet = default(ApiVersionSetContractDetails))
             : base(id, name, type)
         {
             Description = description;
@@ -77,6 +81,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             ApiVersion = apiVersion;
             IsCurrent = isCurrent;
             IsOnline = isOnline;
+            ApiRevisionDescription = apiRevisionDescription;
+            ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
             DisplayName = displayName;
             ServiceUrl = serviceUrl;
@@ -142,6 +148,18 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isOnline")]
         public bool? IsOnline { get; private set; }
+
+        /// <summary>
+        /// Gets or sets description of the Api Revision.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.apiRevisionDescription")]
+        public string ApiRevisionDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets description of the Api Version.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.apiVersionDescription")]
+        public string ApiVersionDescription { get; set; }
 
         /// <summary>
         /// Gets or sets a resource identifier for the related ApiVersionSet.
@@ -211,6 +229,20 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
                 if (ApiVersion.Length > 100)
                 {
                     throw new ValidationException(ValidationRules.MaxLength, "ApiVersion", 100);
+                }
+            }
+            if (ApiRevisionDescription != null)
+            {
+                if (ApiRevisionDescription.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ApiRevisionDescription", 256);
+                }
+            }
+            if (ApiVersionDescription != null)
+            {
+                if (ApiVersionDescription.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ApiVersionDescription", 256);
                 }
             }
             if (DisplayName != null)

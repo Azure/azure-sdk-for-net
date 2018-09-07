@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Criterion to filter metrics.
+    /// </summary>
     public partial class MetricCriteria
     {
         /// <summary>

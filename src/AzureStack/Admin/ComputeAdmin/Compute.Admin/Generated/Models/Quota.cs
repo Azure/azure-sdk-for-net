@@ -16,7 +16,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin.Models
     using System.Linq;
 
     /// <summary>
-    /// Holds quota information used to control resource allocation.
+    /// Holds Compute quota information used to control resource allocation.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Quota : Resource
@@ -38,18 +38,26 @@ namespace Microsoft.AzureStack.Management.Compute.Admin.Models
         /// <param name="location">Location of the resource.</param>
         /// <param name="availabilitySetCount">Maximum number of availability
         /// sets allowed.</param>
-        /// <param name="coresLimit">Maximum number of core allowed.</param>
+        /// <param name="coresLimit">Maximum number of cores allowed.</param>
         /// <param name="virtualMachineCount">Maximum number of virtual
         /// machines allowed.</param>
         /// <param name="vmScaleSetCount">Maximum number of scale sets
         /// allowed.</param>
-        public Quota(string id = default(string), string name = default(string), string type = default(string), string location = default(string), int? availabilitySetCount = default(int?), int? coresLimit = default(int?), int? virtualMachineCount = default(int?), int? vmScaleSetCount = default(int?))
+        /// <param name="maxAllocationStandardManagedDisksAndSnapshots">Maximum
+        /// number of managed disks and snapshots of type standard
+        /// allowed.</param>
+        /// <param name="maxAllocationPremiumManagedDisksAndSnapshots">Maximum
+        /// number of managed disks and snapshots of type premium
+        /// allowed.</param>
+        public Quota(string id = default(string), string name = default(string), string type = default(string), string location = default(string), int? availabilitySetCount = default(int?), int? coresLimit = default(int?), int? virtualMachineCount = default(int?), int? vmScaleSetCount = default(int?), int? maxAllocationStandardManagedDisksAndSnapshots = default(int?), int? maxAllocationPremiumManagedDisksAndSnapshots = default(int?))
             : base(id, name, type, location)
         {
             AvailabilitySetCount = availabilitySetCount;
             CoresLimit = coresLimit;
             VirtualMachineCount = virtualMachineCount;
             VmScaleSetCount = vmScaleSetCount;
+            MaxAllocationStandardManagedDisksAndSnapshots = maxAllocationStandardManagedDisksAndSnapshots;
+            MaxAllocationPremiumManagedDisksAndSnapshots = maxAllocationPremiumManagedDisksAndSnapshots;
             CustomInit();
         }
 
@@ -65,7 +73,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin.Models
         public int? AvailabilitySetCount { get; set; }
 
         /// <summary>
-        /// Gets or sets maximum number of core allowed.
+        /// Gets or sets maximum number of cores allowed.
         /// </summary>
         [JsonProperty(PropertyName = "properties.coresLimit")]
         public int? CoresLimit { get; set; }
@@ -81,6 +89,20 @@ namespace Microsoft.AzureStack.Management.Compute.Admin.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmScaleSetCount")]
         public int? VmScaleSetCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets maximum number of managed disks and snapshots of type
+        /// standard allowed.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxAllocationStandardManagedDisksAndSnapshots")]
+        public int? MaxAllocationStandardManagedDisksAndSnapshots { get; set; }
+
+        /// <summary>
+        /// Gets or sets maximum number of managed disks and snapshots of type
+        /// premium allowed.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxAllocationPremiumManagedDisksAndSnapshots")]
+        public int? MaxAllocationPremiumManagedDisksAndSnapshots { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -105,6 +127,14 @@ namespace Microsoft.AzureStack.Management.Compute.Admin.Models
             if (VmScaleSetCount < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "VmScaleSetCount", 0);
+            }
+            if (MaxAllocationStandardManagedDisksAndSnapshots < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxAllocationStandardManagedDisksAndSnapshots", 0);
+            }
+            if (MaxAllocationPremiumManagedDisksAndSnapshots < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxAllocationPremiumManagedDisksAndSnapshots", 0);
             }
         }
     }

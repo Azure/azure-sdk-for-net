@@ -4,10 +4,9 @@
     <Description>Authorization.Tests Class Library</Description>
     <AssemblyName>Authorization.Tests</AssemblyName>
     <PackageId>Authorization.Tests</PackageId>
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Graph.RBAC" Version="3.4.0-preview" />

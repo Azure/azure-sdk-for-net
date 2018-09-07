@@ -33,9 +33,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         /// <param name="frequency">the recurrence frequency. How often the
         /// schedule profile should take effect. This value must be Week,
-        /// meaning each week will have the same set of profiles. Possible
-        /// values include: 'None', 'Second', 'Minute', 'Hour', 'Day', 'Week',
-        /// 'Month', 'Year'</param>
+        /// meaning each week will have the same set of profiles. For example,
+        /// to set a daily schedule, set **schedule** to every day of the week.
+        /// The frequency property specifies that the schedule is repeated
+        /// weekly. Possible values include: 'None', 'Second', 'Minute',
+        /// 'Hour', 'Day', 'Week', 'Month', 'Year'</param>
         /// <param name="schedule">the scheduling constraints for when the
         /// profile begins.</param>
         public Recurrence(RecurrenceFrequency frequency, RecurrentSchedule schedule)
@@ -53,8 +55,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Gets or sets the recurrence frequency. How often the schedule
         /// profile should take effect. This value must be Week, meaning each
-        /// week will have the same set of profiles. Possible values include:
-        /// 'None', 'Second', 'Minute', 'Hour', 'Day', 'Week', 'Month', 'Year'
+        /// week will have the same set of profiles. For example, to set a
+        /// daily schedule, set **schedule** to every day of the week. The
+        /// frequency property specifies that the schedule is repeated weekly.
+        /// Possible values include: 'None', 'Second', 'Minute', 'Hour', 'Day',
+        /// 'Week', 'Month', 'Year'
         /// </summary>
         [JsonProperty(PropertyName = "frequency")]
         public RecurrenceFrequency Frequency { get; set; }

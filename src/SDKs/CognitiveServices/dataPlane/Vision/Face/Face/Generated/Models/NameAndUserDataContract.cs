@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 
     /// <summary>
     /// A combination of user defined name and user specified data for the
-    /// person, personGroup, and faceList
+    /// person, largePersonGroup/personGroup, and largeFaceList/faceList.
     /// </summary>
     public partial class NameAndUserDataContract
     {

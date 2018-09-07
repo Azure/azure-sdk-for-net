@@ -33,6 +33,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the SelfHostedIntegrationRuntimeNode
         /// class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="nodeName">Name of the integration runtime
         /// node.</param>
         /// <param name="machineName">Machine name of the integration runtime
@@ -59,7 +61,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="lastStopTime">The integration runtime node last stop
         /// time.</param>
         /// <param name="lastUpdateResult">The result of the last integration
-        /// runtime node update. Possible values include: 'Succeed',
+        /// runtime node update. Possible values include: 'None', 'Succeed',
         /// 'Fail'</param>
         /// <param name="lastStartUpdateTime">The last time for the integration
         /// runtime node update start.</param>
@@ -71,8 +73,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// integration runtime node.</param>
         /// <param name="maxConcurrentJobs">The maximum concurrent jobs in this
         /// integration runtime.</param>
-        public SelfHostedIntegrationRuntimeNode(string nodeName = default(string), string machineName = default(string), string hostServiceUri = default(string), string status = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), string versionStatus = default(string), string version = default(string), System.DateTime? registerTime = default(System.DateTime?), System.DateTime? lastConnectTime = default(System.DateTime?), System.DateTime? expiryTime = default(System.DateTime?), System.DateTime? lastStartTime = default(System.DateTime?), System.DateTime? lastStopTime = default(System.DateTime?), string lastUpdateResult = default(string), System.DateTime? lastStartUpdateTime = default(System.DateTime?), System.DateTime? lastEndUpdateTime = default(System.DateTime?), bool? isActiveDispatcher = default(bool?), int? concurrentJobsLimit = default(int?), int? maxConcurrentJobs = default(int?))
+        public SelfHostedIntegrationRuntimeNode(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string nodeName = default(string), string machineName = default(string), string hostServiceUri = default(string), string status = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), string versionStatus = default(string), string version = default(string), System.DateTime? registerTime = default(System.DateTime?), System.DateTime? lastConnectTime = default(System.DateTime?), System.DateTime? expiryTime = default(System.DateTime?), System.DateTime? lastStartTime = default(System.DateTime?), System.DateTime? lastStopTime = default(System.DateTime?), string lastUpdateResult = default(string), System.DateTime? lastStartUpdateTime = default(System.DateTime?), System.DateTime? lastEndUpdateTime = default(System.DateTime?), bool? isActiveDispatcher = default(bool?), int? concurrentJobsLimit = default(int?), int? maxConcurrentJobs = default(int?))
         {
+            AdditionalProperties = additionalProperties;
             NodeName = nodeName;
             MachineName = machineName;
             HostServiceUri = hostServiceUri;
@@ -98,6 +101,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets name of the integration runtime node.
@@ -178,7 +188,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets the result of the last integration runtime node update.
-        /// Possible values include: 'Succeed', 'Fail'
+        /// Possible values include: 'None', 'Succeed', 'Fail'
         /// </summary>
         [JsonProperty(PropertyName = "lastUpdateResult")]
         public string LastUpdateResult { get; private set; }

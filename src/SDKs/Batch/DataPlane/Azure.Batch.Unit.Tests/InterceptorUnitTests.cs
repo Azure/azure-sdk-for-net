@@ -57,7 +57,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task TestRequestWhichDoesntSupportFilter()
         {
-            using (BatchClient client =  await BatchClient.OpenAsync(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 BatchClientBehavior behavior = new Protocol.RequestInterceptor(request =>
                     {
@@ -79,7 +79,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task TestRequestWhichDoesSupportSelect()
         {
-            using (BatchClient client = await BatchClient.OpenAsync(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 ODATADetailLevel detailLevel = new ODATADetailLevel(selectClause: "foo");
                 bool wasHit = false;
@@ -112,7 +112,7 @@
                 ? TimeSpan.FromSeconds(serverTimeoutInSeconds.Value)
                 : TimeSpan.FromSeconds(DefaultServerTimeoutInSeconds);
 
-            using (BatchClient batchCli = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
             {
                 batchCli.CustomBehaviors.Add(new BatchRequestTimeout(serverTimeout, clientTimeout));
                 batchCli.CustomBehaviors.Add(new Protocol.RequestInterceptor((req) => ConfirmTimeoutWasSetInterceptor(req, expectedClientTimeout, expectedServerTimeoutInSeconds)));

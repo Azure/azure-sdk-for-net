@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.DataMigration
             /// </summary>
             /// <remarks>
             /// This method returns region-specific quotas and resource usage information
-            /// for the Data Migration Service.
+            /// for the Database Migration Service.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataMigration
             /// </summary>
             /// <remarks>
             /// This method returns region-specific quotas and resource usage information
-            /// for the Data Migration Service.
+            /// for the Database Migration Service.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.DataMigration
             /// </summary>
             /// <remarks>
             /// This method returns region-specific quotas and resource usage information
-            /// for the Data Migration Service.
+            /// for the Database Migration Service.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.DataMigration
             /// </summary>
             /// <remarks>
             /// This method returns region-specific quotas and resource usage information
-            /// for the Data Migration Service.
+            /// for the Database Migration Service.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

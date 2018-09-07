@@ -7,6 +7,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
     using Microsoft.Rest.ClientRuntime.Azure.Properties;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Net;
     using System.Threading;
@@ -26,7 +27,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         #region fields
         protected AzureOperationResponse<TResourceBody, TRequestHeaders> InitialResponse;
         protected CancellationToken CancelToken;
-        protected Dictionary<string, List<string>> CustomHeaders;
+        protected Dictionary<string, List<string>> _customHeaders;
         protected LROPollState<TResourceBody, TRequestHeaders> CurrentPollingState;
         protected IAzureClient SdkClient;
         protected bool IsLROTaskCompleted { get; set; }
@@ -51,8 +52,27 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             CancelToken = cancellationToken;
             SdkClient = client;
             ValidateInitialResponse();
+#if DEBUG
+            lroPollingCount = 1;
+#endif
         }
         #endregion
+
+        protected Dictionary<string, List<string>> CustomHeaders
+        {
+            get
+            {
+                if (_customHeaders == null)
+                    _customHeaders = new Dictionary<string, List<string>>();
+
+                return _customHeaders;
+            }
+
+            set
+            {
+                _customHeaders = value;
+            }
+        }
 
         #region Public functions
         /// <summary>
@@ -146,6 +166,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             if (CurrentPollingState == null)
             {
                 CurrentPollingState = new LROPollState<TResourceBody, TRequestHeaders>(InitialResponse, SdkClient);
+#if DEBUG
+                InitLroSession();
+#endif
 
                 if (!string.IsNullOrEmpty(CurrentPollingState.AzureAsyncOperationHeaderLink))
                 {
@@ -177,14 +200,23 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         /// <returns></returns>
         protected virtual async Task StartPollingAsync()
         {
+#if DEBUG
+            InitPollingSession();
+#endif
             while (!AzureAsyncOperation.TerminalStatuses.Any(s => s.Equals(CurrentPollingState.Status, StringComparison.OrdinalIgnoreCase)))
             {
                 await Task.Delay(CurrentPollingState.DelayBetweenPolling, CancelToken);
+#if DEBUG
+                UpdatePollingSessionIds();
+#endif
                 await CurrentPollingState.Poll(CustomHeaders, CancelToken);
                 UpdatePollingState();
                 CheckForErrors();
                 InitializeAsyncHeadersToUse();
             }
+#if DEBUG
+            RemoveLroHeaders(removePerfImapact: true);
+#endif
         }
 
         /// <summary>
@@ -205,19 +237,31 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 {
                     CurrentPollingState.Status = AzureAsyncOperation.InProgressStatus;
                 }
-                else if (IsCheckingProvisioningStateApplicable() == true) //Each verb can decide if Provisioning state is applicable and if it needs to be checked
-                {
-                    CurrentPollingState.Status = GetProvisioningStateFromRawBody();                   
-                }
                 else
+                {
+                    CurrentPollingState.Status = CurrentPollingState.GetProvisioningStateFromBody(CurrentPollingState.RawBody, CurrentPollingState.CurrentStatusCode, () => IsCheckingProvisioningStateApplicable());
+                }
+
+                if (string.IsNullOrEmpty(CurrentPollingState.Status))
                 {
                     throw new CloudException("The response from long running operation does not have a valid status code.");
                 }
+
+                #region old code
+                //else if (IsCheckingProvisioningStateApplicable() == true) //Each verb can decide if Provisioning state is applicable and if it needs to be checked
+                //{
+                //    CurrentPollingState.Status = GetProvisioningStateFromRawBody();                   
+                //}
+                //else
+                //{
+                //    throw new CloudException("The response from long running operation does not have a valid status code.");
+                //}
+                #endregion
             }
             #endregion
         }
 
-        internal string GetProvisioningStateFromRawBody()
+        string GetPSFromRawBody()
         {
             string provisioningState = string.Empty;
 
@@ -342,6 +386,95 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         #endregion
 
         #region Private functions
+
+#if DEBUG
+        const string Header_LroSessionId = "LroSessionId";
+        const string Header_LroPollingId = "LroPollingId";
+        const string Header_RecordPlaybackPerfImpact = "RecordPlaybackPerfImpact";
+        const string Header_LroOperation = "LroOperation";
+        const int perfImpactCount = 3;
+
+        private long lroSessionId { get; set; }
+
+        private long lroPollingId { get; set; }
+
+        private long lroPollingCount { get; set; }
+
+        private string lroSessionPollingId { get; set; }
+
+        
+        private void InitLroSession()
+        {
+            this.lroPollingCount = 1;
+            this.lroSessionId = DateTime.Now.Ticks;
+            this.CustomHeaders.Add(Header_LroOperation, new List<string>() { this.RESTOperationVerb });
+        }
+
+        private void InitPollingSession()
+        {
+            this.lroPollingId = DateTime.Now.Ticks;
+        }
+
+        private void UpdatePollingSessionIds()
+        {
+            RemoveLroHeaders();
+            this.lroSessionPollingId = string.Format("{0}.{1}.{2}", this.lroSessionId.ToString(), this.lroPollingId.ToString(), this.lroPollingCount.ToString());
+            this.CustomHeaders.Add(Header_LroSessionId, new List<string>() { this.lroSessionId.ToString() });
+            this.CustomHeaders.Add(Header_LroPollingId, new List<string>() { this.lroSessionPollingId.ToString() });
+            if(this.lroPollingCount >= perfImpactCount)
+            {
+                if(!this.CustomHeaders.TryGetValue(Header_RecordPlaybackPerfImpact, out List<string> playBackImpact))
+                {
+                    this.CustomHeaders.Add(Header_RecordPlaybackPerfImpact, new List<string>() { "true" });
+                }
+            }
+
+            this.lroPollingCount = this.lroPollingCount + 1;
+        }
+
+        protected void RemoveLroHeaders(bool removePerfImapact = false, bool removeOperation = false)
+        {
+            if(this.CustomHeaders.TryGetValue(Header_LroSessionId, out List<string> lroSessionIdList))
+            {
+                if(lroSessionIdList.Any())
+                {
+                    this.CustomHeaders.Remove(Header_LroSessionId);
+                }
+            }
+
+            if (this.CustomHeaders.TryGetValue(Header_LroPollingId, out List<string> lroPollingIdList))
+            {
+                if (lroPollingIdList.Any())
+                {
+                    this.CustomHeaders.Remove(Header_LroPollingId);
+                }
+            }
+
+            if (removePerfImapact)
+            {
+                if (this.CustomHeaders.TryGetValue(Header_RecordPlaybackPerfImpact, out List<string> recPerfImpactList))
+                {
+                    if (recPerfImpactList.Any())
+                    {
+                        this.CustomHeaders.Remove(Header_RecordPlaybackPerfImpact);
+                    }
+                }
+            }
+
+            if(removeOperation)
+            { 
+                if (this.CustomHeaders.TryGetValue(Header_LroOperation, out List<string> restOperation))
+                {
+                    if (restOperation.Any())
+                    {
+                        this.CustomHeaders.Remove(Header_LroOperation);
+                    }
+                }
+            }
+        }
+
+#endif
+
         /// <summary>
         /// Get Valid status
         /// There are cases where there is an error sent from the service and in that case, the status should be one of the valid FailedStatuses

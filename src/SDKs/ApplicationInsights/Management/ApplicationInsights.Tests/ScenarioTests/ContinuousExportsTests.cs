@@ -45,7 +45,7 @@ namespace ApplicationInsights.Tests.Scenarios
                                                             createContinuousExportProperties)
                                                         .GetAwaiter()
                                                         .GetResult();
-                Assert.Equal(1, createContinuousExportResponse.Body.Count());
+                Assert.Single(createContinuousExportResponse.Body);
                 AreEqual(createContinuousExportProperties, createContinuousExportResponse.Body.FirstOrDefault());
 
                 //get all continuous exports
@@ -57,7 +57,7 @@ namespace ApplicationInsights.Tests.Scenarios
                                                 .GetAwaiter()
                                                 .GetResult();
 
-                Assert.Equal(1, getAllContinuousExports.Body.Count());
+                Assert.Single(getAllContinuousExports.Body);
                 AreEqual(createContinuousExportProperties, getAllContinuousExports.Body.FirstOrDefault());
 
                 string exportId = getAllContinuousExports.Body.FirstOrDefault().ExportId;

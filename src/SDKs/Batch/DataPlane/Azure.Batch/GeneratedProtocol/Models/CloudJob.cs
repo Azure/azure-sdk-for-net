@@ -315,58 +315,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "stats")]
         public JobStatistics Stats { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (JobManagerTask != null)
-            {
-                JobManagerTask.Validate();
-            }
-            if (JobPreparationTask != null)
-            {
-                JobPreparationTask.Validate();
-            }
-            if (JobReleaseTask != null)
-            {
-                JobReleaseTask.Validate();
-            }
-            if (CommonEnvironmentSettings != null)
-            {
-                foreach (var element in CommonEnvironmentSettings)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (PoolInfo != null)
-            {
-                PoolInfo.Validate();
-            }
-            if (Metadata != null)
-            {
-                foreach (var element1 in Metadata)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (ExecutionInfo != null)
-            {
-                ExecutionInfo.Validate();
-            }
-            if (Stats != null)
-            {
-                Stats.Validate();
-            }
-        }
     }
 }

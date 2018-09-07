@@ -51,7 +51,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="name">The name of the policy assignment.</param>
         /// <param name="sku">The policy sku. This property is optional,
         /// obsolete, and will be ignored.</param>
-        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), IList<string> notScopes = default(IList<string>), object parameters = default(object), string description = default(string), object metadata = default(object), string id = default(string), string type = default(string), string name = default(string), PolicySku sku = default(PolicySku))
+        /// <param name="location">The location of the policy assignment. Only
+        /// required when utilizing managed identity.</param>
+        /// <param name="identity">The managed identity associated with the
+        /// policy assignment.</param>
+        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), IList<string> notScopes = default(IList<string>), object parameters = default(object), string description = default(string), object metadata = default(object), string id = default(string), string type = default(string), string name = default(string), PolicySku sku = default(PolicySku), string location = default(string), Identity identity = default(Identity))
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -64,6 +68,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Type = type;
             Name = name;
             Sku = sku;
+            Location = location;
+            Identity = identity;
             CustomInit();
         }
 
@@ -140,6 +146,20 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public PolicySku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the policy assignment. Only required
+        /// when utilizing managed identity.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets the managed identity associated with the policy
+        /// assignment.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

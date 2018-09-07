@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        public System.Uri BaseUri { get; set; }
+        internal string BaseUri {get; set;}
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -47,6 +47,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// Gets or sets json deserialization settings.
         /// </summary>
         public JsonSerializerSettings DeserializationSettings { get; private set; }
+
+        /// <summary>
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://westus.api.cognitive.microsoft.com).
+        /// </summary>
+        public string Endpoint { get; set; }
 
         /// <summary>
         /// Subscription credentials which uniquely identify client subscription.
@@ -76,51 +82,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         protected TextAnalyticsClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the TextAnalyticsClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        protected TextAnalyticsClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            BaseUri = baseUri;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the TextAnalyticsClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        protected TextAnalyticsClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            BaseUri = baseUri;
         }
 
         /// <summary>
@@ -177,75 +138,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of the TextAnalyticsClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify client subscription.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public TextAnalyticsClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            BaseUri = baseUri;
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the TextAnalyticsClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify client subscription.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public TextAnalyticsClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            BaseUri = baseUri;
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
         /// An optional partial-method to perform custom initialization.
         ///</summary>
         partial void CustomInitialize();
@@ -254,7 +146,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// </summary>
         private void Initialize()
         {
-            BaseUri = new System.Uri("https://api.cognitive.microsoft.com/text/analytics/v2.0");
+            BaseUri = "{Endpoint}/text/analytics/v2.0";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -319,6 +211,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// </return>
         public async Task<HttpOperationResponse<KeyPhraseBatchResult>> KeyPhrasesWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (input == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "input");
@@ -335,8 +231,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
                 ServiceClientTracing.Enter(_invocationId, this, "KeyPhrases", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "keyPhrases").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "keyPhrases";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -476,6 +373,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// </return>
         public async Task<HttpOperationResponse<LanguageBatchResult>> DetectLanguageWithHttpMessagesAsync(BatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (input == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "input");
@@ -492,8 +393,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
                 ServiceClientTracing.Enter(_invocationId, this, "DetectLanguage", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "languages").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "languages";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -637,6 +539,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// </return>
         public async Task<HttpOperationResponse<SentimentBatchResult>> SentimentWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (input == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "input");
@@ -653,8 +559,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
                 ServiceClientTracing.Enter(_invocationId, this, "Sentiment", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "sentiment").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "sentiment";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -798,6 +705,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// </return>
         public async Task<HttpOperationResponse<EntitiesBatchResult>> EntitiesWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (input == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "input");
@@ -814,8 +725,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
                 ServiceClientTracing.Enter(_invocationId, this, "Entities", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "entities").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "entities";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;

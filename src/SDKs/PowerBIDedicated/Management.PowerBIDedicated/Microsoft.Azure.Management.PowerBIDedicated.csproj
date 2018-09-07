@@ -7,12 +7,13 @@
 		<PackageId>Microsoft.Azure.Management.PowerBIDedicated</PackageId>
 		<Description>Provides management capabilities for Azure PowerBI Dedicated accounts.</Description>
 		<AssemblyTitle>Microsoft Azure PowerBI Dedicated Management Library</AssemblyTitle>
-		<Version>0.9.0-preview</Version>
+		<Version>0.10.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.PowerBIDedicated</AssemblyName>
 		<PackageTags>PowerBIDedicated;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public preview release of the Azure PowerBIDedicated SDK. Included with this release is support for all cluster, job and file server related APIs.
+        This is a public preview release of the Azure PowerBIDedicated SDK. 
+        This release include fix for scaling capacity when the capacity is paused.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

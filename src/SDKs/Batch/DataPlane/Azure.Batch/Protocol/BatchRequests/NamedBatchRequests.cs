@@ -574,6 +574,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
             BatchServiceClient serviceClient,
             CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
         {
+            this.Timeout = Constants.DefaultLongRestRequestClientTimeout;
         }
     }
 
@@ -634,6 +635,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
             BatchServiceClient serviceClient,
             CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
         {
+            this.Timeout = Constants.DefaultLongRestRequestClientTimeout;
         }
     }
 
@@ -1676,6 +1678,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
             TaskAddParameter parameters,
             CancellationToken cancellationToken) : base(serviceClient, parameters, cancellationToken)
         {
+            this.Timeout = Constants.DefaultLongRestRequestClientTimeout;
         }
     }
 

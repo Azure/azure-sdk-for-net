@@ -35,9 +35,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Initializes a new instance of the
         /// SourceControlSyncJobCreateParameters class.
         /// </summary>
-        /// <param name="commitId">Sets the commit id of the source control
-        /// sync job.</param>
-        public SourceControlSyncJobCreateParameters(string commitId = default(string))
+        /// <param name="commitId">The commit id of the source control sync
+        /// job. If not syncing to a commitId, enter an empty string.</param>
+        public SourceControlSyncJobCreateParameters(string commitId)
         {
             CommitId = commitId;
             CustomInit();
@@ -49,10 +49,31 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets sets the commit id of the source control sync job.
+        /// Gets or sets the commit id of the source control sync job. If not
+        /// syncing to a commitId, enter an empty string.
         /// </summary>
         [JsonProperty(PropertyName = "properties.commitId")]
         public string CommitId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (CommitId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CommitId");
+            }
+            if (CommitId != null)
+            {
+                if (CommitId.Length < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "CommitId", 0);
+                }
+            }
+        }
     }
 }

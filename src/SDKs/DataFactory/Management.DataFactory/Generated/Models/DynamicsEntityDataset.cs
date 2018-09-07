@@ -46,10 +46,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for dataset.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Dataset.</param>
+        /// <param name="folder">The folder that this Dataset is in. If not
+        /// specified, Dataset will appear at the root level.</param>
         /// <param name="entityName">The logical name of the entity. Type:
         /// string (or Expression with resultType string).</param>
-        public DynamicsEntityDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object entityName = default(object))
-            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations)
+        public DynamicsEntityDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object entityName = default(object))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations, folder)
         {
             EntityName = entityName;
             CustomInit();

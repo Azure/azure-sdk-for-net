@@ -32,7 +32,7 @@ namespace Billing.Tests.ScenarioTests
                 var invoices = billingMgmtClient.Invoices.List();
                 Assert.NotNull(invoices);
                 Assert.True(invoices.Any());
-                Assert.False(invoices.Any(x => x.DownloadUrl != null));
+                Assert.DoesNotContain(invoices, x => x.DownloadUrl != null);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Billing.Tests.ScenarioTests
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var invoices = billingMgmtClient.Invoices.List(DownloadUrlExpand, RangeFilter, null, 1);
                 Assert.NotNull(invoices);
-                Assert.Equal(1, invoices.Count());
+                Assert.Single(invoices);
                 Assert.NotNull(invoices.First().DownloadUrl);
                 var invoice = invoices.First();
                 Assert.False(string.IsNullOrWhiteSpace(invoice.DownloadUrl.Url));

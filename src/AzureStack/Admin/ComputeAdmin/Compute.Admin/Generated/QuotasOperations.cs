@@ -51,10 +51,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         public ComputeAdminClient Client { get; private set; }
 
         /// <summary>
-        /// Returns the requested quota.
+        /// Returns the requested Compute quota.
         /// </summary>
         /// <remarks>
-        /// Get an existing Quota.
+        /// Get an existing Compute Quota.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -97,10 +97,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "quotaName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2018-02-09";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -110,6 +107,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("quotaName", quotaName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -120,9 +118,9 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{quotaName}", System.Uri.EscapeDataString(quotaName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -182,7 +180,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -250,10 +248,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         }
 
         /// <summary>
-        /// Creates or Updates a Quota.
+        /// Creates or Updates a Compute Quota.
         /// </summary>
         /// <remarks>
-        /// Creates or Updates a Quota.
+        /// Creates or Updates a Compute Quota with the provided quota parameters.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -299,10 +297,6 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "quotaName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (newQuota == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "newQuota");
@@ -311,6 +305,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             {
                 newQuota.Validate();
             }
+            string apiVersion = "2018-02-09";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -320,6 +315,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("quotaName", quotaName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("newQuota", newQuota);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
@@ -331,9 +327,9 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{quotaName}", System.Uri.EscapeDataString(quotaName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -467,10 +463,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         }
 
         /// <summary>
-        /// Deletes specified quota
+        /// Deletes specified Compute quota
         /// </summary>
         /// <remarks>
-        /// Delete an existing quota.
+        /// Delete an existing Compute quota.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -510,10 +506,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "quotaName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2018-02-09";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -523,6 +516,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("quotaName", quotaName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -533,9 +527,9 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{quotaName}", System.Uri.EscapeDataString(quotaName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -645,10 +639,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         }
 
         /// <summary>
-        /// Lists all quotas.
+        /// Lists all Compute quotas.
         /// </summary>
         /// <remarks>
-        /// Get a list of existing quotas.
+        /// Get a list of existing Compute quotas.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -684,10 +678,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2018-02-09";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -696,6 +687,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -705,9 +697,9 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -767,7 +759,7 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

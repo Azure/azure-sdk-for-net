@@ -33,14 +33,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the VnetGateway class.
         /// </summary>
+        /// <param name="vpnPackageUri">The URI where the VPN package can be
+        /// downloaded.</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="vnetName">The Virtual Network name.</param>
-        /// <param name="vpnPackageUri">The URI where the VPN package can be
-        /// downloaded.</param>
-        public VnetGateway(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string vnetName = default(string), string vpnPackageUri = default(string))
+        public VnetGateway(string vpnPackageUri, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string vnetName = default(string))
             : base(id, name, kind, type)
         {
             VnetName = vnetName;
@@ -65,5 +65,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.vpnPackageUri")]
         public string VpnPackageUri { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (VpnPackageUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "VpnPackageUri");
+            }
+        }
     }
 }

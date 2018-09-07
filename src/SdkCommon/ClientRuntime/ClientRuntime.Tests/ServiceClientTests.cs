@@ -25,6 +25,23 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         }
 
         [Fact]
+        public void ClientDefaultHeaderValuesTest()
+        {
+            var fakeClient = new FakeServiceClient(new HttpClientHandler(), new BadResponseDelegatingHandler());
+            var arr = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Where(pihv => String.IsNullOrWhiteSpace(pihv.Product.Version)).ToArray();
+            Assert.Empty(arr);
+        }
+
+        [Fact]
+        public void ClientEmptyProductHeaderValuesTest()
+        {
+            var fakeClient = new FakeServiceClient(new HttpClientHandler(), new BadResponseDelegatingHandler());
+            fakeClient.SetUserAgent("MySpecialHeader", string.Empty);
+            var arr = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Where(pihv => (pihv.Product.Name == "MySpecialHeader")).ToArray();
+            Assert.Empty(arr);
+        }
+
+        [Fact]
         public void ClientAddHandlersToPipelineAddSingleHandler()
         {
             var fakeClient = new FakeServiceClient(new HttpClientHandler(),
@@ -108,6 +125,22 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             var result = fakeClient.DoStuffSync();
             Assert.Equal(HttpStatusCode.InternalServerError, result.StatusCode);
             Assert.Equal(2, attemptsFailed);
+        }
+
+        [Fact]
+        public void RetryAfterHandleTest()
+        {
+            var http = new FakeHttpHandler();
+            http.NumberOfTimesToFail = 2;
+            http.StatusCodeToReturn = (HttpStatusCode) 429;
+            http.TweakResponse = (response) => { response.Headers.Add("Retry-After", "10"); };
+
+            var fakeClient = new FakeServiceClient(http, new RetryAfterDelegatingHandler());
+            
+            var result = fakeClient.DoStuffSync();
+
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+            Assert.Equal(2, http.NumberOfTimesFailedSoFar);
         }
 
         [Fact]

@@ -30,6 +30,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Initializes a new instance of the ReportableException class.
         /// </summary>
         /// <param name="message">Error message</param>
+        /// <param name="actionableMessage">Actionable steps for this
+        /// exception</param>
         /// <param name="filePath">The path to the file where exception
         /// occurred</param>
         /// <param name="lineNumber">The line number where exception
@@ -37,9 +39,10 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="hResult">Coded numerical value that is assigned to a
         /// specific exception</param>
         /// <param name="stackTrace">Stack trace</param>
-        public ReportableException(string message = default(string), string filePath = default(string), string lineNumber = default(string), int? hResult = default(int?), string stackTrace = default(string))
+        public ReportableException(string message = default(string), string actionableMessage = default(string), string filePath = default(string), string lineNumber = default(string), int? hResult = default(int?), string stackTrace = default(string))
         {
             Message = message;
+            ActionableMessage = actionableMessage;
             FilePath = filePath;
             LineNumber = lineNumber;
             HResult = hResult;
@@ -57,6 +60,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
+
+        /// <summary>
+        /// Gets or sets actionable steps for this exception
+        /// </summary>
+        [JsonProperty(PropertyName = "actionableMessage")]
+        public string ActionableMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the path to the file where exception occurred

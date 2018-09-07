@@ -34,8 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// AzureWorkloadContainerExtendedInfo class.
         /// </summary>
         /// <param name="hostServerName">Host Os Name in case of Stand Alone
-        /// and
-        /// Cluster Name in case of distributed container.</param>
+        /// and Cluster Name in case of distributed container.</param>
         /// <param name="inquiryInfo">Inquiry Status for the container.</param>
         /// <param name="nodesList">List of the nodes in case of distributed
         /// container.</param>
@@ -53,8 +52,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets host Os Name in case of Stand Alone and
-        /// Cluster Name in case of distributed container.
+        /// Gets or sets host Os Name in case of Stand Alone and Cluster Name
+        /// in case of distributed container.
         /// </summary>
         [JsonProperty(PropertyName = "hostServerName")]
         public string HostServerName { get; set; }

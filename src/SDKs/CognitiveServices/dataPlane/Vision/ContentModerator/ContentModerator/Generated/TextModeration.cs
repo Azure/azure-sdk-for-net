@@ -98,9 +98,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<Screen>> ScreenTextWithHttpMessagesAsync(string textContentType, Stream textContent, string language = default(string), bool? autocorrect = false, bool? pII = false, string listId = default(string), bool? classify = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (textContentType == null)
             {
@@ -130,7 +130,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessText/Screen/";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
@@ -301,9 +301,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<DetectedLanguage>> DetectLanguageWithHttpMessagesAsync(string textContentType, Stream textContent, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (textContentType == null)
             {
@@ -328,7 +328,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/moderate/v1.0/ProcessText/DetectLanguage";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;

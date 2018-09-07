@@ -53,7 +53,7 @@ namespace Management.HDInsight.Tests
             HDInsightManagementTestUtilities.RunTestInNewResourceGroup(GetType().FullName, "TestCreateWithEmptyExtendedParameters",
                 (resClient, client, rgName) =>
             {
-                CloudException ex = Assert.Throws<CloudException>(() => client.Clusters.Create(rgName, clusterName, new ClusterCreateParametersExtended()));
+                ErrorResponseException ex = Assert.Throws<ErrorResponseException>(() => client.Clusters.Create(rgName, clusterName, new ClusterCreateParametersExtended()));
                 Assert.Equal(HttpStatusCode.BadRequest, ex.Response.StatusCode);
             });
         }
@@ -66,7 +66,7 @@ namespace Management.HDInsight.Tests
             HDInsightManagementTestUtilities.RunTestInNewResourceGroup(GetType().FullName, "TestCreateWithEmptyParameters",
                 (resClient, client, rgName) =>
             {
-                CloudException ex = Assert.Throws<CloudException>(() => client.Clusters.Create(rgName, clusterName, new ClusterCreateParameters()));
+                ErrorResponseException ex = Assert.Throws<ErrorResponseException>(() => client.Clusters.Create(rgName, clusterName, new ClusterCreateParameters()));
                 Assert.Equal(HttpStatusCode.BadRequest, ex.Response.StatusCode);
             });
         }

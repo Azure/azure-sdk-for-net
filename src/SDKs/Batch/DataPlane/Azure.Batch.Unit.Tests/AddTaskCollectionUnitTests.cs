@@ -30,7 +30,7 @@
         public async Task AddTaskCollectionNoHandlerThrows()
         {
             const string dummyJobId = "Dummy";
-            using (BatchClient batchCli = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
             {
                 //Clear the behaviors so that there is no way there is a AddTaskResultHandler defined
                 batchCli.CustomBehaviors.Clear();
@@ -48,7 +48,7 @@
         public async Task AddTaskCollectionNullTaskThrows()
         {
             const string dummyJobId = "Dummy";
-            using (BatchClient batchCli = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
             {
                 ArgumentNullException exception = await Assert.ThrowsAsync<ArgumentNullException>(() => batchCli.JobOperations.AddTaskAsync(dummyJobId, new List<CloudTask> { null }));
                 string expectedString = string.Format(BatchErrorMessages.CollectionMustNotContainNull);
@@ -118,7 +118,7 @@
             const string expectedCode = "badness";
             const string failingTaskId = "baz";
 
-            using (BatchClient batchCli = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
             {
                 var tasksToAdd = new List<CloudTask>
                     {
@@ -166,7 +166,7 @@
             const string dummyJobId = "Dummy";
             int taskCountToAdd = operationCount * Constants.MaxTasksInSingleAddTaskCollectionRequest;
 
-            using (BatchClient batchCli = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient())
             {
                 AddExceptionGeneratingBehavior(batchCli, exceptionFactory);
 
