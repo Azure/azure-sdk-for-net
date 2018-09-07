@@ -6,7 +6,7 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Dns</PackageId>
 		<Description>Provides management capabilities for Azure Dns.</Description>
-		<Version>2.3.0-preview</Version>
+		<Version>3.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.Dns</AssemblyName>    
 		<PackageTags>Microsoft Azure Dns;Dns;</PackageTags>
 		<PackageReleaseNotes>
@@ -22,11 +22,5 @@
 
 	<!-- Please do not move/edit code below this line -->
 	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
-	<ItemGroup>
-	  <Compile Remove="Properties\AssemblyInfo.cs" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Properties\" />
-	</ItemGroup>
 	<!-- Please do not move/edit code above this line -->
 </Project>
