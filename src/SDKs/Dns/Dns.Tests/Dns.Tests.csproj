@@ -10,10 +10,14 @@
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>-->
   <ItemGroup>
+    <Compile Remove="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Network" Version="14.0.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
   </ItemGroup>
   <ItemGroup>
+    <!--<ProjectReference Include="..\..\..\SdkCommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />-->
     <ProjectReference Include="..\Management.Dns\Microsoft.Azure.Management.Dns.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -25,7 +29,12 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
+  
   <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.3" />
   </ItemGroup>
 </Project>
