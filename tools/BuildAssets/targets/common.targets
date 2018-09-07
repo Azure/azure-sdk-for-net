@@ -293,8 +293,8 @@
   </Target>
   
   <Target Name="PublishingNuget">
-    <Error Condition=" ('$(NugetPackageName)' == '') " Text="Please Provide Package Name that has to be published /p:NugetPackagename=[packagename]" />
-    <Error Condition=" ('$(NugetPackageName)' == '') AND ('$(Scope)' == '' OR '$(Scope)' == 'all') " Text="Publishing nuget package without specifying scope or packageName has now been disabled" />
+    <Error Condition=" ('$(NugetPackageName)' == '') AND '$(PublishMultiPackage)' == 'false' " Text="Please Provide Package Name that has to be published /p:NugetPackagename=[packagename]" />
+    <Error Condition=" ('$(NugetPackageName)' == '') AND ('$(Scope)' == '' OR '$(Scope)' == 'all') AND '$(PublishMultiPackage)' == 'false' " Text="Publishing nuget package without specifying scope or packageName has now been disabled" />
     <PropertyGroup>
       <PublishNugetToDir Condition=" '$(PublishNugetToDir)' == '' ">$(LibraryRoot)PublishedNugets</PublishNugetToDir>
       <TaskDebugOutput Condition=" '$(TaskDebugOutput)' == '' ">false</TaskDebugOutput>
@@ -306,7 +306,8 @@
     <Message Text="PackageOutputPath...... $(PackageOutputPath)" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text="PublishNugetToDir...... $(PublishNugetToDir)" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text="NuGetCommand...... $(NuGetCommand)" Condition=" '$(DebugTrace)' == 'true' "/>
-    <Message Text="UserId...... $(UserId)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="UserId...... $(CIUserId)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <DebugTask Condition=" '$(DebugMode)' == 'true' "/>
 	
     <MakeDir Directories="$(PublishNugetToDir)" Condition="!Exists($(PublishNugetToDir)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(PublishNugetToDir)', '^(?i)http'))" />
     <PublishSDKNugetTask 
@@ -314,11 +315,13 @@
       PackageOutputPath="$(PackageOutputPath)" 
       PublishNugetToPath="$(PublishNugetToDir)" 
       NugetExePath="$(NuGetCommand)"
-      UserId="$(UserId)"
+      CIUserId="$(CIUserId)"
       SkipNugetPublishing="$(SkipNugetPublishing)"
       SkipSymbolPublishing="$(SkipSymbolPublishing)"
       TaskDebugOutput="$(TaskDebugOutput)"
       ApiKey="$(ApiKey)"
+      MultiPackagePublish="$(MultiPackagePublish)" 
+      ScopePath="$(Scope)"
       />
   </Target>
 

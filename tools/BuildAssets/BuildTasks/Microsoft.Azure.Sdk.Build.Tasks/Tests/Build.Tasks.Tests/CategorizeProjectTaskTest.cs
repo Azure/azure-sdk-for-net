@@ -76,7 +76,7 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.Equal(cproj.UnFilteredProjects.Count<string>(), 0);
+                Assert.Equal(cproj.UnFilteredProjects.Count<string>(), 1);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.Equal(cproj.UnFilteredProjects.Count<string>(), 0);
+                Assert.Equal(cproj.UnFilteredProjects.Count<string>(), 1);
             }
         }
 

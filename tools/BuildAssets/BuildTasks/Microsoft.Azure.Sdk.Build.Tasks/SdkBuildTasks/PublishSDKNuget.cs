@@ -6,7 +6,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks
     using System;
     using Microsoft.Build.Framework;
     using Microsoft.Build.Utilities;
-    //using Microsoft.WindowsAzure.Build.Tasks.ExecProcess;
     using Microsoft.WindowsAzure.Build.Tasks.Utilities;
     using System.IO;
     using System.Collections.Generic;
@@ -24,18 +23,44 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         private bool _publishAllNugetsunderScope;
         private bool _buildEngineInitialized;
         private string _apiKey;
+        private List<string> authUsers;
+        private List<string> authScopes;
         #endregion
 
         public PublishSDKNugetTask()
-        {
+        {            
             _publishAllNugetsunderScope = false;
             _buildEngineInitialized = false;
-
+            authUsers = new List<string>() { "hovsepm", "shahabhijeet" };
+            authScopes = new List<string>() { "all", "sdks", "sdkcommon", "azurestack" };
             //By default do not skip publishing both nuget and symbols
             SkipNugetPublishing = false;
             SkipSymbolPublishing = false;
         }
 
+        private void Init()
+        {
+            if (authScopes.Where<string>((scope) => scope.Equals(ScopePath, StringComparison.OrdinalIgnoreCase)).Any<string>())
+            {
+                //TODO: Add a way to integrate with AAD and add a feature to depend on Security group. This is a temp fix
+                if (!authUsers.Where<string>((u) => u.Equals(CIUserId, StringComparison.OrdinalIgnoreCase)).Any<string>())
+                {
+                    throw new NotSupportedException(string.Format("User '{0}' do not have permissions to publish multiple nugets from scope '{1}', This feature is currently Not Supported", CIUserId, ScopePath));
+                }
+            }
+            //else
+            //{
+            //    if (!authUsers.Where<string>((u) => u.Equals(CIUserId, StringComparison.OrdinalIgnoreCase)).Any<string>())
+            //    {
+            //        throw new NotSupportedException(string.Format("User '{0}' do not have permissions to publish multiple nugets from scope '{1}', This feature is currently Not Supported", CIUserId, ScopePath));
+            //    }
+            //}
+
+            Check.NotEmptyNotNull(PackageOutputPath, "PackageOutputPath");
+            Check.NotEmptyNotNull(PublishNugetToPath, "PublishNugetToPath");
+        }
+
+        #region Properties
         internal bool IsBuildEngineInitialized
         {
             get
@@ -49,14 +74,14 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             }
         }
 
+
         #region Required Properties
 
         /// <summary>
-        /// Gets or sets Nuget Package Name that needs to be published
+        /// Gets or Sets relative scope Path (e.g. SDKs\Compute relative path after root\src)
         /// </summary>
         [Required]
-        public string NugetPackageName { get; set; }
-        
+        public string ScopePath { get; set; }
         /// <summary>
         /// Gets or sets output path for nuget that got packaged/generated
         /// </summary>
@@ -72,24 +97,24 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         #endregion
 
         /// <summary>
+        /// Gets or sets Nuget Package Name that needs to be published
+        /// </summary>
+        public string NugetPackageName { get; set; }
+        /// <summary>
         /// Sets or gets the path to Nuget.exe
         /// </summary>
         public string NugetExePath { get; set; }
         /// <summary>
         /// GitHub userId
         /// </summary>
-        public string UserId { get; set; }
+        public string CIUserId { get; set; }
         
         /// <summary>
         /// Publish all nuget found under particular scope
         /// e.g. publish all nugets under KeyVault
         /// </summary>
-        public bool publishAllNugetsUnderScope { get { return _publishAllNugetsunderScope; } set { _publishAllNugetsunderScope = value; } }
+        //public bool publishAllNugetsUnderScope { get { return _publishAllNugetsunderScope; } set { _publishAllNugetsunderScope = value; } }
 
-        /// <summary>
-        /// Gets or Sets relative scope Path (e.g. SDKs\Compute relative path after root\src)
-        /// </summary>
-        public string scopePath { get; set; }
 
         public bool SkipSymbolPublishing { get; set; }
         
@@ -97,7 +122,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         public bool TaskDebugOutput { get; set; }
 
-        public List<NugetPublishStatus> NugetPublishStatus { get; private set; }
+        public bool MultiPackagePublish { get; set; }
+
+        public List<Tuple<NugetPublishStatus, NugetPublishStatus>> NugetPublishStatus { get; private set; }
 
         /// <summary>
         /// API key to be used to publish the nuget pakcage
@@ -132,36 +159,56 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             }
         }
 
+        #endregion
+
         public override bool Execute()
         {
-            //NugetExec nug = null;
             try
             {
                 DebugInfo();
-
-                if (publishAllNugetsUnderScope)
-                {
-                    // Check.DirectoryExists(publishNugetToPath);
-                    throw new NotSupportedException("Publishing multiple nugets....This feature is currently Not Supported");
-                }
-                else
-                {
-                    Check.NotEmptyNotNull(NugetPackageName, "NugetPackageName");
-                    Check.NotEmptyNotNull(PackageOutputPath, "PackageOutputPath");
-                    Check.NotEmptyNotNull(PublishNugetToPath, "PublishNugetToPath");
-
-                    NugetPublishStatus = ExecPublishCommand();
-                    ThrowForNonZeroExitCode(NugetPublishStatus);
-                }
-
+                Init();
+                NugetPublishStatus = ExecPublishCommand();
+                ThrowForNonZeroExitCode(NugetPublishStatus);
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogException(ex);
                 throw ex;
             }
         }
+
+        private List<Tuple<string, string>> GetAllNugetPackages()
+        {
+            var dupeFiles = Directory.EnumerateFiles(PackageOutputPath, "*.nupkg", SearchOption.AllDirectories);
+            var symPkgs = Directory.EnumerateFiles(PackageOutputPath, "*.symbols.nupkg", SearchOption.AllDirectories);
+            var nugetPkgs = dupeFiles.Except<string>(symPkgs, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
+
+            List<Tuple<string, string>> pkgList = new List<Tuple<string, string>>();
+            
+            foreach(string pkgPath in nugetPkgs)
+            {
+                string pkgName = Path.GetFileNameWithoutExtension(pkgPath);
+                //string symName = Path.GetFileNameWithoutExtension(pkgPath)
+                var searchedSymPkgs = symPkgs.Where<string>((sym) => (Path.GetFileNameWithoutExtension(sym)).StartsWith(pkgName));
+                if(searchedSymPkgs.Any<string>())
+                {
+                    foreach(string symPath in searchedSymPkgs)
+                    {
+                        string symPkgName = Path.GetFileNameWithoutExtension(symPath);
+                        string nupkgName = string.Concat(pkgName, ".symbols");
+                        if(symPkgName.Equals(nupkgName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            Tuple<string, string> tup = new Tuple<string, string>(pkgPath, symPath);
+                            pkgList.Add(tup);
+                        }
+                    }
+                }
+            }
+
+            return pkgList;
+        }
+
 
         private Tuple<string, string> GetNugetPkgs(string nugetPkgName)
         {
@@ -190,6 +237,38 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             return new Tuple<string, string>(nupkg, nuSymPkg);
         }
 
+        private void ThrowForNonZeroExitCode(List<Tuple<NugetPublishStatus, NugetPublishStatus>> statusList)
+        {
+            foreach(Tuple<NugetPublishStatus, NugetPublishStatus> tup in statusList)
+            {
+                ThrowForNonZeroExitCode(tup?.Item1);
+                ThrowForNonZeroExitCode(tup?.Item2);
+            }
+        }
+
+        private void ThrowForNonZeroExitCode(NugetPublishStatus status)
+        {
+            if (status == null) return;
+
+            if (status.NugetPublishExitCode != 0)
+            {
+                string exMessage = string.Format("{0}\r\n ExitCode:{1}\r\n {2}\r\n", status.PublishArgs, status.NugetPublishExitCode.ToString(), status.NugetPublishStatusOutput);
+                if (status.CaughtException != null)
+                {
+                    throw new ApplicationException(exMessage, status.CaughtException);
+                }
+                else
+                {
+                    throw new ApplicationException(exMessage);
+                }
+            }
+            else
+            {
+                LogInfo(status.PublishArgs);
+                LogInfo(status.NugetPublishStatusOutput);
+            }
+        }
+
         private void ThrowForNonZeroExitCode(List<NugetPublishStatus> statusList)
         {
             foreach(NugetPublishStatus status in statusList)
@@ -214,10 +293,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             }
         }
 
-        private List<NugetPublishStatus> ExecPublishCommand()
+        private List<Tuple<NugetPublishStatus, NugetPublishStatus>> ExecPublishCommand()
         {
             NugetExec nug = null;
-            Tuple<string, string> nupkgs = GetNugetPkgs(NugetPackageName);
+            List<Tuple<string, string>> pkgList = null;
+            Tuple<string, string> nupkgs = null;
+            List<Tuple<NugetPublishStatus, NugetPublishStatus>> statusList = new List<Tuple<NugetPublishStatus, NugetPublishStatus>>();
 
             if (string.IsNullOrEmpty(NugetExePath))
             {
@@ -238,15 +319,40 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 throw new ApplicationException("Requested to skip Publishing Nuget and Symbols");
             }
 
-            List<NugetPublishStatus> publishStatusList = nug.Publish(nupkgs);
-            return publishStatusList;
+            if (!ScopePath.Equals("all", StringComparison.OrdinalIgnoreCase) && MultiPackagePublish == true)
+            {
+                pkgList = GetAllNugetPackages();
+                LogInfo("Packages to be published: {0}", pkgList.Count.ToString());
+
+                if (pkgList.Count >= 2)
+                {
+                    if (!authUsers.Where<string>((u) => u.Equals(CIUserId, StringComparison.OrdinalIgnoreCase)).Any<string>())
+                    {
+                        throw new NotSupportedException(string.Format("Trying to publish '{0}' packges. User '{1}' do not have permissions to publish multiple nugets from scope '{2}', This feature is currently Not Supported", pkgList.Count.ToString(), CIUserId, ScopePath));
+                    }
+                }
+
+                statusList = nug.Publish(pkgList);
+            }
+
+            if (!ScopePath.Equals("all", StringComparison.OrdinalIgnoreCase) && MultiPackagePublish == false)
+            {
+                nupkgs = GetNugetPkgs(NugetPackageName);
+                Tuple<NugetPublishStatus, NugetPublishStatus> singlePkg = nug.Publish(nupkgs);
+                statusList.Add(singlePkg);
+            }
+
+            return statusList;
+
+            //List<NugetPublishStatus> publishStatusList = nug.Publish(nupkgs);
+            //return publishStatusList;
         }
 
         private void DebugInfo()
         {
             if(TaskDebugOutput)
             {
-                LogInfo("UserId: {0}", UserId);
+                LogInfo("UserId: {0}", CIUserId);
                 LogInfo("Nuget Package Name: {0}", NugetPackageName);
                 LogInfo("Nuget Output Path: {0}", PackageOutputPath);
                 LogInfo("Nuget Publish Path: {0}", PublishNugetToPath);

@@ -3,21 +3,15 @@
 
 using Microsoft.Azure.Sdk.Build.ExecProcess;
 using Microsoft.WindowsAzure.Build.Tasks;
-//using Microsoft.WindowsAzure.Build.Tasks.ExecProcess;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Build.Tasks.Tests.PublishNugetTests
 {
-    
-    public class PublishTests
+    public class PublishTests : BuildTestBase
     {
         const string NUGET_PKG_NAME = "Build.Tasks.Tests";
 
@@ -28,7 +22,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
         {
             get
             {
-                if(string.IsNullOrEmpty(_nugetPkgBuiltDir))
+                if (string.IsNullOrEmpty(_nugetPkgBuiltDir))
                 {
                     string codeBasePath = Assembly.GetExecutingAssembly().CodeBase;
                     var uri = new UriBuilder(codeBasePath);
@@ -52,10 +46,10 @@ namespace Build.Tasks.Tests.PublishNugetTests
 
         public PublishTests()
         {
-            if(Directory.Exists(NugetPkgBuiltDir))
+            if (Directory.Exists(NugetPkgBuiltDir))
             {
                 string pubDir = Path.Combine(NugetPkgBuiltDir, "testPublish");
-                if(!Directory.Exists(pubDir))
+                if (!Directory.Exists(pubDir))
                 {
                     Directory.CreateDirectory(pubDir);
                 }
@@ -64,23 +58,20 @@ namespace Build.Tasks.Tests.PublishNugetTests
             }
         }
 
-        
         [Fact]
         public void PublishSingleNuget()
         {
             PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
+            pubNug.ScopePath = Path.GetDirectoryName(NugetPkgBuiltDir);
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = PublishToDir;
 
             pubNug.Execute();
 
-            List<NugetPublishStatus> statusList = pubNug.NugetPublishStatus;
+            var statusList = pubNug.NugetPublishStatus;
+            VerifyNugetPublishStatus(statusList, expectedExitCode: 0);
 
-            foreach(NugetPublishStatus status in statusList)
-            {
-                Assert.Equal(0, status.NugetPublishExitCode);
-            }
         }
 
         [Fact]
@@ -101,20 +92,18 @@ namespace Build.Tasks.Tests.PublishNugetTests
         {
             PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
+            pubNug.ScopePath = Path.GetDirectoryName(NugetPkgBuiltDir);
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = PublishToDir;
             pubNug.SkipSymbolPublishing = true;
 
             pubNug.Execute();
 
-            List<NugetPublishStatus> statusList = pubNug.NugetPublishStatus;
+            var statusList = pubNug.NugetPublishStatus;
 
             Assert.Equal(1, statusList?.Count);
 
-            foreach (NugetPublishStatus status in statusList)
-            {
-                Assert.Equal(0, status.NugetPublishExitCode);
-            }
+            //VerifyNugetPublishStatus(statusList, expectedExitCode: 0);
         }
 
         [Fact]
@@ -125,13 +114,79 @@ namespace Build.Tasks.Tests.PublishNugetTests
             Assert.Equal("https://nuget.smbsrc.net", nugEx.PublishSymbolToPath);
         }
 
+        #region publishing multi-packages
+        [Fact(Skip ="Skiping test to be run by auth users")]
+        public void PublishMultiPackageUnderScope()
+        {
+            //msbuild .\build.proj /t:PublishNuget /p:Scope=SDKs\KeyVault /p:MultiPackagePublish=true /p:PublishNugetToPath=D:\myFork\BuildToolsForSdk\binaries\testPublish /p:PackageOutputPath=D:\myFork\BuildToolsForSdk\binaries\packages
+
+            //This test can be run when SDKs\KeyVault is built and it's nuget packages are created using /t:CreateNugetPackages
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
+            pubNug.MultiPackagePublish = true;
+            pubNug.PackageOutputPath = Path.Combine(BinariesRootDir, "packages");
+            pubNug.PublishNugetToPath = PublishToDir;
+            pubNug.ScopePath = @"SDKs\KeyVault";
+
+            pubNug.Execute();
+
+            List<Tuple<NugetPublishStatus, NugetPublishStatus>> statusList = pubNug.NugetPublishStatus;
+            Assert.Equal(6, statusList.Count);
+            VerifyNugetPublishStatus(statusList, expectedExitCode: 0);
+        }
+
+        [Fact]
+        public void PublishMultiPkgsForAllScope()
+        {
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
+            pubNug.MultiPackagePublish = true;
+            pubNug.PackageOutputPath = Path.Combine(BinariesRootDir, "packages");
+            pubNug.PublishNugetToPath = PublishToDir;
+
+            pubNug.ScopePath = @"all";
+            Assert.Throws<NotSupportedException>(() => pubNug.Execute());
+
+            pubNug.ScopePath = @"sdks";
+            Assert.Throws<NotSupportedException>(() => pubNug.Execute());
+        }
+
+
+        [Fact(Skip = "Skiping test to be run by auth users")]
+        public void SkipNugetPublishForAllScope()
+        {
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
+            pubNug.MultiPackagePublish = true;
+            pubNug.PackageOutputPath = Path.Combine(BinariesRootDir, "packages");
+            pubNug.PublishNugetToPath = PublishToDir;
+            pubNug.SkipNugetPublishing = true;
+            pubNug.SkipSymbolPublishing = true;
+
+            pubNug.ScopePath = @"all";
+            Assert.Throws<ApplicationException>(() => pubNug.Execute());
+        }
+
+        [Fact]
+        public void PublishMultiPkgsWithUser()
+        {
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
+            pubNug.MultiPackagePublish = true;
+            pubNug.PackageOutputPath = Path.Combine(BinariesRootDir, "packages");
+            pubNug.PublishNugetToPath = PublishToDir;
+            pubNug.CIUserId = "foo";
+            pubNug.ScopePath = @"sdkcommon";
+            Assert.Throws<NotSupportedException>(() => pubNug.Execute());
+        }
+
+        #endregion
+
         #region Error Tests
 
         [Fact]
         public void PublishOnlySymbol()
         {
             PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
+            //pubNug.ScopePath = string.Empty;
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
+            pubNug.ScopePath = Path.GetDirectoryName(NugetPkgBuiltDir);
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = "https://www.nuget.org/api/v2/package/";
             pubNug.SkipNugetPublishing = true;
@@ -144,6 +199,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
         {
             PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
+            pubNug.ScopePath = Path.GetDirectoryName(NugetPkgBuiltDir);
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = "https://www.nuget.org/api/v2/package/";
             pubNug.SkipSymbolPublishing = false;
@@ -185,10 +241,14 @@ namespace Build.Tasks.Tests.PublishNugetTests
         }
 
         [Fact]
-        public void PublishAllNugetUnderScope()
+        public void RestrictPublishAllNugetUnderScope()
         {
             PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
-            pubNug.publishAllNugetsUnderScope = true;
+            pubNug.MultiPackagePublish = true;
+            pubNug.ScopePath = Path.GetDirectoryName(NugetPkgBuiltDir);
+            pubNug.PackageOutputPath = NugetPkgBuiltDir;
+            pubNug.PublishNugetToPath = PublishToDir;
+            pubNug.CIUserId = "foo";
             Assert.Throws<NotSupportedException>(() => pubNug.Execute());
         }
 
@@ -216,6 +276,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
         public void GetInnerExceptionWhilePublishing()
         {
             PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
+            pubNug.ScopePath = string.Empty;
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = PublishToDir;
@@ -235,5 +296,14 @@ namespace Build.Tasks.Tests.PublishNugetTests
         }
 
         #endregion
+
+        private void VerifyNugetPublishStatus(List<Tuple<NugetPublishStatus, NugetPublishStatus>> statusList, int expectedExitCode)
+        {
+            foreach (Tuple<NugetPublishStatus, NugetPublishStatus> status in statusList)
+            {
+                Assert.Equal(expectedExitCode, status?.Item1.NugetPublishExitCode);
+                Assert.Equal(expectedExitCode, status?.Item2.NugetPublishExitCode);
+            }
+        }
     }
 }

@@ -22,7 +22,8 @@ namespace Microsoft.Azure.Build.BootstrapTasks
         const string DEFAULT_RAW_URI_Prefix = @"https://raw.githubusercontent.com";
         const string DEFAULT_FORK = "Azure";
         const string DEFAULT_BRANCH_NAME = "SdkBuildTools";
-        const string AKAMS_URI = @"http://aka.ms/AzNetSDKBuildTools";
+        const string LKG_AKAMS_URI = @"http://aka.ms/AzNetSDKBuildTools";
+        const string LATEST_AKAMS_URI = @"http://aka.ms/LatestBuildTools";
 
         const string COPY_TO_RELATIVEPATH = @"tools\SdkBuildTools\";
         const string COPY_FROM_RELATIVEPATH = @"tools\BuildAssets\";
@@ -43,11 +44,6 @@ namespace Microsoft.Azure.Build.BootstrapTasks
         #region Properties
 
         #region Required Properties
-        /// <summary>
-        /// Sets/Gets Local branch Root Directory
-        /// </summary>
-        //[Required]
-        //public string LocalBranchRootDir { get; set; }
 
         [Required]
         public string LocalBranchRootDir
@@ -75,7 +71,10 @@ namespace Microsoft.Azure.Build.BootstrapTasks
                 }
             }
         }
+        #endregion
 
+        #region
+        public bool UseLatest { get; set; }
         public string RemoteBranchName
         {
             get
@@ -225,6 +224,7 @@ namespace Microsoft.Azure.Build.BootstrapTasks
         {
             LocalBranchRootDir = localRootDir;
             RemoteRootDir = remoteRootDir;
+            UseLatest = true;
             Init();
         }
         /// <summary>
@@ -347,7 +347,15 @@ namespace Microsoft.Azure.Build.BootstrapTasks
 
             try
             {
-                req = (HttpWebRequest)WebRequest.Create(AKAMS_URI);
+                if(UseLatest == true)
+                {
+                    req = (HttpWebRequest)WebRequest.Create(LATEST_AKAMS_URI);
+                }
+                else
+                {
+                    req = (HttpWebRequest)WebRequest.Create(LKG_AKAMS_URI);
+                }
+
                 req.Method = "HEAD";
                 //req.AllowAutoRedirect = false;
 
