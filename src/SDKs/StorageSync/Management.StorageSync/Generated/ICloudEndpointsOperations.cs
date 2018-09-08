@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CloudEndpoint,CloudEndpointsCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CloudEndpoint,CloudEndpointsCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a given CloudEndpoint.
         /// </summary>
@@ -332,7 +332,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CloudEndpoint,CloudEndpointsCreateHeaders>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CloudEndpoint,CloudEndpointsCreateHeaders>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a given CloudEndpoint.
         /// </summary>

@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerEndpoint,ServerEndpointsCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, ServerEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerEndpoint,ServerEndpointsCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, ServerEndpointCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Patch a given ServerEndpoint.
         /// </summary>
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerEndpoint,ServerEndpointsCreateHeaders>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, ServerEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerEndpoint,ServerEndpointsCreateHeaders>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, ServerEndpointCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Patch a given ServerEndpoint.
         /// </summary>

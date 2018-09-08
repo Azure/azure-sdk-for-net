@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<StorageSyncService>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, StorageSyncService parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageSyncService>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, StorageSyncServiceCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a given StorageSyncService.
         /// </summary>

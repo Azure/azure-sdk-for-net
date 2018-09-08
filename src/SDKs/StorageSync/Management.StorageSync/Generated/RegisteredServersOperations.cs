@@ -546,7 +546,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<RegisteredServer,RegisteredServersCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string serverId, RegisteredServer parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RegisteredServer,RegisteredServersCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string serverId, RegisteredServerCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<RegisteredServer,RegisteredServersCreateHeaders> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, serverId, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -614,7 +614,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegisteredServer,RegisteredServersCreateHeaders>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string serverId, RegisteredServer parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RegisteredServer,RegisteredServersCreateHeaders>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string serverId, RegisteredServerCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {

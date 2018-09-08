@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ServerEndpoint,ServerEndpointsCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, ServerEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServerEndpoint,ServerEndpointsCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, ServerEndpointCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<ServerEndpoint,ServerEndpointsCreateHeaders> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -700,7 +700,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ServerEndpoint,ServerEndpointsCreateHeaders>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, ServerEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServerEndpoint,ServerEndpointsCreateHeaders>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, ServerEndpointCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {

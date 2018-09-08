@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='parameters'>
             /// Body of Registered Server object.
             /// </param>
-            public static RegisteredServer Create(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, RegisteredServer parameters)
+            public static RegisteredServer Create(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, RegisteredServerCreateParameters parameters)
             {
                 return operations.CreateAsync(resourceGroupName, storageSyncServiceName, serverId, parameters).GetAwaiter().GetResult();
             }
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegisteredServer> CreateAsync(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, RegisteredServer parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegisteredServer> CreateAsync(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, RegisteredServerCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, serverId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='parameters'>
             /// Body of Registered Server object.
             /// </param>
-            public static RegisteredServer BeginCreate(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, RegisteredServer parameters)
+            public static RegisteredServer BeginCreate(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, RegisteredServerCreateParameters parameters)
             {
                 return operations.BeginCreateAsync(resourceGroupName, storageSyncServiceName, serverId, parameters).GetAwaiter().GetResult();
             }
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegisteredServer> BeginCreateAsync(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, RegisteredServer parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegisteredServer> BeginCreateAsync(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, RegisteredServerCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, serverId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

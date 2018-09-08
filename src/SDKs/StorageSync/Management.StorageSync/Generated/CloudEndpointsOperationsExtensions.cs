@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='parameters'>
             /// Body of Cloud Endpoint resource.
             /// </param>
-            public static CloudEndpoint Create(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpoint parameters)
+            public static CloudEndpoint Create(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateParameters parameters)
             {
                 return operations.CreateAsync(resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, parameters).GetAwaiter().GetResult();
             }
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CloudEndpoint> CreateAsync(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpoint parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CloudEndpoint> CreateAsync(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -536,7 +536,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='parameters'>
             /// Body of Cloud Endpoint resource.
             /// </param>
-            public static CloudEndpoint BeginCreate(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpoint parameters)
+            public static CloudEndpoint BeginCreate(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateParameters parameters)
             {
                 return operations.BeginCreateAsync(resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, parameters).GetAwaiter().GetResult();
             }
@@ -565,7 +565,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CloudEndpoint> BeginCreateAsync(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpoint parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CloudEndpoint> BeginCreateAsync(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, CloudEndpointCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

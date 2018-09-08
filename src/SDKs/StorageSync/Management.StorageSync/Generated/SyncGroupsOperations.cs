@@ -295,8 +295,8 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <param name='syncGroupName'>
         /// Name of Sync Group resource.
         /// </param>
-        /// <param name='uniqueId'>
-        /// Unique Id
+        /// <param name='parameters'>
+        /// Sync Group Body
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SyncGroup,SyncGroupsCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string uniqueId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SyncGroup,SyncGroupsCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, SyncGroupCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -370,10 +370,9 @@ namespace Microsoft.Azure.Management.StorageSync
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "syncGroupName");
             }
-            SyncGroup parameters = new SyncGroup();
-            if (uniqueId != null)
+            if (parameters == null)
             {
-                parameters.UniqueId = uniqueId;
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

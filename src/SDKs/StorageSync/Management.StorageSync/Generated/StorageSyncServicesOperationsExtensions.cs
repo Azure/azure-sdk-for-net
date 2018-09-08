@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='parameters'>
             /// Storage Sync Service resource name.
             /// </param>
-            public static StorageSyncService Create(this IStorageSyncServicesOperations operations, string resourceGroupName, string storageSyncServiceName, StorageSyncService parameters)
+            public static StorageSyncService Create(this IStorageSyncServicesOperations operations, string resourceGroupName, string storageSyncServiceName, StorageSyncServiceCreateParameters parameters)
             {
                 return operations.CreateAsync(resourceGroupName, storageSyncServiceName, parameters).GetAwaiter().GetResult();
             }
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageSyncService> CreateAsync(this IStorageSyncServicesOperations operations, string resourceGroupName, string storageSyncServiceName, StorageSyncService parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageSyncService> CreateAsync(this IStorageSyncServicesOperations operations, string resourceGroupName, string storageSyncServiceName, StorageSyncServiceCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

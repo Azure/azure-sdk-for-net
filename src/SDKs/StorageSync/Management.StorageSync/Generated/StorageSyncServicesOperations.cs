@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<StorageSyncService>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, StorageSyncService parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageSyncService>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, StorageSyncServiceCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -353,10 +353,6 @@ namespace Microsoft.Azure.Management.StorageSync
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
-            if (parameters != null)
-            {
-                parameters.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
