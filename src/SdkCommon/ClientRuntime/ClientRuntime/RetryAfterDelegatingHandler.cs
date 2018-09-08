@@ -45,7 +45,7 @@ namespace Microsoft.Rest
             CancellationToken cancellationToken)
         {
             do {
-                var response = await base.SendAsync(request, cancellationToken);
+                var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
                 
                 // if they send back a 429
                 if( response.StatusCode == ((HttpStatusCode)429) ) {
