@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="addressPrefix">The address prefix for the
         /// subnet.</param>
+        /// <param name="addressPrefixes">List of  address prefixes for the
+        /// subnet.</param>
         /// <param name="networkSecurityGroup">The reference of the
         /// NetworkSecurityGroup resource.</param>
         /// <param name="routeTable">The reference of the RouteTable
@@ -45,10 +47,17 @@ namespace Microsoft.Azure.Management.Network.Models
         /// endpoints.</param>
         /// <param name="serviceEndpointPolicies">An array of service endpoint
         /// policies.</param>
+        /// <param name="interfaceEndpoints">An array of references to
+        /// interface endpoints </param>
         /// <param name="ipConfigurations">Gets an array of references to the
         /// network interface IP configurations using subnet.</param>
         /// <param name="resourceNavigationLinks">Gets an array of references
         /// to the external resources using subnet.</param>
+        /// <param name="delegations">Gets an array of references to the
+        /// delegations on the subnet.</param>
+        /// <param name="purpose">A read-only string identifying the intention
+        /// of use for this subnet based on delegations and other user-defined
+        /// properties.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource.</param>
         /// <param name="name">The name of the resource that is unique within a
@@ -56,16 +65,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public Subnet(string id = default(string), string addressPrefix = default(string), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), RouteTable routeTable = default(RouteTable), IList<ServiceEndpointPropertiesFormat> serviceEndpoints = default(IList<ServiceEndpointPropertiesFormat>), IList<ServiceEndpointPolicy> serviceEndpointPolicies = default(IList<ServiceEndpointPolicy>), IList<IPConfiguration> ipConfigurations = default(IList<IPConfiguration>), IList<ResourceNavigationLink> resourceNavigationLinks = default(IList<ResourceNavigationLink>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public Subnet(string id = default(string), string addressPrefix = default(string), IList<string> addressPrefixes = default(IList<string>), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), RouteTable routeTable = default(RouteTable), IList<ServiceEndpointPropertiesFormat> serviceEndpoints = default(IList<ServiceEndpointPropertiesFormat>), IList<ServiceEndpointPolicy> serviceEndpointPolicies = default(IList<ServiceEndpointPolicy>), IList<SubResource> interfaceEndpoints = default(IList<SubResource>), IList<IPConfiguration> ipConfigurations = default(IList<IPConfiguration>), IList<ResourceNavigationLink> resourceNavigationLinks = default(IList<ResourceNavigationLink>), IList<Delegation> delegations = default(IList<Delegation>), string purpose = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             AddressPrefix = addressPrefix;
+            AddressPrefixes = addressPrefixes;
             NetworkSecurityGroup = networkSecurityGroup;
             RouteTable = routeTable;
             ServiceEndpoints = serviceEndpoints;
             ServiceEndpointPolicies = serviceEndpointPolicies;
+            InterfaceEndpoints = interfaceEndpoints;
             IpConfigurations = ipConfigurations;
             ResourceNavigationLinks = resourceNavigationLinks;
+            Delegations = delegations;
+            Purpose = purpose;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -82,6 +95,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.addressPrefix")]
         public string AddressPrefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of  address prefixes for the subnet.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.addressPrefixes")]
+        public IList<string> AddressPrefixes { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the NetworkSecurityGroup resource.
@@ -108,6 +127,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ServiceEndpointPolicy> ServiceEndpointPolicies { get; set; }
 
         /// <summary>
+        /// Gets or sets an array of references to interface endpoints
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.interfaceEndpoints")]
+        public IList<SubResource> InterfaceEndpoints { get; set; }
+
+        /// <summary>
         /// Gets an array of references to the network interface IP
         /// configurations using subnet.
         /// </summary>
@@ -119,6 +144,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceNavigationLinks")]
         public IList<ResourceNavigationLink> ResourceNavigationLinks { get; set; }
+
+        /// <summary>
+        /// Gets an array of references to the delegations on the subnet.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.delegations")]
+        public IList<Delegation> Delegations { get; set; }
+
+        /// <summary>
+        /// Gets a read-only string identifying the intention of use for this
+        /// subnet based on delegations and other user-defined properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.purpose")]
+        public string Purpose { get; private set; }
 
         /// <summary>
         /// Gets or sets the provisioning state of the resource.
