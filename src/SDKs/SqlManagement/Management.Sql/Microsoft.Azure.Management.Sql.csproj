@@ -12,8 +12,8 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Support database sensitivity labels.
 - Added support for Managed Instance keys and encryption protectors.
+- Added support for DatabaseVulnerabilityAssessment.StorageAccountAccessKey, which causes DatabaseVulnerabilityAssessment.StorageContainerSasKey to no longer be a required property.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

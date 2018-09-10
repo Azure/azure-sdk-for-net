@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
@@ -31,7 +32,7 @@ namespace Sql.Tests
     {
         public const string DefaultLogin = "dummylogin";
         public const string DefaultPassword = "Un53cuRE!";
-        
+
         public const string TestPrefix = "sqlcrudtest-";
 
         public static string GenerateName(
@@ -97,7 +98,7 @@ namespace Sql.Tests
             // Location is being returned two different ways across different APIs.
             Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
         }
-        
+
         public static void ValidateDatabase(dynamic expected, Database actual, string name)
         {
             Assert.Equal(name, actual.Name);
@@ -209,7 +210,7 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.AssertCollection(expected.Tags, actual.Tags);
             }
         }
-		
+
 		public static void ValidateManagedDatabase(dynamic expected, ManagedDatabase actual, string name)
         {
             Assert.Equal(name, actual.Name);
@@ -332,7 +333,7 @@ namespace Sql.Tests
             Assert.Equal(expected.ReadOnlyEndpoint.FailoverPolicy, actual.ReadOnlyEndpoint.FailoverPolicy);
             Assert.Equal(expected.ReadWriteEndpoint.FailoverPolicy, actual.ReadWriteEndpoint.FailoverPolicy);
             Assert.Equal(expected.ReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes, actual.ReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes);
-            
+
             Assert.Equal(expected.ManagedInstancePairs.FirstOrDefault().PrimaryManagedInstanceId, actual.ManagedInstancePairs.FirstOrDefault().PrimaryManagedInstanceId);
             Assert.Equal(expected.ManagedInstancePairs.FirstOrDefault().PartnerManagedInstanceId, actual.ManagedInstancePairs.FirstOrDefault().PartnerManagedInstanceId);
         }
@@ -365,7 +366,7 @@ namespace Sql.Tests
             Assert.NotNull(actual.Id);
             Assert.Equal(expected.VirtualNetworkSubnetId, actual.VirtualNetworkSubnetId);
         }
-        
+
         internal static Task<Database[]> CreateDatabasesAsync(
             SqlManagementClient sqlClient,
             string resourceGroupName,
@@ -390,7 +391,7 @@ namespace Sql.Tests
             // Wait for all databases to be created.
             return Task.WhenAll(createDbTasks);
         }
-		
+
 		internal static Task<ManagedDatabase[]> CreateManagedDatabasesAsync(
             SqlManagementClient sqlClient,
             string resourceGroupName,
