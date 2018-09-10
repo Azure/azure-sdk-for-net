@@ -15,7 +15,7 @@
                 Increases the default long running operation retry timeout from 30 seconds to 3 minutes.
             ]]>
         </PackageReleaseNotes>
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <PropertyGroup>
