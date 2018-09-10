@@ -103,6 +103,17 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
+        public void Factories_GetGitHubAccessToken()
+        {
+            RunTest("Factories_GetGitHubAccessToken", (example, client, responseCode) =>
+            {
+                GitHubAccessTokenRequest request = new GitHubAccessTokenRequest("someCode", "https://github.com/login/oauth/access_token");
+                GitHubAccessTokenResponse resource = client.Factories.GetGitHubAccessToken(RGN(example), FN(example), request);
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
+        [Fact]
         public void IntegrationRuntimes_Create()
         {
             RunTest("IntegrationRuntimes_Create", (example, client, responseCode) =>
