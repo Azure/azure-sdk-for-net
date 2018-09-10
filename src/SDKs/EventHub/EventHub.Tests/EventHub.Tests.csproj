@@ -2,10 +2,11 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />  
   <PropertyGroup>
     <PackageId>EventHub.Tests</PackageId>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>
     <Description>EventHub.Tests Class Library</Description>
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>EventHub.Tests</AssemblyName>    
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>  
   <ItemGroup>
     <Compile Remove="Tests\ScenarioTests.ConsumergroupsTests.CRUD_Length.cs" />
@@ -17,10 +18,6 @@
     <Compile Remove="Tests\ScenarioTests.EventHubTests.CRUD.cs" />
     <Compile Remove="Tests\ScenarioTests.NamespaceTests.CRUDAuthorizationRules.cs" />
   </ItemGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->  
-
 
   <ItemGroup>
     <!-- <PackageReference Include="Microsoft.Azure.Management.EventHub" Version="1.2.0" /> -->

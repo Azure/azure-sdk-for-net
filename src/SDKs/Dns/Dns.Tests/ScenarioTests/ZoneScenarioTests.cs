@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 // Ensure that Id is parseable into resourceGroup
                 string resourceGroupName =
                     ExtractResourceGroupNameFromId(createdZone.Id);
-                Assert.True(resourceGroupName.Equals(resourceGroup.Name));
+                Assert.Equal(resourceGroupName, resourceGroup.Name);
 
                 // Retrieve the zone after create, verify response
                 var retrievedZone = dnsClient.Zones.Get(
@@ -406,10 +406,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     dnsClient.Zones.ListByResourceGroup(resourceGroup.Name, 1);
 
                 Assert.NotNull(listresponse);
-                Assert.Equal(1, listresponse.Count());
-                Assert.True(
-                    zoneNames.Any(
-                        zoneName => zoneName == listresponse.ElementAt(0).Name));
+                Assert.Single(listresponse);
+                Assert.Contains(zoneNames, zoneName => zoneName == listresponse.ElementAt(0).Name);
 
                 ZoneScenarioTests.DeleteZones(
                     dnsClient,
@@ -463,7 +461,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     dnsClient.Zones.ListByResourceGroupNext(
                         (listresponse.NextPageLink));
 
-                Assert.Equal(1, listresponse.Count());
+                Assert.Single(listresponse);
 
                 ZoneScenarioTests.DeleteZones(
                     dnsClient,
@@ -635,7 +633,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
         #region Helper methods
 
-        public static void CreateZones(
+        internal static void CreateZones(
             DnsManagementClient dnsClient,
             ResourceGroup resourceGroup,
             string[] zoneNames,
@@ -656,7 +654,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
             }
         }
 
-        public static void CreatePrivateZones(
+        internal static void CreatePrivateZones(
             DnsManagementClient dnsClient,
             ResourceGroup resourceGroup,
             IList<string> zonesNames,
@@ -679,7 +677,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
             }
         }
 
-        public static void DeleteZones(
+        internal static void DeleteZones(
             DnsManagementClient dnsClient,
             ResourceGroup resourceGroup,
             string[] zoneNames)
