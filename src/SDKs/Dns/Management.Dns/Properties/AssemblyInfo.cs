@@ -6,8 +6,8 @@ using System.Resources;
 
 [assembly: AssemblyTitle("Microsoft Azure DNS Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure DNS Resources.")]
-[assembly: AssemblyVersion("2.1.0.0")]
-[assembly: AssemblyFileVersion("2.2.0.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
