@@ -8,10 +8,6 @@
     <Version>1.0.0</Version>    
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
-  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Management.CognitiveServices\Microsoft.Azure.Management.CognitiveServices.csproj" />
