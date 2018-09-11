@@ -53,6 +53,15 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
             return rgname;
         }
 
+        public static void RemoveResourceGroup(IResourceManagementClient resourcesClient, string rgName)
+        {
+            if (!IsTestTenant)
+            {
+                resourcesClient.ResourceGroups.Delete(rgName);
+            }
+
+        }
+
         public static StorageSyncManagementClient GetStorageSyncManagementClient(MockContext context, RecordedDelegatingHandler handler = null)
         {
 

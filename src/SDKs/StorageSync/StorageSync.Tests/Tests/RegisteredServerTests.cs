@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
 
                 storageSyncManagementClient.RegisteredServers.Delete(resourceGroupName, storageSyncServiceResource.Name, serverGuid.ToString());
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -81,6 +82,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
 
                 storageSyncManagementClient.RegisteredServers.Delete(resourceGroupName, storageSyncServiceResource.Name, serverGuid.ToString());
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -118,6 +120,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
 
                 storageSyncManagementClient.RegisteredServers.Delete(resourceGroupName, storageSyncServiceResource.Name, serverGuid.ToString());
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -169,6 +172,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 // Delete RegisteredServer when it's been already deleted.
                 storageSyncManagementClient.RegisteredServers.Delete(resourceGroupName, storageSyncServiceResource.Name, serverGuid.ToString());
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
     }

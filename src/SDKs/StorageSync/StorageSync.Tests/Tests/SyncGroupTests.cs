@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
 
                 storageSyncManagementClient.SyncGroups.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName);
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
-
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
 
                 storageSyncManagementClient.SyncGroups.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName);
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
-
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
 
                 storageSyncManagementClient.SyncGroups.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName);
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
-
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
 
                 storageSyncManagementClient.SyncGroups.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName);
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
-
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 

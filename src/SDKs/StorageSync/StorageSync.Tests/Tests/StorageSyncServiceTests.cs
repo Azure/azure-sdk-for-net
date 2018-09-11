@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(resource, true);
 
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, resourceName);
+
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -67,6 +69,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(resource, true);
 
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, resourceName);
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
         [Fact]
@@ -93,6 +96,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(resource, false);
 
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, resourceName);
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -133,6 +137,8 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(resources.Single(r => r.Name == resourceName), false);
 
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, resourceName);
+
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -165,6 +171,8 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
 
                 // Delete StorageSyncService which was just deleted
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, resourceName);
+
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -203,6 +211,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 Assert.False(checkNameAvailabilityResult.NameAvailable.Value);
 
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, resourceName);
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -226,6 +235,8 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
 
                 // Try Create StorageSyncService
                 Assert.Throws<StorageSyncErrorException>(() => storageSyncManagementClient.StorageSyncServices.Create(resourceGroupName, resourceName, parameters));
+
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
     }

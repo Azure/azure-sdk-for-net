@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 storageSyncManagementClient.SyncGroups.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName);
                 storageSyncManagementClient.RegisteredServers.Delete(resourceGroupName, storageSyncServiceResource.Name, registeredServerResource.ServerId.Trim('"'));
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
-
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 

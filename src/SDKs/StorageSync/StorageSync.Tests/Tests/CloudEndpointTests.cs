@@ -50,6 +50,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 storageSyncManagementClient.CloudEndpoints.Delete(resourceGroupName, parentResource.Name, syncGroupName, cloudEndpointName);
                 storageSyncManagementClient.SyncGroups.Delete(resourceGroupName, parentResource.Name, syncGroupName);
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, parentResource.Name);
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -94,6 +95,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 storageSyncManagementClient.CloudEndpoints.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName, cloudEndpointName);
                 storageSyncManagementClient.SyncGroups.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName);
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -141,7 +143,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 storageSyncManagementClient.CloudEndpoints.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName, cloudEndpointName);
                 storageSyncManagementClient.SyncGroups.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName);
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
-
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
@@ -190,7 +192,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
 
                 storageSyncManagementClient.SyncGroups.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName);
                 storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
-
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
     }
