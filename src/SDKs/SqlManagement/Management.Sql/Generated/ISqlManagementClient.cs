@@ -328,11 +328,6 @@ namespace Microsoft.Azure.Management.Sql
         IManagedDatabasesOperations ManagedDatabases { get; }
 
         /// <summary>
-        /// Gets the ISensitivityLabelsOperations.
-        /// </summary>
-        ISensitivityLabelsOperations SensitivityLabels { get; }
-
-        /// <summary>
         /// Gets the IServerAutomaticTuningOperations.
         /// </summary>
         IServerAutomaticTuningOperations ServerAutomaticTuning { get; }

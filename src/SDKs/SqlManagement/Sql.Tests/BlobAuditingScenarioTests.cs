@@ -1,4 +1,7 @@
-﻿using Microsoft.Azure.Management.ResourceManager.Models;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Management.Storage;
@@ -45,7 +48,7 @@ namespace Sql.Tests
                 VerifyServerBlobAuditingPolicy(serverPolicy, serverResultPolicy);
                 serverResultPolicy = await client.ServerBlobAuditingPolicies.GetAsync(resourceGroup.Name, server.Name);
                 VerifyServerBlobAuditingPolicy(serverPolicy, serverResultPolicy);
-                
+
                 ExtendedServerBlobAuditingPolicy extendedServerResultPolicy = await client.ExtendedServerBlobAuditingPolicies.CreateOrUpdateAsync(resourceGroup.Name, server.Name, extendedServerPolicy);
                 VerifyExtendedServerBlobAuditingPolicy(extendedServerPolicy, extendedServerResultPolicy);
                 extendedServerResultPolicy = await client.ExtendedServerBlobAuditingPolicies.GetAsync(resourceGroup.Name, server.Name);
