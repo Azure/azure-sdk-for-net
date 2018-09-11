@@ -40,9 +40,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="applicationRuleCollections">Collection of application
-        /// rule collections used by a Azure Firewall.</param>
+        /// rule collections used by Azure Firewall.</param>
+        /// <param name="natRuleCollections">Collection of NAT rule collections
+        /// used by Azure Firewall.</param>
         /// <param name="networkRuleCollections">Collection of network rule
-        /// collections used by a Azure Firewall.</param>
+        /// collections used by Azure Firewall.</param>
         /// <param name="ipConfigurations">IP configuration of the Azure
         /// Firewall resource.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -50,10 +52,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deleting', 'Failed'</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public AzureFirewall(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections = default(IList<AzureFirewallApplicationRuleCollection>), IList<AzureFirewallNetworkRuleCollection> networkRuleCollections = default(IList<AzureFirewallNetworkRuleCollection>), IList<AzureFirewallIPConfiguration> ipConfigurations = default(IList<AzureFirewallIPConfiguration>), string provisioningState = default(string), string etag = default(string))
+        public AzureFirewall(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections = default(IList<AzureFirewallApplicationRuleCollection>), IList<AzureFirewallNatRuleCollection> natRuleCollections = default(IList<AzureFirewallNatRuleCollection>), IList<AzureFirewallNetworkRuleCollection> networkRuleCollections = default(IList<AzureFirewallNetworkRuleCollection>), IList<AzureFirewallIPConfiguration> ipConfigurations = default(IList<AzureFirewallIPConfiguration>), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             ApplicationRuleCollections = applicationRuleCollections;
+            NatRuleCollections = natRuleCollections;
             NetworkRuleCollections = networkRuleCollections;
             IpConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
@@ -67,14 +70,21 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets collection of application rule collections used by a
+        /// Gets or sets collection of application rule collections used by
         /// Azure Firewall.
         /// </summary>
         [JsonProperty(PropertyName = "properties.applicationRuleCollections")]
         public IList<AzureFirewallApplicationRuleCollection> ApplicationRuleCollections { get; set; }
 
         /// <summary>
-        /// Gets or sets collection of network rule collections used by a Azure
+        /// Gets or sets collection of NAT rule collections used by Azure
+        /// Firewall.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.natRuleCollections")]
+        public IList<AzureFirewallNatRuleCollection> NatRuleCollections { get; set; }
+
+        /// <summary>
+        /// Gets or sets collection of network rule collections used by Azure
         /// Firewall.
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkRuleCollections")]

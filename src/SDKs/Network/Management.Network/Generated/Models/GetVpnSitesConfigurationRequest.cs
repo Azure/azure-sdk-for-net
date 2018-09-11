@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// which config is to be downloaded.</param>
         /// <param name="outputBlobSasUrl">The sas-url to download the
         /// configurations for vpn-sites</param>
-        public GetVpnSitesConfigurationRequest(IList<SubResource> vpnSites = default(IList<SubResource>), string outputBlobSasUrl = default(string))
+        public GetVpnSitesConfigurationRequest(IList<string> vpnSites = default(IList<string>), string outputBlobSasUrl = default(string))
         {
             VpnSites = vpnSites;
             OutputBlobSasUrl = outputBlobSasUrl;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// is to be downloaded.
         /// </summary>
         [JsonProperty(PropertyName = "vpnSites")]
-        public IList<SubResource> VpnSites { get; set; }
+        public IList<string> VpnSites { get; set; }
 
         /// <summary>
         /// Gets or sets the sas-url to download the configurations for
