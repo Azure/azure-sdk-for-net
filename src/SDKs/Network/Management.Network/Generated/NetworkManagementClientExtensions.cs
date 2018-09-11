@@ -65,5 +65,47 @@ namespace Microsoft.Azure.Management.Network
                 }
             }
 
+            /// <summary>
+            /// Gives the supported security providers for the virtual wan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='virtualWANName'>
+            /// The name of the VirtualWAN for which supported security providers are
+            /// needed.
+            /// </param>
+            public static VirtualWanSecurityProviders SupportedSecurityProviders(this INetworkManagementClient operations, string resourceGroupName, string virtualWANName)
+            {
+                return operations.SupportedSecurityProvidersAsync(resourceGroupName, virtualWANName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gives the supported security providers for the virtual wan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='virtualWANName'>
+            /// The name of the VirtualWAN for which supported security providers are
+            /// needed.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualWanSecurityProviders> SupportedSecurityProvidersAsync(this INetworkManagementClient operations, string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SupportedSecurityProvidersWithHttpMessagesAsync(resourceGroupName, virtualWANName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

@@ -206,6 +206,29 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<VirtualNetworkGateway>> ResetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Resets the VPN client shared key of the virtual network gateway in
+        /// the specified resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualNetworkGatewayName'>
+        /// The name of the virtual network gateway.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> ResetVpnClientSharedKeyWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Generates VPN client package for P2S client of the virtual network
         /// gateway in the specified resource group.
         /// </summary>
@@ -602,6 +625,29 @@ namespace Microsoft.Azure.Management.Network
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<VirtualNetworkGateway>> BeginResetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Resets the VPN client shared key of the virtual network gateway in
+        /// the specified resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualNetworkGatewayName'>
+        /// The name of the virtual network gateway.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginResetVpnClientSharedKeyWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Generates VPN client package for P2S client of the virtual network
         /// gateway in the specified resource group.
