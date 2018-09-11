@@ -40,11 +40,11 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the URL of the site to return similar images and similar
-        /// products from. (e.g., "www.bing.com", "bing.com").
+        /// Gets or sets the URL of the site to return similar images and
+        /// similar products from. (e.g., "www.bing.com", "bing.com").
         /// </summary>
         [JsonProperty(PropertyName = "site")]
-        public string Site { get; private set; }
+        public string Site { get; set; }
 
     }
 }
