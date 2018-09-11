@@ -14,27 +14,27 @@ namespace Microsoft.Azure.Management.StorageSync.Models
     using System.Linq;
 
     /// <summary>
-    /// Error type
+    /// The parameters used when calling recall action on server endpoint.
     /// </summary>
-    public partial class StorageSyncError
+    public partial class RecallActionParameters
     {
         /// <summary>
-        /// Initializes a new instance of the StorageSyncError class.
+        /// Initializes a new instance of the RecallActionParameters class.
         /// </summary>
-        public StorageSyncError()
+        public RecallActionParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageSyncError class.
+        /// Initializes a new instance of the RecallActionParameters class.
         /// </summary>
-        /// <param name="error">Error details of the given entry.</param>
-        /// <param name="innererror">Error details of the given entry.</param>
-        public StorageSyncError(StorageSyncApiError error = default(StorageSyncApiError), StorageSyncApiError innererror = default(StorageSyncApiError))
+        /// <param name="pattern">Pattern of the files.</param>
+        /// <param name="recallPath">Recall path.</param>
+        public RecallActionParameters(string pattern = default(string), string recallPath = default(string))
         {
-            Error = error;
-            Innererror = innererror;
+            Pattern = pattern;
+            RecallPath = recallPath;
             CustomInit();
         }
 
@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error details of the given entry.
+        /// Gets or sets pattern of the files.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public StorageSyncApiError Error { get; set; }
+        [JsonProperty(PropertyName = "pattern")]
+        public string Pattern { get; set; }
 
         /// <summary>
-        /// Gets or sets error details of the given entry.
+        /// Gets or sets recall path.
         /// </summary>
-        [JsonProperty(PropertyName = "innererror")]
-        public StorageSyncApiError Innererror { get; set; }
+        [JsonProperty(PropertyName = "recallPath")]
+        public string RecallPath { get; set; }
 
     }
 }

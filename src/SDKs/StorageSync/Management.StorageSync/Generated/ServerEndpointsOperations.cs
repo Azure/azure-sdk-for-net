@@ -648,16 +648,19 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <param name='serverEndpointName'>
         /// Name of Server Endpoint object.
         /// </param>
+        /// <param name='parameters'>
+        /// Body of Recall Action object.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationHeaderResponse<ServerEndpointsRecallActionHeaders>> RecallActionWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<ServerEndpointsRecallActionHeaders>> RecallActionWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationHeaderResponse<ServerEndpointsRecallActionHeaders> _response = await BeginRecallActionWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationHeaderResponse<ServerEndpointsRecallActionHeaders> _response = await BeginRecallActionWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1436,6 +1439,9 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <param name='serverEndpointName'>
         /// Name of Server Endpoint object.
         /// </param>
+        /// <param name='parameters'>
+        /// Body of Recall Action object.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1454,7 +1460,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<ServerEndpointsRecallActionHeaders>> BeginRecallActionWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<ServerEndpointsRecallActionHeaders>> BeginRecallActionWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1509,6 +1515,10 @@ namespace Microsoft.Azure.Management.StorageSync
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverEndpointName");
             }
+            if (parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1520,6 +1530,7 @@ namespace Microsoft.Azure.Management.StorageSync
                 tracingParameters.Add("storageSyncServiceName", storageSyncServiceName);
                 tracingParameters.Add("syncGroupName", syncGroupName);
                 tracingParameters.Add("serverEndpointName", serverEndpointName);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginRecallAction", tracingParameters);
             }
@@ -1574,6 +1585,12 @@ namespace Microsoft.Azure.Management.StorageSync
 
             // Serialize Request
             string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {

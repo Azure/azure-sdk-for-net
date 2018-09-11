@@ -193,6 +193,9 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <param name='serverEndpointName'>
         /// Name of Server Endpoint object.
         /// </param>
+        /// <param name='parameters'>
+        /// Body of Recall Action object.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -205,7 +208,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<ServerEndpointsRecallActionHeaders>> RecallActionWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<ServerEndpointsRecallActionHeaders>> RecallActionWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create a new ServerEndpoint.
         /// </summary>
@@ -317,6 +320,9 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <param name='serverEndpointName'>
         /// Name of Server Endpoint object.
         /// </param>
+        /// <param name='parameters'>
+        /// Body of Recall Action object.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -329,6 +335,6 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<ServerEndpointsRecallActionHeaders>> BeginRecallActionWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<ServerEndpointsRecallActionHeaders>> BeginRecallActionWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

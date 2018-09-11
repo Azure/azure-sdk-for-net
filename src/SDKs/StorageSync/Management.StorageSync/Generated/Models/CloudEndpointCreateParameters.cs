@@ -36,6 +36,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// Initializes a new instance of the CloudEndpointCreateParameters
         /// class.
         /// </summary>
+        /// <param name="location">Required. Gets or sets the location of the
+        /// resource. This will be one of the supported and registered Azure
+        /// Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo
+        /// region of a resource cannot be changed once it is created, but if
+        /// an identical geo region is specified on update, the request will
+        /// succeed.</param>
         /// <param name="tags">Gets or sets a list of key value pairs that
         /// describe the resource. These tags can be used for viewing and
         /// grouping this resource (across resource groups). A maximum of 15
@@ -48,8 +54,9 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// name</param>
         /// <param name="storageAccountTenantId">Storage Account Tenant
         /// Id</param>
-        public CloudEndpointCreateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string storageAccountResourceId = default(string), string storageAccountShareName = default(string), string storageAccountTenantId = default(string))
+        public CloudEndpointCreateParameters(string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string storageAccountResourceId = default(string), string storageAccountShareName = default(string), string storageAccountTenantId = default(string))
         {
+            Location = location;
             Tags = tags;
             StorageAccountResourceId = storageAccountResourceId;
             StorageAccountShareName = storageAccountShareName;
@@ -61,6 +68,16 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets required. Gets or sets the location of the resource.
+        /// This will be one of the supported and registered Azure Geo Regions
+        /// (e.g. West US, East US, Southeast Asia, etc.). The geo region of a
+        /// resource cannot be changed once it is created, but if an identical
+        /// geo region is specified on update, the request will succeed.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets a list of key value pairs that describe the resource.

@@ -307,9 +307,12 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='serverEndpointName'>
             /// Name of Server Endpoint object.
             /// </param>
-            public static ServerEndpointsRecallActionHeaders RecallAction(this IServerEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName)
+            /// <param name='parameters'>
+            /// Body of Recall Action object.
+            /// </param>
+            public static ServerEndpointsRecallActionHeaders RecallAction(this IServerEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionParameters parameters)
             {
-                return operations.RecallActionAsync(resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName).GetAwaiter().GetResult();
+                return operations.RecallActionAsync(resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -330,12 +333,15 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='serverEndpointName'>
             /// Name of Server Endpoint object.
             /// </param>
+            /// <param name='parameters'>
+            /// Body of Recall Action object.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServerEndpointsRecallActionHeaders> RecallActionAsync(this IServerEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerEndpointsRecallActionHeaders> RecallActionAsync(this IServerEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RecallActionWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RecallActionWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -527,9 +533,12 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='serverEndpointName'>
             /// Name of Server Endpoint object.
             /// </param>
-            public static ServerEndpointsRecallActionHeaders BeginRecallAction(this IServerEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName)
+            /// <param name='parameters'>
+            /// Body of Recall Action object.
+            /// </param>
+            public static ServerEndpointsRecallActionHeaders BeginRecallAction(this IServerEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionParameters parameters)
             {
-                return operations.BeginRecallActionAsync(resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName).GetAwaiter().GetResult();
+                return operations.BeginRecallActionAsync(resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -550,12 +559,15 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='serverEndpointName'>
             /// Name of Server Endpoint object.
             /// </param>
+            /// <param name='parameters'>
+            /// Body of Recall Action object.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServerEndpointsRecallActionHeaders> BeginRecallActionAsync(this IServerEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServerEndpointsRecallActionHeaders> BeginRecallActionAsync(this IServerEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginRecallActionWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginRecallActionWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
