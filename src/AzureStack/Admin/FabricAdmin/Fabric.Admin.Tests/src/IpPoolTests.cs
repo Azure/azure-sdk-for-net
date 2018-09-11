@@ -109,7 +109,6 @@ namespace Fabric.Tests
 
                 var status = client.IpPools.CreateOrUpdate(ResourceGroupName, fabricLocationName, ipPoolName, ipPool);
                 Assert.NotNull(status);
-                Assert.Equal(SUCCESS_MSG, status.ProvisioningStateProperty);
 
             });
         }
@@ -126,7 +125,6 @@ namespace Fabric.Tests
 
                 var status = client.IpPools.CreateOrUpdate(ResourceGroupName, fabricLocationName, ipPoolName, ipPool);
                 Assert.NotNull(status);
-                Assert.Equal(SUCCESS_MSG, status.ProvisioningStateProperty);
 
             });
         }
