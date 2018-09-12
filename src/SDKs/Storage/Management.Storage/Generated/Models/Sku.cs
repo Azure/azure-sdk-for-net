@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// creation; optional for update. Note that in older versions, sku
         /// name was called accountType. Possible values include:
         /// 'Standard_LRS', 'Standard_GRS', 'Standard_RAGRS', 'Standard_ZRS',
-        /// 'Premium_LRS', 'Premium_ZRS'</param>
+        /// 'Premium_LRS'</param>
         /// <param name="tier">Gets the sku tier. This is based on the SKU
         /// name. Possible values include: 'Standard', 'Premium'</param>
         /// <param name="resourceType">The type of the resource, usually it is
@@ -72,8 +72,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Gets or sets the sku name. Required for account creation; optional
         /// for update. Note that in older versions, sku name was called
         /// accountType. Possible values include: 'Standard_LRS',
-        /// 'Standard_GRS', 'Standard_RAGRS', 'Standard_ZRS', 'Premium_LRS',
-        /// 'Premium_ZRS'
+        /// 'Standard_GRS', 'Standard_RAGRS', 'Standard_ZRS', 'Premium_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public SkuName Name { get; set; }

@@ -30,9 +30,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         [EnumMember(Value = "Standard_ZRS")]
         StandardZRS,
         [EnumMember(Value = "Premium_LRS")]
-        PremiumLRS,
-        [EnumMember(Value = "Premium_ZRS")]
-        PremiumZRS
+        PremiumLRS
     }
     internal static class SkuNameEnumExtension
     {
@@ -55,8 +53,6 @@ namespace Microsoft.Azure.Management.Storage.Models
                     return "Standard_ZRS";
                 case SkuName.PremiumLRS:
                     return "Premium_LRS";
-                case SkuName.PremiumZRS:
-                    return "Premium_ZRS";
             }
             return null;
         }
@@ -75,8 +71,6 @@ namespace Microsoft.Azure.Management.Storage.Models
                     return SkuName.StandardZRS;
                 case "Premium_LRS":
                     return SkuName.PremiumLRS;
-                case "Premium_ZRS":
-                    return SkuName.PremiumZRS;
             }
             return null;
         }
