@@ -1799,44 +1799,48 @@ namespace Storage.Tests
             }
         }
 
-        //[Fact]
-        //public void StorageAccountCreateUpdateWithFileAadIntegration()
-        //{
-        //    var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+        [Fact]
+        public void StorageAccountCreateSetGetFileAadIntegration()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-        //    using (MockContext context = MockContext.Start(this.GetType().FullName))
-        //    {
-        //        var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-        //        var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
-        //        // Create resource group
-        //        var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-        //        // Create storage account with StorageV2
-        //        string accountName = TestUtilities.GenerateName("sto");
-        //        var parameters = new StorageAccountCreateParameters
-        //        {
-        //            Sku = new Sku { Name = SkuName.StandardLRS },
-        //            Kind = Kind.StorageV2,
-        //            EnableAzureFilesAadIntegration = true,
-        //            AccessTier = AccessTier.Hot,
-        //            Location = StorageManagementTestUtilities.DefaultLocation
-        //        };
-        //        StorageAccount account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
-        //        StorageManagementTestUtilities.VerifyAccountProperties(account, false);
-        //        Assert.True(account.EnableAzureFilesAadIntegration);
-        //        Assert.Equal(Kind.BlobStorage, account.Kind);
-        //        Assert.Equal(SkuName.StandardRAGRS, account.Sku.Name);
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardGRS },
+                    Kind = Kind.StorageV2,
+                    EnableAzureFilesAadIntegration = true,
+                    Location = "westus"
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                Assert.True(account.EnableAzureFilesAadIntegration);
 
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.True(account.EnableAzureFilesAadIntegration);
 
-        //        var updateParameters = new StorageAccountUpdateParameters
-        //        {
-        //            EnableAzureFilesAadIntegration =false
-        //        };
-        //        storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
-        //        account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
-        //        Assert.False(account.EnableAzureFilesAadIntegration);
-        //    }
-        //}
+                // Update storage account 
+                var updateParameters = new StorageAccountUpdateParameters
+                {
+                    EnableAzureFilesAadIntegration = false,
+                    EnableHttpsTrafficOnly = true
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                Assert.False(account.EnableAzureFilesAadIntegration);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.False(account.EnableAzureFilesAadIntegration);
+            }
+        }
     }
 }
