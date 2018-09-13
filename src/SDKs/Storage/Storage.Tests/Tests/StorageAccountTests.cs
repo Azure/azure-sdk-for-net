@@ -1618,7 +1618,98 @@ namespace Storage.Tests
                 Assert.NotNull(account.PrimaryEndpoints.Web);
             }
         }
-        
+
+        [Fact]
+        public void StorageAccountSetGetDeleteManagementPolicy()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardGRS },
+                    Kind = Kind.StorageV2,
+                    Location = StorageManagementTestUtilities.DefaultLocation
+                };
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+
+                string rules = @"{
+    ""version"":""0.5"",
+    ""rules"":
+    [{
+        ""name"": ""olcmtest"",
+        ""type"": ""Lifecycle"",
+        ""definition"": {
+            ""filters"":
+            {
+                ""blobTypes"":[""blockBlob""],
+                ""prefixMatch"":[""olcmtestcontainer""]
+            },
+            ""actions"":
+            {
+                ""baseBlob"":
+                {
+                    ""tierToCool"":
+                    {
+                        ""daysAfterModificationGreaterThan"":1000.0
+                    },
+					""tierToArchive"" : {
+						""daysAfterModificationGreaterThan"" : 90.0
+					},
+                    ""delete"":
+                    {
+                        ""daysAfterModificationGreaterThan"":1000.0
+                    }
+                },
+				""snapshot"":
+                {
+                    ""delete"":
+                    {
+                        ""daysAfterCreationGreaterThan"":5000.0
+                    }
+                }
+            }
+        }
+    }]
+}";
+                //Set Management Policies
+                Newtonsoft.Json.Linq.JObject rule1 = Newtonsoft.Json.Linq.JObject.Parse(rules);
+                StorageAccountManagementPolicies policy = storageMgmtClient.ManagementPolicies.CreateOrUpdate(rgname, accountName, rule1);
+                Assert.Equal(Regex.Replace(rules, @"\r\n?|\n|\t| ", ""), Regex.Replace(policy.Policy.ToString(), @"\r\n?|\n|\t| ", ""));
+
+                //Get Management Policies
+                policy = storageMgmtClient.ManagementPolicies.Get(rgname, accountName);
+                Assert.Equal(Regex.Replace(rules, @"\r\n?|\n|\t| ", ""), Regex.Replace(policy.Policy.ToString(), @"\r\n?|\n|\t| ", ""));
+
+                //Delete Management Policies, and check policy not exist 
+                storageMgmtClient.ManagementPolicies.Delete(rgname, accountName);
+                bool dataPolicyExist = true;
+                try
+                {
+                    policy = storageMgmtClient.ManagementPolicies.Get(rgname, accountName);
+                }
+                catch (Microsoft.Rest.Azure.CloudException cloudException)
+                {
+                    Assert.Equal(System.Net.HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+                    dataPolicyExist = false;
+                }
+                Assert.False(dataPolicyExist);
+
+                //Delete not exist Management Policies will not fail
+                storageMgmtClient.ManagementPolicies.Delete(rgname, accountName);
+            }
+        }
+
+
         [Fact]
         public void StorageAccountCreateGetdfs()
         {
