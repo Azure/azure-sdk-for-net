@@ -39,8 +39,8 @@ namespace ServiceBus.Tests.ScenarioTests
                         Location = location,
                         Sku = new SBSku
                         {
-                            Name = SkuName.Standard,
-                            Tier = SkuTier.Standard
+                            Name = SkuName.Premium,
+                            Tier = SkuTier.Premium
                         },
                         Tags = new Dictionary<string, string>()
                         {
@@ -68,7 +68,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 var virtualNetworkRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.VirtualNetworkRulesPrefix);
                 var createVirtualNetworkRuleParameter = new VirtualNetworkRule()
                 {
-                    VirtualNetworkSubnetId = @"/subscriptions/"+ ServiceBusManagementClient.SubscriptionId+ "/resourceGroups/EventHubClusterRG/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/default"
+                    VirtualNetworkSubnetId = @"/subscriptions/"+ ServiceBusManagementClient.SubscriptionId+ "/resourceGroups/EventHubClusterRG/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbdefault"
                 };
 
                 var createNamespaceVirtualNetworkResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdateVirtualNetworkRule(resourceGroup, namespaceName,
@@ -90,7 +90,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Contains(getAllVirtualNetworkRulesResponse, ns => ns.Name == virtualNetworkRuleName);
                                
                 VirtualNetworkRule updateVirtualNetworkRuleParameter = new VirtualNetworkRule();
-                updateVirtualNetworkRuleParameter.VirtualNetworkSubnetId = @"/subscriptions/"+ ServiceBusManagementClient.SubscriptionId+ "/resourceGroups/EventHubClusterRG/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/default";
+                updateVirtualNetworkRuleParameter.VirtualNetworkSubnetId = @"/subscriptions/"+ ServiceBusManagementClient.SubscriptionId+ "/resourceGroups/EventHubClusterRG/providers/Microsoft.Network/virtualNetworks/sbehvnettest1/subnets/sbvnetruletest";
 
                 var updateVirtualNetworkRuleResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdateVirtualNetworkRule(resourceGroup,
                     namespaceName, virtualNetworkRuleName, updateVirtualNetworkRuleParameter);

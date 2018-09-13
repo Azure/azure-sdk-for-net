@@ -89,7 +89,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Equal(createIPFilterRuleParameter.Action, getNamespaceFilterRulesResponse.Action);
                 
                 // Get all namespaces AuthorizationRules
-                var getAllNamespaceFilterRulesResponse = ServiceBusManagementClient.Namespaces.ListIPFilterRules(resourceGroup, namespaceName);
+                var getAllNamespaceFilterRulesResponse = ServiceBusManagementClient.Namespaces.ListIpFilterRules(resourceGroup, namespaceName);
                 Assert.NotNull(getAllNamespaceFilterRulesResponse);
                 Assert.True( getAllNamespaceFilterRulesResponse.Count() > 0);
 
