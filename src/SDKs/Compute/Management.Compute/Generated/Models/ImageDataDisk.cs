@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// for the managed disk. Possible values are: Standard_LRS,
         /// Premium_LRS, and StandardSSD_LRS. Possible values include:
         /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS'</param>
-        public ImageDataDisk(int lun, SubResource snapshot = default(SubResource), SubResource managedDisk = default(SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), StorageAccountTypes? storageAccountType = default(StorageAccountTypes?))
+        public ImageDataDisk(int lun, SubResource snapshot = default(SubResource), SubResource managedDisk = default(SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), string storageAccountType = default(string))
         {
             Lun = lun;
             Snapshot = snapshot;
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Premium_LRS', 'StandardSSD_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountType")]
-        public StorageAccountTypes? StorageAccountType { get; set; }
+        public string StorageAccountType { get; set; }
 
         /// <summary>
         /// Validate the object.

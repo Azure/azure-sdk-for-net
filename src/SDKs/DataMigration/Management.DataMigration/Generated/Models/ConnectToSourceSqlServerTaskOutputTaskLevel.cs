@@ -42,16 +42,19 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// login id.</param>
         /// <param name="agentJobs">Source agent jobs as a map from agent job
         /// name to id.</param>
+        /// <param name="databaseTdeCertificateMapping">Mapping from database
+        /// name to TDE certificate name, if applicable</param>
         /// <param name="sourceServerVersion">Source server version</param>
         /// <param name="sourceServerBrandVersion">Source server brand
         /// version</param>
         /// <param name="validationErrors">Validation errors</param>
-        public ConnectToSourceSqlServerTaskOutputTaskLevel(string id = default(string), IDictionary<string, string> databases = default(IDictionary<string, string>), IDictionary<string, string> logins = default(IDictionary<string, string>), IDictionary<string, string> agentJobs = default(IDictionary<string, string>), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), IList<ReportableException> validationErrors = default(IList<ReportableException>))
+        public ConnectToSourceSqlServerTaskOutputTaskLevel(string id = default(string), IDictionary<string, string> databases = default(IDictionary<string, string>), IDictionary<string, string> logins = default(IDictionary<string, string>), IDictionary<string, string> agentJobs = default(IDictionary<string, string>), IDictionary<string, string> databaseTdeCertificateMapping = default(IDictionary<string, string>), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), IList<ReportableException> validationErrors = default(IList<ReportableException>))
             : base(id)
         {
             Databases = databases;
             Logins = logins;
             AgentJobs = agentJobs;
+            DatabaseTdeCertificateMapping = databaseTdeCertificateMapping;
             SourceServerVersion = sourceServerVersion;
             SourceServerBrandVersion = sourceServerBrandVersion;
             ValidationErrors = validationErrors;
@@ -72,14 +75,21 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <summary>
         /// Gets source logins as a map from login name to login id.
         /// </summary>
-        [JsonProperty(PropertyName = "Logins")]
+        [JsonProperty(PropertyName = "logins")]
         public IDictionary<string, string> Logins { get; private set; }
 
         /// <summary>
         /// Gets source agent jobs as a map from agent job name to id.
         /// </summary>
-        [JsonProperty(PropertyName = "AgentJobs")]
+        [JsonProperty(PropertyName = "agentJobs")]
         public IDictionary<string, string> AgentJobs { get; private set; }
+
+        /// <summary>
+        /// Gets mapping from database name to TDE certificate name, if
+        /// applicable
+        /// </summary>
+        [JsonProperty(PropertyName = "databaseTdeCertificateMapping")]
+        public IDictionary<string, string> DatabaseTdeCertificateMapping { get; private set; }
 
         /// <summary>
         /// Gets source server version

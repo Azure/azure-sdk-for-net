@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. This method returns a list of tasks owned
-        /// by a service resource. Some tasks may have a status of Unknown,
-        /// which indicates that an error occurred while querying the status of
-        /// that task.
+        /// Database Migration Service. This method returns a list of tasks
+        /// owned by a service resource. Some tasks may have a status of
+        /// Unknown, which indicates that an error occurred while querying the
+        /// status of that task.
         /// </remarks>
         /// <param name='groupName'>
         /// Name of the resource group
@@ -253,14 +253,53 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </exception>
         Task<AzureOperationResponse<ProjectTask>> CancelWithHttpMessagesAsync(string groupName, string serviceName, string projectName, string taskName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Execute a command on a task
+        /// </summary>
+        /// <remarks>
+        /// The tasks resource is a nested, proxy-only resource representing
+        /// work performed by a DMS instance. This method executes a command on
+        /// a running task.
+        /// </remarks>
+        /// <param name='groupName'>
+        /// Name of the resource group
+        /// </param>
+        /// <param name='serviceName'>
+        /// Name of the service
+        /// </param>
+        /// <param name='projectName'>
+        /// Name of the project
+        /// </param>
+        /// <param name='taskName'>
+        /// Name of the Task
+        /// </param>
+        /// <param name='parameters'>
+        /// Command to execute
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ApiErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CommandProperties>> CommandWithHttpMessagesAsync(string groupName, string serviceName, string projectName, string taskName, CommandProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get tasks in a service
         /// </summary>
         /// <remarks>
         /// The services resource is the top-level resource that represents the
-        /// Data Migration Service. This method returns a list of tasks owned
-        /// by a service resource. Some tasks may have a status of Unknown,
-        /// which indicates that an error occurred while querying the status of
-        /// that task.
+        /// Database Migration Service. This method returns a list of tasks
+        /// owned by a service resource. Some tasks may have a status of
+        /// Unknown, which indicates that an error occurred while querying the
+        /// status of that task.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

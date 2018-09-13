@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="status">Current status of validation at the database
         /// level. Possible values include: 'Default', 'NotStarted',
         /// 'Initialized', 'InProgress', 'Completed', 'CompletedWithIssues',
-        /// 'Failed', 'Stopped'</param>
+        /// 'Stopped', 'Failed'</param>
         public MigrationValidationDatabaseLevelResult(string id = default(string), string migrationId = default(string), string sourceDatabaseName = default(string), string targetDatabaseName = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), DataIntegrityValidationResult dataIntegrityValidationResult = default(DataIntegrityValidationResult), SchemaComparisonValidationResult schemaValidationResult = default(SchemaComparisonValidationResult), QueryAnalysisValidationResult queryAnalysisValidationResult = default(QueryAnalysisValidationResult), string status = default(string))
         {
             Id = id;
@@ -130,8 +130,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <summary>
         /// Gets current status of validation at the database level. Possible
         /// values include: 'Default', 'NotStarted', 'Initialized',
-        /// 'InProgress', 'Completed', 'CompletedWithIssues', 'Failed',
-        /// 'Stopped'
+        /// 'InProgress', 'Completed', 'CompletedWithIssues', 'Stopped',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; private set; }

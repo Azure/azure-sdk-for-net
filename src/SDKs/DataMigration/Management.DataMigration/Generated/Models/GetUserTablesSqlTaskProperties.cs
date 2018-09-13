@@ -41,11 +41,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// submitted. Possible values include: 'Unknown', 'Queued', 'Running',
         /// 'Canceled', 'Succeeded', 'Failed', 'FailedInputValidation',
         /// 'Faulted'</param>
+        /// <param name="commands">Array of command properties.</param>
         /// <param name="input">Task input</param>
         /// <param name="output">Task output. This is ignored if
         /// submitted.</param>
-        public GetUserTablesSqlTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), GetUserTablesSqlTaskInput input = default(GetUserTablesSqlTaskInput), IList<GetUserTablesSqlTaskOutput> output = default(IList<GetUserTablesSqlTaskOutput>))
-            : base(errors, state)
+        public GetUserTablesSqlTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), IList<CommandProperties> commands = default(IList<CommandProperties>), GetUserTablesSqlTaskInput input = default(GetUserTablesSqlTaskInput), IList<GetUserTablesSqlTaskOutput> output = default(IList<GetUserTablesSqlTaskOutput>))
+            : base(errors, state, commands)
         {
             Input = input;
             Output = output;

@@ -74,11 +74,6 @@ namespace Microsoft.Azure.Management.Network
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IAzureFirewallsOperations.
-        /// </summary>
-        public virtual IAzureFirewallsOperations AzureFirewalls { get; private set; }
-
-        /// <summary>
         /// Gets the IApplicationGatewaysOperations.
         /// </summary>
         public virtual IApplicationGatewaysOperations ApplicationGateways { get; private set; }
@@ -87,6 +82,26 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IApplicationSecurityGroupsOperations.
         /// </summary>
         public virtual IApplicationSecurityGroupsOperations ApplicationSecurityGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the IAvailableDelegationsOperations.
+        /// </summary>
+        public virtual IAvailableDelegationsOperations AvailableDelegations { get; private set; }
+
+        /// <summary>
+        /// Gets the IAvailableResourceGroupDelegationsOperations.
+        /// </summary>
+        public virtual IAvailableResourceGroupDelegationsOperations AvailableResourceGroupDelegations { get; private set; }
+
+        /// <summary>
+        /// Gets the IAzureFirewallsOperations.
+        /// </summary>
+        public virtual IAzureFirewallsOperations AzureFirewalls { get; private set; }
+
+        /// <summary>
+        /// Gets the IAzureFirewallFqdnTagsOperations.
+        /// </summary>
+        public virtual IAzureFirewallFqdnTagsOperations AzureFirewallFqdnTags { get; private set; }
 
         /// <summary>
         /// Gets the IDdosProtectionPlansOperations.
@@ -132,6 +147,21 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IExpressRouteCrossConnectionPeeringsOperations.
         /// </summary>
         public virtual IExpressRouteCrossConnectionPeeringsOperations ExpressRouteCrossConnectionPeerings { get; private set; }
+
+        /// <summary>
+        /// Gets the IExpressRouteGatewaysOperations.
+        /// </summary>
+        public virtual IExpressRouteGatewaysOperations ExpressRouteGateways { get; private set; }
+
+        /// <summary>
+        /// Gets the IExpressRouteConnectionsOperations.
+        /// </summary>
+        public virtual IExpressRouteConnectionsOperations ExpressRouteConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IInterfaceEndpointsOperations.
+        /// </summary>
+        public virtual IInterfaceEndpointsOperations InterfaceEndpoints { get; private set; }
 
         /// <summary>
         /// Gets the ILoadBalancersOperations.
@@ -182,6 +212,16 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the INetworkInterfaceLoadBalancersOperations.
         /// </summary>
         public virtual INetworkInterfaceLoadBalancersOperations NetworkInterfaceLoadBalancers { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkInterfaceTapConfigurationsOperations.
+        /// </summary>
+        public virtual INetworkInterfaceTapConfigurationsOperations NetworkInterfaceTapConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkProfilesOperations.
+        /// </summary>
+        public virtual INetworkProfilesOperations NetworkProfiles { get; private set; }
 
         /// <summary>
         /// Gets the INetworkSecurityGroupsOperations.
@@ -254,6 +294,16 @@ namespace Microsoft.Azure.Management.Network
         public virtual IBgpServiceCommunitiesOperations BgpServiceCommunities { get; private set; }
 
         /// <summary>
+        /// Gets the IServiceEndpointPoliciesOperations.
+        /// </summary>
+        public virtual IServiceEndpointPoliciesOperations ServiceEndpointPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IServiceEndpointPolicyDefinitionsOperations.
+        /// </summary>
+        public virtual IServiceEndpointPolicyDefinitionsOperations ServiceEndpointPolicyDefinitions { get; private set; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         public virtual IUsagesOperations Usages { get; private set; }
@@ -274,6 +324,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IVirtualNetworkPeeringsOperations VirtualNetworkPeerings { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualNetworkTapsOperations.
+        /// </summary>
+        public virtual IVirtualNetworkTapsOperations VirtualNetworkTaps { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualNetworkGatewaysOperations.
         /// </summary>
         public virtual IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; private set; }
@@ -289,9 +344,9 @@ namespace Microsoft.Azure.Management.Network
         public virtual ILocalNetworkGatewaysOperations LocalNetworkGateways { get; private set; }
 
         /// <summary>
-        /// Gets the IVirtualWANsOperations.
+        /// Gets the IVirtualWansOperations.
         /// </summary>
-        public virtual IVirtualWANsOperations VirtualWANs { get; private set; }
+        public virtual IVirtualWansOperations VirtualWans { get; private set; }
 
         /// <summary>
         /// Gets the IVpnSitesOperations.
@@ -324,14 +379,14 @@ namespace Microsoft.Azure.Management.Network
         public virtual IVpnConnectionsOperations VpnConnections { get; private set; }
 
         /// <summary>
-        /// Gets the IServiceEndpointPoliciesOperations.
+        /// Gets the IP2sVpnServerConfigurationsOperations.
         /// </summary>
-        public virtual IServiceEndpointPoliciesOperations ServiceEndpointPolicies { get; private set; }
+        public virtual IP2sVpnServerConfigurationsOperations P2sVpnServerConfigurations { get; private set; }
 
         /// <summary>
-        /// Gets the IServiceEndpointPolicyDefinitionsOperations.
+        /// Gets the IP2sVpnGatewaysOperations.
         /// </summary>
-        public virtual IServiceEndpointPolicyDefinitionsOperations ServiceEndpointPolicyDefinitions { get; private set; }
+        public virtual IP2sVpnGatewaysOperations P2sVpnGateways { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
@@ -574,9 +629,12 @@ namespace Microsoft.Azure.Management.Network
         /// </summary>
         private void Initialize()
         {
-            AzureFirewalls = new AzureFirewallsOperations(this);
             ApplicationGateways = new ApplicationGatewaysOperations(this);
             ApplicationSecurityGroups = new ApplicationSecurityGroupsOperations(this);
+            AvailableDelegations = new AvailableDelegationsOperations(this);
+            AvailableResourceGroupDelegations = new AvailableResourceGroupDelegationsOperations(this);
+            AzureFirewalls = new AzureFirewallsOperations(this);
+            AzureFirewallFqdnTags = new AzureFirewallFqdnTagsOperations(this);
             DdosProtectionPlans = new DdosProtectionPlansOperations(this);
             AvailableEndpointServices = new AvailableEndpointServicesOperations(this);
             ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
@@ -586,6 +644,9 @@ namespace Microsoft.Azure.Management.Network
             ExpressRouteServiceProviders = new ExpressRouteServiceProvidersOperations(this);
             ExpressRouteCrossConnections = new ExpressRouteCrossConnectionsOperations(this);
             ExpressRouteCrossConnectionPeerings = new ExpressRouteCrossConnectionPeeringsOperations(this);
+            ExpressRouteGateways = new ExpressRouteGatewaysOperations(this);
+            ExpressRouteConnections = new ExpressRouteConnectionsOperations(this);
+            InterfaceEndpoints = new InterfaceEndpointsOperations(this);
             LoadBalancers = new LoadBalancersOperations(this);
             LoadBalancerBackendAddressPools = new LoadBalancerBackendAddressPoolsOperations(this);
             LoadBalancerFrontendIPConfigurations = new LoadBalancerFrontendIPConfigurationsOperations(this);
@@ -596,6 +657,8 @@ namespace Microsoft.Azure.Management.Network
             NetworkInterfaces = new NetworkInterfacesOperations(this);
             NetworkInterfaceIPConfigurations = new NetworkInterfaceIPConfigurationsOperations(this);
             NetworkInterfaceLoadBalancers = new NetworkInterfaceLoadBalancersOperations(this);
+            NetworkInterfaceTapConfigurations = new NetworkInterfaceTapConfigurationsOperations(this);
+            NetworkProfiles = new NetworkProfilesOperations(this);
             NetworkSecurityGroups = new NetworkSecurityGroupsOperations(this);
             SecurityRules = new SecurityRulesOperations(this);
             DefaultSecurityRules = new DefaultSecurityRulesOperations(this);
@@ -610,22 +673,25 @@ namespace Microsoft.Azure.Management.Network
             RouteTables = new RouteTablesOperations(this);
             Routes = new RoutesOperations(this);
             BgpServiceCommunities = new BgpServiceCommunitiesOperations(this);
+            ServiceEndpointPolicies = new ServiceEndpointPoliciesOperations(this);
+            ServiceEndpointPolicyDefinitions = new ServiceEndpointPolicyDefinitionsOperations(this);
             Usages = new UsagesOperations(this);
             VirtualNetworks = new VirtualNetworksOperations(this);
             Subnets = new SubnetsOperations(this);
             VirtualNetworkPeerings = new VirtualNetworkPeeringsOperations(this);
+            VirtualNetworkTaps = new VirtualNetworkTapsOperations(this);
             VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
             VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
             LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
-            VirtualWANs = new VirtualWANsOperations(this);
+            VirtualWans = new VirtualWansOperations(this);
             VpnSites = new VpnSitesOperations(this);
             VpnSitesConfiguration = new VpnSitesConfigurationOperations(this);
             VirtualHubs = new VirtualHubsOperations(this);
             HubVirtualNetworkConnections = new HubVirtualNetworkConnectionsOperations(this);
             VpnGateways = new VpnGatewaysOperations(this);
             VpnConnections = new VpnConnectionsOperations(this);
-            ServiceEndpointPolicies = new ServiceEndpointPoliciesOperations(this);
-            ServiceEndpointPolicyDefinitions = new ServiceEndpointPolicyDefinitionsOperations(this);
+            P2sVpnServerConfigurations = new P2sVpnServerConfigurationsOperations(this);
+            P2sVpnGateways = new P2sVpnGatewaysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -706,7 +772,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-07-01";
+            string apiVersion = "2018-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -841,6 +907,196 @@ namespace Microsoft.Azure.Management.Network
                 try
                 {
                     _result.Body = SafeJsonConvert.DeserializeObject<DnsNameAvailabilityResult>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Gives the supported security providers for the virtual wan.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='virtualWANName'>
+        /// The name of the VirtualWAN for which supported security providers are
+        /// needed.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<VirtualWanSecurityProviders>> SupportedSecurityProvidersWithHttpMessagesAsync(string resourceGroupName, string virtualWANName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (virtualWANName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualWANName");
+            }
+            string apiVersion = "2018-08-01";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("virtualWANName", virtualWANName);
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "SupportedSecurityProviders", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{virtualWANName}", System.Uri.EscapeDataString(virtualWANName));
+            List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    Error _errorBody =  SafeJsonConvert.DeserializeObject<Error>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<VirtualWanSecurityProviders>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<VirtualWanSecurityProviders>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

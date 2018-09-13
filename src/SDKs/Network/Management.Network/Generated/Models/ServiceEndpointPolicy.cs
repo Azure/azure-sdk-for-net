@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="serviceEndpointPolicyDefinitions">A collection of
         /// service endpoint policy definitions of the service endpoint
         /// policy.</param>
+        /// <param name="subnets">A collection of references to
+        /// subnets.</param>
         /// <param name="resourceGuid">The resource GUID property of the
         /// service endpoint policy resource.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -49,10 +51,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deleting', and 'Failed'.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ServiceEndpointPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<ServiceEndpointPolicyDefinition> serviceEndpointPolicyDefinitions = default(IList<ServiceEndpointPolicyDefinition>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public ServiceEndpointPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<ServiceEndpointPolicyDefinition> serviceEndpointPolicyDefinitions = default(IList<ServiceEndpointPolicyDefinition>), IList<Subnet> subnets = default(IList<Subnet>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             ServiceEndpointPolicyDefinitions = serviceEndpointPolicyDefinitions;
+            Subnets = subnets;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             Etag = etag;
@@ -72,18 +75,24 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ServiceEndpointPolicyDefinition> ServiceEndpointPolicyDefinitions { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the service endpoint
-        /// policy resource.
+        /// Gets a collection of references to subnets.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        [JsonProperty(PropertyName = "properties.subnets")]
+        public IList<Subnet> Subnets { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the service endpoint policy.
+        /// Gets the resource GUID property of the service endpoint policy
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        public string ResourceGuid { get; private set; }
+
+        /// <summary>
+        /// Gets the provisioning state of the service endpoint policy.
         /// Possible values are: 'Updating', 'Deleting', and 'Failed'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the
