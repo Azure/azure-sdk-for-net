@@ -38,8 +38,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// class.
         /// </summary>
         /// <param name="sku">Gets or sets the SKU name. Note that the SKU name
-        /// cannot be updated to Standard_ZRS or Premium_LRS, nor can accounts
-        /// of those sku names be updated to any other value.</param>
+        /// cannot be updated to Standard_ZRS, Premium_LRS or Premium_ZRS, nor
+        /// can accounts of those sku names be updated to any other
+        /// value.</param>
         /// <param name="tags">Gets or sets a list of key value pairs that
         /// describe the resource. These tags can be used in viewing and
         /// grouping this resource (across resource groups). A maximum of 15
@@ -88,8 +89,8 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets or sets the SKU name. Note that the SKU name cannot be updated
-        /// to Standard_ZRS or Premium_LRS, nor can accounts of those sku names
-        /// be updated to any other value.
+        /// to Standard_ZRS, Premium_LRS or Premium_ZRS, nor can accounts of
+        /// those sku names be updated to any other value.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
