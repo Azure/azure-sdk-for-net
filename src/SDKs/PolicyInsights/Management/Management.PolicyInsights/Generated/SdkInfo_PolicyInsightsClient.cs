@@ -30,10 +30,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/pilor/azure-rest-api-specs/blob/remediations/specification/policyinsights/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\code\\azure-sdk-for-net\\src\\SDKs";
-      public static readonly String GithubForkName = "pilor";
-      public static readonly String GithubBranchName = "remediations";
-      public static readonly String GithubCommidId = "d732f6ca8b65b200be57168e19004dd330493d44";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/policyinsights/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\code\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "64266364a9517d82448d09622b70ff753a9fbaa9";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
