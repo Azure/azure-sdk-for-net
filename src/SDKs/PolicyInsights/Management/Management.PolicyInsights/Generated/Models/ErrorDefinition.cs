@@ -11,31 +11,40 @@
 namespace Microsoft.Azure.Management.PolicyInsights.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Error definition.
     /// </summary>
-    public partial class QueryFailureError
+    public partial class ErrorDefinition
     {
         /// <summary>
-        /// Initializes a new instance of the QueryFailureError class.
+        /// Initializes a new instance of the ErrorDefinition class.
         /// </summary>
-        public QueryFailureError()
+        public ErrorDefinition()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the QueryFailureError class.
+        /// Initializes a new instance of the ErrorDefinition class.
         /// </summary>
         /// <param name="code">Service specific error code which serves as the
         /// substatus for the HTTP error code.</param>
         /// <param name="message">Description of the error.</param>
-        public QueryFailureError(string code = default(string), string message = default(string))
+        /// <param name="target">The target of the error.</param>
+        /// <param name="details">Internal error details.</param>
+        /// <param name="additionalInfo">Additional scenario specific error
+        /// details.</param>
+        public ErrorDefinition(string code = default(string), string message = default(string), string target = default(string), IList<ErrorDefinition> details = default(IList<ErrorDefinition>), IList<TypedErrorInfo> additionalInfo = default(IList<TypedErrorInfo>))
         {
             Code = code;
             Message = message;
+            Target = target;
+            Details = details;
+            AdditionalInfo = additionalInfo;
             CustomInit();
         }
 
@@ -56,6 +65,24 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
+
+        /// <summary>
+        /// Gets the target of the error.
+        /// </summary>
+        [JsonProperty(PropertyName = "target")]
+        public string Target { get; private set; }
+
+        /// <summary>
+        /// Gets internal error details.
+        /// </summary>
+        [JsonProperty(PropertyName = "details")]
+        public IList<ErrorDefinition> Details { get; private set; }
+
+        /// <summary>
+        /// Gets additional scenario specific error details.
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalInfo")]
+        public IList<TypedErrorInfo> AdditionalInfo { get; private set; }
 
     }
 }
