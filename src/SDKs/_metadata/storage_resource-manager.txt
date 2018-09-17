@@ -1,9 +1,9 @@
-2018-09-14 02:04:40 UTC
+2018-09-17 03:01:58 UTC
 
 1) azure-rest-api-specs repository information
-GitHub user: blueww
-Branch:      newkindFileaad
-Commit:      d6eb4ce08758f93e2568173ff26e3b21fa50edec
+GitHub user: azure
+Branch:      master
+Commit:      9441291c93c1637c0148a56f30e70b0a9e0557f4
 
 2) AutoRest information
 Requested version: latest
