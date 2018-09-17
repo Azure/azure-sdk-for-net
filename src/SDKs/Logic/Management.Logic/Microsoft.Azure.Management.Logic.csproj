@@ -5,7 +5,7 @@
 
 	<PropertyGroup>
 		<Description>Microsoft Azure LogicApps Management Library</Description>
-		<Version>3.1.0</Version>
+		<Version>4.0.0</Version>
 		<PackageId>Microsoft.Azure.Management.Logic</PackageId>
 		<PackageTags>Microsoft Azure LogicApps management;LogicApps;LogicApps management;</PackageTags>
 		<PackageReleaseNotes/>
