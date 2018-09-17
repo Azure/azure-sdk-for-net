@@ -73,7 +73,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowRuns.List(null, "wfName"));
@@ -116,7 +116,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowRuns.ListNext(null));
@@ -158,7 +158,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowRuns.Get(null, "wfName", "rName"));
@@ -202,7 +202,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowRuns.Cancel(null, "wfName", "rName"));
@@ -220,7 +220,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             client.WorkflowRuns.Cancel("rgName", "wfName", "rName");
@@ -270,7 +270,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateRunListResponse1(IPage<WorkflowRun> page)
         {
-            Assert.Equal(1, page.Count());
+            Assert.Single(page);
             Assert.Equal("http://management.azure.com/runNextLink", page.NextPageLink);
             this.ValidateRun1(page.First());
         }

@@ -4,85 +4,90 @@
 
 namespace Test.Azure.Management.Logic
 {
+    using System;
     using System.Linq;
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Newtonsoft.Json.Linq;
     using Xunit;
 
     [Collection("WorkflowTriggerHistoriesScenarioTests")]
-    public class WorkflowTriggerHistoriesScenarioTests : ScenarioTestsBase
+    public class WorkflowTriggerHistoriesScenarioTests : ScenarioTestsBase, IDisposable
     {
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void ListHistory()
+        private readonly MockContext context;
+        private readonly ILogicManagementClient client;
+
+        private readonly string workflowName;
+        private readonly Workflow workflow;
+
+        public WorkflowTriggerHistoriesScenarioTests()
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
+            this.context = MockContext.Start(className: this.TestClassName);
+            this.client = this.GetClient(this.context);
+
+            this.workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+            this.workflow = this.CreateWorkflow(this.workflowName);
+        }
+
+        public void Dispose()
+        {
+            this.client.Workflows.Delete(Constants.DefaultResourceGroup, this.workflowName);
+
+            this.client.Dispose();
+            this.context.Dispose();
+        }
+
+        [Fact]
+        public void WorkflowTriggerHistories_Get_OK()
+        {
+            var createdWorkflow = this.client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.workflowName,
+                this.workflow);
+
+            var preHistories = this.client.WorkflowTriggerHistories.List(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
+            Assert.Empty(preHistories);
+
+            this.client.WorkflowTriggers.Run(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
+
+            var postHistories = this.client.WorkflowTriggerHistories.List(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
+            var retrievedHistory = this.client.WorkflowTriggerHistories.Get(Constants.DefaultResourceGroup, 
+                this.workflowName, 
+                Constants.DefaultTriggerName, 
+                postHistories.First().Name);
+
+            this.ValidateHistory(retrievedHistory);
+        }
+
+        [Fact]
+        public void WorkflowTriggerHistories_List_OK()
+        {
+            var createdWorkflow = this.client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.workflowName,
+                this.workflow);
+
+            var preHistories = this.client.WorkflowTriggerHistories.List(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
+            Assert.Empty(preHistories);
+
+            this.client.WorkflowTriggers.Run(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
+            this.client.WorkflowTriggers.Run(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
+
+            var postHistories = this.client.WorkflowTriggerHistories.List(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
+
+            Assert.Equal(2, postHistories.Count());
+            foreach (var history in postHistories)
             {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
-                
-                // Create a workflow
-                var workflow = client.Workflows.CreateOrUpdate(
-                    resourceGroupName: this.resourceGroupName,
-                    workflowName: workflowName,
-                    workflow: new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        Definition = JToken.Parse(this.simpleTriggerDefinition)
-                    });
-
-                // List the histories
-                var histories = client.WorkflowTriggerHistories.List(this.resourceGroupName, workflowName, "httpTrigger");
-
-                // Run the trigger
-                client.WorkflowTriggers.Run(this.resourceGroupName, workflowName, "httpTrigger");
-
-                // List the histories
-                histories = client.WorkflowTriggerHistories.List(this.resourceGroupName, workflowName, "httpTrigger");
-                Assert.NotEmpty(histories);
-
-                // Delete the workflow
-                client.Workflows.Delete(this.resourceGroupName, workflowName);
+                this.ValidateHistory(history);
             }
         }
 
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void GetHistory()
+        private void ValidateHistory(WorkflowTriggerHistory actual)
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
-                
-                // Create a workflow
-                var workflow = client.Workflows.CreateOrUpdate(
-                    resourceGroupName: this.resourceGroupName,
-                    workflowName: workflowName,
-                    workflow: new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        Definition = JToken.Parse(this.simpleTriggerDefinition)
-                    });
-
-                // Run the trigger
-                client.WorkflowTriggers.Run(this.resourceGroupName, workflowName, "httpTrigger");
-
-                // List the histories
-                var histories = client.WorkflowTriggerHistories.List(this.resourceGroupName, workflowName, "httpTrigger");
-                Assert.NotEmpty(histories);
-
-                // Get the history
-                var history = client.WorkflowTriggerHistories.Get(this.resourceGroupName, workflowName, "httpTrigger", histories.First().Name);
-
-                Assert.NotNull(history.StartTime);
-                Assert.NotNull(history.EndTime);
-
-                // Delete the workflow
-                client.Workflows.Delete(this.resourceGroupName, workflowName);
-            }
+            Assert.NotEmpty(actual.Correlation.ClientTrackingId);
+            Assert.True(actual.Fired);
+            Assert.NotEmpty(actual.Id);
+            Assert.NotEmpty(actual.Run.Name);
+            Assert.NotNull(actual.StartTime);
+            Assert.NotNull(actual.EndTime);
         }
     }
 }

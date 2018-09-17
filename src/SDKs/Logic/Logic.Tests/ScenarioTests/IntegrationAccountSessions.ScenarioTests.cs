@@ -4,10 +4,11 @@
 
 namespace Test.Azure.Management.Logic
 {
-    using System.Collections.Generic;
+    using System;
     using System.Linq;
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
@@ -15,353 +16,154 @@ namespace Test.Azure.Management.Logic
     /// Scenario tests for the integration accounts session.
     /// </summary>
     [Collection("IntegrationAccountPartnerScenarioTests")]
-    public class IntegrationAccountSessionScenarioTests : ScenarioTestsBase
+    public class IntegrationAccountSessionScenarioTests : ScenarioTestsBase, IDisposable
     {
-        /// <summary>
-        /// Tests the create and delete operations of the integration account session.
-        /// https://msazure.visualstudio.com/One/_workitems/edit/587947
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndDeleteIntegrationAccountSession()
+        private readonly MockContext context;
+        private readonly ILogicManagementClient client;
+        private readonly string integrationAccountName;
+        private readonly IntegrationAccount integrationAccount;
+        private readonly string sessionName;
+
+        public IntegrationAccountSessionScenarioTests()
         {
-            using (var context = MockContext.Start(className: this.testClassName))
-            {
-                var integrationAccountName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountPrefix);
-                var integrationAccountSessionName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
+            this.context = MockContext.Start(className: this.TestClassName);
+            this.client = this.GetClient(this.context);
 
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    integrationAccount: this.CreateIntegrationAccountInstance(integrationAccountName: integrationAccountName));
+            this.integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+            this.integrationAccount = this.client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.CreateIntegrationAccount(this.integrationAccountName));
 
-                var instance = this.CreateIntegrationAccountSessionInstanceWithoutLocation(
-                    integrationAccountSessionName: integrationAccountSessionName,
-                    integrationAccountName: integrationAccountName);
-                instance.Content = "256";
-
-                var session = client.Sessions.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName,
-                    session: instance);
-
-                var getSession = client.Sessions.Get(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName);
-
-                Assert.Equal(expected: integrationAccountSessionName, actual: getSession.Name);
-                Assert.Equal(expected: "256", actual: getSession.Content);
-
-                // Deleting an existing record should return 200
-                client.Sessions.Delete(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName);
-
-                // Deleting an absent record should not throw, RP returns 204
-                client.Sessions.Delete(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName);
-
-                // Getting an absent record should throw, RP returns 404 and error response
-                Assert.Throws<ErrorResponseException>(() => client.Sessions
-                    .Get(
-                        resourceGroupName: Constants.DefaultResourceGroup,
-                        integrationAccountName: integrationAccountName,
-                        sessionName: integrationAccountSessionName));
-
-                // Clean-up the integration account.
-                client.IntegrationAccounts.Delete(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName);
-            }
+            this.sessionName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);
         }
 
-        /// <summary>
-        /// Tests the create and update operations of the integration account session.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndUpdateIntegrationAccountSession()
+        public void Dispose()
         {
-            using (var context = MockContext.Start(className: this.testClassName))
-            {
-                var integrationAccountName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountPrefix);
-                var integrationAccountSessionName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
+            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
 
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    integrationAccount: this.CreateIntegrationAccountInstance(integrationAccountName: integrationAccountName));
-
-                var session = client.Sessions.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName,
-                    session: this.CreateIntegrationAccountSessionInstanceWithoutLocation(
-                        integrationAccountSessionName: integrationAccountSessionName,
-                        integrationAccountName: integrationAccountName));
-
-                var updateSession = this.CreateIntegrationAccountSessionInstanceWithoutLocation(
-                    integrationAccountSessionName: integrationAccountSessionName,
-                    integrationAccountName: integrationAccountName);
-                updateSession.Content = "foobar_update";
-
-                var updatedSession = client.Sessions.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName,
-                    session: updateSession);
-
-                Assert.Equal(expected: integrationAccountSessionName, actual: updatedSession.Name);
-                Assert.Equal(expected: "foobar_update", actual: updateSession.Content);
-
-                client.IntegrationAccounts.Delete(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName);
-            }
+            this.client.Dispose();
+            this.context.Dispose();
         }
 
-        /// <summary>
-        /// Tests the create and get operations of the integration account session.
-        /// https://msazure.visualstudio.com/One/_workitems/edit/587947
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndGetIntegrationAccountSession()
+        [Fact]
+        public void IntegrationAccountSessions_Create_OK()
         {
-            using (var context = MockContext.Start(className: this.testClassName))
-            {
-                var integrationAccountName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountPrefix);
-                var integrationAccountSessionName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
+            var session = this.CreateIntegrationAccountSession(this.sessionName);
+            var createdSession = this.client.IntegrationAccountSessions.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.sessionName,
+                session);
 
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    integrationAccount: this.CreateIntegrationAccountInstance(integrationAccountName: integrationAccountName));
-                var instance = this.CreateIntegrationAccountSessionInstanceWithoutLocation(
-                    integrationAccountSessionName: integrationAccountSessionName,
-                    integrationAccountName: integrationAccountName);
-                instance.Content= "256";
-
-                var session = client.Sessions.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName,
-                    session: instance);
-
-                Assert.Equal(actual: session.Name, expected: integrationAccountSessionName);
-
-                var getSession = client.Sessions.Get(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName);
-
-                Assert.Equal(session.Name, getSession.Name);
-                Assert.Equal(session.Content, "256");
-
-                client.IntegrationAccounts.Delete(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName);
-            }
+            this.ValidateSession(session, createdSession);
         }
 
-        /// <summary>
-        /// Tests the create and list operations of the integration account session.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void ListIntegrationAccountSessions()
+        [Fact]
+        public void IntegrationAccountSessions_Get_OK()
         {
-            using (var context = MockContext.Start(className: this.testClassName))
-            {
+            var session = this.CreateIntegrationAccountSession(this.sessionName);
+            var createdSession = this.client.IntegrationAccountSessions.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.sessionName,
+                session);
 
-                var integrationAccountName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountPrefix);
+            var retrievedSession = this.client.IntegrationAccountSessions.Get(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.sessionName);
 
-                var integrationAccountSessionName1 = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);
-                var integrationAccountSessionName2 = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);
-                var integrationAccountSessionName3 = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);
-
-                var client = context.GetServiceClient<LogicManagementClient>();
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    integrationAccount: this.CreateIntegrationAccountInstance(integrationAccountName: integrationAccountName));
-
-                client.Sessions.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName1,
-                    session: this.CreateIntegrationAccountSessionInstanceWithoutLocation(
-                        integrationAccountSessionName: integrationAccountSessionName1,
-                        integrationAccountName: integrationAccountName));
-
-                client.Sessions.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName2,
-                    session: this.CreateIntegrationAccountSessionInstanceWithoutLocation(
-                        integrationAccountSessionName: integrationAccountSessionName2,
-                        integrationAccountName: integrationAccountName));
-
-                client.Sessions.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName3,
-                    session: this.CreateIntegrationAccountSessionInstanceWithoutLocation(
-                        integrationAccountSessionName: integrationAccountSessionName3,
-                        integrationAccountName: integrationAccountName));
-
-                var sessions = client.Sessions.ListByIntegrationAccounts(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName);
-
-                Assert.True(sessions.Count() == 3);
-
-                client.IntegrationAccounts.Delete(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName);
-            }
+            this.ValidateSession(session, retrievedSession);
         }
 
-        /// <summary>
-        /// Tests the delete operations of the integration account session with integration account. 
-        /// Session must be deleted with the integration account deletion.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void DeleteIntegrationAccountSessionOnAccountDeletion()
+        [Fact]
+        public void IntegrationAccountSessions_List_OK()
         {
-            using (var context = MockContext.Start(className: this.testClassName))
-            {
-                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                var integrationAccountSessionName = TestUtilities.GenerateName(Constants.IntegrationAccountSessionPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
+            var session1 = this.CreateIntegrationAccountSession(this.sessionName);
+            var createdSession = this.client.IntegrationAccountSessions.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.sessionName,
+                session1);
 
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    integrationAccount: this.CreateIntegrationAccountInstance(integrationAccountName: integrationAccountName));
-                var session = client.Sessions.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAccountSessionName,
-                    session: this.CreateIntegrationAccountSessionInstanceWithoutLocation(
-                        integrationAccountSessionName: integrationAccountSessionName,
-                        integrationAccountName: integrationAccountName));
+            var sessionName2 = TestUtilities.GenerateName(Constants.IntegrationAccountSessionPrefix);
+            var session2 = this.CreateIntegrationAccountSession(sessionName2);
+            var createdSession2 = this.client.IntegrationAccountSessions.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                sessionName2,
+                session2);
 
-                Assert.Equal(actual: session.Name, expected: integrationAccountSessionName);
+            var sessionName3 = TestUtilities.GenerateName(Constants.IntegrationAccountSessionPrefix);
+            var session3 = this.CreateIntegrationAccountSession(sessionName3);
+            var createdSession3 = this.client.IntegrationAccountSessions.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                sessionName3,
+                session3);
 
-                client.IntegrationAccounts.Delete(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName);
-                Assert.Throws<ErrorResponseException>(() => client.Sessions
-                    .Get(
-                        resourceGroupName: Constants.DefaultResourceGroup,
-                        integrationAccountName: integrationAccountName,
-                        sessionName: integrationAccountSessionName));
-            }
+            var sessions = this.client.IntegrationAccountSessions.List(Constants.DefaultResourceGroup, this.integrationAccountName);
+
+            Assert.Equal(3, sessions.Count());
+            this.ValidateSession(session1, sessions.Single(x => x.Name == session1.Name));
+            this.ValidateSession(session2, sessions.Single(x => x.Name == session2.Name));
+            this.ValidateSession(session3, sessions.Single(x => x.Name == session3.Name));
         }
 
-        /// <summary>
-        /// Tests the create operations of the integration account session using file input.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateIntegrationAccountSessionUsingFile()
+        [Fact]
+        public void IntegrationAccountSessions_Update_OK()
         {
-            using (var context = MockContext.Start(className: this.testClassName))
-            {
-                var integrationAccountName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountPrefix);
-                var integrationAs2AccountSessionName =TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);
-                var integrationX12AccountSessionName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);
-                var integrationEdifactAccountSessionName = TestUtilities.GenerateName(prefix: Constants.IntegrationAccountSessionPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
+            var session = this.CreateIntegrationAccountSession(this.sessionName);
+            var createdSession = this.client.IntegrationAccountSessions.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.sessionName,
+                session);
 
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    integrationAccount: this.CreateIntegrationAccountInstance(integrationAccountName: integrationAccountName));
+            var newSession = this.CreateIntegrationAccountSession(this.sessionName);
+            var updatedSession = this.client.IntegrationAccountSessions.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.sessionName,
+                newSession);
 
-                var as2Session = client.Sessions.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationAs2AccountSessionName,
-                    session: this.CreateIntegrationAccountSessionInstanceWithLocation(
-                        integrationAccountSessionName: integrationAs2AccountSessionName,
-                        integrationAccountName: integrationAccountName));
+            this.ValidateSession(newSession, updatedSession);
+        }
 
-                var edifactSession = client.Sessions.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationEdifactAccountSessionName,
-                    session: this.CreateIntegrationAccountSessionInstanceWithLocation(
-                        integrationAccountSessionName: integrationEdifactAccountSessionName,
-                        integrationAccountName: integrationAccountName));
+        [Fact]
+        public void IntegrationAccountSessions_Delete_OK()
+        {
+            var session = this.CreateIntegrationAccountSession(this.sessionName);
+            var createdSession = this.client.IntegrationAccountSessions.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.sessionName,
+                session);
 
-                var x12Session = client.Sessions.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    sessionName: integrationX12AccountSessionName,
-                    session: this.CreateIntegrationAccountSessionInstanceWithLocation(
-                        integrationAccountSessionName: integrationX12AccountSessionName,
-                        integrationAccountName: integrationAccountName));
+            this.client.IntegrationAccountSessions.Delete(Constants.DefaultResourceGroup, this.integrationAccountName, this.sessionName);
+            Assert.Throws<CloudException>(() => this.client.IntegrationAccountSessions.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.sessionName));
+        }
 
-                Assert.Equal(actual: as2Session.Name, expected: integrationAs2AccountSessionName);
-                Assert.Equal(actual: edifactSession.Name, expected: integrationEdifactAccountSessionName);
-                Assert.Equal(actual: x12Session.Name, expected: integrationX12AccountSessionName);
+        [Fact]
+        public void IntegrationAccountSessions_DeleteWhenDeleteIntegrationAccount_OK()
+        {
+            var session = this.CreateIntegrationAccountSession(this.sessionName);
+            var createdSession = this.client.IntegrationAccountSessions.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.sessionName,
+                session);
 
-                client.IntegrationAccounts.Delete(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName);
-            }
+            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
+            Assert.Throws<CloudException>(() => this.client.IntegrationAccountSessions.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.sessionName));
         }
 
         #region Private
 
-        /// <summary>
-        /// Creates an Integration account session without the location property
-        /// </summary>
-        /// <param name="integrationAccountSessionName">Name of the integration account session</param>
-        /// <param name="integrationAccountName">Name of the integration account</param>
-        /// <returns>Session instance</returns>
-        private IntegrationAccountSession CreateIntegrationAccountSessionInstanceWithoutLocation(
-            string integrationAccountSessionName,
-            string integrationAccountName)
+        private void ValidateSession(IntegrationAccountSession expected, IntegrationAccountSession actual)
         {
-            var tags = new Dictionary<string, string>();
-            tags.Add("IntegrationAccountSession", integrationAccountSessionName);
-
-            var session = new IntegrationAccountSession
-            {
-                Tags = tags,
-                Content = "123"
-            };
-
-            return session;
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Content, actual.Content);
+            Assert.NotNull(actual.CreatedTime);
+            Assert.NotNull(actual.ChangedTime);
         }
 
-        /// <summary>
-        /// Creates an Integration account session with the location property
-        /// </summary>
-        /// <param name="integrationAccountSessionName">Name of the integration account session</param>
-        /// <param name="integrationAccountName">Name of the integration account</param>        
-        /// <returns>Session instance</returns>
-        private IntegrationAccountSession CreateIntegrationAccountSessionInstanceWithLocation(
-            string integrationAccountSessionName,
-            string integrationAccountName)
+        private IntegrationAccountSession CreateIntegrationAccountSession(string sessionName)
         {
-            var tags = new Dictionary<string, string>();
-            tags.Add("IntegrationAccountSession", integrationAccountSessionName);
-
-            var session = new IntegrationAccountSession
-            {
-                Location = Constants.DefaultLocation,
-                Tags = tags,
-                Content = "456"
-            };
-
-            return session;
+            return new IntegrationAccountSession(
+                name: sessionName,
+                location: Constants.DefaultLocation,
+                content: "456");
         }
 
         #endregion Private

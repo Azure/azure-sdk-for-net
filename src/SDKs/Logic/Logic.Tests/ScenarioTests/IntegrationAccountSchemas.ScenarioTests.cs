@@ -12,222 +12,192 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
+    using System;
 
     /// <summary>
     /// Scenario tests for the integration accounts schema.
     /// </summary>
     [Collection("IntegrationAccountSchemaScenarioTests")]
-    public class IntegrationAccountSchemaScenarioTests : ScenarioTestsBase
+    public class IntegrationAccountSchemaScenarioTests : ScenarioTestsBase, IDisposable
     {
-        /// <summary>
-        /// Schema content in string format
-        /// </summary>
-        private string SchemaContent { get; set; }
+        private readonly MockContext context;
+        private readonly ILogicManagementClient client;
+        private readonly string integrationAccountName;
+        private readonly IntegrationAccount integrationAccount;
+        private readonly string schemaName;
+        private readonly string schemaContent;
 
-        /// <summary>
-        /// TargetNamespace of the schema
-        /// </summary>
-        private string SchemaTargetNamespace { get; set; }
-
-        /// <summary>
-        ///Initializes a new instance of the <see cref="IntegrationAccountSchemaScenarioTests"/> class.
-        /// </summary>
         public IntegrationAccountSchemaScenarioTests()
         {
-            this.SchemaContent = File.ReadAllText(@"TestData/OrderFile.xsd");
-            this.SchemaTargetNamespace = "http://Inbound_EDI.OrderFile";
+            this.context = MockContext.Start(className: this.TestClassName);
+            this.client = this.GetClient(this.context);
+
+            this.integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+            this.integrationAccount = this.client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.CreateIntegrationAccount(this.integrationAccountName));
+
+            this.schemaContent = File.ReadAllText(@"TestData/OrderFile.xsd");
+            this.schemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
         }
 
-        /// <summary>
-        /// Tests the create and delete operations of the integration account schema.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndDeleteIntegrationAccountSchema()
+
+        public void Dispose()
         {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountSchemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
 
-                var client = this.GetIntegrationAccountClient(context);
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                var schema = client.Schemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountSchemaName,
-                    CreateIntegrationAccountSchemaInstance(integrationAccountSchemaName, integrationAccountName));
-
-                Assert.Equal(schema.Name, integrationAccountSchemaName);
-                //Assert.Equal(schema.TargetNamespace, this.SchemaTargetNamespace);
-                Assert.NotNull(schema.ContentLink.Uri);
-
-                client.Schemas.Delete(Constants.DefaultResourceGroup, integrationAccountName,
-                    integrationAccountSchemaName);
-                Assert.Throws<CloudException>(
-                    () =>
-                        client.Schemas.Get(Constants.DefaultResourceGroup, integrationAccountName,
-                            integrationAccountSchemaName));
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-            }
+            this.client.Dispose();
+            this.context.Dispose();
         }
 
-        /// <summary>
-        /// Tests the deletion of the integration account schema on account deletion.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void DeleteIntegrationAccountSchemaOnAccountDeletion()
+        [Fact]
+        public void IntegrationAccountSchemas_Create_OK()
         {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountSchemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+            var schema = this.CreateIntegrationAccountSchema(this.schemaName);
+            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.schemaName,
+                schema);
 
-                var client = this.GetIntegrationAccountClient(context);
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                var schema = client.Schemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountSchemaName,
-                    CreateIntegrationAccountSchemaInstance(integrationAccountSchemaName, integrationAccountName));
-
-                Assert.Equal(schema.Name, integrationAccountSchemaName);
-                //Assert.Equal(schema.TargetNamespace, this.SchemaTargetNamespace);
-                Assert.NotNull(schema.ContentLink.Uri);
-
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-                Assert.Throws<CloudException>(
-                    () =>
-                        client.Schemas.Get(Constants.DefaultResourceGroup, integrationAccountName,
-                            integrationAccountSchemaName));
-            }
+            this.ValidateSchema(schema, createdSchema);
         }
 
-        /// <summary>
-        /// Tests the create and Update operations of the integration account schema.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndUpdateIntegrationAccountSchema()
+        [Fact]
+        public void IntegrationAccountSchemas_Get_OK()
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountSchemaName =TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+            var schema = this.CreateIntegrationAccountSchema(this.schemaName);
+            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.schemaName,
+                schema);
 
-                var client = this.GetIntegrationAccountClient(context);
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                var schema = client.Schemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountSchemaName,
-                    CreateIntegrationAccountSchemaInstance(integrationAccountSchemaName, integrationAccountName));
+            var retrievedSchema = this.client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.schemaName);
 
-                var updatedSchema = client.Schemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    integrationAccountSchemaName, new IntegrationAccountSchema
-                    {
-                        ContentType = "application/xml",
-                        Location = Constants.DefaultLocation,
-                        SchemaType = SchemaType.Xml,
-                        Content = this.SchemaContent
-                    });
-
-                Assert.Equal(updatedSchema.Name, integrationAccountSchemaName);
-                Assert.NotNull(updatedSchema.ContentLink.Uri);
-
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-            }
+            this.ValidateSchema(schema, retrievedSchema);
         }
 
-        /// <summary>
-        /// Tests the create and get operations of the integration account schema.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndGetIntegrationAccountSchema()
+        [Fact]
+        public void IntegrationAccountSchemas_List_OK()
         {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountSchemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+            var schema1 = this.CreateIntegrationAccountSchema(this.schemaName);
+            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.schemaName,
+                schema1);
 
-                var client = this.GetIntegrationAccountClient(context);
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                var schema = client.Schemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountSchemaName,
-                    CreateIntegrationAccountSchemaInstance(integrationAccountSchemaName, integrationAccountName));
+            var schemaName2 = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+            var schema2 = this.CreateIntegrationAccountSchema(schemaName2);
+            var createdSchema2 = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                schemaName2,
+                schema2);
 
-                Assert.Equal(schema.Name, integrationAccountSchemaName);
-                //Assert.Equal(schema.TargetNamespace, this.SchemaTargetNamespace);
+            var schemaName3 = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+            var schema3 = this.CreateIntegrationAccountSchema(schemaName3);
+            var createdSchema3 = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                schemaName3,
+                schema3);
 
-                var getSchema = client.Schemas.Get(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    integrationAccountSchemaName);
+            var schemas = this.client.IntegrationAccountSchemas.List(Constants.DefaultResourceGroup, this.integrationAccountName);
 
-                Assert.Equal(schema.Name, getSchema.Name);
-
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-            }
+            Assert.Equal(3, schemas.Count());
+            this.ValidateSchema(schema1, schemas.Single(x => x.Name == schema1.Name));
+            this.ValidateSchema(schema2, schemas.Single(x => x.Name == schema2.Name));
+            this.ValidateSchema(schema3, schemas.Single(x => x.Name == schema3.Name));
         }
 
-        /// <summary>
-        /// Tests the create and List operations of the integration account schema.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void ListIntegrationAccountSchemas()
+        [Fact]
+        public void IntegrationAccountSchemas_Update_OK()
         {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountSchemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+            var schema = this.CreateIntegrationAccountSchema(this.schemaName);
+            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.schemaName,
+                schema);
 
-                var client = this.GetIntegrationAccountClient(context);
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
+            var newSchema = this.CreateIntegrationAccountSchema(this.schemaName);
+            var updatedSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.schemaName,
+                newSchema);
 
-                var createdSchema = client.Schemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountSchemaName,
-                    CreateIntegrationAccountSchemaInstance(integrationAccountSchemaName, integrationAccountName));
-
-                var schemas = client.Schemas.ListByIntegrationAccounts(Constants.DefaultResourceGroup,
-                    integrationAccountName);
-
-                Assert.True(schemas.Any());
-
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-
-            }
+            this.ValidateSchema(newSchema, updatedSchema);
         }
 
-        /// <summary>
-        /// Creates an Integration account schema
-        /// </summary>
-        /// <param name="integrationAccountSchemaName">Name of the schema</param>
-        /// <param name="integrationAccountName">Name of the integration account</param>        
-        /// <returns>Schema instance</returns>
-        private IntegrationAccountSchema CreateIntegrationAccountSchemaInstance(string integrationAccountSchemaName,
-            string integrationAccountName)
+        [Fact]
+        public void IntegrationAccountSchemas_Delete_OK()
         {
-            IDictionary<string, string> tags = new Dictionary<string, string>();
-            tags.Add("integrationAccountSchemaName", integrationAccountSchemaName);
+            var schema = this.CreateIntegrationAccountSchema(this.schemaName);
+            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.schemaName,
+                schema);
 
-            var schema = new IntegrationAccountSchema
-            {
-                ContentType = "application/xml",
-                Location = Constants.DefaultLocation,
-                Tags = tags,
-                SchemaType = SchemaType.Xml,
-                Content = this.SchemaContent,
-                Metadata = integrationAccountSchemaName
-            };
-
-            return schema;
+            this.client.IntegrationAccountSchemas.Delete(Constants.DefaultResourceGroup, this.integrationAccountName, this.schemaName);
+            Assert.Throws<CloudException>(() => this.client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.schemaName));
         }
+
+        [Fact]
+        public void IntegrationAccountSchemas_DeleteWhenDeleteIntegrationAccount_OK()
+        {
+            var schema = this.CreateIntegrationAccountSchema(this.schemaName);
+            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.schemaName,
+                schema);
+
+            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
+            Assert.Throws<CloudException>(() => this.client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.schemaName));
+        }
+
+        [Fact]
+        public void IntegrationAccountSchemas_ListContentCallbackUrl_OK()
+        {
+            var schema = this.CreateIntegrationAccountSchema(this.schemaName);
+            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.schemaName,
+                schema);
+
+            var contentCallbackUrl = this.client.IntegrationAccountSchemas.ListContentCallbackUrl(Constants.DefaultResourceGroup,
+                this.integrationAccountName,
+                this.schemaName,
+                new GetCallbackUrlParameters
+                {
+                    KeyType = "Primary"
+                });
+
+            Assert.Equal("GET", contentCallbackUrl.Method);
+            Assert.Contains(this.schemaName, contentCallbackUrl.Value);
+        }
+
+        #region Private
+
+        private void ValidateSchema(IntegrationAccountSchema expected, IntegrationAccountSchema actual)
+        {
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.SchemaType, actual.SchemaType);
+            Assert.Equal(expected.TargetNamespace, actual.TargetNamespace);
+            Assert.NotEmpty(actual.ContentLink.Uri);
+            Assert.NotNull(actual.ContentLink.ContentSize);
+            Assert.NotNull(actual.CreatedTime);
+            Assert.NotNull(actual.ChangedTime);
+        }
+
+        private IntegrationAccountSchema CreateIntegrationAccountSchema(string schemaName)
+        {
+            return new IntegrationAccountSchema(
+                SchemaType.Xml,
+                name: schemaName,
+                location: Constants.DefaultLocation,
+                targetNamespace: "http://Inbound_EDI.OrderFile",
+                content: this.schemaContent,
+                contentType: "application/xml");
+        }
+
+        #endregion
     }
 }

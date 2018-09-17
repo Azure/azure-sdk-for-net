@@ -7,39 +7,68 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Newtonsoft.Json.Linq;
+    using System;
     using Xunit;
 
     [Collection("WorkflowVersionsScenarioTests")]
-    public class WorkflowVersionsScenarioTests : ScenarioTestsBase
+    public class WorkflowVersionsScenarioTests : ScenarioTestsBase, IDisposable
     {
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndGetWorkflowVersion()
+        private readonly MockContext context;
+        private readonly ILogicManagementClient client;
+
+        private readonly string workflowName;
+        private readonly Workflow workflow;
+
+        public WorkflowVersionsScenarioTests()
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
+            this.context = MockContext.Start(className: this.TestClassName);
+            this.client = this.GetClient(this.context);
+
+            this.workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+            this.workflow = this.CreateWorkflow(this.workflowName);
+        }
+
+        public void Dispose()
+        {
+            this.client.Workflows.Delete(Constants.DefaultResourceGroup, this.workflowName);
+
+            this.client.Dispose();
+            this.context.Dispose();
+        }
+
+        [Fact]
+        public void WorkflowVersions_Get_OK()
+        {
+            var createdWorkflow = this.client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.workflowName,
+                this.workflow);
+
+            var workflowVersion = this.client.WorkflowVersions.Get(Constants.DefaultResourceGroup, this.workflowName, createdWorkflow.Version);
+
+            this.ValidateWorkflowVersion(this.workflow, workflowVersion);
+        }
+
+        [Fact]
+        public void WorkflowVersions_List_OK()
+        {
+            var createdWorkflow = this.client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                this.workflowName,
+                this.workflow);
+
+            var workflowVersions = this.client.WorkflowVersions.List(Constants.DefaultResourceGroup, this.workflowName);
+
+            foreach(var workflowVersion in workflowVersions)
             {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
-                // Create a workflow
-                var workflow = client.Workflows.CreateOrUpdate(
-                    resourceGroupName: this.resourceGroupName,
-                    workflowName: workflowName,
-                    workflow: new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        Definition = JToken.Parse(this.definition)
-                    });
-
-                // Get the workflow version and verify the content
-                var version = client.WorkflowVersions.Get(this.resourceGroupName, workflowName, workflow.Version);
-                Assert.Equal(WorkflowState.Enabled, workflow.State);
-                Assert.Equal(this.Sku.Name, workflow.Sku.Name);
-                Assert.NotEmpty(workflow.Definition.ToString());
-
-                // Delete the workflow
-                client.Workflows.Delete(this.resourceGroupName, workflowName);
+                this.ValidateWorkflowVersion(this.workflow, workflowVersion);
             }
+        }
+
+        private void ValidateWorkflowVersion(Workflow expected, WorkflowVersion actual)
+        {
+            Assert.Equal(expected.Definition, actual.Definition);
+            Assert.Equal(expected.Tags, actual.Tags);
+            Assert.NotNull(actual.ChangedTime);
+            Assert.NotNull(actual.CreatedTime);
         }
     }
 }
