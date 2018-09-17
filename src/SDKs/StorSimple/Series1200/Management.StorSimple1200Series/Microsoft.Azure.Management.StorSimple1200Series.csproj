@@ -9,27 +9,14 @@
 		<AssemblyName>Microsoft.Azure.Management.StorSimple1200Series</AssemblyName>
 		<Version>1.0.0</Version>
 		<PackageTags>Microsoft Azure StorSimple1200Series management;StorSimple1200Series;StorSimple;StorSimple1200Series management;</PackageTags>
-		<NoWarn>$(NoWarn);CS1591</NoWarn>
-	</PropertyGroup>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
 	<PropertyGroup>
-		<TargetFrameworks>net462;netstandard1.4</TargetFrameworks>
-		<RootNamespace>Microsoft.Azure.Management.StorSimple1200Series</RootNamespace>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net462|AnyCPU'">
-	  <DefineConstants>TRACE;DebugInVS;NETFRAMEWORK;NET462</DefineConstants>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <RootNamespace>Microsoft.Azure.Management.StorSimple1200Series</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Compile Remove="Customizations\OperationsExtensions.cs" />
-	  <Compile Remove="Generated\AvailableProviderOperationsOperations.cs" />
-	  <Compile Remove="Generated\AvailableProviderOperationsOperationsExtensions.cs" />
-	  <Compile Remove="Generated\IAvailableProviderOperationsOperations.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
 		<PackageReference Include="System.Text.Encoding" Version="4.3.0" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Reference Include="System.Net.Http" />
 	</ItemGroup>
 
 	<!-- Please do not move/edit code below this line -->

@@ -23,7 +23,7 @@
         /// </param>
         public static IPage<AvailableProviderOperation> List(this IAvailableProviderOperationsOperations operations)
         {
-            return operations.ListAsync().GetAwaiter().GetResult();
+            return operations.ListAsync().GetAwaiter().GetResult() as IPage<AvailableProviderOperation>;
         }
 
         /// <summary>

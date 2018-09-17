@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.StorSimple1200Series
     /// <summary>
     /// AvailableProviderOperationsOperations operations.
     /// </summary>
-    public partial class AvailableProviderOperationsOperations : IServiceOperations<StorSimpleManagementClient>, IAvailableProviderOperationsOperations
+    public partial class AvailableProviderOperationsOperations : IServiceOperations<StorSimple1200SeriesManagementClient>, IAvailableProviderOperationsOperations
     {
         /// <summary>
         /// Initializes a new instance of the AvailableProviderOperationsOperations class.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.StorSimple1200Series
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AvailableProviderOperationsOperations(StorSimpleManagementClient client)
+        public AvailableProviderOperationsOperations(StorSimple1200SeriesManagementClient client)
         {
             if (client == null)
             {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.StorSimple1200Series
         /// <summary>
         /// Gets a reference to the StorSimpleManagementClient
         /// </summary>
-        public StorSimpleManagementClient Client { get; private set; }
+        public StorSimple1200SeriesManagementClient Client { get; private set; }
 
         /// <summary>
         /// List of AvailableProviderOperations

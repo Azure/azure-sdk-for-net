@@ -129,15 +129,6 @@
             encryptedTextBytes = rsa.Encrypt(textBytes, RSAEncryptionPadding.Pkcs1);
 #endif
             var encryptedBase64 = Convert.ToBase64String(encryptedTextBytes);
-            //            var encodedPrivateCert = "AwAAAAEAAAAUAAAAvGUEVwyaDyxGbcijMgEnf4YPsPQCAAAAAQAAAHwAAAAcAAAAAAAAAAEAAAAgAAAAAAAAAAAAAAABAAAAQwBOAF8AQwBOAD0AQwBCAF8AMgA3ADgANgA5ADUAMgAwADMANQA3ADYANQA4ADUANQA5ADAANwBfADYAMwA2ADYANgAyADIANgA2ADgANwA3ADgAOAA3ADAAMwAwAAAAIAAAAAEAAABGAwAAMIIDQjCCAiqgAwIBAgIQGP6H71wSFKVJMTmPk3pbejANBgkqhkiG9w0BAQUFADBdMVswWQYDVQQDHlIAQwBCAF8AMgA3ADgANgA5ADUAMgAwADMANQA3ADYANQA4ADUANQA5ADAANwBfADYAMwA2ADYANgAyADIANgA2ADgANwA3ADgAOAA3ADAAMwAwMB4XDTE4MDYyODAwMDAwMFoXDTIxMDcwMzE0NTgwN1owXTFbMFkGA1UEAx5SAEMAQgBfADIANwA4ADYAOQA1ADIAMAAzADUANwA2ADUAOAA1ADUAOQAwADcAXwA2ADMANgA2ADYAMgAyADYANgA4ADcANwA4ADgANwAwADMAMDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKRapUV01f76nipOXWKY5yd0vKP1OWX012W+dqyBZFWqsG4rQW2L3RoUuAYNLzcaL8AW5QxCsri2R/mH3Po8JbrN3hq1WWbbw3dBSl9I7G52+c1vux3k4Qi1nJRUBjVeRWtqBvV2N+yXPDCu+TZu8nAepW6S8NYK0XXmy67DDhQyIqD0SLblsAfRY3c96g7KTnPDatUifGlm19xhKEX8tUktepDoy0bDB9P2GdbunVgpfhE8vGmqNjd3eS7HG8/rZ6wojtcU95q7rfJa5w3xWJ3EnT3TLIR3gs3pPjXaZYeYRXIU5PakLNMPooi0He2lz4Jl5JucG6e2vebFw+BU2xUCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEAB2utYdBClyeweSMSvDOvefhlU+tg/qDQ4lbdITSCOG8muzvpBxBAQDj9mf3YW5DqqOdL4JWyP8Pd8iaztAviAkdncO+xaDbnKfEeAnwc7pViqA1+lyM1MitjgBO75X4Cub/SLQZSICE9TpclPwr7WaYqNo0HIRFA0rzepN4HYtIevBFhUDd1MsLgUji2AMWywPGW4YZT14tMQ28c1qppnZhZq4pP/b82QSQxGxZZGEwx75ja3xQ7Qv7A5UNPuRpPjSnFVol5LHAQ/1+sBEbaI9OfrcvJCw+hQFD3cx13wADE7mKVH6+6MOcegUcpIMns74UMtzBSI+xw1XoQ4RicBg==";
-            //            X509Certificate2 privateCert = new X509Certificate2(Convert.FromBase64String(encodedPrivateCert), "", X509KeyStorageFlags.PersistKeySet);
-
-            //#if FullNetFx
-            //#else
-            //            var rsaDec = privateCert.GetRSAPrivateKey();
-            //            var decryptedBytes = rsaDec.Decrypt(encryptedTextBytes,RSAEncryptionPadding.Pkcs1);
-            //            var decPlainKey = Encoding.UTF8.GetString(decryptedBytes);
-            //#endif
             return encryptedBase64;
         }
 
