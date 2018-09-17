@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="sku">Required. Gets or sets the sku name.</param>
         /// <param name="kind">Required. Indicates the type of storage account.
-        /// Possible values include: 'Storage', 'StorageV2',
-        /// 'BlobStorage'</param>
+        /// Possible values include: 'Storage', 'StorageV2', 'BlobStorage',
+        /// 'FileStorage', 'BlockBlobStorage'</param>
         /// <param name="location">Required. Gets or sets the location of the
         /// resource. This will be one of the supported and registered Azure
         /// Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo
@@ -65,11 +65,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="accessTier">Required for storage accounts where kind =
         /// BlobStorage. The access tier used for billing. Possible values
         /// include: 'Hot', 'Cool'</param>
+        /// <param name="enableAzureFilesAadIntegration">Enables Azure Files
+        /// AAD Integration for SMB if sets to true.</param>
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true.</param>
         /// <param name="isHnsEnabled">Account HierarchicalNamespace enabled if
         /// sets to true.</param>
-        public StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?))
+        public StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), bool? enableAzureFilesAadIntegration = default(bool?), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?))
         {
             Sku = sku;
             Kind = kind;
@@ -80,6 +82,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             Encryption = encryption;
             NetworkRuleSet = networkRuleSet;
             AccessTier = accessTier;
+            EnableAzureFilesAadIntegration = enableAzureFilesAadIntegration;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
             IsHnsEnabled = isHnsEnabled;
             CustomInit();
@@ -98,7 +101,8 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets or sets required. Indicates the type of storage account.
-        /// Possible values include: 'Storage', 'StorageV2', 'BlobStorage'
+        /// Possible values include: 'Storage', 'StorageV2', 'BlobStorage',
+        /// 'FileStorage', 'BlockBlobStorage'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public Kind Kind { get; set; }
@@ -160,6 +164,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessTier")]
         public AccessTier? AccessTier { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables Azure Files AAD Integration for SMB if sets to
+        /// true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.azureFilesAadIntegration")]
+        public bool? EnableAzureFilesAadIntegration { get; set; }
 
         /// <summary>
         /// Gets or sets allows https traffic only to storage service if sets
