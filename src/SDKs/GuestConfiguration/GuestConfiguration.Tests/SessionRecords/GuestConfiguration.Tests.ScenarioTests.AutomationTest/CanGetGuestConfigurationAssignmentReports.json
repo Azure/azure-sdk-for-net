@@ -1,0 +1,136 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/GCSDKTests/providers/Microsoft.Compute/virtualMachines/GCSDKTests0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2018-06-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL0dDU0RLVGVzdHMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy9HQ1NES1Rlc3RzMC9wcm92aWRlcnMvTWljcm9zb2Z0Lkd1ZXN0Q29uZmlndXJhdGlvbi9ndWVzdENvbmZpZ3VyYXRpb25Bc3NpZ25tZW50cy9BdWRpdFNlY3VyZVByb3RvY29sP2FwaS12ZXJzaW9uPTIwMTgtMDYtMzAtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e47791de-d318-4f0b-9cf4-a022b36d8aa2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/3.0.3.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 10 Sep 2018 20:58:05 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "22f647d2-4705-430c-af2c-039b13918247"
+        ],
+        "x-ms-correlation-request-id": [
+          "22f647d2-4705-430c-af2c-039b13918247"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180910T205805Z:22f647d2-4705-430c-af2c-039b13918247"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "871"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"westcentralus\",\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/GCSDKTests/providers/Microsoft.Compute/virtualMachines/GCSDKTests0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n  \"name\": \"AuditSecureProtocol\",\r\n  \"properties\": {\r\n    \"complianceStatus\": \"Pending\",\r\n    \"assignmentHash\": \"\",\r\n    \"latestReportId\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/GCSDKTests/providers/Microsoft.Compute/virtualMachines/GCSDKTests0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/\",\r\n    \"lastComplianceStatusChecked\": \"0001-01-01T00:00:00\",\r\n    \"context\": null,\r\n    \"guestConfiguration\": {\r\n      \"kind\": null,\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\",\r\n      \"contentUri\": null,\r\n      \"contentHash\": null,\r\n      \"configurationParameter\": [],\r\n      \"configurationSetting\": null\r\n    },\r\n    \"provisioningState\": null\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/GCSDKTests/providers/Microsoft.Compute/virtualMachines/GCSDKTests0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports?api-version=2018-06-30-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL0dDU0RLVGVzdHMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy9HQ1NES1Rlc3RzMC9wcm92aWRlcnMvTWljcm9zb2Z0Lkd1ZXN0Q29uZmlndXJhdGlvbi9ndWVzdENvbmZpZ3VyYXRpb25Bc3NpZ25tZW50cy9BdWRpdFNlY3VyZVByb3RvY29sL3JlcG9ydHM/YXBpLXZlcnNpb249MjAxOC0wNi0zMC1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "64dbb477-c859-4a94-a007-1f7b7a97149c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/3.0.3.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 10 Sep 2018 20:58:05 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "b2e27615-dd31-422a-935f-33205198007a"
+        ],
+        "x-ms-correlation-request-id": [
+          "b2e27615-dd31-422a-935f-33205198007a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180910T205805Z:b2e27615-dd31-422a-935f-33205198007a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "b5e4748c-f69a-467c-8749-e2f9c8cd3db0"
+  }
+}

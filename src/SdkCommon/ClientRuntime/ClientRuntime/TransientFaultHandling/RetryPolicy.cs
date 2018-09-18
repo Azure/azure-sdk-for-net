@@ -96,7 +96,7 @@ namespace Microsoft.Rest.TransientFaultHandling
         /// <summary>
         /// An instance of a callback delegate that will be invoked whenever a retry condition is encountered.
         /// </summary>
-        public event EventHandler<RetryingEventArgs> Retrying;
+        public EventHandler<RetryingEventArgs> Retrying;
 
         /// <summary>
         /// Gets the retry strategy.

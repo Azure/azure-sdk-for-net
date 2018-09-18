@@ -71,11 +71,6 @@ namespace Microsoft.Azure.Management.Network
 
 
         /// <summary>
-        /// Gets the IAzureFirewallsOperations.
-        /// </summary>
-        IAzureFirewallsOperations AzureFirewalls { get; }
-
-        /// <summary>
         /// Gets the IApplicationGatewaysOperations.
         /// </summary>
         IApplicationGatewaysOperations ApplicationGateways { get; }
@@ -84,6 +79,26 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IApplicationSecurityGroupsOperations.
         /// </summary>
         IApplicationSecurityGroupsOperations ApplicationSecurityGroups { get; }
+
+        /// <summary>
+        /// Gets the IAvailableDelegationsOperations.
+        /// </summary>
+        IAvailableDelegationsOperations AvailableDelegations { get; }
+
+        /// <summary>
+        /// Gets the IAvailableResourceGroupDelegationsOperations.
+        /// </summary>
+        IAvailableResourceGroupDelegationsOperations AvailableResourceGroupDelegations { get; }
+
+        /// <summary>
+        /// Gets the IAzureFirewallsOperations.
+        /// </summary>
+        IAzureFirewallsOperations AzureFirewalls { get; }
+
+        /// <summary>
+        /// Gets the IAzureFirewallFqdnTagsOperations.
+        /// </summary>
+        IAzureFirewallFqdnTagsOperations AzureFirewallFqdnTags { get; }
 
         /// <summary>
         /// Gets the IDdosProtectionPlansOperations.
@@ -129,6 +144,21 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IExpressRouteCrossConnectionPeeringsOperations.
         /// </summary>
         IExpressRouteCrossConnectionPeeringsOperations ExpressRouteCrossConnectionPeerings { get; }
+
+        /// <summary>
+        /// Gets the IExpressRouteGatewaysOperations.
+        /// </summary>
+        IExpressRouteGatewaysOperations ExpressRouteGateways { get; }
+
+        /// <summary>
+        /// Gets the IExpressRouteConnectionsOperations.
+        /// </summary>
+        IExpressRouteConnectionsOperations ExpressRouteConnections { get; }
+
+        /// <summary>
+        /// Gets the IInterfaceEndpointsOperations.
+        /// </summary>
+        IInterfaceEndpointsOperations InterfaceEndpoints { get; }
 
         /// <summary>
         /// Gets the ILoadBalancersOperations.
@@ -179,6 +209,16 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the INetworkInterfaceLoadBalancersOperations.
         /// </summary>
         INetworkInterfaceLoadBalancersOperations NetworkInterfaceLoadBalancers { get; }
+
+        /// <summary>
+        /// Gets the INetworkInterfaceTapConfigurationsOperations.
+        /// </summary>
+        INetworkInterfaceTapConfigurationsOperations NetworkInterfaceTapConfigurations { get; }
+
+        /// <summary>
+        /// Gets the INetworkProfilesOperations.
+        /// </summary>
+        INetworkProfilesOperations NetworkProfiles { get; }
 
         /// <summary>
         /// Gets the INetworkSecurityGroupsOperations.
@@ -251,6 +291,16 @@ namespace Microsoft.Azure.Management.Network
         IBgpServiceCommunitiesOperations BgpServiceCommunities { get; }
 
         /// <summary>
+        /// Gets the IServiceEndpointPoliciesOperations.
+        /// </summary>
+        IServiceEndpointPoliciesOperations ServiceEndpointPolicies { get; }
+
+        /// <summary>
+        /// Gets the IServiceEndpointPolicyDefinitionsOperations.
+        /// </summary>
+        IServiceEndpointPolicyDefinitionsOperations ServiceEndpointPolicyDefinitions { get; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         IUsagesOperations Usages { get; }
@@ -271,6 +321,11 @@ namespace Microsoft.Azure.Management.Network
         IVirtualNetworkPeeringsOperations VirtualNetworkPeerings { get; }
 
         /// <summary>
+        /// Gets the IVirtualNetworkTapsOperations.
+        /// </summary>
+        IVirtualNetworkTapsOperations VirtualNetworkTaps { get; }
+
+        /// <summary>
         /// Gets the IVirtualNetworkGatewaysOperations.
         /// </summary>
         IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; }
@@ -286,9 +341,9 @@ namespace Microsoft.Azure.Management.Network
         ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
 
         /// <summary>
-        /// Gets the IVirtualWANsOperations.
+        /// Gets the IVirtualWansOperations.
         /// </summary>
-        IVirtualWANsOperations VirtualWANs { get; }
+        IVirtualWansOperations VirtualWans { get; }
 
         /// <summary>
         /// Gets the IVpnSitesOperations.
@@ -321,14 +376,14 @@ namespace Microsoft.Azure.Management.Network
         IVpnConnectionsOperations VpnConnections { get; }
 
         /// <summary>
-        /// Gets the IServiceEndpointPoliciesOperations.
+        /// Gets the IP2sVpnServerConfigurationsOperations.
         /// </summary>
-        IServiceEndpointPoliciesOperations ServiceEndpointPolicies { get; }
+        IP2sVpnServerConfigurationsOperations P2sVpnServerConfigurations { get; }
 
         /// <summary>
-        /// Gets the IServiceEndpointPolicyDefinitionsOperations.
+        /// Gets the IP2sVpnGatewaysOperations.
         /// </summary>
-        IServiceEndpointPolicyDefinitionsOperations ServiceEndpointPolicyDefinitions { get; }
+        IP2sVpnGatewaysOperations P2sVpnGateways { get; }
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.azure.com zone is
@@ -348,6 +403,24 @@ namespace Microsoft.Azure.Management.Network
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithHttpMessagesAsync(string location, string domainNameLabel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gives the supported security providers for the virtual wan.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='virtualWANName'>
+        /// The name of the VirtualWAN for which supported security providers
+        /// are needed.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<VirtualWanSecurityProviders>> SupportedSecurityProvidersWithHttpMessagesAsync(string resourceGroupName, string virtualWANName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
