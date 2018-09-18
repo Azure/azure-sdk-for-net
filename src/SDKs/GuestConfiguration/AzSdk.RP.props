@@ -3,6 +3,5 @@
   <PropertyGroup>
     <AzureApiTag>Compute_2018-06-30-preview;GuestConfiguration_2018-06-30-preview;</AzureApiTag>
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
-    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 </Project>
