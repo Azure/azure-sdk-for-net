@@ -10,7 +10,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
-    public class AutomationTest 
+    public class GuestConfigurationTest 
     {
         private const string ResourceGroupName = "GCSDKTests";
         private const string VMName = "GCSDKTests0";
