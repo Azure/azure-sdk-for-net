@@ -14,30 +14,33 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Disk Copy Progress
+    /// DataBox Disk Copy Progress
     /// </summary>
-    public partial class DiskCopyProgress
+    public partial class DataBoxDiskCopyProgress
     {
         /// <summary>
-        /// Initializes a new instance of the DiskCopyProgress class.
+        /// Initializes a new instance of the DataBoxDiskCopyProgress class.
         /// </summary>
-        public DiskCopyProgress()
+        public DataBoxDiskCopyProgress()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DiskCopyProgress class.
+        /// Initializes a new instance of the DataBoxDiskCopyProgress class.
         /// </summary>
         /// <param name="serialNumber">The serial number of the disk</param>
+        /// <param name="bytesCopied">Bytes copied during the copy of
+        /// disk.</param>
         /// <param name="percentComplete">Indicates the percentage completed
         /// for the copy of the disk.</param>
         /// <param name="status">The Status of the copy. Possible values
         /// include: 'NotStarted', 'InProgress', 'Completed',
-        /// 'CompletedWithErrors', 'Failed'</param>
-        public DiskCopyProgress(string serialNumber = default(string), int? percentComplete = default(int?), CopyStatus? status = default(CopyStatus?))
+        /// 'CompletedWithErrors', 'Failed', 'NotReturned'</param>
+        public DataBoxDiskCopyProgress(string serialNumber = default(string), long? bytesCopied = default(long?), int? percentComplete = default(int?), CopyStatus? status = default(CopyStatus?))
         {
             SerialNumber = serialNumber;
+            BytesCopied = bytesCopied;
             PercentComplete = percentComplete;
             Status = status;
             CustomInit();
@@ -49,25 +52,30 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the serial number of the disk
+        /// Gets the serial number of the disk
         /// </summary>
         [JsonProperty(PropertyName = "serialNumber")]
-        public string SerialNumber { get; set; }
+        public string SerialNumber { get; private set; }
 
         /// <summary>
-        /// Gets or sets indicates the percentage completed for the copy of the
-        /// disk.
+        /// Gets bytes copied during the copy of disk.
+        /// </summary>
+        [JsonProperty(PropertyName = "bytesCopied")]
+        public long? BytesCopied { get; private set; }
+
+        /// <summary>
+        /// Gets indicates the percentage completed for the copy of the disk.
         /// </summary>
         [JsonProperty(PropertyName = "percentComplete")]
-        public int? PercentComplete { get; set; }
+        public int? PercentComplete { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Status of the copy. Possible values include:
-        /// 'NotStarted', 'InProgress', 'Completed', 'CompletedWithErrors',
-        /// 'Failed'
+        /// Gets the Status of the copy. Possible values include: 'NotStarted',
+        /// 'InProgress', 'Completed', 'CompletedWithErrors', 'Failed',
+        /// 'NotReturned'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public CopyStatus? Status { get; set; }
+        public CopyStatus? Status { get; private set; }
 
     }
 }

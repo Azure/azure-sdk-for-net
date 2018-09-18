@@ -14,27 +14,29 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Capacity of the sku.
+    /// The Network Adapter configuration of a DataBox.
     /// </summary>
-    public partial class SkuCapacity
+    public partial class ApplianceNetworkConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the SkuCapacity class.
+        /// Initializes a new instance of the ApplianceNetworkConfiguration
+        /// class.
         /// </summary>
-        public SkuCapacity()
+        public ApplianceNetworkConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SkuCapacity class.
+        /// Initializes a new instance of the ApplianceNetworkConfiguration
+        /// class.
         /// </summary>
-        /// <param name="usable">Usable capacity in TB.</param>
-        /// <param name="maximum">Maximum capacity in TB.</param>
-        public SkuCapacity(string usable = default(string), string maximum = default(string))
+        /// <param name="name">Name of the network.</param>
+        /// <param name="macAddress">Mac Address.</param>
+        public ApplianceNetworkConfiguration(string name = default(string), string macAddress = default(string))
         {
-            Usable = usable;
-            Maximum = maximum;
+            Name = name;
+            MacAddress = macAddress;
             CustomInit();
         }
 
@@ -44,16 +46,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets usable capacity in TB.
+        /// Gets name of the network.
         /// </summary>
-        [JsonProperty(PropertyName = "usable")]
-        public string Usable { get; private set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets maximum capacity in TB.
+        /// Gets mac Address.
         /// </summary>
-        [JsonProperty(PropertyName = "maximum")]
-        public string Maximum { get; private set; }
+        [JsonProperty(PropertyName = "macAddress")]
+        public string MacAddress { get; private set; }
 
     }
 }
