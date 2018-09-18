@@ -51,6 +51,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// gateway.</param>
         /// <param name="authenticationCertificates">Array of references to
         /// application gateway authentication certificates.</param>
+        /// <param name="trustedRootCertificates">Array of references to
+        /// application gateway trusted root certificates.</param>
         /// <param name="connectionDraining">Connection draining of the backend
         /// http settings resource.</param>
         /// <param name="hostName">Host header to be sent to the backend
@@ -73,7 +75,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayBackendHttpSettings(string id = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), IList<SubResource> authenticationCertificates = default(IList<SubResource>), ApplicationGatewayConnectionDraining connectionDraining = default(ApplicationGatewayConnectionDraining), string hostName = default(string), bool? pickHostNameFromBackendAddress = default(bool?), string affinityCookieName = default(string), bool? probeEnabled = default(bool?), string path = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayBackendHttpSettings(string id = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), IList<SubResource> authenticationCertificates = default(IList<SubResource>), IList<SubResource> trustedRootCertificates = default(IList<SubResource>), ApplicationGatewayConnectionDraining connectionDraining = default(ApplicationGatewayConnectionDraining), string hostName = default(string), bool? pickHostNameFromBackendAddress = default(bool?), string affinityCookieName = default(string), bool? probeEnabled = default(bool?), string path = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             Port = port;
@@ -82,6 +84,7 @@ namespace Microsoft.Azure.Management.Network.Models
             RequestTimeout = requestTimeout;
             Probe = probe;
             AuthenticationCertificates = authenticationCertificates;
+            TrustedRootCertificates = trustedRootCertificates;
             ConnectionDraining = connectionDraining;
             HostName = hostName;
             PickHostNameFromBackendAddress = pickHostNameFromBackendAddress;
@@ -141,6 +144,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.authenticationCertificates")]
         public IList<SubResource> AuthenticationCertificates { get; set; }
+
+        /// <summary>
+        /// Gets or sets array of references to application gateway trusted
+        /// root certificates.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.trustedRootCertificates")]
+        public IList<SubResource> TrustedRootCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets connection draining of the backend http settings

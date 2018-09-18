@@ -32,10 +32,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// ApplicationGatewayAutoscaleConfiguration class.
         /// </summary>
-        /// <param name="bounds">Autoscale bounds</param>
-        public ApplicationGatewayAutoscaleConfiguration(ApplicationGatewayAutoscaleBounds bounds)
+        /// <param name="minCapacity">Lower bound on number of Application
+        /// Gateway instances</param>
+        public ApplicationGatewayAutoscaleConfiguration(int minCapacity)
         {
-            Bounds = bounds;
+            MinCapacity = minCapacity;
             CustomInit();
         }
 
@@ -45,10 +46,10 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets autoscale bounds
+        /// Gets or sets lower bound on number of Application Gateway instances
         /// </summary>
-        [JsonProperty(PropertyName = "bounds")]
-        public ApplicationGatewayAutoscaleBounds Bounds { get; set; }
+        [JsonProperty(PropertyName = "minCapacity")]
+        public int MinCapacity { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -58,13 +59,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Bounds == null)
+            if (MinCapacity < 2)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Bounds");
-            }
-            if (Bounds != null)
-            {
-                Bounds.Validate();
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MinCapacity", 2);
             }
         }
     }

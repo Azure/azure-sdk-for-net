@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="ifFalseActivities">List of activities to execute if
         /// expression is evaluated to false. This is an optional property and
         /// if not provided, the activity will exit without any action.</param>
-        public IfConditionActivity(string name, Expression expression, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>), IList<Activity> ifTrueActivities = default(IList<Activity>), IList<Activity> ifFalseActivities = default(IList<Activity>))
+        public IfConditionActivity(string name, Expression expression, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), IList<Activity> ifTrueActivities = default(IList<Activity>), IList<Activity> ifFalseActivities = default(IList<Activity>))
             : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             Expression = expression;

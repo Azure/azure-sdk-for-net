@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dns.Tests", "Dns.Tests\Dns.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Dns", "Management.Dns\Microsoft.Azure.Management.Dns.csproj", "{89758CD0-93F3-4047-8F5D-653457D2935B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Test.HttpRecorder", "..\..\SdkCommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj", "{07799757-EB32-4055-89C2-252A39AC8199}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +23,15 @@ Global
 		{89758CD0-93F3-4047-8F5D-653457D2935B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89758CD0-93F3-4047-8F5D-653457D2935B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89758CD0-93F3-4047-8F5D-653457D2935B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07799757-EB32-4055-89C2-252A39AC8199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07799757-EB32-4055-89C2-252A39AC8199}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07799757-EB32-4055-89C2-252A39AC8199}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07799757-EB32-4055-89C2-252A39AC8199}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0BC5428F-5BAA-4B2C-A7DB-DFC1988C3CDD}
 	EndGlobalSection
 EndGlobal

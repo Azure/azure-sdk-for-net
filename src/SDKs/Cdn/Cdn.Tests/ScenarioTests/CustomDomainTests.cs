@@ -67,7 +67,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List custom domains one this endpoint should return none
                 var customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(resourceGroupName, profileName, endpointName);
-                Assert.Equal(0, customDomains.Count());
+                Assert.Empty(customDomains);
 
                 // NOTE: There is a CName mapping already created for this custom domain and endpoint hostname
                 // "sdk-1-f3757d2a3e10.azureedge-test.net" maps to "endpoint-f3757d2a3e10.azureedge.net"
@@ -80,7 +80,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List custom domains one this endpoint should return one
                 customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(resourceGroupName, profileName, endpointName);
-                Assert.Equal(1, customDomains.Count());
+                Assert.Single(customDomains);
 
                 // Stop endpoint
                 cdnMgmtClient.Endpoints.Stop(resourceGroupName, profileName, endpointName);
@@ -107,7 +107,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List custom domains on endpoint should return one
                 customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(resourceGroupName, profileName, endpointName);
-                Assert.Equal(1, customDomains.Count());
+                Assert.Single(customDomains);
 
                 // Start endpoint
                 cdnMgmtClient.Endpoints.Start(resourceGroupName, profileName, endpointName);
@@ -125,7 +125,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List custom domains on endpoint should return none
                 customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(resourceGroupName, profileName, endpointName);
-                Assert.Equal(0, customDomains.Count());
+                Assert.Empty(customDomains);
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);

@@ -101,6 +101,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         /// </return>
         public async Task<HttpOperationResponse<LuisResult>> ResolveWithHttpMessagesAsync(string appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (appId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "appId");
@@ -135,8 +139,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
                 ServiceClientTracing.Enter(_invocationId, this, "Resolve", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
             List<string> _queryParameters = new List<string>();
             if (timezoneOffset != null)

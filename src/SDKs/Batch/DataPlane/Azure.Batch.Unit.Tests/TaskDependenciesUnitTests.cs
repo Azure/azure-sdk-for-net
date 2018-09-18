@@ -28,9 +28,8 @@
             const string jobId = "id-123";
             const bool usesTaskDependencies = true;
             // Bound
-            BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
 
-            using (BatchClient client = BatchClient.Open(credentials))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
                     baseRequest =>
@@ -60,7 +59,7 @@
             const string jobId = "id-123";
             const bool usesTaskDependencies = true;
 
-            using (BatchClient client = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
                     baseRequest =>
@@ -91,7 +90,7 @@
             const bool usesTaskDependencies = true;
 
 
-            using (BatchClient client = BatchClient.Open(ClientUnitTestCommon.CreateDummySharedKeyCredential()))
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
             {
                 Protocol.RequestInterceptor interceptor = new Protocol.RequestInterceptor(
                     baseRequest =>

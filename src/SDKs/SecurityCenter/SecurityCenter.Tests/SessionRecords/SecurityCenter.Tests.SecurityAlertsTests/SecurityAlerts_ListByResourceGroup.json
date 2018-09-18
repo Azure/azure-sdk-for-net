@@ -1,0 +1,70 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/RSG/providers/Microsoft.Security/alerts?api-version=2015-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Jlc291cmNlR3JvdXBzL1JTRy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5L2FsZXJ0cz9hcGktdmVyc2lvbj0yMDE1LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2976451c-6ae0-4479-a999-b78195701ca3"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/RSG/providers/Microsoft.Security/locations/centralus/alerts/2518710774294070750_FFF23C70-80EF-4A8B-9122-507B0EA8DFFF\",\r\n      \"name\": \"2518710774294070750_FFF23C70-80EF-4A8B-9122-507B0EA8DFFF\",\r\n      \"type\": \"Microsoft.Security/Locations/alerts\",\r\n      \"properties\": {\r\n        \"vendorName\": \"Microsoft\",\r\n        \"alertDisplayName\": \"PREVIEW - Vulnerability scanner detected\",\r\n        \"alertName\": \"APPS_WpScanner\",\r\n        \"detectedTimeUtc\": \"2018-07-10T11:49:30.5929249Z\",\r\n        \"description\": \"Azure App Services activity log indicates a possible vulnerability scanner usage on your App Service resource.\\r\\nThe suspicious activity detected resembles that of tools targeting WordPress applications.\",\r\n        \"remediationSteps\": \"1. If WordPress is installed, make sure that the application is up to date and automatic updates are enabled.\\r\\n2. If only specific IPs should access to the web application, use IP Restrictions (https://docs.microsoft.com/en-us/azure/app-service/app-service-ip-restrictions).\",\r\n        \"actionTaken\": \"Undefined\",\r\n        \"reportedSeverity\": \"High\",\r\n        \"compromisedEntity\": \"testSite1\",\r\n        \"associatedResource\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/RSG/providers/Microsoft.Web/sites/testSite1\",\r\n        \"subscriptionId\": \"487bb485-b5b0-471e-9c0d-10717612f869\",\r\n        \"instanceId\": \"fff23c70-80ef-4a8b-9122-507b0ea8dfff\",\r\n        \"extendedProperties\": {\r\n          \"sample User Agents\": \"WPScan+v2.9.3+(http://wpscan.org)\",\r\n          \"last Event Time\": \"6/23/2018 12:18:58 AM\",\r\n          \"sample URIs\": \"/wp-config.php.original, /wp-includes/css/editor.min.css, /wp-includes/js/wp-emoji.js, /wp-config.old, /xmlrpc.php, /wp-admin/css/wp-admin-rtl.css, /#wp-config.php#, /wp-includes/js/tinymce/plugins/wplink/plugin.js, /wp-includes/js/tinymce/plugins/wordpress/editor_plugin.js, /wp-admin/js/post.js\",\r\n          \"sample Referer\": \"https://www.stone.com.br/\",\r\n          \"resourceType\": \"App Service\",\r\n          \"end Time UTC\": \"2018-07-10T11:54:30.5929249Z\"\r\n        },\r\n        \"state\": \"Dismissed\",\r\n        \"reportedTimeUtc\": \"2018-07-10T16:31:52.4195616Z\",\r\n        \"confidenceReasons\": [],\r\n        \"canBeInvestigated\": true,\r\n        \"entities\": []\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/RSG/providers/Microsoft.Security/alerts?api-version=2015-06-01-preview&%24skiptoken=TY%2fLkqIwAEX%2fhcXskARBxaquqdEKjE4DGpKg7AKk2ygvE%2fBBV%2f%2f7uJjFrO%2bpc%2bp%2bGY149O%2byuWhj%2bWWkKCGI4niHjKVx6vtOLy2r5g3%2fFLVo%2bgkfByUmRVsvHWdq6SHXhZJdL9tGW85inufOwjVzNwemM4fC9ApQmhDM4XwG7Y%2fFzLOU0O2gChGodui0hZPA6lR7k6VQ2gploVrdfvSTRBSDkv3T4pVQvf7JO2neXsgr9GYD6JpgZgJodkrcpLj%2f0BfZkfYimjfx3MbZ4QRo4D%2fLoAI89YbEZu7m3MowQSBe%2bzEOijFN4TZEHmIHnPEq6wgN7yFyZ7h%2bhCx4XAktcYkg3ZMoYkH4JAz%2fyamHUkLl%2b%2fpfo%2fam%2f7mnkfQjXjGHAHwuAbzuD6cdCzQkEKuIepSPbMfOnyO5lHGOXJqNK74ff90J2fqCPig9lBwjCFKGVyWs3PB3FTNAx9eOI%2bRejyOORIX6jbxLUjOn9PHpWD8qUvt9lmxmecN0vr5L9vqe2QyQwDsfD7jLbUfG55VnfH%2f%2fBQ%3d%3d\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 22 Jul 2018 12:52:48 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-original-request-ids": [
+          "1c86cf74-77c9-483b-bad5-f1435586a477",
+          "c9a8a2eb-2508-4746-9490-395a142f3db3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-request-id": [
+          "d4deba07-baa2-4fdb-9444-3c357c53b6bc"
+        ],
+        "x-ms-correlation-request-id": [
+          "d4deba07-baa2-4fdb-9444-3c357c53b6bc"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20180722T125249Z:d4deba07-baa2-4fdb-9444-3c357c53b6bc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+  }
+}

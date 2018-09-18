@@ -33,6 +33,7 @@ namespace Management.HDInsight.Tests
         private const string AdlDefaultStorageAccountName = "";
 
 
+
         // These can be set to anything but all created clusters should be deleted after usage so these aren't secret.
         private const string DefaultContainer = "default";
         private const string SshUser = "sshuser";

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-#if FullNetFx
+//#if FullNetFx
 namespace Microsoft.Rest.Azure.Authentication
 {
     using System;
@@ -16,11 +16,7 @@ namespace Microsoft.Rest.Azure.Authentication
     /// Provides tokens for Azure Active Directory Microsoft Id and Organization Id users.
     /// </summary>
     public partial class UserTokenProvider : ITokenProvider
-    {
-        /// <summary>
-        /// The id of the active directory common tenant.
-        /// </summary>
-        public const string CommonTenantId = "common";
+    {   
         /// <summary>
         /// Uri parameters used in the credential prompt.  Allows recalling previous 
         /// logins in the login dialog.
@@ -29,6 +25,12 @@ namespace Microsoft.Rest.Azure.Authentication
         private AuthenticationContext _authenticationContext;
         private string _clientId;
         private UserIdentifier _userid;
+
+        /// <summary>
+        /// The id of the active directory common tenant.
+        /// </summary>
+        public const string CommonTenantId = "common";
+
 
         /// <summary>
         /// Create a token provider which can provide user tokens in the given context.  The user must have previously authenticated in the given context. 
@@ -64,9 +66,10 @@ namespace Microsoft.Rest.Azure.Authentication
             this._userid = userId;
         }
 
+
         #region .NET 461
         // please remove this preprocessor #if whenever ADAL will go public with the new library 
-#if net461
+#if !net452
         /// <summary>
         /// Log in to azure active directory using device code authentication.
         /// </summary>
@@ -312,4 +315,4 @@ namespace Microsoft.Rest.Azure.Authentication
         }
     }
 }
-#endif
+//#endif

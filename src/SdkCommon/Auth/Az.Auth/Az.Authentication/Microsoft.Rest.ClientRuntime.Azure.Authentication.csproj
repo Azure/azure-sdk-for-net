@@ -5,14 +5,11 @@
     <Description>Provides ADAL based authentication for Azure management client libraries</Description>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure.Authentication</AssemblyName>
     <AssemblyTitle>Authentication for Azure Management Clients</AssemblyTitle>
-    <Version>2.3.3</Version>    
+    <Version>2.3.4</Version>    
     <PackageTags>Microsoft AutoRest ClientRuntime Authentication $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
 	<PackageReleaseNotes>
 		<![CDATA[
-			1) TokenAudience URI is no longer formatted to add trailing '/'. Provided URI is honored.
-			2) Added Net 461 target framework
-			3) For .NET 452 target, added exact version of ADAL. We will no longer be supporting ADAL 3.x.x in .NET 452. If you need support for ADAL 3.x.x please use .NET 461 target version
-			4) Due to braking changes in adal, no support for ADAL 3.x.x for .net 452. please use .NET 461 target framework.
+			1) Bring back DeviceAuth to .NET Core and .NET 461 that was mistakenly left out.
 		]]>
 	</PackageReleaseNotes>
   </PropertyGroup>
@@ -21,7 +18,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)'=='net461' ">
-    <DefineConstants>net461;FullNetFx</DefineConstants>
+    <DefineConstants>net461</DefineConstants>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>

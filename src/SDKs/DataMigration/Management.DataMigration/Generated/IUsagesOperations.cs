@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// This method returns region-specific quotas and resource usage
-        /// information for the Data Migration Service.
+        /// information for the Database Migration Service.
         /// </remarks>
         /// <param name='location'>
         /// The Azure region of the operation
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         /// <remarks>
         /// This method returns region-specific quotas and resource usage
-        /// information for the Data Migration Service.
+        /// information for the Database Migration Service.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

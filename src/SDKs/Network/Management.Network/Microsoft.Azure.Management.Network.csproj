@@ -7,16 +7,20 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.1.0-preview</Version>
+		<Version>19.5.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Made VM reference in NIC readonly
-      - Added new VPN protocol
-			- Added examples for Express Route Circuit APIs
-			- AppGW FIPS mode enabled
-      - Added VirtualWan Swagger
-      - Removed enableRateLimiting property
+      - Added AddressPrefixes on Subnet properties
+      - Included required properties for outbound rule 
+      - Azure Firewall FQDN Tag added as a top level resource
+      - Swagger Coverage/Completeness- for operation CheckNameAvailability
+      - Azure Firewall NAT Rule Collection 
+      - Added support for interface endpoints
+      - Added linkedResourceType and hostedWorkloads to nic 
+      - Added App Gateway Trusted root certificate changes 
+      - Added ExpressRoute gateway resource
+      - Added support for delegations on a subnet      
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

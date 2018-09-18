@@ -6,44 +6,44 @@
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/spaceneedle.jpg\"\r\n}",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "192"
-        ],
         "Ocp-Apim-Subscription-Key": [
           ""
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/2.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"result\": {\r\n    \"landmarks\": [\r\n      {\r\n        \"name\": \"Obelisco Espacial\",\r\n        \"confidence\": 0.99991440773010254\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"c8e97c27-8cd8-41b1-9925-6e236a8c31af\",\r\n  \"metadata\": {\r\n    \"height\": 479,\r\n    \"width\": 243,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "193"
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.2.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
+        "Content-Length": [
+          "192"
+        ]
+      },
+      "ResponseHeaders": {
         "Connection": [
           "close"
         ],
         "Date": [
-          "Thu, 14 Jun 2018 00:34:22 GMT"
+          "Mon, 30 Jul 2018 21:58:50 GMT"
         ],
         "apim-request-id": [
-          "c8e97c27-8cd8-41b1-9925-6e236a8c31af"
+          "f7ade5a3-a17f-49bf-a718-f29c461d6d1f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
         "x-content-type-options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "193"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ]
       },
+      "ResponseBody": "{\r\n  \"result\": {\r\n    \"landmarks\": [\r\n      {\r\n        \"name\": \"Obelisco Espacial\",\r\n        \"confidence\": 0.99991440773010254\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"f7ade5a3-a17f-49bf-a718-f29c461d6d1f\",\r\n  \"metadata\": {\r\n    \"height\": 479,\r\n    \"width\": 243,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

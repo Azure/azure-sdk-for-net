@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
@@ -16,7 +17,7 @@ namespace Sql.Tests
     {
         private const string _environmentVariableName = "TEST_CSM_ORGID_AUTHENTICATION";
 
-        private static readonly TestEnvironment _environment = 
+        private static readonly TestEnvironment _environment =
             new TestEnvironment(Environment.GetEnvironmentVariable(_environmentVariableName));
 
         // We now load default locations from environment variable.
@@ -174,7 +175,7 @@ namespace Sql.Tests
         /// </summary>
         private static string GetValueFromEnvironment(string key, string backupValue = null)
         {
-            return GetOrAddVariable(key, () => 
+            return GetOrAddVariable(key, () =>
             {
                 string value;
                 bool successful = _environment.ConnectionString.KeyValuePairs.TryGetValue(key, out value);

@@ -1,0 +1,63 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/RSG/providers/Microsoft.Security/locations/centralus/alerts/2518710774294070750_FFF23C70-80EF-4A8B-9122-507B0EA8DFFF/Dismiss?api-version=2015-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Jlc291cmNlR3JvdXBzL1JTRy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5L2xvY2F0aW9ucy9jZW50cmFsdXMvYWxlcnRzLzI1MTg3MTA3NzQyOTQwNzA3NTBfRkZGMjNDNzAtODBFRi00QThCLTkxMjItNTA3QjBFQThERkZGL0Rpc21pc3M/YXBpLXZlcnNpb249MjAxNS0wNi0wMS1wcmV2aWV3",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "07964606-6f05-4e81-b9a5-4a4886f71115"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 22 Jul 2018 12:52:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "46f6d7d7-9128-48aa-962b-aabbb4b7e19f"
+        ],
+        "x-ms-correlation-request-id": [
+          "46f6d7d7-9128-48aa-962b-aabbb4b7e19f"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20180722T125244Z:46f6d7d7-9128-48aa-962b-aabbb4b7e19f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+  }
+}

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <param name="accentColor">Possible accent color.</param>
         /// <param name="isBWImg">A value indicating if the image is black and
         /// white.</param>
-        public ColorInfo(string dominantColorForeground = default(string), string dominantColorBackground = default(string), IList<string> dominantColors = default(IList<string>), string accentColor = default(string), bool? isBWImg = default(bool?))
+        public ColorInfo(string dominantColorForeground = default(string), string dominantColorBackground = default(string), IList<string> dominantColors = default(IList<string>), string accentColor = default(string), bool isBWImg = default(bool))
         {
             DominantColorForeground = dominantColorForeground;
             DominantColorBackground = dominantColorBackground;
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Gets or sets a value indicating if the image is black and white.
         /// </summary>
         [JsonProperty(PropertyName = "isBWImg")]
-        public bool? IsBWImg { get; set; }
+        public bool IsBWImg { get; set; }
 
     }
 }

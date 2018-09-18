@@ -82,13 +82,17 @@ namespace Microsoft.Rest
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
-            RetryPolicy.Retrying += (sender, args) =>
+
+            if (RetryPolicy.Retrying == null)
             {
+              RetryPolicy.Retrying = (sender, args) =>
+              {
                 if (Retrying != null)
                 {
-                    Retrying(sender, args);
+                  Retrying(sender, args);
                 }
-            };
+              };
+            }
 
             HttpResponseMessage responseMessage = null;
             try

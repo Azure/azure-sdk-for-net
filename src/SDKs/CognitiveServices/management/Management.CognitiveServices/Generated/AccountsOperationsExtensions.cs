@@ -414,9 +414,14 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
             /// </param>
-            public static UsagesResult GetUsages(this IAccountsOperations operations, string resourceGroupName, string accountName)
+            /// <param name='filter'>
+            /// An OData filter expression that describes a subset of usages to return. The
+            /// supported parameter is name.value (name of the metric, can have an or of
+            /// multiple names).
+            /// </param>
+            public static UsagesResult GetUsages(this IAccountsOperations operations, string resourceGroupName, string accountName, string filter = default(string))
             {
-                return operations.GetUsagesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+                return operations.GetUsagesAsync(resourceGroupName, accountName, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -431,12 +436,17 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
             /// </param>
+            /// <param name='filter'>
+            /// An OData filter expression that describes a subset of usages to return. The
+            /// supported parameter is name.value (name of the metric, can have an or of
+            /// multiple names).
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UsagesResult> GetUsagesAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UsagesResult> GetUsagesAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetUsagesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetUsagesWithHttpMessagesAsync(resourceGroupName, accountName, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

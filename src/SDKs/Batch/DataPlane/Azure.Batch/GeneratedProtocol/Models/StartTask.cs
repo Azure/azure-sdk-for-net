@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -51,8 +50,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="containerSettings">The settings for the container
         /// under which the start task runs.</param>
         /// <param name="resourceFiles">A list of files that the Batch service
-        /// will download to the compute node before running the command
-        /// line.</param>
+        /// will download to the compute node before running the command line.
+        /// There is a maximum size for the list of resource files. When the
+        /// max size is exceeded, the request will fail and the response error
+        /// code will be RequestEntityTooLarge. If this occurs, the collection
+        /// of ResourceFiles must be reduced in size. This can be achieved
+        /// using .zip files, Application Packages, or Docker
+        /// Containers.</param>
         /// <param name="environmentSettings">A list of environment variable
         /// settings for the start task.</param>
         /// <param name="userIdentity">The user identity under which the start
@@ -113,7 +117,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
-        /// to the compute node before running the command line.
+        /// to the compute node before running the command line.  There is a
+        /// maximum size for the list of resource files. When the max size is
+        /// exceeded, the request will fail and the response error code will be
+        /// RequestEntityTooLarge. If this occurs, the collection of
+        /// ResourceFiles must be reduced in size. This can be achieved using
+        /// .zip files, Application Packages, or Docker Containers.
         /// </summary>
         /// <remarks>
         /// Files listed under this element are located in the task's working
@@ -176,42 +185,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (CommandLine == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
-            }
-            if (ContainerSettings != null)
-            {
-                ContainerSettings.Validate();
-            }
-            if (ResourceFiles != null)
-            {
-                foreach (var element in ResourceFiles)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (EnvironmentSettings != null)
-            {
-                foreach (var element1 in EnvironmentSettings)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-        }
     }
 }

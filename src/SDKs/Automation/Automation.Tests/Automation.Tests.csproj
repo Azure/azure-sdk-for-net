@@ -3,13 +3,9 @@
   <PropertyGroup>
     <PackageId>Automation.Tests</PackageId>
     <AssemblyName>Automation.Tests</AssemblyName>
-    <VersionPrefix>3.0.1-preview</VersionPrefix>
+    <Version>1.0.0</Version>
     <Description>Test Project for Automation tests</Description>
-  </PropertyGroup>
-  
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-    <TestProjectType>true</TestProjectType>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

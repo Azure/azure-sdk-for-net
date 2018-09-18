@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="message">Login migration progress message</param>
         /// <param name="exceptionsAndWarnings">Login migration errors and
         /// warnings per login</param>
-        public MigrateSqlServerSqlMITaskOutputLoginLevel(string id = default(string), string loginName = default(string), string state = default(string), LoginMigrationStage? stage = default(LoginMigrationStage?), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string message = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
+        public MigrateSqlServerSqlMITaskOutputLoginLevel(string id = default(string), string loginName = default(string), string state = default(string), string stage = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string message = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
             : base(id)
         {
             LoginName = loginName;
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Completed'
         /// </summary>
         [JsonProperty(PropertyName = "stage")]
-        public LoginMigrationStage? Stage { get; private set; }
+        public string Stage { get; private set; }
 
         /// <summary>
         /// Gets login migration start time

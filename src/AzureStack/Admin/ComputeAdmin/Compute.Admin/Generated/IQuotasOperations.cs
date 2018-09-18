@@ -24,10 +24,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
     public partial interface IQuotasOperations
     {
         /// <summary>
-        /// Returns the requested quota.
+        /// Returns the requested Compute quota.
         /// </summary>
         /// <remarks>
-        /// Get an existing Quota.
+        /// Get an existing Compute Quota.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -52,10 +52,11 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// </exception>
         Task<AzureOperationResponse<Quota>> GetWithHttpMessagesAsync(string location, string quotaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or Updates a Quota.
+        /// Creates or Updates a Compute Quota.
         /// </summary>
         /// <remarks>
-        /// Creates or Updates a Quota.
+        /// Creates or Updates a Compute Quota with the provided quota
+        /// parameters.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -83,10 +84,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// </exception>
         Task<AzureOperationResponse<Quota>> CreateOrUpdateWithHttpMessagesAsync(string location, string quotaName, Quota newQuota, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes specified quota
+        /// Deletes specified Compute quota
         /// </summary>
         /// <remarks>
-        /// Delete an existing quota.
+        /// Delete an existing Compute quota.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -108,10 +109,10 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string location, string quotaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all quotas.
+        /// Lists all Compute quotas.
         /// </summary>
         /// <remarks>
-        /// Get a list of existing quotas.
+        /// Get a list of existing Compute quotas.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.

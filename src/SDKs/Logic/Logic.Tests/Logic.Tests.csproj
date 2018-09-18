@@ -6,9 +6,9 @@
     <DelaySign>true</DelaySign>
     <AssemblyName>Logic.Tests</AssemblyName>
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>  
     <!--<PackageReference Include="Microsoft.Azure.Management.Logic" Version="3.0.0" />-->    

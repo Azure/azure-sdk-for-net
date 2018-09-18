@@ -698,6 +698,109 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
+            /// Remove all linked integration runtimes under specific data factory in a
+            /// self-hosted integration runtime.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            /// <param name='linkedIntegrationRuntimeRequest'>
+            /// The data factory name for the linked integration runtime.
+            /// </param>
+            public static void RemoveLinks(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, LinkedIntegrationRuntimeRequest linkedIntegrationRuntimeRequest)
+            {
+                operations.RemoveLinksAsync(resourceGroupName, factoryName, integrationRuntimeName, linkedIntegrationRuntimeRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Remove all linked integration runtimes under specific data factory in a
+            /// self-hosted integration runtime.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            /// <param name='linkedIntegrationRuntimeRequest'>
+            /// The data factory name for the linked integration runtime.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RemoveLinksAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, LinkedIntegrationRuntimeRequest linkedIntegrationRuntimeRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RemoveLinksWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, linkedIntegrationRuntimeRequest, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Create a linked integration runtime entry in a shared integration runtime.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            /// <param name='createLinkedIntegrationRuntimeRequest'>
+            /// The linked integration runtime properties.
+            /// </param>
+            public static IntegrationRuntimeStatusResponse CreateLinkedIntegrationRuntime(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, CreateLinkedIntegrationRuntimeRequest createLinkedIntegrationRuntimeRequest)
+            {
+                return operations.CreateLinkedIntegrationRuntimeAsync(resourceGroupName, factoryName, integrationRuntimeName, createLinkedIntegrationRuntimeRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a linked integration runtime entry in a shared integration runtime.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            /// <param name='createLinkedIntegrationRuntimeRequest'>
+            /// The linked integration runtime properties.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IntegrationRuntimeStatusResponse> CreateLinkedIntegrationRuntimeAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, CreateLinkedIntegrationRuntimeRequest createLinkedIntegrationRuntimeRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateLinkedIntegrationRuntimeWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, createLinkedIntegrationRuntimeRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Starts a ManagedReserved type integration runtime.
             /// </summary>
             /// <param name='operations'>

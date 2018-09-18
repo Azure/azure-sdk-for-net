@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="waitOnCompletion">Defines whether activity execution
         /// will wait for the dependent pipeline execution to finish. Default
         /// is false.</param>
-        public ExecutePipelineActivity(string name, PipelineReference pipeline, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>), IDictionary<string, object> parameters = default(IDictionary<string, object>), bool? waitOnCompletion = default(bool?))
+        public ExecutePipelineActivity(string name, PipelineReference pipeline, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), IDictionary<string, object> parameters = default(IDictionary<string, object>), bool? waitOnCompletion = default(bool?))
             : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             Pipeline = pipeline;

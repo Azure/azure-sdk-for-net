@@ -68,8 +68,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/providers/Microsoft.IoTCentral/checkNameAvailability?api-version=2017-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW9UQ2VudHJhbC9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxNy0wNy0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/providers/Microsoft.IoTCentral/checkNameAvailability?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW9UQ2VudHJhbC9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxOC0wOS0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"name\": \"dotnetsdkapp\"\r\n}",
       "RequestHeaders": {
@@ -120,8 +120,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/DotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapp?api-version=2017-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL0RvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHA/YXBpLXZlcnNpb249MjAxNy0wNy0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/DotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapp?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL0RvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHA/YXBpLXZlcnNpb249MjAxOC0wOS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"dotnetsdkapp\",\r\n    \"subdomain\": \"dotnetsdkapp\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"location\": \"WestUS\"\r\n}",
       "RequestHeaders": {
@@ -172,8 +172,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/DotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapp?api-version=2017-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL0RvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHA/YXBpLXZlcnNpb249MjAxNy0wNy0wMS1wcml2YXRlcHJldmlldw==",
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/DotNetSdkIotCentralRG/providers/Microsoft.IoTCentral/IoTApps/dotnetsdkapp?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL0RvdE5ldFNka0lvdENlbnRyYWxSRy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcy9kb3RuZXRzZGthcHA/YXBpLXZlcnNpb249MjAxOC0wOS0wMQ==",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"dotnetsdkapp\",\r\n    \"subdomain\": \"dotnetsdkapp\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -224,8 +224,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/dotnetsdkiotcentralrg/providers/Microsoft.IoTCentral/IoTApps?api-version=2017-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL2RvdG5ldHNka2lvdGNlbnRyYWxyZy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcz9hcGktdmVyc2lvbj0yMDE3LTA3LTAxLXByaXZhdGVwcmV2aWV3",
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/resourceGroups/dotnetsdkiotcentralrg/providers/Microsoft.IoTCentral/IoTApps?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Jlc291cmNlR3JvdXBzL2RvdG5ldHNka2lvdGNlbnRyYWxyZy9wcm92aWRlcnMvTWljcm9zb2Z0LklvVENlbnRyYWwvSW9UQXBwcz9hcGktdmVyc2lvbj0yMDE4LTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -270,8 +270,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/providers/Microsoft.IoTCentral/IoTApps?api-version=2017-07-01-privatepreview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW9UQ2VudHJhbC9Jb1RBcHBzP2FwaS12ZXJzaW9uPTIwMTctMDctMDEtcHJpdmF0ZXByZXZpZXc=",
+      "RequestUri": "/subscriptions/5e057e7d-4134-4581-aeaf-a40b25e60055/providers/Microsoft.IoTCentral/IoTApps?api-version=2018-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWUwNTdlN2QtNDEzNC00NTgxLWFlYWYtYTQwYjI1ZTYwMDU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW9UQ2VudHJhbC9Jb1RBcHBzP2FwaS12ZXJzaW9uPTIwMTgtMDktMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -316,8 +316,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.IoTCentral/operations?api-version=2017-07-01-privatepreview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW9UQ2VudHJhbC9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTctMDctMDEtcHJpdmF0ZXByZXZpZXc=",
+      "RequestUri": "/providers/Microsoft.IoTCentral/operations?api-version=2018-09-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuSW9UQ2VudHJhbC9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTgtMDktMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

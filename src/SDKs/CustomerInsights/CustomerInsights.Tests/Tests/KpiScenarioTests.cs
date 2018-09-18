@@ -79,16 +79,16 @@ namespace CustomerInsights.Tests.Tests
 
                 Assert.Equal(kpiName, createKpiResult.KpiName);
                 Assert.Equal(createKpiResult.Name, HubName + "/" + kpiName);
-                Assert.Equal(createKpiResult.Type, "Microsoft.CustomerInsights/hubs/kpi");
+                Assert.Equal("Microsoft.CustomerInsights/hubs/kpi", createKpiResult.Type);
 
                 var getKpiResult = aciClient.Kpi.Get(ResourceGroupName, HubName, kpiName);
                 Assert.Equal(kpiName, getKpiResult.KpiName);
                 Assert.Equal(getKpiResult.Name, HubName + "/" + kpiName, StringComparer.OrdinalIgnoreCase);
-                Assert.Equal(getKpiResult.Type, "Microsoft.CustomerInsights/hubs/kpi", StringComparer.OrdinalIgnoreCase);
+                Assert.Equal("Microsoft.CustomerInsights/hubs/kpi", getKpiResult.Type, StringComparer.OrdinalIgnoreCase);
 
                 var listKpiResult = aciClient.Kpi.ListByHub(ResourceGroupName, HubName);
                 Assert.True(listKpiResult.ToList().Count >= 1);
-                Assert.True(listKpiResult.ToList().Any(kpiReturned => kpiName == kpiReturned.KpiName));
+                Assert.Contains(listKpiResult.ToList(), kpiReturned => kpiName == kpiReturned.KpiName);
 
                 var deleteKpiResult =
                     aciClient.Kpi.DeleteWithHttpMessagesAsync(ResourceGroupName, HubName, kpiName).Result;

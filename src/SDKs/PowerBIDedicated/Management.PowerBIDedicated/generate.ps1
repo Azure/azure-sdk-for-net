@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "PowerBIDedicated/resource-manager" -AutoRestVersion "latest" 

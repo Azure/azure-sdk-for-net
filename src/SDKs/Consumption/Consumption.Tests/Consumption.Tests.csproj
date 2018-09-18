@@ -4,11 +4,8 @@
     <PackageId>Consumption.Tests</PackageId>
     <Description>Consumption.Tests Class Library</Description>    
     <AssemblyName>Consumption.Tests</AssemblyName>
-    <VersionPrefix>2.1.0</VersionPrefix>    
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <Version>1.0.0</Version>    
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

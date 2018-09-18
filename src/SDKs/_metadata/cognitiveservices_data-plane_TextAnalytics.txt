@@ -4,15 +4,15 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/TextAnalytics/readme.md --csharp --version=latest --reflect-api-versions --csharp.output-folder=E:\azure-sdk-for-net\src\SDKs\CognitiveServices\dataPlane\Language\TextAnalytics\TextAnalytics\Generated\TextAnalytics
-2018-07-06 00:48:29 UTC
+2018-07-26 19:20:31 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      6a9b980b104d37e495f77e82a7aaf32e342e7a1c
+Commit:      c39645d5399639edb6a46d7f87715640e928cd30
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    autorest@2.0.4280
+Bootstrapper version:    autorest@2.0.4282
 
 
 Latest installed version:    

@@ -27,6 +27,8 @@ namespace Microsoft.Azure.Batch.Protocol
     {
         private const string OCPDateHeaderString = "ocp-date";
 
+        private static readonly byte[] EmptyArray = new byte[0];
+
         /// <summary>
         /// Gets the Batch account name.
         /// </summary>
@@ -78,19 +80,12 @@ namespace Microsoft.Azure.Batch.Protocol
 
             if (contentLength == null)
             {
-                // Because C# httpRequest adds a content-length = 0 header for DELETE, PATCH, and OPTIONS even if there is no body (but only in netframework), we have to
-                // sign the request knowing that there will be content-length set.
-#if FullNetFx
-                if (httpRequest.Method == HttpMethod.Delete || httpRequest.Method == new HttpMethod("PATCH") || httpRequest.Method == HttpMethod.Options)
+                // C# in .NET Framework adds a content-lenth = 0 reader for DELETE, PATH, OPTIONS, and POST, so we need to manually set the content-length to 0
+                // Because of https://github.com/dotnet/corefx/issues/31172 netstandard/netcore has different behavior depending on version, so we purpusefully set 
+                // httoRequest.Content to an empty array to froce inclusion of content-length = 0 on all versions.
+                if (httpRequest.Method == HttpMethod.Delete || httpRequest.Method == new HttpMethod("PATCH") || httpRequest.Method == HttpMethod.Options || httpRequest.Method == HttpMethod.Post)
                 {
-                    contentLength = 0;
-                }
-#endif
-
-                // Because C# httpRequest adds a content-length = 0 header for POST even if there is no body, we have to
-                // sign the request knowing that there will be content-length set.
-                if (httpRequest.Method == HttpMethod.Post)
-                {
+                    httpRequest.Content = new ByteArrayContent(EmptyArray);
                     contentLength = 0;
                 }
             }
@@ -133,8 +128,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 signature.Append(canonicalHeader).Append(':').Append(value).Append('\n');
             }
 
-            // We temporary change client side auth code generator to bypass server bug 4092533
-            signature.Append('/').Append(AccountName).Append('/').Append(httpRequest.RequestUri.AbsolutePath.TrimStart('/').Replace("%5C", "/").Replace("%2F", "/"));
+            signature.Append('/').Append(AccountName).Append('/').Append(httpRequest.RequestUri.AbsolutePath.TrimStart('/'));
             if (!string.IsNullOrEmpty(httpRequest.RequestUri.Query))
             {
 #if FullNetFx

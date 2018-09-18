@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
@@ -31,7 +32,7 @@ namespace Sql.Tests
     {
         public const string DefaultLogin = "dummylogin";
         public const string DefaultPassword = "Un53cuRE!";
-        
+
         public const string TestPrefix = "sqlcrudtest-";
 
         public static string GenerateName(
@@ -97,7 +98,7 @@ namespace Sql.Tests
             // Location is being returned two different ways across different APIs.
             Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
         }
-        
+
         public static void ValidateDatabase(dynamic expected, Database actual, string name)
         {
             Assert.Equal(name, actual.Name);
@@ -209,7 +210,7 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.AssertCollection(expected.Tags, actual.Tags);
             }
         }
-		
+
 		public static void ValidateManagedDatabase(dynamic expected, ManagedDatabase actual, string name)
         {
             Assert.Equal(name, actual.Name);
@@ -332,7 +333,7 @@ namespace Sql.Tests
             Assert.Equal(expected.ReadOnlyEndpoint.FailoverPolicy, actual.ReadOnlyEndpoint.FailoverPolicy);
             Assert.Equal(expected.ReadWriteEndpoint.FailoverPolicy, actual.ReadWriteEndpoint.FailoverPolicy);
             Assert.Equal(expected.ReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes, actual.ReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes);
-            
+
             Assert.Equal(expected.ManagedInstancePairs.FirstOrDefault().PrimaryManagedInstanceId, actual.ManagedInstancePairs.FirstOrDefault().PrimaryManagedInstanceId);
             Assert.Equal(expected.ManagedInstancePairs.FirstOrDefault().PartnerManagedInstanceId, actual.ManagedInstancePairs.FirstOrDefault().PartnerManagedInstanceId);
         }
@@ -352,12 +353,20 @@ namespace Sql.Tests
             Assert.Equal(expectedUri, actual.Uri);
         }
 
+        public static void ValidateManagedInstanceKey(ManagedInstanceKey actual, string expectedName, string expectedKeyType, string expectedUri)
+        {
+            Assert.NotNull(actual);
+            Assert.Equal(expectedName, actual.Name);
+            Assert.Equal(expectedKeyType, actual.ServerKeyType);
+            Assert.Equal(expectedUri, actual.Uri);
+        }
+
         public static void ValidateVirtualNetworkRule(VirtualNetworkRule expected, VirtualNetworkRule actual, string name)
         {
             Assert.NotNull(actual.Id);
             Assert.Equal(expected.VirtualNetworkSubnetId, actual.VirtualNetworkSubnetId);
         }
-        
+
         internal static Task<Database[]> CreateDatabasesAsync(
             SqlManagementClient sqlClient,
             string resourceGroupName,
@@ -382,7 +391,7 @@ namespace Sql.Tests
             // Wait for all databases to be created.
             return Task.WhenAll(createDbTasks);
         }
-		
+
 		internal static Task<ManagedDatabase[]> CreateManagedDatabasesAsync(
             SqlManagementClient sqlClient,
             string resourceGroupName,
@@ -440,39 +449,77 @@ namespace Sql.Tests
                 throw new InvalidOperationException("Server has no identity");
             }
 
+            return CreateKeyVaultKeyAccessibleByIdentity(context, resourceGroup, server.Identity);
+        }
+
+        /// <summary>
+        /// Creates a key vault, grants the managed instance and current user access to that vault,
+        /// and creates a key in the vault.
+        /// </summary>
+        internal static KeyBundle CreateKeyVaultKeyWithManagedInstanceAccess(
+            SqlManagementTestContext context,
+            ResourceGroup resourceGroup,
+            ManagedInstance managedInstance)
+        {
+            if (managedInstance.Identity == null)
+            {
+                throw new InvalidOperationException("managedInstance has no identity");
+            }
+
+            return CreateKeyVaultKeyAccessibleByIdentity(context, resourceGroup, managedInstance.Identity);
+        }
+
+        private static KeyBundle CreateKeyVaultKeyAccessibleByIdentity(SqlManagementTestContext context,
+            ResourceGroup resourceGroup, ResourceIdentity identity)
+        {
             var sqlClient = context.GetClient<SqlManagementClient>();
             var keyVaultManagementClient = context.GetClient<KeyVaultManagementClient>();
             var keyVaultClient = TestEnvironmentUtilities.GetKeyVaultClient();
 
             // Prepare vault permissions for the server
-            var serverPermissions = new Permissions()
+            var permissions = new Permissions()
             {
-                Keys = new List<string>() { KeyPermissions.WrapKey, KeyPermissions.UnwrapKey, KeyPermissions.Get, KeyPermissions.List }
+                Keys = new List<string>()
+                {
+                    KeyPermissions.WrapKey,
+                    KeyPermissions.UnwrapKey,
+                    KeyPermissions.Get,
+                    KeyPermissions.List
+                }
             };
-            var aclEntryServer = new AccessPolicyEntry(server.Identity.TenantId.Value, server.Identity.PrincipalId.Value.ToString(), serverPermissions);
+
+            var aclEntry = new AccessPolicyEntry(identity.TenantId.Value,
+                identity.PrincipalId.Value.ToString(), permissions);
 
             // Prepare vault permissions for the app used in this test
             var appPermissions = new Permissions()
             {
-                Keys = new List<string>() { KeyPermissions.Create, KeyPermissions.Delete, KeyPermissions.Get, KeyPermissions.List }
+                Keys = new List<string>()
+                {
+                    KeyPermissions.Create,
+                    KeyPermissions.Delete,
+                    KeyPermissions.Get,
+                    KeyPermissions.List
+                }
             };
             string authObjectId = TestEnvironmentUtilities.GetUserObjectId();
-            var aclEntryUser = new AccessPolicyEntry(server.Identity.TenantId.Value, authObjectId, appPermissions);
+            var aclEntryUser = new AccessPolicyEntry(identity.TenantId.Value, authObjectId, appPermissions);
 
             // Create a vault
-            var accessPolicy = new List<AccessPolicyEntry>() { aclEntryServer, aclEntryUser };
+            var accessPolicy = new List<AccessPolicyEntry>() {aclEntry, aclEntryUser};
             string vaultName = SqlManagementTestUtilities.GenerateName();
-            string vaultLocation = "centralus";
-            var vault = keyVaultManagementClient.Vaults.CreateOrUpdate(resourceGroup.Name, vaultName, new VaultCreateOrUpdateParameters()
-            {
-                Location = vaultLocation,
-                Properties = new VaultProperties()
+            string vaultLocation = TestEnvironmentUtilities.DefaultLocation;
+            var vault = keyVaultManagementClient.Vaults.CreateOrUpdate(resourceGroup.Name, vaultName,
+                new VaultCreateOrUpdateParameters()
                 {
-                    AccessPolicies = accessPolicy,
-                    TenantId = server.Identity.TenantId.Value,
-                    EnableSoftDelete = true
-                }
-            });
+                    Location = vaultLocation,
+                    Properties = new VaultProperties()
+                    {
+                        AccessPolicies = accessPolicy,
+                        TenantId = identity.TenantId.Value,
+                        EnableSoftDelete = true
+                    }
+                });
 
             // Create a key
             // This can be flaky if attempted immediately after creating the vault. Adding short sleep to improve robustness.

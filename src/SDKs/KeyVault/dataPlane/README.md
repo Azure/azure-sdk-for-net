@@ -1,4 +1,4 @@
-# Microsoft Azure Keyvault SDK for .NET (2.3.2)
+# Microsoft Azure Keyvault SDK for .NET
 
 The Microsoft Azure Key Vault SDK for .NET allows you to build secure Azure applications that can access secrets, keys, and certificates that a encrypted at rest with hardware security modules.
 
@@ -18,6 +18,9 @@ complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http:
     - Create, Read, Update, Delete, and Recover Certificates
     - Create, Read, Update, and Delete certificate renewal properties
     - Create, Read, Update, and Delete certificate issuers
+- Storage Accounts
+    - Add, Read, Update, and Remove Storage Accounts managed by the Key Vault
+    - Create, Read, Update, and Delete SAS definitions
 
 ## Getting Started
 
@@ -63,7 +66,7 @@ Tests for the Azure Key Vault SDK are run in the same manner as the rest of the 
 
 ## Samples
 
-Code samples are available in the Azure Key Vault SDK code in the [Microsoft.Azure.KeyVault.Samples](Microsoft.Azure.KeyVault.Samples) directory.  Addictional samples can also be found on [Azure Code Samples](https://azure.microsoft.com/en-us/resources/samples/?sort=0&service=key-vault&platform=dotnet).
+Code samples for the Azure Key Vault SDK are available on [Azure Code Samples](https://azure.microsoft.com/en-us/resources/samples/?sort=0&service=key-vault&platform=dotnet).
 
 ## Additional Documentation
 

@@ -7,13 +7,13 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>1.18.0-preview</Version>
+		<Version>1.20.0-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added support for using sever level Threat Detection.
-- Added support for uploading TDE certificate into servers and managed instances.
+- Added support for Managed Instance keys and encryption protectors.
+- Added support for DatabaseVulnerabilityAssessment.StorageAccountAccessKey, which causes DatabaseVulnerabilityAssessment.StorageContainerSasKey to no longer be a required property.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

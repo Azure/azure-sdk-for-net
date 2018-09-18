@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v2.0/Training/projects?name=Test%20Project",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1RyYWluaW5nL3Byb2plY3RzP25hbWU9VGVzdCUyMFByb2plY3Q=",
+      "RequestUri": "/customvision/v2.1/Training/projects?name=Test%20Project",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL3Byb2plY3RzP25hbWU9VGVzdCUyMFByb2plY3Q=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -11,22 +11,22 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"248e2678-1059-4fd4-82f6-b9c762cd7a6a\",\r\n  \"name\": \"Test Project\",\r\n  \"description\": \"\",\r\n  \"settings\": {\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"useNegativeSet\": true,\r\n    \"classificationType\": \"MultiLabel\",\r\n    \"detectionParameters\": null\r\n  },\r\n  \"created\": \"2018-04-25T20:55:32.5533333\",\r\n  \"lastModified\": \"2018-04-25T20:55:32.5533333\",\r\n  \"thumbnailUri\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"367f9104-bdd2-47de-b717-a20804884057\",\r\n  \"name\": \"Test Project (1)\",\r\n  \"description\": \"\",\r\n  \"settings\": {\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"useNegativeSet\": true,\r\n    \"detectionParameters\": null\r\n  },\r\n  \"created\": \"2018-07-12T15:22:21.8566667\",\r\n  \"lastModified\": \"2018-07-12T15:22:21.8566667\",\r\n  \"thumbnailUri\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "335"
+          "339"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Date": [
-          "Wed, 25 Apr 2018 20:55:31 GMT"
+          "Thu, 12 Jul 2018 15:22:21 GMT"
         ],
         "apim-request-id": [
-          "088314a8-a527-46fc-8122-ed29b5355fa9"
+          "7bac925e-541f-420f-be41-636c4d073740"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -38,8 +38,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v2.0/Training/projects/248e2678-1059-4fd4-82f6-b9c762cd7a6a/images/urls",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1RyYWluaW5nL3Byb2plY3RzLzI0OGUyNjc4LTEwNTktNGZkNC04MmY2LWI5Yzc2MmNkN2E2YS9pbWFnZXMvdXJscw==",
+      "RequestUri": "/customvision/v2.1/Training/projects/367f9104-bdd2-47de-b717-a20804884057/images/urls",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL3Byb2plY3RzLzM2N2Y5MTA0LWJkZDItNDdkZS1iNzE3LWEyMDgwNDg4NDA1Ny9pbWFnZXMvdXJscw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"images\": [\r\n    {\r\n      \"url\": \"https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
@@ -54,22 +54,22 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"isBatchSuccessful\": true,\r\n  \"images\": [\r\n    {\r\n      \"sourceUrl\": \"https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg\",\r\n      \"status\": \"OK\",\r\n      \"image\": {\r\n        \"id\": \"d3c6cb54-544c-4ad5-b32a-e71f074010d5\",\r\n        \"created\": \"2018-04-25T20:55:32.7727444\",\r\n        \"width\": 1260,\r\n        \"height\": 900,\r\n        \"imageUri\": \"https://irisusscppestore.blob.core.windows.net/i-248e267810594fd482f6b9c762cd7a6a/i-d3c6cb54544c4ad5b32ae71f074010d5?sv=2017-04-17&sr=b&sig=f0whMvF8V5ccGlORshOhstxVrMF2a6VkmOthaNJZpTo%3D&se=2018-04-26T20%3A55%3A32Z&sp=r\",\r\n        \"thumbnailUri\": \"https://irisusscppestore.blob.core.windows.net/i-248e267810594fd482f6b9c762cd7a6a/t-d3c6cb54544c4ad5b32ae71f074010d5?sv=2017-04-17&sr=b&sig=XvyLNR7F7jkX16PPAV%2FUgqJM1mYoHtOExo0KZ9Hv6po%3D&se=2018-04-26T20%3A55%3A32Z&sp=r\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"isBatchSuccessful\": true,\r\n  \"images\": [\r\n    {\r\n      \"sourceUrl\": \"https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg\",\r\n      \"status\": \"OK\",\r\n      \"image\": {\r\n        \"id\": \"6daacba7-6efb-4e4a-a4a4-7c7144643550\",\r\n        \"created\": \"2018-07-12T15:22:22.1041885\",\r\n        \"width\": 1260,\r\n        \"height\": 900,\r\n        \"imageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-367f9104bdd247deb717a20804884057/i-6daacba76efb4e4aa4a47c7144643550?sv=2017-04-17&sr=b&sig=Gea1H2tMjsh4j6FLEZkQTBFeIbIQdEU7%2Fz0dfT8%2BDAM%3D&se=2018-07-13T15%3A22%3A22Z&sp=r\",\r\n        \"thumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-367f9104bdd247deb717a20804884057/t-6daacba76efb4e4aa4a47c7144643550?sv=2017-04-17&sr=b&sig=KTwl4eXputF3wq5W8Geu30h9wkmvjH6daxg9sH6iybs%3D&se=2018-07-13T15%3A22%3A22Z&sp=r\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "776"
+          "778"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Date": [
-          "Wed, 25 Apr 2018 20:55:31 GMT"
+          "Thu, 12 Jul 2018 15:22:22 GMT"
         ],
         "apim-request-id": [
-          "2b7b4298-d5c6-4baf-8e40-fdc3a7e4ed1d"
+          "4d802d5d-39d8-40ad-8946-f9356a26ca03"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -81,8 +81,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v2.0/Training/projects/248e2678-1059-4fd4-82f6-b9c762cd7a6a/images?imageIds=d3c6cb54-544c-4ad5-b32a-e71f074010d5",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1RyYWluaW5nL3Byb2plY3RzLzI0OGUyNjc4LTEwNTktNGZkNC04MmY2LWI5Yzc2MmNkN2E2YS9pbWFnZXM/aW1hZ2VJZHM9ZDNjNmNiNTQtNTQ0Yy00YWQ1LWIzMmEtZTcxZjA3NDAxMGQ1",
+      "RequestUri": "/customvision/v2.1/Training/projects/367f9104-bdd2-47de-b717-a20804884057/images?imageIds=6daacba7-6efb-4e4a-a4a4-7c7144643550",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL3Byb2plY3RzLzM2N2Y5MTA0LWJkZDItNDdkZS1iNzE3LWEyMDgwNDg4NDA1Ny9pbWFnZXM/aW1hZ2VJZHM9NmRhYWNiYTctNmVmYi00ZTRhLWE0YTQtN2M3MTQ0NjQzNTUw",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -91,7 +91,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
         ]
       },
       "ResponseBody": "",
@@ -100,10 +100,10 @@
           "0"
         ],
         "Date": [
-          "Wed, 25 Apr 2018 20:55:32 GMT"
+          "Thu, 12 Jul 2018 15:22:22 GMT"
         ],
         "apim-request-id": [
-          "87f17415-ffee-4c82-8d56-1382921ecd41"
+          "47acd842-760a-4f28-845b-ef0db468e632"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -115,8 +115,8 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/customvision/v2.0/Training/projects/248e2678-1059-4fd4-82f6-b9c762cd7a6a",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1RyYWluaW5nL3Byb2plY3RzLzI0OGUyNjc4LTEwNTktNGZkNC04MmY2LWI5Yzc2MmNkN2E2YQ==",
+      "RequestUri": "/customvision/v2.1/Training/projects/367f9104-bdd2-47de-b717-a20804884057",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL3Byb2plY3RzLzM2N2Y5MTA0LWJkZDItNDdkZS1iNzE3LWEyMDgwNDg4NDA1Nw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -125,7 +125,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
         ]
       },
       "ResponseBody": "",
@@ -134,10 +134,10 @@
           "0"
         ],
         "Date": [
-          "Wed, 25 Apr 2018 20:55:32 GMT"
+          "Thu, 12 Jul 2018 15:22:22 GMT"
         ],
         "apim-request-id": [
-          "3a6d740e-420f-4919-b1fa-9490bd8cf79e"
+          "c6584c21-d4cd-430c-8a29-c25e05e23f91"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

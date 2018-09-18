@@ -147,6 +147,21 @@ namespace Automation.Tests.TestSupport
             UpdateRunbookContent(runbookName, runbookContent);
         }
 
+        public void CreatePSScriptRunbook(string runbookName, string runbookContent, string description = null)
+        {
+            AutomationClient.Runbook.CreateOrUpdate(ResourceGroup, AutomationAccount, runbookName,
+                new RunbookCreateOrUpdateParameters
+                {
+                    Name = runbookName,
+                    Description = description,
+                    Location = Location,
+                    RunbookType = RunbookTypeEnum.PowerShell,
+                    Draft = new RunbookDraft()
+                });
+
+            UpdateRunbookContent(runbookName, runbookContent);
+        }
+
         public Schedule CreateHourlySchedule(string scheduleName, DateTimeOffset startTime,
             DateTimeOffset expiryTime, string description = null, byte hourInterval = 1)
         {
@@ -228,12 +243,12 @@ namespace Automation.Tests.TestSupport
                 LogProgress = runbook.LogProgress,
                 LogVerbose = runbook.LogVerbose
             });
-        }
+        }        
 
         public void UpdateRunbookContent(string runbookName, string runbookContent)
         {
             var byteArray = Encoding.ASCII.GetBytes(runbookContent);
-            AutomationClient.RunbookDraft.ReplaceContent(ResourceGroup, AutomationAccount, runbookName, byteArray.ToString());
+            AutomationClient.RunbookDraft.ReplaceContent(ResourceGroup, AutomationAccount, runbookName, new MemoryStream(byteArray));
         }
 
         public void PublishRunbook(string runbookName)
@@ -264,7 +279,7 @@ namespace Automation.Tests.TestSupport
             return runbook;
         }
 
-        public string GetRunbookContent(string runbookName)
+        public Stream GetRunbookContent(string runbookName)
         {
             var runbookContentStream =
                 AutomationClient.RunbookDraft.GetContent(ResourceGroup, AutomationAccount, runbookName);
@@ -567,8 +582,12 @@ namespace Automation.Tests.TestSupport
         #region SourceControl Methods
 
         public SourceControl CreateSourceControl(string sourceControlName, string repoUrl, string branch, string folderPath, bool autoSync,
-                                                 bool publishRunbook, string sourceControlType, string securityToken, string description)
+                                                 bool publishRunbook, string sourceControlType, string accessToken, string description)
         {
+            var securityTokenProperties = new SourceControlSecurityTokenProperties();
+            securityTokenProperties.AccessToken = accessToken;
+            securityTokenProperties.TokenType = "PersonalAccessToken";
+
             var sourceControl = AutomationClient.SourceControl.CreateOrUpdate(ResourceGroup, AutomationAccount, sourceControlName,
                     new SourceControlCreateOrUpdateParameters
                     {
@@ -578,7 +597,7 @@ namespace Automation.Tests.TestSupport
                         AutoSync = autoSync,
                         PublishRunbook = publishRunbook,
                         SourceType = sourceControlType,
-                        SecurityToken = securityToken,
+                        SecurityToken = securityTokenProperties,
                         Description = description
                     });
             return sourceControl;
@@ -619,7 +638,7 @@ namespace Automation.Tests.TestSupport
         public SourceControlSyncJob CreateSourceControlSyncJob(string sourceControlName, Guid sourceControlSyncJobId)
         {
             var sourceControlSyncJob = AutomationClient.SourceControlSyncJob.Create(ResourceGroup, AutomationAccount, sourceControlName, sourceControlSyncJobId,
-                    new SourceControlSyncJobCreateParameters());
+                    new SourceControlSyncJobCreateParameters(""));
 
             return sourceControlSyncJob;
         }

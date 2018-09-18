@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// </summary>
     public static class IntegrationRuntimeUpdateResult
     {
+        public const string None = "None";
         public const string Succeed = "Succeed";
         public const string Fail = "Fail";
     }

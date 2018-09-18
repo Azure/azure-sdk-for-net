@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.ResourceGraph/resources?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VHcmFwaC9yZXNvdXJjZXM/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"subscriptions\": [\r\n    \"00000000-0000-0000-0000-000000000000\"\r\n  ],\r\n  \"query\": \"project id, tags, properties | limit 2\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d2cbefd0-8265-4e02-bf5f-9229c30e0ca9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.Azure.Management.ResourceGraph.ResourceGraphClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "129"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 31 Aug 2018 23:24:47 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "cf5a7008-1435-4b18-9fc6-f4c4e26aa562"
+        ],
+        "x-ms-correlation-request-id": [
+          "cf5a7008-1435-4b18-9fc6-f4c4e26aa562"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180831T232447Z:cf5a7008-1435-4b18-9fc6-f4c4e26aa562"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1679"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody":  "{\"totalRecords\":2,\"count\":2,\"data\":{\"columns\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"tags\",\"type\":\"object\"},{\"name\":\"properties\",\"type\":\"object\"}],\"rows\":[[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/zarttest1faaede5-14b9-43b9-8836-3b8df81aa6f2/providers/Microsoft.StreamAnalytics/streamingjobs/zarttest28000000\",{},{\"provisioningState\":\"Succeeded\",\"sku\":{\"name\":\"Standard\"},\"eventsLateArrivalMaxDelayInSeconds\":5,\"createdDate\":\"2018-07-26T01:17:29.3470000Z\",\"compatibilityLevel\":\"1.0\",\"outputErrorPolicy\":\"Stop\",\"dataLocale\":\"en-US\",\"jobState\":\"Created\",\"package\":null,\"jobType\":\"Cloud\",\"jobId\":\"00000000-0000-0000-0000-000000000000\"}],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/newzarttestefd4b1a7-6480-40bb-bac5-f23376ebb04d/providers/Microsoft.Storage/storageAccounts/zarttest9b000000\",{},{\"provisioningState\":\"Succeeded\",\"creationTime\":\"2018-08-04T19:23:48.4690000Z\",\"supportsHttpsTrafficOnly\":true,\"trustedDirectories\":[\"72f988bf-86f1-41af-91ab-2d7cd011db47\"],\"primaryEndpoints\":{\"blob\":\"https://zarttest9b000000.blob.core.windows.net/\",\"file\":\"https://zarttest9b000000.file.core.windows.net/\",\"table\":\"https://zarttest9b000000.table.core.windows.net/\",\"queue\":\"https://zarttest9b000000.queue.core.windows.net/\"},\"statusOfPrimary\":\"available\",\"primaryLocation\":\"eastus\",\"networkAcls\":{\"virtualNetworkRules\":[],\"defaultAction\":\"Allow\",\"ipRules\":[],\"bypass\":\"AzureServices\"},\"encryption\":{\"services\":{\"blob\":{\"lastEnabledTime\":\"2018-08-04T19:23:48.5940000Z\",\"enabled\":true},\"file\":{\"lastEnabledTime\":\"2018-08-04T19:23:48.5940000Z\",\"enabled\":true}},\"keySource\":\"Microsoft.Storage\"}}]]},\"facets\":[],\"resultTruncated\":\"false\"}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "00000000-0000-0000-0000-000000000000"
+  }
+}

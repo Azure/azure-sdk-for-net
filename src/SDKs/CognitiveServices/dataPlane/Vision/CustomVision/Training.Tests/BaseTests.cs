@@ -12,11 +12,21 @@
     using System.Threading.Tasks;
     using Xunit;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class BaseTests : IClassFixture<ProjectIdFixture>
     {
         private static readonly string TrainingKey = "";
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected static HttpRecorderMode RecorderMode = HttpRecorderMode.Playback;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         protected static string ObjDetectionProjectName = "Obj Detection SDK Tests";
 
         protected static Guid FoodDomain = Guid.Parse("C151D5B5-DD07-472A-ACC8-15D29DEA8518");
@@ -41,9 +51,9 @@
             this.fixture = fixture;
         }
 
-        protected ITrainingClient GetTrainingClientClient()
+        protected ITrainingApi GetTrainingClient()
         {
-            ITrainingClient client = new TrainingClient(handlers: HttpMockServer.CreateInstance())
+            ITrainingApi client = new TrainingApi(handlers: HttpMockServer.CreateInstance())
             {
                 ApiKey = TrainingKey,
             };
@@ -51,10 +61,10 @@
             return client;
         }
 
-        public async Task<Guid> CreateTrainedImageClassificationProjectAsync(Guid? domain = null)
+        public Guid CreateTrainedImageClassificationProjectAsync(Guid? domain = null)
         {
 #if RECORD_MODE
-            var client = GetTrainingClientClient();
+            var client = GetTrainingClient();
             var projName = Guid.NewGuid().ToString();
 
             // Create a project
@@ -108,7 +118,7 @@
 #endif
         }
 
-        public async Task<Guid> CreateTrainedObjDetectionProject()
+        public Guid CreateTrainedObjDetectionProject()
         {
 #if RECORD_MODE
             Dictionary<string, double[]> fileToRegionMap = new Dictionary<string, double[]>()
@@ -156,7 +166,7 @@
                 {"scissors_20", new double[] { 0.231617644, 0.08459154, 0.504901946, 0.8480392 } }
             };
 
-            var client = GetTrainingClientClient();
+            var client = GetTrainingClient();
 
             // Find the object detection domain
             var domains = await client.GetDomainsAsync();
@@ -168,6 +178,7 @@
             var existingProject = projects.FirstOrDefault(proj => proj.Name == ObjDetectionProjectName && proj.Settings.DomainId == objDetectionDomain.Id);
             if (existingProject != null)
             {
+                this.fixture.ObjectDetectionProjectId = existingProject.Id;
                 return existingProject.Id;
             }
 
@@ -212,7 +223,7 @@
             HttpMockServer.Flush();
             HttpMockServer.Initialize(HttpMockServer.CallerIdentity, HttpMockServer.TestIdentity, RecorderMode);
 
-            this.fixture.ObjectDetectionProject = project.Id;
+            this.fixture.ObjectDetectionProjectId = project.Id;
             return project.Id;
 #else
             return this.fixture.ObjectDetectionProjectId;

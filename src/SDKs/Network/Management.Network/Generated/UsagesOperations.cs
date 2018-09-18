@@ -85,16 +85,16 @@ namespace Microsoft.Azure.Management.Network
             }
             if (location != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(location, "^[-\\w\\._]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(location, "^[-\\w\\._ ]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "location", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "location", "^[-\\w\\._ ]+$");
                 }
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-04-01";
+            string apiVersion = "2018-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

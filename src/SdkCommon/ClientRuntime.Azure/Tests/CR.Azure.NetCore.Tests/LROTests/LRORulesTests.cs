@@ -4,15 +4,13 @@
 namespace CR.Azure.NetCore.Tests.LROTests
 {
     using CR.Azure.NetCore.Tests.Fakes;
-    using CR.Azure.NetCore.Tests.Redis;
-    using CR.Azure.NetCore.Tests.Redis.Models;
+    using CR.Azure.NetCore.Tests.TestClients.Models;
+    using CR.Azure.NetCore.Tests.TestClients.RedisClient;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using System.Collections.Generic;
-    using System.Net;
     using System.Net.Http;
     using Xunit;
-    
+
     /// <summary>
     /// 
     /// </summary>

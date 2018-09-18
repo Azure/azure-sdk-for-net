@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!--<Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />-->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('CR.test.reference.props'))" />
   <PropertyGroup>
     <TargetFrameworks>net452</TargetFrameworks>
@@ -9,17 +8,11 @@
     <VersionPrefix>1.0.0</VersionPrefix>
   </PropertyGroup>
 
-
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="2.28.3" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.2.12,3.0.0)" />
+	<ProjectReference Include="..\..\Auth\Az.Auth\Az.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />
+    <ProjectReference Include="..\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />
+    <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj"/>
-    <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj"/>
-  </ItemGroup>
-
 
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />

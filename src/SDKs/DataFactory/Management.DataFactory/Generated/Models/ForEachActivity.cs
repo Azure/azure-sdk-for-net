@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="batchCount">Batch count to be used for controlling the
         /// number of parallel execution (when isSequential is set to
         /// false).</param>
-        public ForEachActivity(string name, Expression items, IList<Activity> activities, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>), bool? isSequential = default(bool?), int? batchCount = default(int?))
+        public ForEachActivity(string name, Expression items, IList<Activity> activities, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), bool? isSequential = default(bool?), int? batchCount = default(int?))
             : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             IsSequential = isSequential;

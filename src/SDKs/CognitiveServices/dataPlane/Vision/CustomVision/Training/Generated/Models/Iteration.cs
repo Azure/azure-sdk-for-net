@@ -46,7 +46,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// another format for download</param>
         /// <param name="domainId">Get or sets a guid of the domain the
         /// iteration has been trained on</param>
-        public Iteration(System.Guid id = default(System.Guid), string name = default(string), bool isDefault = default(bool), string status = default(string), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), System.DateTime? trainedAt = default(System.DateTime?), System.Guid projectId = default(System.Guid), bool exportable = default(bool), System.Guid? domainId = default(System.Guid?))
+        /// <param name="classificationType">Gets the classification type of
+        /// the project. Possible values include: 'Multiclass',
+        /// 'Multilabel'</param>
+        public Iteration(System.Guid id = default(System.Guid), string name = default(string), bool isDefault = default(bool), string status = default(string), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), System.DateTime? trainedAt = default(System.DateTime?), System.Guid projectId = default(System.Guid), bool exportable = default(bool), System.Guid? domainId = default(System.Guid?), string classificationType = default(string))
         {
             Id = id;
             Name = name;
@@ -58,6 +61,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
             ProjectId = projectId;
             Exportable = exportable;
             DomainId = domainId;
+            ClassificationType = classificationType;
             CustomInit();
         }
 
@@ -128,6 +132,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "domainId")]
         public System.Guid? DomainId { get; private set; }
+
+        /// <summary>
+        /// Gets the classification type of the project. Possible values
+        /// include: 'Multiclass', 'Multilabel'
+        /// </summary>
+        [JsonProperty(PropertyName = "classificationType")]
+        public string ClassificationType { get; private set; }
 
     }
 }

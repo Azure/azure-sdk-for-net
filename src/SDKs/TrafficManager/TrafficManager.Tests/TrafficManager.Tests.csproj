@@ -6,12 +6,10 @@
     <AssemblyName>TrafficManager.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>    
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="xunit" />
-  </ItemGroup>
+  </PropertyGroup>-->
+
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.TrafficManager" Version="2.2.0-preview" />-->    
     <ProjectReference Include="..\Management.TrafficManager\Microsoft.Azure.Management.TrafficManager.csproj" />
@@ -26,16 +24,5 @@
   <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="1.8.1" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.7.0" />
-    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.12" />
-    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.2" />
-    <PackageReference Update="xunit" Version="2.3.1" />
-    <PackageReference Update="xunit.runner.visualstudio" Version="2.3.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
 </Project>

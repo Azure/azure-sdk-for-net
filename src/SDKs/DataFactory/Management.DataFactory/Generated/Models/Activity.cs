@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="userProperties">Activity user properties.</param>
-        public Activity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>))
+        public Activity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>))
         {
             AdditionalProperties = additionalProperties;
             Name = name;
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets activity user properties.
         /// </summary>
         [JsonProperty(PropertyName = "userProperties")]
-        public IDictionary<string, string> UserProperties { get; set; }
+        public IList<UserProperty> UserProperties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -103,6 +103,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (UserProperties != null)
+            {
+                foreach (var element1 in UserProperties)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

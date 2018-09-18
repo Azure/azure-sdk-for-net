@@ -4,8 +4,9 @@
 
 using System;
 using System.Net;
-
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Xunit;
 
 namespace Compute.Tests
 {
@@ -83,5 +84,27 @@ namespace Compute.Tests
             catch (Exception) { }
         }
 
+        public void ValidateExpectedReturnCode(Action action, HttpStatusCode httpResponseCode)
+        {
+            Assert.Throws<CloudException>(() =>
+            {
+                try
+                {
+                    action.Invoke();
+                }
+                catch (CloudException ex)
+                {
+                    if (ex.Response.StatusCode == httpResponseCode)
+                    {
+                        // Expected exception received.
+                        throw;
+                    }
+                    else
+                    {
+                        throw new Exception($"Test failed: CloudException with wrong StatusCode {ex.Response.StatusCode}.");
+                    }
+                }
+            });
+        }
     }
 }

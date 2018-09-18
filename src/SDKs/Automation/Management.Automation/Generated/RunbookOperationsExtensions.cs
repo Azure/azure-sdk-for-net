@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Automation
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -37,7 +38,7 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='runbookName'>
             /// The runbook name.
             /// </param>
-            public static string GetContent(this IRunbookOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
+            public static Stream GetContent(this IRunbookOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
             {
                 return operations.GetContentAsync(resourceGroupName, automationAccountName, runbookName).GetAwaiter().GetResult();
             }
@@ -61,12 +62,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> GetContentAsync(this IRunbookOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Stream> GetContentAsync(this IRunbookOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetContentWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                var _result = await operations.GetContentWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
             }
 
             /// <summary>
