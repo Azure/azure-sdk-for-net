@@ -9,7 +9,12 @@
 		<AssemblyName>Microsoft.Azure.Management.StorSimple1200Series</AssemblyName>
 		<Version>1.0.0</Version>
 		<PackageTags>Microsoft Azure StorSimple1200Series management;StorSimple1200Series;StorSimple;StorSimple1200Series management;</PackageTags>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <PackageReleaseNotes>
+      <![CDATA[
+        This is a public release of the Azure StorSimple 1200 Series SDK. 
+      ]]>
+    </PackageReleaseNotes>    
+  <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 	<PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
