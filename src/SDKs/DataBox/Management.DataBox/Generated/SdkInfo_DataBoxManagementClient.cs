@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.DataBox
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/AzureDataBox/azure-rest-api-specs/blob/skutest/specification/databox/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\work\\git\\azure-sdk-for-net\\src\\SDKs";
-      public static readonly String GithubForkName = "AzureDataBox";
-      public static readonly String GithubBranchName = "skutest";
-      public static readonly String GithubCommidId = "5638460db7666401dc2f2e538f65f355c7f85b30";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/databox/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\work\\git\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "be799c37e1df63769895f0ae6fc51d65c69aba27";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

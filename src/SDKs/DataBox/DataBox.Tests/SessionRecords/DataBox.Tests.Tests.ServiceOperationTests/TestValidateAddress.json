@@ -7,14 +7,14 @@
       "RequestBody": "{\r\n  \"shippingAddress\": {\r\n    \"streetAddress1\": \"16 TOWNSEND ST\",\r\n    \"streetAddress2\": \"Unit 1\",\r\n    \"city\": \"San Francisco\",\r\n    \"stateOrProvince\": \"CA\",\r\n    \"country\": \"US\",\r\n    \"postalCode\": \"94107\",\r\n    \"companyName\": \"Microsoft\",\r\n    \"addressType\": \"Commercial\"\r\n  },\r\n  \"deviceType\": \"DataBox\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9f1830f8-1cf7-4145-8b34-0742d9c9be13"
+          "b7728f76-342e-4bd0-9187-a7f9b2b29394"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/0.9.0"
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 11 Sep 2018 12:27:57 GMT"
+          "Wed, 19 Sep 2018 09:28:28 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -37,10 +37,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "d6e4f688-74ec-49aa-bb57-0dca69de1db2"
+          "a9fe49c4-e8f7-4ac7-9d6c-b49588310678"
         ],
         "x-ms-client-request-id": [
-          "9f1830f8-1cf7-4145-8b34-0742d9c9be13"
+          "b7728f76-342e-4bd0-9187-a7f9b2b29394"
         ],
         "X-Powered-By": [
           "ASP.NET"
@@ -49,10 +49,10 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "4ecbd9bc-65ca-410f-9a7f-c57a89fa72cb"
+          "7e382fb1-9a54-48dc-b140-a635494b900e"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20180911T122758Z:4ecbd9bc-65ca-410f-9a7f-c57a89fa72cb"
+          "SOUTHEASTASIA:20180919T092828Z:7e382fb1-9a54-48dc-b140-a635494b900e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

@@ -7,14 +7,14 @@
       "RequestBody": "{\r\n  \"country\": \"US\",\r\n  \"location\": \"westus\",\r\n  \"transferType\": \"ImportToAzure\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a69a48a0-a372-444d-9251-83828238a521"
+          "4e698ef0-d274-49ac-9961-16c79bb3e5e0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/0.9.0"
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 11 Sep 2018 12:28:04 GMT"
+          "Wed, 19 Sep 2018 09:28:35 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -37,10 +37,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "2145964b-6eca-4bc8-855c-cf7baca68176"
+          "655f2b51-5b87-4413-97dd-3d260bec058c"
         ],
         "x-ms-client-request-id": [
-          "a69a48a0-a372-444d-9251-83828238a521"
+          "4e698ef0-d274-49ac-9961-16c79bb3e5e0"
         ],
         "X-Powered-By": [
           "ASP.NET"
@@ -49,10 +49,10 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "aaac77f2-512e-4a92-ba9b-4e1b7e4ea44a"
+          "b569e52e-295b-4fbf-990b-5b555927df6b"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20180911T122804Z:aaac77f2-512e-4a92-ba9b-4e1b7e4ea44a"
+          "SOUTHEASTASIA:20180919T092835Z:b569e52e-295b-4fbf-990b-5b555927df6b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
