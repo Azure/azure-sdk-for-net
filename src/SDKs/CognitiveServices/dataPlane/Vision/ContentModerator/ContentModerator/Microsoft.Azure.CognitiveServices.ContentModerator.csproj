@@ -6,17 +6,15 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.ContentModerator</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Content Moderator APIs.</Description>
-    <Version>0.13.0-preview</Version>
+    <Version>1.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.ContentModerator</AssemblyName>
     <PackageTags>ContentModerator;Content Moderator;</PackageTags>
     <PackageReleaseNotes>
-    <![CDATA[
-This is a preview release of the Cognitive Services Content Moderator SDK.
+<![CDATA[
+This is a public release of the Cognitive Services Content Moderator SDK.
 
-Changes in this release:
-1. Supported customizing service endpoints by assigning the endpoint string to ContentModeratorClient.Endpoint. The endpoint string can be found on Azure Portal, it should contain only protocol and hostname, for example: https://westus.api.cognitive.microsoft.com.
-2. Body.Metadata, ImageList.Metadata, TermList.Metadata, members of RefreshIndex.AdvancedInfo are now IDictionary<string, string>.
-    ]]>
+Included with this release is support for Content Moderator API
+]]>
 	</PackageReleaseNotes>
   </PropertyGroup>
 
