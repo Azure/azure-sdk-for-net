@@ -5,6 +5,7 @@
     <Description>DataBox.Tests class library</Description>
     <AssemblyName>DataBox.Tests</AssemblyName>
     <VersionPrefix>1.0.0</VersionPrefix>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
