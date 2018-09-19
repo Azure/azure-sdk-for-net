@@ -319,7 +319,8 @@ namespace Microsoft.Rest.Azure
 
             set
             {
-                _retryAfterInSeconds = ValidateRetryAfterValue(value);
+                //_retryAfterInSeconds = ValidateRetryAfterValue(value);
+                _retryAfterInSeconds = value;
             }
         }
 
