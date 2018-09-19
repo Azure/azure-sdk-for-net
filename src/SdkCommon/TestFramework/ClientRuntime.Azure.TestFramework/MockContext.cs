@@ -304,7 +304,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
-                if(TestFxEnvironment.OptimizeRecordedFile == true)
+                if(TestFxEnvironment?.OptimizeRecordedFile == true)
                 {
                     ProcessRecordedFiles procRecFile = new ProcessRecordedFiles(recordedFilePath);
                     procRecFile.CompactLroPolling();
