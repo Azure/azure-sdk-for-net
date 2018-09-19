@@ -21,14 +21,6 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Net;
     using System.Net.Http;
 
-    /// <summary>
-    /// Role based access control provides you a way to apply granular level
-    /// policy administration down to individual resources or resource groups.
-    /// These operations enable you to manage role definitions and role
-    /// assignments. A role definition describes the set of actions that can be
-    /// performed on resources. A role assignment grants access to Azure Active
-    /// Directory users.
-    /// </summary>
     public partial class AuthorizationManagementClient : ServiceClient<AuthorizationManagementClient>, IAuthorizationManagementClient, IAzureClient
     {
         /// <summary>
@@ -57,19 +49,20 @@ namespace Microsoft.Azure.Management.Authorization
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -97,6 +90,24 @@ namespace Microsoft.Azure.Management.Authorization
         /// Gets the IRoleDefinitionsOperations.
         /// </summary>
         public virtual IRoleDefinitionsOperations RoleDefinitions { get; private set; }
+
+        /// <summary>
+        /// Gets the IDenyAssignmentsOperations.
+        /// </summary>
+        public virtual IDenyAssignmentsOperations DenyAssignments { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the AuthorizationManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling AuthorizationManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected AuthorizationManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the AuthorizationManagementClient class.
@@ -181,6 +192,33 @@ namespace Microsoft.Azure.Management.Authorization
         /// Thrown when a required parameter is null
         /// </exception>
         public AuthorizationManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the AuthorizationManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling AuthorizationManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public AuthorizationManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -304,6 +342,7 @@ namespace Microsoft.Azure.Management.Authorization
             Permissions = new PermissionsOperations(this);
             RoleAssignments = new RoleAssignmentsOperations(this);
             RoleDefinitions = new RoleDefinitionsOperations(this);
+            DenyAssignments = new DenyAssignmentsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
