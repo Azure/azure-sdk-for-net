@@ -22,7 +22,8 @@ namespace Microsoft.Azure.Management.ServiceBus
     using System.Net.Http;
 
     /// <summary>
-    /// Azure Service Bus client
+    /// Azure Service Bus client for managing Namespace, IPFilter Rules,
+    /// VirtualNetworkRules and Zone Redundant
     /// </summary>
     public partial class ServiceBusManagementClient : ServiceClient<ServiceBusManagementClient>, IServiceBusManagementClient, IAzureClient
     {
@@ -59,26 +60,22 @@ namespace Microsoft.Azure.Management.ServiceBus
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Gets the INamespacesOperations.
@@ -86,49 +83,17 @@ namespace Microsoft.Azure.Management.ServiceBus
         public virtual INamespacesOperations Namespaces { get; private set; }
 
         /// <summary>
-        /// Gets the IDisasterRecoveryConfigsOperations.
+        /// Initializes a new instance of the ServiceBusManagementClient class.
         /// </summary>
-        public virtual IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; private set; }
-
-        /// <summary>
-        /// Gets the IMigrationConfigsOperations.
-        /// </summary>
-        public virtual IMigrationConfigsOperations MigrationConfigs { get; private set; }
-
-        /// <summary>
-        /// Gets the IQueuesOperations.
-        /// </summary>
-        public virtual IQueuesOperations Queues { get; private set; }
-
-        /// <summary>
-        /// Gets the ITopicsOperations.
-        /// </summary>
-        public virtual ITopicsOperations Topics { get; private set; }
-
-        /// <summary>
-        /// Gets the ISubscriptionsOperations.
-        /// </summary>
-        public virtual ISubscriptionsOperations Subscriptions { get; private set; }
-
-        /// <summary>
-        /// Gets the IRulesOperations.
-        /// </summary>
-        public virtual IRulesOperations Rules { get; private set; }
-
-        /// <summary>
-        /// Gets the IRegionsOperations.
-        /// </summary>
-        public virtual IRegionsOperations Regions { get; private set; }
-
-        /// <summary>
-        /// Gets the IPremiumMessagingRegionsOperations.
-        /// </summary>
-        public virtual IPremiumMessagingRegionsOperations PremiumMessagingRegions { get; private set; }
-
-        /// <summary>
-        /// Gets the IEventHubsOperations.
-        /// </summary>
-        public virtual IEventHubsOperations EventHubs { get; private set; }
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ServiceBusManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected ServiceBusManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ServiceBusManagementClient class.
@@ -213,6 +178,33 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// Thrown when a required parameter is null
         /// </exception>
         public ServiceBusManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ServiceBusManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ServiceBusManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public ServiceBusManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -331,19 +323,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </summary>
         private void Initialize()
         {
-            Operations = new Operations(this);
             Namespaces = new NamespacesOperations(this);
-            DisasterRecoveryConfigs = new DisasterRecoveryConfigsOperations(this);
-            MigrationConfigs = new MigrationConfigsOperations(this);
-            Queues = new QueuesOperations(this);
-            Topics = new TopicsOperations(this);
-            Subscriptions = new SubscriptionsOperations(this);
-            Rules = new RulesOperations(this);
-            Regions = new RegionsOperations(this);
-            PremiumMessagingRegions = new PremiumMessagingRegionsOperations(this);
-            EventHubs = new EventHubsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-04-01";
+            ApiVersion = "2018-01-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
