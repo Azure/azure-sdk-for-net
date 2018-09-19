@@ -2,13 +2,13 @@
   <PropertyGroup>
     <Description>Microsoft.Rest.ClientRuntime.Azure.TestFramework</Description>
     <AssemblyTitle>Test framework for Microsoft AutoRest Generated Clients</AssemblyTitle>
-    <Version>1.7.3</Version>
+    <Version>1.7.4</Version>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure.TestFramework</AssemblyName>
     <PackageId>Microsoft.Rest.ClientRuntime.Azure.TestFramework</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime REST TestFramework</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      1) Adding new key-value pair for opt into optimizing recorded files for LRO scenarios
+      1) Bug fix for handling optimizing test recorded file.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
