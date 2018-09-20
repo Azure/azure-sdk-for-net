@@ -4,174 +4,231 @@
 
 namespace Test.Azure.Management.Logic
 {
-    using System.IO;
-    using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
-    using System;
+    using System.IO;
 
     /// <summary>
     /// Scenario tests for the integration accounts schema.
     /// </summary>
     [Collection("IntegrationAccountSchemaScenarioTests")]
-    public class IntegrationAccountSchemaScenarioTests : ScenarioTestsBase, IDisposable
+    public class IntegrationAccountSchemaScenarioTests : ScenarioTestsBase
     {
-        private readonly MockContext context;
-        private readonly ILogicManagementClient client;
-        private readonly string integrationAccountName;
-        private readonly IntegrationAccount integrationAccount;
-        private readonly string schemaName;
-        private readonly string schemaContent;
-
-        public IntegrationAccountSchemaScenarioTests()
-        {
-            this.context = MockContext.Start(className: this.TestClassName);
-            this.client = this.GetClient(this.context);
-
-            this.integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-            this.integrationAccount = this.client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.CreateIntegrationAccount(this.integrationAccountName));
-
-            this.schemaContent = File.ReadAllText(@"TestData/OrderFile.xsd");
-            this.schemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
-        }
-
-
-        public void Dispose()
-        {
-            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
-
-            this.client.Dispose();
-            this.context.Dispose();
-        }
-
         [Fact]
         public void IntegrationAccountSchemas_Create_OK()
         {
-            var schema = this.CreateIntegrationAccountSchema(this.schemaName);
-            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.schemaName,
-                schema);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.ValidateSchema(schema, createdSchema);
+                var schemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+                var schema = this.CreateIntegrationAccountSchema(schemaName);
+                var createdSchema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    schemaName,
+                    schema);
+
+                this.ValidateSchema(schema, createdSchema);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountSchemas_Get_OK()
         {
-            var schema = this.CreateIntegrationAccountSchema(this.schemaName);
-            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.schemaName,
-                schema);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var retrievedSchema = this.client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.schemaName);
+                var schemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+                var schema = this.CreateIntegrationAccountSchema(schemaName);
+                var createdSchema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    schemaName,
+                    schema);
 
-            this.ValidateSchema(schema, retrievedSchema);
+                var retrievedSchema = client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    schemaName);
+
+                this.ValidateSchema(schema, retrievedSchema);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountSchemas_List_OK()
         {
-            var schema1 = this.CreateIntegrationAccountSchema(this.schemaName);
-            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.schemaName,
-                schema1);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var schemaName2 = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
-            var schema2 = this.CreateIntegrationAccountSchema(schemaName2);
-            var createdSchema2 = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                schemaName2,
-                schema2);
+                var schemaName1 = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+                var schema1 = this.CreateIntegrationAccountSchema(schemaName1);
+                var createdSchema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    schemaName1,
+                    schema1);
 
-            var schemaName3 = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
-            var schema3 = this.CreateIntegrationAccountSchema(schemaName3);
-            var createdSchema3 = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                schemaName3,
-                schema3);
+                var schemaName2 = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+                var schema2 = this.CreateIntegrationAccountSchema(schemaName2);
+                var createdSchema2 = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    schemaName2,
+                    schema2);
 
-            var schemas = this.client.IntegrationAccountSchemas.List(Constants.DefaultResourceGroup, this.integrationAccountName);
+                var schemaName3 = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+                var schema3 = this.CreateIntegrationAccountSchema(schemaName3);
+                var createdSchema3 = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    schemaName3,
+                    schema3);
 
-            Assert.Equal(3, schemas.Count());
-            this.ValidateSchema(schema1, schemas.Single(x => x.Name == schema1.Name));
-            this.ValidateSchema(schema2, schemas.Single(x => x.Name == schema2.Name));
-            this.ValidateSchema(schema3, schemas.Single(x => x.Name == schema3.Name));
+                var schemas = client.IntegrationAccountSchemas.List(Constants.DefaultResourceGroup, integrationAccountName);
+
+                Assert.Equal(3, schemas.Count());
+                this.ValidateSchema(schema1, schemas.Single(x => x.Name == schema1.Name));
+                this.ValidateSchema(schema2, schemas.Single(x => x.Name == schema2.Name));
+                this.ValidateSchema(schema3, schemas.Single(x => x.Name == schema3.Name));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountSchemas_Update_OK()
         {
-            var schema = this.CreateIntegrationAccountSchema(this.schemaName);
-            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.schemaName,
-                schema);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var newSchema = this.CreateIntegrationAccountSchema(this.schemaName);
-            var updatedSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.schemaName,
-                newSchema);
+                var schemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+                var schema = this.CreateIntegrationAccountSchema(schemaName);
+                var createdSchema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    schemaName,
+                    schema);
 
-            this.ValidateSchema(newSchema, updatedSchema);
+                var newSchema = this.CreateIntegrationAccountSchema(schemaName);
+                var updatedSchema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    schemaName,
+                    newSchema);
+
+                this.ValidateSchema(newSchema, updatedSchema);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountSchemas_Delete_OK()
         {
-            var schema = this.CreateIntegrationAccountSchema(this.schemaName);
-            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.schemaName,
-                schema);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.client.IntegrationAccountSchemas.Delete(Constants.DefaultResourceGroup, this.integrationAccountName, this.schemaName);
-            Assert.Throws<CloudException>(() => this.client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.schemaName));
+                var schemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+                var schema = this.CreateIntegrationAccountSchema(schemaName);
+                var createdSchema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    schemaName,
+                    schema);
+
+                client.IntegrationAccountSchemas.Delete(Constants.DefaultResourceGroup, integrationAccountName, schemaName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, integrationAccountName, schemaName));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountSchemas_DeleteWhenDeleteIntegrationAccount_OK()
         {
-            var schema = this.CreateIntegrationAccountSchema(this.schemaName);
-            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.schemaName,
-                schema);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
-            Assert.Throws<CloudException>(() => this.client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.schemaName));
+                var schemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+                var schema = this.CreateIntegrationAccountSchema(schemaName);
+                var createdSchema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    schemaName,
+                    schema);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, integrationAccountName, schemaName));
+            }
         }
 
         [Fact]
         public void IntegrationAccountSchemas_ListContentCallbackUrl_OK()
         {
-            var schema = this.CreateIntegrationAccountSchema(this.schemaName);
-            var createdSchema = this.client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.schemaName,
-                schema);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var contentCallbackUrl = this.client.IntegrationAccountSchemas.ListContentCallbackUrl(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.schemaName,
-                new GetCallbackUrlParameters
-                {
-                    KeyType = "Primary"
-                });
+                var schemaName = TestUtilities.GenerateName(Constants.IntegrationAccountSchemaPrefix);
+                var schema = this.CreateIntegrationAccountSchema(schemaName);
+                var createdSchema = client.IntegrationAccountSchemas.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    schemaName,
+                    schema);
 
-            Assert.Equal("GET", contentCallbackUrl.Method);
-            Assert.Contains(this.schemaName, contentCallbackUrl.Value);
+                var contentCallbackUrl = client.IntegrationAccountSchemas.ListContentCallbackUrl(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    schemaName,
+                    new GetCallbackUrlParameters
+                    {
+                        KeyType = "Primary"
+                    });
+
+                Assert.Equal("GET", contentCallbackUrl.Method);
+                Assert.Contains(schemaName, contentCallbackUrl.Value);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         #region Private
@@ -194,7 +251,7 @@ namespace Test.Azure.Management.Logic
                 name: schemaName,
                 location: Constants.DefaultLocation,
                 targetNamespace: "http://Inbound_EDI.OrderFile",
-                content: this.schemaContent,
+                content: File.ReadAllText(@"TestData/OrderFile.xsd"),
                 contentType: "application/xml");
         }
 

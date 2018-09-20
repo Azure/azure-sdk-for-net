@@ -12,71 +12,66 @@ namespace Test.Azure.Management.Logic
     using Xunit;
 
     [Collection("WorkflowTriggerHistoriesScenarioTests")]
-    public class WorkflowTriggerHistoriesScenarioTests : ScenarioTestsBase, IDisposable
+    public class WorkflowTriggerHistoriesScenarioTests : ScenarioTestsBase
     {
-        private readonly MockContext context;
-        private readonly ILogicManagementClient client;
-
-        private readonly string workflowName;
-        private readonly Workflow workflow;
-
-        public WorkflowTriggerHistoriesScenarioTests()
-        {
-            this.context = MockContext.Start(className: this.TestClassName);
-            this.client = this.GetClient(this.context);
-
-            this.workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
-            this.workflow = this.CreateWorkflow(this.workflowName);
-        }
-
-        public void Dispose()
-        {
-            this.client.Workflows.Delete(Constants.DefaultResourceGroup, this.workflowName);
-
-            this.client.Dispose();
-            this.context.Dispose();
-        }
-
         [Fact]
         public void WorkflowTriggerHistories_Get_OK()
         {
-            var createdWorkflow = this.client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.workflowName,
-                this.workflow);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
 
-            var preHistories = this.client.WorkflowTriggerHistories.List(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
-            Assert.Empty(preHistories);
+                var preHistories = client.WorkflowTriggerHistories.List(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName);
+                Assert.Empty(preHistories);
 
-            this.client.WorkflowTriggers.Run(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
+                client.WorkflowTriggers.Run(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName);
 
-            var postHistories = this.client.WorkflowTriggerHistories.List(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
-            var retrievedHistory = this.client.WorkflowTriggerHistories.Get(Constants.DefaultResourceGroup, 
-                this.workflowName, 
-                Constants.DefaultTriggerName, 
-                postHistories.First().Name);
+                var postHistories = client.WorkflowTriggerHistories.List(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName);
+                var retrievedHistory = client.WorkflowTriggerHistories.Get(Constants.DefaultResourceGroup,
+                    workflowName,
+                    Constants.DefaultTriggerName,
+                    postHistories.First().Name);
 
-            this.ValidateHistory(retrievedHistory);
+                this.ValidateHistory(retrievedHistory);
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+            }
         }
 
         [Fact]
         public void WorkflowTriggerHistories_List_OK()
         {
-            var createdWorkflow = this.client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.workflowName,
-                this.workflow);
-
-            var preHistories = this.client.WorkflowTriggerHistories.List(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
-            Assert.Empty(preHistories);
-
-            this.client.WorkflowTriggers.Run(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
-            this.client.WorkflowTriggers.Run(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
-
-            var postHistories = this.client.WorkflowTriggerHistories.List(Constants.DefaultResourceGroup, this.workflowName, Constants.DefaultTriggerName);
-
-            Assert.Equal(2, postHistories.Count());
-            foreach (var history in postHistories)
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                this.ValidateHistory(history);
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
+
+                var preHistories = client.WorkflowTriggerHistories.List(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName);
+                Assert.Empty(preHistories);
+
+                client.WorkflowTriggers.Run(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName);
+                client.WorkflowTriggers.Run(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName);
+
+                var postHistories = client.WorkflowTriggerHistories.List(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName);
+
+                Assert.Equal(2, postHistories.Count());
+                foreach (var history in postHistories)
+                {
+                    this.ValidateHistory(history);
+                }
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }
         }
 

@@ -8,221 +8,320 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Xunit;
 
     [Collection("IntegrationAccountAgreementsScenarioTests")]
-    public class IntegrationAccountAgreementsScenarioTests : ScenarioTestsBase, IDisposable
+    public class IntegrationAccountAgreementsScenarioTests : ScenarioTestsBase
     {
-        private readonly MockContext context;
-        private readonly ILogicManagementClient client;
-        private readonly string integrationAccountName;
-        private readonly string agreementName;
-        private readonly IntegrationAccount integrationAccount;
-
-        public IntegrationAccountAgreementsScenarioTests()
-        {
-            this.context = MockContext.Start(className: this.TestClassName);
-            this.client = this.GetClient(this.context);
-
-            this.integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-            this.integrationAccount = this.client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.CreateIntegrationAccount(this.integrationAccountName));
-
-            this.agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
-        }
-
-        public void Dispose()
-        {
-            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
-
-            this.client.Dispose();
-            this.context.Dispose();
-        }
-
         [Fact]
         public void IntegrationAccountAgreements_CreateAs2_OK()
         {
-            var agreement = this.CreateIntegrationAccountAgreement(this.agreementName, AgreementType.AS2);
-            var createdAgreement = this.client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup, 
-                this.integrationAccountName, 
-                this.agreementName, 
-                agreement);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.ValidateAgreement(agreement, createdAgreement);
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
+
+                this.ValidateAgreement(agreement, createdAgreement);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountAgreements_CreateEdifact_OK()
         {
-            var agreement = this.CreateIntegrationAccountAgreement(this.agreementName, AgreementType.Edifact);
-            var createdAgreement = this.client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.agreementName,
-                agreement);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.ValidateAgreement(agreement, createdAgreement);
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.Edifact);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
+
+                this.ValidateAgreement(agreement, createdAgreement);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountAgreements_CreateX12_OK()
         {
-            var agreement = this.CreateIntegrationAccountAgreement(this.agreementName, AgreementType.X12);
-            var createdAgreement = this.client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.agreementName,
-                agreement);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.ValidateAgreement(agreement, createdAgreement);
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.X12);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
+
+                this.ValidateAgreement(agreement, createdAgreement);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountAgreements_CreateWithEnvelopeOverride_OK()
         {
-            var agreement = this.CreateIntegrationAccountAgreement(this.agreementName, AgreementType.X12);
-            agreement.Content.X12.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides = new List<X12EnvelopeOverride>
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                new X12EnvelopeOverride
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.X12);
+                agreement.Content.X12.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides = new List<X12EnvelopeOverride>
                 {
-                    HeaderVersion = "1",
-                    MessageId = "100",
-                    ProtocolVersion = "1",
-                    ReceiverApplicationId = "93494",
-                    ResponsibleAgencyCode = "X",
-                    SenderApplicationId = "89459",
-                    TargetNamespace = "http://tempuri.org",
-                    FunctionalIdentifierCode = "x",
-                    DateFormat = X12DateFormat.CCYYMMDD,
-                    TimeFormat = X12TimeFormat.HHMM
-                }
-            };
+                    new X12EnvelopeOverride
+                    {
+                        HeaderVersion = "1",
+                        MessageId = "100",
+                        ProtocolVersion = "1",
+                        ReceiverApplicationId = "93494",
+                        ResponsibleAgencyCode = "X",
+                        SenderApplicationId = "89459",
+                        TargetNamespace = "http://tempuri.org",
+                        FunctionalIdentifierCode = "x",
+                        DateFormat = X12DateFormat.CCYYMMDD,
+                        TimeFormat = X12TimeFormat.HHMM
+                    }
+                };
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
 
-            var createdAgreement = this.client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.agreementName,
-                agreement);
+                var retrievedAgreement = client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName);
 
-            var retrievedAgreement = this.client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.agreementName);
+                this.ValidateAgreement(agreement, retrievedAgreement);
 
-            this.ValidateAgreement(agreement, retrievedAgreement);
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountAgreements_Get_OK()
         {
-            var agreement = this.CreateIntegrationAccountAgreement(this.agreementName, AgreementType.AS2);
-            var createdAgreement = this.client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.agreementName,
-                agreement);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var retrievedAgreement = this.client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.agreementName);
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
 
-            this.ValidateAgreement(agreement, retrievedAgreement);
+                var retrievedAgreement = client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName);
+
+                this.ValidateAgreement(agreement, retrievedAgreement);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountAgreements_List_OK()
         {
-            var agreement1 = this.CreateIntegrationAccountAgreement(this.agreementName, AgreementType.AS2);
-            var createdAgreement = this.client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.agreementName,
-                agreement1);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var agreementName2 = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
-            var agreement2 = this.CreateIntegrationAccountAgreement(agreementName2, AgreementType.Edifact);
-            var createdAgreement2 = this.client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                agreementName2,
-                agreement2);
+                var agreementName1 = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement1 = this.CreateIntegrationAccountAgreement(agreementName1, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName1,
+                    agreement1);
 
-            var agreementName3 = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
-            var agreement3 = this.CreateIntegrationAccountAgreement(agreementName3, AgreementType.X12);
-            var createdAgreement3 = this.client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                agreementName3,
-                agreement3);
+                var agreementName2 = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement2 = this.CreateIntegrationAccountAgreement(agreementName2, AgreementType.Edifact);
+                var createdAgreement2 = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName2,
+                    agreement2);
 
-            var agreements = this.client.IntegrationAccountAgreements.List(Constants.DefaultResourceGroup, this.integrationAccountName);
+                var agreementName3 = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement3 = this.CreateIntegrationAccountAgreement(agreementName3, AgreementType.X12);
+                var createdAgreement3 = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName3,
+                    agreement3);
 
-            Assert.Equal(3, agreements.Count());
-            this.ValidateAgreement(agreement1, agreements.Single(x => x.AgreementType == agreement1.AgreementType));
-            this.ValidateAgreement(agreement2, agreements.Single(x => x.AgreementType == agreement2.AgreementType));
-            this.ValidateAgreement(agreement3, agreements.Single(x => x.AgreementType == agreement3.AgreementType));
+                var agreements = client.IntegrationAccountAgreements.List(Constants.DefaultResourceGroup, integrationAccountName);
+
+                Assert.Equal(3, agreements.Count());
+                this.ValidateAgreement(agreement1, agreements.Single(x => x.AgreementType == agreement1.AgreementType));
+                this.ValidateAgreement(agreement2, agreements.Single(x => x.AgreementType == agreement2.AgreementType));
+                this.ValidateAgreement(agreement3, agreements.Single(x => x.AgreementType == agreement3.AgreementType));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountAgreements_Update_OK()
         {
-            var agreement = this.CreateIntegrationAccountAgreement(this.agreementName, AgreementType.AS2);
-            var createdAgreement = this.client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.agreementName,
-                agreement);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var newAgreement = this.CreateIntegrationAccountAgreement(this.agreementName, AgreementType.AS2);
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
 
-            var updatedAgreement = this.client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.agreementName,
-                newAgreement);
+                var newAgreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
 
-            this.ValidateAgreement(newAgreement, updatedAgreement);
+                var updatedAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    newAgreement);
+
+                this.ValidateAgreement(newAgreement, updatedAgreement);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountAgreements_Delete_OK()
         {
-            var agreement = this.CreateIntegrationAccountAgreement(this.agreementName, AgreementType.AS2);
-            var createdAgreement = this.client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.agreementName,
-                agreement);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.client.IntegrationAccountAgreements.Delete(Constants.DefaultResourceGroup, this.integrationAccountName, this.agreementName);
-            Assert.Throws<CloudException>(() => this.client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.agreementName));
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
+
+                client.IntegrationAccountAgreements.Delete(Constants.DefaultResourceGroup, integrationAccountName, agreementName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup, integrationAccountName, agreementName));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountAgreements_DeleteWhenDeleteIntegrationAccount_OK()
         {
-            var agreement = this.CreateIntegrationAccountAgreement(this.agreementName, AgreementType.AS2);
-            var createdAgreement = this.client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.agreementName,
-                agreement);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
-            Assert.Throws<CloudException>(() => this.client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.agreementName));
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup, integrationAccountName, agreementName));
+            }
         }
 
         [Fact]
         public void IntegrationAccountAgreements_ListContentCallbackUrl_OK()
         {
-            var agreement = this.CreateIntegrationAccountAgreement(this.agreementName, AgreementType.AS2);
-            var createdAgreement = this.client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.agreementName,
-                agreement);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var contentCallbackUrl = this.client.IntegrationAccountAgreements.ListContentCallbackUrl(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.agreementName,
-                new GetCallbackUrlParameters
-                {
-                    KeyType = "Primary"
-                });
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
 
-            Assert.Equal("GET", contentCallbackUrl.Method);
-            Assert.Contains(this.agreementName, contentCallbackUrl.Value);
+                var contentCallbackUrl = client.IntegrationAccountAgreements.ListContentCallbackUrl(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    new GetCallbackUrlParameters
+                    {
+                        KeyType = "Primary"
+                    });
+
+                Assert.Equal("GET", contentCallbackUrl.Method);
+                Assert.Contains(agreementName, contentCallbackUrl.Value);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         #region Private

@@ -37,6 +37,21 @@ namespace Test.Azure.Management.Logic
             }
         }
 
+        protected void CleanResourceGroup(LogicManagementClient client, string resourceGroup = Constants.DefaultResourceGroup)
+        {
+            var integrationAccounts = client.IntegrationAccounts.ListByResourceGroup(resourceGroup);
+            foreach(var integrationAccount in integrationAccounts)
+            {
+                client.IntegrationAccounts.Delete(resourceGroup, integrationAccount.Name);
+            }
+
+            var workflows = client.Workflows.ListByResourceGroup(resourceGroup);
+            foreach(var workflow in workflows)
+            {
+                client.Workflows.Delete(resourceGroup, workflow.Name);
+            }
+        }
+
         protected LogicManagementClient GetClient(MockContext context)
         {
             return context.GetServiceClient<LogicManagementClient>();

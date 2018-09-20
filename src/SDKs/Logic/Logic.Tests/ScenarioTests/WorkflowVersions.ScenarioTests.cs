@@ -7,59 +7,53 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using System;
     using Xunit;
 
     [Collection("WorkflowVersionsScenarioTests")]
-    public class WorkflowVersionsScenarioTests : ScenarioTestsBase, IDisposable
+    public class WorkflowVersionsScenarioTests : ScenarioTestsBase
     {
-        private readonly MockContext context;
-        private readonly ILogicManagementClient client;
-
-        private readonly string workflowName;
-        private readonly Workflow workflow;
-
-        public WorkflowVersionsScenarioTests()
-        {
-            this.context = MockContext.Start(className: this.TestClassName);
-            this.client = this.GetClient(this.context);
-
-            this.workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
-            this.workflow = this.CreateWorkflow(this.workflowName);
-        }
-
-        public void Dispose()
-        {
-            this.client.Workflows.Delete(Constants.DefaultResourceGroup, this.workflowName);
-
-            this.client.Dispose();
-            this.context.Dispose();
-        }
-
         [Fact]
         public void WorkflowVersions_Get_OK()
         {
-            var createdWorkflow = this.client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.workflowName,
-                this.workflow);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
 
-            var workflowVersion = this.client.WorkflowVersions.Get(Constants.DefaultResourceGroup, this.workflowName, createdWorkflow.Version);
+                var workflowVersion = client.WorkflowVersions.Get(Constants.DefaultResourceGroup, workflowName, createdWorkflow.Version);
 
-            this.ValidateWorkflowVersion(this.workflow, workflowVersion);
+                this.ValidateWorkflowVersion(workflow, workflowVersion);
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+            }
         }
 
         [Fact]
         public void WorkflowVersions_List_OK()
         {
-            var createdWorkflow = this.client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.workflowName,
-                this.workflow);
-
-            var workflowVersions = this.client.WorkflowVersions.List(Constants.DefaultResourceGroup, this.workflowName);
-
-            foreach(var workflowVersion in workflowVersions)
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                this.ValidateWorkflowVersion(this.workflow, workflowVersion);
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
+
+                var workflowVersions = client.WorkflowVersions.List(Constants.DefaultResourceGroup, workflowName);
+
+                foreach (var workflowVersion in workflowVersions)
+                {
+                    this.ValidateWorkflowVersion(workflow, workflowVersion);
+                }
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }
         }
 

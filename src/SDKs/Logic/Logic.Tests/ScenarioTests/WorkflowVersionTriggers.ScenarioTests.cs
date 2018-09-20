@@ -7,52 +7,37 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using System;
     using Xunit;
 
     [Collection("WorkflowVersionTriggersScenarioTests")]
-    public class WorkflowVersionTriggersScenarioTests : ScenarioTestsBase, IDisposable
+    public class WorkflowVersionTriggersScenarioTests : ScenarioTestsBase
     {
-        private readonly MockContext context;
-        private readonly ILogicManagementClient client;
-
-        private readonly string workflowName;
-        private readonly Workflow workflow;
-
-        public WorkflowVersionTriggersScenarioTests()
-        {
-            this.context = MockContext.Start(className: this.TestClassName);
-            this.client = this.GetClient(this.context);
-
-            this.workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
-            this.workflow = this.CreateWorkflow(this.workflowName);
-        }
-
-        public void Dispose()
-        {
-            this.client.Workflows.Delete(Constants.DefaultResourceGroup, this.workflowName);
-
-            this.client.Dispose();
-            this.context.Dispose();
-        }
-
         [Fact]
         public void WorkflowVersionTriggers_ListCallbackUrl_OK()
         {
-            var createdWorkflow = this.client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.workflowName,
-                this.workflow);
-          
-            var callbackUrl = this.client.WorkflowVersionTriggers.ListCallbackUrl(Constants.DefaultResourceGroup,
-                this.workflowName,
-                createdWorkflow.Version,
-                Constants.DefaultTriggerName,
-                new GetCallbackUrlParameters
-                {
-                    KeyType = "Primary"
-                });
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
 
-            Assert.NotEmpty(callbackUrl.BasePath);
+                var callbackUrl = client.WorkflowVersionTriggers.ListCallbackUrl(Constants.DefaultResourceGroup,
+                    workflowName,
+                    createdWorkflow.Version,
+                    Constants.DefaultTriggerName,
+                    new GetCallbackUrlParameters
+                    {
+                        KeyType = "Primary"
+                    });
+
+                Assert.NotEmpty(callbackUrl.BasePath);
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+            }
         }
     }
 }

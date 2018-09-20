@@ -4,208 +4,304 @@
 
 namespace Test.Azure.Management.Logic
 {
-    using System.IO;
-    using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
-    using System;
 
-    /// <summary>
-    /// Scenario tests for the integration accounts map.
-    /// </summary>
     [Collection("IntegrationAccountMapScenarioTests")]
-    public class IntegrationAccountMapScenarioTests : ScenarioTestsBase, IDisposable
+    public class IntegrationAccountMapScenarioTests : ScenarioTestsBase
     {
-        private readonly MockContext context;
-        private readonly ILogicManagementClient client;
-        private readonly string integrationAccountName;
-        private readonly string mapName;
-        private readonly IntegrationAccount integrationAccount;
-
-        public IntegrationAccountMapScenarioTests()
-        {
-            this.context = MockContext.Start(className: this.TestClassName);
-            this.client = this.GetClient(this.context);
-
-            this.integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-            this.integrationAccount = this.client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.CreateIntegrationAccount(this.integrationAccountName));
-
-            this.mapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
-        }
-
-        public void Dispose()
-        {
-            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
-
-            this.client.Dispose();
-            this.context.Dispose();
-        }
-
         [Fact]
         public void IntegrationAccountMaps_CreateXslt_OK()
         {
-            var map = this.CreateIntegrationAccountMap(this.mapName, MapType.Xslt);
-            var createdMap = this.client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.mapName,
-                map);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.ValidateMap(map, createdMap);
+                var mapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
+                var map = this.CreateIntegrationAccountMap(mapName, MapType.Xslt);
+                var createdMap = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName,
+                    map);
+
+                this.ValidateMap(map, createdMap);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountMaps_CreateXslt20_OK()
         {
-            var map = this.CreateIntegrationAccountMap(this.mapName, MapType.Xslt20);
-            var createdMap = this.client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.mapName,
-                map);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.ValidateMap(map, createdMap);
+                var mapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
+                var map = this.CreateIntegrationAccountMap(mapName, MapType.Xslt20);
+                var createdMap = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName,
+                    map);
+
+                this.ValidateMap(map, createdMap);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountMaps_CreateXslt30_OK()
         {
-            var map = this.CreateIntegrationAccountMap(this.mapName, MapType.Xslt30);
-            var createdMap = this.client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.mapName,
-                map);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.ValidateMap(map, createdMap);
+                var mapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
+                var map = this.CreateIntegrationAccountMap(mapName, MapType.Xslt30);
+                var createdMap = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName,
+                    map);
+
+                this.ValidateMap(map, createdMap);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountMaps_CreateLiquid_OK()
         {
-            var map = this.CreateIntegrationAccountMap(this.mapName, MapType.Liquid);
-            var createdMap = this.client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.mapName,
-                map);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.ValidateMap(map, createdMap);
+                var mapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
+                var map = this.CreateIntegrationAccountMap(mapName, MapType.Liquid);
+                var createdMap = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName,
+                    map);
+
+                this.ValidateMap(map, createdMap);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountMaps_Get_OK()
         {
-            var map = this.CreateIntegrationAccountMap(this.mapName, MapType.Xslt);
-            var createdMap = this.client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.mapName,
-                map);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var retrievedMap = this.client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.mapName);
+                var mapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
+                var map = this.CreateIntegrationAccountMap(mapName, MapType.Xslt);
+                var createdMap = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName,
+                    map);
 
-            this.ValidateMap(map, retrievedMap);
+                var retrievedMap = client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName);
+
+                this.ValidateMap(map, retrievedMap);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountMaps_List_OK()
         {
-            var map1 = this.CreateIntegrationAccountMap(this.mapName, MapType.Xslt);
-            var createdMap = this.client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.mapName,
-                map1);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var mapName2 = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
-            var map2 = this.CreateIntegrationAccountMap(mapName2, MapType.Xslt20);
-            var createdMap2 = this.client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                mapName2,
-                map2);
+                var mapName1 = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
+                var map1 = this.CreateIntegrationAccountMap(mapName1, MapType.Xslt);
+                var createdMap1 = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName1,
+                    map1);
 
-            var mapName3 = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
-            var map3 = this.CreateIntegrationAccountMap(mapName3, MapType.Liquid);
-            var createdMap3 = this.client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                mapName3,
-                map3);
+                var mapName2 = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
+                var map2 = this.CreateIntegrationAccountMap(mapName2, MapType.Xslt20);
+                var createdMap2 = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName2,
+                    map2);
 
-            var maps = this.client.IntegrationAccountMaps.List(Constants.DefaultResourceGroup, this.integrationAccountName);
+                var mapName3 = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
+                var map3 = this.CreateIntegrationAccountMap(mapName3, MapType.Liquid);
+                var createdMap3 = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName3,
+                    map3);
 
-            Assert.Equal(3, maps.Count());
-            this.ValidateMap(map1, maps.Single(x => x.MapType == map1.MapType));
-            this.ValidateMap(map2, maps.Single(x => x.MapType == map2.MapType));
-            this.ValidateMap(map3, maps.Single(x => x.MapType == map3.MapType));
+                var maps = client.IntegrationAccountMaps.List(Constants.DefaultResourceGroup, integrationAccountName);
+
+                Assert.Equal(3, maps.Count());
+                this.ValidateMap(map1, maps.Single(x => x.MapType == map1.MapType));
+                this.ValidateMap(map2, maps.Single(x => x.MapType == map2.MapType));
+                this.ValidateMap(map3, maps.Single(x => x.MapType == map3.MapType));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountMaps_Update_OK()
         {
-            var map = this.CreateIntegrationAccountMap(this.mapName, MapType.Xslt);
-            var createdMap = this.client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.mapName,
-                map);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var newMap = this.CreateIntegrationAccountMap(this.mapName, MapType.Xslt);
+                var mapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
+                var map = this.CreateIntegrationAccountMap(mapName, MapType.Xslt);
+                var createdMap = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName,
+                    map);
 
-            var updatedMap = this.client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.mapName,
-                newMap);
+                var newMap = this.CreateIntegrationAccountMap(mapName, MapType.Xslt);
 
-            this.ValidateMap(newMap, updatedMap);
+                var updatedMap = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName,
+                    newMap);
+
+                this.ValidateMap(newMap, updatedMap);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountMaps_Delete_OK()
         {
-            var map = this.CreateIntegrationAccountMap(this.mapName, MapType.Xslt);
-            var createdMap = this.client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.mapName,
-                map);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.client.IntegrationAccountMaps.Delete(Constants.DefaultResourceGroup, this.integrationAccountName, this.mapName);
-            Assert.Throws<CloudException>(() => this.client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.mapName));
+                var mapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
+                var map = this.CreateIntegrationAccountMap(mapName, MapType.Xslt);
+                var createdMap = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName,
+                    map);
+
+                client.IntegrationAccountMaps.Delete(Constants.DefaultResourceGroup, integrationAccountName, mapName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, integrationAccountName, mapName));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountMaps_DeleteWhenDeleteIntegrationAccount_OK()
         {
-            var map = this.CreateIntegrationAccountMap(this.mapName, MapType.Xslt);
-            var createdMap = this.client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.mapName,
-                map);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
-            Assert.Throws<CloudException>(() => this.client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.mapName));
+                var mapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
+                var map = this.CreateIntegrationAccountMap(mapName, MapType.Xslt);
+                var createdMap = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName,
+                    map);
+
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, integrationAccountName, mapName));
+            }
         }
 
         [Fact]
         public void IntegrationAccountMaps_ListContentCallbackUrl_OK()
         {
-            var map = this.CreateIntegrationAccountMap(this.mapName, MapType.Xslt);
-            var createdMap = this.client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.mapName,
-                map);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var contentCallbackUrl = this.client.IntegrationAccountMaps.ListContentCallbackUrl(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.mapName,
-                new GetCallbackUrlParameters
-                {
-                    KeyType = "Primary"
-                });
+                var mapName = TestUtilities.GenerateName(Constants.IntegrationAccountMapPrefix);
+                var map = this.CreateIntegrationAccountMap(mapName, MapType.Xslt);
+                var createdMap = client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName,
+                    map);
 
-            Assert.Equal("GET", contentCallbackUrl.Method);
-            Assert.Contains(this.mapName, contentCallbackUrl.Value);
+                var contentCallbackUrl = client.IntegrationAccountMaps.ListContentCallbackUrl(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    mapName,
+                    new GetCallbackUrlParameters
+                    {
+                        KeyType = "Primary"
+                    });
+
+                Assert.Equal("GET", contentCallbackUrl.Method);
+                Assert.Contains(mapName, contentCallbackUrl.Value);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         #region Private

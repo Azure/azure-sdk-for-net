@@ -8,141 +8,189 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using System;
     using System.IO;
     using System.Linq;
     using Xunit;
 
     [Collection("IntegrationAccountAssembliesScenarioTests")]
-    public class IntegrationAccountAssembliesScenarioTests : ScenarioTestsBase, IDisposable
+    public class IntegrationAccountAssembliesScenarioTests : ScenarioTestsBase
     {
-        private readonly MockContext context;
-        private readonly ILogicManagementClient client;
-        private readonly string integrationAccountName;
-        private readonly string assemblyName;
-        private readonly IntegrationAccount integrationAccount;
-
-        public IntegrationAccountAssembliesScenarioTests()
-        {
-            this.context = MockContext.Start(className: this.TestClassName);
-            this.client = this.GetClient(this.context);
-
-            this.integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-            this.integrationAccount = this.client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.CreateIntegrationAccount(this.integrationAccountName));
-
-            this.assemblyName = TestUtilities.GenerateName(Constants.IntegrationAccountAssemblyPrefix);
-        }
-
-        public void Dispose()
-        {
-            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
-
-            this.client.Dispose();
-            this.context.Dispose();
-        }
-
         [Fact]
         public void IntegrationAccountAssemblies_Create_OK()
         {
-            var assembly = this.CreateIntegrationAccountAssembly(this.assemblyName);
-            var createdAssembly = this.client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup, 
-                this.integrationAccountName, 
-                this.assemblyName, 
-                assembly);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.ValidateAssembly(assembly, createdAssembly);
+                var assemblyName = TestUtilities.GenerateName(Constants.IntegrationAccountAssemblyPrefix);
+                var assembly = this.CreateIntegrationAccountAssembly(assemblyName);
+                var createdAssembly = client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    assemblyName,
+                    assembly);
+
+                this.ValidateAssembly(assembly, createdAssembly);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountAssemblies_Get_OK()
         {
-            var assembly = this.CreateIntegrationAccountAssembly(this.assemblyName);
-            var createdAssembly = this.client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.assemblyName,
-                assembly);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var retrievedAssembly = this.client.IntegrationAccountAssemblies.Get(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.assemblyName);
+                var assemblyName = TestUtilities.GenerateName(Constants.IntegrationAccountAssemblyPrefix);
+                var assembly = this.CreateIntegrationAccountAssembly(assemblyName);
+                var createdAssembly = client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    assemblyName,
+                    assembly);
 
-            this.ValidateAssembly(assembly, retrievedAssembly);
+                var retrievedAssembly = client.IntegrationAccountAssemblies.Get(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    assemblyName);
+
+                this.ValidateAssembly(assembly, retrievedAssembly);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountAssemblies_List_OK()
         {
-            var assembly1 = this.CreateIntegrationAccountAssembly(this.assemblyName);
-            var createdAssembly1 = this.client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.assemblyName,
-                assembly1);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var assemblyName2 = TestUtilities.GenerateName(Constants.IntegrationAccountAssemblyPrefix);
-            var assembly2 = this.CreateIntegrationAccountAssembly(assemblyName2);
-            var createdAssembly2 = this.client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                assemblyName2,
-                assembly2);
+                var assemblyName1 = TestUtilities.GenerateName(Constants.IntegrationAccountAssemblyPrefix);
+                var assembly1 = this.CreateIntegrationAccountAssembly(assemblyName1);
+                var createdAssembly1 = client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    assemblyName1,
+                    assembly1);
 
-            var assemblyName3 = TestUtilities.GenerateName(Constants.IntegrationAccountAssemblyPrefix);
-            var assembly3 = this.CreateIntegrationAccountAssembly(assemblyName3);
-            var createdAssembly3 = this.client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                assemblyName3,
-                assembly3);
+                var assemblyName2 = TestUtilities.GenerateName(Constants.IntegrationAccountAssemblyPrefix);
+                var assembly2 = this.CreateIntegrationAccountAssembly(assemblyName2);
+                var createdAssembly2 = client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    assemblyName2,
+                    assembly2);
 
-            var assemblies = this.client.IntegrationAccountAssemblies.List(Constants.DefaultResourceGroup, this.integrationAccountName);
+                var assemblyName3 = TestUtilities.GenerateName(Constants.IntegrationAccountAssemblyPrefix);
+                var assembly3 = this.CreateIntegrationAccountAssembly(assemblyName3);
+                var createdAssembly3 = client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    assemblyName3,
+                    assembly3);
 
-            Assert.Equal(3, assemblies.Count());
-            this.ValidateAssembly(assembly1, createdAssembly1);
-            this.ValidateAssembly(assembly2, createdAssembly2);
-            this.ValidateAssembly(assembly3, createdAssembly3);
+                var assemblies = client.IntegrationAccountAssemblies.List(Constants.DefaultResourceGroup, integrationAccountName);
+
+                Assert.Equal(3, assemblies.Count());
+                this.ValidateAssembly(assembly1, createdAssembly1);
+                this.ValidateAssembly(assembly2, createdAssembly2);
+                this.ValidateAssembly(assembly3, createdAssembly3);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountAssemblies_Delete_OK()
         {
-            var assembly = this.CreateIntegrationAccountAssembly(this.assemblyName);
-            var createdAssembly = this.client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.assemblyName,
-                assembly);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.client.IntegrationAccountAssemblies.Delete(Constants.DefaultResourceGroup, this.integrationAccountName, this.assemblyName);
-            Assert.Throws<CloudException>(() => this.client.IntegrationAccountAssemblies.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.assemblyName));
+                var assemblyName = TestUtilities.GenerateName(Constants.IntegrationAccountAssemblyPrefix);
+                var assembly = this.CreateIntegrationAccountAssembly(assemblyName);
+                var createdAssembly = client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    assemblyName,
+                    assembly);
+
+                client.IntegrationAccountAssemblies.Delete(Constants.DefaultResourceGroup, integrationAccountName, assemblyName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountAssemblies.Get(Constants.DefaultResourceGroup, integrationAccountName, assemblyName));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountAssemblies_DeleteWhenDeleteIntegrationAccount_OK()
         {
-            var assembly = this.CreateIntegrationAccountAssembly(this.assemblyName);
-            var createdAssembly = this.client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.assemblyName,
-                assembly);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
-            Assert.Throws<CloudException>(() => this.client.IntegrationAccountAssemblies.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.assemblyName));
+                var assemblyName = TestUtilities.GenerateName(Constants.IntegrationAccountAssemblyPrefix);
+                var assembly = this.CreateIntegrationAccountAssembly(assemblyName);
+                var createdAssembly = client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    assemblyName,
+                    assembly);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountAssemblies.Get(Constants.DefaultResourceGroup, integrationAccountName, assemblyName));
+            }
         }
 
         [Fact]
         public void IntegrationAccountAssemblies_ListContentCallbackUrl_OK()
         {
-            var assembly = this.CreateIntegrationAccountAssembly(this.assemblyName);
-            var createdAssembly = this.client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.assemblyName,
-                assembly);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var contentCallbackUrl = this.client.IntegrationAccountAssemblies.ListContentCallbackUrl(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.assemblyName);
+                var assemblyName = TestUtilities.GenerateName(Constants.IntegrationAccountAssemblyPrefix);
+                var assembly = this.CreateIntegrationAccountAssembly(assemblyName);
+                var createdAssembly = client.IntegrationAccountAssemblies.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    assemblyName,
+                    assembly);
 
-            Assert.Equal("GET", contentCallbackUrl.Method);
-            Assert.Contains(this.assemblyName, contentCallbackUrl.Value);
+                var contentCallbackUrl = client.IntegrationAccountAssemblies.ListContentCallbackUrl(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    assemblyName);
+
+                Assert.Equal("GET", contentCallbackUrl.Method);
+                Assert.Contains(assemblyName, contentCallbackUrl.Value);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         #region Private

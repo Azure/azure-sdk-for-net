@@ -8,124 +8,158 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Xunit;
 
     [Collection("IntegrationAccountBatchConfigurationsScenarioTests")]
-    public class IntegrationAccountBatchConfigurationsScenarioTests : ScenarioTestsBase, IDisposable
+    public class IntegrationAccountBatchConfigurationsScenarioTests : ScenarioTestsBase
     {
-        private readonly MockContext context;
-        private readonly ILogicManagementClient client;
-        private readonly string integrationAccountName;
-        private readonly string batchConfigurationName;
-        private readonly IntegrationAccount integrationAccount;
-
-        public IntegrationAccountBatchConfigurationsScenarioTests()
-        {
-            this.context = MockContext.Start(className: this.TestClassName);
-            this.client = this.GetClient(this.context);
-
-            this.integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-            this.integrationAccount = this.client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.CreateIntegrationAccount(this.integrationAccountName));
-
-            this.batchConfigurationName = TestUtilities.GenerateName(Constants.IntegrationAccountBatchConfigurationPrefix);
-        }
-
-        public void Dispose()
-        {
-            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
-
-            this.client.Dispose();
-            this.context.Dispose();
-        }
-
         [Fact]
         public void IntegrationAccountBatchConfigurations_Create_OK()
         {
-            var batchConfiguration = this.CreateIntegrationAccountBatchConfiguration(this.batchConfigurationName);
-            var createdBatchConfiguration = this.client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.batchConfigurationName,
-                batchConfiguration);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.ValidateBatchConfiguration(batchConfiguration, createdBatchConfiguration);
+                var batchConfigurationName = TestUtilities.GenerateName(Constants.IntegrationAccountBatchConfigurationPrefix);
+                var batchConfiguration = this.CreateIntegrationAccountBatchConfiguration(batchConfigurationName);
+                var createdBatchConfiguration = client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    batchConfigurationName,
+                    batchConfiguration);
+
+                this.ValidateBatchConfiguration(batchConfiguration, createdBatchConfiguration);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountBatchConfigurations_Get_OK()
         {
-            var batchConfiguration = this.CreateIntegrationAccountBatchConfiguration(this.batchConfigurationName);
-            var createdBatchConfiguration = this.client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.batchConfigurationName,
-                batchConfiguration);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var retrievedBatchConfiguration = this.client.IntegrationAccountBatchConfigurations.Get(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.batchConfigurationName);
+                var batchConfigurationName = TestUtilities.GenerateName(Constants.IntegrationAccountBatchConfigurationPrefix);
+                var batchConfiguration = this.CreateIntegrationAccountBatchConfiguration(batchConfigurationName);
+                var createdBatchConfiguration = client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    batchConfigurationName,
+                    batchConfiguration);
 
-            this.ValidateBatchConfiguration(batchConfiguration, retrievedBatchConfiguration);
+                var retrievedBatchConfiguration = client.IntegrationAccountBatchConfigurations.Get(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    batchConfigurationName);
+
+                this.ValidateBatchConfiguration(batchConfiguration, retrievedBatchConfiguration);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountBatchConfigurations_List_OK()
         {
-            var batchConfiguration1 = this.CreateIntegrationAccountBatchConfiguration(this.batchConfigurationName);
-            var createdBatchConfiguration1 = this.client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.batchConfigurationName,
-                batchConfiguration1);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            var batchConfigurationName2 = TestUtilities.GenerateName(Constants.IntegrationAccountBatchConfigurationPrefix);
-            var batchConfiguration2 = this.CreateIntegrationAccountBatchConfiguration(batchConfigurationName2);
-            var createdBatchConfiguration2 = this.client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                batchConfigurationName2,
-                batchConfiguration2);
+                var batchConfigurationName1 = TestUtilities.GenerateName(Constants.IntegrationAccountBatchConfigurationPrefix);
+                var batchConfiguration1 = this.CreateIntegrationAccountBatchConfiguration(batchConfigurationName1);
+                var createdBatchConfiguration1 = client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    batchConfigurationName1,
+                    batchConfiguration1);
 
-            var batchConfigurationName3 = TestUtilities.GenerateName(Constants.IntegrationAccountBatchConfigurationPrefix);
-            var batchConfiguration3 = this.CreateIntegrationAccountBatchConfiguration(batchConfigurationName3);
-            var createdBatchConfiguration3 = this.client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                batchConfigurationName3,
-                batchConfiguration3);
+                var batchConfigurationName2 = TestUtilities.GenerateName(Constants.IntegrationAccountBatchConfigurationPrefix);
+                var batchConfiguration2 = this.CreateIntegrationAccountBatchConfiguration(batchConfigurationName2);
+                var createdBatchConfiguration2 = client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    batchConfigurationName2,
+                    batchConfiguration2);
 
-            var batchConfigurations = this.client.IntegrationAccountBatchConfigurations.List(Constants.DefaultResourceGroup, this.integrationAccountName);
+                var batchConfigurationName3 = TestUtilities.GenerateName(Constants.IntegrationAccountBatchConfigurationPrefix);
+                var batchConfiguration3 = this.CreateIntegrationAccountBatchConfiguration(batchConfigurationName3);
+                var createdBatchConfiguration3 = client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    batchConfigurationName3,
+                    batchConfiguration3);
 
-            Assert.Equal(3, batchConfigurations.Count());
-            this.ValidateBatchConfiguration(batchConfiguration1, createdBatchConfiguration1);
-            this.ValidateBatchConfiguration(batchConfiguration2, createdBatchConfiguration2);
-            this.ValidateBatchConfiguration(batchConfiguration3, createdBatchConfiguration3);
+                var batchConfigurations = client.IntegrationAccountBatchConfigurations.List(Constants.DefaultResourceGroup, integrationAccountName);
+
+                Assert.Equal(3, batchConfigurations.Count());
+                this.ValidateBatchConfiguration(batchConfiguration1, createdBatchConfiguration1);
+                this.ValidateBatchConfiguration(batchConfiguration2, createdBatchConfiguration2);
+                this.ValidateBatchConfiguration(batchConfiguration3, createdBatchConfiguration3);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountBatchConfigurations_Delete_OK()
         {
-            var batchConfiguration = this.CreateIntegrationAccountBatchConfiguration(this.batchConfigurationName);
-            var createdBatchConfiguration = this.client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.batchConfigurationName,
-                batchConfiguration);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.client.IntegrationAccountBatchConfigurations.Delete(Constants.DefaultResourceGroup, this.integrationAccountName, this.batchConfigurationName);
-            Assert.Throws<CloudException>(() => this.client.IntegrationAccountBatchConfigurations.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.batchConfigurationName));
+                var batchConfigurationName = TestUtilities.GenerateName(Constants.IntegrationAccountBatchConfigurationPrefix);
+                var batchConfiguration = this.CreateIntegrationAccountBatchConfiguration(batchConfigurationName);
+                var createdBatchConfiguration = client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    batchConfigurationName,
+                    batchConfiguration);
+
+                client.IntegrationAccountBatchConfigurations.Delete(Constants.DefaultResourceGroup, integrationAccountName, batchConfigurationName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountBatchConfigurations.Get(Constants.DefaultResourceGroup, integrationAccountName, batchConfigurationName));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
         }
 
         [Fact]
         public void IntegrationAccountBatchConfigurations_DeleteWhenDeleteIntegrationAccount_OK()
         {
-            var batchConfiguration = this.CreateIntegrationAccountBatchConfiguration(this.batchConfigurationName);
-            var createdBatchConfiguration = this.client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
-                this.integrationAccountName,
-                this.batchConfigurationName,
-                batchConfiguration);
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-            this.client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, this.integrationAccountName);
-            Assert.Throws<CloudException>(() => this.client.IntegrationAccountBatchConfigurations.Get(Constants.DefaultResourceGroup, this.integrationAccountName, this.batchConfigurationName));
+                var batchConfigurationName = TestUtilities.GenerateName(Constants.IntegrationAccountBatchConfigurationPrefix);
+                var batchConfiguration = this.CreateIntegrationAccountBatchConfiguration(batchConfigurationName);
+                var createdBatchConfiguration = client.IntegrationAccountBatchConfigurations.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    batchConfigurationName,
+                    batchConfiguration);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountBatchConfigurations.Get(Constants.DefaultResourceGroup, integrationAccountName, batchConfigurationName));
+            }
         }
 
         #region Private
