@@ -16,25 +16,25 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// The secrets related to a pod job.
+    /// The secrets related to a databox job.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Pod")]
-    public partial class PodJobSecrets : JobSecrets
+    [Newtonsoft.Json.JsonObject("DataBox")]
+    public partial class DataboxJobSecrets : JobSecrets
     {
         /// <summary>
-        /// Initializes a new instance of the PodJobSecrets class.
+        /// Initializes a new instance of the DataboxJobSecrets class.
         /// </summary>
-        public PodJobSecrets()
+        public DataboxJobSecrets()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PodJobSecrets class.
+        /// Initializes a new instance of the DataboxJobSecrets class.
         /// </summary>
         /// <param name="podSecrets">Contains the list of secret objects for a
         /// job.</param>
-        public PodJobSecrets(IList<PodSecret> podSecrets = default(IList<PodSecret>))
+        public DataboxJobSecrets(IList<DataBoxSecret> podSecrets = default(IList<DataBoxSecret>))
         {
             PodSecrets = podSecrets;
             CustomInit();
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Gets or sets contains the list of secret objects for a job.
         /// </summary>
         [JsonProperty(PropertyName = "podSecrets")]
-        public IList<PodSecret> PodSecrets { get; set; }
+        public IList<DataBoxSecret> PodSecrets { get; set; }
 
     }
 }

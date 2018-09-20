@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -34,7 +33,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// identify the error.</param>
         /// <param name="message">Describes the error in detail and provides
         /// debugging information.</param>
-        public Error(string code, string message = default(string))
+        public Error(string code = default(string), string message = default(string))
         {
             Code = code;
             Message = message;
@@ -47,31 +46,18 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error code that can be used to programmatically
-        /// identify the error.
+        /// Gets error code that can be used to programmatically identify the
+        /// error.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        public string Code { get; private set; }
 
         /// <summary>
-        /// Gets or sets describes the error in detail and provides debugging
+        /// Gets describes the error in detail and provides debugging
         /// information.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Code == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Code");
-            }
-        }
     }
 }

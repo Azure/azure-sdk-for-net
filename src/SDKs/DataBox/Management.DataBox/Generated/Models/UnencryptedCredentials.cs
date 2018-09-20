@@ -14,27 +14,27 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Capacity of the sku.
+    /// Unencrypted credentials for accessing device.
     /// </summary>
-    public partial class SkuCapacity
+    public partial class UnencryptedCredentials
     {
         /// <summary>
-        /// Initializes a new instance of the SkuCapacity class.
+        /// Initializes a new instance of the UnencryptedCredentials class.
         /// </summary>
-        public SkuCapacity()
+        public UnencryptedCredentials()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SkuCapacity class.
+        /// Initializes a new instance of the UnencryptedCredentials class.
         /// </summary>
-        /// <param name="usable">Usable capacity in TB.</param>
-        /// <param name="maximum">Maximum capacity in TB.</param>
-        public SkuCapacity(string usable = default(string), string maximum = default(string))
+        /// <param name="jobName">Name of the job.</param>
+        /// <param name="jobSecrets">Secrets related to this job.</param>
+        public UnencryptedCredentials(string jobName = default(string), JobSecrets jobSecrets = default(JobSecrets))
         {
-            Usable = usable;
-            Maximum = maximum;
+            JobName = jobName;
+            JobSecrets = jobSecrets;
             CustomInit();
         }
 
@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets usable capacity in TB.
+        /// Gets name of the job.
         /// </summary>
-        [JsonProperty(PropertyName = "usable")]
-        public string Usable { get; private set; }
+        [JsonProperty(PropertyName = "jobName")]
+        public string JobName { get; private set; }
 
         /// <summary>
-        /// Gets maximum capacity in TB.
+        /// Gets secrets related to this job.
         /// </summary>
-        [JsonProperty(PropertyName = "maximum")]
-        public string Maximum { get; private set; }
+        [JsonProperty(PropertyName = "jobSecrets")]
+        public JobSecrets JobSecrets { get; private set; }
 
     }
 }

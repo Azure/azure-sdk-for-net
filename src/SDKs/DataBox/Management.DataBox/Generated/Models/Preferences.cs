@@ -16,27 +16,24 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// The secrets related to disk job.
+    /// Preferences related to the order
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Disk")]
-    public partial class DiskJobSecrets : JobSecrets
+    public partial class Preferences
     {
         /// <summary>
-        /// Initializes a new instance of the DiskJobSecrets class.
+        /// Initializes a new instance of the Preferences class.
         /// </summary>
-        public DiskJobSecrets()
+        public Preferences()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DiskJobSecrets class.
+        /// Initializes a new instance of the Preferences class.
         /// </summary>
-        /// <param name="diskSecrets">Contains the list of secrets object for
-        /// that device.</param>
-        public DiskJobSecrets(IList<DiskSecret> diskSecrets = default(IList<DiskSecret>))
+        public Preferences(IList<string> preferredDataCenterRegion = default(IList<string>))
         {
-            DiskSecrets = diskSecrets;
+            PreferredDataCenterRegion = preferredDataCenterRegion;
             CustomInit();
         }
 
@@ -46,10 +43,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets contains the list of secrets object for that device.
         /// </summary>
-        [JsonProperty(PropertyName = "diskSecrets")]
-        public IList<DiskSecret> DiskSecrets { get; set; }
+        [JsonProperty(PropertyName = "preferredDataCenterRegion")]
+        public IList<string> PreferredDataCenterRegion { get; set; }
 
     }
 }
