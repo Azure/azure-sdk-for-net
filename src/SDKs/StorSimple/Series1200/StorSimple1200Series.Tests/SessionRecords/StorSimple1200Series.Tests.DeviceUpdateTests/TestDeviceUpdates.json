@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/0.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/0.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"activationTime\": \"2018-08-02T04:13:20.7807788Z\",\r\n        \"allowedDeviceOperations\": [\r\n          \"Delete\",\r\n          \"DRTarget\",\r\n          \"Browsable\"\r\n        ],\r\n        \"culture\": \"en-US\",\r\n        \"deviceCapabilities\": [\r\n          \"FileServer\"\r\n        ],\r\n        \"domainName\": \"fareast.corp.microsoft.com\",\r\n        \"deviceSoftwareVersion\": \"10.0.10296.0\",\r\n        \"deviceConfigurationStatus\": \"Pending\",\r\n        \"modelDescription\": \"1200\",\r\n        \"status\": \"ReadyToSetup\",\r\n        \"type\": \"Series9000OnPremVirtualAppliance\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hManagerForSDKTest4/devices/HBVT-02X525X2W0\",\r\n      \"name\": \"HBVT-02X525X2W0\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"activationTime\": \"2018-08-01T09:50:53.0579135Z\",\r\n        \"allowedDeviceOperations\": [\r\n          \"Deactivate\",\r\n          \"Browsable\"\r\n        ],\r\n        \"culture\": \"en-US\",\r\n        \"deviceCapabilities\": [\r\n          \"IscsiServer\"\r\n        ],\r\n        \"domainName\": \"\",\r\n        \"deviceSoftwareVersion\": \"10.0.10296.0\",\r\n        \"deviceConfigurationStatus\": \"Complete\",\r\n        \"modelDescription\": \"1200\",\r\n        \"status\": \"Offline\",\r\n        \"type\": \"Series9000OnPremVirtualAppliance\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hManagerForSDKTest4/devices/is2-hlmdhdgu1et\",\r\n      \"name\": \"is2-hlmdhdgu1et\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"activationTime\": \"2018-08-01T09:53:10.7596923Z\",\r\n        \"allowedDeviceOperations\": [\r\n          \"Deactivate\",\r\n          \"Browsable\"\r\n        ],\r\n        \"culture\": \"en-US\",\r\n        \"deviceCapabilities\": [\r\n          \"FileServer\"\r\n        ],\r\n        \"domainName\": \"fareast.corp.microsoft.com\",\r\n        \"deviceSoftwareVersion\": \"10.0.10296.0\",\r\n        \"deviceConfigurationStatus\": \"Complete\",\r\n        \"modelDescription\": \"1200\",\r\n        \"status\": \"Online\",\r\n        \"type\": \"Series9000OnPremVirtualAppliance\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hManagerForSDKTest4/devices/FS2-FVABBUENBSU\",\r\n      \"name\": \"FS2-FVABBUENBSU\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices\"\r\n    }\r\n  ]\r\n}",
@@ -85,7 +85,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/0.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/0.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -147,7 +147,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/0.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/0.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -200,7 +200,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/0.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/0.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -259,7 +259,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/0.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/0.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"deviceVersion\": \"10.0.10296.0\",\r\n    \"deviceLastScannedTime\": \"2018-08-02T05:46:21.6812618Z\",\r\n    \"regularUpdatesAvailable\": false,\r\n    \"rebootRequiredForInstall\": false,\r\n    \"totalItemsPendingForDownload\": 0,\r\n    \"totalItemsPendingForInstall\": 0,\r\n    \"status\": \"Idle\",\r\n    \"lastCompletedScanTime\": \"2018-08-02T05:46:22.3687602Z\",\r\n    \"inProgressDownloadJobId\": \"\",\r\n    \"inProgressInstallJobId\": \"\"\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hManagerForSDKTest4/devices/HBVT-02X525X2W0/updateSummary/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.StorSimple/managers/devices/updateSummary\"\r\n}",

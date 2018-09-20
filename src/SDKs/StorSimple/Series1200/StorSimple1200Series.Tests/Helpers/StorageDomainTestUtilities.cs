@@ -24,7 +24,6 @@ namespace StorSimple1200Series.Tests
             var storageAccountCredentialIds = string.IsNullOrEmpty(sacId) ? null : new List<string>() { sacId };
 
             // StorageDomain instance
-            storageDomain.Name = TestConstants.DefaultStorageDomainForSDKTestName;
             storageDomain.StorageAccountCredentialIds = storageAccountCredentialIds;
             storageDomain.EncryptionStatus = EncryptionStatus.Disabled;
             storageDomain.EncryptionKey = null; ;
@@ -71,7 +70,7 @@ namespace StorSimple1200Series.Tests
         public static StorageDomain GetStorageDomain(
             string name,
             string sacId,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {
@@ -92,9 +91,9 @@ namespace StorSimple1200Series.Tests
                 var sdNew = new StorageDomain(
                     client, 
                     resourceGroupName, 
-                    managerName);
+                    managerName,
+                    name);
                 sdNew.Initialize(sacId);
-                sdNew.Name = name;
                 storageDomain = sdNew.CreateOrUpdate();
             }
 
@@ -112,7 +111,7 @@ namespace StorSimple1200Series.Tests
         /// <returns></returns>
         public static StorageDomain GetStorageDomainById(
             string storageDomainId,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {
@@ -145,7 +144,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="managerName"></param>
         public static void DeleteStorageDomain(
             string name,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {

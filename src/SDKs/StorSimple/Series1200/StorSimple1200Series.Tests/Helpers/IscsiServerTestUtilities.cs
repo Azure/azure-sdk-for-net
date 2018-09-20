@@ -21,16 +21,13 @@ namespace StorSimple1200Series.Tests
         /// Initlaizes a given iscsi server instance
         /// </summary>
         /// <param name="iscsiServer"></param>
-        /// <param name="iscsiServerName"></param>
         /// <param name="storageDomainId"></param>
         /// <param name="backupSchGroupId"></param>
         public static void Initialize(
             this ISCSIServer iscsiServer,
-            string iscsiServerName,
             string storageDomainId,
             string backupSchGroupId)
         {
-            iscsiServer.Name = iscsiServerName;
             iscsiServer.StorageDomainId = storageDomainId;
             iscsiServer.BackupScheduleGroupId = backupSchGroupId;
             iscsiServer.Description = "Demo ISCSIServer for SDK Test";
@@ -38,14 +35,14 @@ namespace StorSimple1200Series.Tests
             iscsiServer.ReverseChapId = "";
 
             var chaps = iscsiServer.Client.ChapSettings.ListByDevice(
-                iscsiServerName,
+                iscsiServer.Name,
                 iscsiServer.ResourceGroupName,
                 iscsiServer.ManagerName);
 
-            if (chaps != null && chaps.Value.Any())
+            if (chaps != null && chaps.Any())
             {
-                iscsiServer.ChapId = chaps.Value.First().Id;
-                iscsiServer.ReverseChapId = chaps.Value.First().Id;
+                iscsiServer.ChapId = chaps.First().Id;
+                iscsiServer.ReverseChapId = chaps.First().Id;
             }
         }
 
@@ -90,7 +87,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="iscsiServerName"></param>
         /// <returns></returns>
         public static ISCSIServer GetIsciServer(
-                StorSimple1200SeriesManagementClient client,
+                StorSimpleManagementClient client,
                 string resourceGroupName,
                 string managerName,
                 string deviceName,
@@ -160,7 +157,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="managerName"></param>
         /// <returns></returns>
         public static IEnumerable<ISCSIServer> GetIscsiServers(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {
@@ -199,7 +196,8 @@ namespace StorSimple1200Series.Tests
                 var iscsiDisktoCreate = new ISCSIDisk(
                     iscsiServer.Client,
                     iscsiServer.ResourceGroupName,
-                    iscsiServer.ManagerName);
+                    iscsiServer.ManagerName,
+                    TestConstants.DefaultTieredIscsiDiskName);
                 iscsiDisktoCreate.Initialize(DataPolicy.Tiered);
 
                 var iscsiDisk = iscsiDisktoCreate.CreateOrUpdate(
@@ -234,7 +232,7 @@ namespace StorSimple1200Series.Tests
         /// <returns></returns>
         public static Device GetDeviceByIscsiServer(
             string iscsiServerName,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {
@@ -294,7 +292,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="deviceName"></param>
         /// <param name="iscsiServerName"></param>
         public static void DeleteAndValidateIscsiServer(
-                StorSimple1200SeriesManagementClient client,
+                StorSimpleManagementClient client,
                 string resourceGroupName,
                 string managerName,
                 string deviceName,

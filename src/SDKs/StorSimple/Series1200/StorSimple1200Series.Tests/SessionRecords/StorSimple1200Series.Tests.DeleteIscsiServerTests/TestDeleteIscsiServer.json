@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"storageDomainId\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/storageDomains/sd-isci-HSDK-0NZI14MDTF\",\r\n        \"backupScheduleGroupId\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-UGU4PITWNI/backupScheduleGroups/BackupSchGroupForSDKTest\",\r\n        \"chapId\": \"\",\r\n        \"reverseChapId\": \"\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-UGU4PITWNI/iscsiServers/HSDK-UGU4PITWNI\",\r\n      \"name\": \"HSDK-UGU4PITWNI\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/iscsiServers\"\r\n    }\r\n  ]\r\n}",
@@ -85,7 +85,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -156,7 +156,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"storageAccountCredentialIds\": [\r\n          \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/storageAccountCredentials/sacforsdktest\"\r\n        ],\r\n        \"encryptionStatus\": \"Disabled\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/storageDomains/sd-fs-HSDK-T4ZA3EAJFR\",\r\n      \"name\": \"sd-fs-HSDK-T4ZA3EAJFR\",\r\n      \"type\": \"Microsoft.StorSimple/managers/storageDomains\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"storageAccountCredentialIds\": [\r\n          \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/storageAccountCredentials/sacforsdktest\"\r\n        ],\r\n        \"encryptionStatus\": \"Disabled\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/storageDomains/sd-isci-HSDK-0NZI14MDTF\",\r\n      \"name\": \"sd-isci-HSDK-0NZI14MDTF\",\r\n      \"type\": \"Microsoft.StorSimple/managers/storageDomains\"\r\n    }\r\n  ]\r\n}",
@@ -227,7 +227,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"storageAccountCredentialIds\": [\r\n          \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/storageAccountCredentials/sacforsdktest\"\r\n        ],\r\n        \"encryptionStatus\": \"Disabled\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/storageDomains/sd-fs-HSDK-T4ZA3EAJFR\",\r\n      \"name\": \"sd-fs-HSDK-T4ZA3EAJFR\",\r\n      \"type\": \"Microsoft.StorSimple/managers/storageDomains\"\r\n    }\r\n  ]\r\n}",
@@ -298,7 +298,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"startTime\": {\r\n          \"hour\": 23,\r\n          \"minute\": 0\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-UGU4PITWNI/backupScheduleGroups/BackupSchGroupForSDKTest\",\r\n      \"name\": \"BackupSchGroupForSDKTest\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/backupScheduleGroups\"\r\n    }\r\n  ]\r\n}",
@@ -369,7 +369,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"storageDomainId\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/storageDomains/sd-isci-HSDK-0NZI14MDTF\",\r\n    \"backupScheduleGroupId\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-UGU4PITWNI/backupScheduleGroups/BackupSchGroupForSDKTest\",\r\n    \"chapId\": \"\",\r\n    \"reverseChapId\": \"\"\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-UGU4PITWNI/iscsiServers/HSDK-UGU4PITWNI\",\r\n  \"name\": \"HSDK-UGU4PITWNI\",\r\n  \"type\": \"Microsoft.StorSimple/managers/devices/iscsiServers\"\r\n}",
@@ -440,7 +440,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -502,7 +502,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -555,7 +555,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -614,7 +614,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -685,7 +685,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"storageAccountCredentialIds\": [\r\n      \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/storageAccountCredentials/sacforsdktest\"\r\n    ],\r\n    \"encryptionStatus\": \"Disabled\"\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/storageDomains/sd-isci-HSDK-0NZI14MDTF\",\r\n  \"name\": \"sd-isci-HSDK-0NZI14MDTF\",\r\n  \"type\": \"Microsoft.StorSimple/managers/storageDomains\"\r\n}",
@@ -756,7 +756,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -818,7 +818,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -871,7 +871,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -930,7 +930,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"startTime\": {\r\n      \"hour\": 23,\r\n      \"minute\": 0\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-UGU4PITWNI/backupScheduleGroups/BackupSchGroupForSDKTest\",\r\n  \"name\": \"BackupSchGroupForSDKTest\",\r\n  \"type\": \"Microsoft.StorSimple/managers/devices/backupScheduleGroups\"\r\n}",
@@ -1001,7 +1001,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -1063,7 +1063,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -1116,7 +1116,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",

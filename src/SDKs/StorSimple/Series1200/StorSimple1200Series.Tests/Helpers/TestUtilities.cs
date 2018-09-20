@@ -27,7 +27,7 @@ namespace StorSimple1200Series.Tests
 
         private static void SetBaseResourceValues(
             this BaseModel baseModel, 
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName, 
             string managerName)
         {

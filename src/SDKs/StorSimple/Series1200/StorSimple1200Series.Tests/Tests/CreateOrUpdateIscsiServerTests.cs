@@ -66,8 +66,9 @@
                 var iscsiServer = new ISCSIServer(
                     this.Client,
                     this.ResourceGroupName,
-                    this.ManagerName);
-                iscsiServer.Initialize(device.Name, storageDomain.Id, bsg.Id);
+                    this.ManagerName,
+                    device.Name);
+                iscsiServer.Initialize(storageDomain.Id, bsg.Id);
                 var iscsiServerCreated = iscsiServer.CreateOrUpdate(device.Name);
 
                 iscsiServerCreated.Description = "Updated desc of the iscsiServer";
@@ -99,7 +100,8 @@
             var chapSettings = new ChapSettings(
                 this.Client,
                 this.ResourceGroupName,
-                this.ManagerName);
+                this.ManagerName,
+                TestConstants.DefaultChapSettingName);
 
             chapSettings.Initialize();
             var chapSettingsCreated = chapSettings.CreateOrUpdate(iscsiServer.Name);
@@ -150,10 +152,10 @@
             var chapSettings = new ChapSettings(
                 this.Client,
                 this.ResourceGroupName,
-                this.ManagerName);
+                this.ManagerName,
+                TestConstants.DefaultChapSettingNameForDelete);
 
             chapSettings.Initialize();
-            chapSettings.Name = TestConstants.DefaultChapSettingNameForDelete;
             var chapSettingsCreated = chapSettings.CreateOrUpdate(iscsiServer.Name);
 
             var chapSettingsGet = TestUtilities.GetChapSettings(

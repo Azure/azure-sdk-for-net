@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"domainName\": \"fareast.corp.microsoft.com\",\r\n        \"storageDomainId\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/storageDomains/sd-fs-HSDK-4XY4FI2IVG\",\r\n        \"backupScheduleGroupId\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0/backupScheduleGroups/BackupSchGroupForSDKTest\",\r\n        \"description\": \"Update description of fileserver\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0/fileServers/HSDK-DMNJB2PET0\",\r\n      \"name\": \"HSDK-DMNJB2PET0\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/fileServers\"\r\n    }\r\n  ]\r\n}",
@@ -85,7 +85,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"description\": \"Demo FileShare for SDK Test Local\",\r\n        \"shareStatus\": \"Online\",\r\n        \"dataPolicy\": \"Local\",\r\n        \"adminUser\": \"fareast\\\\idcdlslb\",\r\n        \"provisionedCapacityInBytes\": 536870912000,\r\n        \"usedCapacityInBytes\": 222298112,\r\n        \"localUsedCapacityInBytes\": 222298112,\r\n        \"monitoringStatus\": \"Enabled\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0/fileServers/HSDK-DMNJB2PET0/shares/Auto-TestFileShare2\",\r\n      \"name\": \"Auto-TestFileShare2\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/fileServers/shares\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"description\": \"Restore file Share\",\r\n        \"shareStatus\": \"Online\",\r\n        \"dataPolicy\": \"Tiered\",\r\n        \"adminUser\": \"HSDK-DMNJB2PET0\\\\StorSimpleAdmin\",\r\n        \"provisionedCapacityInBytes\": 536870912000,\r\n        \"usedCapacityInBytes\": 174063616,\r\n        \"localUsedCapacityInBytes\": 174063616,\r\n        \"monitoringStatus\": \"Enabled\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0/fileServers/HSDK-DMNJB2PET0/shares/ClonedTieredFileShareForSDKTest\",\r\n      \"name\": \"ClonedTieredFileShareForSDKTest\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/fileServers/shares\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"description\": \"Updated: Demo FileShare for SDK Test Tiered\",\r\n        \"shareStatus\": \"Offline\",\r\n        \"dataPolicy\": \"Tiered\",\r\n        \"adminUser\": \"fareast\\\\idcdlslb\",\r\n        \"provisionedCapacityInBytes\": 536870912000,\r\n        \"usedCapacityInBytes\": 174063616,\r\n        \"localUsedCapacityInBytes\": 174063616,\r\n        \"monitoringStatus\": \"Enabled\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0/fileServers/HSDK-DMNJB2PET0/shares/Auto-TestFileShare1\",\r\n      \"name\": \"Auto-TestFileShare1\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/fileServers/shares\"\r\n    }\r\n  ]\r\n}",
@@ -156,7 +156,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"description\": \"Demo FileShare for SDK Test Local\",\r\n    \"shareStatus\": \"Online\",\r\n    \"dataPolicy\": \"Local\",\r\n    \"adminUser\": \"fareast\\\\idcdlslb\",\r\n    \"provisionedCapacityInBytes\": 536870912000,\r\n    \"usedCapacityInBytes\": 222298112,\r\n    \"localUsedCapacityInBytes\": 222298112,\r\n    \"monitoringStatus\": \"Enabled\"\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0/fileServers/HSDK-DMNJB2PET0/shares/Auto-TestFileShare2\",\r\n  \"name\": \"Auto-TestFileShare2\",\r\n  \"type\": \"Microsoft.StorSimple/managers/devices/fileServers/shares\"\r\n}",
@@ -227,7 +227,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -289,7 +289,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -342,7 +342,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -401,7 +401,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"description\": \"Restore file Share\",\r\n        \"shareStatus\": \"Online\",\r\n        \"dataPolicy\": \"Tiered\",\r\n        \"adminUser\": \"HSDK-DMNJB2PET0\\\\StorSimpleAdmin\",\r\n        \"provisionedCapacityInBytes\": 536870912000,\r\n        \"usedCapacityInBytes\": 174063616,\r\n        \"localUsedCapacityInBytes\": 174063616,\r\n        \"monitoringStatus\": \"Enabled\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0/fileServers/HSDK-DMNJB2PET0/shares/ClonedTieredFileShareForSDKTest\",\r\n      \"name\": \"ClonedTieredFileShareForSDKTest\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/fileServers/shares\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"description\": \"Updated: Demo FileShare for SDK Test Tiered\",\r\n        \"shareStatus\": \"Offline\",\r\n        \"dataPolicy\": \"Tiered\",\r\n        \"adminUser\": \"fareast\\\\idcdlslb\",\r\n        \"provisionedCapacityInBytes\": 536870912000,\r\n        \"usedCapacityInBytes\": 174063616,\r\n        \"localUsedCapacityInBytes\": 174063616,\r\n        \"monitoringStatus\": \"Enabled\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0/fileServers/HSDK-DMNJB2PET0/shares/Auto-TestFileShare1\",\r\n      \"name\": \"Auto-TestFileShare1\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/fileServers/shares\"\r\n    }\r\n  ]\r\n}",
@@ -472,7 +472,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"description\": \"Updated: Demo FileShare for SDK Test Tiered\",\r\n        \"shareStatus\": \"Offline\",\r\n        \"dataPolicy\": \"Tiered\",\r\n        \"adminUser\": \"fareast\\\\idcdlslb\",\r\n        \"provisionedCapacityInBytes\": 536870912000,\r\n        \"usedCapacityInBytes\": 174063616,\r\n        \"localUsedCapacityInBytes\": 174063616,\r\n        \"monitoringStatus\": \"Enabled\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0/fileServers/HSDK-DMNJB2PET0/shares/Auto-TestFileShare1\",\r\n      \"name\": \"Auto-TestFileShare1\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/fileServers/shares\"\r\n    }\r\n  ]\r\n}",
@@ -543,7 +543,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -614,7 +614,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"description\": \"Restore file Share\",\r\n    \"shareStatus\": \"Online\",\r\n    \"dataPolicy\": \"Tiered\",\r\n    \"adminUser\": \"HSDK-DMNJB2PET0\\\\StorSimpleAdmin\",\r\n    \"provisionedCapacityInBytes\": 536870912000,\r\n    \"usedCapacityInBytes\": 174063616,\r\n    \"localUsedCapacityInBytes\": 174063616,\r\n    \"monitoringStatus\": \"Enabled\"\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0/fileServers/HSDK-DMNJB2PET0/shares/ClonedTieredFileShareForSDKTest\",\r\n  \"name\": \"ClonedTieredFileShareForSDKTest\",\r\n  \"type\": \"Microsoft.StorSimple/managers/devices/fileServers/shares\"\r\n}",
@@ -685,7 +685,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -747,7 +747,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -800,7 +800,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -859,7 +859,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"description\": \"Updated: Demo FileShare for SDK Test Tiered\",\r\n    \"shareStatus\": \"Offline\",\r\n    \"dataPolicy\": \"Tiered\",\r\n    \"adminUser\": \"fareast\\\\idcdlslb\",\r\n    \"provisionedCapacityInBytes\": 536870912000,\r\n    \"usedCapacityInBytes\": 174063616,\r\n    \"localUsedCapacityInBytes\": 174063616,\r\n    \"monitoringStatus\": \"Enabled\"\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0/fileServers/HSDK-DMNJB2PET0/shares/Auto-TestFileShare1\",\r\n  \"name\": \"Auto-TestFileShare1\",\r\n  \"type\": \"Microsoft.StorSimple/managers/devices/fileServers/shares\"\r\n}",
@@ -930,7 +930,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -992,7 +992,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -1045,7 +1045,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",

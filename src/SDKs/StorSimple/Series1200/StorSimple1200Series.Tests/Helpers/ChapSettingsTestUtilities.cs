@@ -19,7 +19,6 @@ namespace StorSimple1200Series.Tests
         public static void Initialize(
             this ChapSettings chapSettings)
         {
-            chapSettings.Name = TestConstants.DefaultChapSettingName;
             chapSettings.Password = chapSettings.Client.Managers.GetAsymmetricEncryptedSecret(
                     chapSettings.ResourceGroupName,
                     chapSettings.ManagerName,
@@ -63,7 +62,7 @@ namespace StorSimple1200Series.Tests
         public static ChapSettings GetChapSettings(
             string chapUserName,
             string deviceName,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {
@@ -92,7 +91,7 @@ namespace StorSimple1200Series.Tests
                 iscsiServer.ResourceGroupName,
                 iscsiServer.ManagerName);
 
-            return chapSettings.Value;
+            return chapSettings;
         }
 
         /// <summary>
@@ -106,7 +105,7 @@ namespace StorSimple1200Series.Tests
         public static void DeleteChapSettings(
             string chapUserName,
             string deviceName,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {

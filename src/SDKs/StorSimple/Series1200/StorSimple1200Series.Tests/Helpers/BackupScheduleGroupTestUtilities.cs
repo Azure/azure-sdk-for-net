@@ -23,7 +23,6 @@ namespace StorSimple1200Series.Tests
             // Create BackupScheduleGroup
             var currentDateTime = DateTime.Now.AddMinutes(100);
             var startTime = new Time(currentDateTime.Hour, currentDateTime.Minute);
-            backupScheduleGroup.Name = TestConstants.DefaultBackupSchGroupName;
             backupScheduleGroup.StartTime = startTime;
         }
 
@@ -65,7 +64,7 @@ namespace StorSimple1200Series.Tests
         public static BackupScheduleGroup GetBackupScheduleGroup(
             string deviceName,
             string name,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {
@@ -88,9 +87,9 @@ namespace StorSimple1200Series.Tests
                 var bsgNew = new BackupScheduleGroup(
                     client,
                     resourceGroupName,
-                    managerName);
+                    managerName,
+                    name);
                 bsgNew.Initialize();
-                bsgNew.Name = name;
                 bsg = bsgNew.CreateOrUpdate(deviceName);
             }
 
@@ -110,7 +109,7 @@ namespace StorSimple1200Series.Tests
         public static BackupScheduleGroup GetBackupScheduleGroupById(
             string id,
             string deviceName,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {
@@ -146,7 +145,7 @@ namespace StorSimple1200Series.Tests
         public static void DeleteBackupScheduleGroup(
             string name,
             string deviceName,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {

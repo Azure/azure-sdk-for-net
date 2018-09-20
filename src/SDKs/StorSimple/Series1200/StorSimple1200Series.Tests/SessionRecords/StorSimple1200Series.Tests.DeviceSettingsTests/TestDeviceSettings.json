@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"activationTime\": \"2018-08-07T16:08:22.7737816Z\",\r\n        \"allowedDeviceOperations\": [\r\n          \"Delete\",\r\n          \"DRTarget\",\r\n          \"Browsable\"\r\n        ],\r\n        \"culture\": \"en-US\",\r\n        \"deviceCapabilities\": [\r\n          \"FileServer\"\r\n        ],\r\n        \"domainName\": \"fareast.corp.microsoft.com\",\r\n        \"deviceSoftwareVersion\": \"10.0.10296.0\",\r\n        \"deviceConfigurationStatus\": \"Pending\",\r\n        \"modelDescription\": \"1200\",\r\n        \"status\": \"ReadyToSetup\",\r\n        \"type\": \"Series9000OnPremVirtualAppliance\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-T4ZA3EAJFR\",\r\n      \"name\": \"HSDK-T4ZA3EAJFR\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices\"\r\n    }\r\n  ]\r\n}",
@@ -85,7 +85,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"timeZone\": \"(UTC) Coordinated Universal Time\",\r\n    \"primaryTimeServer\": \"time.windows.com\"\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-T4ZA3EAJFR/timeSettings/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.StorSimple/managers/devices/timeSettings\"\r\n}",
@@ -162,7 +162,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -224,7 +224,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -286,7 +286,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"emailNotification\": \"Enabled\",\r\n    \"notificationToServiceOwners\": \"Disabled\",\r\n    \"alertNotificationCulture\": \"en-US\",\r\n    \"additionalRecipientEmailList\": [\r\n      \"testuser@abc.com\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-T4ZA3EAJFR/alertSettings/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.StorSimple/managers/devices/alertSettings\"\r\n}",
@@ -357,7 +357,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"emailNotification\": \"Enabled\",\r\n    \"notificationToServiceOwners\": \"Disabled\",\r\n    \"alertNotificationCulture\": \"en-US\",\r\n    \"additionalRecipientEmailList\": [\r\n      \"testuser@abc.com\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-T4ZA3EAJFR/alertSettings/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.StorSimple/managers/devices/alertSettings\"\r\n}",
@@ -428,7 +428,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"primaryDNSServer\": \"10.50.50.50\",\r\n    \"secondaryDNSServer\": \"10.50.10.50\",\r\n    \"nodeNetworks\": [\r\n      {\r\n        \"networkAdapters\": [\r\n          {\r\n            \"networkAdapterName\": \"Ethernet\",\r\n            \"iPv4Info\": {\r\n              \"ipAddress\": \"10.60.145.5\",\r\n              \"prefixLength\": 26,\r\n              \"gateway\": \"10.60.145.1\"\r\n            },\r\n            \"dhcpStatus\": \"Enabled\",\r\n            \"linkSpeed\": 868993459200\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-T4ZA3EAJFR/networkSettings/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.StorSimple/managers/devices/networkSettings\"\r\n}",
@@ -499,7 +499,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"encryptionStatus\": \"Enabled\",\r\n    \"keyRolloverStatus\": \"NotRequired\"\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/encryptionSettings/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.StorSimple/managers/encryptionSettings\"\r\n}",
@@ -570,7 +570,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": \"EAAAAEVOuLjZQYRnJxD6RjOyBWGYfyw8wqXci5WHh8QfS98ouU65SFHHVWs2MdD2KeND3ZFM989gwfMaOVwiSmdMvi30/VnoNZIu7rhGG6SKVhUSHfOSZyb2eUufvwPXNUKa/mhVPJ4SH1uHUHvG1bjWaFZ2ojo1ff7e0xQlifYWZQdSi6ScxzjI41EdIT7Hspp+xtU2y+8Q5ALDgASRdVHdHYRmSF1/uyDXoAU8spTLrm/Ug8X0cadt1w+pAX0fnx3PPyfsNRVsbWofLtm1CirKv2euA8TamgFz82/xI4vT1m2RopLFc2W6sXGeSESWK2fUlV6WLjTqPwGXSJ7ZQ5/QcIP08QC1Z3K7muemFtSx+sr8/kjQIufxjD/A7cTN77bpTBCU7l1GxmdPFMlZxsVrU23SXAdu4JWcw6KrdSlxjig6GBHCHqCtaocjpD46GkRiGye80JudJqroWz0F14X9eOa48He3K/HLZnRdmaNKHClzApW3hCZwiI1r0NhHi9mLn3Laiy920L+kLRDghRsps9gMpYbQFYNNnQMAnCdWQ36TUbQWqqqcLVpgxaKvzbsXpYzL6ntlztmIp9RZ+i2r9ZoGGg4kIkiUNhpSVZ8k05H49zc1fJKapVER1MbEKApVBiC9ck+TbNMjkzOHY39QBJK35EYz2qfkGPTIDrnpdK4GiBXEDnq9ERx0CHVz8qLIRn538pZp8jktHft5WvOWk0Zw31+lSPnLCX1qBfnqT6ulH08VozwJqidcb2fOfMJ8BRgYupP47RGUa6gdRMMUmS3KgDetX0qXaqO4krCQYsiA3PeQwuZWVGA3eeALUQsizDFS1+esWVP/z9HgJclv4ydHjrMTf+GyWVozGJui9zqMz3B2otWZmWcyWAe4iE9a2w7P1MLgGvSShhQSU7S54mR4QF7WOArpaYUqe4VoZdLaTHS9bVDBrjPbFrrjfQlYNt8CPN2KmpeGsdicNlCeq5JCG9Ys7rpjr1QM49V0yV6sfOgE8rYldebwtJGwDnuq09LrGAIfuzVQ59AjW6YScPBSNeCnsyk4bC1I1zDKdEhCHspR8/3w++dAMH3wZ6fCEbOLgTy06lHVPyKyINVcDY/TLbSz04v9gFySujzSrt1qCrL5aK4eGxsANlVVwxXIGlTcyH5MYlrnNCIToIrdfIqmkjTea9WJ4buaz3DAnDsA+4ai+3vYMwJakE2mRxW5YIQHNEgoaY460a5HRCmnjDvpAmQ6ICB7uR/JunfQ2Jc3PI889dY8YOfy8YWHqzbXMUN7eRWRTp6A1W6J2CFtKLflDu0t+ZGX4Pa27zK4pN6ml410hoYGjet3+O7bxL/z3aR9cOgmV6kMhboOhvMaj8V43zSiq9ONhZgDZmVzhwP4oaKP/O1uhWqwbhGVOeAk8hCHTiD3FUXlrJVm3IgUSn8lL5R82cwyol578BKernVBP5PT4vwyF1aWPaOyxx+kITBcALBmlQv3JanW5j9FkFP0gC5oy7KitEXYac132oe7HiOQ7t1TJCoem5kxK3bYLg==\",\r\n  \"valueCertificateThumbprint\": \"D73DB57C4CDD6761E159F8D1E8A7D759424983FD\",\r\n  \"encryptionAlgorithm\": \"AES256\"\r\n}",
@@ -641,7 +641,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"name\": \"vaultExtendedInfo\",\r\n  \"etag\": \"72227c97-ecab-4f3d-8e89-7ab2e9681735\",\r\n  \"properties\": {\r\n    \"integrityKey\": \"84be7258-8d22-43ba-896a-074616e0a00c\"\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/Managers/hAzureSDKOperationsextendedInformation/vaultExtendedInfo\",\r\n  \"type\": \"Microsoft.StorSimple/Managers/extendedInformation\"\r\n}",
@@ -714,7 +714,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -776,7 +776,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -829,7 +829,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",

@@ -3,9 +3,10 @@
     public partial class ISCSIServer
     {
         public ISCSIServer(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
-            string managerName) : base(client, resourceGroupName, managerName)
+            string managerName,
+            string name) : base(client, resourceGroupName, managerName, name)
         {
         }
     }

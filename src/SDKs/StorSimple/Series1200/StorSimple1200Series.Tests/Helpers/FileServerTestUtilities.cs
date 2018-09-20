@@ -21,16 +21,13 @@ namespace StorSimple1200Series.Tests
         /// Initializes fileserver for given instance
         /// </summary>
         /// <param name="fileServer"></param>
-        /// <param name="fileServerName"></param>
         /// <param name="storageDomainId"></param>
         /// <param name="backupSchGroupId"></param>
         public static void Initialize(
             this FileServer fileServer,
-            string fileServerName,
             string storageDomainId,
             string backupSchGroupId)
         {
-            fileServer.Name = fileServerName;
             fileServer.StorageDomainId = storageDomainId;
             fileServer.BackupScheduleGroupId = backupSchGroupId;
             fileServer.DomainName = TestConstants.DomainName;
@@ -78,7 +75,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="fileServerName"></param>
         /// <returns></returns>
         public static FileServer GetFileServer(
-                StorSimple1200SeriesManagementClient client,
+                StorSimpleManagementClient client,
                 string resourceGroupName,
                 string managerName,
                 string deviceName,
@@ -103,7 +100,7 @@ namespace StorSimple1200Series.Tests
         /// <returns></returns>
         public static Device GetDeviceByFileServer(
                 string fileServerName,
-                StorSimple1200SeriesManagementClient client,
+                StorSimpleManagementClient client,
                 string resourceGroupName,
                 string managerName)
         {
@@ -184,7 +181,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="managerName"></param>
         /// <returns></returns>
         public static IEnumerable<FileServer> GetFileServers(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {
@@ -210,7 +207,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="deviceName"></param>
         /// <param name="fileServerName"></param>
         public static void DeleteAndValidateFileServer(
-                StorSimple1200SeriesManagementClient client,
+                StorSimpleManagementClient client,
                 string resourceGroupName,
                 string managerName,
                 string deviceName,
@@ -266,7 +263,8 @@ namespace StorSimple1200Series.Tests
                 var fileShareToCreate = new FileShare(
                     fileServer.Client, 
                     fileServer.ResourceGroupName, 
-                    fileServer.ManagerName);
+                    fileServer.ManagerName,
+                    TestConstants.DefaultTieredFileShareName);
                 fileShareToCreate.Initialize(DataPolicy.Tiered);
 
                 fileShareToCreate.CreateOrUpdate(

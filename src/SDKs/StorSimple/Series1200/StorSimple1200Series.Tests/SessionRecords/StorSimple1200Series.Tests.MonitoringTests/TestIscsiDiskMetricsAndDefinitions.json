@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"storageDomainId\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/storageDomains/Default-HSDK-WSJQERQW3F-StorageDomain\",\r\n        \"backupScheduleGroupId\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-WSJQERQW3F/backupScheduleGroups/Default-HSDK-WSJQERQW3F-BackupScheduleGroup\",\r\n        \"chapId\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-WSJQERQW3F/chapSettings/ChapSettingForSDK\",\r\n        \"reverseChapId\": \"\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-WSJQERQW3F/iscsiServers/HSDK-WSJQERQW3F\",\r\n      \"name\": \"HSDK-WSJQERQW3F\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/iscsiServers\"\r\n    }\r\n  ]\r\n}",
@@ -85,7 +85,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -156,7 +156,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"description\": \"Demo IscsiDisk for SDK Test Tiered\",\r\n        \"diskStatus\": \"Online\",\r\n        \"accessControlRecords\": [],\r\n        \"dataPolicy\": \"Tiered\",\r\n        \"provisionedCapacityInBytes\": 536870912000,\r\n        \"usedCapacityInBytes\": 0,\r\n        \"localUsedCapacityInBytes\": 0,\r\n        \"monitoringStatus\": \"Enabled\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-WSJQERQW3F/iscsiServers/HSDK-WSJQERQW3F/disks/TieredIscsiDiskForSDKTest\",\r\n      \"name\": \"TieredIscsiDiskForSDKTest\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/iscsiServers/disks\"\r\n    }\r\n  ]\r\n}",
@@ -233,7 +233,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -295,7 +295,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -357,7 +357,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -419,7 +419,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"description\": \"Demo IscsiDisk for SDK Test Tiered\",\r\n    \"diskStatus\": \"Online\",\r\n    \"accessControlRecords\": [],\r\n    \"dataPolicy\": \"Tiered\",\r\n    \"provisionedCapacityInBytes\": 536870912000,\r\n    \"usedCapacityInBytes\": 0,\r\n    \"localUsedCapacityInBytes\": 0,\r\n    \"monitoringStatus\": \"Enabled\"\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-WSJQERQW3F/iscsiServers/HSDK-WSJQERQW3F/disks/TieredIscsiDiskForSDKTest\",\r\n  \"name\": \"TieredIscsiDiskForSDKTest\",\r\n  \"type\": \"Microsoft.StorSimple/managers/devices/iscsiServers/disks\"\r\n}",
@@ -490,7 +490,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": {\r\n        \"value\": \"HostUsedStorage\",\r\n        \"localizedValue\": \"Primary Storage Used\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"https://pod01-cis2.sea.storsimple.windowsazure.com/managers/4239154091695873374/devices/HSDK-WSJQERQW3F/iscsiservers/HSDK-WSJQERQW3F/disks/TieredIscsiDiskForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Disk\",\r\n          \"value\": \"TieredIscsiDiskForSDKTest\"\r\n        }\r\n      ],\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/iscsiServers/disks/metricsDefinitions\"\r\n    }\r\n  ]\r\n}",
@@ -561,7 +561,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"resourceId\": \"https://pod01-cis2.sea.storsimple.windowsazure.com/managers/4239154091695873374/devices/HSDK-WSJQERQW3F/iscsiservers/HSDK-WSJQERQW3F/disks/TieredIscsiDiskForSDKTest\",\r\n      \"startTime\": \"2018-08-10T18:30:00Z\",\r\n      \"endTime\": \"2018-08-11T18:30:00Z\",\r\n      \"timeGrain\": \"1.00:00:00\",\r\n      \"primaryAggregation\": \"Average\",\r\n      \"name\": {\r\n        \"value\": \"HostUsedStorage\",\r\n        \"localizedValue\": \"Primary Storage Used\"\r\n      },\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Disk\",\r\n          \"value\": \"TieredIscsiDiskForSDKTest\"\r\n        }\r\n      ],\r\n      \"unit\": \"Bytes\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/iscsiServers/disks/metrics\",\r\n      \"values\": []\r\n    }\r\n  ]\r\n}",

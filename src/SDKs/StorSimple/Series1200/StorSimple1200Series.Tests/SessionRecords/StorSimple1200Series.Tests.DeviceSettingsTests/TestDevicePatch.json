@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"activationTime\": \"2018-08-11T16:21:37.3451912Z\",\r\n        \"allowedDeviceOperations\": [\r\n          \"Delete\",\r\n          \"DRTarget\",\r\n          \"Browsable\"\r\n        ],\r\n        \"culture\": \"en-US\",\r\n        \"deviceCapabilities\": [\r\n          \"IscsiServer\"\r\n        ],\r\n        \"domainName\": \"fareast.corp.microsoft.com\",\r\n        \"deviceSoftwareVersion\": \"10.0.10296.0\",\r\n        \"deviceConfigurationStatus\": \"Pending\",\r\n        \"modelDescription\": \"1200\",\r\n        \"status\": \"ReadyToSetup\",\r\n        \"type\": \"Series9000OnPremVirtualAppliance\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-UGU4PITWNI\",\r\n      \"name\": \"HSDK-UGU4PITWNI\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"activationTime\": \"2018-08-11T14:42:31.0604569Z\",\r\n        \"allowedDeviceOperations\": [\r\n          \"Delete\",\r\n          \"DRTarget\",\r\n          \"Browsable\"\r\n        ],\r\n        \"culture\": \"en-US\",\r\n        \"deviceCapabilities\": [\r\n          \"FileServer\"\r\n        ],\r\n        \"domainName\": \"fareast.corp.microsoft.com\",\r\n        \"deviceSoftwareVersion\": \"10.0.10296.0\",\r\n        \"deviceConfigurationStatus\": \"Pending\",\r\n        \"modelDescription\": \"1200\",\r\n        \"status\": \"ReadyToSetup\",\r\n        \"type\": \"Series9000OnPremVirtualAppliance\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0\",\r\n      \"name\": \"HSDK-DMNJB2PET0\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"activationTime\": \"2018-08-11T15:19:40.8252542Z\",\r\n        \"allowedDeviceOperations\": [\r\n          \"Delete\",\r\n          \"DRTarget\",\r\n          \"Browsable\"\r\n        ],\r\n        \"culture\": \"en-US\",\r\n        \"deviceCapabilities\": [\r\n          \"FileServer\"\r\n        ],\r\n        \"domainName\": \"fareast.corp.microsoft.com\",\r\n        \"deviceSoftwareVersion\": \"10.0.10296.0\",\r\n        \"deviceConfigurationStatus\": \"Pending\",\r\n        \"modelDescription\": \"1200\",\r\n        \"status\": \"ReadyToSetup\",\r\n        \"type\": \"Series9000OnPremVirtualAppliance\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-YYMYCY4NK0\",\r\n      \"name\": \"HSDK-YYMYCY4NK0\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices\"\r\n    }\r\n  ]\r\n}",
@@ -91,7 +91,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -153,7 +153,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -215,7 +215,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"activationTime\": \"2018-08-11T16:21:37.3451912Z\",\r\n    \"allowedDeviceOperations\": [\r\n      \"Delete\",\r\n      \"DRTarget\",\r\n      \"Browsable\"\r\n    ],\r\n    \"culture\": \"en-US\",\r\n    \"deviceCapabilities\": [\r\n      \"IscsiServer\"\r\n    ],\r\n    \"deviceDescription\": \"NewDescription8/14/2018 2:30:34 PM\",\r\n    \"domainName\": \"fareast.corp.microsoft.com\",\r\n    \"deviceSoftwareVersion\": \"10.0.10296.0\",\r\n    \"deviceConfigurationStatus\": \"Pending\",\r\n    \"modelDescription\": \"1200\",\r\n    \"status\": \"ReadyToSetup\",\r\n    \"type\": \"Series9000OnPremVirtualAppliance\"\r\n  },\r\n  \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-UGU4PITWNI\",\r\n  \"name\": \"HSDK-UGU4PITWNI\",\r\n  \"type\": \"Microsoft.StorSimple/managers/devices\"\r\n}",

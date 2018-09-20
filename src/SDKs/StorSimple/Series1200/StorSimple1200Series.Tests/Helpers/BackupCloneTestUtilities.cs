@@ -46,7 +46,9 @@ namespace StorSimple1200Series.Tests
             var restoreFileShare = new FileShare(
                 backupSet.Client,
                 backupSet.ResourceGroupName,
-                backupSet.ManagerName);
+                backupSet.ManagerName,
+                TestConstants.DefaultTieredFileShareName);
+
             restoreFileShare.Initialize(DataPolicy.Tiered);
             restoreFileShare.Description = "Restore file Share";
             restoreFileShare.AdminUser = deviceName + "\\StorSimpleAdmin";
@@ -103,11 +105,11 @@ namespace StorSimple1200Series.Tests
             var restoreIscsiDisk = new ISCSIDisk(
                 backupSet.Client,
                 backupSet.ResourceGroupName,
-                backupSet.ManagerName);
+                backupSet.ManagerName,
+                endPointName);
 
             restoreIscsiDisk.Initialize(DataPolicy.Tiered);
             restoreIscsiDisk.Description = "Restore Disk ";
-            restoreIscsiDisk.Name = endPointName;
 
             var cloneRequest = new CloneRequest()
             {
@@ -138,7 +140,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="managerName"></param>
         /// <param name="filter"></param>
         public static IPage<Backup> GetBackupsByManager(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName,
             ODataQuery<BackupFilter> filter)
@@ -159,7 +161,7 @@ namespace StorSimple1200Series.Tests
         public static void DeleteBackup(
             string name,
             string deviceName,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {
@@ -168,7 +170,7 @@ namespace StorSimple1200Series.Tests
 
         public static void GetBackupsByDevice(
             string deviceName,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {

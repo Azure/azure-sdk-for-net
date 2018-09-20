@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.StorSimple1200Series
                     "The EncryptionStatus of this resource is disabled. Register atleast 1 device to your resource before proceeding");
             }
 
-            var encryptionKey = operations.GetPublicEncryptionKey(resourceGroupName, managerName);
+            var encryptionKey = operations.GetEncryptionKey(resourceGroupName, managerName);
 
             if (encryptionKey.Value == null)
             {

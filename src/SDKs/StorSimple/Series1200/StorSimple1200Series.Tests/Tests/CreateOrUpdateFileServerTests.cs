@@ -55,13 +55,21 @@
                     $"StorageDomain not found: {storageDomain.Name}");
 
                 // Create BackupScheduleGroup
-                var bsg = new BackupScheduleGroup(this.Client, this.ResourceGroupName, this.ManagerName);
+                var bsg = new BackupScheduleGroup(
+                    this.Client, 
+                    this.ResourceGroupName, 
+                    this.ManagerName,
+                    TestConstants.DefaultBackupSchGroupName);
                 bsg.Initialize();
                 var bsgCreated = bsg.CreateOrUpdate(device.Name);
 
                 // Create FileServer
-                var fileServer = new FileServer(this.Client, this.ResourceGroupName, this.ManagerName);
-                fileServer.Initialize(device.Name, storageDomain.Id, bsgCreated.Id);
+                var fileServer = new FileServer(
+                    this.Client, 
+                    this.ResourceGroupName, 
+                    this.ManagerName,
+                    device.Name);
+                fileServer.Initialize(storageDomain.Id, bsgCreated.Id);
                 var fileServerCreated = fileServer.CreateOrUpdate(device.Name);
 
                  //Update FileServer

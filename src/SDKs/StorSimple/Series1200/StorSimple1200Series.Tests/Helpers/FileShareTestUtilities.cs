@@ -22,8 +22,6 @@ namespace StorSimple1200Series.Tests
         /// <param name="dataPolicy"></param>
         public static void Initialize(this FileShare fileShare, DataPolicy dataPolicy)
         {
-            fileShare.Name = (dataPolicy == DataPolicy.Local) ? TestConstants.DefaultLocalFileShareName :
-                TestConstants.DefaultTieredFileShareName;
             fileShare.AdminUser = TestConstants.DomainUser;
             fileShare.DataPolicy = dataPolicy;
             fileShare.Description = "Demo FileShare for SDK Test " + dataPolicy.ToString();
@@ -78,7 +76,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="deviceName"></param>
         /// <param name="fileServerName"></param>
         public static void DeleteAndValidateFileShare(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName,
             string fileShareName,

@@ -25,7 +25,7 @@
 
         protected MockContext Context { get; set; }
 
-        public StorSimple1200SeriesManagementClient Client { get; protected set; }
+        public StorSimpleManagementClient Client { get; protected set; }
 
         public StorSimpleTestBase(ITestOutputHelper testOutputHelper)
         {
@@ -37,7 +37,7 @@
 
             this.ResourceGroupName = TestConstants.DefaultResourceGroupName;
             this.ManagerName = TestConstants.DefaultManagerName;
-            this.Client = this.Context.GetServiceClient<StorSimple1200SeriesManagementClient>();
+            this.Client = this.Context.GetServiceClient<StorSimpleManagementClient>();
             var testEnv = TestEnvironmentFactory.GetTestEnvironment();
             this.SubscriptionId = testEnv.SubscriptionId;
 

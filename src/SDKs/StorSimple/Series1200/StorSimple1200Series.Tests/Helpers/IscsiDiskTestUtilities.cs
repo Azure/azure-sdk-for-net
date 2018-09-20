@@ -24,9 +24,8 @@ namespace StorSimple1200Series.Tests
         /// <param name="dataPolicy"></param>
         public static void Initialize(this ISCSIDisk iscsiDisk, DataPolicy dataPolicy)
         {
-            iscsiDisk.Name = TestConstants.DefaultTieredIscsiDiskName;
             iscsiDisk.Description = "Demo IscsiDisk for SDK Test " + dataPolicy.ToString();
-            iscsiDisk.AccessControlRecordsProperty = new List<string>();
+            iscsiDisk.AccessControlRecords = new List<string>();
             iscsiDisk.DataPolicy = dataPolicy;
             iscsiDisk.DiskStatus = DiskStatus.Online;
             iscsiDisk.ProvisionedCapacityInBytes = TestConstants.ProvisionedCapacityInBytesForDisk;
@@ -118,7 +117,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="deviceName"></param>
         /// <param name="iscsiServerName"></param>
         public static void DeleteAndValidateIscsiDisk(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName,
             string iscsiDiskName,

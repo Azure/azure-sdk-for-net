@@ -5,12 +5,12 @@
 
     public partial class BaseModel
     {
-        public StorSimple1200SeriesManagementClient Client;
+        public StorSimpleManagementClient Client;
         public string ResourceGroupName;
         public string ManagerName;
 
         public BaseModel(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {
@@ -20,7 +20,7 @@
         }
         
         public BaseModel(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName, 
             string name)

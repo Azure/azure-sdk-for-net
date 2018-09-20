@@ -23,7 +23,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="filter"></param>
         /// <returns></returns>
         public static IPage<Alert> GetAlerts(
-                StorSimple1200SeriesManagementClient client,
+                StorSimpleManagementClient client,
                 string resourceGroupName,
                 string managerName,
                 ODataQuery<AlertFilter> filter)
@@ -39,7 +39,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="managerName"></param>
         /// <param name="alertId"></param>
         public static void ClearAlerts(
-                StorSimple1200SeriesManagementClient client,
+                StorSimpleManagementClient client,
                 string resourceGroupName,
                 string managerName,
                 string alertId)
@@ -56,7 +56,7 @@ namespace StorSimple1200Series.Tests
         }
 
         public static void SendEmail(
-                StorSimple1200SeriesManagementClient client,
+                StorSimpleManagementClient client,
                 string resourceGroupName,
                 string managerName,
                 string deviceName,

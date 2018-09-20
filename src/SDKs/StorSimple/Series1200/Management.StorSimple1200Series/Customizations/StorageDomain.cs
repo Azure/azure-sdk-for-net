@@ -3,9 +3,10 @@
     public partial class StorageDomain
     {
         public StorageDomain(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
-            string managerName) : base(client, resourceGroupName, managerName)
+            string managerName,
+            string name) : base(client, resourceGroupName, managerName, name)
         {
         }
     }

@@ -30,7 +30,7 @@
         {
             try
             {
-                var operations = this.Client.Operations.List();
+                var operations = this.Client.AvailableProviderOperations.List();
                 Assert.True(
                     operations != null && operations.Any(),
                     "List call for Operations was not successful.");

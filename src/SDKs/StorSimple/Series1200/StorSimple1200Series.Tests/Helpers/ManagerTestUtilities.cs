@@ -21,8 +21,6 @@ namespace StorSimple1200Series.Tests
         /// <param name="manager"></param>
         public static void Initialize(this Manager manager)
         {
-            manager.Name = string.IsNullOrWhiteSpace(manager.Name) ?
-                TestConstants.ManagerForManagerOperationTests : manager.Name;
             manager.Location = "westus";
             manager.CisIntrinsicSettings = new ManagerIntrinsicSettings()
             {
@@ -39,7 +37,7 @@ namespace StorSimple1200Series.Tests
         /// <returns></returns>
         public static Manager CreateOrUpdate(
             this Manager manager,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName)
         {
             client.Managers.CreateOrUpdate(
@@ -59,7 +57,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="channelEncryptionKey"></param>
         /// <returns></returns>
         public static SymmetricEncryptedSecret GetEncryptionKey(
-                StorSimple1200SeriesManagementClient client,
+                StorSimpleManagementClient client,
                 string resourceGroupName,
                 string managerName,
                 out string channelEncryptionKey)
@@ -101,26 +99,11 @@ namespace StorSimple1200Series.Tests
         /// <param name="managerName"></param>
         /// <returns></returns>
         public static Manager GetManager(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName, 
             string managerName)
         {
             return client.Managers.Get(resourceGroupName, managerName.GetDoubleEncoded());
-        }
-
-        /// <summary>
-        /// Regenerates activation key for given manager
-        /// </summary>
-        /// <param name="manager"></param>
-        /// <returns></returns>
-        public static string RegenerateActivationKey(
-            this Manager manager,
-            StorSimple1200SeriesManagementClient client,
-            string resourceGroupName)
-        {
-            return client.Managers.RegenerateActivationKey(
-                resourceGroupName,
-                manager.Name.GetDoubleEncoded()).ActivationKey;
         }
 
         /// <summary>
@@ -129,7 +112,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="client"></param>
         /// <returns></returns>
         public static IEnumerable<Manager> ListManagerBySubscription(
-            StorSimple1200SeriesManagementClient client)
+            StorSimpleManagementClient client)
         {
             var managers = client.Managers.List();
             return managers;
@@ -142,7 +125,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="resourceGroupName"></param>
         /// <returns></returns>
         public static IEnumerable<Manager> ListManagerByResourceGroup(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName)
         {
             var managers = client.Managers.ListByResourceGroup(resourceGroupName);
@@ -156,7 +139,7 @@ namespace StorSimple1200Series.Tests
         /// <returns></returns>
         public static ManagerExtendedInfo GetAndUpdateExtendedInfo(
             this Manager manager,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName)
         {
             var extendedInfo = client.Managers.GetExtendedInfo(
@@ -185,7 +168,7 @@ namespace StorSimple1200Series.Tests
         /// </summary>
         public static void DeleteExtendedInfo(
             this Manager manager,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName)
         {
             client.Managers.DeleteExtendedInfoWithHttpMessagesAsync(
@@ -198,7 +181,7 @@ namespace StorSimple1200Series.Tests
         /// </summary>
         public static void Delete(
             this Manager manager, 
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName)
         {
             var managerToDelete = client.Managers.Get(
@@ -217,7 +200,7 @@ namespace StorSimple1200Series.Tests
         /// <returns></returns>
         public static IEnumerable<Device> ListDevices(
             this Manager manager,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName)
         {
             var devices = client.Devices.ListByManager(
@@ -247,7 +230,7 @@ namespace StorSimple1200Series.Tests
         /// <returns></returns>
         public static IEnumerable<MetricDefinition> GetMetricDefinitions(
             this Manager manager,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName)
         {
             return client.Managers.ListMetricDefinition(
@@ -263,7 +246,7 @@ namespace StorSimple1200Series.Tests
         /// <returns></returns>
         public static IEnumerable<Metrics> GetMetrics(
             this Manager manager,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             ODataQuery<MetricFilter> odataQuery)
         {
@@ -285,7 +268,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="filter"></param>
         /// <returns></returns>
         public static IEnumerable<Job> GetJobsByManager(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName,
             ODataQuery<JobFilter> filter)
@@ -305,7 +288,7 @@ namespace StorSimple1200Series.Tests
         public static Job GetJob(
             string name,
             string deviceName,
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName)
         {
@@ -323,7 +306,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="managerName"></param>
         /// <param name="deviceName"></param>
         public static void DeactivateDevice(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName,
             string deviceName)
@@ -339,7 +322,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="managerName"></param>
         /// <param name="deviceName"></param>
         public static void DeleteDevice(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string managerName,
             string deviceName)
@@ -352,7 +335,7 @@ namespace StorSimple1200Series.Tests
         #region Private methods
 
         private static UploadCertificateResponse UploadVaultCertificate(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string resourceGroupName,
             string resourceName, 
             X509Certificate2 cert)

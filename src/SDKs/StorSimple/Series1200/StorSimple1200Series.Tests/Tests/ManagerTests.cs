@@ -29,8 +29,12 @@
             try
             {
                 this.ManagerName = string.Empty;
+
                 //Create StorSimple Manager
-                var manager = new Manager(this.ResourceGroupName);
+                var manager = new Manager(
+                    this.Client,
+                    this.ResourceGroupName,
+                    TestConstants.ManagerForManagerOperationTests);
                 manager.Initialize();
                 manager = manager.CreateOrUpdate(this.Client, this.ResourceGroupName);
 

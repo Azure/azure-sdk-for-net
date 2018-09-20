@@ -45,14 +45,18 @@
                 var sacToCreate = new StorageAccountCredential(
                     this.Client,
                     this.ResourceGroupName,
-                    this.ManagerName);
+                    this.ManagerName,
+                    "Dummy" + TestConstants.DefaultSacName);
 
                 sacToCreate.Initialize();
-                sacToCreate.Name = "Dummy" + sacToCreate.Name;
                 var sac = sacToCreate.CreateOrUpdate();
 
                 //Create ACR
-                var acrToCreate = new AccessControlRecord(this.Client, this.ResourceGroupName, this.ManagerName);
+                var acrToCreate = new AccessControlRecord(
+                    this.Client,
+                    this.ResourceGroupName,
+                    this.ManagerName,
+                    TestConstants.DefaultAcrName);
                 acrToCreate.Initialize();
                 var acr = acrToCreate.CreateOrUpdate();
 

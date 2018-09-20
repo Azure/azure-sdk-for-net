@@ -41,19 +41,25 @@
                 var fileServer = fileServers.First();
 
                 // Create a FileShare with Tiered data policy
-                var fileShare = new FileShare(this.Client, this.ResourceGroupName, this.ManagerName);
+                var fileShare = new FileShare(
+                    this.Client, 
+                    this.ResourceGroupName, 
+                    this.ManagerName,
+                    "Auto-TestFileShare1");
                 fileShare.Initialize(DataPolicy.Tiered);
-                fileShare.Name = "Auto-TestFileShare1";
 
                 var fileShareCreated = fileShare.CreateOrUpdate(
                     fileServer.Name,
                     fileServer.Name);
 
                 // Create a FileShare with Local data policy
-                var fileShare2 = new FileShare(this.Client, this.ResourceGroupName, this.ManagerName);
+                var fileShare2 = new FileShare(
+                    this.Client, 
+                    this.ResourceGroupName, 
+                    this.ManagerName, 
+                    "Auto-TestFileShare2");
                 fileShare2.Initialize(DataPolicy.Local);
-                fileShare2.Name = "Auto-TestFileShare2";
-
+                
                 var fileShareCreated2 = fileShare2.CreateOrUpdate(
                     fileServer.Name,
                     fileServer.Name);

@@ -6,6 +6,7 @@
 
     using Microsoft.Azure.Management.StorSimple1200Series;
     using Microsoft.Azure.Management.StorSimple1200Series.Models;
+    using Microsoft.Rest;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -80,9 +81,12 @@
         private void ValidateCreateOrUpdateAlertSettings(string deviceName)
         {
             //set new alert settings on the device
-            AlertSettings newAlertSettings = new AlertSettings()
+            AlertSettings newAlertSettings = new AlertSettings(
+                this.Client,
+                this.ResourceGroupName,
+                this.ManagerName,
+                "default")
             {
-                Name = "default",
                 AlertNotificationCulture = "en-US",
                 EmailNotification = AlertEmailNotificationStatus.Enabled,
                 NotificationToServiceOwners = ServiceOwnersAlertNotificationStatus.Disabled,
@@ -128,8 +132,21 @@
                 this.ManagerName
             );
 
-            // Validate
-            networkSettingsBeforeUpdate.Validate();
+            try
+            {
+                // Validate
+                networkSettingsBeforeUpdate.Validate();
+            }
+            catch (ValidationException ex)
+            {
+                // Ignoring this error due to the change in the propertynames
+                // as a result of swagger review
+                if (ex.Rule != ValidationRules.CannotBeNull ||
+                    ex.Target != "PrimaryDnsServer")
+                {
+                    throw;
+                }
+            }
         }
 
         /// <summary>

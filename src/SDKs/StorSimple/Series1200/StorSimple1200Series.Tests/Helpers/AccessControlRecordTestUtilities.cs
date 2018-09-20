@@ -18,7 +18,6 @@ namespace StorSimple1200Series.Tests
         /// <param name="accessControlRecord"></param>
         public static void Initialize(this AccessControlRecord accessControlRecord)
         {
-            accessControlRecord.Name = TestConstants.DefaultAcrName;
             accessControlRecord.InitiatorName = "iqn.2017-06.com.contoso:ForTest";
         }
 
@@ -31,7 +30,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="managerName"></param>
         /// <returns></returns>
         public static AccessControlRecord GetAccessControlRecord(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string name,
             string resourceGroupName,
             string managerName)
@@ -41,7 +40,7 @@ namespace StorSimple1200Series.Tests
 
             if (acr == null)
             {
-                acr = new AccessControlRecord(client, resourceGroupName, managerName);
+                acr = new AccessControlRecord(client, resourceGroupName, managerName, name);
                 acr.Initialize();
                 acrCreated = acr.CreateOrUpdate();
                 acrCreated.SetBaseResourceValues(client, resourceGroupName, managerName);

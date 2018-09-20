@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"domainName\": \"fareast.corp.microsoft.com\",\r\n        \"storageDomainId\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/storageDomains/sd-fs-HSDK-4XY4FI2IVG\",\r\n        \"backupScheduleGroupId\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0/backupScheduleGroups/BackupSchGroupForSDKTest\",\r\n        \"description\": \"Update description of fileserver\"\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hAzureSDKOperations/devices/HSDK-DMNJB2PET0/fileServers/HSDK-DMNJB2PET0\",\r\n      \"name\": \"HSDK-DMNJB2PET0\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/fileServers\"\r\n    }\r\n  ]\r\n}",
@@ -85,7 +85,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": {\r\n        \"value\": \"CloudConsumedStorage\",\r\n        \"localizedValue\": \"Cloud Storage Used\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"https://pod01-cis2.sea.storsimple.windowsazure.com/managers/4239154091695873374/devices/HSDK-DMNJB2PET0/fileservers/HSDK-DMNJB2PET0\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"FileServer\",\r\n          \"value\": \"HSDK-DMNJB2PET0\"\r\n        }\r\n      ],\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/fileServers/metricsDefinitions\"\r\n    }\r\n  ]\r\n}",
@@ -156,7 +156,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"resourceId\": \"https://pod01-cis2.sea.storsimple.windowsazure.com/managers/4239154091695873374/devices/HSDK-DMNJB2PET0/fileservers/HSDK-DMNJB2PET0\",\r\n      \"startTime\": \"2018-08-10T18:30:00Z\",\r\n      \"endTime\": \"2018-08-11T18:30:00Z\",\r\n      \"timeGrain\": \"1.00:00:00\",\r\n      \"primaryAggregation\": \"Average\",\r\n      \"name\": {\r\n        \"value\": \"CloudConsumedStorage\",\r\n        \"localizedValue\": \"Cloud Storage Used\"\r\n      },\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"FileServer\",\r\n          \"value\": \"HSDK-DMNJB2PET0\"\r\n        }\r\n      ],\r\n      \"unit\": \"Bytes\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/fileServers/metrics\",\r\n      \"values\": []\r\n    }\r\n  ]\r\n}",

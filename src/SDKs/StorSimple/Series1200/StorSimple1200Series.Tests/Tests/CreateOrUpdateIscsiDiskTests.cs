@@ -41,18 +41,24 @@
                 var iscsiServer = iSCSIServers.First();
 
                 // Create a iscsidisk with Tiered data policy
-                var iscsiDisk = new ISCSIDisk(this.Client, this.ResourceGroupName, this.ManagerName);
+                var iscsiDisk = new ISCSIDisk(
+                    this.Client, 
+                    this.ResourceGroupName, 
+                    this.ManagerName, 
+                    "Auto-TestIscsiDisk1");
                 iscsiDisk.Initialize(DataPolicy.Tiered);
-                iscsiDisk.Name = "Auto-TestIscsiDisk1";
 
                 var iscsiDiskCreated = iscsiDisk.CreateOrUpdate(
                     iscsiServer.Name,
                     iscsiServer.Name);
 
                 // Create a iscsidisk with tiered data policy
-                var iscsiDisk2 = new ISCSIDisk(this.Client, this.ResourceGroupName, this.ManagerName);
+                var iscsiDisk2 = new ISCSIDisk(
+                    this.Client, 
+                    this.ResourceGroupName, 
+                    this.ManagerName, 
+                    "Auto-TestIscsiDisk2");
                 iscsiDisk2.Initialize(DataPolicy.Tiered);
-                iscsiDisk2.Name = "Auto-TestIscsiDisk2";
 
                 var iscsiDiskCreated2 = iscsiDisk2.CreateOrUpdate(
                     iscsiServer.Name,

@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/0.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/0.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"title\": \"No device heartbeat received for 5 minutes.\",\r\n        \"scope\": \"Device\",\r\n        \"alertType\": \"Cloud Connectivity\",\r\n        \"appearedAtTime\": \"2018-08-02T04:08:12.9140342Z\",\r\n        \"appearedAtSourceTime\": \"2018-08-02T04:08:12.9140342Z\",\r\n        \"clearedAtTime\": \"0001-01-01T00:00:00Z\",\r\n        \"clearedAtSourceTime\": \"0001-01-01T00:00:00Z\",\r\n        \"source\": {\r\n          \"name\": \"is2-hlmdhdgu1et\",\r\n          \"timeZone\": \"UTC\",\r\n          \"alertSourceType\": \"Device\"\r\n        },\r\n        \"recommendation\": \"The StorSimple Device Manager service has not received a heartbeat from the virtual array. The virtual array may be offline. This could be due to one of the following reasons. <br/>\\r\\n\\t1. The virtual array may be turned off or paused on the hypervisor. In Hyper-V, your virtual array will be paused automatically when the volume that stores snapshots or virtual hard disks, runs out of available storage. The state of the virtual array is listed as <i>\\\"paused-critical\\\"</i> in Hyper-V Manager. Resolve this by creating additional space on the volume. If you still cannot connect, check the Hyper-V host or ESX server to ensure that the VM is healthy.<br/><br/>\\r\\n\\t2. The virtual array is not able to communicate with the StorSimple Device Manager service. In the local web UI of the virtual array, go to <b>Troubleshooting > Diagnostic tests</b> and click <b>Run diagnostic tests</b>. Resolve the reported issues. <br/> <br/>\\r\\n  If the issue persists, contact your network administrator.\",\r\n        \"resolutionReason\": \"\",\r\n        \"severity\": \"Critical\",\r\n        \"status\": \"Active\",\r\n        \"errorDetails\": {\r\n          \"errorCode\": \"\",\r\n          \"errorMessage\": \"\",\r\n          \"occurences\": 2\r\n        },\r\n        \"detailedInformation\": {\r\n          \"occurrences\": \"2\",\r\n          \"last observed\": \"8/2/2018 4:08:12 AM (UTC)\",\r\n          \"first observed\": \"1/1/0001 12:00:00 AM (UTC)\"\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/9eb689cd-7243-43b4-b6f6-5c65cb296641/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/hManagerForSDKTest4/devices/is2-hlmdhdgu1et/alerts/a1f3a945-74dc-4387-bf17-a4f226374833\",\r\n      \"name\": \"a1f3a945-74dc-4387-bf17-a4f226374833\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/alerts\"\r\n    }\r\n  ]\r\n}",
@@ -91,7 +91,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.StorSimple1200Series.StorSimple1200SeriesManagementClient/0.0.0.0"
+          "Microsoft.Azure.Management.StorSimple1200Series.StorSimpleManagementClient/0.0.0.0"
         ]
       },
       "ResponseBody": "",

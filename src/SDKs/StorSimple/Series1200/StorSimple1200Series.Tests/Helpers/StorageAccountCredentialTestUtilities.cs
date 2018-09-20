@@ -19,7 +19,6 @@ namespace StorSimple1200Series.Tests
         /// <param name="sac"></param>
         public static void Initialize(this StorageAccountCredential sac)
         {
-            sac.Name = TestConstants.DefaultSacName;
             sac.EndPoint = TestConstants.DefaultStorageAccountEndPoint;
             sac.EnableSSL = SslStatus.Enabled;
             sac.Login = TestConstants.TestSacLogin;
@@ -62,7 +61,7 @@ namespace StorSimple1200Series.Tests
         /// <param name="managerName"></param>
         /// <returns></returns>
         public static StorageAccountCredential GetStorageAccountCredential(
-            StorSimple1200SeriesManagementClient client,
+            StorSimpleManagementClient client,
             string name,
             string resourceGroupName,
             string managerName)
@@ -76,7 +75,11 @@ namespace StorSimple1200Series.Tests
             catch (Exception)
             {
                 // Since it's not present, create
-                sac = new StorageAccountCredential(client, resourceGroupName, managerName);
+                sac = new StorageAccountCredential(
+                    client, 
+                    resourceGroupName, 
+                    managerName,
+                    TestConstants.DefaultSacName);
                 sac.Initialize();
                 sac = sac.CreateOrUpdate();
             }
