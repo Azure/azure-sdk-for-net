@@ -138,8 +138,10 @@ namespace Test.Azure.Management.Logic
             }
         }
 
+        // IntegrationAccountBatchConfigurations_DeleteWhenDeleteIntegrationAccount_OK
+        // Renamed to get around path limitations
         [Fact]
-        public void IntegrationAccountBatchConfigurations_DeleteWhenDeleteIntegrationAccount_OK()
+        public void BatchConfigurations_IntegrationAccountDelete_OK()
         {
             using (var context = MockContext.Start(this.TestClassName))
             {
