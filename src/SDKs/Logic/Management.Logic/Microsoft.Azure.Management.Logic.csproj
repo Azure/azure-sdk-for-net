@@ -11,45 +11,11 @@
 		<PackageReleaseNotes>
 		<![CDATA[
 	  - Updated API Version to 2018-07-01-preview
-      - Most enums have become strings
-	  - Added Liquid, XSLT 2.0 and 3.0 to Integration Account Maps
-	  - Added Basic to Integration Account Sku
-	  - Schemas has become IntegrationAccountSchemas
-	    - New operations: ListContentCallbackUrl
-	    - Changed operations: ListByIntegrationAccounts has become List
-	  - Maps has become IntegrationAccountMaps
-	    - New operations: ListContentCallbackUrl
-	    - Changed operations: ListByIntegrationAccounts has become List
-	  - Partners has become IntegrationAccountPartners
-	    - New operations: ListContentCallbackUrl
-	    - Changed operations: ListByIntegrationAccounts has become List
-	  - Agreements has become IntegrationAccountAgreements
-	    - New operations: ListContentCallbackUrl
-	    - Changed operations: ListByIntegrationAccounts has become List
-	  - Certificates has become IntegrationAccountCertificates
-	    - Changed operations: ListByIntegrationAccounts has become List
-	  - Sessions has become IntegrationAccountSessions
-	    - Most error messages have been standardized with the rest of the SDK to return CloudException
-		- Changed operations: ListByIntegrationAccounts has become List
-	  - Added IntegrationAccountAssemblies
-	  - Added IntegrationAccountBatchConfigurations
-	  - IntegrationAccount
-	    - New operations: ListKeyVaultKeys, LogTrackingEvents, RegenerateAccessKey
-      - LogicManagementClient
-		- Changed operations: ListOperations has become List
-      - Added WorkflowRunActionRepetitions
-	  - Added Workflow RunActionScopeRepetitions
-      - WorkRunActions
-	    - New operations: ListExpressionTraces, 
-      - Added WorkflowRunOperations
-      - WorkflowTriggers
-	    - New operations: Reset, GetSchemaJson, SetState
-      - Added WorkflowVersionTriggers
-      - WorkflowVersions
-	    - Changed operations: ListCallbackUrl moved to WorkflowVersionTriggers
-	  - Workflows
-	    - New operations: ListCallbackUrl, Move, ValidateByResourceGroup
-		- Changed operations: Validate has become ValidateByLocation
+      - Most enums have become strings, added Liquid, XSLT 2.0 and 3.0 to Integration Account Maps, and Basic to Integration Account Sku
+	  - Added IntegrationAccountAssemblies, IntegrationAccountBatchConfigurations, WorkflowRunActionRepetitions, WorkflowRunActionScopeRepetitions, WorkflowVersionTriggers, WorkflowRunOperations
+	  - Several operations have changed name, primarily ListByIntegrationAccounts has become List
+	  - Integration Account artifacts have all had IntegrationAccount added as a prefix to them (Example: Maps has become IntegrationAccountMaps)
+	  - Many new operations have been added
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
