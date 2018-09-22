@@ -51,7 +51,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public bool Equals(AuthorizationRules other)
         {
-            if (other == null || this.Count != other.Count)
+            if (ReferenceEquals(other, null) || this.Count != other.Count)
             {
                 return false;
             }

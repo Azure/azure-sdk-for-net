@@ -247,6 +247,8 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenProvider"/> credentials to perform this operation.</exception>
         /// <exception cref="ServerBusyException">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
+        /// <remarks>Note - Only following data types are deserialized in Filters and Action parameters - string,int,long,bool,double,DateTime.
+        /// Other data types would return its string value.</remarks>
         public virtual async Task<RuleDescription> GetRuleAsync(string topicPath, string subscriptionName, string ruleName, CancellationToken cancellationToken = default)
         {
             EntityNameHelper.CheckValidTopicName(topicPath);
@@ -436,7 +438,9 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <exception cref="ServerBusyException">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
         /// <remarks>You can simulate pages of list of entities by manipulating <paramref name="count"/> and <paramref name="skip"/>.
-        /// skip(0)+count(100) gives first 100 entities. skip(100)+count(100) gives the next 100 entities.</remarks>
+        /// skip(0)+count(100) gives first 100 entities. skip(100)+count(100) gives the next 100 entities.
+        /// Note - Only following data types are deserialized in Filters and Action parameters - string,int,long,bool,double,DateTime.
+        /// Other data types would return its string value.</remarks>
         public virtual async Task<IList<RuleDescription>> GetRulesAsync(string topicPath, string subscriptionName, int count = 100, int skip = 0, CancellationToken cancellationToken = default)
         {
             EntityNameHelper.CheckValidTopicName(topicPath);
@@ -895,7 +899,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 return null;
             }
 
-            var exceptionMessage = await response.Content?.ReadAsStringAsync();
+            var exceptionMessage = await (response.Content?.ReadAsStringAsync() ?? Task.FromResult(string.Empty));
             exceptionMessage = ParseDetailIfAvailable(exceptionMessage) ?? response.ReasonPhrase;
 
             if (response.StatusCode == HttpStatusCode.Unauthorized)

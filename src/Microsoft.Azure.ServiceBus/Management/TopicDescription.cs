@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus.Management
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Represents the metadata description of the topic.
@@ -187,6 +188,12 @@ namespace Microsoft.Azure.ServiceBus.Management
             }
         }
 
+        /// <summary>
+        /// List of properties that were retrieved using GetTopic but is not understood by this version of client is stored here.
+        /// These will be sent back to the service as-is when UpdateTopic is called on this TopicDescription.
+        /// </summary>
+        internal List<object> UnknownProperties { get; set; }
+
         public override int GetHashCode()
         {
             return this.Path?.GetHashCode() ?? base.GetHashCode();
@@ -200,7 +207,8 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public bool Equals(TopicDescription otherDescription)
         {
-            if (otherDescription is TopicDescription other && this.Path.Equals(other.Path, StringComparison.OrdinalIgnoreCase)
+            if (otherDescription is TopicDescription other 
+                && this.Path.Equals(other.Path, StringComparison.OrdinalIgnoreCase)
                 && this.AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
                 && this.DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
                 && (!this.RequiresDuplicateDetection || this.DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))

@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus.Management
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.Azure.ServiceBus.Primitives;
 
     /// <summary>
@@ -283,6 +284,12 @@ namespace Microsoft.Azure.ServiceBus.Management
             }
         }
 
+        /// <summary>
+        /// List of properties that were retrieved using GetQueue but is not understood by this version of client is stored here.
+        /// These will be sent back to the service as-is when UpdateQueue is called on this QueueDescription.
+        /// </summary>
+        internal List<object> UnknownProperties { get; set; }
+
         public override int GetHashCode()
         {
             return this.Path?.GetHashCode() ?? base.GetHashCode();
@@ -294,14 +301,10 @@ namespace Microsoft.Azure.ServiceBus.Management
             return this.Equals(other);
         }
 
-        public bool Equals(QueueDescription other)
+        public bool Equals(QueueDescription otherDescription)
         {
-            if (other == null)
-            {
-                return false;
-            }
-
-            if (this.Path.Equals(other.Path, StringComparison.OrdinalIgnoreCase)
+            if (otherDescription is QueueDescription other
+                && this.Path.Equals(other.Path, StringComparison.OrdinalIgnoreCase)
                 && this.AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
                 && this.DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
                 && (!this.RequiresDuplicateDetection || this.DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))

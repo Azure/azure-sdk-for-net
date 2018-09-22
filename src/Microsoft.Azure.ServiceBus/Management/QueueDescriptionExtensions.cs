@@ -12,31 +12,39 @@ namespace Microsoft.Azure.ServiceBus.Management
     {
         public static XDocument Serialize(this QueueDescription description)
         {
+            var queueDescriptionElements = new List<object>()
+            {
+                new XElement(XName.Get("LockDuration", ManagementClientConstants.SbNs), XmlConvert.ToString(description.LockDuration)),
+                new XElement(XName.Get("MaxSizeInMegabytes", ManagementClientConstants.SbNs), XmlConvert.ToString(description.MaxSizeInMB)),
+                new XElement(XName.Get("RequiresDuplicateDetection", ManagementClientConstants.SbNs), XmlConvert.ToString(description.RequiresDuplicateDetection)),
+                new XElement(XName.Get("RequiresSession", ManagementClientConstants.SbNs), XmlConvert.ToString(description.RequiresSession)),
+                description.DefaultMessageTimeToLive != TimeSpan.MaxValue ? new XElement(XName.Get("DefaultMessageTimeToLive", ManagementClientConstants.SbNs), XmlConvert.ToString(description.DefaultMessageTimeToLive)) : null,
+                new XElement(XName.Get("DeadLetteringOnMessageExpiration", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnableDeadLetteringOnMessageExpiration)),
+                description.RequiresDuplicateDetection && description.DuplicateDetectionHistoryTimeWindow != default ?
+                    new XElement(XName.Get("DuplicateDetectionHistoryTimeWindow", ManagementClientConstants.SbNs), XmlConvert.ToString(description.DuplicateDetectionHistoryTimeWindow))
+                    : null,
+                new XElement(XName.Get("MaxDeliveryCount", ManagementClientConstants.SbNs), XmlConvert.ToString(description.MaxDeliveryCount)),
+                new XElement(XName.Get("EnableBatchedOperations", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnableBatchedOperations)),
+                description.AuthorizationRules?.Serialize(),
+                new XElement(XName.Get("Status", ManagementClientConstants.SbNs), description.Status.ToString()),
+                description.ForwardTo != null ? new XElement(XName.Get("ForwardTo", ManagementClientConstants.SbNs), description.ForwardTo) : null,
+                description.UserMetadata != null ? new XElement(XName.Get("UserMetadata", ManagementClientConstants.SbNs), description.UserMetadata) : null,
+                description.AutoDeleteOnIdle != TimeSpan.MaxValue ? new XElement(XName.Get("AutoDeleteOnIdle", ManagementClientConstants.SbNs), XmlConvert.ToString(description.AutoDeleteOnIdle)) : null,
+                new XElement(XName.Get("EnablePartitioning", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnablePartitioning)),
+                description.ForwardDeadLetteredMessagesTo != null ? new XElement(XName.Get("ForwardDeadLetteredMessagesTo", ManagementClientConstants.SbNs), description.ForwardDeadLetteredMessagesTo) : null
+            };
+
+            if (description.UnknownProperties != null)
+            {
+                queueDescriptionElements.AddRange(description.UnknownProperties);
+            }
+
             return new XDocument(
                 new XElement(XName.Get("entry", ManagementClientConstants.AtomNs),
                     new XElement(XName.Get("content", ManagementClientConstants.AtomNs),
                         new XAttribute("type", "application/xml"),
                         new XElement(XName.Get("QueueDescription", ManagementClientConstants.SbNs),
-                            new XElement(XName.Get("LockDuration", ManagementClientConstants.SbNs), XmlConvert.ToString(description.LockDuration)),
-                            new XElement(XName.Get("MaxSizeInMegabytes", ManagementClientConstants.SbNs), XmlConvert.ToString(description.MaxSizeInMB)),
-                            new XElement(XName.Get("RequiresDuplicateDetection", ManagementClientConstants.SbNs), XmlConvert.ToString(description.RequiresDuplicateDetection)),
-                            new XElement(XName.Get("RequiresSession", ManagementClientConstants.SbNs), XmlConvert.ToString(description.RequiresSession)),
-                            description.DefaultMessageTimeToLive != TimeSpan.MaxValue ? new XElement(XName.Get("DefaultMessageTimeToLive", ManagementClientConstants.SbNs), XmlConvert.ToString(description.DefaultMessageTimeToLive)) : null,
-                            new XElement(XName.Get("DeadLetteringOnMessageExpiration", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnableDeadLetteringOnMessageExpiration)),
-                            description.RequiresDuplicateDetection && description.DuplicateDetectionHistoryTimeWindow != default ?
-                                new XElement(XName.Get("DuplicateDetectionHistoryTimeWindow", ManagementClientConstants.SbNs), XmlConvert.ToString(description.DuplicateDetectionHistoryTimeWindow))
-                                : null,
-                            new XElement(XName.Get("MaxDeliveryCount", ManagementClientConstants.SbNs), XmlConvert.ToString(description.MaxDeliveryCount)),
-                            new XElement(XName.Get("EnableBatchedOperations", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnableBatchedOperations)),
-                            description.AuthorizationRules?.Serialize(),
-                            new XElement(XName.Get("Status", ManagementClientConstants.SbNs), description.Status.ToString()),
-                            description.ForwardTo != null ? new XElement(XName.Get("ForwardTo", ManagementClientConstants.SbNs), description.ForwardTo) : null,
-                            description.UserMetadata != null ? new XElement(XName.Get("UserMetadata", ManagementClientConstants.SbNs), description.UserMetadata) : null,
-                            description.AutoDeleteOnIdle != TimeSpan.MaxValue ? new XElement(XName.Get("AutoDeleteOnIdle", ManagementClientConstants.SbNs), XmlConvert.ToString(description.AutoDeleteOnIdle)) : null,
-                            new XElement(XName.Get("EnablePartitioning", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnablePartitioning)),
-                            description.ForwardDeadLetteredMessagesTo != null ? new XElement(XName.Get("ForwardDeadLetteredMessagesTo", ManagementClientConstants.SbNs), description.ForwardDeadLetteredMessagesTo) : null
-                        ))
-                ));
+                            queueDescriptionElements.ToArray()))));
         }
 
         public static QueueDescription ParseFromContent(string xml)
@@ -130,6 +138,24 @@ namespace Microsoft.Azure.ServiceBus.Management
                         break;
                     case "AuthorizationRules":
                         qd.AuthorizationRules = AuthorizationRules.ParseFromXElement(element);
+                        break;
+                    case "AccessedAt":
+                    case "CreatedAt":
+                    case "MessageCount":
+                    case "SizeInBytes":
+                    case "UpdatedAt":
+                    case "CountDetails":
+                        // Ignore known properties
+                        // Do nothing
+                        break;
+                    default:
+                        // For unknown properties, keep them as-is for forward proof.
+                        if (qd.UnknownProperties == null)
+                        {
+                            qd.UnknownProperties = new List<object>();
+                        }
+
+                        qd.UnknownProperties.Add(element);
                         break;
                 }
             }

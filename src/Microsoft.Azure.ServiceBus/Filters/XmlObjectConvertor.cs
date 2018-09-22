@@ -13,6 +13,11 @@ namespace Microsoft.Azure.ServiceBus.Filters
         internal static object ParseValueObject(XElement element)
         {
             var prefix = element.GetPrefixOfNamespace(XNamespace.Get(ManagementClientConstants.XmlSchemaNs));
+            if (string.IsNullOrWhiteSpace(prefix))
+            {
+                return element.Value;
+            }
+
             var type = element.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs)).Value;
             switch (type.Substring(prefix.Length + 1))
             {

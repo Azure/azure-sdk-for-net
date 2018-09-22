@@ -110,6 +110,25 @@ namespace Microsoft.Azure.ServiceBus.Management
                     case "AuthorizationRules":
                         topicDesc.AuthorizationRules = AuthorizationRules.ParseFromXElement(element);
                         break;
+                    case "AccessedAt":
+                    case "CreatedAt":
+                    case "MessageCount":
+                    case "SizeInBytes":
+                    case "UpdatedAt":
+                    case "CountDetails":
+                    case "SubscriptionCount":
+                        // Ignore known properties
+                        // Do nothing
+                        break;
+                    default:
+                        // For unknown properties, keep them as-is for forward proof.
+                        if (topicDesc.UnknownProperties == null)
+                        {
+                            topicDesc.UnknownProperties = new List<object>();
+                        }
+
+                        topicDesc.UnknownProperties.Add(element);
+                        break;
                 }
             }
 
@@ -118,24 +137,34 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public static XDocument Serialize(this TopicDescription description)
         {
+            var topicDescriptionElements = new List<object>
+            {
+                description.DefaultMessageTimeToLive != TimeSpan.MaxValue ? new XElement(XName.Get("DefaultMessageTimeToLive", ManagementClientConstants.SbNs), XmlConvert.ToString(description.DefaultMessageTimeToLive)) : null,
+                new XElement(XName.Get("MaxSizeInMegabytes", ManagementClientConstants.SbNs), XmlConvert.ToString(description.MaxSizeInMB)),
+                new XElement(XName.Get("RequiresDuplicateDetection", ManagementClientConstants.SbNs), XmlConvert.ToString(description.RequiresDuplicateDetection)),
+                description.RequiresDuplicateDetection && description.DuplicateDetectionHistoryTimeWindow != default ?
+                    new XElement(XName.Get("DuplicateDetectionHistoryTimeWindow", ManagementClientConstants.SbNs), XmlConvert.ToString(description.DuplicateDetectionHistoryTimeWindow))
+                    : null,
+                new XElement(XName.Get("EnableBatchedOperations", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnableBatchedOperations)),
+                description.AuthorizationRules?.Serialize(),
+                new XElement(XName.Get("Status", ManagementClientConstants.SbNs), description.Status.ToString()),
+                description.UserMetadata != null ? new XElement(XName.Get("UserMetadata", ManagementClientConstants.SbNs), description.UserMetadata) : null,
+                new XElement(XName.Get("SupportOrdering", ManagementClientConstants.SbNs), XmlConvert.ToString(description.SupportOrdering)),
+                description.AutoDeleteOnIdle != TimeSpan.MaxValue ? new XElement(XName.Get("AutoDeleteOnIdle", ManagementClientConstants.SbNs), XmlConvert.ToString(description.AutoDeleteOnIdle)) : null,
+                new XElement(XName.Get("EnablePartitioning", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnablePartitioning))
+            };
+
+            if (description.UnknownProperties != null)
+            {
+                topicDescriptionElements.AddRange(description.UnknownProperties);
+            }
+
             XDocument doc = new XDocument(
                 new XElement(XName.Get("entry", ManagementClientConstants.AtomNs),
                     new XElement(XName.Get("content", ManagementClientConstants.AtomNs),
                         new XAttribute("type", "application/xml"),
                         new XElement(XName.Get("TopicDescription", ManagementClientConstants.SbNs),
-                            description.DefaultMessageTimeToLive != TimeSpan.MaxValue ? new XElement(XName.Get("DefaultMessageTimeToLive", ManagementClientConstants.SbNs), XmlConvert.ToString(description.DefaultMessageTimeToLive)) : null,
-                            new XElement(XName.Get("MaxSizeInMegabytes", ManagementClientConstants.SbNs), XmlConvert.ToString(description.MaxSizeInMB)),
-                            new XElement(XName.Get("RequiresDuplicateDetection", ManagementClientConstants.SbNs), XmlConvert.ToString(description.RequiresDuplicateDetection)),
-                            description.RequiresDuplicateDetection && description.DuplicateDetectionHistoryTimeWindow != default ?
-                                new XElement(XName.Get("DuplicateDetectionHistoryTimeWindow", ManagementClientConstants.SbNs), XmlConvert.ToString(description.DuplicateDetectionHistoryTimeWindow))
-                                : null,
-                            new XElement(XName.Get("EnableBatchedOperations", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnableBatchedOperations)),
-                            description.AuthorizationRules?.Serialize(),
-                            new XElement(XName.Get("Status", ManagementClientConstants.SbNs), description.Status.ToString()),
-                            description.UserMetadata != null ? new XElement(XName.Get("UserMetadata", ManagementClientConstants.SbNs), description.UserMetadata) : null,
-                            new XElement(XName.Get("SupportOrdering", ManagementClientConstants.SbNs), XmlConvert.ToString(description.SupportOrdering)),
-                            description.AutoDeleteOnIdle != TimeSpan.MaxValue ? new XElement(XName.Get("AutoDeleteOnIdle", ManagementClientConstants.SbNs), XmlConvert.ToString(description.AutoDeleteOnIdle)) : null,
-                            new XElement(XName.Get("EnablePartitioning", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnablePartitioning))
+                            topicDescriptionElements
                         ))
                     ));
 

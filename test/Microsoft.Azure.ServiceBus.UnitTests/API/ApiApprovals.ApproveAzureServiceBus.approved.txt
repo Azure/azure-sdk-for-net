@@ -721,7 +721,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public Microsoft.Azure.ServiceBus.Management.EntityStatus Status { get; set; }
         public string UserMetadata { get; set; }
         public override bool Equals(object obj) { }
-        public bool Equals(Microsoft.Azure.ServiceBus.Management.QueueDescription other) { }
+        public bool Equals(Microsoft.Azure.ServiceBus.Management.QueueDescription otherDescription) { }
         public override int GetHashCode() { }
     }
     public class QueueRuntimeInfo

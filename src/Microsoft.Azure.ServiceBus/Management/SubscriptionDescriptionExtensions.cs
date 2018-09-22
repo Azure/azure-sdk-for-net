@@ -147,6 +147,24 @@ namespace Microsoft.Azure.ServiceBus.Management
                             subscriptionDesc.ForwardDeadLetteredMessagesTo = element.Value;
                         }
                         break;
+                    case "AccessedAt":
+                    case "CreatedAt":
+                    case "MessageCount":
+                    case "SizeInBytes":
+                    case "UpdatedAt":
+                    case "CountDetails":
+                        // Ignore known properties
+                        // Do nothing
+                        break;
+                    default:
+                        // For unknown properties, keep them as-is for forward proof.
+                        if (subscriptionDesc.UnknownProperties == null)
+                        {
+                            subscriptionDesc.UnknownProperties = new List<object>();
+                        }
+
+                        subscriptionDesc.UnknownProperties.Add(element);
+                        break;
                 }
             }
 
@@ -155,24 +173,34 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public static XDocument Serialize(this SubscriptionDescription description)
         {
+            var subscriptionDescriptionElements = new List<object>()
+            {
+                new XElement(XName.Get("LockDuration", ManagementClientConstants.SbNs), XmlConvert.ToString(description.LockDuration)),
+                new XElement(XName.Get("RequiresSession", ManagementClientConstants.SbNs), XmlConvert.ToString(description.RequiresSession)),
+                description.DefaultMessageTimeToLive != TimeSpan.MaxValue ? new XElement(XName.Get("DefaultMessageTimeToLive", ManagementClientConstants.SbNs), XmlConvert.ToString(description.DefaultMessageTimeToLive)) : null,
+                new XElement(XName.Get("DeadLetteringOnMessageExpiration", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnableDeadLetteringOnMessageExpiration)),
+                new XElement(XName.Get("DeadLetteringOnFilterEvaluationExceptions", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnableDeadLetteringOnFilterEvaluationExceptions)),
+                description.DefaultRuleDescription != null ? description.DefaultRuleDescription.SerializeRule("DefaultRuleDescription") : null,
+                new XElement(XName.Get("MaxDeliveryCount", ManagementClientConstants.SbNs), XmlConvert.ToString(description.MaxDeliveryCount)),
+                new XElement(XName.Get("EnableBatchedOperations", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnableBatchedOperations)),
+                new XElement(XName.Get("Status", ManagementClientConstants.SbNs), description.Status.ToString()),
+                description.ForwardTo != null ? new XElement(XName.Get("ForwardTo", ManagementClientConstants.SbNs), description.ForwardTo) : null,
+                description.UserMetadata != null ? new XElement(XName.Get("UserMetadata", ManagementClientConstants.SbNs), description.UserMetadata) : null,
+                description.ForwardDeadLetteredMessagesTo != null ? new XElement(XName.Get("ForwardDeadLetteredMessagesTo", ManagementClientConstants.SbNs), description.ForwardDeadLetteredMessagesTo) : null,
+                description.AutoDeleteOnIdle != TimeSpan.MaxValue ? new XElement(XName.Get("AutoDeleteOnIdle", ManagementClientConstants.SbNs), XmlConvert.ToString(description.AutoDeleteOnIdle)) : null
+            };
+
+            if (description.UnknownProperties != null)
+            {
+                subscriptionDescriptionElements.AddRange(description.UnknownProperties);
+            }
+
             return new XDocument(
                 new XElement(XName.Get("entry", ManagementClientConstants.AtomNs),
                     new XElement(XName.Get("content", ManagementClientConstants.AtomNs),
                         new XAttribute("type", "application/xml"),
                         new XElement(XName.Get("SubscriptionDescription", ManagementClientConstants.SbNs),
-                            new XElement(XName.Get("LockDuration", ManagementClientConstants.SbNs), XmlConvert.ToString(description.LockDuration)),
-                            new XElement(XName.Get("RequiresSession", ManagementClientConstants.SbNs), XmlConvert.ToString(description.RequiresSession)),
-                            description.DefaultMessageTimeToLive != TimeSpan.MaxValue ? new XElement(XName.Get("DefaultMessageTimeToLive", ManagementClientConstants.SbNs), XmlConvert.ToString(description.DefaultMessageTimeToLive)) : null,
-                            new XElement(XName.Get("DeadLetteringOnMessageExpiration", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnableDeadLetteringOnMessageExpiration)),
-                            new XElement(XName.Get("DeadLetteringOnFilterEvaluationExceptions", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnableDeadLetteringOnFilterEvaluationExceptions)),
-                            description.DefaultRuleDescription != null ? description.DefaultRuleDescription.SerializeRule("DefaultRuleDescription") : null,
-                            new XElement(XName.Get("MaxDeliveryCount", ManagementClientConstants.SbNs), XmlConvert.ToString(description.MaxDeliveryCount)),
-                            new XElement(XName.Get("EnableBatchedOperations", ManagementClientConstants.SbNs), XmlConvert.ToString(description.EnableBatchedOperations)),
-                            new XElement(XName.Get("Status", ManagementClientConstants.SbNs), description.Status.ToString()),
-                            description.ForwardTo != null ? new XElement(XName.Get("ForwardTo", ManagementClientConstants.SbNs), description.ForwardTo) : null,
-                            description.UserMetadata != null ? new XElement(XName.Get("UserMetadata", ManagementClientConstants.SbNs), description.UserMetadata) : null,
-                            description.ForwardDeadLetteredMessagesTo != null ? new XElement(XName.Get("ForwardDeadLetteredMessagesTo", ManagementClientConstants.SbNs), description.ForwardDeadLetteredMessagesTo) : null,
-                            description.AutoDeleteOnIdle != TimeSpan.MaxValue ? new XElement(XName.Get("AutoDeleteOnIdle", ManagementClientConstants.SbNs), XmlConvert.ToString(description.AutoDeleteOnIdle)) : null
+                            subscriptionDescriptionElements
                         ))
                 ));
         }
