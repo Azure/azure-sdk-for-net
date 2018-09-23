@@ -14,7 +14,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// Enumerates over all rows in all tables.
         /// </summary>
         [JsonProperty(PropertyName = "results")]
-        public IEnumerable<IDictionary<string, string>> Results
+        public IEnumerable<IDictionary<string, object>> Results
         {
             get
             {

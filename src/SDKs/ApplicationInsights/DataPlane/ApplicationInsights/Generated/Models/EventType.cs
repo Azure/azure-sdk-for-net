@@ -10,105 +10,22 @@
 
 namespace Microsoft.Azure.ApplicationInsights.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for EventType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum EventType
+    public static class EventType
     {
-        [EnumMember(Value = "$all")]
-        All,
-        [EnumMember(Value = "traces")]
-        Traces,
-        [EnumMember(Value = "customEvents")]
-        CustomEvents,
-        [EnumMember(Value = "pageViews")]
-        PageViews,
-        [EnumMember(Value = "browserTimings")]
-        BrowserTimings,
-        [EnumMember(Value = "requests")]
-        Requests,
-        [EnumMember(Value = "dependencies")]
-        Dependencies,
-        [EnumMember(Value = "exceptions")]
-        Exceptions,
-        [EnumMember(Value = "availabilityResults")]
-        AvailabilityResults,
-        [EnumMember(Value = "performanceCounters")]
-        PerformanceCounters,
-        [EnumMember(Value = "customMetrics")]
-        CustomMetrics
-    }
-    internal static class EventTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this EventType? value)
-        {
-            return value == null ? null : ((EventType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this EventType value)
-        {
-            switch( value )
-            {
-                case EventType.All:
-                    return "$all";
-                case EventType.Traces:
-                    return "traces";
-                case EventType.CustomEvents:
-                    return "customEvents";
-                case EventType.PageViews:
-                    return "pageViews";
-                case EventType.BrowserTimings:
-                    return "browserTimings";
-                case EventType.Requests:
-                    return "requests";
-                case EventType.Dependencies:
-                    return "dependencies";
-                case EventType.Exceptions:
-                    return "exceptions";
-                case EventType.AvailabilityResults:
-                    return "availabilityResults";
-                case EventType.PerformanceCounters:
-                    return "performanceCounters";
-                case EventType.CustomMetrics:
-                    return "customMetrics";
-            }
-            return null;
-        }
-
-        internal static EventType? ParseEventType(this string value)
-        {
-            switch( value )
-            {
-                case "$all":
-                    return EventType.All;
-                case "traces":
-                    return EventType.Traces;
-                case "customEvents":
-                    return EventType.CustomEvents;
-                case "pageViews":
-                    return EventType.PageViews;
-                case "browserTimings":
-                    return EventType.BrowserTimings;
-                case "requests":
-                    return EventType.Requests;
-                case "dependencies":
-                    return EventType.Dependencies;
-                case "exceptions":
-                    return EventType.Exceptions;
-                case "availabilityResults":
-                    return EventType.AvailabilityResults;
-                case "performanceCounters":
-                    return EventType.PerformanceCounters;
-                case "customMetrics":
-                    return EventType.CustomMetrics;
-            }
-            return null;
-        }
+        public const string All = "$all";
+        public const string Traces = "traces";
+        public const string CustomEvents = "customEvents";
+        public const string PageViews = "pageViews";
+        public const string BrowserTimings = "browserTimings";
+        public const string Requests = "requests";
+        public const string Dependencies = "dependencies";
+        public const string Exceptions = "exceptions";
+        public const string AvailabilityResults = "availabilityResults";
+        public const string PerformanceCounters = "performanceCounters";
+        public const string CustomMetrics = "customMetrics";
     }
 }

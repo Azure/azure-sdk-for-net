@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/v1/apps/DEMO_APP/events/pageViews?timespan=PT12H&$top=10",
-      "EncodedRequestUri": "L3YxL2FwcHMvREVNT19BUFAvZXZlbnRzL3BhZ2VWaWV3cz90aW1lc3Bhbj1QVDEySCYkdG9wPTEw",
+      "RequestUri": "/v1/apps/DEMO_APP/events/pageViews?timespan=P1D&$top=1",
+      "EncodedRequestUri": "L3YxL2FwcHMvREVNT19BUFAvZXZlbnRzL3BhZ2VWaWV3cz90aW1lc3Bhbj1QMUQmJHRvcD0x",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,7 +10,7 @@
           "DEMO_KEY"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.00001.0",
           "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
         ],
         "prefer": [
@@ -20,25 +20,18 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "496e0c80-3210-4a8e-9f11-d2b3a576f867"
+          "698bcd38-0dec-4c55-96f7-8980f4685ac2"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://api.applicationinsights.io/v1/apps/DEMO_APP/events/$metadata#pageViews\",\r\n  \"value\": [\r\n    {\r\n      \"id\": \"9c71abb0-fbbf-11e7-88c9-53bb74d81bb1\",\r\n      \"type\": \"pageView\",\r\n      \"count\": 1,\r\n      \"timestamp\": \"2018-01-17T19:50:00.04Z\",\r\n      \"customDimensions\": null,\r\n      \"customMeasurements\": null,\r\n      \"operation\": {\r\n        \"name\": \"/\",\r\n        \"id\": \"5tfK8\",\r\n        \"parentId\": \"5tfK8\",\r\n        \"syntheticSource\": null\r\n      },\r\n      \"session\": {\r\n        \"id\": \"DN50\"\r\n      },\r\n      \"user\": {\r\n        \"id\": \"d8I00\",\r\n        \"accountId\": null,\r\n        \"authenticatedId\": null\r\n      },\r\n      \"cloud\": {\r\n        \"roleName\": null,\r\n        \"roleInstance\": null\r\n      },\r\n      \"ai\": {\r\n        \"iKey\": \"5a2e4e0c-e136-4a15-9824-90ba859b0a89\",\r\n        \"appName\": \"fabrikamprod\",\r\n        \"appId\": \"cf58dcfd-0683-487c-bc84-048789bca8e5\",\r\n        \"sdkVersion\": \"javascript:1.0.8\"\r\n      },\r\n      \"pageView\": {\r\n        \"name\": \"Home Page\",\r\n        \"url\": null,\r\n        \"duration\": null,\r\n        \"performanceBucket\": null\r\n      },\r\n      \"application\": {\r\n        \"version\": \"1.3.2\"\r\n      },\r\n      \"client\": {\r\n        \"model\": null,\r\n        \"os\": \"Windows 8.1\",\r\n        \"type\": \"Browser\",\r\n        \"browser\": null,\r\n        \"ip\": \"131.0.40.0\",\r\n        \"city\": \"Sao Goncalo\",\r\n        \"stateOrProvince\": \"Rio de Janeiro\",\r\n        \"countryOrRegion\": \"Brazil\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"9c83ad10-fbbf-11e7-8b62-35e705aefb67\",\r\n      \"type\": \"pageView\",\r\n      \"count\": 1,\r\n      \"timestamp\": \"2018-01-17T19:50:00.04Z\",\r\n      \"customDimensions\": null,\r\n      \"customMeasurements\": null,\r\n      \"operation\": {\r\n        \"name\": \"/\",\r\n        \"id\": \"lV2Vi\",\r\n        \"parentId\": \"lV2Vi\",\r\n        \"syntheticSource\": null\r\n      },\r\n      \"session\": {\r\n        \"id\": \"hAicd\"\r\n      },\r\n      \"user\": {\r\n        \"id\": \"ehG00\",\r\n        \"accountId\": null,\r\n        \"authenticatedId\": null\r\n      },\r\n      \"cloud\": {\r\n        \"roleName\": null,\r\n        \"roleInstance\": null\r\n      },\r\n      \"ai\": {\r\n        \"iKey\": \"5a2e4e0c-e136-4a15-9824-90ba859b0a89\",\r\n        \"appName\": \"fabrikamprod\",\r\n        \"appId\": \"cf58dcfd-0683-487c-bc84-048789bca8e5\",\r\n        \"sdkVersion\": \"javascript:1.0.8\"\r\n      },\r\n      \"pageView\": {\r\n        \"name\": \"Home Page\",\r\n        \"url\": null,\r\n        \"duration\": null,\r\n        \"performanceBucket\": null\r\n      },\r\n      \"application\": {\r\n        \"version\": \"1.2.6\"\r\n      },\r\n      \"client\": {\r\n        \"model\": null,\r\n        \"os\": \"macOS 10.12\",\r\n        \"type\": \"Browser\",\r\n        \"browser\": null,\r\n        \"ip\": \"1.73.100.0\",\r\n        \"city\": \"Yokohama\",\r\n        \"stateOrProvince\": \"Kanagawa\",\r\n        \"countryOrRegion\": \"Japan\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"9c5dae80-fbbf-11e7-abcc-bfc518423d09\",\r\n      \"type\": \"pageView\",\r\n      \"count\": 1,\r\n      \"timestamp\": \"2018-01-17T19:50:00.04Z\",\r\n      \"customDimensions\": null,\r\n      \"customMeasurements\": null,\r\n      \"operation\": {\r\n        \"name\": \"/\",\r\n        \"id\": \"BKmCi\",\r\n        \"parentId\": \"BKmCi\",\r\n        \"syntheticSource\": null\r\n      },\r\n      \"session\": {\r\n        \"id\": \"tROai\"\r\n      },\r\n      \"user\": {\r\n        \"id\": \"h4C00\",\r\n        \"accountId\": null,\r\n        \"authenticatedId\": null\r\n      },\r\n      \"cloud\": {\r\n        \"roleName\": null,\r\n        \"roleInstance\": null\r\n      },\r\n      \"ai\": {\r\n        \"iKey\": \"5a2e4e0c-e136-4a15-9824-90ba859b0a89\",\r\n        \"appName\": \"fabrikamprod\",\r\n        \"appId\": \"cf58dcfd-0683-487c-bc84-048789bca8e5\",\r\n        \"sdkVersion\": \"javascript:1.0.8\"\r\n      },\r\n      \"pageView\": {\r\n        \"name\": \"Customers\",\r\n        \"url\": null,\r\n        \"duration\": null,\r\n        \"performanceBucket\": null\r\n      },\r\n      \"application\": {\r\n        \"version\": \"1.3.2\"\r\n      },\r\n      \"client\": {\r\n        \"model\": null,\r\n        \"os\": \"Ubuntu\",\r\n        \"type\": \"Browser\",\r\n        \"browser\": null,\r\n        \"ip\": \"2.125.100.0\",\r\n        \"city\": \"Peterborough\",\r\n        \"stateOrProvince\": \"Peterborough\",\r\n        \"countryOrRegion\": \"United Kingdom\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"9c8b0010-fbbf-11e7-95fd-bb10dd10cbe5\",\r\n      \"type\": \"pageView\",\r\n      \"count\": 1,\r\n      \"timestamp\": \"2018-01-17T19:50:00.04Z\",\r\n      \"customDimensions\": null,\r\n      \"customMeasurements\": null,\r\n      \"operation\": {\r\n        \"name\": \"/\",\r\n        \"id\": \"4GpHz\",\r\n        \"parentId\": \"4GpHz\",\r\n        \"syntheticSource\": null\r\n      },\r\n      \"session\": {\r\n        \"id\": \"2gp0z\"\r\n      },\r\n      \"user\": {\r\n        \"id\": \"hHR00\",\r\n        \"accountId\": null,\r\n        \"authenticatedId\": null\r\n      },\r\n      \"cloud\": {\r\n        \"roleName\": null,\r\n        \"roleInstance\": null\r\n      },\r\n      \"ai\": {\r\n        \"iKey\": \"5a2e4e0c-e136-4a15-9824-90ba859b0a89\",\r\n        \"appName\": \"fabrikamprod\",\r\n        \"appId\": \"cf58dcfd-0683-487c-bc84-048789bca8e5\",\r\n        \"sdkVersion\": \"javascript:1.0.8\"\r\n      },\r\n      \"pageView\": {\r\n        \"name\": \"Home Page\",\r\n        \"url\": null,\r\n        \"duration\": null,\r\n        \"performanceBucket\": null\r\n      },\r\n      \"application\": {\r\n        \"version\": \"1.3.2\"\r\n      },\r\n      \"client\": {\r\n        \"model\": null,\r\n        \"os\": \"macOS 10.12\",\r\n        \"type\": \"Browser\",\r\n        \"browser\": null,\r\n        \"ip\": \"2.125.100.0\",\r\n        \"city\": \"Peterborough\",\r\n        \"stateOrProvince\": \"Peterborough\",\r\n        \"countryOrRegion\": \"United Kingdom\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"9c73f5a1-fbbf-11e7-99ed-a5bb5322478f\",\r\n      \"type\": \"pageView\",\r\n      \"count\": 1,\r\n      \"timestamp\": \"2018-01-17T19:50:00.04Z\",\r\n      \"customDimensions\": null,\r\n      \"customMeasurements\": null,\r\n      \"operation\": {\r\n        \"name\": \"/\",\r\n        \"id\": \"I//NN\",\r\n        \"parentId\": \"I//NN\",\r\n        \"syntheticSource\": null\r\n      },\r\n      \"session\": {\r\n        \"id\": \"boJ/r\"\r\n      },\r\n      \"user\": {\r\n        \"id\": \"ePF00\",\r\n        \"accountId\": null,\r\n        \"authenticatedId\": null\r\n      },\r\n      \"cloud\": {\r\n        \"roleName\": null,\r\n        \"roleInstance\": null\r\n      },\r\n      \"ai\": {\r\n        \"iKey\": \"5a2e4e0c-e136-4a15-9824-90ba859b0a89\",\r\n        \"appName\": \"fabrikamprod\",\r\n        \"appId\": \"cf58dcfd-0683-487c-bc84-048789bca8e5\",\r\n        \"sdkVersion\": \"javascript:1.0.8\"\r\n      },\r\n      \"pageView\": {\r\n        \"name\": \"Home Page\",\r\n        \"url\": null,\r\n        \"duration\": null,\r\n        \"performanceBucket\": null\r\n      },\r\n      \"application\": {\r\n        \"version\": \"1.3.2\"\r\n      },\r\n      \"client\": {\r\n        \"model\": null,\r\n        \"os\": \"Windows 10\",\r\n        \"type\": \"Browser\",\r\n        \"browser\": null,\r\n        \"ip\": \"1.73.100.0\",\r\n        \"city\": \"Yokohama\",\r\n        \"stateOrProvince\": \"Kanagawa\",\r\n        \"countryOrRegion\": \"Japan\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"9c94c411-fbbf-11e7-a677-7f5420cc9b17\",\r\n      \"type\": \"pageView\",\r\n      \"count\": 1,\r\n      \"timestamp\": \"2018-01-17T19:50:00.04Z\",\r\n      \"customDimensions\": null,\r\n      \"customMeasurements\": null,\r\n      \"operation\": {\r\n        \"name\": \"/\",\r\n        \"id\": \"CgkWm\",\r\n        \"parentId\": \"CgkWm\",\r\n        \"syntheticSource\": null\r\n      },\r\n      \"session\": {\r\n        \"id\": \"1WsSK\"\r\n      },\r\n      \"user\": {\r\n        \"id\": \"dKI00\",\r\n        \"accountId\": null,\r\n        \"authenticatedId\": null\r\n      },\r\n      \"cloud\": {\r\n        \"roleName\": null,\r\n        \"roleInstance\": null\r\n      },\r\n      \"ai\": {\r\n        \"iKey\": \"5a2e4e0c-e136-4a15-9824-90ba859b0a89\",\r\n        \"appName\": \"fabrikamprod\",\r\n        \"appId\": \"cf58dcfd-0683-487c-bc84-048789bca8e5\",\r\n        \"sdkVersion\": \"javascript:1.0.8\"\r\n      },\r\n      \"pageView\": {\r\n        \"name\": \"Home Page\",\r\n        \"url\": null,\r\n        \"duration\": null,\r\n        \"performanceBucket\": null\r\n      },\r\n      \"application\": {\r\n        \"version\": \"1.3.2\"\r\n      },\r\n      \"client\": {\r\n        \"model\": null,\r\n        \"os\": \"Windows 10\",\r\n        \"type\": \"Browser\",\r\n        \"browser\": null,\r\n        \"ip\": \"131.0.40.0\",\r\n        \"city\": \"Sao Goncalo\",\r\n        \"stateOrProvince\": \"Rio de Janeiro\",\r\n        \"countryOrRegion\": \"Brazil\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"9c822670-fbbf-11e7-b8f2-bb2383906b70\",\r\n      \"type\": \"pageView\",\r\n      \"count\": 1,\r\n      \"timestamp\": \"2018-01-17T19:50:00.04Z\",\r\n      \"customDimensions\": null,\r\n      \"customMeasurements\": null,\r\n      \"operation\": {\r\n        \"name\": \"/\",\r\n        \"id\": \"CIre\",\r\n        \"parentId\": \"CIre\",\r\n        \"syntheticSource\": null\r\n      },\r\n      \"session\": {\r\n        \"id\": \"vgDQL\"\r\n      },\r\n      \"user\": {\r\n        \"id\": \"fdD00\",\r\n        \"accountId\": null,\r\n        \"authenticatedId\": null\r\n      },\r\n      \"cloud\": {\r\n        \"roleName\": null,\r\n        \"roleInstance\": null\r\n      },\r\n      \"ai\": {\r\n        \"iKey\": \"5a2e4e0c-e136-4a15-9824-90ba859b0a89\",\r\n        \"appName\": \"fabrikamprod\",\r\n        \"appId\": \"cf58dcfd-0683-487c-bc84-048789bca8e5\",\r\n        \"sdkVersion\": \"javascript:1.0.8\"\r\n      },\r\n      \"pageView\": {\r\n        \"name\": \"Home Page\",\r\n        \"url\": null,\r\n        \"duration\": null,\r\n        \"performanceBucket\": null\r\n      },\r\n      \"application\": {\r\n        \"version\": \"1.2.6\"\r\n      },\r\n      \"client\": {\r\n        \"model\": null,\r\n        \"os\": \"Windows 10\",\r\n        \"type\": \"Browser\",\r\n        \"browser\": null,\r\n        \"ip\": \"1.25.100.0\",\r\n        \"city\": \"Baotou\",\r\n        \"stateOrProvince\": \"Inner Mongolia Autonomous Region\",\r\n        \"countryOrRegion\": \"China\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"9cbb5ee0-fbbf-11e7-b01f-5fa1ac8aeddd\",\r\n      \"type\": \"pageView\",\r\n      \"count\": 1,\r\n      \"timestamp\": \"2018-01-17T19:50:00.04Z\",\r\n      \"customDimensions\": null,\r\n      \"customMeasurements\": null,\r\n      \"operation\": {\r\n        \"name\": \"/\",\r\n        \"id\": \"FjMMU\",\r\n        \"parentId\": \"FjMMU\",\r\n        \"syntheticSource\": null\r\n      },\r\n      \"session\": {\r\n        \"id\": \"wG07R\"\r\n      },\r\n      \"user\": {\r\n        \"id\": \"h3J00\",\r\n        \"accountId\": null,\r\n        \"authenticatedId\": null\r\n      },\r\n      \"cloud\": {\r\n        \"roleName\": null,\r\n        \"roleInstance\": null\r\n      },\r\n      \"ai\": {\r\n        \"iKey\": \"5a2e4e0c-e136-4a15-9824-90ba859b0a89\",\r\n        \"appName\": \"fabrikamprod\",\r\n        \"appId\": \"cf58dcfd-0683-487c-bc84-048789bca8e5\",\r\n        \"sdkVersion\": \"javascript:1.0.8\"\r\n      },\r\n      \"pageView\": {\r\n        \"name\": \"Home Page\",\r\n        \"url\": null,\r\n        \"duration\": null,\r\n        \"performanceBucket\": null\r\n      },\r\n      \"application\": {\r\n        \"version\": \"1.2.6\"\r\n      },\r\n      \"client\": {\r\n        \"model\": null,\r\n        \"os\": \"Windows 10\",\r\n        \"type\": \"Browser\",\r\n        \"browser\": null,\r\n        \"ip\": \"2.125.100.0\",\r\n        \"city\": \"Peterborough\",\r\n        \"stateOrProvince\": \"Peterborough\",\r\n        \"countryOrRegion\": \"United Kingdom\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"9c5dfca0-fbbf-11e7-bf96-8777e379f10c\",\r\n      \"type\": \"pageView\",\r\n      \"count\": 1,\r\n      \"timestamp\": \"2018-01-17T19:50:00.04Z\",\r\n      \"customDimensions\": null,\r\n      \"customMeasurements\": null,\r\n      \"operation\": {\r\n        \"name\": \"/\",\r\n        \"id\": \"LO53I\",\r\n        \"parentId\": \"LO53I\",\r\n        \"syntheticSource\": null\r\n      },\r\n      \"session\": {\r\n        \"id\": \"W+I4o\"\r\n      },\r\n      \"user\": {\r\n        \"id\": \"dNK00\",\r\n        \"accountId\": null,\r\n        \"authenticatedId\": null\r\n      },\r\n      \"cloud\": {\r\n        \"roleName\": null,\r\n        \"roleInstance\": null\r\n      },\r\n      \"ai\": {\r\n        \"iKey\": \"5a2e4e0c-e136-4a15-9824-90ba859b0a89\",\r\n        \"appName\": \"fabrikamprod\",\r\n        \"appId\": \"cf58dcfd-0683-487c-bc84-048789bca8e5\",\r\n        \"sdkVersion\": \"javascript:1.0.8\"\r\n      },\r\n      \"pageView\": {\r\n        \"name\": \"Home Page\",\r\n        \"url\": null,\r\n        \"duration\": null,\r\n        \"performanceBucket\": null\r\n      },\r\n      \"application\": {\r\n        \"version\": \"1.3.2\"\r\n      },\r\n      \"client\": {\r\n        \"model\": null,\r\n        \"os\": \"macOS 10.12\",\r\n        \"type\": \"Browser\",\r\n        \"browser\": null,\r\n        \"ip\": \"131.0.40.0\",\r\n        \"city\": \"Sao Goncalo\",\r\n        \"stateOrProvince\": \"Rio de Janeiro\",\r\n        \"countryOrRegion\": \"Brazil\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"9c71abb0-fbbf-11e7-8bf2-118dea8db50f\",\r\n      \"type\": \"pageView\",\r\n      \"count\": 1,\r\n      \"timestamp\": \"2018-01-17T19:50:00.04Z\",\r\n      \"customDimensions\": null,\r\n      \"customMeasurements\": null,\r\n      \"operation\": {\r\n        \"name\": \"/\",\r\n        \"id\": \"zUjUa\",\r\n        \"parentId\": \"zUjUa\",\r\n        \"syntheticSource\": null\r\n      },\r\n      \"session\": {\r\n        \"id\": \"Gmur+\"\r\n      },\r\n      \"user\": {\r\n        \"id\": \"dfH00\",\r\n        \"accountId\": null,\r\n        \"authenticatedId\": null\r\n      },\r\n      \"cloud\": {\r\n        \"roleName\": null,\r\n        \"roleInstance\": null\r\n      },\r\n      \"ai\": {\r\n        \"iKey\": \"5a2e4e0c-e136-4a15-9824-90ba859b0a89\",\r\n        \"appName\": \"fabrikamprod\",\r\n        \"appId\": \"cf58dcfd-0683-487c-bc84-048789bca8e5\",\r\n        \"sdkVersion\": \"javascript:1.0.8\"\r\n      },\r\n      \"pageView\": {\r\n        \"name\": \"Home Page\",\r\n        \"url\": null,\r\n        \"duration\": null,\r\n        \"performanceBucket\": null\r\n      },\r\n      \"application\": {\r\n        \"version\": \"1.3.2\"\r\n      },\r\n      \"client\": {\r\n        \"model\": null,\r\n        \"os\": \"Windows 10\",\r\n        \"type\": \"Browser\",\r\n        \"browser\": null,\r\n        \"ip\": \"131.0.40.0\",\r\n        \"city\": \"Sao Goncalo\",\r\n        \"stateOrProvince\": \"Rio de Janeiro\",\r\n        \"countryOrRegion\": \"Brazil\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8; ieee754compatible=false; odata.metadata=none; odata.streaming=false"
-        ],
         "Connection": [
           "keep-alive"
         ],
         "Date": [
-          "Wed, 17 Jan 2018 19:54:30 GMT"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
+          "Sun, 23 Sep 2018 03:30:21 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-blue.96febf84-fb37-11e7-a5b2-70b3d5800008"
+          "1.1 draft-ai-blue.7d1dc807-be68-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"
@@ -54,20 +47,27 @@
           "*"
         ],
         "Access-Control-Expose-Headers": [
-          "Retry-After,Age,WWW-Authenticate"
+          "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location"
         ],
         "OData-Version": [
           "4.0;"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "934"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8; ieee754compatible=false; odata.metadata=none; odata.streaming=false"
         ]
       },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://api.applicationinsights.io/v1/apps/DEMO_APP/events/$metadata#pageViews\",\r\n  \"value\": [\r\n    {\r\n      \"id\": \"8e7fba40-bedf-11e8-a21a-b51b58ae909a\",\r\n      \"count\": 1,\r\n      \"type\": \"pageView\",\r\n      \"timestamp\": \"2018-09-23T03:20:00.056Z\",\r\n      \"customDimensions\": null,\r\n      \"customMeasurements\": null,\r\n      \"operation\": {\r\n        \"name\": \"/\",\r\n        \"id\": \"VJYXP\",\r\n        \"parentId\": \"VJYXP\",\r\n        \"syntheticSource\": \"\"\r\n      },\r\n      \"session\": {\r\n        \"id\": \"3fhdj\"\r\n      },\r\n      \"user\": {\r\n        \"id\": \"f9N00\",\r\n        \"accountId\": \"\",\r\n        \"authenticatedId\": \"\"\r\n      },\r\n      \"cloud\": {\r\n        \"roleName\": \"\",\r\n        \"roleInstance\": \"\"\r\n      },\r\n      \"ai\": {\r\n        \"iKey\": \"5a2e4e0c-e136-4a15-9824-90ba859b0a89\",\r\n        \"appName\": \"fabrikamprod\",\r\n        \"appId\": \"cf58dcfd-0683-487c-bc84-048789bca8e5\",\r\n        \"sdkVersion\": \"javascript:1.0.8\"\r\n      },\r\n      \"pageView\": {\r\n        \"name\": \"Home Page\",\r\n        \"url\": \"\",\r\n        \"duration\": null,\r\n        \"performanceBucket\": \"\",\r\n        \"id\": \"\"\r\n      },\r\n      \"application\": {\r\n        \"version\": \"1.2.6\"\r\n      },\r\n      \"client\": {\r\n        \"model\": \"\",\r\n        \"os\": \"Windows 10\",\r\n        \"type\": \"Browser\",\r\n        \"browser\": \"\",\r\n        \"ip\": \"0.0.0.0\",\r\n        \"city\": \"Baotou\",\r\n        \"stateOrProvince\": \"Inner Mongolia Autonomous Region\",\r\n        \"countryOrRegion\": \"China\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/v1/apps/DEMO_APP/events/pageViews/9c71abb0-fbbf-11e7-88c9-53bb74d81bb1?timespan=PT12H",
-      "EncodedRequestUri": "L3YxL2FwcHMvREVNT19BUFAvZXZlbnRzL3BhZ2VWaWV3cy85YzcxYWJiMC1mYmJmLTExZTctODhjOS01M2JiNzRkODFiYjE/dGltZXNwYW49UFQxMkg=",
+      "RequestUri": "/v1/apps/DEMO_APP/events/pageViews/8e7fba40-bedf-11e8-a21a-b51b58ae909a?timespan=P1D",
+      "EncodedRequestUri": "L3YxL2FwcHMvREVNT19BUFAvZXZlbnRzL3BhZ2VWaWV3cy84ZTdmYmE0MC1iZWRmLTExZTgtYTIxYS1iNTFiNThhZTkwOWE/dGltZXNwYW49UDFE",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -75,7 +75,7 @@
           "DEMO_KEY"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.00001.0",
           "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
         ],
         "prefer": [
@@ -85,25 +85,18 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "9628e30a-ea0c-4170-98be-a99c418889b2"
+          "7e9461ee-ad19-4202-91ba-a908c580bf49"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://api.applicationinsights.io/v1/apps/DEMO_APP/events/pageViews/$metadata#pageViews\",\r\n  \"value\": [\r\n    {\r\n      \"id\": \"9c71abb0-fbbf-11e7-88c9-53bb74d81bb1\",\r\n      \"type\": \"pageView\",\r\n      \"count\": 1,\r\n      \"timestamp\": \"2018-01-17T19:50:00.04Z\",\r\n      \"customDimensions\": null,\r\n      \"customMeasurements\": null,\r\n      \"operation\": {\r\n        \"name\": \"/\",\r\n        \"id\": \"5tfK8\",\r\n        \"parentId\": \"5tfK8\",\r\n        \"syntheticSource\": null\r\n      },\r\n      \"session\": {\r\n        \"id\": \"DN50\"\r\n      },\r\n      \"user\": {\r\n        \"id\": \"d8I00\",\r\n        \"accountId\": null,\r\n        \"authenticatedId\": null\r\n      },\r\n      \"cloud\": {\r\n        \"roleName\": null,\r\n        \"roleInstance\": null\r\n      },\r\n      \"ai\": {\r\n        \"iKey\": \"5a2e4e0c-e136-4a15-9824-90ba859b0a89\",\r\n        \"appName\": \"fabrikamprod\",\r\n        \"appId\": \"cf58dcfd-0683-487c-bc84-048789bca8e5\",\r\n        \"sdkVersion\": \"javascript:1.0.8\"\r\n      },\r\n      \"pageView\": {\r\n        \"name\": \"Home Page\",\r\n        \"url\": null,\r\n        \"duration\": null,\r\n        \"performanceBucket\": null\r\n      },\r\n      \"application\": {\r\n        \"version\": \"1.3.2\"\r\n      },\r\n      \"client\": {\r\n        \"model\": null,\r\n        \"os\": \"Windows 8.1\",\r\n        \"type\": \"Browser\",\r\n        \"browser\": null,\r\n        \"ip\": \"131.0.40.0\",\r\n        \"city\": \"Sao Goncalo\",\r\n        \"stateOrProvince\": \"Rio de Janeiro\",\r\n        \"countryOrRegion\": \"Brazil\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "945"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8; ieee754compatible=false; odata.metadata=none; odata.streaming=false"
-        ],
         "Connection": [
           "keep-alive"
         ],
         "Date": [
-          "Wed, 17 Jan 2018 19:54:31 GMT"
+          "Sun, 23 Sep 2018 03:30:21 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-blue.a74bfc44-fb36-11e7-a5b2-70b3d5800008"
+          "1.1 draft-ai-blue.b1cec974-be8f-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"
@@ -119,15 +112,22 @@
           "*"
         ],
         "Access-Control-Expose-Headers": [
-          "Retry-After,Age,WWW-Authenticate"
+          "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location"
         ],
         "OData-Version": [
           "4.0;"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "944"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8; ieee754compatible=false; odata.metadata=none; odata.streaming=false"
         ]
       },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://api.applicationinsights.io/v1/apps/DEMO_APP/events/pageViews/$metadata#pageViews\",\r\n  \"value\": [\r\n    {\r\n      \"id\": \"8e7fba40-bedf-11e8-a21a-b51b58ae909a\",\r\n      \"count\": 1,\r\n      \"type\": \"pageView\",\r\n      \"timestamp\": \"2018-09-23T03:20:00.056Z\",\r\n      \"customDimensions\": null,\r\n      \"customMeasurements\": null,\r\n      \"operation\": {\r\n        \"name\": \"/\",\r\n        \"id\": \"VJYXP\",\r\n        \"parentId\": \"VJYXP\",\r\n        \"syntheticSource\": \"\"\r\n      },\r\n      \"session\": {\r\n        \"id\": \"3fhdj\"\r\n      },\r\n      \"user\": {\r\n        \"id\": \"f9N00\",\r\n        \"accountId\": \"\",\r\n        \"authenticatedId\": \"\"\r\n      },\r\n      \"cloud\": {\r\n        \"roleName\": \"\",\r\n        \"roleInstance\": \"\"\r\n      },\r\n      \"ai\": {\r\n        \"iKey\": \"5a2e4e0c-e136-4a15-9824-90ba859b0a89\",\r\n        \"appName\": \"fabrikamprod\",\r\n        \"appId\": \"cf58dcfd-0683-487c-bc84-048789bca8e5\",\r\n        \"sdkVersion\": \"javascript:1.0.8\"\r\n      },\r\n      \"pageView\": {\r\n        \"name\": \"Home Page\",\r\n        \"url\": \"\",\r\n        \"duration\": null,\r\n        \"performanceBucket\": \"\",\r\n        \"id\": \"\"\r\n      },\r\n      \"application\": {\r\n        \"version\": \"1.2.6\"\r\n      },\r\n      \"client\": {\r\n        \"model\": \"\",\r\n        \"os\": \"Windows 10\",\r\n        \"type\": \"Browser\",\r\n        \"browser\": \"\",\r\n        \"ip\": \"0.0.0.0\",\r\n        \"city\": \"Baotou\",\r\n        \"stateOrProvince\": \"Inner Mongolia Autonomous Region\",\r\n        \"countryOrRegion\": \"China\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

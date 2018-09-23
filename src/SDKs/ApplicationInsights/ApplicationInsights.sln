@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.ApplicationInsights.Tests", "DataPlane\Data.ApplicationInsights.Tests\Data.ApplicationInsights.Tests.csproj", "{FA06A27D-4D07-4157-9C61-36BEBD67970D}"
 EndProject
