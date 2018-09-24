@@ -250,8 +250,8 @@ namespace Microsoft.Azure.ServiceBus.Management
         }
 
         /// <summary>
-        /// List of properties that were retrieved using GetSubscription but is not understood by this version of client is stored here.
-        /// These will be sent back to the service as-is when UpdateSubscription is called on this SubscriptionDescription.
+        /// List of properties that were retrieved using GetSubscription but are not understood by this version of client is stored here.
+        /// The list will be sent back when an already retrieved SubscriptionDescription will be used in UpdateSubscription call.
         /// </summary>
         internal List<object> UnknownProperties { get; set; }
 

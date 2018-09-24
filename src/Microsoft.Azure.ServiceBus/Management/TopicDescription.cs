@@ -189,8 +189,8 @@ namespace Microsoft.Azure.ServiceBus.Management
         }
 
         /// <summary>
-        /// List of properties that were retrieved using GetTopic but is not understood by this version of client is stored here.
-        /// These will be sent back to the service as-is when UpdateTopic is called on this TopicDescription.
+        /// List of properties that were retrieved using GetTopic but are not understood by this version of client is stored here.
+        /// The list will be sent back when an already retrieved TopicDescription will be used in UpdateTopic call. 
         /// </summary>
         internal List<object> UnknownProperties { get; set; }
 

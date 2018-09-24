@@ -285,8 +285,8 @@ namespace Microsoft.Azure.ServiceBus.Management
         }
 
         /// <summary>
-        /// List of properties that were retrieved using GetQueue but is not understood by this version of client is stored here.
-        /// These will be sent back to the service as-is when UpdateQueue is called on this QueueDescription.
+        /// List of properties that were retrieved using GetQueue but are not understood by this version of client is stored here.
+        /// The list will be sent back when an already retrieved QueueDescription will be used in UpdateQueue call.
         /// </summary>
         internal List<object> UnknownProperties { get; set; }
 
