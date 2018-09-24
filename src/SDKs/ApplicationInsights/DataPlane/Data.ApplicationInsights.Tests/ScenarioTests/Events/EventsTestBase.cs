@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Azure.ApplicationInsights.Models;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Newtonsoft.Json;
 using Xunit;
 

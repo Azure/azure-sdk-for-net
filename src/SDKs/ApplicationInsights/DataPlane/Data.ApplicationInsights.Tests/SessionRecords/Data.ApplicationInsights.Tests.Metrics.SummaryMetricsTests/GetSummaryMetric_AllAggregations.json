@@ -11,7 +11,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.00001.0",
-          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
+          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.0.0.0"
         ],
         "prefer": [
           "response-v1=true"
@@ -20,7 +20,7 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "107a18a5-b960-42b2-955b-a5cd3d1fbc39"
+          "ffd4e11a-575f-43cc-b239-2e0d8ea8ba75"
         ]
       },
       "ResponseHeaders": {
@@ -28,10 +28,10 @@
           "keep-alive"
         ],
         "Date": [
-          "Sun, 23 Sep 2018 03:30:27 GMT"
+          "Mon, 24 Sep 2018 21:36:23 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-blue.154f14c7-be2d-11e8-b19c-70b3d5800001"
+          "1.1 draft-ai-blue.9c3cda1e-bfa6-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"
@@ -53,13 +53,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Content-Length": [
-          "167"
+          "170"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-09-22T15:30:27.094Z\",\r\n    \"end\": \"2018-09-23T03:30:27.094Z\",\r\n    \"requests/duration\": {\r\n      \"avg\": 72.93,\r\n      \"count\": 38814,\r\n      \"min\": 0.43,\r\n      \"max\": 23236,\r\n      \"sum\": 2830816.67\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-09-24T09:36:22.94Z\",\r\n    \"end\": \"2018-09-24T21:36:22.94Z\",\r\n    \"requests/duration\": {\r\n      \"avg\": 83.25,\r\n      \"count\": 39162,\r\n      \"min\": 0.44,\r\n      \"max\": 24541.22,\r\n      \"sum\": 3260388.99\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

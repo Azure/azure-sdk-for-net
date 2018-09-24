@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.ApplicationInsights
+namespace Microsoft.Azure.ApplicationInsights.Query
 {
     using Microsoft.Rest;
     using Models;
@@ -52,9 +52,9 @@ namespace Microsoft.Azure.ApplicationInsights
         IEvents Events { get; }
 
         /// <summary>
-        /// Gets the IQuery.
+        /// Gets the IQueryOperations.
         /// </summary>
-        IQuery Query { get; }
+        IQueryOperations Query { get; }
 
     }
 }

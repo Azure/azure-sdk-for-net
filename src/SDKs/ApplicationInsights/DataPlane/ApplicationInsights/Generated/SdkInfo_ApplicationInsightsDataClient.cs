@@ -5,7 +5,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.ApplicationInsights
+namespace Microsoft.Azure.ApplicationInsights.Query
 {
   using System;
   using System.Collections.Generic;

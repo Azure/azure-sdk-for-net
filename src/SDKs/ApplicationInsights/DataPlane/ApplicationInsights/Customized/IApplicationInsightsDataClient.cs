@@ -1,10 +1,10 @@
-﻿using Microsoft.Azure.ApplicationInsights.Models;
+﻿using Microsoft.Azure.ApplicationInsights.Query.Models;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Rest;
 
-namespace Microsoft.Azure.ApplicationInsights
+namespace Microsoft.Azure.ApplicationInsights.Query
 {
     public partial interface IApplicationInsightsDataClient
     {

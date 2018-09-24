@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Azure.ApplicationInsights.Models;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Xunit;
 
 namespace Data.ApplicationInsights.Tests.Metrics

@@ -11,7 +11,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.00001.0",
-          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
+          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.0.0.0"
         ],
         "prefer": [
           "response-v1=true"
@@ -20,7 +20,7 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "d0fb26d4-c778-4af9-8759-302cf7a7feb8"
+          "19ab3d05-c353-4070-a499-d040b230f5be"
         ]
       },
       "ResponseHeaders": {
@@ -28,10 +28,10 @@
           "keep-alive"
         ],
         "Date": [
-          "Sun, 23 Sep 2018 03:30:26 GMT"
+          "Mon, 24 Sep 2018 21:33:40 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-blue.5a530b04-be21-11e8-b19c-70b3d5800001"
+          "1.1 draft-ai-blue.23308d31-c024-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"
@@ -59,7 +59,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-09-22T15:30:26.864Z\",\r\n    \"end\": \"2018-09-23T03:30:26.864Z\",\r\n    \"segments\": [\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 214.42\r\n        },\r\n        \"request/resultCode\": \"500\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 54.86\r\n        },\r\n        \"request/resultCode\": \"200\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 9.51\r\n        },\r\n        \"request/resultCode\": \"404\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-09-24T09:33:40.746Z\",\r\n    \"end\": \"2018-09-24T21:33:40.746Z\",\r\n    \"segments\": [\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 237.06\r\n        },\r\n        \"request/resultCode\": \"500\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 63.6\r\n        },\r\n        \"request/resultCode\": \"200\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 16.59\r\n        },\r\n        \"request/resultCode\": \"404\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

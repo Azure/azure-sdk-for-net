@@ -1,5 +1,5 @@
-﻿using Microsoft.Azure.ApplicationInsights;
-using Microsoft.Azure.ApplicationInsights.Models;
+﻿using Microsoft.Azure.ApplicationInsights.Query;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Threading.Tasks;
@@ -46,7 +46,7 @@ namespace Data.ApplicationInsights.Tests.Events
         [InlineData(EventType.CustomMetrics)]
         public async Task GetEventsByType(string eventType)
         {
-            using (var ctx = MockContext.Start(GetType().FullName, $"GetEventsByType.{eventType}"))
+            using (var ctx = MockContext.Start(GetType().FullName, $"GetByType.{eventType}"))
             {
                 var client = GetClient(ctx);
                 var traces = await client.Events.GetByTypeAsync(DefaultAppId, eventType, timespan: Timespan, top: TopCount);

@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.ApplicationInsights
+namespace Microsoft.Azure.ApplicationInsights.Query
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
@@ -55,9 +55,9 @@ namespace Microsoft.Azure.ApplicationInsights
         public virtual IEvents Events { get; private set; }
 
         /// <summary>
-        /// Gets the IQuery.
+        /// Gets the IQueryOperations.
         /// </summary>
-        public virtual IQuery Query { get; private set; }
+        public virtual IQueryOperations Query { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ApplicationInsightsDataClient class.
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.ApplicationInsights
         {
             Metrics = new Metrics(this);
             Events = new Events(this);
-            Query = new Query(this);
+            Query = new QueryOperations(this);
             BaseUri = new System.Uri("https://api.applicationinsights.io/v1");
             SerializationSettings = new JsonSerializerSettings
             {

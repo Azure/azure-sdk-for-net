@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Data.ApplicationInsights.Tests.Events;
-using Microsoft.Azure.ApplicationInsights;
-using Microsoft.Azure.ApplicationInsights.Models;
+using Microsoft.Azure.ApplicationInsights.Query;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json;
 using Xunit;
@@ -26,7 +26,7 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
         public async Task GetEventsAsync<T>(string eventType, MultiQueryAsync<T> multiQueryAsync, SingleQueryAsync<T> singleQueryAsync,
             object unused1, object unused2) where T : EventsResultData
         {
-            using (var ctx = MockContext.Start(GetType().FullName, $"GetEvents.{eventType}"))
+            using (var ctx = MockContext.Start(GetType().FullName, $"GetByTypeAsync.{eventType}"))
             {
                 var timespan = "P1D";
                 var top = 1;
@@ -68,10 +68,10 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
         [MemberData(nameof(AvailabilityResultsData))]
         [MemberData(nameof(PerformanceCountersData))]
         [MemberData(nameof(CustomMetricsData))]
-        public void GetEvents<T>(string eventType, object unused1, object unused2,
+        public void GetByType<T>(string eventType, object unused1, object unused2,
             MultiQuery<T> multiQuery, SingleQuery<T> singleQuery) where T : EventsResultData
         {
-            using (var ctx = MockContext.Start(GetType().FullName, $"GetEvents.{eventType}"))
+            using (var ctx = MockContext.Start(GetType().FullName, $"GetByType.{eventType}"))
             {
                 var timespan = "P1D";
                 var top = 10;

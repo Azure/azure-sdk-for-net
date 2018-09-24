@@ -11,7 +11,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.00001.0",
-          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
+          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.0.0.0"
         ],
         "prefer": [
           "response-v1=true"
@@ -20,7 +20,7 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "5a5d82c2-fdee-4163-8895-246c5403ba58"
+          "58f01adb-4daa-4d92-97f9-f5f93d41043f"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -34,10 +34,10 @@
           "keep-alive"
         ],
         "Date": [
-          "Sun, 23 Sep 2018 03:30:28 GMT"
+          "Mon, 24 Sep 2018 21:36:21 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-blue.154f14c7-be2d-11e8-b19c-70b3d5800001"
+          "1.1 draft-ai-blue.31a1c7f5-c02c-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"
@@ -59,13 +59,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Content-Length": [
-          "934"
+          "982"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"AggregatedSegmentMetric\",\r\n    \"status\": 200,\r\n    \"body\": {\r\n      \"value\": {\r\n        \"start\": \"2018-09-22T15:30:27.953Z\",\r\n        \"end\": \"2018-09-23T03:30:27.953Z\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 826.12\r\n            },\r\n            \"request/name\": \"GET Customers/Details\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 822.8\r\n            },\r\n            \"request/name\": \"GET ServiceTickets/Assign\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 489.72\r\n            },\r\n            \"request/name\": \"GET Home/Index\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 183.74\r\n            },\r\n            \"request/name\": \"GET robots.txt/Index\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 146.31\r\n            },\r\n            \"request/name\": \"GET Customers/Edit\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 116.14\r\n            },\r\n            \"request/name\": \"POST ServiceTickets/Create\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 109.72\r\n            },\r\n            \"request/name\": \"GET ServiceTickets/Index\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 77.15\r\n            },\r\n            \"request/name\": \"GET ServiceTickets/Delete\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 55.04\r\n            },\r\n            \"request/name\": \"GET /FabrikamProd/Scripts/knockout-1.2.0.js\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 47.88\r\n            },\r\n            \"request/name\": \"GET ServiceTickets/Create\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"AggregatedSegmentMetric\",\r\n    \"status\": 200,\r\n    \"body\": {\r\n      \"value\": {\r\n        \"start\": \"2018-09-24T09:36:21.44Z\",\r\n        \"end\": \"2018-09-24T21:36:21.44Z\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 930.95\r\n            },\r\n            \"request/name\": \"GET Customers/Details\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 559.83\r\n            },\r\n            \"request/name\": \"GET Home/Index\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 297.02\r\n            },\r\n            \"request/name\": \"GET Reports/Tickets\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 275\r\n            },\r\n            \"request/name\": \"GET robots.txt/Index\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 229.34\r\n            },\r\n            \"request/name\": \"GET /FabrikamProd/Scripts/jQuery.tmpl.min.js\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 178.54\r\n            },\r\n            \"request/name\": \"GET Reports/Employees\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 176.04\r\n            },\r\n            \"request/name\": \"GET /FabrikamProd/Scripts/jquery-1.5.1.min.js\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 164.16\r\n            },\r\n            \"request/name\": \"GET ServiceTickets/Edit\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 139.61\r\n            },\r\n            \"request/name\": \"GET /FabrikamProd/Content/themes/base/jquery.ui.all.css\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 124.57\r\n            },\r\n            \"request/name\": \"POST ServiceTickets/Create\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     }
   ],

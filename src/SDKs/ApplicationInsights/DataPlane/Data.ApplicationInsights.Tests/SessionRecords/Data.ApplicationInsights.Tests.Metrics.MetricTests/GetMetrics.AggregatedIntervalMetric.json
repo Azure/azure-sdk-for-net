@@ -11,7 +11,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.00001.0",
-          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
+          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.0.0.0"
         ],
         "prefer": [
           "response-v1=true"
@@ -20,7 +20,7 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "29b2546e-a8c6-4971-9aaa-5fe0613ca6af"
+          "4577c1cf-db95-4364-aa8b-b73cedc03cf6"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -34,10 +34,10 @@
           "keep-alive"
         ],
         "Date": [
-          "Sun, 23 Sep 2018 03:30:27 GMT"
+          "Mon, 24 Sep 2018 21:36:21 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-blue.da6cdf1a-be71-11e8-b19c-70b3d5800001"
+          "1.1 draft-ai-blue.b61bf8d6-bf2d-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"
@@ -59,13 +59,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Content-Length": [
-          "685"
+          "686"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"AggregatedIntervalMetric\",\r\n    \"status\": 200,\r\n    \"body\": {\r\n      \"value\": {\r\n        \"start\": \"2018-09-22T15:30:27.723Z\",\r\n        \"end\": \"2018-09-23T03:30:27.723Z\",\r\n        \"interval\": \"PT3H\",\r\n        \"segments\": [\r\n          {\r\n            \"start\": \"2018-09-22T15:30:27.723Z\",\r\n            \"end\": \"2018-09-22T18:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 77.75\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2018-09-22T18:00:00Z\",\r\n            \"end\": \"2018-09-22T21:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 74.82\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2018-09-22T21:00:00Z\",\r\n            \"end\": \"2018-09-23T00:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 69.54\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2018-09-23T00:00:00Z\",\r\n            \"end\": \"2018-09-23T03:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 68.98\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2018-09-23T03:00:00Z\",\r\n            \"end\": \"2018-09-23T03:30:27.723Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 81.1\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"AggregatedIntervalMetric\",\r\n    \"status\": 200,\r\n    \"body\": {\r\n      \"value\": {\r\n        \"start\": \"2018-09-24T09:36:21.243Z\",\r\n        \"end\": \"2018-09-24T21:36:21.243Z\",\r\n        \"interval\": \"PT3H\",\r\n        \"segments\": [\r\n          {\r\n            \"start\": \"2018-09-24T09:36:21.243Z\",\r\n            \"end\": \"2018-09-24T12:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 76.13\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2018-09-24T12:00:00Z\",\r\n            \"end\": \"2018-09-24T15:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 92.97\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2018-09-24T15:00:00Z\",\r\n            \"end\": \"2018-09-24T18:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 73.28\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2018-09-24T18:00:00Z\",\r\n            \"end\": \"2018-09-24T21:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 91.49\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2018-09-24T21:00:00Z\",\r\n            \"end\": \"2018-09-24T21:36:21.243Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 69.79\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     }
   ],

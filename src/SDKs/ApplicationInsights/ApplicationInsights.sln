@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationInsights.Tests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ApplicationInsights", "Management\Management.ApplicationInsights\Microsoft.Azure.Management.ApplicationInsights.csproj", "{218115E9-B94C-4CBE-9FE4-485DCA96C2FF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ApplicationInsights", "DataPlane\ApplicationInsights\Microsoft.Azure.ApplicationInsights.csproj", "{69672630-2C7C-401F-B923-1D507BD63383}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ApplicationInsights.Query", "DataPlane\ApplicationInsights\Microsoft.Azure.ApplicationInsights.Query.csproj", "{69672630-2C7C-401F-B923-1D507BD63383}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

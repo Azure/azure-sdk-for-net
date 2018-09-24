@@ -11,7 +11,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.00001.0",
-          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
+          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.0.0.0"
         ],
         "prefer": [
           "response-v1=true"
@@ -20,7 +20,7 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "47fedf09-335a-4801-85b2-5b9e0b916ed4"
+          "5b909f74-8435-433d-926f-cd13c456294e"
         ]
       },
       "ResponseHeaders": {
@@ -28,10 +28,10 @@
           "keep-alive"
         ],
         "Date": [
-          "Sun, 23 Sep 2018 03:30:26 GMT"
+          "Mon, 24 Sep 2018 21:33:40 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-blue.72dbc689-be35-11e8-b19c-70b3d5800001"
+          "1.1 draft-ai-blue.9ee17da4-c004-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"
@@ -53,13 +53,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Content-Length": [
-          "441"
+          "445"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-09-22T15:30:26.355Z\",\r\n    \"end\": \"2018-09-23T03:30:26.355Z\",\r\n    \"segments\": [\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 214.42,\r\n          \"count\": 4602,\r\n          \"min\": 19.12,\r\n          \"max\": 3877.63,\r\n          \"sum\": 986753.34\r\n        },\r\n        \"request/resultCode\": \"500\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 54.86,\r\n          \"count\": 33491,\r\n          \"min\": 0.43,\r\n          \"max\": 23236,\r\n          \"sum\": 1837205.88\r\n        },\r\n        \"request/resultCode\": \"200\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 9.51,\r\n          \"count\": 721,\r\n          \"min\": 1.65,\r\n          \"max\": 1004.11,\r\n          \"sum\": 6857.46\r\n        },\r\n        \"request/resultCode\": \"404\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-09-24T09:33:39.593Z\",\r\n    \"end\": \"2018-09-24T21:33:39.593Z\",\r\n    \"segments\": [\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 237.06,\r\n          \"count\": 4634,\r\n          \"min\": 19.24,\r\n          \"max\": 24541.22,\r\n          \"sum\": 1098548.8\r\n        },\r\n        \"request/resultCode\": \"500\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 63.6,\r\n          \"count\": 33786,\r\n          \"min\": 0.44,\r\n          \"max\": 24323.5,\r\n          \"sum\": 2148938.21\r\n        },\r\n        \"request/resultCode\": \"200\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 16.59,\r\n          \"count\": 721,\r\n          \"min\": 1.44,\r\n          \"max\": 1535.19,\r\n          \"sum\": 11963.68\r\n        },\r\n        \"request/resultCode\": \"404\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

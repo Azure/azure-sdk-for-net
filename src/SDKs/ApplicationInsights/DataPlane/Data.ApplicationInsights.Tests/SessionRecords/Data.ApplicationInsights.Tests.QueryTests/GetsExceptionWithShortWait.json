@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.00001.0",
-          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
+          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.0.0.0"
         ],
         "prefer": [
           "response-v1=true,wait=1"
@@ -23,7 +23,7 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "0e0e7402-10d4-454a-8e44-a22c7f28bfa0"
+          "388eb597-d32c-4e8f-a562-bafba5375d74"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -37,10 +37,10 @@
           "keep-alive"
         ],
         "Date": [
-          "Sun, 23 Sep 2018 03:32:05 GMT"
+          "Mon, 24 Sep 2018 21:35:19 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-blue.fd108546-be66-11e8-b19c-70b3d5800001"
+          "1.1 draft-ai-blue.4760ece2-c024-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"

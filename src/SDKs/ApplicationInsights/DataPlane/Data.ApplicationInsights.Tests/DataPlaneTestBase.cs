@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.ApplicationInsights;
+﻿using Microsoft.Azure.ApplicationInsights.Query;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
