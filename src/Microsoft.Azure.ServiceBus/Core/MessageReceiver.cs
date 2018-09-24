@@ -1141,6 +1141,10 @@ namespace Microsoft.Azure.ServiceBus.Core
                 }
                 amqpRequestMessage.Map[ManagementConstants.Properties.SequenceNumbers] = sequenceNumbers;
                 amqpRequestMessage.Map[ManagementConstants.Properties.ReceiverSettleMode] = (uint)(this.ReceiveMode == ReceiveMode.ReceiveAndDelete ? 0 : 1);
+                if (!string.IsNullOrWhiteSpace(this.SessionIdInternal))
+                {
+                    amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionIdInternal;
+                }
 
                 var response = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 

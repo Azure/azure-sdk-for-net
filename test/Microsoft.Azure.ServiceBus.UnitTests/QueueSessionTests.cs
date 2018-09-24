@@ -203,6 +203,32 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
+        [Theory]
+        [MemberData(nameof(TestPermutations))]
+        [DisplayTestMethodName]
+        public async Task ReceiveDeferredMessageForSessionTest(string qName)
+        {
+            var sessionId = Guid.NewGuid().ToString("N").Substring(0, 8);
+            var messageId = Guid.NewGuid().ToString("N").Substring(0, 8);
+
+            var sender = new MessageSender(TestUtility.NamespaceConnectionString, qName);
+            await sender.SendAsync(new Message() { SessionId = sessionId, MessageId = messageId });
+
+            var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, qName);
+            var messageSession = await sessionClient.AcceptMessageSessionAsync(sessionId);
+            var msg = await messageSession.ReceiveAsync();
+            var seqNum = msg.SystemProperties.SequenceNumber;
+            await messageSession.DeferAsync(msg.SystemProperties.LockToken);
+            var msg2 = await messageSession.ReceiveDeferredMessageAsync(seqNum);
+
+            Assert.Equal(seqNum, msg2.SystemProperties.SequenceNumber);
+            Assert.Equal(messageId, msg2.MessageId);
+
+            await sender.CloseAsync();
+            await sessionClient.CloseAsync();
+            await messageSession.CloseAsync();
+        }
+
         [Fact]
         [DisplayTestMethodName]
         public async Task AcceptSessionThrowsSessionCannotBeLockedException()
