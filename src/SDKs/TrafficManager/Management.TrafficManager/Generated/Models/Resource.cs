@@ -50,11 +50,11 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets fully qualified resource Id for the resource. Ex -
+        /// Gets or sets fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Gets the name of the resource
