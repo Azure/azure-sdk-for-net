@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "trafficmanager/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "trafficmanager/resource-manager" -AutoRestVersion "latest" -AutoRestCodeGenerationFlags  "--opt-in-extensible-enums"
