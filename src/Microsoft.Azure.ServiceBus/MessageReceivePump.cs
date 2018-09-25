@@ -231,7 +231,16 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     var amount = MessagingUtilities.CalculateRenewAfterDuration(message.SystemProperties.LockedUntilUtc);
                     MessagingEventSource.Log.MessageReceiverPumpRenewMessageStart(this.messageReceiver.ClientId, message, amount);
-                    await Task.Delay(amount, renewLockCancellationToken).ConfigureAwait(false);
+
+                    // We're awaiting the task created by 'ContinueWith' to avoid awaiting the Delay task which may be canceled
+                    // by the renewLockCancellationToken. This way we prevent a TaskCanceledException.
+                    var delayTask = await Task.Delay(amount, renewLockCancellationToken)
+                        .ContinueWith(t => t, TaskContinuationOptions.ExecuteSynchronously)
+                        .ConfigureAwait(false);
+                    if (delayTask.IsCanceled)
+                    {
+                        break;
+                    }
 
                     if (!this.pumpCancellationToken.IsCancellationRequested &&
                         !renewLockCancellationToken.IsCancellationRequested)
@@ -248,10 +257,9 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     MessagingEventSource.Log.MessageReceiverPumpRenewMessageException(this.messageReceiver.ClientId, message, exception);
 
-                    // TaskCanceled is expected here as renewTasks will be cancelled after the Complete call is made.
-                    // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point 
+                    // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point
                     // this renew exception is not relevant anymore. Lets not bother user with this exception.
-                    if (!(exception is TaskCanceledException) && !(exception is ObjectDisposedException))
+                    if (!(exception is ObjectDisposedException))
                     {
                         await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.RenewLock).ConfigureAwait(false);
                     }
