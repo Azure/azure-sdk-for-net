@@ -4,13 +4,9 @@
     <Description>DataLakeStore.Tests Class Library</Description>
     <AssemblyName>DataLakeStore.Tests</AssemblyName>
     <PackageId>DataLakeStore.Tests</PackageId>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
-
   <ItemGroup>
     <ProjectReference Include="..\Management.DataLake.Store\Microsoft.Azure.Management.DataLake.Store.csproj" />
   </ItemGroup>

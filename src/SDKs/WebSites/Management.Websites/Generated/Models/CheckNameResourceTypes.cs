@@ -19,5 +19,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public const string Site = "Site";
         public const string Slot = "Slot";
         public const string HostingEnvironment = "HostingEnvironment";
+        public const string PublishingUser = "PublishingUser";
+        public const string MicrosoftWebSites = "Microsoft.Web/sites";
+        public const string MicrosoftWebSitesSlots = "Microsoft.Web/sites/slots";
+        public const string MicrosoftWebHostingEnvironments = "Microsoft.Web/hostingEnvironments";
+        public const string MicrosoftWebPublishingUsers = "Microsoft.Web/publishingUsers";
     }
 }

@@ -5,11 +5,11 @@
 
 	<PropertyGroup>
 		<Description>Microsoft Azure CDN Management Library</Description>
-		<Version>4.0.1-preview</Version>
+		<Version>4.0.2-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.Cdn</AssemblyName>    
 		<PackageId>Microsoft.Azure.Management.Cdn</PackageId>
 		<PackageTags>Microsoft Azure CDN management;CDN;Cdn management;</PackageTags>
-		<PackageReleaseNotes>Added delivery policy as a property on an endpoint and generated the SDK using the latest version of the swagger</PackageReleaseNotes>
+		<PackageReleaseNotes>Added Standard_Microsoft sku in CDN pricing tiers and generated the SDK using the latest version of the swagger</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<PropertyGroup>

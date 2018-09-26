@@ -1525,6 +1525,31 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
         [JsonSample]
+        public const string DatabricksLinkedServiceWithNewClusterPy3 = @"
+{
+    name: ""DatabricksLinkedService"",
+    properties: {
+        type: ""AzureDatabricks"",
+        typeProperties: {
+            domain: ""https://westeurope.azuredatabricks.net/"",
+            accessToken: {
+                type: ""SecureString"",
+                value: ""someKey""
+            },
+            newClusterVersion: ""3.4.x-scala2.11"",
+            newClusterNumOfWorker: ""1"",
+            newClusterNodeType: ""Standard_DS3_v2"",
+            newClusterSparkConf: {
+                ""spark.speculation"": true
+            },
+            newClusterSparkEnvVars: {
+                ""PYSPARK_PYTHON"": ""/databricks/python3/bin/python3""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
         public const string MySqlLinkedService = @"
 {
     name: ""MySqlLinkedService"",

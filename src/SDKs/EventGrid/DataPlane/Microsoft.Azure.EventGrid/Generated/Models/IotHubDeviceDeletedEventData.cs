@@ -33,17 +33,14 @@ namespace Microsoft.Azure.EventGrid.Models
         /// <param name="deviceId">The unique identifier of the device. This
         /// case-sensitive string can be up to 128 characters long, and
         /// supports ASCII 7-bit alphanumeric characters plus the following
-        /// special characters: - : . + % _ # * ? ! ( ) , = @ ; $ '.</param>
+        /// special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $
+        /// '.</param>
         /// <param name="hubName">Name of the IoT Hub where the device was
         /// created or deleted.</param>
-        /// <param name="opType">The event type specified for this operation by
-        /// the IoT Hub.</param>
-        /// <param name="operationTimestamp">The ISO8601 timestamp of the
-        /// operation.</param>
         /// <param name="twin">Information about the device twin, which is the
-        /// cloud represenation of application device metadata.</param>
-        public IotHubDeviceDeletedEventData(string deviceId = default(string), string hubName = default(string), string opType = default(string), string operationTimestamp = default(string), DeviceTwinInfo twin = default(DeviceTwinInfo))
-            : base(deviceId, hubName, opType, operationTimestamp, twin)
+        /// cloud representation of application device metadata.</param>
+        public IotHubDeviceDeletedEventData(string deviceId = default(string), string hubName = default(string), DeviceTwinInfo twin = default(DeviceTwinInfo))
+            : base(deviceId, hubName, twin)
         {
             CustomInit();
         }

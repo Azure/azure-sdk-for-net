@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading.Tasks;
 
     /// <summary>
-    /// VirtualWANsOperations operations.
+    /// VirtualWansOperations operations.
     /// </summary>
-    public partial interface IVirtualWANsOperations
+    public partial interface IVirtualWansOperations
     {
         /// <summary>
         /// Retrieves the details of a VirtualWAN.

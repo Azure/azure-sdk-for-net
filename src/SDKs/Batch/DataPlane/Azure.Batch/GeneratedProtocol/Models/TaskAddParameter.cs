@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -178,7 +177,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// For multi-instance tasks, the resource files will only be
         /// downloaded to the compute node on which the primary task is
-        /// executed.
+        /// executed. There is a maximum size for the list of resource files.
+        /// When the max size is exceeded, the request will fail and the
+        /// response error code will be RequestEntityTooLarge. If this occurs,
+        /// the collection of ResourceFiles must be reduced in size. This can
+        /// be achieved using .zip files, Application Packages, or Docker
+        /// Containers.
         /// </remarks>
         [JsonProperty(PropertyName = "resourceFiles")]
         public IList<ResourceFile> ResourceFiles { get; set; }
@@ -283,74 +287,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "authenticationTokenSettings")]
         public AuthenticationTokenSettings AuthenticationTokenSettings { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
-            }
-            if (CommandLine == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
-            }
-            if (ContainerSettings != null)
-            {
-                ContainerSettings.Validate();
-            }
-            if (ResourceFiles != null)
-            {
-                foreach (var element in ResourceFiles)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (OutputFiles != null)
-            {
-                foreach (var element1 in OutputFiles)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (EnvironmentSettings != null)
-            {
-                foreach (var element2 in EnvironmentSettings)
-                {
-                    if (element2 != null)
-                    {
-                        element2.Validate();
-                    }
-                }
-            }
-            if (AffinityInfo != null)
-            {
-                AffinityInfo.Validate();
-            }
-            if (MultiInstanceSettings != null)
-            {
-                MultiInstanceSettings.Validate();
-            }
-            if (ApplicationPackageReferences != null)
-            {
-                foreach (var element3 in ApplicationPackageReferences)
-                {
-                    if (element3 != null)
-                    {
-                        element3.Validate();
-                    }
-                }
-            }
-        }
     }
 }

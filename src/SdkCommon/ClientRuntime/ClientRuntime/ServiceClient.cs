@@ -484,7 +484,7 @@ namespace Microsoft.Rest
         /// <param name="version">Version of the product to be used in the user agent</param>
         public bool SetUserAgent(string productName, string version)
         {
-            if (!_disposed && HttpClient != null)
+            if (!_disposed && HttpClient != null && !string.IsNullOrWhiteSpace(version))
             {
                 string cleanedProductName = CleanUserAgentInfoEntry(productName);
                 AddUserAgentEntry(new ProductInfoHeaderValue(cleanedProductName, version));
@@ -527,7 +527,8 @@ namespace Microsoft.Rest
             // If you want to log ProductName in userAgent, it has to be without spaces
             foreach(ProductInfoHeaderValue piHv in defaultUserAgentInfoList)
             {
-                if(!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase)))
+                if(!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase)) 
+                    && !string.IsNullOrWhiteSpace(piHv.Product.Version))
                 {
                     HttpClient.DefaultRequestHeaders.UserAgent.Add(piHv);
                 }

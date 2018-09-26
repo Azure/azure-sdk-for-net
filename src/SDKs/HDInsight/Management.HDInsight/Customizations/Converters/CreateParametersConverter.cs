@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 string configKey = string.Format(Constants.StorageConfigurations.WasbStorageAccountKeyFormat, storageAccount.Key);
                 coreConfig[configKey] = storageAccount.Value;
             }
-            
+
             configurations[ConfigurationKey.CoreSite] = coreConfig;
         }
 
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.HDInsight
 
             return config;
         }
-        
+
         private static void AddDataLakePropertiesIfNecessary(ClusterCreateParameters createProperties, IDictionary<string, Dictionary<string, string>> configurations)
         {
             ServicePrincipal servicePrincipal = createProperties.Principal as ServicePrincipal;
@@ -209,16 +209,16 @@ namespace Microsoft.Azure.Management.HDInsight
 
                 string connectionUrl =
                     string.Format(Constants.MetastoreConfigurations.ConnectionUrlFormat, hiveMetastore.Server, hiveMetastore.Database);
-
-                configurations.Add(ConfigurationKey.HiveSite, new Dictionary<string, string>
+                
+                configurations.AddOrCombineConfigurations(ConfigurationKey.HiveSite, new Dictionary<string, string>
                 {
                     {Constants.MetastoreConfigurations.HiveSite.ConnectionUrlKey, connectionUrl},
                     {Constants.MetastoreConfigurations.HiveSite.ConnectionUserNameKey, hiveMetastore.User},
                     {Constants.MetastoreConfigurations.HiveSite.ConnectionPasswordKey, hiveMetastore.Password},
                     {Constants.MetastoreConfigurations.HiveSite.ConnectionDriverNameKey, Constants.MetastoreConfigurations.HiveSite.ConnectionDriverNameValue}
                 });
-
-                configurations.Add(ConfigurationKey.HiveEnv, new Dictionary<string, string>
+                
+                configurations.AddOrCombineConfigurations(ConfigurationKey.HiveEnv, new Dictionary<string, string>
                 {
                     {Constants.MetastoreConfigurations.HiveEnv.DatabaseKey, Constants.MetastoreConfigurations.DatabaseValue},
                     {Constants.MetastoreConfigurations.HiveEnv.DatabaseNameKey, hiveMetastore.Database},
@@ -237,8 +237,8 @@ namespace Microsoft.Azure.Management.HDInsight
                     throw new ArgumentException("Please provide the fully qualified metastore name.");
                 }
                 string connectionUrl = string.Format(Constants.MetastoreConfigurations.ConnectionUrlFormat, oozieMetastore.Server, oozieMetastore.Database);
-
-                configurations.Add(ConfigurationKey.OozieSite, new Dictionary<string, string>
+                
+                configurations.AddOrCombineConfigurations(ConfigurationKey.OozieSite, new Dictionary<string, string>
                 {
                     {Constants.MetastoreConfigurations.OozieSite.UrlKey, connectionUrl},
                     {Constants.MetastoreConfigurations.OozieSite.UserNameKey, oozieMetastore.User},
@@ -246,8 +246,8 @@ namespace Microsoft.Azure.Management.HDInsight
                     {Constants.MetastoreConfigurations.OozieSite.DriverKey, Constants.MetastoreConfigurations.OozieSite.DriverValue},
                     {Constants.MetastoreConfigurations.OozieSite.SchemaKey, Constants.MetastoreConfigurations.OozieSite.SchemaValue}
                 });
-
-                configurations.Add(ConfigurationKey.OozieEnv, new Dictionary<string, string>
+                
+                configurations.AddOrCombineConfigurations(ConfigurationKey.OozieEnv, new Dictionary<string, string>
                 {
                     {Constants.MetastoreConfigurations.OozieEnv.DatabaseKey, Constants.MetastoreConfigurations.DatabaseValue},
                     {Constants.MetastoreConfigurations.OozieEnv.DatabaseNameKey, oozieMetastore.Database},
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.HDInsight
 
             //RServer & MLServices clusters contain an additional edge node. Return here for all other types.
             if (!new[] { "RServer", "MLServices" }.Contains(createProperties.ClusterType, StringComparer.OrdinalIgnoreCase))
-                {
+            {
                 return roles;
             }
 
@@ -403,5 +403,28 @@ namespace Microsoft.Azure.Management.HDInsight
                 }
             };
         }
+
+        private static void AddOrCombineConfigurations(this IDictionary<string, Dictionary<string, string>> configurations, string configKey, Dictionary<string, string> newConfigurations)
+        {
+            if (configurations.ContainsKey(configKey))
+            {
+                IEnumerable<string> duplicateConfigs = newConfigurations.Keys.Intersect(configurations[configKey].Keys);
+                if (duplicateConfigs.Any())
+                {
+                    throw new ArgumentException(string.Format($"Configuration already specified: {string.Join(", ", duplicateConfigs)}"));
+                }
+                configurations[configKey] = MergedDictionaries(configurations[configKey], newConfigurations);
+            }
+            else
+            {
+                configurations.Add(configKey, newConfigurations);
+            }
+        }
+
+        private static Dictionary<TKey, TValue> MergedDictionaries<TKey, TValue>(IDictionary<TKey, TValue> dict1, IDictionary<TKey, TValue> dict2)
+        {
+            return dict1.Union(dict2).ToDictionary(p => p.Key, p => p.Value);
+        }
+
     }
 }

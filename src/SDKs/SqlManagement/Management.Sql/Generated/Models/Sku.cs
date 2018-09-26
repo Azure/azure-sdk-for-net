@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// An ARM Resource SKU.
+    /// The resource model definition representing SKU
     /// </summary>
     public partial class Sku
     {
@@ -30,14 +30,19 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="name">The name of the SKU, typically, a letter +
-        /// Number code, e.g. P3.</param>
-        /// <param name="tier">The tier of the particular SKU, e.g. Basic,
-        /// Premium.</param>
-        /// <param name="size">Size of the particular SKU</param>
+        /// <param name="name">The name of the SKU. Ex - P3. It is typically a
+        /// letter+number code</param>
+        /// <param name="tier">This field is required to be implemented by the
+        /// Resource Provider if the service has more than one tier, but is not
+        /// required on a PUT.</param>
+        /// <param name="size">The SKU size. When the name field is the
+        /// combination of tier and some other value, this would be the
+        /// standalone code. </param>
         /// <param name="family">If the service has different generations of
         /// hardware, for the same SKU, then that can be captured here.</param>
-        /// <param name="capacity">Capacity of the particular SKU.</param>
+        /// <param name="capacity">If the SKU supports scale out/in then the
+        /// capacity integer should be included. If scale out/in is not
+        /// possible for the resource this may be omitted.</param>
         public Sku(string name, string tier = default(string), string size = default(string), string family = default(string), int? capacity = default(int?))
         {
             Name = name;
@@ -54,20 +59,23 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the SKU, typically, a letter + Number
-        /// code, e.g. P3.
+        /// Gets or sets the name of the SKU. Ex - P3. It is typically a
+        /// letter+number code
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the tier of the particular SKU, e.g. Basic, Premium.
+        /// Gets or sets this field is required to be implemented by the
+        /// Resource Provider if the service has more than one tier, but is not
+        /// required on a PUT.
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
-        /// Gets or sets size of the particular SKU
+        /// Gets or sets the SKU size. When the name field is the combination
+        /// of tier and some other value, this would be the standalone code.
         /// </summary>
         [JsonProperty(PropertyName = "size")]
         public string Size { get; set; }
@@ -80,7 +88,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string Family { get; set; }
 
         /// <summary>
-        /// Gets or sets capacity of the particular SKU.
+        /// Gets or sets if the SKU supports scale out/in then the capacity
+        /// integer should be included. If scale out/in is not possible for the
+        /// resource this may be omitted.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }

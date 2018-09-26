@@ -1,20 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
- <!-- Please do not move/edit code below this line -->
+  <!-- Please do not move/edit code below this line -->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <!-- Please do not move/edit code above this line -->
+  
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.ContentModerator</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Content Moderator APIs.</Description>
-    <Version>0.12.1-preview</Version>
+    <Version>1.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.ContentModerator</AssemblyName>
     <PackageTags>ContentModerator;Content Moderator;</PackageTags>
     <PackageReleaseNotes>
-    <![CDATA[
-    This is a preview release of the Cognitive Services Content Moderator SDK.
-    
-    Changes in this release:
-    1. Additional AzureRegions: Canada Central, Japan East, Central India and UK South
-    ]]>
+<![CDATA[
+This is a public release of the Cognitive Services Content Moderator SDK.
+
+Included with this release is support for Content Moderator API
+]]>
 	</PackageReleaseNotes>
   </PropertyGroup>
 

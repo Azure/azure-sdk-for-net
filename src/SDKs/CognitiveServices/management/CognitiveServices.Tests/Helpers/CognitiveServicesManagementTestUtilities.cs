@@ -151,8 +151,8 @@ namespace CognitiveServices.Tests.Helpers
 
                 Assert.NotNull(account.Tags);
                 Assert.Equal(2, account.Tags.Count);
-                Assert.Equal(account.Tags["key1"], "value1");
-                Assert.Equal(account.Tags["key2"], "value2");
+                Assert.Equal("value1", account.Tags["key1"]);
+                Assert.Equal("value2", account.Tags["key2"]);
             }
             else
             {

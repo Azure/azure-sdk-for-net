@@ -19,11 +19,12 @@ namespace Microsoft.Azure.Management.Storage
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Storage", "BlobContainers", "2018-03-01-preview"),
-                new Tuple<string, string, string>("Storage", "Operations", "2018-03-01-preview"),
-                new Tuple<string, string, string>("Storage", "Skus", "2018-03-01-preview"),
-                new Tuple<string, string, string>("Storage", "StorageAccounts", "2018-03-01-preview"),
-                new Tuple<string, string, string>("Storage", "Usages", "2018-03-01-preview"),
+                new Tuple<string, string, string>("Storage", "BlobContainers", "2018-07-01"),
+                new Tuple<string, string, string>("Storage", "ManagementPolicies", "2018-03-01-preview"),
+                new Tuple<string, string, string>("Storage", "Operations", "2018-07-01"),
+                new Tuple<string, string, string>("Storage", "Skus", "2018-07-01"),
+                new Tuple<string, string, string>("Storage", "StorageAccounts", "2018-07-01"),
+                new Tuple<string, string, string>("Storage", "Usages", "2018-07-01"),
               }.AsEnumerable();
           }
       }

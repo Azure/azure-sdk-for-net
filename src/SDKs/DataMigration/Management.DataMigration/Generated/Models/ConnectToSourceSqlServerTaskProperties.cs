@@ -41,11 +41,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// submitted. Possible values include: 'Unknown', 'Queued', 'Running',
         /// 'Canceled', 'Succeeded', 'Failed', 'FailedInputValidation',
         /// 'Faulted'</param>
+        /// <param name="commands">Array of command properties.</param>
         /// <param name="input">Task input</param>
         /// <param name="output">Task output. This is ignored if
         /// submitted.</param>
-        public ConnectToSourceSqlServerTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), ConnectToSourceSqlServerTaskInput input = default(ConnectToSourceSqlServerTaskInput), IList<ConnectToSourceSqlServerTaskOutput> output = default(IList<ConnectToSourceSqlServerTaskOutput>))
-            : base(errors, state)
+        public ConnectToSourceSqlServerTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), IList<CommandProperties> commands = default(IList<CommandProperties>), ConnectToSourceSqlServerTaskInput input = default(ConnectToSourceSqlServerTaskInput), IList<ConnectToSourceSqlServerTaskOutput> output = default(IList<ConnectToSourceSqlServerTaskOutput>))
+            : base(errors, state, commands)
         {
             Input = input;
             Output = output;

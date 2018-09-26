@@ -49,6 +49,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for dataset.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Dataset.</param>
+        /// <param name="folder">The folder that this Dataset is in. If not
+        /// specified, Dataset will appear at the root level.</param>
         /// <param name="key">The key of the Amazon S3 object. Type: string (or
         /// Expression with resultType string).</param>
         /// <param name="prefix">The prefix filter for the S3 object name.
@@ -58,8 +60,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="format">The format of files.</param>
         /// <param name="compression">The data compression method used for the
         /// Amazon S3 object.</param>
-        public AmazonS3Dataset(LinkedServiceReference linkedServiceName, object bucketName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object key = default(object), object prefix = default(object), object version = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
-            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations)
+        public AmazonS3Dataset(LinkedServiceReference linkedServiceName, object bucketName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object key = default(object), object prefix = default(object), object version = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations, folder)
         {
             BucketName = bucketName;
             Key = key;

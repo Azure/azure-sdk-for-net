@@ -21,6 +21,10 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Fakes
         public FakeServiceClient(HttpClient httpClient)
             : base(httpClient)
         { }
+
+        public FakeServiceClient(params DelegatingHandler[] handlers) : base(handlers)
+        {
+        }
         
         public FakeServiceClient(HttpClientHandler httpMessageHandler, params DelegatingHandler[] handlers)
             : base(httpMessageHandler, handlers)
@@ -40,7 +44,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Fakes
         private async Task<HttpResponseMessage> DoStuff(string content = null)
         {
             // Construct URL
-            string url = "http://tempuri.norg";
+            string url = "http://tempuri.org";
 
             // Create HTTP transport objects
             _httpRequest = null;

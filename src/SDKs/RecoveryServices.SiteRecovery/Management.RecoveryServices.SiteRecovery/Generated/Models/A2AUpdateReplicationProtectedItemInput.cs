@@ -42,12 +42,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// details.</param>
         /// <param name="recoveryBootDiagStorageAccountId">The boot diagnostic
         /// storage account.</param>
-        public A2AUpdateReplicationProtectedItemInput(string recoveryCloudServiceId = default(string), string recoveryResourceGroupId = default(string), IList<A2AVmManagedDiskUpdateDetails> managedDiskUpdateDetails = default(IList<A2AVmManagedDiskUpdateDetails>), string recoveryBootDiagStorageAccountId = default(string))
+        /// <param name="diskEncryptionInfo">The recovery os disk encryption
+        /// information.</param>
+        public A2AUpdateReplicationProtectedItemInput(string recoveryCloudServiceId = default(string), string recoveryResourceGroupId = default(string), IList<A2AVmManagedDiskUpdateDetails> managedDiskUpdateDetails = default(IList<A2AVmManagedDiskUpdateDetails>), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo))
         {
             RecoveryCloudServiceId = recoveryCloudServiceId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
             ManagedDiskUpdateDetails = managedDiskUpdateDetails;
             RecoveryBootDiagStorageAccountId = recoveryBootDiagStorageAccountId;
+            DiskEncryptionInfo = diskEncryptionInfo;
             CustomInit();
         }
 
@@ -79,6 +82,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryBootDiagStorageAccountId")]
         public string RecoveryBootDiagStorageAccountId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recovery os disk encryption information.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskEncryptionInfo")]
+        public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
 
     }
 }

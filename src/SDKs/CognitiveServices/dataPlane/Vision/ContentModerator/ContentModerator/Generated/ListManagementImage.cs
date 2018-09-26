@@ -81,9 +81,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<Image>> AddImageWithHttpMessagesAsync(string listId, int? tag = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (listId == null)
             {
@@ -105,7 +105,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/lists/v1.0/imagelists/{listId}/images";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{listId}", System.Uri.EscapeDataString(listId));
             List<string> _queryParameters = new List<string>();
             if (tag != null)
@@ -249,9 +249,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<string>> DeleteAllImagesWithHttpMessagesAsync(string listId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (listId == null)
             {
@@ -271,7 +271,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/lists/v1.0/imagelists/{listId}/images";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{listId}", System.Uri.EscapeDataString(listId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -402,9 +402,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<ImageIds>> GetAllImageIdsWithHttpMessagesAsync(string listId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (listId == null)
             {
@@ -424,7 +424,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/lists/v1.0/imagelists/{listId}/images";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{listId}", System.Uri.EscapeDataString(listId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -558,9 +558,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<string>> DeleteImageWithHttpMessagesAsync(string listId, string imageId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (listId == null)
             {
@@ -585,7 +585,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/lists/v1.0/imagelists/{listId}/images/{ImageId}";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{listId}", System.Uri.EscapeDataString(listId));
             _url = _url.Replace("{ImageId}", System.Uri.EscapeDataString(imageId));
             // Create HTTP transport objects
@@ -729,9 +729,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<Image>> AddImageUrlInputWithHttpMessagesAsync(string listId, string contentType, BodyModel imageUrl, int? tag = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (listId == null)
             {
@@ -763,7 +763,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/lists/v1.0/imagelists/{listId}/images";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{listId}", System.Uri.EscapeDataString(listId));
             List<string> _queryParameters = new List<string>();
             if (tag != null)
@@ -922,9 +922,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<Image>> AddImageFileInputWithHttpMessagesAsync(string listId, Stream imageStream, int? tag = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (listId == null)
             {
@@ -951,7 +951,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/lists/v1.0/imagelists/{listId}/images";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{listId}", System.Uri.EscapeDataString(listId));
             List<string> _queryParameters = new List<string>();
             if (tag != null)

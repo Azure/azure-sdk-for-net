@@ -36,14 +36,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="sku">SKU.</param>
-        /// <param name="product">Product.</param>
-        /// <param name="vendor">Vendor.</param>
-        /// <param name="premierAddOnOfferName">Name.</param>
+        /// <param name="sku">Premier add on SKU.</param>
+        /// <param name="product">Premier add on offer Product.</param>
+        /// <param name="vendor">Premier add on offer Vendor.</param>
         /// <param name="promoCodeRequired">&lt;code&gt;true&lt;/code&gt; if
         /// promotion code is required; otherwise,
         /// &lt;code&gt;false&lt;/code&gt;.</param>
-        /// <param name="quota">Quota.</param>
+        /// <param name="quota">Premier add on offer Quota.</param>
         /// <param name="webHostingPlanRestrictions">App Service plans this
         /// offer is restricted to. Possible values include: 'None', 'Free',
         /// 'Shared', 'Basic', 'Standard', 'Premium'</param>
@@ -51,13 +50,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="legalTermsUrl">Legal terms URL.</param>
         /// <param name="marketplacePublisher">Marketplace publisher.</param>
         /// <param name="marketplaceOffer">Marketplace offer.</param>
-        public PremierAddOnOffer(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string sku = default(string), string product = default(string), string vendor = default(string), string premierAddOnOfferName = default(string), bool? promoCodeRequired = default(bool?), int? quota = default(int?), AppServicePlanRestrictions? webHostingPlanRestrictions = default(AppServicePlanRestrictions?), string privacyPolicyUrl = default(string), string legalTermsUrl = default(string), string marketplacePublisher = default(string), string marketplaceOffer = default(string))
+        public PremierAddOnOffer(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string sku = default(string), string product = default(string), string vendor = default(string), bool? promoCodeRequired = default(bool?), int? quota = default(int?), AppServicePlanRestrictions? webHostingPlanRestrictions = default(AppServicePlanRestrictions?), string privacyPolicyUrl = default(string), string legalTermsUrl = default(string), string marketplacePublisher = default(string), string marketplaceOffer = default(string))
             : base(id, name, kind, type)
         {
             Sku = sku;
             Product = product;
             Vendor = vendor;
-            PremierAddOnOfferName = premierAddOnOfferName;
             PromoCodeRequired = promoCodeRequired;
             Quota = quota;
             WebHostingPlanRestrictions = webHostingPlanRestrictions;
@@ -74,28 +72,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets SKU.
+        /// Gets or sets premier add on SKU.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sku")]
         public string Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets product.
+        /// Gets or sets premier add on offer Product.
         /// </summary>
         [JsonProperty(PropertyName = "properties.product")]
         public string Product { get; set; }
 
         /// <summary>
-        /// Gets or sets vendor.
+        /// Gets or sets premier add on offer Vendor.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vendor")]
         public string Vendor { get; set; }
-
-        /// <summary>
-        /// Gets or sets name.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string PremierAddOnOfferName { get; set; }
 
         /// <summary>
         /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if
@@ -106,7 +98,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public bool? PromoCodeRequired { get; set; }
 
         /// <summary>
-        /// Gets or sets quota.
+        /// Gets or sets premier add on offer Quota.
         /// </summary>
         [JsonProperty(PropertyName = "properties.quota")]
         public int? Quota { get; set; }

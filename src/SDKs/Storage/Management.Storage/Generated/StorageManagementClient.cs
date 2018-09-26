@@ -52,11 +52,6 @@ namespace Microsoft.Azure.Management.Storage
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -98,6 +93,11 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the IBlobContainersOperations.
         /// </summary>
         public virtual IBlobContainersOperations BlobContainers { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagementPoliciesOperations.
+        /// </summary>
+        public virtual IManagementPoliciesOperations ManagementPolicies { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the StorageManagementClient class.
@@ -305,8 +305,8 @@ namespace Microsoft.Azure.Management.Storage
             StorageAccounts = new StorageAccountsOperations(this);
             Usages = new UsagesOperations(this);
             BlobContainers = new BlobContainersOperations(this);
+            ManagementPolicies = new ManagementPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-03-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

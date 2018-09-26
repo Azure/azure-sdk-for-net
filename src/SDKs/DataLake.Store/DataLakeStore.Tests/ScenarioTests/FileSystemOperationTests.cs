@@ -188,7 +188,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        //[Fact] commenting this out until we have a good test for validating access denied within the same tenant
+        [Fact(Skip = "skipping this out until we have a good test for validating access denied within the same tenant")] 
         public void DataLakeStoreFileSystemTestAccessDenied()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -513,13 +513,11 @@ namespace DataLakeStore.Tests
                         fileContentsToAdd.Length*2);
 
                     // Attempt to get the files that were concatted together, which should fail and throw
-                    Assert.Throws(typeof (AdlsErrorException),
-                        () =>
+                    Assert.Throws<AdlsErrorException>(() =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
                                 filePath1));
-                    Assert.Throws(typeof (AdlsErrorException),
-                        () =>
+                    Assert.Throws<AdlsErrorException>(() =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
                                 filePath2));
@@ -557,13 +555,11 @@ namespace DataLakeStore.Tests
                         fileContentsToAdd.Length*2);
 
                     // Attempt to get the files that were concatted together, which should fail and throw
-                    Assert.Throws(typeof (AdlsErrorException),
-                        () =>
+                    Assert.Throws<AdlsErrorException>(() =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
                                 filePath1));
-                    Assert.Throws(typeof (AdlsErrorException),
-                        () =>
+                    Assert.Throws<AdlsErrorException>(() =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
                                 filePath2));
@@ -606,20 +602,17 @@ namespace DataLakeStore.Tests
                         fileContentsToAdd.Length*2);
 
                     // Attempt to get the files that were concatted together, which should fail and throw
-                    Assert.Throws(typeof (AdlsErrorException),
-                        () =>
+                    Assert.Throws<AdlsErrorException>(() =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
                                 filePath1));
-                    Assert.Throws(typeof (AdlsErrorException),
-                        () =>
+                    Assert.Throws<AdlsErrorException>(() =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
                                 filePath2));
 
                     // Attempt to get the folder that was created for concat, which should fail and be deleted.
-                    Assert.Throws(typeof (AdlsErrorException),
-                        () =>
+                    Assert.Throws<AdlsErrorException>(() =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
                                 concatFolderPath));
@@ -655,8 +648,7 @@ namespace DataLakeStore.Tests
                         fileContentsToAdd.Length);
 
                     // Ensure the old file is gone
-                    Assert.Throws(typeof (AdlsErrorException),
-                        () =>
+                    Assert.Throws<AdlsErrorException>(() =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
                                 filePath));
@@ -681,8 +673,7 @@ namespace DataLakeStore.Tests
                     Assert.Equal(1, listFolderResponse.FileStatuses.FileStatus.Count);
                     Assert.Equal(FileType.FILE, listFolderResponse.FileStatuses.FileStatus[0].Type);
 
-                    Assert.Throws(typeof (AdlsErrorException),
-                        () =>
+                    Assert.Throws<AdlsErrorException>(() =>
                             commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(
                                 commonData.DataLakeStoreFileSystemAccountName,
                                 targetFolder1));
@@ -809,9 +800,7 @@ namespace DataLakeStore.Tests
                     var finalEntries = finalAclStatus.Entries;
                     foreach (var entry in finalEntries)
                     {
-                        Assert.True(
-                            currentAcl.AclStatus.Entries.Any(
-                                original => original.Equals(entry, StringComparison.CurrentCultureIgnoreCase)));
+                        Assert.Contains(currentAcl.AclStatus.Entries, original => original.Equals(entry, StringComparison.CurrentCultureIgnoreCase));
                     }
 
                     Assert.Equal(finalEntries.Count, currentAcl.AclStatus.Entries.Count);
@@ -937,7 +926,7 @@ namespace DataLakeStore.Tests
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
                     
                     Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
-                    Assert.True(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
+                    Assert.Contains(aclGetResponse.AclStatus.Entries, entry => entry.Contains(commonData.AclUserId));
                 }
             }
         }
@@ -975,7 +964,7 @@ namespace DataLakeStore.Tests
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
 
                     Assert.Equal(currentCount + 1, aclGetResponse.AclStatus.Entries.Count);
-                    Assert.True(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
+                    Assert.Contains(aclGetResponse.AclStatus.Entries, entry => entry.Contains(commonData.AclUserId));
 
                     // now remove the entry
                     var aceToRemove = string.Format(",user:{0}", commonData.AclUserId);
@@ -993,7 +982,7 @@ namespace DataLakeStore.Tests
                     Assert.NotEmpty(aclGetResponse.AclStatus.Entries);
                     
                     Assert.Equal(currentCount, aclGetResponse.AclStatus.Entries.Count);
-                    Assert.False(aclGetResponse.AclStatus.Entries.Any(entry => entry.Contains(commonData.AclUserId)));
+                    Assert.DoesNotContain(aclGetResponse.AclStatus.Entries, entry => entry.Contains(commonData.AclUserId));
                 }
             }
         }

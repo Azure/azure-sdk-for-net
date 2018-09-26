@@ -25,10 +25,10 @@ namespace Microsoft.Azure.Management.DataMigration
             /// Get tasks in a service
             /// </summary>
             /// <remarks>
-            /// The services resource is the top-level resource that represents the Data
-            /// Migration Service. This method returns a list of tasks owned by a service
-            /// resource. Some tasks may have a status of Unknown, which indicates that an
-            /// error occurred while querying the status of that task.
+            /// The services resource is the top-level resource that represents the
+            /// Database Migration Service. This method returns a list of tasks owned by a
+            /// service resource. Some tasks may have a status of Unknown, which indicates
+            /// that an error occurred while querying the status of that task.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -54,10 +54,10 @@ namespace Microsoft.Azure.Management.DataMigration
             /// Get tasks in a service
             /// </summary>
             /// <remarks>
-            /// The services resource is the top-level resource that represents the Data
-            /// Migration Service. This method returns a list of tasks owned by a service
-            /// resource. Some tasks may have a status of Unknown, which indicates that an
-            /// error occurred while querying the status of that task.
+            /// The services resource is the top-level resource that represents the
+            /// Database Migration Service. This method returns a list of tasks owned by a
+            /// service resource. Some tasks may have a status of Unknown, which indicates
+            /// that an error occurred while querying the status of that task.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -421,13 +421,81 @@ namespace Microsoft.Azure.Management.DataMigration
             }
 
             /// <summary>
+            /// Execute a command on a task
+            /// </summary>
+            /// <remarks>
+            /// The tasks resource is a nested, proxy-only resource representing work
+            /// performed by a DMS instance. This method executes a command on a running
+            /// task.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupName'>
+            /// Name of the resource group
+            /// </param>
+            /// <param name='serviceName'>
+            /// Name of the service
+            /// </param>
+            /// <param name='projectName'>
+            /// Name of the project
+            /// </param>
+            /// <param name='taskName'>
+            /// Name of the Task
+            /// </param>
+            /// <param name='parameters'>
+            /// Command to execute
+            /// </param>
+            public static CommandProperties Command(this ITasksOperations operations, string groupName, string serviceName, string projectName, string taskName, CommandProperties parameters)
+            {
+                return operations.CommandAsync(groupName, serviceName, projectName, taskName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Execute a command on a task
+            /// </summary>
+            /// <remarks>
+            /// The tasks resource is a nested, proxy-only resource representing work
+            /// performed by a DMS instance. This method executes a command on a running
+            /// task.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupName'>
+            /// Name of the resource group
+            /// </param>
+            /// <param name='serviceName'>
+            /// Name of the service
+            /// </param>
+            /// <param name='projectName'>
+            /// Name of the project
+            /// </param>
+            /// <param name='taskName'>
+            /// Name of the Task
+            /// </param>
+            /// <param name='parameters'>
+            /// Command to execute
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CommandProperties> CommandAsync(this ITasksOperations operations, string groupName, string serviceName, string projectName, string taskName, CommandProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CommandWithHttpMessagesAsync(groupName, serviceName, projectName, taskName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get tasks in a service
             /// </summary>
             /// <remarks>
-            /// The services resource is the top-level resource that represents the Data
-            /// Migration Service. This method returns a list of tasks owned by a service
-            /// resource. Some tasks may have a status of Unknown, which indicates that an
-            /// error occurred while querying the status of that task.
+            /// The services resource is the top-level resource that represents the
+            /// Database Migration Service. This method returns a list of tasks owned by a
+            /// service resource. Some tasks may have a status of Unknown, which indicates
+            /// that an error occurred while querying the status of that task.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -444,10 +512,10 @@ namespace Microsoft.Azure.Management.DataMigration
             /// Get tasks in a service
             /// </summary>
             /// <remarks>
-            /// The services resource is the top-level resource that represents the Data
-            /// Migration Service. This method returns a list of tasks owned by a service
-            /// resource. Some tasks may have a status of Unknown, which indicates that an
-            /// error occurred while querying the status of that task.
+            /// The services resource is the top-level resource that represents the
+            /// Database Migration Service. This method returns a list of tasks owned by a
+            /// service resource. Some tasks may have a status of Unknown, which indicates
+            /// that an error occurred while querying the status of that task.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

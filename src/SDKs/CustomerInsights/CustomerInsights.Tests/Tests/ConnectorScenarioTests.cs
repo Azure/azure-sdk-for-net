@@ -50,18 +50,16 @@ namespace CustomerInsights.Tests.Tests
                 Assert.Equal(connectorName, createdConnector.ConnectorName);
                 Assert.Equal(createdConnector.Name, HubName + "/" + connectorName, StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    createdConnector.Type,
                     "Microsoft.CustomerInsights/hubs/connectors",
-                    StringComparer.OrdinalIgnoreCase);
+                    createdConnector.Type, StringComparer.OrdinalIgnoreCase);
 
                 var getConnector = aciClient.Connectors.Get(ResourceGroupName, HubName, connectorName);
 
                 Assert.Equal(connectorName, getConnector.ConnectorName);
                 Assert.Equal(getConnector.Name, HubName + "/" + connectorName, StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    getConnector.Type,
                     "Microsoft.CustomerInsights/hubs/connectors",
-                    StringComparer.OrdinalIgnoreCase);
+                    getConnector.Type, StringComparer.OrdinalIgnoreCase);
 
                 var deleteConnectorResponse =
                     aciClient.Connectors.DeleteWithHttpMessagesAsync(ResourceGroupName, HubName, connectorName).Result;

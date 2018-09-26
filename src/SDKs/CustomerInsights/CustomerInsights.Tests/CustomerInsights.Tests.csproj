@@ -5,11 +5,9 @@
     <Description>CustomerInsights.Tests Class Library</Description>
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>CustomerInsights.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>    
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\Management.CustomerInsights\Microsoft.Azure.Management.CustomerInsights.csproj" />

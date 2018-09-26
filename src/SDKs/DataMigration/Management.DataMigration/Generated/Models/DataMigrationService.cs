@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     using System.Linq;
 
     /// <summary>
-    /// A Data Migration Service resource
+    /// A Database Migration Service resource
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class DataMigrationService : TrackedResource

@@ -43,16 +43,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// The type 'None' will remove any identities from the virtual
         /// machine. Possible values include: 'SystemAssigned', 'UserAssigned',
         /// 'SystemAssigned, UserAssigned', 'None'</param>
-        /// <param name="identityIds">The list of user identities associated
-        /// with the Virtual Machine. The user identity references will be ARM
-        /// resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/identities/{identityName}'.</param>
-        public VirtualMachineIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?), IList<string> identityIds = default(IList<string>))
+        /// <param name="userAssignedIdentities">The list of user identities
+        /// associated with the Virtual Machine. The user identity dictionary
+        /// key references will be ARM resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.</param>
+        public VirtualMachineIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?), IDictionary<string, VirtualMachineIdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, VirtualMachineIdentityUserAssignedIdentitiesValue>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             Type = type;
-            IdentityIds = identityIds;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
 
@@ -88,12 +88,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the list of user identities associated with the
-        /// Virtual Machine. The user identity references will be ARM resource
-        /// ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/identities/{identityName}'.
+        /// Virtual Machine. The user identity dictionary key references will
+        /// be ARM resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
         /// </summary>
-        [JsonProperty(PropertyName = "identityIds")]
-        public IList<string> IdentityIds { get; set; }
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, VirtualMachineIdentityUserAssignedIdentitiesValue> UserAssignedIdentities { get; set; }
 
     }
 }

@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace Microsoft.Azure.Batch
+using System.Text;
+
+namespace Microsoft.Azure.Batch
 {
     using System;
     using System.Collections.Generic;
@@ -296,6 +298,100 @@
         public NodeFile GetNodeFile(string filePath, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task<NodeFile> asyncTask = this.GetNodeFileAsync(filePath, additionalBehaviors);
+            return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+        }
+
+        /// <summary>
+        /// Copies the contents of a file from the node to the given <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="filePath">The path of the file to retrieve.</param>
+        /// <param name="stream">The stream to copy the file contents to.</param>
+        /// <param name="byteRange">A byte range defining what section of the file to copy. If omitted, the entire file is downloaded.</param>
+        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
+        public Task CopyNodeFileContentToStreamAsync(
+            string filePath,
+            Stream stream,
+            GetFileRequestByteRange byteRange = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // create the behavior manager
+            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            Task asyncTask = this.parentBatchClient.PoolOperations.CopyNodeFileContentToStreamAsyncImpl(
+                this.parentPoolId,
+                this.Id,
+                filePath,
+                stream,
+                byteRange,
+                bhMgr,
+                cancellationToken);
+
+            return asyncTask;
+        }
+
+        /// <summary>
+        /// Copies the contents of a file from the node to the given <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="filePath">The path of the file to retrieve.</param>
+        /// <param name="stream">The stream to copy the file contents to.</param>
+        /// <param name="byteRange">A byte range defining what section of the file to copy. If omitted, the entire file is downloaded.</param>
+        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
+        /// <returns>A bound <see cref="NodeFile"/> object.</returns>
+        public void CopyNodeFileContentToStream(
+            string filePath,
+            Stream stream,
+            GetFileRequestByteRange byteRange = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            Task asyncTask = this.CopyNodeFileContentToStreamAsync(filePath, stream, byteRange, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+        }
+
+        /// <summary>
+        /// Reads the contents of a file from the specified node into a string.
+        /// </summary>
+        /// <param name="filePath">The path of the file to retrieve.</param>
+        /// <param name="encoding">The encoding to use. If no value or null is specified, UTF8 is used.</param>
+        /// <param name="byteRange">A byte range defining what section of the file to copy. If omitted, the entire file is downloaded.</param>
+        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
+        public Task<string> CopyNodeFileContentToStringAsync(
+            string filePath,
+            Encoding encoding = null,
+            GetFileRequestByteRange byteRange = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // create the behavior manager
+            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+            return this.parentBatchClient.PoolOperations.CopyNodeFileContentToStringAsyncImpl(
+                this.parentPoolId,
+                this.Id,
+                filePath,
+                encoding,
+                byteRange,
+                bhMgr,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Reads the contents of a file from the specified node into a string.
+        /// </summary>
+        /// <param name="filePath">The path of the file to retrieve.</param>
+        /// <param name="encoding">The encoding to use. If no value or null is specified, UTF8 is used.</param>
+        /// <param name="byteRange">A byte range defining what section of the file to copy. If omitted, the entire file is downloaded.</param>
+        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
+        /// <returns>A bound <see cref="NodeFile"/> object.</returns>
+        public string CopyNodeFileContentToString(
+            string filePath,
+            Encoding encoding = null,
+            GetFileRequestByteRange byteRange = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            Task<string> asyncTask = this.CopyNodeFileContentToStringAsync(filePath, encoding, byteRange, additionalBehaviors);
             return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
         }
 

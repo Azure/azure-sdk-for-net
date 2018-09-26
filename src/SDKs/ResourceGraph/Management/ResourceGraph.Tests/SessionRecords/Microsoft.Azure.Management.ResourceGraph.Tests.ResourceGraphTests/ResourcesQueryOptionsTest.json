@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.ResourceGraph/resources?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VHcmFwaC9yZXNvdXJjZXM/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestMethod": "POST",
+      "RequestBody": "{\"subscriptions\": [\"d0610b27-9663-4c05-89f8-5b4be01e86a5\"], \"query\": \"project id\", \"options\": {\"$skipToken\": \"82aw3vQlArEastJ24LABY8oPgQLesIyAyzYs2g6/aOOOmJHSYFj39fODurJV5e2tTFFebWcfxn7n5edicA8u6HgSJe1GCEk5HjxwLkeJiye2LVZDC7TaValkJbsk9JqY4yv5c7iRiLqgO34RbHEeVfLJpa56u4RZu0K+GpQvnBRPyAhy3KbwhZWpU5Nnqnud2whGb5WKdlL8xF7wnQaUnUN2lns8WwqwM4rc0VK4BbQt/WfWWcYJivSAyB3m4Z5g73df1KiU4C+K8auvUMpLPYVxxnKC/YZz42YslVAWXXUmuGOaM2SfLHRO6o4O9DgXlUgYjeFWqIbAkmMiVEqU\", \"$top\": 4, \"$skip\": 8}}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a29e441c-d71f-48e5-9988-ff4d9ddc7c99"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.Azure.Management.ResourceGraph.ResourceGraphClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "458"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 31 Aug 2018 23:24:49 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "e242e4e7-39e0-4c74-85f5-8abb009a2711"
+        ],
+        "x-ms-correlation-request-id": [
+          "e242e4e7-39e0-4c74-85f5-8abb009a2711"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180831T232450Z:e242e4e7-39e0-4c74-85f5-8abb009a2711"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1098"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\"totalRecords\":743,\"count\":4,\"data\":{\"columns\":[{\"name\":\"id\",\"type\":\"string\"}],\"rows\":[[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/backup/providers/Microsoft.ClassicCompute/domainNames/admin-a\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/backup/providers/Microsoft.ClassicCompute/domainNames/admin-b\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/backup/providers/Microsoft.Network/trafficmanagerprofiles/admin\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/RP/providers/Microsoft.ClassicCompute/domainNames/rp-a\"]]},\"facets\":[],\"resultTruncated\":\"false\",\"$skipToken\":\"ceXHDV/5yajn1stYtSCyQ32ULLF0jGv9oazG14qvdgwdAQNDUPHjt6MIlJZ2Y/K8z7fb+qo9wguegf8QYW0c7rqwtXUghJvKkPBENcn1O17nQxtjXeq6s8sD64D8t5P9NIHntl70D95yuVUjHF6/dsvVK33wKyvORwPTCbZrSj+pfz2yd5spa93izzOu06PcyFvcvCJAzZ5scImnVDqS700hR63izVwyETJtQluoqSPYkhxAOVk/+ThWlN0DKy9OfUE34M9PZSQz2QTWXKpUK1+okRfH/B2RVdXro60ZnNMrdPtglA5w7oEs5Ivq20IE4RtPfg97UEbkfyMP9huC=\"}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "00000000-0000-0000-0000-000000000000"
+  }
+}

@@ -46,6 +46,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for dataset.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Dataset.</param>
+        /// <param name="folder">The folder that this Dataset is in. If not
+        /// specified, Dataset will appear at the root level.</param>
         /// <param name="relativeUrl">The relative URL based on the URL in the
         /// HttpLinkedService refers to an HTTP file Type: string (or
         /// Expression with resultType string).</param>
@@ -61,8 +63,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="format">The format of files.</param>
         /// <param name="compression">The data compression method used on
         /// files.</param>
-        public HttpDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object relativeUrl = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
-            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations)
+        public HttpDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object relativeUrl = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations, folder)
         {
             RelativeUrl = relativeUrl;
             RequestMethod = requestMethod;

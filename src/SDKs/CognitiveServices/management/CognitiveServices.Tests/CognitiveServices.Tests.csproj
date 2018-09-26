@@ -5,18 +5,13 @@
     <Description>CognitiveServices.Tests Class Library</Description>
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>CognitiveServices.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>    
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
 
   <ItemGroup>
-    <!--<PackageReference Include="Microsoft.Azure.Management.CognitiveServices" Version="0.3.0-preview" />-->
     <ProjectReference Include="..\Management.CognitiveServices\Microsoft.Azure.Management.CognitiveServices.csproj" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
-    
-    <PackageReference Include="System.Runtime" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

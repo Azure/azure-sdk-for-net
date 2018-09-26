@@ -811,7 +811,7 @@ namespace Storage.Tests
         }
 
         [Fact]
-        public void StorageAccountUsageTest()
+        public void StorageAccountLocationUsageTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -821,7 +821,8 @@ namespace Storage.Tests
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
                 // Query usage
-                var usages = storageMgmtClient.Usages.List();
+                string Location = StorageManagementTestUtilities.DefaultLocation;
+                var usages = storageMgmtClient.Usages.ListByLocation(Location);
                 Assert.Equal(1, usages.Count());
                 Assert.Equal(UsageUnit.Count, usages.First().Unit);
                 Assert.NotNull(usages.First().CurrentValue);
@@ -1304,6 +1305,7 @@ namespace Storage.Tests
                 string keyName = TestUtilities.GenerateName("keyvaultkey");
 
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Location = StorageManagementTestUtilities.DefaultRGLocation;
                 parameters.Identity = new Identity { };
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
@@ -1658,21 +1660,21 @@ namespace Storage.Tests
                 {
                     ""tierToCool"":
                     {
-                        ""daysAfterModificationGreaterThan"":1000
+                        ""daysAfterModificationGreaterThan"":1000.0
                     },
 					""tierToArchive"" : {
-						""daysAfterModificationGreaterThan"" : 90
+						""daysAfterModificationGreaterThan"" : 90.0
 					},
                     ""delete"":
                     {
-                        ""daysAfterModificationGreaterThan"":1000
+                        ""daysAfterModificationGreaterThan"":1000.0
                     }
                 },
 				""snapshot"":
                 {
                     ""delete"":
                     {
-                        ""daysAfterCreationGreaterThan"":5000
+                        ""daysAfterCreationGreaterThan"":5000.0
                     }
                 }
             }
@@ -1681,19 +1683,19 @@ namespace Storage.Tests
 }";
                 //Set Management Policies
                 Newtonsoft.Json.Linq.JObject rule1 = Newtonsoft.Json.Linq.JObject.Parse(rules);
-                StorageAccountManagementPolicies policy = storageMgmtClient.StorageAccounts.CreateOrUpdateManagementPolicies(rgname, accountName, rule1);
+                StorageAccountManagementPolicies policy = storageMgmtClient.ManagementPolicies.CreateOrUpdate(rgname, accountName, rule1);
                 Assert.Equal(Regex.Replace(rules, @"\r\n?|\n|\t| ", ""), Regex.Replace(policy.Policy.ToString(), @"\r\n?|\n|\t| ", ""));
 
                 //Get Management Policies
-                policy = storageMgmtClient.StorageAccounts.GetManagementPolicies(rgname, accountName);
+                policy = storageMgmtClient.ManagementPolicies.Get(rgname, accountName);
                 Assert.Equal(Regex.Replace(rules, @"\r\n?|\n|\t| ", ""), Regex.Replace(policy.Policy.ToString(), @"\r\n?|\n|\t| ", ""));
 
                 //Delete Management Policies, and check policy not exist 
-                storageMgmtClient.StorageAccounts.DeleteManagementPolicies(rgname, accountName);
+                storageMgmtClient.ManagementPolicies.Delete(rgname, accountName);
                 bool dataPolicyExist = true;
                 try
                 {
-                    policy = storageMgmtClient.StorageAccounts.GetManagementPolicies(rgname, accountName);
+                    policy = storageMgmtClient.ManagementPolicies.Get(rgname, accountName);
                 }
                 catch (Microsoft.Rest.Azure.CloudException cloudException)
                 {
@@ -1703,9 +1705,10 @@ namespace Storage.Tests
                 Assert.False(dataPolicyExist);
 
                 //Delete not exist Management Policies will not fail
-                storageMgmtClient.StorageAccounts.DeleteManagementPolicies(rgname, accountName);
+                storageMgmtClient.ManagementPolicies.Delete(rgname, accountName);
             }
         }
+
 
         [Fact]
         public void StorageAccountCreateGetdfs()
@@ -1737,6 +1740,106 @@ namespace Storage.Tests
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 Assert.True(account.IsHnsEnabled = true);
                 Assert.NotNull(account.PrimaryEndpoints.Dfs);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountCreateWithFileStorage()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account with StorageV2
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.PremiumLRS },
+                    Kind = Kind.FileStorage,
+                    Location = "North Europe"
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.Equal(Kind.FileStorage, account.Kind);
+                Assert.Equal(SkuName.PremiumLRS, account.Sku.Name);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountCreateWithBlockBlobStorage()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account with StorageV2
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.PremiumLRS },
+                    Kind = Kind.BlockBlobStorage,
+                    Location = "North Europe"
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.Equal(Kind.BlockBlobStorage, account.Kind);
+                Assert.Equal(SkuName.PremiumLRS, account.Sku.Name);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountCreateSetGetFileAadIntegration()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardGRS },
+                    Kind = Kind.StorageV2,
+                    EnableAzureFilesAadIntegration = true,
+                    Location = "westus"
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                Assert.True(account.EnableAzureFilesAadIntegration);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.True(account.EnableAzureFilesAadIntegration);
+
+                // Update storage account 
+                var updateParameters = new StorageAccountUpdateParameters
+                {
+                    EnableAzureFilesAadIntegration = false,
+                    EnableHttpsTrafficOnly = true
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                Assert.False(account.EnableAzureFilesAadIntegration);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.False(account.EnableAzureFilesAadIntegration);
             }
         }
     }

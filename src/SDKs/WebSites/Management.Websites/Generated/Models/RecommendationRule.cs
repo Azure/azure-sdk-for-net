@@ -39,8 +39,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="recommendationRuleName">Unique name of the
-        /// rule.</param>
+        /// <param name="recommendationName">Unique name of the rule.</param>
         /// <param name="displayName">UI friendly name of the rule.</param>
         /// <param name="message">Localized name of the rule (Good for
         /// UI).</param>
@@ -57,8 +56,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="channels">List of available channels that this rule
         /// applies. Possible values include: 'Notification', 'Api', 'Email',
         /// 'Webhook', 'All'</param>
-        /// <param name="tags">An array of category tags that the rule
-        /// contains.</param>
+        /// <param name="categoryTags">The list of category tags that this
+        /// recommendation rule belongs to.</param>
         /// <param name="isDynamic">True if this is associated with a
         /// dynamically added rule</param>
         /// <param name="extensionName">Extension name of the portal if exists.
@@ -67,10 +66,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Applicable to dynamic rule only.</param>
         /// <param name="forwardLink">Forward link to an external document
         /// associated with the rule. Applicable to dynamic rule only.</param>
-        public RecommendationRule(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string recommendationRuleName = default(string), string displayName = default(string), string message = default(string), System.Guid? recommendationId = default(System.Guid?), string description = default(string), string actionName = default(string), NotificationLevel? level = default(NotificationLevel?), Channels? channels = default(Channels?), IList<string> tags = default(IList<string>), bool? isDynamic = default(bool?), string extensionName = default(string), string bladeName = default(string), string forwardLink = default(string))
+        public RecommendationRule(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string recommendationName = default(string), string displayName = default(string), string message = default(string), System.Guid? recommendationId = default(System.Guid?), string description = default(string), string actionName = default(string), NotificationLevel? level = default(NotificationLevel?), Channels? channels = default(Channels?), IList<string> categoryTags = default(IList<string>), bool? isDynamic = default(bool?), string extensionName = default(string), string bladeName = default(string), string forwardLink = default(string))
             : base(id, name, kind, type)
         {
-            RecommendationRuleName = recommendationRuleName;
+            RecommendationName = recommendationName;
             DisplayName = displayName;
             Message = message;
             RecommendationId = recommendationId;
@@ -78,7 +77,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             ActionName = actionName;
             Level = level;
             Channels = channels;
-            Tags = tags;
+            CategoryTags = categoryTags;
             IsDynamic = isDynamic;
             ExtensionName = extensionName;
             BladeName = bladeName;
@@ -94,8 +93,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets unique name of the rule.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string RecommendationRuleName { get; set; }
+        [JsonProperty(PropertyName = "properties.recommendationName")]
+        public string RecommendationName { get; set; }
 
         /// <summary>
         /// Gets or sets UI friendly name of the rule.
@@ -147,10 +146,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public Channels? Channels { get; set; }
 
         /// <summary>
-        /// Gets or sets an array of category tags that the rule contains.
+        /// Gets the list of category tags that this recommendation rule
+        /// belongs to.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.tags")]
-        public IList<string> Tags { get; set; }
+        [JsonProperty(PropertyName = "properties.categoryTags")]
+        public IList<string> CategoryTags { get; private set; }
 
         /// <summary>
         /// Gets or sets true if this is associated with a dynamically added

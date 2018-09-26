@@ -81,9 +81,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<object>> AddTermWithHttpMessagesAsync(string listId, string term, string language, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (listId == null)
             {
@@ -113,7 +113,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/lists/v1.0/termlists/{listId}/terms/{term}";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{listId}", System.Uri.EscapeDataString(listId));
             _url = _url.Replace("{term}", System.Uri.EscapeDataString(term));
             List<string> _queryParameters = new List<string>();
@@ -260,9 +260,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<string>> DeleteTermWithHttpMessagesAsync(string listId, string term, string language, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (listId == null)
             {
@@ -292,7 +292,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/lists/v1.0/termlists/{listId}/terms/{term}";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{listId}", System.Uri.EscapeDataString(listId));
             _url = _url.Replace("{term}", System.Uri.EscapeDataString(term));
             List<string> _queryParameters = new List<string>();
@@ -442,9 +442,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<Terms>> GetAllTermsWithHttpMessagesAsync(string listId, string language, int? offset = default(int?), int? limit = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (listId == null)
             {
@@ -471,7 +471,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/lists/v1.0/termlists/{listId}/terms";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{listId}", System.Uri.EscapeDataString(listId));
             List<string> _queryParameters = new List<string>();
             if (language != null)
@@ -622,9 +622,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// </return>
         public async Task<HttpOperationResponse<string>> DeleteAllTermsWithHttpMessagesAsync(string listId, string language, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.BaseUrl == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (listId == null)
             {
@@ -649,7 +649,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "contentmoderator/lists/v1.0/termlists/{listId}/terms";
-            _url = _url.Replace("{baseUrl}", Client.BaseUrl);
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{listId}", System.Uri.EscapeDataString(listId));
             List<string> _queryParameters = new List<string>();
             if (language != null)

@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Microsoft.Rest.TransientFaultHandling
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Provides the base implementation of the retry mechanism for unreliable actions and 
     /// transient conditions.
@@ -97,6 +99,23 @@ namespace Microsoft.Rest.TransientFaultHandling
         /// An instance of a callback delegate that will be invoked whenever a retry condition is encountered.
         /// </summary>
         public event EventHandler<RetryingEventArgs> Retrying;
+        
+        /// <summary>
+        /// Get delegate count associated with the event
+        /// </summary>
+        public int EventCallbackCount
+        {
+            get
+            {
+                IEnumerable<Delegate> invokeList = this.Retrying?.GetInvocationList();
+                if (invokeList != null)
+                {
+                    return invokeList.Count<Delegate>();
+                }
+
+                return 0;
+            }
+        }
 
         /// <summary>
         /// Gets the retry strategy.

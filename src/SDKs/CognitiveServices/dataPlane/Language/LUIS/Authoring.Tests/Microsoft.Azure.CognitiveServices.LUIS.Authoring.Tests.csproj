@@ -4,10 +4,7 @@
     <Description>Microsoft.Azure.CognitiveServices.LUIS-Authoring.Tests Class Library</Description>
     <AssemblyName>Microsoft.Azure.CognitiveServices.LUIS-Authoring.Tests</AssemblyName>
     <Version>1.0.0</Version>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

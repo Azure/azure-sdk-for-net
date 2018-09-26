@@ -182,7 +182,7 @@ namespace DataLakeAnalytics.Tests
                     );
 
                 Assert.NotNull(listJobResponse);
-                Assert.True(listJobResponse.Any(job => job.JobId == getJobResponse.JobId));
+                Assert.Contains(listJobResponse, job => job.JobId == getJobResponse.JobId);
 
                 // Validate usql job relationship retrieval (get/list pipeline and get/list recurrence)
                 var getPipeline = 
@@ -201,8 +201,8 @@ namespace DataLakeAnalytics.Tests
                         commonData.SecondDataLakeAnalyticsAccountName
                     );
 
-                Assert.Equal(1, listPipeline.Count());
-                Assert.True(listPipeline.Any(pipeline => pipeline.PipelineId == pipelineId));
+                Assert.Single(listPipeline);
+                Assert.Contains(listPipeline, pipeline => pipeline.PipelineId == pipelineId);
 
                 // Recurrence get/list
                 var getRecurrence = 
@@ -219,8 +219,8 @@ namespace DataLakeAnalytics.Tests
                         commonData.SecondDataLakeAnalyticsAccountName
                     );
 
-                Assert.Equal(1, listRecurrence.Count());
-                Assert.True(listRecurrence.Any(recurrence => recurrence.RecurrenceId == recurrenceId));
+                Assert.Single(listRecurrence);
+                Assert.Contains(listRecurrence, recurrence => recurrence.RecurrenceId == recurrenceId);
 
                 // TODO: re-enable this after the next prod push
                 // List the usql jobs with only the jobId property filled

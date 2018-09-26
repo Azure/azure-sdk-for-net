@@ -151,5 +151,61 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
 
+        [JsonSample]
+        public const string TumblingWindowTriggerWithDependencySample = @"
+{
+  name: ""myDemoTWTriggerWithDependency"",
+  properties: {
+    type: ""TumblingWindowTrigger"",
+    typeProperties: {
+      frequency: ""Hour"",
+      interval: 24,
+      startTime: ""2017-04-14T13:00:00Z"",
+      endTime: ""2018-04-14T13:00:00Z"",
+      delay: ""00:00:01"",
+      retryPolicy: {
+        count: 3,
+        intervalInSeconds: 30
+      },
+      maxConcurrency: 10,
+      dependsOn: [{
+        type: ""TumblingWindowTriggerDependencyReference"",
+        referenceTrigger: {
+          type: ""TriggerReference"",
+          referenceName: ""myDemoTWTrigger1""
+        },
+        offset: ""00:00:00"",
+        size: ""02:00:00""
+      },
+      {
+        type: ""TumblingWindowTriggerDependencyReference"",
+        referenceTrigger: {
+          type: ""TriggerReference"",
+          referenceName: ""myDemoTWTrigger2""
+        },
+        offset: ""-00:30:00"",
+        size: ""00:30:00""
+      }]
+    },
+    pipeline: {
+      pipelineReference: {
+        type: ""PipelineReference"",
+        referenceName: ""myPipeline""
+      },
+      parameters: {
+        windowStart: {
+          type: ""Expression"",
+          value: ""@{trigger().outputs.windowStartTime}""
+        },
+        windowEnd: {
+          type: ""Expression"",
+          value: ""@{trigger().outputs.windowEndTime}""
+        },
+      }
+    }
+  }
+}
+";
+
     }
 }
