@@ -1441,6 +1441,70 @@ namespace Authorization.Tests
             }
         }
 
+        [Fact(Skip = "Enable after principalId filter change gets deployed to PROD")]
+        public void DenyAssignmentsListUsingPrincipalIdFilterTest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var principalId = "f8d526a054eb4941ae69ebf4a334d0f0";
+                var allDenyAssignments = client.DenyAssignments.List(new ODataQuery<DenyAssignmentFilter>(f => f.PrincipalId == principalId));
+
+                Assert.NotNull(allDenyAssignments);
+
+                foreach (var assignment in allDenyAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.Principals);
+                    Assert.NotNull(assignment.ExcludePrincipals);
+                    Assert.NotNull(assignment.Scope);
+                    Assert.NotNull(assignment.Permissions);
+                }
+            }
+        }
+
+        [Fact]
+        public void DenyAssignmentsListUsingGdprExportPrincipalIdFilterTest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var principalId = "f8d526a054eb4941ae69ebf4a334d0f0";
+                var allDenyAssignments = client.DenyAssignments.List(new ODataQuery<DenyAssignmentFilter>(f => f.GdprExportPrincipalId == principalId));
+
+                Assert.NotNull(allDenyAssignments);
+
+                foreach (var assignment in allDenyAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.DenyAssignmentName);
+                    Assert.NotNull(assignment.Description);
+                    Assert.Null(assignment.Principals);
+                    Assert.Null(assignment.ExcludePrincipals);
+                    Assert.Null(assignment.Scope);
+                    Assert.Null(assignment.DoNotApplyToChildScopes);
+                    Assert.Null(assignment.Permissions);
+                    Assert.Null(assignment.IsSystemProtected);
+                }
+            }
+        }
+
         #endregion
 
         private static T GetValueFromTestContext<T>(Func<T> constructor, Func<string, T> parser, string mockName)
