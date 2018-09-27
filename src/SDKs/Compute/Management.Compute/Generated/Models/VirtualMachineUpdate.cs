@@ -46,6 +46,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the virtual machine.</param>
         /// <param name="storageProfile">Specifies the storage settings for the
         /// virtual machine disks.</param>
+        /// <param name="additionalCapabilities">Specifies additional
+        /// capabilities enabled or disabled on the virtual machine.</param>
         /// <param name="osProfile">Specifies the operating system settings for
         /// the virtual machine.</param>
         /// <param name="networkProfile">Specifies the network interfaces of
@@ -87,12 +89,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
             : base(tags)
         {
             Plan = plan;
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
+            AdditionalCapabilities = additionalCapabilities;
             OsProfile = osProfile;
             NetworkProfile = networkProfile;
             DiagnosticsProfile = diagnosticsProfile;
@@ -136,6 +139,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageProfile")]
         public StorageProfile StorageProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies additional capabilities enabled or disabled
+        /// on the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.additionalCapabilities")]
+        public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the operating system settings for the

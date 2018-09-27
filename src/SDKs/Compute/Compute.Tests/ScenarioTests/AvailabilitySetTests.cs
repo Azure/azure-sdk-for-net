@@ -47,10 +47,12 @@ namespace Compute.Tests
         [Fact]
         public void TestOperations()
         {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 try
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
                     EnsureClientsInitialized(context);
                     Initialize(context);
 
@@ -71,6 +73,7 @@ namespace Compute.Tests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     resourcesClient.ResourceGroups.Delete(resourceGroup1Name);
                 }
             }
