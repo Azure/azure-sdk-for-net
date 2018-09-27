@@ -57,7 +57,6 @@ namespace Backup.Tests
                     {
                         var bName = ExtractName(backup.Name);
                         client.Backups.Get(ResourceGroupName, blName, bName);
-                        return;
                     }
                 });
             });
