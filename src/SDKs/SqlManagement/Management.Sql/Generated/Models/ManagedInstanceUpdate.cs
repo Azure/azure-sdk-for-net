@@ -50,8 +50,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="vCores">The number of VCores.</param>
         /// <param name="storageSizeInGB">The maximum storage size in
         /// GB.</param>
+        /// <param name="collation">Collation of the managed instance.</param>
+        /// <param name="dnsZone">The Dns Zone that the managed instance is
+        /// in.</param>
+        /// <param name="dnsZonePartner">The resource id of another managed
+        /// instance whose DNS zone this managed instance will share after
+        /// creation.</param>
         /// <param name="tags">Resource tags.</param>
-        public ManagedInstanceUpdate(Sku sku = default(Sku), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedInstanceUpdate(Sku sku = default(Sku), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
@@ -62,6 +68,9 @@ namespace Microsoft.Azure.Management.Sql.Models
             LicenseType = licenseType;
             VCores = vCores;
             StorageSizeInGB = storageSizeInGB;
+            Collation = collation;
+            DnsZone = dnsZone;
+            DnsZonePartner = dnsZonePartner;
             Tags = tags;
             CustomInit();
         }
@@ -128,6 +137,25 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageSizeInGB")]
         public int? StorageSizeInGB { get; set; }
+
+        /// <summary>
+        /// Gets collation of the managed instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.collation")]
+        public string Collation { get; private set; }
+
+        /// <summary>
+        /// Gets the Dns Zone that the managed instance is in.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dnsZone")]
+        public string DnsZone { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the resource id of another managed instance whose DNS
+        /// zone this managed instance will share after creation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dnsZonePartner")]
+        public string DnsZonePartner { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.
