@@ -65,7 +65,7 @@ namespace Media.Tests.ScenarioTests
                     liveOutputs = MediaClient.LiveOutputs.List(ResourceGroup, AccountName, eventName);
                     Assert.Empty(liveOutputs);
 
-                    // Get tranform, which should not exist
+                    // Get the liveOutput, which should not exist
                     liveOutput = MediaClient.LiveOutputs.Get(ResourceGroup, AccountName, eventName, liveOutputName);
                     Assert.Null(liveOutput);
 

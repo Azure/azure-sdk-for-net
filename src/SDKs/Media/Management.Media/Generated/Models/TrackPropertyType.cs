@@ -11,101 +11,56 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for TrackPropertyType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(TrackPropertyTypeConverter))]
-    public struct TrackPropertyType : System.IEquatable<TrackPropertyType>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum TrackPropertyType
     {
-        private TrackPropertyType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
         /// <summary>
         /// Unknown track property
         /// </summary>
-        public static readonly TrackPropertyType Unknown = "Unknown";
-
+        [EnumMember(Value = "Unknown")]
+        Unknown,
         /// <summary>
         /// Track FourCC
         /// </summary>
-        public static readonly TrackPropertyType FourCC = "FourCC";
-
-
-        /// <summary>
-        /// Underlying value of enum TrackPropertyType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for TrackPropertyType
-        /// </summary>
-        public override string ToString()
+        [EnumMember(Value = "FourCC")]
+        FourCC
+    }
+    internal static class TrackPropertyTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this TrackPropertyType? value)
         {
-            return UnderlyingValue.ToString();
+            return value == null ? null : ((TrackPropertyType)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Compares enums of type TrackPropertyType
-        /// </summary>
-        public bool Equals(TrackPropertyType e)
+        internal static string ToSerializedValue(this TrackPropertyType value)
         {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
+            switch( value )
+            {
+                case TrackPropertyType.Unknown:
+                    return "Unknown";
+                case TrackPropertyType.FourCC:
+                    return "FourCC";
+            }
+            return null;
         }
 
-        /// <summary>
-        /// Implicit operator to convert string to TrackPropertyType
-        /// </summary>
-        public static implicit operator TrackPropertyType(string value)
+        internal static TrackPropertyType? ParseTrackPropertyType(this string value)
         {
-            return new TrackPropertyType(value);
+            switch( value )
+            {
+                case "Unknown":
+                    return TrackPropertyType.Unknown;
+                case "FourCC":
+                    return TrackPropertyType.FourCC;
+            }
+            return null;
         }
-
-        /// <summary>
-        /// Implicit operator to convert TrackPropertyType to string
-        /// </summary>
-        public static implicit operator string(TrackPropertyType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum TrackPropertyType
-        /// </summary>
-        public static bool operator == (TrackPropertyType e1, TrackPropertyType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum TrackPropertyType
-        /// </summary>
-        public static bool operator != (TrackPropertyType e1, TrackPropertyType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for TrackPropertyType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is TrackPropertyType && Equals((TrackPropertyType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode TrackPropertyType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
     }
 }

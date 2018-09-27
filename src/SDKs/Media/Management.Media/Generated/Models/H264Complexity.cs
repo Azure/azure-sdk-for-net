@@ -11,109 +11,68 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for H264Complexity.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(H264ComplexityConverter))]
-    public struct H264Complexity : System.IEquatable<H264Complexity>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum H264Complexity
     {
-        private H264Complexity(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
         /// <summary>
         /// Tells the encoder to use settings that are optimized for faster
         /// encoding. Quality is sacrificed to decrease encoding time.
         /// </summary>
-        public static readonly H264Complexity Speed = "Speed";
-
+        [EnumMember(Value = "Speed")]
+        Speed,
         /// <summary>
         /// Tells the encoder to use settings that achieve a balance between
         /// speed and quality.
         /// </summary>
-        public static readonly H264Complexity Balanced = "Balanced";
-
+        [EnumMember(Value = "Balanced")]
+        Balanced,
         /// <summary>
         /// Tells the encoder to use settings that are optimized to produce
         /// higher quality output at the expense of slower overall encode time.
         /// </summary>
-        public static readonly H264Complexity Quality = "Quality";
-
-
-        /// <summary>
-        /// Underlying value of enum H264Complexity
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for H264Complexity
-        /// </summary>
-        public override string ToString()
+        [EnumMember(Value = "Quality")]
+        Quality
+    }
+    internal static class H264ComplexityEnumExtension
+    {
+        internal static string ToSerializedValue(this H264Complexity? value)
         {
-            return UnderlyingValue.ToString();
+            return value == null ? null : ((H264Complexity)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Compares enums of type H264Complexity
-        /// </summary>
-        public bool Equals(H264Complexity e)
+        internal static string ToSerializedValue(this H264Complexity value)
         {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
+            switch( value )
+            {
+                case H264Complexity.Speed:
+                    return "Speed";
+                case H264Complexity.Balanced:
+                    return "Balanced";
+                case H264Complexity.Quality:
+                    return "Quality";
+            }
+            return null;
         }
 
-        /// <summary>
-        /// Implicit operator to convert string to H264Complexity
-        /// </summary>
-        public static implicit operator H264Complexity(string value)
+        internal static H264Complexity? ParseH264Complexity(this string value)
         {
-            return new H264Complexity(value);
+            switch( value )
+            {
+                case "Speed":
+                    return H264Complexity.Speed;
+                case "Balanced":
+                    return H264Complexity.Balanced;
+                case "Quality":
+                    return H264Complexity.Quality;
+            }
+            return null;
         }
-
-        /// <summary>
-        /// Implicit operator to convert H264Complexity to string
-        /// </summary>
-        public static implicit operator string(H264Complexity e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum H264Complexity
-        /// </summary>
-        public static bool operator == (H264Complexity e1, H264Complexity e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum H264Complexity
-        /// </summary>
-        public static bool operator != (H264Complexity e1, H264Complexity e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for H264Complexity
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is H264Complexity && Equals((H264Complexity)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode H264Complexity
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
     }
 }

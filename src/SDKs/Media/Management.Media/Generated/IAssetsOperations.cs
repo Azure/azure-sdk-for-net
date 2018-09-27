@@ -255,7 +255,38 @@ namespace Microsoft.Azure.Management.Media
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AssetStorageEncryptionKey>> GetEncryptionKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, string assetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageEncryptedAssetDecryptionData>> GetEncryptionKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, string assetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List Streaming Locators
+        /// </summary>
+        /// <remarks>
+        /// Lists Streaming Locators which are associated with this asset.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the Azure subscription.
+        /// </param>
+        /// <param name='accountName'>
+        /// The Media Services account name.
+        /// </param>
+        /// <param name='assetName'>
+        /// The Asset name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ApiErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ListStreamingLocatorsResponse>> ListStreamingLocatorsWithHttpMessagesAsync(string resourceGroupName, string accountName, string assetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List Assets
         /// </summary>

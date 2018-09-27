@@ -11,29 +11,33 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The Asset Storage encryption key.
+    /// The Streaming Locators associated with this Asset.
     /// </summary>
-    public partial class AssetStorageEncryptionKey
+    public partial class ListStreamingLocatorsResponse
     {
         /// <summary>
-        /// Initializes a new instance of the AssetStorageEncryptionKey class.
+        /// Initializes a new instance of the ListStreamingLocatorsResponse
+        /// class.
         /// </summary>
-        public AssetStorageEncryptionKey()
+        public ListStreamingLocatorsResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AssetStorageEncryptionKey class.
+        /// Initializes a new instance of the ListStreamingLocatorsResponse
+        /// class.
         /// </summary>
-        /// <param name="storageEncryptionKey">The Asset storage encryption
-        /// key.</param>
-        public AssetStorageEncryptionKey(string storageEncryptionKey = default(string))
+        /// <param name="streamingLocators">The list of Streaming
+        /// Locators.</param>
+        public ListStreamingLocatorsResponse(IList<AssetStreamingLocator> streamingLocators = default(IList<AssetStreamingLocator>))
         {
-            StorageEncryptionKey = storageEncryptionKey;
+            StreamingLocators = streamingLocators;
             CustomInit();
         }
 
@@ -43,10 +47,10 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Asset storage encryption key.
+        /// Gets the list of Streaming Locators.
         /// </summary>
-        [JsonProperty(PropertyName = "storageEncryptionKey")]
-        public string StorageEncryptionKey { get; set; }
+        [JsonProperty(PropertyName = "streamingLocators")]
+        public IList<AssetStreamingLocator> StreamingLocators { get; private set; }
 
     }
 }

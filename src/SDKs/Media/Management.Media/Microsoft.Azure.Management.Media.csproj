@@ -6,12 +6,12 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Media</PackageId>
 		<Description>Provides developers with libraries for managing Azure Media Services using the Azure Resource Manager API.</Description>
-		<Version>1.8.0-preview</Version>
+		<Version>2.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.Media</AssemblyName>
 		<PackageTags>Microsoft Azure Media management;Media;Media management;</PackageTags>
                 <PackageReleaseNotes>
                         <![CDATA[
-        This release adds support for the 2nd Preview of the V3 API of Azure Media Services, including:
+        This release adds support for the General Availability of the V3 API of Azure Media Services, including:
 
         1. Transforms and Jobs to encode or analyze media content.
         2. StreamingLocators for publishing and streaming content to end user devices
@@ -22,14 +22,17 @@
         6. StreamingEndpoints to configure and scale dynamic packaging, encryption and streaming for
            both live and on demand media content.
 
-        Updates from the 1st Preview of the V3 API include support for Protected Preview on Live Events
-        and the addition of CorrelationData to the Job object.
+        Updates from the 2nd Preview of the V3 API include:
 
-        Note that type of the ContentKeys property of StreamingLocators has changed from 
-        StreamingLocatorUserDefinedContentKey to StreamingLocatorContentKey. This allows the ContentKeyId
-        information to be available when a user creates a StreamingLocator even for ContentKeys
-        created by MediaServices.  Also the CustomLicenseAcquisitionUrlTemplate property of EnvelopeEncryption 
-        was renamed to CustomKeyAcquisitionUrlTemplate.
+        * Support for Account and Asset level filters to allow a subset of a multi-bitrate streaming presentation to be
+          exposed to end users.
+        * The ListStreamingLocators method was added to Assets to allow the Locators associated with an Asset to be 
+          quickly enumerated.
+        * Jobs now support Update to allow changing the priority of a Job before processing begins.
+
+        Note that the VideoAnalyzerPreset.AudioInsightsOnly was renamed to VideoAnalyzerPreset.InsightsToExtract and converted
+        from a boolean to an enum to give three options (AudioInsightsOnly, VideoInsightsOnly, and AllInsights).  The default
+        is AllInsights.
 
                         ]]>
                 </PackageReleaseNotes>
