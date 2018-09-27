@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/resourcegroups/AzureAuthzSDK/providers/Microsoft.Authorization/denyAssignments/43af7d0c-0bf8-407f-96c0-96a29d076431?api-version=2018-07-01-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQwMDRhOWZkLWQ1OGUtNDhkYy1hZWIyLTRhNGFlYzU4NjA2Zi9yZXNvdXJjZWdyb3Vwcy9BenVyZUF1dGh6U0RLL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9kZW55QXNzaWdubWVudHMvNDNhZjdkMGMtMGJmOC00MDdmLTk2YzAtOTZhMjlkMDc2NDMxP2FwaS12ZXJzaW9uPTIwMTgtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4b488091-dc15-4d90-9fa8-44049f16c163"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26020.03",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.8.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 26 Sep 2018 23:38:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "Set-Cookie": [
+          "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
+        ],
+        "x-ms-request-charge": [
+          "1"
+        ],
+        "x-ms-request-id": [
+          "9a61bea6-c361-4fa0-9f93-4c76e32d6b41"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "4656a8d2-a9e6-4e6f-9fa0-8ff59646159e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180926T233840Z:4656a8d2-a9e6-4e6f-9fa0-8ff59646159e"
+        ],
+        "Content-Length": [
+          "887"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"denyAssignmentName\": \"AzureAuthzSDK_43AF7D0C-0BF8-407F-96C0-96A29D076431\",\r\n    \"description\": \"Test deny assignment for AzureAuthzSDK\",\r\n    \"permissions\": [\r\n      {\r\n        \"actions\": [\r\n          \"foo/*\"\r\n        ],\r\n        \"notActions\": [\r\n          \"foo/*/read\"\r\n        ],\r\n        \"dataActions\": [\r\n          \"foo/*\"\r\n        ],\r\n        \"notDataActions\": []\r\n      }\r\n    ],\r\n    \"scope\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/resourcegroups/AzureAuthzSDK\",\r\n    \"doNotApplyToChildScopes\": false,\r\n    \"principals\": [\r\n      {\r\n        \"id\": \"f8d526a054eb4941ae69ebf4a334d0f0\",\r\n        \"type\": \"User\"\r\n      }\r\n    ],\r\n    \"excludePrincipals\": [],\r\n    \"isSystemProtected\": true,\r\n    \"createdOn\": \"2018-09-20T19:03:38.8383507Z\",\r\n    \"updatedOn\": \"2018-09-20T21:40:01.1354716Z\",\r\n    \"createdBy\": null,\r\n    \"updatedBy\": null\r\n  },\r\n  \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/resourcegroups/AzureAuthzSDK/providers/Microsoft.Authorization/denyAssignments/43af7d0c-0bf8-407f-96c0-96a29d076431\",\r\n  \"type\": \"Microsoft.Authorization/denyAssignments\",\r\n  \"name\": \"43af7d0c-0bf8-407f-96c0-96a29d076431\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "4004a9fd-d58e-48dc-aeb2-4a4aec58606f"
+  }
+}

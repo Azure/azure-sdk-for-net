@@ -7,35 +7,25 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b03dcbc6-da1b-4203-8c52-d678fe1e6c79"
+          "539883f1-adff-4261-b3cb-67ea0946c99b"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
+          "FxVersion/4.6.26020.03",
           "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.8.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"actions\": [\r\n        \"*\"\r\n      ],\r\n      \"notActions\": [],\r\n      \"dataActions\": [],\r\n      \"notDataActions\": []\r\n    },\r\n    {\r\n      \"actions\": [\r\n        \"*/read\"\r\n      ],\r\n      \"notActions\": [],\r\n      \"dataActions\": [],\r\n      \"notDataActions\": []\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Sat, 10 Mar 2018 00:23:03 GMT"
+          "Wed, 26 Sep 2018 23:36:58 GMT"
         ],
         "Pragma": [
           "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
         ],
         "Server": [
           "Microsoft-IIS/10.0"
@@ -43,14 +33,11 @@
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "x-ms-request-charge": [
           "1"
         ],
         "x-ms-request-id": [
-          "de249d8b-301e-4d70-8f82-8ebcf5ba0e42"
+          "bd118e87-0ff6-4383-9995-d9473d8f0bd4"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -58,19 +45,26 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
+          "11998"
         ],
         "x-ms-correlation-request-id": [
-          "8052bf2a-d7ff-41ad-8c21-b8e95ef39097"
+          "b6b660ef-8d14-4390-9463-9599e21bde5f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180310T002303Z:8052bf2a-d7ff-41ad-8c21-b8e95ef39097"
+          "WESTUS2:20180926T233659Z:b6b660ef-8d14-4390-9463-9599e21bde5f"
+        ],
+        "Content-Length": [
+          "82"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"actions\": [\r\n        \"*\"\r\n      ],\r\n      \"notActions\": [],\r\n      \"dataActions\": [],\r\n      \"notDataActions\": []\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
