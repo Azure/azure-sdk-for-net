@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="disabledAlerts">Specifies the semicolon-separated list
         /// of alerts that are disabled, or empty string to disable no alerts.
         /// Possible values: Sql_Injection; Sql_Injection_Vulnerability;
-        /// Access_Anomaly; Usage_Anomaly.</param>
+        /// Access_Anomaly; Data_Exfiltration; Unsafe_Action.</param>
         /// <param name="emailAddresses">Specifies the semicolon-separated list
         /// of e-mail addresses to which the alert is sent.</param>
         /// <param name="emailAccountAdmins">Specifies that the alert is sent
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets or sets specifies the semicolon-separated list of alerts that
         /// are disabled, or empty string to disable no alerts. Possible
         /// values: Sql_Injection; Sql_Injection_Vulnerability; Access_Anomaly;
-        /// Usage_Anomaly.
+        /// Data_Exfiltration; Unsafe_Action.
         /// </summary>
         [JsonProperty(PropertyName = "properties.disabledAlerts")]
         public string DisabledAlerts { get; set; }
