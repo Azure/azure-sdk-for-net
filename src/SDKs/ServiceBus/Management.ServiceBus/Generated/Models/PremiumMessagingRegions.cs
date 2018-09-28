@@ -10,37 +10,36 @@
 
 namespace Microsoft.Azure.Management.ServiceBus.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Single item in a List or Get VirtualNetworkRules operation
+    /// Premium Messaging Region
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class VirtualNetworkRule : Resource
+    public partial class PremiumMessagingRegions : ResourceNamespacePatch
     {
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkRule class.
+        /// Initializes a new instance of the PremiumMessagingRegions class.
         /// </summary>
-        public VirtualNetworkRule()
+        public PremiumMessagingRegions()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkRule class.
+        /// Initializes a new instance of the PremiumMessagingRegions class.
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="virtualNetworkSubnetId">Resource ID of Virtual Network
-        /// Subnet</param>
-        public VirtualNetworkRule(string id = default(string), string name = default(string), string type = default(string), string virtualNetworkSubnetId = default(string))
-            : base(id, name, type)
+        /// <param name="location">Resource location</param>
+        /// <param name="tags">Resource tags</param>
+        public PremiumMessagingRegions(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PremiumMessagingRegionsProperties properties = default(PremiumMessagingRegionsProperties))
+            : base(id, name, type, location, tags)
         {
-            VirtualNetworkSubnetId = virtualNetworkSubnetId;
+            Properties = properties;
             CustomInit();
         }
 
@@ -50,10 +49,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource ID of Virtual Network Subnet
         /// </summary>
-        [JsonProperty(PropertyName = "properties.virtualNetworkSubnetId")]
-        public string VirtualNetworkSubnetId { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public PremiumMessagingRegionsProperties Properties { get; set; }
 
     }
 }

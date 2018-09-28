@@ -22,8 +22,7 @@ namespace Microsoft.Azure.Management.ServiceBus
     using System.Net.Http;
 
     /// <summary>
-    /// Azure Service Bus client for managing Namespace, IPFilter Rules,
-    /// VirtualNetworkRules and Zone Redundant
+    /// Azure Service Bus client
     /// </summary>
     public partial class ServiceBusManagementClient : ServiceClient<ServiceBusManagementClient>, IServiceBusManagementClient, IAzureClient
     {
@@ -78,9 +77,59 @@ namespace Microsoft.Azure.Management.ServiceBus
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the INamespacesOperations.
         /// </summary>
         public virtual INamespacesOperations Namespaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IDisasterRecoveryConfigsOperations.
+        /// </summary>
+        public virtual IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; private set; }
+
+        /// <summary>
+        /// Gets the IMigrationConfigsOperations.
+        /// </summary>
+        public virtual IMigrationConfigsOperations MigrationConfigs { get; private set; }
+
+        /// <summary>
+        /// Gets the IQueuesOperations.
+        /// </summary>
+        public virtual IQueuesOperations Queues { get; private set; }
+
+        /// <summary>
+        /// Gets the ITopicsOperations.
+        /// </summary>
+        public virtual ITopicsOperations Topics { get; private set; }
+
+        /// <summary>
+        /// Gets the ISubscriptionsOperations.
+        /// </summary>
+        public virtual ISubscriptionsOperations Subscriptions { get; private set; }
+
+        /// <summary>
+        /// Gets the IRulesOperations.
+        /// </summary>
+        public virtual IRulesOperations Rules { get; private set; }
+
+        /// <summary>
+        /// Gets the IRegionsOperations.
+        /// </summary>
+        public virtual IRegionsOperations Regions { get; private set; }
+
+        /// <summary>
+        /// Gets the IPremiumMessagingRegionsOperations.
+        /// </summary>
+        public virtual IPremiumMessagingRegionsOperations PremiumMessagingRegions { get; private set; }
+
+        /// <summary>
+        /// Gets the IEventHubsOperations.
+        /// </summary>
+        public virtual IEventHubsOperations EventHubs { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ServiceBusManagementClient class.
@@ -323,9 +372,19 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </summary>
         private void Initialize()
         {
+            Operations = new Operations(this);
             Namespaces = new NamespacesOperations(this);
+            DisasterRecoveryConfigs = new DisasterRecoveryConfigsOperations(this);
+            MigrationConfigs = new MigrationConfigsOperations(this);
+            Queues = new QueuesOperations(this);
+            Topics = new TopicsOperations(this);
+            Subscriptions = new SubscriptionsOperations(this);
+            Rules = new RulesOperations(this);
+            Regions = new RegionsOperations(this);
+            PremiumMessagingRegions = new PremiumMessagingRegionsOperations(this);
+            EventHubs = new EventHubsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-01-01-preview";
+            ApiVersion = "2017-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
