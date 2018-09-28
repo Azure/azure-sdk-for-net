@@ -56,7 +56,7 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 // List the linked services in the workspace
                 var listResponse = client.LinkedServices.ListByWorkspace(resourceGroupName, workspaceName);
-                Assert.Equal(1, listResponse.Count());
+                Assert.Single(listResponse);
                 Assert.Single(listResponse.Where(w => w.ResourceId.Equals(accountResourceId, StringComparison.OrdinalIgnoreCase)));
 
                 var accountResourceId2 = string.Format(accountResourceIdFromat, subId, resourceGroupName, automationAccountName2);

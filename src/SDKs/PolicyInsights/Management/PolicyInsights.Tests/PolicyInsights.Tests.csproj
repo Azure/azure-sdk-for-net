@@ -5,10 +5,8 @@
     <Description>PolicyInsights.Tests Class Library</Description>
     <AssemblyName>PolicyInsights.Tests</AssemblyName>
     <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
   <ItemGroup>
     <ProjectReference Include="..\Management.PolicyInsights\Microsoft.Azure.Management.PolicyInsights.csproj" />
   </ItemGroup>

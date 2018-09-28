@@ -75,9 +75,9 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 Assert.NotNull(schemaResult);
                 Assert.NotNull(schemaResult.Metadata);
-                Assert.Equal(schemaResult.Metadata.ResultType, "schema");
+                Assert.Equal("schema", schemaResult.Metadata.ResultType);
                 Assert.NotNull(schemaResult.Value);
-                Assert.NotEqual(schemaResult.Value.Count, 0);
+                Assert.NotEqual(0, schemaResult.Value.Count);
             }
         }
 
@@ -98,7 +98,7 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 Assert.NotNull(savedSearchesResult);
                 Assert.NotNull(savedSearchesResult.Value);
-                Assert.NotEqual(savedSearchesResult.Value.Count, 0);
+                Assert.NotEqual(0, savedSearchesResult.Value.Count);
 
                 String[] idStrings = savedSearchesResult.Value[0].Id.Split('/');
                 string id = idStrings[idStrings.Length - 1];
@@ -109,17 +109,17 @@ namespace OperationalInsights.Test.ScenarioTests
                     id);
                 Assert.NotNull(savedSearchResult);
                 Assert.NotNull(savedSearchResult.Etag);
-                Assert.NotEqual(savedSearchResult.Etag, "");
+                Assert.NotEqual("", savedSearchResult.Etag);
                 Assert.NotNull(savedSearchResult.Id);
-                Assert.NotEqual(savedSearchResult.Id, "");
+                Assert.NotEqual("", savedSearchResult.Id);
                 Assert.NotNull(savedSearchResult.Query);
-                Assert.NotEqual(savedSearchResult.Query, "");
+                Assert.NotEqual("", savedSearchResult.Query);
 
                 var savedSearchResults = client.SavedSearches.GetResults(resourceGroupName, workspaceName, id);
                 Assert.NotNull(savedSearchResults);
                 Assert.NotNull(savedSearchResults.Metadata);
                 Assert.NotNull(savedSearchResults.Value);
-                Assert.NotEqual(savedSearchResults.Value.Count, 0);
+                Assert.NotEqual(0, savedSearchResults.Value.Count);
             }
         }
 
@@ -163,7 +163,7 @@ namespace OperationalInsights.Test.ScenarioTests
                 var savedSearchesResult = client.SavedSearches.ListByWorkspace(resourceGroupName, workspaceName);
                 Assert.NotNull(savedSearchesResult);
                 Assert.NotNull(savedSearchesResult.Value);
-                Assert.NotEqual(savedSearchesResult.Value.Count, 0);
+                Assert.NotEqual(0, savedSearchesResult.Value.Count);
                 Assert.NotNull(savedSearchesResult.Value[0].Id);
                 Assert.NotNull(savedSearchesResult.Value[0].Query);
                 bool foundSavedSearch = false;
@@ -202,9 +202,9 @@ namespace OperationalInsights.Test.ScenarioTests
                 savedSearchesResult = client.SavedSearches.ListByWorkspace(resourceGroupName, workspaceName);
                 Assert.NotNull(savedSearchesResult);
                 Assert.NotNull(savedSearchesResult.Value);
-                Assert.NotEqual(savedSearchesResult.Value.Count, 0);
+                Assert.NotEqual(0, savedSearchesResult.Value.Count);
                 Assert.NotNull(savedSearchesResult.Value[0].Id);
-                Assert.Equal(savedSearchesResult.Value[0].Query, "*");
+                Assert.Equal("*", savedSearchesResult.Value[0].Query);
                 foundSavedSearch = false;
                 for (int i = 0; i < savedSearchesResult.Value.Count; i++)
                 {

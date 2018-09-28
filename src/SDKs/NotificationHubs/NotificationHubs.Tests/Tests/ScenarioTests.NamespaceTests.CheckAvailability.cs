@@ -59,7 +59,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.True(ex.Message.Contains("NotFound"));
+                    Assert.Contains("NotFound", ex.Message);
                 }
             }
         }

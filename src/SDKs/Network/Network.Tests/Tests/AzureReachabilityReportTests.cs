@@ -42,9 +42,9 @@ namespace Network.Tests.Tests
                 var report = networkManagementClient.NetworkWatchers.GetAzureReachabilityReport("NetworkWatcherRG", "NetworkWatcher", parameters);
 
                 //Validation
-                Assert.Equal(report.AggregationLevel, "Country");
-                Assert.Equal(report.ProviderLocation.Country, "United States");
-                Assert.Equal(report.ReachabilityReport[0].AzureLocation, "West US");
+                Assert.Equal("Country", report.AggregationLevel);
+                Assert.Equal("United States", report.ProviderLocation.Country);
+                Assert.Equal("West US", report.ReachabilityReport[0].AzureLocation);
             }
         }
 
@@ -74,10 +74,10 @@ namespace Network.Tests.Tests
                 var report = networkManagementClient.NetworkWatchers.GetAzureReachabilityReport("NetworkWatcherRG", "NetworkWatcher", parameters);
 
                 //Validation
-                Assert.Equal(report.AggregationLevel, "State");
-                Assert.Equal(report.ProviderLocation.Country, "United States");
-                Assert.Equal(report.ProviderLocation.State, "washington");
-                Assert.Equal(report.ReachabilityReport[0].AzureLocation, "West US");
+                Assert.Equal("State", report.AggregationLevel);
+                Assert.Equal("United States", report.ProviderLocation.Country);
+                Assert.Equal("washington", report.ProviderLocation.State);
+                Assert.Equal("West US", report.ReachabilityReport[0].AzureLocation);
             }
         }
 
@@ -108,11 +108,11 @@ namespace Network.Tests.Tests
                 var report = networkManagementClient.NetworkWatchers.GetAzureReachabilityReport("NetworkWatcherRG", "NetworkWatcher", parameters);
 
                 //Validation
-                Assert.Equal(report.AggregationLevel, "City");
-                Assert.Equal(report.ProviderLocation.Country, "United States");
-                Assert.Equal(report.ProviderLocation.State, "washington");
-                Assert.Equal(report.ProviderLocation.City, "seattle");
-                Assert.Equal(report.ReachabilityReport[0].AzureLocation, "West US");
+                Assert.Equal("City", report.AggregationLevel);
+                Assert.Equal("United States", report.ProviderLocation.Country);
+                Assert.Equal("washington", report.ProviderLocation.State);
+                Assert.Equal("seattle", report.ProviderLocation.City);
+                Assert.Equal("West US", report.ReachabilityReport[0].AzureLocation);
             }
         }
     }
