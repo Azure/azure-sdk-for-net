@@ -19,6 +19,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
         /// ISO8601 time period value.  This timespan is applied in addition to
@@ -73,6 +77,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -135,6 +143,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -157,6 +169,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='eventId'>
         /// ID of event.
@@ -187,6 +203,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -242,6 +262,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -304,6 +328,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -326,6 +354,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='eventId'>
         /// ID of event.
@@ -356,6 +388,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -411,6 +447,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -473,6 +513,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -495,6 +539,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='eventId'>
         /// ID of event.
@@ -525,6 +573,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -580,6 +632,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -642,6 +698,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -664,6 +724,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='eventId'>
         /// ID of event.
@@ -694,6 +758,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -749,6 +817,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -808,9 +880,12 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets the data for a single request event
         /// </remarks>
-        
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='eventId'>
         /// ID of event.
@@ -834,6 +909,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='eventId'>
         /// ID of event.
@@ -864,6 +943,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -919,6 +1002,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -981,6 +1068,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -1003,6 +1094,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='eventId'>
         /// ID of event.
@@ -1033,6 +1128,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -1088,6 +1187,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -1150,6 +1253,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -1172,6 +1279,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='eventId'>
         /// ID of event.
@@ -1202,6 +1313,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -1257,6 +1372,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -1319,6 +1438,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -1341,6 +1464,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='eventId'>
         /// ID of event.
@@ -1371,6 +1498,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -1426,6 +1557,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -1488,6 +1623,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -1510,6 +1649,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='eventId'>
         /// ID of event.
@@ -1540,6 +1683,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -1595,6 +1742,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
@@ -1657,6 +1808,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -1679,6 +1834,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='eventId'>
         /// ID of event.

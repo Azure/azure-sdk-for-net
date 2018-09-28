@@ -14,6 +14,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Executes an OData query for trace events
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
         /// ISO8601 time period value.  This timespan is applied in addition to
@@ -68,6 +72,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets the data for a single trace event
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -93,6 +101,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Executes an OData query for custom events
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
         /// ISO8601 time period value.  This timespan is applied in addition to
@@ -147,6 +159,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets the data for a single custom event
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -171,6 +187,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Executes an OData query for page view events
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
         /// ISO8601 time period value.  This timespan is applied in addition to
@@ -225,6 +245,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets the data for a single page view event
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -249,6 +273,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Executes an OData query for browser timing events
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
         /// ISO8601 time period value.  This timespan is applied in addition to
@@ -303,6 +331,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets the data for a single browser timing event
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -327,6 +359,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Executes an OData query for request events
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
         /// ISO8601 time period value.  This timespan is applied in addition to
@@ -381,6 +417,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets the data for a single request event
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -405,6 +445,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Executes an OData query for dependency events
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
         /// ISO8601 time period value.  This timespan is applied in addition to
@@ -459,6 +503,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets the data for a single dependency event
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -483,6 +531,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Executes an OData query for exception events
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
         /// ISO8601 time period value.  This timespan is applied in addition to
@@ -537,6 +589,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets the data for a single exception event
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -561,6 +617,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Executes an OData query for availability result events
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
         /// ISO8601 time period value.  This timespan is applied in addition to
@@ -614,6 +674,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets the data for a single availability result event
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -638,6 +702,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Executes an OData query for performance counter events
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
         /// ISO8601 time period value.  This timespan is applied in addition to
@@ -692,6 +760,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets the data for a single performance counter event
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>
@@ -716,6 +788,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Executes an OData query for custom metric events
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to retrieve events. This is an
         /// ISO8601 time period value.  This timespan is applied in addition to
@@ -770,6 +846,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets the data for a single custom metric event
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='eventId'>
         /// ID of event.
         /// </param>

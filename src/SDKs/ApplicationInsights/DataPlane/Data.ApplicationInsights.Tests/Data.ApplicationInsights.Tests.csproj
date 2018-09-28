@@ -4,7 +4,8 @@
     <PackageId>Data.ApplicationInsights.Tests</PackageId>
     <Description>Data.ApplicationInsights.Tests Class library</Description>
     <PackageId>Data.ApplicationInsights.Tests</PackageId>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0-preview</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   
   <ItemGroup>

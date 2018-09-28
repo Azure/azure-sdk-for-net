@@ -14,6 +14,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets summary metric values for a single metric
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
         /// application-specific custom metric. Possible values include:
@@ -81,6 +85,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets metric values for a single metric
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
         /// application-specific custom metric. Possible values include:
@@ -165,6 +173,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets metric values for a single metric
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
         /// application-specific custom metric. Possible values include:
@@ -241,6 +253,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <remarks>
         /// Gets metric values for a single metric
         /// </remarks>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
         /// application-specific custom metric. Possible values include:

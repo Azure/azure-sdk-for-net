@@ -19,6 +19,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
         /// application-specific custom metric. Possible values include:
@@ -85,6 +89,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
@@ -159,6 +167,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
@@ -244,6 +256,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
@@ -335,6 +351,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
+        /// </param>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
         /// application-specific custom metric. Possible values include:
@@ -410,6 +430,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
@@ -492,6 +516,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
@@ -578,6 +606,10 @@ namespace Microsoft.Azure.ApplicationInsights.Query
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
+        /// </param>
+        /// <param name='appId'>
+        /// ID of the application. This is Application ID from the API Access settings
+        /// blade in the Azure portal.
         /// </param>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
