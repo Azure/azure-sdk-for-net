@@ -55,7 +55,7 @@ namespace Management.HDInsight.Tests
 
                 //List script actions and validate script is persisted.
                 IPage<RuntimeScriptActionDetail> scriptActionsList = client.ScriptActions.ListPersistedScripts(rgName, clusterName);
-                Assert.Equal(1, scriptActionsList.Count());
+                Assert.Single(scriptActionsList);
                 RuntimeScriptActionDetail scriptAction = scriptActionsList.First();
                 Assert.Equal(scriptActionParams[0].Name, scriptAction.Name);
                 Assert.Equal(scriptActionParams[0].Uri, scriptAction.Uri);
@@ -66,11 +66,11 @@ namespace Management.HDInsight.Tests
 
                 //List script actions and validate script is deleted.
                 scriptActionsList = client.ScriptActions.ListPersistedScripts(rgName, clusterName);
-                Assert.Equal(0, scriptActionsList.Count());
+                Assert.Empty(scriptActionsList);
 
                 //List script action history and validate script appears there.
                 IPage<RuntimeScriptActionDetail> listHistoryResponse = client.ScriptExecutionHistory.List(rgName, clusterName);
-                Assert.Equal(1, listHistoryResponse.Count());
+                Assert.Single(listHistoryResponse);
                 scriptAction = listHistoryResponse.First();
                 Assert.Equal(1, scriptAction.ExecutionSummary.Count);
                 Assert.Equal(scriptActionParams[0].Name, scriptAction.Name);
@@ -107,7 +107,7 @@ namespace Management.HDInsight.Tests
 
                 //List script action list and validate the promoted script is the only one there.
                 scriptActionsList = client.ScriptActions.ListPersistedScripts(rgName, clusterName);
-                Assert.Equal(1, scriptActionsList.Count());
+                Assert.Single(scriptActionsList);
                 Assert.Equal(1, scriptAction.ExecutionSummary.Count);
                 Assert.Equal(scriptActionParams[0].Name, scriptAction.Name);
                 Assert.Equal(scriptActionParams[0].Uri, scriptAction.Uri);
