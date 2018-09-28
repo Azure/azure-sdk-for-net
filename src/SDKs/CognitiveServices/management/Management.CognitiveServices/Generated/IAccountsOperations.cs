@@ -268,6 +268,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <param name='accountName'>
         /// The name of Cognitive Services account.
         /// </param>
+        /// <param name='filter'>
+        /// An OData filter expression that describes a subset of usages to
+        /// return. The supported parameter is name.value (name of the metric,
+        /// can have an or of multiple names).
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -283,7 +288,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<UsagesResult>> GetUsagesWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UsagesResult>> GetUsagesWithHttpMessagesAsync(string resourceGroupName, string accountName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns all the resources of a particular type belonging to a
         /// resource group

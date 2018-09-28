@@ -133,6 +133,19 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <summary>
         /// Initializes a new instance of the DataFactoryManagementClient class.
         /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling DataFactoryManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected DataFactoryManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the DataFactoryManagementClient class.
+        /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
@@ -213,6 +226,33 @@ namespace Microsoft.Azure.Management.DataFactory
         /// Thrown when a required parameter is null
         /// </exception>
         public DataFactoryManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the DataFactoryManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling DataFactoryManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public DataFactoryManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -395,6 +435,8 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetCompression>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetStorageFormat>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetStorageFormat>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DependencyReference>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DependencyReference>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopySource>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySource>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopyTranslator>("type"));

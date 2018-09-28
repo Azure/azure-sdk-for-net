@@ -16,10 +16,6 @@
     <ProjectReference Include="..\..\Management\Search.Management.Tests\Search.Management.Tests.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.12" />
-    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.2" />
-  </ItemGroup>
-  <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

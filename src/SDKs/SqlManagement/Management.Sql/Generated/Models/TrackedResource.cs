@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         public TrackedResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type)
         {
-            Tags = tags;
             Location = location;
+            Tags = tags;
             CustomInit();
         }
 
@@ -51,16 +51,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
         /// Gets or sets resource location.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -86,11 +86,11 @@ namespace Test.Azure.Management.Logic
         },
         'parameters':{
             'parameter1':{
-                'type': 'string',
+                'type': 'String',
                 'value': 'abc'
             },
             'parameter2':{
-                'type': 'array',
+                'type': 'Array',
                 'value': [1, 2, 3]
             }
         }
@@ -156,14 +156,14 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.WorkflowVersions.ListCallbackUrl(null, "wfName", "version", "triggerName"));
-            Assert.Throws<ValidationException>(() => client.WorkflowVersions.ListCallbackUrl("rgName", null, "version", "triggerName"));
-            Assert.Throws<ValidationException>(() => client.WorkflowVersions.ListCallbackUrl("rgName", "wfName", null, "triggerName"));
-            Assert.Throws<ValidationException>(() => client.WorkflowVersions.ListCallbackUrl("rgName", "wfName", "version", null));
-            Assert.Throws<CloudException>(() => client.WorkflowVersions.ListCallbackUrl("rgName", "wfName", "version", "triggerName"));
+            Assert.Throws<ValidationException>(() => client.WorkflowVersionTriggers.ListCallbackUrl(null, "wfName", "version", "triggerName"));
+            Assert.Throws<ValidationException>(() => client.WorkflowVersionTriggers.ListCallbackUrl("rgName", null, "version", "triggerName"));
+            Assert.Throws<ValidationException>(() => client.WorkflowVersionTriggers.ListCallbackUrl("rgName", "wfName", null, "triggerName"));
+            Assert.Throws<ValidationException>(() => client.WorkflowVersionTriggers.ListCallbackUrl("rgName", "wfName", "version", null));
+            Assert.Throws<CloudException>(() => client.WorkflowVersionTriggers.ListCallbackUrl("rgName", "wfName", "version", "triggerName"));
         }
 
         [Fact]
@@ -183,7 +183,7 @@ namespace Test.Azure.Management.Logic
                 Content = responseContent,
             };
 
-            var triggerUrl = client.WorkflowVersions.ListCallbackUrl("rgName", "wfName", "version", "triggerName");
+            var triggerUrl = client.WorkflowVersionTriggers.ListCallbackUrl("rgName", "wfName", "version", "triggerName");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();

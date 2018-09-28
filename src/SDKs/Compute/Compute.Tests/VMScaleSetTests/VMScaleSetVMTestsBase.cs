@@ -22,7 +22,7 @@ namespace Compute.Tests
             {
                 Assert.NotNull(vmScaleSetVMOut.Zones);
                 Assert.Equal(1, vmScaleSetVMOut.Zones.Count);
-                Assert.True(vmScaleSet.Zones.Any(vmssZone => vmssZone == vmScaleSetVMOut.Zones.First()));
+                Assert.Contains(vmScaleSet.Zones, vmssZone => vmssZone == vmScaleSetVMOut.Zones.First());
             }
         }
 

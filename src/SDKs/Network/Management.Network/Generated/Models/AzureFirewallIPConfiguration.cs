@@ -39,10 +39,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// IP to be used as the next hop in User Defined Routes.</param>
         /// <param name="subnet">Reference of the subnet resource. This
         /// resource must be named 'AzureFirewallSubnet'.</param>
-        /// <param name="internalPublicIpAddress">Reference of the PublicIP
-        /// resource. This field is a mandatory input.</param>
         /// <param name="publicIPAddress">Reference of the PublicIP resource.
-        /// This field is populated in the output.</param>
+        /// This field is a mandatory input if subnet is not null.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
@@ -51,12 +49,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public AzureFirewallIPConfiguration(string id = default(string), string privateIPAddress = default(string), SubResource subnet = default(SubResource), SubResource internalPublicIpAddress = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public AzureFirewallIPConfiguration(string id = default(string), string privateIPAddress = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PrivateIPAddress = privateIPAddress;
             Subnet = subnet;
-            InternalPublicIpAddress = internalPublicIpAddress;
             PublicIPAddress = publicIPAddress;
             ProvisioningState = provisioningState;
             Name = name;
@@ -85,14 +82,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets reference of the PublicIP resource. This field is a
-        /// mandatory input.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.internalPublicIpAddress")]
-        public SubResource InternalPublicIpAddress { get; set; }
-
-        /// <summary>
-        /// Gets or sets reference of the PublicIP resource. This field is
-        /// populated in the output.
+        /// mandatory input if subnet is not null.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public SubResource PublicIPAddress { get; set; }
@@ -112,11 +102,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

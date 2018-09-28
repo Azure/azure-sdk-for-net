@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="resources">The virtual machine child extension
         /// resources.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), string vmId = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), IList<string> zones = default(IList<string>))
+        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), string vmId = default(string), VirtualMachineScaleSetVMInstanceView instanceView = default(VirtualMachineScaleSetVMInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             InstanceId = instanceId;
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets the virtual machine instance view.
         /// </summary>
         [JsonProperty(PropertyName = "properties.instanceView")]
-        public VirtualMachineInstanceView InstanceView { get; private set; }
+        public VirtualMachineScaleSetVMInstanceView InstanceView { get; private set; }
 
         /// <summary>
         /// Gets or sets specifies the hardware settings for the virtual

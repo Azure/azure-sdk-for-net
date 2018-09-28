@@ -78,7 +78,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// runtime is going to update to.</param>
         /// <param name="latestVersion">The latest version on download
         /// center.</param>
-        public SelfHostedIntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string dataFactoryName = default(string), string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string), string versionStatus = default(string), IList<LinkedIntegrationRuntime> links = default(IList<LinkedIntegrationRuntime>), string pushedVersion = default(string), string latestVersion = default(string))
+        /// <param name="autoUpdateETA">The estimated time when the self-hosted
+        /// integration runtime will be updated.</param>
+        public SelfHostedIntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string dataFactoryName = default(string), string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string), string versionStatus = default(string), IList<LinkedIntegrationRuntime> links = default(IList<LinkedIntegrationRuntime>), string pushedVersion = default(string), string latestVersion = default(string), System.DateTime? autoUpdateETA = default(System.DateTime?))
             : base(additionalProperties, dataFactoryName, state)
         {
             CreateTime = createTime;
@@ -96,6 +98,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Links = links;
             PushedVersion = pushedVersion;
             LatestVersion = latestVersion;
+            AutoUpdateETA = autoUpdateETA;
             CustomInit();
         }
 
@@ -204,6 +207,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.latestVersion")]
         public string LatestVersion { get; private set; }
+
+        /// <summary>
+        /// Gets the estimated time when the self-hosted integration runtime
+        /// will be updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.autoUpdateETA")]
+        public System.DateTime? AutoUpdateETA { get; private set; }
 
     }
 }

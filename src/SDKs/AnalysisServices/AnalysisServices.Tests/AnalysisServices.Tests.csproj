@@ -4,10 +4,9 @@
     <Description>AnalysisServices.Tests Class Library</Description>
     <AssemblyName>AnalysisServices.Tests</AssemblyName>
     <PackageId>AnalysisServices.Tests</PackageId>
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\Management.Analysis\Microsoft.Azure.Management.Analysis.csproj" />

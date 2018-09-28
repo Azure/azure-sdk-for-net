@@ -596,6 +596,26 @@ namespace CognitiveServices.Tests
         }
 
         [Fact]
+        public void CognitiveServicesResourceSkusListTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                var skus = cognitiveServicesMgmtClient.ResourceSkus.List();
+
+                Assert.True(skus.Any(), "Assert that the array of skus has at least 1 member.");
+                Assert.True(skus.Any(sku => sku.Kind == "Face"), "Assert that the sku list at least contains one Face sku.");
+                Assert.True(skus.Any(sku => sku.Name == "F0"), "Assert that the sku list at least contains one F0 sku.");
+                Assert.True(skus.Any(sku => sku.Locations != null), "Assert that the sku list has non null location info in it.");
+                Assert.True(skus.All(sku => sku.Locations.Count == 1), "There should be exactly one location info per entry.");
+            }
+        }
+
+        [Fact]
         public void CognitiveServicesAccountMinMaxNameLengthTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

@@ -2,6 +2,15 @@
 
 ## Current version
 
+## Version 2.2.0
+
+###  Feature Additions
+        - Added folders to Pipeline and Dataset
+        - Added TumblingWindowTrigger dependsOn, offset and size properties
+        - Added new API to get GitHub access token
+        - Added new property on Databricks linked Service to set Spark environment variables
+        - Fixed the casing in JSON for FactoryGitHubConfiguration 
+
 ## Version 2.1.0
 
 ###  Feature Additions

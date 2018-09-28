@@ -615,7 +615,7 @@ namespace BatchClientIntegrationTests
                         CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: targetDedicated);
                         pool.Commit();
 
-                        this.testOutputHelper.WriteLine("Created pool {0}", poolId);
+                        this.testOutputHelper.WriteLine($"Created pool {poolId}");
 
 
                         CloudPool boundPool = batchCli.PoolOperations.GetPool(poolId);
@@ -630,6 +630,7 @@ namespace BatchClientIntegrationTests
                         boundPool.Refresh();
 
                         //The pool could be in stopping or steady state
+                        this.testOutputHelper.WriteLine($"Pool allocation state: {boundPool.AllocationState}");
                         Assert.True(boundPool.AllocationState == AllocationState.Steady || boundPool.AllocationState == AllocationState.Stopping);
                     }
                     finally

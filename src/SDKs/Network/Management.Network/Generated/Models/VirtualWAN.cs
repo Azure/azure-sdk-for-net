@@ -43,17 +43,33 @@ namespace Microsoft.Azure.Management.Network.Models
         /// not.</param>
         /// <param name="virtualHubs">List of VirtualHubs in the
         /// VirtualWAN.</param>
+        /// <param name="securityProviderName">The Security Provider
+        /// name.</param>
+        /// <param name="allowBranchToBranchTraffic">True if branch to branch
+        /// traffic is allowed.</param>
+        /// <param name="allowVnetToVnetTraffic">True if Vnet to Vnet traffic
+        /// is allowed.</param>
+        /// <param name="office365LocalBreakoutCategory">The office local
+        /// breakout category. Possible values include: 'Optimize',
+        /// 'OptimizeAndAllow', 'All', 'None'</param>
+        /// <param name="p2SVpnServerConfigurations">list of all
+        /// P2SVpnServerConfigurations associated with the virtual wan.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VirtualWAN(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? disableVpnEncryption = default(bool?), IList<SubResource> virtualHubs = default(IList<SubResource>), IList<SubResource> vpnSites = default(IList<SubResource>), string provisioningState = default(string), string etag = default(string))
+        public VirtualWAN(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? disableVpnEncryption = default(bool?), IList<SubResource> virtualHubs = default(IList<SubResource>), IList<SubResource> vpnSites = default(IList<SubResource>), string securityProviderName = default(string), bool? allowBranchToBranchTraffic = default(bool?), bool? allowVnetToVnetTraffic = default(bool?), string office365LocalBreakoutCategory = default(string), IList<P2SVpnServerConfiguration> p2SVpnServerConfigurations = default(IList<P2SVpnServerConfiguration>), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             DisableVpnEncryption = disableVpnEncryption;
             VirtualHubs = virtualHubs;
             VpnSites = vpnSites;
+            SecurityProviderName = securityProviderName;
+            AllowBranchToBranchTraffic = allowBranchToBranchTraffic;
+            AllowVnetToVnetTraffic = allowVnetToVnetTraffic;
+            Office365LocalBreakoutCategory = office365LocalBreakoutCategory;
+            P2SVpnServerConfigurations = p2SVpnServerConfigurations;
             ProvisioningState = provisioningState;
             Etag = etag;
             CustomInit();
@@ -80,6 +96,38 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnSites")]
         public IList<SubResource> VpnSites { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the Security Provider name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securityProviderName")]
+        public string SecurityProviderName { get; set; }
+
+        /// <summary>
+        /// Gets or sets true if branch to branch traffic is allowed.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowBranchToBranchTraffic")]
+        public bool? AllowBranchToBranchTraffic { get; set; }
+
+        /// <summary>
+        /// Gets or sets true if Vnet to Vnet traffic is allowed.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowVnetToVnetTraffic")]
+        public bool? AllowVnetToVnetTraffic { get; set; }
+
+        /// <summary>
+        /// Gets or sets the office local breakout category. Possible values
+        /// include: 'Optimize', 'OptimizeAndAllow', 'All', 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.office365LocalBreakoutCategory")]
+        public string Office365LocalBreakoutCategory { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of all P2SVpnServerConfigurations associated with
+        /// the virtual wan.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.p2SVpnServerConfigurations")]
+        public IList<P2SVpnServerConfiguration> P2SVpnServerConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets the provisioning state of the resource. Possible

@@ -197,6 +197,30 @@
             "tags": {
               "exampleTag": "exampleValue"
             }
+          },
+          {
+            "name": "exampleFactoryNameGitHub",
+            "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryNameGitHub",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2018-06-19T05:41:50.0041314Z",
+              "version": "2018-06-01",
+              "repoConfiguration": {
+                "type": "FactoryGitHubConfiguration",
+                "hostName": "",
+                "accountName": "ADF",
+                "repositoryName": "repo",
+                "collaborationBranch": "master",
+                "rootFolder": "/",
+                "lastCommitId": ""
+              }
+            },
+            "eTag": "\"00004004-0000-0000-0000-5b28979c0000\"",
+            "location": "East US",
+            "tags": {
+              "exampleTag": "exampleValue"
+            }
           }
         ]
       }

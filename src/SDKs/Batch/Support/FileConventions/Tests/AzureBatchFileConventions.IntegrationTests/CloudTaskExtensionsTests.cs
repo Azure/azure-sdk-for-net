@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
                 Url = $"http://contoso.noregion.batch.azure.com/jobs/{_jobId}/tasks/{_taskId}",  // TODO: remove if .NET client library can surface CloudTask.JobId directly
             };
 
-            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient(taskResponse)))
+            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient(taskResponse)))
             {
                 var task = await batchClient.JobOperations.GetTaskAsync(_jobId, _taskId);
 

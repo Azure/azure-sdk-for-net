@@ -777,6 +777,52 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Get network configuration diagnostic.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to get network configuration diagnostic.
+            /// </param>
+            public static NetworkConfigurationDiagnosticResponse GetNetworkConfigurationDiagnostic(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, NetworkConfigurationDiagnosticParameters parameters)
+            {
+                return operations.GetNetworkConfigurationDiagnosticAsync(resourceGroupName, networkWatcherName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get network configuration diagnostic.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to get network configuration diagnostic.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NetworkConfigurationDiagnosticResponse> GetNetworkConfigurationDiagnosticAsync(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, NetworkConfigurationDiagnosticParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNetworkConfigurationDiagnosticWithHttpMessagesAsync(resourceGroupName, networkWatcherName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes the specified network watcher resource.
             /// </summary>
             /// <param name='operations'>
@@ -1284,6 +1330,52 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<AvailableProvidersList> BeginListAvailableProvidersAsync(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginListAvailableProvidersWithHttpMessagesAsync(resourceGroupName, networkWatcherName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get network configuration diagnostic.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to get network configuration diagnostic.
+            /// </param>
+            public static NetworkConfigurationDiagnosticResponse BeginGetNetworkConfigurationDiagnostic(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, NetworkConfigurationDiagnosticParameters parameters)
+            {
+                return operations.BeginGetNetworkConfigurationDiagnosticAsync(resourceGroupName, networkWatcherName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get network configuration diagnostic.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to get network configuration diagnostic.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NetworkConfigurationDiagnosticResponse> BeginGetNetworkConfigurationDiagnosticAsync(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, NetworkConfigurationDiagnosticParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGetNetworkConfigurationDiagnosticWithHttpMessagesAsync(resourceGroupName, networkWatcherName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

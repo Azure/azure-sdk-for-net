@@ -11,68 +11,21 @@ namespace DataBox.Tests.Tests
     {
         public JobsActionsTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-        }
+        }        
 
         [Fact]
-        public void TestGetCopyLogsUri()
+        public void TestListCredentials()
         {
             try
             {
-                var copyLogsUri = this.Client.Jobs.GetCopyLogsUri(TestConstants.DefaultResourceGroupName, TestConstants.DefaultJobName);
-                Assert.True(copyLogsUri != null, "Call for copy logs uri was not successful.");
-            }
-            catch (Exception e)
-            {
-                Assert.Null(e);
-            }
-        }
-
-        [Fact]
-        public void TestDownloadShippingLabelUri()
-        {
-            try
-            {
-                var shippingLabelUri = this.Client.Jobs.DownloadShippingLabelUri(TestConstants.DefaultResourceGroupName, TestConstants.DefaultJobName);
-                Assert.True(shippingLabelUri != null, "Call for download shipping label uri was not successful.");
-            }
-            catch (Exception e)
-            {
-                Assert.Null(e);
-            }
-        }
-
-        [Fact]
-        public void TestListSecrets()
-        {
-            try
-            {
-                var secrets = this.Client.Jobs.ListSecrets(TestConstants.DefaultResourceGroupName, TestConstants.DefaultJobName);
+                var secrets = this.Client.Jobs.ListCredentials(TestConstants.DefaultResourceGroupName, TestConstants.DefaultJobName);
                 Assert.True(secrets != null, "Call for list secrets was not successful.");
             }
             catch (Exception e)
             {
                 Assert.Null(e);
             }
-        }
-
-        [Fact]
-        public void TestReportIssue()
-        {
-            try
-            {
-                var issue = new ReportIssueDetails
-                {
-                    IssueType = IssueType.DeviceFailure,
-                    DeviceIssueType = DeviceIssueType.DeviceNotBootingUp
-                };
-                this.Client.Jobs.ReportIssue(TestConstants.DefaultResourceGroupName, TestConstants.DefaultJobName,
-                    issue);
-            }
-            catch (Exception e)
-            {
-                Assert.Null(e);
-            }
-        }
+        }        
 
         [Fact]
         public void TestBookShipmentPickup()

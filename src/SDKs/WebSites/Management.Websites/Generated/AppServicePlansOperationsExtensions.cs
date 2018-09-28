@@ -745,8 +745,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq
+            /// 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             public static IPage<ResourceMetric> ListMetrics(this IAppServicePlansOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
             {
@@ -775,8 +775,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='filter'>
             /// Return only usages/metrics specified in the filter. Filter conforms to
             /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq
+            /// 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

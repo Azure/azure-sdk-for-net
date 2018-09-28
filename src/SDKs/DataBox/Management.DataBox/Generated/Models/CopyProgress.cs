@@ -31,13 +31,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="storageAccountName">Name of the storage account where
         /// the data needs to be uploaded.</param>
+        /// <param name="accountId">Id of the account where the data needs to
+        /// be uploaded.</param>
         /// <param name="bytesSentToCloud">Amount of data uploaded by the job
         /// as of now.</param>
         /// <param name="totalBytesToProcess">Total amount of data to be
         /// processed by the job.</param>
-        public CopyProgress(string storageAccountName = default(string), long? bytesSentToCloud = default(long?), long? totalBytesToProcess = default(long?))
+        public CopyProgress(string storageAccountName = default(string), string accountId = default(string), long? bytesSentToCloud = default(long?), long? totalBytesToProcess = default(long?))
         {
             StorageAccountName = storageAccountName;
+            AccountId = accountId;
             BytesSentToCloud = bytesSentToCloud;
             TotalBytesToProcess = totalBytesToProcess;
             CustomInit();
@@ -49,23 +52,29 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the storage account where the data needs to be
+        /// Gets name of the storage account where the data needs to be
         /// uploaded.
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountName")]
-        public string StorageAccountName { get; set; }
+        public string StorageAccountName { get; private set; }
 
         /// <summary>
-        /// Gets or sets amount of data uploaded by the job as of now.
+        /// Gets id of the account where the data needs to be uploaded.
+        /// </summary>
+        [JsonProperty(PropertyName = "accountId")]
+        public string AccountId { get; private set; }
+
+        /// <summary>
+        /// Gets amount of data uploaded by the job as of now.
         /// </summary>
         [JsonProperty(PropertyName = "bytesSentToCloud")]
-        public long? BytesSentToCloud { get; set; }
+        public long? BytesSentToCloud { get; private set; }
 
         /// <summary>
-        /// Gets or sets total amount of data to be processed by the job.
+        /// Gets total amount of data to be processed by the job.
         /// </summary>
         [JsonProperty(PropertyName = "totalBytesToProcess")]
-        public long? TotalBytesToProcess { get; set; }
+        public long? TotalBytesToProcess { get; private set; }
 
     }
 }

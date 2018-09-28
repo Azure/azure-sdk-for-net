@@ -34,14 +34,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="instanceName">Name of the server on which the
         /// measurement is made.</param>
         /// <param name="value">Value of counter at a certain time.</param>
-        /// <param name="coreCount">Core Count of worker. Not a data
-        /// member</param>
-        public PerfMonSample(System.DateTime? time = default(System.DateTime?), string instanceName = default(string), double? value = default(double?), int? coreCount = default(int?))
+        public PerfMonSample(System.DateTime? time = default(System.DateTime?), string instanceName = default(string), double? value = default(double?))
         {
             Time = time;
             InstanceName = instanceName;
             Value = value;
-            CoreCount = coreCount;
             CustomInit();
         }
 
@@ -67,12 +64,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public double? Value { get; set; }
-
-        /// <summary>
-        /// Gets or sets core Count of worker. Not a data member
-        /// </summary>
-        [JsonProperty(PropertyName = "coreCount")]
-        public int? CoreCount { get; set; }
 
     }
 }

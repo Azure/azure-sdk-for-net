@@ -52,7 +52,7 @@ namespace CustomerInsights.Tests.Tests
 
                 Assert.Equal(interactionName, interactionResult.TypeName);
                 Assert.Equal(interactionResult.Name, HubName + "/" + interactionName);
-                Assert.Equal(interactionResult.Type, "Microsoft.CustomerInsights/hubs/interactions");
+                Assert.Equal("Microsoft.CustomerInsights/hubs/interactions", interactionResult.Type);
 
                 //Get interaction and verify
                 var interactionGetResult = aciClient.Interactions.Get(
@@ -67,9 +67,8 @@ namespace CustomerInsights.Tests.Tests
                     HubName + "/" + interactionName,
                     StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    interactionGetResult.Type,
                     "Microsoft.CustomerInsights/hubs/interactions",
-                    StringComparer.OrdinalIgnoreCase);
+                    interactionGetResult.Type, StringComparer.OrdinalIgnoreCase);
             }
         }
 

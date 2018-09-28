@@ -36,14 +36,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="domainName">Name of the top level domain.</param>
         /// <param name="privacy">If &lt;code&gt;true&lt;/code&gt;, then the
         /// top level domain supports domain privacy; otherwise,
         /// &lt;code&gt;false&lt;/code&gt;.</param>
-        public TopLevelDomain(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string domainName = default(string), bool? privacy = default(bool?))
+        public TopLevelDomain(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? privacy = default(bool?))
             : base(id, name, kind, type)
         {
-            DomainName = domainName;
             Privacy = privacy;
             CustomInit();
         }
@@ -52,12 +50,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets name of the top level domain.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string DomainName { get; private set; }
 
         /// <summary>
         /// Gets or sets if &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;, then
