@@ -11,102 +11,57 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DeinterlaceMode.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(DeinterlaceModeConverter))]
-    public struct DeinterlaceMode : System.IEquatable<DeinterlaceMode>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum DeinterlaceMode
     {
-        private DeinterlaceMode(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
         /// <summary>
         /// Disables de-interlacing of the source video.
         /// </summary>
-        public static readonly DeinterlaceMode Off = "Off";
-
+        [EnumMember(Value = "Off")]
+        Off,
         /// <summary>
         /// Apply automatic pixel adaptive de-interlacing on each frame in the
         /// input video.
         /// </summary>
-        public static readonly DeinterlaceMode AutoPixelAdaptive = "AutoPixelAdaptive";
-
-
-        /// <summary>
-        /// Underlying value of enum DeinterlaceMode
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for DeinterlaceMode
-        /// </summary>
-        public override string ToString()
+        [EnumMember(Value = "AutoPixelAdaptive")]
+        AutoPixelAdaptive
+    }
+    internal static class DeinterlaceModeEnumExtension
+    {
+        internal static string ToSerializedValue(this DeinterlaceMode? value)
         {
-            return UnderlyingValue.ToString();
+            return value == null ? null : ((DeinterlaceMode)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Compares enums of type DeinterlaceMode
-        /// </summary>
-        public bool Equals(DeinterlaceMode e)
+        internal static string ToSerializedValue(this DeinterlaceMode value)
         {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
+            switch( value )
+            {
+                case DeinterlaceMode.Off:
+                    return "Off";
+                case DeinterlaceMode.AutoPixelAdaptive:
+                    return "AutoPixelAdaptive";
+            }
+            return null;
         }
 
-        /// <summary>
-        /// Implicit operator to convert string to DeinterlaceMode
-        /// </summary>
-        public static implicit operator DeinterlaceMode(string value)
+        internal static DeinterlaceMode? ParseDeinterlaceMode(this string value)
         {
-            return new DeinterlaceMode(value);
+            switch( value )
+            {
+                case "Off":
+                    return DeinterlaceMode.Off;
+                case "AutoPixelAdaptive":
+                    return DeinterlaceMode.AutoPixelAdaptive;
+            }
+            return null;
         }
-
-        /// <summary>
-        /// Implicit operator to convert DeinterlaceMode to string
-        /// </summary>
-        public static implicit operator string(DeinterlaceMode e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum DeinterlaceMode
-        /// </summary>
-        public static bool operator == (DeinterlaceMode e1, DeinterlaceMode e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum DeinterlaceMode
-        /// </summary>
-        public static bool operator != (DeinterlaceMode e1, DeinterlaceMode e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for DeinterlaceMode
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is DeinterlaceMode && Equals((DeinterlaceMode)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode DeinterlaceMode
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
     }
 }

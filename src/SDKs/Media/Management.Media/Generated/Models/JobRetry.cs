@@ -11,104 +11,59 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for JobRetry.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(JobRetryConverter))]
-    public struct JobRetry : System.IEquatable<JobRetry>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum JobRetry
     {
-        private JobRetry(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
         /// <summary>
         /// Issue needs to be investigated and then the job resubmitted with
         /// corrections or retried once the underlying issue has been
         /// corrected.
         /// </summary>
-        public static readonly JobRetry DoNotRetry = "DoNotRetry";
-
+        [EnumMember(Value = "DoNotRetry")]
+        DoNotRetry,
         /// <summary>
         /// Issue may be resolved after waiting for a period of time and
         /// resubmitting the same Job.
         /// </summary>
-        public static readonly JobRetry MayRetry = "MayRetry";
-
-
-        /// <summary>
-        /// Underlying value of enum JobRetry
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for JobRetry
-        /// </summary>
-        public override string ToString()
+        [EnumMember(Value = "MayRetry")]
+        MayRetry
+    }
+    internal static class JobRetryEnumExtension
+    {
+        internal static string ToSerializedValue(this JobRetry? value)
         {
-            return UnderlyingValue.ToString();
+            return value == null ? null : ((JobRetry)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Compares enums of type JobRetry
-        /// </summary>
-        public bool Equals(JobRetry e)
+        internal static string ToSerializedValue(this JobRetry value)
         {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
+            switch( value )
+            {
+                case JobRetry.DoNotRetry:
+                    return "DoNotRetry";
+                case JobRetry.MayRetry:
+                    return "MayRetry";
+            }
+            return null;
         }
 
-        /// <summary>
-        /// Implicit operator to convert string to JobRetry
-        /// </summary>
-        public static implicit operator JobRetry(string value)
+        internal static JobRetry? ParseJobRetry(this string value)
         {
-            return new JobRetry(value);
+            switch( value )
+            {
+                case "DoNotRetry":
+                    return JobRetry.DoNotRetry;
+                case "MayRetry":
+                    return JobRetry.MayRetry;
+            }
+            return null;
         }
-
-        /// <summary>
-        /// Implicit operator to convert JobRetry to string
-        /// </summary>
-        public static implicit operator string(JobRetry e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum JobRetry
-        /// </summary>
-        public static bool operator == (JobRetry e1, JobRetry e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum JobRetry
-        /// </summary>
-        public static bool operator != (JobRetry e1, JobRetry e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for JobRetry
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is JobRetry && Equals((JobRetry)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode JobRetry
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
     }
 }
