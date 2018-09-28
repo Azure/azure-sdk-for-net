@@ -100,12 +100,12 @@ namespace StreamAnalytics.Tests
 
                 // List job and verify that the job shows up in the list
                 var listByRgResponse = streamAnalyticsManagementClient.StreamingJobs.ListByResourceGroup(resourceGroupName, "inputs,outputs,transformation,functions");
-                Assert.Equal(1, listByRgResponse.Count());
+                Assert.Single(listByRgResponse);
                 ValidationHelper.ValidateStreamingJob(putResponse.Body, listByRgResponse.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listByRgResponse.Single().Etag);
 
                 var listReponse = streamAnalyticsManagementClient.StreamingJobs.List("inputs, outputs, transformation, functions");
-                Assert.Equal(1, listReponse.Count());
+                Assert.Single(listReponse);
                 ValidationHelper.ValidateStreamingJob(putResponse.Body, listReponse.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listReponse.Single().Etag);
 
@@ -114,10 +114,10 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the job
                 listByRgResponse = streamAnalyticsManagementClient.StreamingJobs.ListByResourceGroup(resourceGroupName, "inputs,outputs,transformation,functions");
-                Assert.Equal(0, listByRgResponse.Count());
+                Assert.Empty(listByRgResponse);
 
                 listReponse = streamAnalyticsManagementClient.StreamingJobs.List("inputs, outputs, transformation, functions");
-                Assert.Equal(0, listReponse.Count());
+                Assert.Empty(listReponse);
             }
         }
 
@@ -258,12 +258,12 @@ namespace StreamAnalytics.Tests
 
                 // List job and verify that the job shows up in the list
                 var listByRgResponse = streamAnalyticsManagementClient.StreamingJobs.ListByResourceGroup(resourceGroupName, "inputs,outputs,transformation,functions");
-                Assert.Equal(1, listByRgResponse.Count());
+                Assert.Single(listByRgResponse);
                 ValidationHelper.ValidateStreamingJob(putResponse.Body, listByRgResponse.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listByRgResponse.Single().Etag);
 
                 var listReponse = streamAnalyticsManagementClient.StreamingJobs.List("inputs, outputs, transformation, functions");
-                Assert.Equal(1, listReponse.Count());
+                Assert.Single(listReponse);
                 ValidationHelper.ValidateStreamingJob(putResponse.Body, listReponse.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listReponse.Single().Etag);
 
@@ -274,7 +274,7 @@ namespace StreamAnalytics.Tests
                 };
                 CloudException cloudException = Assert.Throws<CloudException>(() => streamAnalyticsManagementClient.StreamingJobs.Start(resourceGroupName, jobName, startStreamingJobParameters));
                 Assert.Equal((HttpStatusCode)422, cloudException.Response.StatusCode);
-                Assert.True(cloudException.Response.Content.Contains("LastOutputEventTime must be available when OutputStartMode is set to LastOutputEventTime. Please make sure at least one output event has been processed."));
+                Assert.Contains("LastOutputEventTime must be available when OutputStartMode is set to LastOutputEventTime. Please make sure at least one output event has been processed.", cloudException.Response.Content);
 
                 startStreamingJobParameters.OutputStartMode = OutputStartMode.CustomTime;
                 startStreamingJobParameters.OutputStartTime = new DateTime(2012, 12, 12, 12, 12, 12, DateTimeKind.Utc);
@@ -299,7 +299,7 @@ namespace StreamAnalytics.Tests
                 // Check diagnostics
                 var inputListResponse = streamAnalyticsManagementClient.Inputs.ListByStreamingJob(resourceGroupName, jobName, "*");
                 Assert.NotNull(inputListResponse);
-                Assert.Equal(1, inputListResponse.Count());
+                Assert.Single(inputListResponse);
                 var inputFromList = inputListResponse.Single();
                 Assert.NotNull(inputFromList.Properties.Diagnostics);
                 Assert.Equal(2, inputFromList.Properties.Diagnostics.Conditions.Count());
@@ -325,10 +325,10 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the job
                 listByRgResponse = streamAnalyticsManagementClient.StreamingJobs.ListByResourceGroup(resourceGroupName, "inputs,outputs,transformation,functions");
-                Assert.Equal(0, listByRgResponse.Count());
+                Assert.Empty(listByRgResponse);
 
                 listReponse = streamAnalyticsManagementClient.StreamingJobs.List("inputs, outputs, transformation, functions");
-                Assert.Equal(0, listReponse.Count());
+                Assert.Empty(listReponse);
             }
         }
     }

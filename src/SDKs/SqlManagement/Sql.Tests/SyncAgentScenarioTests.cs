@@ -48,7 +48,7 @@ namespace Sql.Tests
 
                 // List sync agent
                 IPage<SyncAgent> listAgents = sqlClient.SyncAgents.ListByServer(resourceGroup.Name, server.Name);
-                Assert.Equal(1, listAgents.Count());
+                Assert.Single(listAgents);
                 Assert.Equal(agentName, listAgents.Single().Name);
 
                 // Generate key
@@ -64,7 +64,7 @@ namespace Sql.Tests
                 // Get linked databases
                 IPage<SyncAgentLinkedDatabase> linkedDatabases = sqlClient.SyncAgents.ListLinkedDatabases(resourceGroup.Name, server.Name, agentName);
                 Assert.NotNull(linkedDatabases);
-                Assert.Equal(0, linkedDatabases.Count());
+                Assert.Empty(linkedDatabases);
 
                 // Delete the sync agent
                 sqlClient.SyncAgents.Delete(resourceGroup.Name, server.Name, agentName);

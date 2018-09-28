@@ -126,7 +126,7 @@ namespace Sql.Tests
 
                 // List data masking rules
                 rules = sqlClient.DataMaskingRules.ListByDatabase(resourceGroup.Name, server.Name, dbName);
-                Assert.Equal(1, rules.Count());
+                Assert.Single(rules);
                 
                 // Verify Policy now enabled
                 policy = sqlClient.DataMaskingPolicies.Get(resourceGroup.Name, server.Name, dbName);
@@ -144,7 +144,7 @@ namespace Sql.Tests
 
                 // Verify no rules are returned
                 rules = sqlClient.DataMaskingRules.ListByDatabase(resourceGroup.Name, server.Name, dbName);
-                Assert.Equal(0, rules.Count());
+                Assert.Empty(rules);
             };
         }
     }

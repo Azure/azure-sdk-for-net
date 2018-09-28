@@ -67,12 +67,12 @@ namespace Sql.Tests
 
             foreach (var elem in expected)
             {
-                Assert.True(actual.Contains(elem));
+                Assert.Contains(elem, actual);
             }
 
             foreach (var elem in actual)
             {
-                Assert.True(expected.Contains(elem));
+                Assert.Contains(elem, expected);
             }
         }
 
