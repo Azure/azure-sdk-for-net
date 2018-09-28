@@ -4,11 +4,11 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/graphrbac/data-plane/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\Users\grlin\dev\azure-sdk-for-net\src\SDKs
-2018-09-27 21:59:22 UTC
+2018-09-28 17:43:53 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      045b4f98f97fdda6b52b419b4cbde9e56ad4bd07
+Commit:      cd84ac9a998b7d39721b8c2675762e3df9bea628
 AutoRest information
 Requested version: latest
 Bootstrapper version:    autorest@2.0.4283
