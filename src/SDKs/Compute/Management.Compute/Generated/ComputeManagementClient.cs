@@ -102,6 +102,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IUsageOperations Usage { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
+        public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineSizesOperations.
         /// </summary>
         public virtual IVirtualMachineSizesOperations VirtualMachineSizes { get; private set; }
@@ -110,11 +115,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IImagesOperations.
         /// </summary>
         public virtual IImagesOperations Images { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachinesOperations.
-        /// </summary>
-        public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualMachineScaleSetsOperations.
@@ -160,6 +160,21 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the ISnapshotsOperations.
         /// </summary>
         public virtual ISnapshotsOperations Snapshots { get; private set; }
+
+        /// <summary>
+        /// Gets the IGalleriesOperations.
+        /// </summary>
+        public virtual IGalleriesOperations Galleries { get; private set; }
+
+        /// <summary>
+        /// Gets the IGalleryImagesOperations.
+        /// </summary>
+        public virtual IGalleryImagesOperations GalleryImages { get; private set; }
+
+        /// <summary>
+        /// Gets the IGalleryImageVersionsOperations.
+        /// </summary>
+        public virtual IGalleryImageVersionsOperations GalleryImageVersions { get; private set; }
 
         /// <summary>
         /// Gets the IContainerServicesOperations.
@@ -413,9 +428,9 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
             VirtualMachineImages = new VirtualMachineImagesOperations(this);
             Usage = new UsageOperations(this);
+            VirtualMachines = new VirtualMachinesOperations(this);
             VirtualMachineSizes = new VirtualMachineSizesOperations(this);
             Images = new ImagesOperations(this);
-            VirtualMachines = new VirtualMachinesOperations(this);
             VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
             VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
             VirtualMachineScaleSetRollingUpgrades = new VirtualMachineScaleSetRollingUpgradesOperations(this);
@@ -425,6 +440,9 @@ namespace Microsoft.Azure.Management.Compute
             ResourceSkus = new ResourceSkusOperations(this);
             Disks = new DisksOperations(this);
             Snapshots = new SnapshotsOperations(this);
+            Galleries = new GalleriesOperations(this);
+            GalleryImages = new GalleryImagesOperations(this);
+            GalleryImageVersions = new GalleryImageVersionsOperations(this);
             ContainerServices = new ContainerServicesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

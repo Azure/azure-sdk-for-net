@@ -14,26 +14,28 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The configuration parameters used for performing automatic OS upgrade.
+    /// The properties describe the recommended machine configuration for this
+    /// Image Definition. These properties are updateable.
     /// </summary>
-    public partial class AutoOSUpgradePolicy
+    public partial class RecommendedMachineConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the AutoOSUpgradePolicy class.
+        /// Initializes a new instance of the RecommendedMachineConfiguration
+        /// class.
         /// </summary>
-        public AutoOSUpgradePolicy()
+        public RecommendedMachineConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AutoOSUpgradePolicy class.
+        /// Initializes a new instance of the RecommendedMachineConfiguration
+        /// class.
         /// </summary>
-        /// <param name="disableAutoRollback">Whether OS image rollback feature
-        /// should be disabled. Default value is false.</param>
-        public AutoOSUpgradePolicy(bool? disableAutoRollback = default(bool?))
+        public RecommendedMachineConfiguration(ResourceRange vCPUs = default(ResourceRange), ResourceRange memory = default(ResourceRange))
         {
-            DisableAutoRollback = disableAutoRollback;
+            VCPUs = vCPUs;
+            Memory = memory;
             CustomInit();
         }
 
@@ -43,11 +45,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets whether OS image rollback feature should be disabled.
-        /// Default value is false.
         /// </summary>
-        [JsonProperty(PropertyName = "disableAutoRollback")]
-        public bool? DisableAutoRollback { get; set; }
+        [JsonProperty(PropertyName = "vCPUs")]
+        public ResourceRange VCPUs { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "memory")]
+        public ResourceRange Memory { get; set; }
 
     }
 }

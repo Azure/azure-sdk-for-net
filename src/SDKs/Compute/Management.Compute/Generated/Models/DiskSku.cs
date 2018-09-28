@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The disks sku name. Can be Standard_LRS, Premium_LRS, or
-    /// StandardSSD_LRS.
+    /// The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS,
+    /// or UltraSSD_LRS.
     /// </summary>
     public partial class DiskSku
     {
@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the DiskSku class.
         /// </summary>
         /// <param name="name">The sku name. Possible values include:
-        /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS'</param>
+        /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS',
+        /// 'UltraSSD_LRS'</param>
         /// <param name="tier">The sku tier.</param>
         public DiskSku(string name = default(string), string tier = default(string))
         {
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the sku name. Possible values include: 'Standard_LRS',
-        /// 'Premium_LRS', 'StandardSSD_LRS'
+        /// 'Premium_LRS', 'StandardSSD_LRS', 'UltraSSD_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
