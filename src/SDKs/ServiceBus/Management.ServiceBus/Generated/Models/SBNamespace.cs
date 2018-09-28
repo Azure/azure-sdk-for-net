@@ -49,10 +49,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Service Bus operations.</param>
         /// <param name="metricId">Identifier for Azure Insights
         /// metrics</param>
-        /// <param name="zoneRedundant">Enabling this property creates a
-        /// Premium Service Bus Namespace in regions supported availability
-        /// zones.</param>
-        public SBNamespace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SBSku sku = default(SBSku), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), bool? zoneRedundant = default(bool?))
+        public SBNamespace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SBSku sku = default(SBSku), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -61,7 +58,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
             MetricId = metricId;
-            ZoneRedundant = zoneRedundant;
             CustomInit();
         }
 
@@ -105,13 +101,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.metricId")]
         public string MetricId { get; private set; }
-
-        /// <summary>
-        /// Gets or sets enabling this property creates a Premium Service Bus
-        /// Namespace in regions supported availability zones.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.zoneRedundant")]
-        public bool? ZoneRedundant { get; set; }
 
         /// <summary>
         /// Validate the object.
