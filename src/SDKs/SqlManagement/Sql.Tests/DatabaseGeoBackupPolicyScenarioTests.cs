@@ -33,7 +33,7 @@ namespace Sql.Tests
 
                 // List Geo Backup Policy
                 IEnumerable<GeoBackupPolicy> policies = sqlClient.GeoBackupPolicies.ListByDatabase(resourceGroup.Name, server.Name, dbName);
-                Assert.Single(policies);
+                Assert.Equal(1, policies.Count());
 
                 GeoBackupPolicy policy = policies.First();
                 Assert.Equal("Default", policy.Name);
@@ -54,7 +54,7 @@ namespace Sql.Tests
 
                 // List Geo Backup Policy
                 policies = sqlClient.GeoBackupPolicies.ListByDatabase(resourceGroup.Name, server.Name, dbName);
-                Assert.Single(policies);
+                Assert.Equal(1, policies.Count());
 
                 policy = policies.First();
                 Assert.Equal("Default", policy.Name);

@@ -119,7 +119,7 @@ namespace Sql.Tests
                 //
                 var failoverGroupsOnSecondary = sqlClient.FailoverGroups.ListByServer(resourceGroup.Name, targetServer.Name);
                 Assert.NotNull(failoverGroupsOnSecondary);
-                Assert.Single(failoverGroupsOnSecondary);
+                Assert.Equal(1, failoverGroupsOnSecondary.Count());
 
                 var primaryDatabase = sqlClient.Databases.Get(resourceGroup.Name, sourceServer.Name, databaseName);
 

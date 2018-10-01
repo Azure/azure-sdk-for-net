@@ -75,7 +75,7 @@ namespace Sql.Tests
                 sqlClient.Servers.Delete(resourceGroup.Name, serverNameV12);
 
                 var listServers2 = sqlClient.Servers.ListByResourceGroup(resourceGroup.Name);
-                Assert.Single(listServers2);
+                Assert.Equal(1, listServers2.Count());
             }
         }
     }

@@ -33,7 +33,7 @@ namespace Sql.Tests
             TestImportExport(false, "TestImportNewDatabase");
         }
 
-        internal void TestImportExport(bool preexistingDatabase, string testName)
+        public void TestImportExport(bool preexistingDatabase, string testName)
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this, testName))
             {

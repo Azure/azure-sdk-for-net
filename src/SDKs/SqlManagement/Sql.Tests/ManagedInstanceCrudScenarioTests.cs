@@ -85,12 +85,12 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.ValidateManagedInstance(updateMI1, managedInstanceName, login, newTags, TestEnvironmentUtilities.DefaultLocationId);
 
                 // Drop server, update count
-                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName).Wait();
+                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName);
 
                 var listMI2 = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
-                Assert.Single(listMI2);
+                Assert.Equal(1, listMI2.Count());
 
-                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName2).Wait();
+                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName2);
                 var listMI3 = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
                 Assert.Empty(listMI3);
             }

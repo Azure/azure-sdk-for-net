@@ -92,7 +92,7 @@ namespace Sql.Tests
                 // List sync members
                 IPage<SyncMember> listSyncMembers = sqlClient.SyncMembers.ListBySyncGroup(resourceGroup.Name, server.Name, testDatabaseName, syncGroupName);
                 Assert.NotNull(listSyncMembers);
-                Assert.Single(listSyncMembers);
+                Assert.Equal(1, listSyncMembers.Count());
                 Assert.Equal(syncMemberName, listSyncMembers.Single().Name);
 
                 // Update sync member

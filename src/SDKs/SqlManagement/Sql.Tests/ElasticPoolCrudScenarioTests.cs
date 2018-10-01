@@ -110,7 +110,7 @@ namespace Sql.Tests
              * In this test we only test the cancel operation on resize pool from Premium to Premium
              *    since currently we only support Cancel pool resize operation on Premium <-> Premium
              * */
-            // string testPrefix = "sqlelasticpoollistcanceloperation-";
+            string testPrefix = "sqlelasticpoollistcanceloperation-";
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
                 ResourceGroup resourceGroup = context.CreateResourceGroup("West Europe");
@@ -200,8 +200,8 @@ namespace Sql.Tests
             SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp, epName);
             var epa = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
             Assert.NotNull(epa);
-            Assert.Single(epa);
-            Assert.Single(epa.Where(a => a.Operation == "CREATE"));
+            Assert.Equal(1, epa.Count());
+            Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
 
             // Update elasticPool Dtu
             // 
@@ -214,8 +214,8 @@ namespace Sql.Tests
             epa = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
             Assert.NotNull(epa);
             Assert.Equal(2, epa.Count());
-            Assert.Single(epa.Where(a => a.Operation == "CREATE"));
-            Assert.Single(epa.Where(a => a.Operation == "UPDATE"));
+            Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
+            Assert.Equal(1, epa.Where(a => a.Operation == "UPDATE").Count());
 
             // Update elasticPool Dtu Max
             // 
@@ -227,7 +227,7 @@ namespace Sql.Tests
             epa = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
             Assert.NotNull(epa);
             Assert.Equal(3, epa.Count());
-            Assert.Single(epa.Where(a => a.Operation == "CREATE"));
+            Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
             Assert.Equal(2, epa.Where(a => a.Operation == "UPDATE").Count());
 
             // Update elasticPool Dtu Min
@@ -240,7 +240,7 @@ namespace Sql.Tests
             epa = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
             Assert.NotNull(epa);
             Assert.Equal(4, epa.Count());
-            Assert.Single(epa.Where(a => a.Operation == "CREATE"));
+            Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
             Assert.Equal(3, epa.Where(a => a.Operation == "UPDATE").Count());
         }
 

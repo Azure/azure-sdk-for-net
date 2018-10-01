@@ -24,11 +24,10 @@ namespace Sql.Tests
                 foreach(ServiceObjective objective in serviceObjectives)
                 {
                     Assert.NotNull(objective.ServiceObjectiveName);
-                    /*
                     Assert.NotNull(objective.IsDefault);
                     Assert.NotNull(objective.IsSystem);
                     Assert.NotNull(objective.Enabled);
-                    */
+
                     // Assert Get finds the service objective from List
                     Assert.NotNull(sqlClient.ServiceObjectives.Get(resourceGroup.Name, server.Name, objective.Name));
                 }

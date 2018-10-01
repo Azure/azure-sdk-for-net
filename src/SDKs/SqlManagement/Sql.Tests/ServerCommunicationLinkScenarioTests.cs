@@ -46,7 +46,7 @@ namespace Sql.Tests
                 // List Communication Link
                 IEnumerable<ServerCommunicationLink> links = sqlClient.ServerCommunicationLinks.ListByServer(resourceGroup.Name, server1.Name);
 
-                Assert.Single(links);
+                Assert.Equal(1, links.Count());
                 link = links.First();
                 Assert.Equal(linkName, link.Name);
                 Assert.Equal(server2.Name, link.PartnerServer);
@@ -80,7 +80,7 @@ namespace Sql.Tests
                 // List Communication Link, assert there is one
                 IEnumerable<ServerCommunicationLink> links = sqlClient.ServerCommunicationLinks.ListByServer(resourceGroup.Name, server1.Name);
 
-                Assert.Single(links);
+                Assert.Equal(1, links.Count());
                 link = links.First();
                 Assert.Equal(linkName, link.Name);
                 Assert.Equal(server2.Name, link.PartnerServer);
@@ -90,7 +90,7 @@ namespace Sql.Tests
                 links = sqlClient.ServerCommunicationLinks.ListByServer(resourceGroup.Name, server1.Name);
 
                 // Assert that no links found
-                Assert.Empty(links);
+                Assert.Equal(0, links.Count());
             }
         }
     }

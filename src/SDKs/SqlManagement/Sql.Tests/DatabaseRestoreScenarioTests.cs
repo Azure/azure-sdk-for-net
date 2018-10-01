@@ -217,7 +217,7 @@ namespace Sql.Tests
                 Assert.True(backups.Count() == 0);
                 backups = sqlClient.LongTermRetentionBackups.ListByDatabase(server.Location, server.Name, database.Name);
                 Assert.True(backups.Count() == 0);
-                Assert.Throws<CloudException>(() => sqlClient.LongTermRetentionBackups.Get(server.Location, server.Name, database.Name, "backup"));
+                Assert.Throws(typeof(CloudException), () => sqlClient.LongTermRetentionBackups.Get(server.Location, server.Name, database.Name, "backup"));
             }
         }
 

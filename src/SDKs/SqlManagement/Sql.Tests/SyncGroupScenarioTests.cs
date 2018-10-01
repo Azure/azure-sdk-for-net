@@ -67,7 +67,7 @@ namespace Sql.Tests
                 // List sync group
                 IPage<SyncGroup> listSyncGroups = sqlClient.SyncGroups.ListByDatabase(resourceGroup.Name, server.Name, testDatabaseName);
                 Assert.NotNull(listSyncGroups);
-                Assert.Single(listSyncGroups);
+                Assert.Equal(1, listSyncGroups.Count());
                 Assert.Equal(syncGroupName, listSyncGroups.Single().Name);
 
                 // Update sync group

@@ -63,8 +63,8 @@ namespace Sql.Tests
                 var activity = sqlClient.ElasticPoolDatabaseActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
 
                 Assert.Equal(2, activity.Where(a => a.DatabaseName == dbName).Count());
-                Assert.Single(activity.Where(a => a.DatabaseName == dbName && a.Operation == "CREATE"));
-                Assert.Single(activity.Where(a => a.DatabaseName == dbName && a.Operation == "UPDATE"));
+                Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName && a.Operation == "CREATE").Count());
+                Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName && a.Operation == "UPDATE").Count());
             }
         }
 
@@ -99,8 +99,8 @@ namespace Sql.Tests
                 // Get the Elastic Pool Activity List
                 var activity = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
 
-                Assert.Single(activity.Where(a => a.ElasticPoolName == epName));
-                Assert.Single(activity.Where(a => a.Operation == "CREATE"));
+                Assert.Equal(1, activity.Where(a => a.ElasticPoolName == epName).Count());
+                Assert.Equal(1, activity.Where(a => a.Operation == "CREATE").Count());
             }
         }
 
@@ -155,8 +155,8 @@ namespace Sql.Tests
 
                 // Get the Elastic Pool Database Activity List for first pool
                 var activity = sqlClient.ElasticPoolDatabaseActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
-                Assert.Single(activity.Where(a => a.DatabaseName == dbName));
-                Assert.Single(activity.Where(a => a.DatabaseName == dbName && a.Operation == "CREATE"));
+                Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName).Count());
+                Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName && a.Operation == "CREATE").Count());
 
                 // Move database to second elastic pool
                 dbInput = new Database()
@@ -169,8 +169,8 @@ namespace Sql.Tests
                 // Get the Elastic Pool Database Activity List for second pool
                 activity = sqlClient.ElasticPoolDatabaseActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName2);
                 Assert.Equal(2, activity.Where(a => a.DatabaseName == dbName).Count());
-                Assert.Single(activity.Where(a => a.DatabaseName == dbName && a.Operation == "CREATE"));
-                Assert.Single(activity.Where(a => a.DatabaseName == dbName && a.Operation == "UPDATE"));
+                Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName && a.Operation == "CREATE").Count());
+                Assert.Equal(1, activity.Where(a => a.DatabaseName == dbName && a.Operation == "UPDATE").Count());
             }
         }
     }

@@ -261,9 +261,9 @@ namespace Sql.Tests
                 //
                 AzureOperationResponse<IPage<DatabaseOperation>> response = sqlClient.DatabaseOperations.ListByDatabaseWithHttpMessagesAsync(
                     resourceGroup.Name, server.Name, dbName).Result;
-                Assert.Equal(HttpStatusCode.OK, response.Response.StatusCode);
+                Assert.Equal(response.Response.StatusCode, HttpStatusCode.OK);
                 IList<DatabaseOperation> responseObject = response.Body.ToList();
-                Assert.Single(responseObject);
+                Assert.Equal(responseObject.Count(), 1);
 
                 // Cancel the database updateslo operation
                 //
@@ -367,7 +367,7 @@ namespace Sql.Tests
                 };
                 var dbResult = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
 
-                Assert.Null(dbResult.ElasticPoolName);
+                Assert.Equal(null, dbResult.ElasticPoolName);
             }
         }
 
