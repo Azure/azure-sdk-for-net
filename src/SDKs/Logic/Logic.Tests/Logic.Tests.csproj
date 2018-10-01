@@ -3,13 +3,10 @@
   <PropertyGroup>
     <PackageId>Logic.Tests</PackageId>
     <Description>Logic.Tests Class Library</Description>
-    <DelaySign>true</DelaySign>
     <AssemblyName>Logic.Tests</AssemblyName>
     <PackageTags />
-  </PropertyGroup>
-  <PropertyGroup>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>  
