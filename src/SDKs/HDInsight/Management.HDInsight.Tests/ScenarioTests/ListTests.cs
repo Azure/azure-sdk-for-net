@@ -41,8 +41,8 @@ namespace Management.HDInsight.Tests
                     try
                     {
                         var list = client.Clusters.ListByResourceGroup(rgName);
-                        Assert.False(list.Any(c => c.Name.Equals(clusterName1, StringComparison.OrdinalIgnoreCase)));
-                        Assert.False(list.Any(c => c.Name.Equals(clusterName2, StringComparison.OrdinalIgnoreCase)));
+                        Assert.DoesNotContain(list, c => c.Name.Equals(clusterName1, StringComparison.OrdinalIgnoreCase));
+                        Assert.DoesNotContain(list, c => c.Name.Equals(clusterName2, StringComparison.OrdinalIgnoreCase));
 
                         // Create one cluster with ADLS so both clusters aren't using the same storage account at the same time
                         ClusterCreateParameters parameters1 = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
@@ -52,8 +52,8 @@ namespace Management.HDInsight.Tests
                             () => client.Clusters.Create(rgName, clusterName2, parameters2));
 
                         list = client.Clusters.ListByResourceGroup(rgName);
-                        Assert.True(list.Any(c => c.Name.Equals(clusterName1, StringComparison.OrdinalIgnoreCase)));
-                        Assert.True(list.Any(c => c.Name.Equals(clusterName2, StringComparison.OrdinalIgnoreCase)));
+                        Assert.Contains(list, c => c.Name.Equals(clusterName1, StringComparison.OrdinalIgnoreCase));
+                        Assert.Contains(list, c => c.Name.Equals(clusterName2, StringComparison.OrdinalIgnoreCase));
                     }
                     finally
                     {
@@ -84,8 +84,8 @@ namespace Management.HDInsight.Tests
                     rgName2 = HDInsightManagementTestUtilities.CreateResourceGroup(resourceClient);
 
                     var list = client.Clusters.List();
-                    Assert.False(list.Any(c => c.Name.Equals(clusterName1, StringComparison.OrdinalIgnoreCase)));
-                    Assert.False(list.Any(c => c.Name.Equals(clusterName2, StringComparison.OrdinalIgnoreCase)));
+                    Assert.DoesNotContain(list, c => c.Name.Equals(clusterName1, StringComparison.OrdinalIgnoreCase));
+                    Assert.DoesNotContain(list, c => c.Name.Equals(clusterName2, StringComparison.OrdinalIgnoreCase));
 
                     // Create one cluster with ADLS so both clusters aren't using the same storage account at the same time
                     ClusterCreateParameters parameters1 = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
@@ -95,8 +95,8 @@ namespace Management.HDInsight.Tests
                         () => client.Clusters.Create(rgName2, clusterName2, parameters2));
 
                     list = client.Clusters.List();
-                    Assert.True(list.Any(c => c.Name.Equals(clusterName1, StringComparison.OrdinalIgnoreCase)));
-                    Assert.True(list.Any(c => c.Name.Equals(clusterName2, StringComparison.OrdinalIgnoreCase)));
+                    Assert.Contains(list, c => c.Name.Equals(clusterName1, StringComparison.OrdinalIgnoreCase));
+                    Assert.Contains(list, c => c.Name.Equals(clusterName2, StringComparison.OrdinalIgnoreCase));
                 }
                 finally
                 {
