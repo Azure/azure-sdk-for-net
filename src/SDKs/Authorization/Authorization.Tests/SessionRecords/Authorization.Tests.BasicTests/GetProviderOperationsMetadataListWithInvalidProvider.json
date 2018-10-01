@@ -7,32 +7,22 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "647c6af1-b4bc-4678-9dcf-61c06d391bd7"
+          "cdc0f26d-150a-44cb-a015-4de2175d9da1"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
+          "FxVersion/4.6.26020.03",
           "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.8.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ProviderNotFound\",\r\n    \"message\": \"Provider 'InvalidProvider' not found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "87"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Sat, 10 Mar 2018 00:22:48 GMT"
+          "Wed, 26 Sep 2018 23:40:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -44,7 +34,7 @@
           "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
         ],
         "x-ms-request-id": [
-          "860504f1-1dc1-4078-840d-77fee2c70776"
+          "df2efbc5-6202-4baf-8be0-f831b0c226a7"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -52,19 +42,26 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14999"
+          "11994"
         ],
         "x-ms-correlation-request-id": [
-          "85135bd6-e157-4d12-a640-b9691f03f5cd"
+          "be0a357a-7e5a-4f84-9373-5597470ea284"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180310T002249Z:85135bd6-e157-4d12-a640-b9691f03f5cd"
+          "WESTUS2:20180926T234035Z:be0a357a-7e5a-4f84-9373-5597470ea284"
+        ],
+        "Content-Length": [
+          "87"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ProviderNotFound\",\r\n    \"message\": \"Provider 'InvalidProvider' not found.\"\r\n  }\r\n}",
       "StatusCode": 404
     }
   ],

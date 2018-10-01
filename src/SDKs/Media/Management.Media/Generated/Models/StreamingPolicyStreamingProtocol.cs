@@ -11,113 +11,74 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for StreamingPolicyStreamingProtocol.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(StreamingPolicyStreamingProtocolConverter))]
-    public struct StreamingPolicyStreamingProtocol : System.IEquatable<StreamingPolicyStreamingProtocol>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum StreamingPolicyStreamingProtocol
     {
-        private StreamingPolicyStreamingProtocol(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
         /// <summary>
         /// HLS protocol
         /// </summary>
-        public static readonly StreamingPolicyStreamingProtocol Hls = "Hls";
-
+        [EnumMember(Value = "Hls")]
+        Hls,
         /// <summary>
         /// DASH protocol
         /// </summary>
-        public static readonly StreamingPolicyStreamingProtocol Dash = "Dash";
-
+        [EnumMember(Value = "Dash")]
+        Dash,
         /// <summary>
         /// SmoothStreaming protocol
         /// </summary>
-        public static readonly StreamingPolicyStreamingProtocol SmoothStreaming = "SmoothStreaming";
-
+        [EnumMember(Value = "SmoothStreaming")]
+        SmoothStreaming,
         /// <summary>
         /// Download protocol
         /// </summary>
-        public static readonly StreamingPolicyStreamingProtocol Download = "Download";
-
-
-        /// <summary>
-        /// Underlying value of enum StreamingPolicyStreamingProtocol
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for StreamingPolicyStreamingProtocol
-        /// </summary>
-        public override string ToString()
+        [EnumMember(Value = "Download")]
+        Download
+    }
+    internal static class StreamingPolicyStreamingProtocolEnumExtension
+    {
+        internal static string ToSerializedValue(this StreamingPolicyStreamingProtocol? value)
         {
-            return UnderlyingValue.ToString();
+            return value == null ? null : ((StreamingPolicyStreamingProtocol)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Compares enums of type StreamingPolicyStreamingProtocol
-        /// </summary>
-        public bool Equals(StreamingPolicyStreamingProtocol e)
+        internal static string ToSerializedValue(this StreamingPolicyStreamingProtocol value)
         {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
+            switch( value )
+            {
+                case StreamingPolicyStreamingProtocol.Hls:
+                    return "Hls";
+                case StreamingPolicyStreamingProtocol.Dash:
+                    return "Dash";
+                case StreamingPolicyStreamingProtocol.SmoothStreaming:
+                    return "SmoothStreaming";
+                case StreamingPolicyStreamingProtocol.Download:
+                    return "Download";
+            }
+            return null;
         }
 
-        /// <summary>
-        /// Implicit operator to convert string to
-        /// StreamingPolicyStreamingProtocol
-        /// </summary>
-        public static implicit operator StreamingPolicyStreamingProtocol(string value)
+        internal static StreamingPolicyStreamingProtocol? ParseStreamingPolicyStreamingProtocol(this string value)
         {
-            return new StreamingPolicyStreamingProtocol(value);
+            switch( value )
+            {
+                case "Hls":
+                    return StreamingPolicyStreamingProtocol.Hls;
+                case "Dash":
+                    return StreamingPolicyStreamingProtocol.Dash;
+                case "SmoothStreaming":
+                    return StreamingPolicyStreamingProtocol.SmoothStreaming;
+                case "Download":
+                    return StreamingPolicyStreamingProtocol.Download;
+            }
+            return null;
         }
-
-        /// <summary>
-        /// Implicit operator to convert StreamingPolicyStreamingProtocol to
-        /// string
-        /// </summary>
-        public static implicit operator string(StreamingPolicyStreamingProtocol e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum StreamingPolicyStreamingProtocol
-        /// </summary>
-        public static bool operator == (StreamingPolicyStreamingProtocol e1, StreamingPolicyStreamingProtocol e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum StreamingPolicyStreamingProtocol
-        /// </summary>
-        public static bool operator != (StreamingPolicyStreamingProtocol e1, StreamingPolicyStreamingProtocol e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for StreamingPolicyStreamingProtocol
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is StreamingPolicyStreamingProtocol && Equals((StreamingPolicyStreamingProtocol)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode StreamingPolicyStreamingProtocol
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
     }
 }

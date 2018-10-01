@@ -35,16 +35,17 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="type">Encryption type of Content Key. Possible values
         /// include: 'CommonEncryptionCenc', 'CommonEncryptionCbcs',
         /// 'EnvelopeEncryption'</param>
-        /// <param name="label">Label of Content Key</param>
+        /// <param name="labelReferenceInStreamingPolicy">Label of Content Key
+        /// as specified in the Streaming Policy</param>
         /// <param name="value">Value of  of Content Key</param>
         /// <param name="policyName">ContentKeyPolicy used by Content
         /// Key</param>
         /// <param name="tracks">Tracks which use this Content Key</param>
-        public StreamingLocatorContentKey(System.Guid id, StreamingLocatorContentKeyType type = default(StreamingLocatorContentKeyType), string label = default(string), string value = default(string), string policyName = default(string), IList<TrackSelection> tracks = default(IList<TrackSelection>))
+        public StreamingLocatorContentKey(System.Guid id, StreamingLocatorContentKeyType type = default(StreamingLocatorContentKeyType), string labelReferenceInStreamingPolicy = default(string), string value = default(string), string policyName = default(string), IList<TrackSelection> tracks = default(IList<TrackSelection>))
         {
             Id = id;
             Type = type;
-            Label = label;
+            LabelReferenceInStreamingPolicy = labelReferenceInStreamingPolicy;
             Value = value;
             PolicyName = policyName;
             Tracks = tracks;
@@ -71,10 +72,11 @@ namespace Microsoft.Azure.Management.Media.Models
         public StreamingLocatorContentKeyType Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets label of Content Key
+        /// Gets or sets label of Content Key as specified in the Streaming
+        /// Policy
         /// </summary>
-        [JsonProperty(PropertyName = "label")]
-        public string Label { get; set; }
+        [JsonProperty(PropertyName = "labelReferenceInStreamingPolicy")]
+        public string LabelReferenceInStreamingPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets value of  of Content Key
@@ -89,10 +91,10 @@ namespace Microsoft.Azure.Management.Media.Models
         public string PolicyName { get; private set; }
 
         /// <summary>
-        /// Gets or sets tracks which use this Content Key
+        /// Gets tracks which use this Content Key
         /// </summary>
         [JsonProperty(PropertyName = "tracks")]
-        public IList<TrackSelection> Tracks { get; set; }
+        public IList<TrackSelection> Tracks { get; private set; }
 
         /// <summary>
         /// Validate the object.

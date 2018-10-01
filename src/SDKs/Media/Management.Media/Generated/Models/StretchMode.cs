@@ -11,28 +11,22 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for StretchMode.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(StretchModeConverter))]
-    public struct StretchMode : System.IEquatable<StretchMode>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum StretchMode
     {
-        private StretchMode(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
         /// <summary>
         /// Strictly respect the output resolution without considering the
         /// pixel aspect ratio or display aspect ratio of the input video.
         /// </summary>
-        public static readonly StretchMode None = "None";
-
+        [EnumMember(Value = "None")]
+        None,
         /// <summary>
         /// Override the output resolution, and change it to match the display
         /// aspect ratio of the input, without padding. For example, if the
@@ -40,8 +34,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// the value in the preset is overridden, and the output will be at
         /// 1280x720, which maintains the input aspect ratio of 16:9.
         /// </summary>
-        public static readonly StretchMode AutoSize = "AutoSize";
-
+        [EnumMember(Value = "AutoSize")]
+        AutoSize,
         /// <summary>
         /// Pad the output (with either letterbox or pillar box) to honor the
         /// output resolution, while ensuring that the active video region in
@@ -51,77 +45,42 @@ namespace Microsoft.Azure.Management.Media.Models
         /// rectangle of 1280x720 at aspect ratio of 16:9, and pillar box
         /// regions 280 pixels wide at the left and right.
         /// </summary>
-        public static readonly StretchMode AutoFit = "AutoFit";
-
-
-        /// <summary>
-        /// Underlying value of enum StretchMode
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for StretchMode
-        /// </summary>
-        public override string ToString()
+        [EnumMember(Value = "AutoFit")]
+        AutoFit
+    }
+    internal static class StretchModeEnumExtension
+    {
+        internal static string ToSerializedValue(this StretchMode? value)
         {
-            return UnderlyingValue.ToString();
+            return value == null ? null : ((StretchMode)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Compares enums of type StretchMode
-        /// </summary>
-        public bool Equals(StretchMode e)
+        internal static string ToSerializedValue(this StretchMode value)
         {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
+            switch( value )
+            {
+                case StretchMode.None:
+                    return "None";
+                case StretchMode.AutoSize:
+                    return "AutoSize";
+                case StretchMode.AutoFit:
+                    return "AutoFit";
+            }
+            return null;
         }
 
-        /// <summary>
-        /// Implicit operator to convert string to StretchMode
-        /// </summary>
-        public static implicit operator StretchMode(string value)
+        internal static StretchMode? ParseStretchMode(this string value)
         {
-            return new StretchMode(value);
+            switch( value )
+            {
+                case "None":
+                    return StretchMode.None;
+                case "AutoSize":
+                    return StretchMode.AutoSize;
+                case "AutoFit":
+                    return StretchMode.AutoFit;
+            }
+            return null;
         }
-
-        /// <summary>
-        /// Implicit operator to convert StretchMode to string
-        /// </summary>
-        public static implicit operator string(StretchMode e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum StretchMode
-        /// </summary>
-        public static bool operator == (StretchMode e1, StretchMode e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum StretchMode
-        /// </summary>
-        public static bool operator != (StretchMode e1, StretchMode e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for StretchMode
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is StretchMode && Equals((StretchMode)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode StretchMode
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
     }
 }

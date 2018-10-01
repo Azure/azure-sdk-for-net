@@ -66,7 +66,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.List(null, "wfName"));
@@ -109,7 +109,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.ListNext(null));
@@ -151,7 +151,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.Get(null, "wfName", "triggerName"));
@@ -195,7 +195,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.Run(null, "wfName", "triggerName"));
@@ -213,7 +213,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             client.WorkflowTriggers.Run("rgName", "wfName", "triggerName");
@@ -232,7 +232,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.Accepted,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             client.WorkflowTriggers.Run("rgName", "wfName", "triggerName");
@@ -251,7 +251,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.NoContent,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             client.WorkflowTriggers.Run("rgName", "wfName", "triggerName");
@@ -274,7 +274,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.ListCallbackUrl(null, "wfName", "triggerName"));
@@ -365,7 +365,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateTriggerListResponse1(IPage<WorkflowTrigger> page)
         {
-            Assert.Equal(1, page.Count());
+            Assert.Single(page);
             Assert.Equal("http://management.azure.com/triggerNextLink", page.NextPageLink);
             this.ValidateTrigger1(page.First());
         }

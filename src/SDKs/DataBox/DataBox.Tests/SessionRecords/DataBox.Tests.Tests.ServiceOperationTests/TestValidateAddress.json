@@ -1,82 +1,79 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3c66da21-607e-49b4-8bdf-f25fbb8f705f/providers/Microsoft.DataBox/locations/westus/validateAddress?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M2NmRhMjEtNjA3ZS00OWI0LThiZGYtZjI1ZmJiOGY3MDVmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3ZhbGlkYXRlQWRkcmVzcz9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/validateAddress?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3ZhbGlkYXRlQWRkcmVzcz9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"shippingAddress\": {\r\n    \"streetAddress1\": \"16 TOWNSEND ST\",\r\n    \"streetAddress2\": \"Unit 1\",\r\n    \"city\": \"San Francisco\",\r\n    \"stateOrProvince\": \"CA\",\r\n    \"country\": \"US\",\r\n    \"postalCode\": \"94107\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"shippingAddress\": {\r\n    \"streetAddress1\": \"16 TOWNSEND ST\",\r\n    \"streetAddress2\": \"Unit 1\",\r\n    \"city\": \"San Francisco\",\r\n    \"stateOrProvince\": \"CA\",\r\n    \"country\": \"US\",\r\n    \"postalCode\": \"94107\",\r\n    \"companyName\": \"Microsoft\",\r\n    \"addressType\": \"Commercial\"\r\n  },\r\n  \"deviceType\": \"DataBox\"\r\n}",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "216"
-        ],
         "x-ms-client-request-id": [
-          "95c90d37-98c4-473d-939f-cb375e57e984"
+          "b7728f76-342e-4bd0-9187-a7f9b2b29394"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"validationStatus\": \"Valid\",\r\n    \"alternateAddresses\": [\r\n      {\r\n        \"streetAddress1\": \"16 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"streetAddress3\": \"\",\r\n        \"city\": \"SAN FRANCISCO\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"addressType\": \"None\"\r\n      }\r\n    ]\r\n  }\r\n}",
-      "ResponseHeaders": {
+          "FxVersion/4.6.26614.01",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.0"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
-        "Expires": [
-          "-1"
-        ],
+        "Content-Length": [
+          "311"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Apr 2018 10:38:53 GMT"
+          "Wed, 19 Sep 2018 09:28:28 GMT"
         ],
         "Pragma": [
           "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-request-id": [
-          "2ad5cd3b-889a-45b4-9e54-42eb3cd8ee6e"
+          "a9fe49c4-e8f7-4ac7-9d6c-b49588310678"
         ],
         "x-ms-client-request-id": [
-          "95c90d37-98c4-473d-939f-cb375e57e984"
+          "b7728f76-342e-4bd0-9187-a7f9b2b29394"
         ],
         "X-Powered-By": [
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "cb284d04-3ff3-440f-95b1-354d577a6a4a"
+          "7e382fb1-9a54-48dc-b140-a635494b900e"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20180413T103854Z:cb284d04-3ff3-440f-95b1-354d577a6a4a"
+          "SOUTHEASTASIA:20180919T092828Z:7e382fb1-9a54-48dc-b140-a635494b900e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "386"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"validationStatus\": \"Valid\",\r\n    \"alternateAddresses\": [\r\n      {\r\n        \"streetAddress1\": \"16 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"streetAddress3\": \"\",\r\n        \"city\": \"SAN FRANCISCO\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"addressType\": \"None\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f",
-    "SubId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f"
+    "SubscriptionId": "fa68082f-8ff7-4a25-95c7-ce9da541242f",
+    "SubId": "fa68082f-8ff7-4a25-95c7-ce9da541242f"
   }
 }

@@ -58,7 +58,27 @@ namespace Compute.Tests
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks", vmSize: VirtualMachineSizeTypes.StandardM64s, hasManagedDisks: true,
-                    storageAccountType: StorageAccountTypes.PremiumLRS, writeAcceleratorEnabled: true);
+                    osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, dataDiskStorageAccountType: StorageAccountTypes.PremiumLRS, writeAcceleratorEnabled: true);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        /// <summary>
+        /// To record this test case, you need to run it in region which support local diff disks.
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_DiffDisks")]
+        public void TestVMScenarioOperations_DiffDisks()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_DiffDisks", vmSize: VirtualMachineSizeTypes.StandardDS1V2, hasManagedDisks: true,
+                   hasDiffDisks: true, osDiskStorageAccountType: StorageAccountTypes.StandardLRS);
             }
             finally
             {
@@ -79,7 +99,7 @@ namespace Compute.Tests
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks_StandardSSD", hasManagedDisks: true,
-                    storageAccountType: StorageAccountTypes.StandardSSDLRS);
+                    osDiskStorageAccountType: StorageAccountTypes.StandardSSDLRS, dataDiskStorageAccountType: StorageAccountTypes.StandardSSDLRS);
             }
             finally
             {
@@ -106,8 +126,30 @@ namespace Compute.Tests
             }
         }
 
+        /// <summary>
+        /// To record this test case, you need to run it in zone supported regions like eastus2euap.
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_ManagedDisks_UltraSSD")]
+        public void TestVMScenarioOperations_ManagedDisks_UltraSSD()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks_UltraSSD", hasManagedDisks: true, zones: new List<string> { "3" }, 
+                    vmSize: VirtualMachineSizeTypes.StandardDS12V2, osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, 
+                    dataDiskStorageAccountType: StorageAccountTypes.UltraSSDLRS, callUpdateVM: true);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
         private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A0",
-            string storageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null, bool callUpdateVM = false)
+            string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
+            bool hasDiffDisks = false, bool callUpdateVM = false)
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
@@ -127,12 +169,12 @@ namespace Compute.Tests
                         CreateStorageAccount(rgName, storageAccountName);
                     }
 
-                    CreateVM(rgName, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: hasManagedDisks, vmSize: vmSize, storageAccountType: storageAccountType, 
-                        writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones);
+                    CreateVM(rgName, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: hasManagedDisks,hasDiffDisks: hasDiffDisks, vmSize: vmSize, osDiskStorageAccountType: osDiskStorageAccountType,
+                        dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones);
 
                     // Instance view is not completely populated just after VM is provisioned. So we wait here for a few minutes to 
                     // allow GA blob to populate.
-                    ComputeManagementTestUtilities.WaitMinutes(5);
+                    ComputeManagementTestUtilities.WaitMinutes(2);
 
                     var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
                     Assert.True(getVMWithInstanceViewResponse != null, "VM in Get");
@@ -146,13 +188,13 @@ namespace Compute.Tests
 
                     var listResponse = m_CrpClient.VirtualMachines.List(rgName);
                     ValidateVM(inputVM, listResponse.FirstOrDefault(x => x.Name == inputVM.Name),
-                        Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name), hasManagedDisks, hasUserDefinedAS, writeAcceleratorEnabled);
+                        Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name), hasManagedDisks, hasUserDefinedAS, writeAcceleratorEnabled, hasDiffDisks);
 
                     var listVMSizesResponse = m_CrpClient.VirtualMachines.ListAvailableSizes(rgName, inputVM.Name);
-                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled);
+                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks);
 
                     listVMSizesResponse = m_CrpClient.AvailabilitySets.ListAvailableSizes(rgName, asName);
-                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled);
+                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks);
 
                     if (callUpdateVM)
                     {

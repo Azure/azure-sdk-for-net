@@ -32,12 +32,12 @@ namespace Media.Tests.ScenarioTests
                     string endpointDescription = "A test streaming endpoint";
                     string location = Helpers.MediaManagementTestUtilities.DefaultLocation;
 
-                    // Get tranform, which should not exist
+                    // Get StreamingEndpoint, which should not exist
                     StreamingEndpoint streamingEndpoint = MediaClient.StreamingEndpoints.Get(ResourceGroup, AccountName, endpointName);
                     Assert.Null(streamingEndpoint);
 
                     // Create a new StreamingEndpoint
-                    StreamingEndpoint parameters = new StreamingEndpoint(location: location, description: endpointDescription);
+                    StreamingEndpoint parameters = new StreamingEndpoint(location: location, description: endpointDescription, scaleUnits: 0);
                     StreamingEndpoint createdEndpoint = MediaClient.StreamingEndpoints.Create(ResourceGroup, AccountName, endpointName, parameters, autoStart: true);
                     ValidateStreamingEndpoint(createdEndpoint, endpointName, endpointDescription, location, StreamingEndpointResourceState.Running);
 
@@ -69,11 +69,11 @@ namespace Media.Tests.ScenarioTests
                     // Delete the StreamingEndpoint
                     MediaClient.StreamingEndpoints.Delete(ResourceGroup, AccountName, endpointName);
 
-                    // List transforms, which should should just contain the default again
+                    // List StreamingEndpoints, which should should just contain the default again
                     streamingEndpoints = MediaClient.StreamingEndpoints.List(ResourceGroup, AccountName);
                     Assert.Single(streamingEndpoints);
 
-                    // Get tranform, which should not exist
+                    // Get StreamingEndpoint, which should not exist
                     streamingEndpoint = MediaClient.StreamingEndpoints.Get(ResourceGroup, AccountName, endpointName);
                     Assert.Null(streamingEndpoint);
                 }

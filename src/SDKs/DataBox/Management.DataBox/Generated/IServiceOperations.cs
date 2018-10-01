@@ -56,8 +56,12 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='location'>
         /// The location of the resource
         /// </param>
-        /// <param name='validateAddress'>
+        /// <param name='shippingAddress'>
         /// Shipping address of the customer.
+        /// </param>
+        /// <param name='deviceType'>
+        /// Device type to be used for the job. Possible values include:
+        /// 'DataBox', 'DataBoxDisk', 'DataBoxHeavy'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -74,7 +78,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AddressValidationOutput>> ValidateAddressMethodWithHttpMessagesAsync(string location, ValidateAddress validateAddress, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AddressValidationOutput>> ValidateAddressMethodWithHttpMessagesAsync(string location, ShippingAddress shippingAddress, SkuName deviceType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// This method provides the list of available skus for the given
         /// subscription and location.

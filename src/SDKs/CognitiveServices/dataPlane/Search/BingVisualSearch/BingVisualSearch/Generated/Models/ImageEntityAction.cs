@@ -6,11 +6,13 @@
 
 namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
 {
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Defines an entity action.
+    /// </summary>
     public partial class ImageEntityAction : ImageAction
     {
         /// <summary>
@@ -54,11 +56,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// serviceUrl might return JSON along with an image URL.</param>
         /// <param name="actionType">A string representing the type of
         /// action.</param>
-        /// <param name="data">Information about the entity.</param>
-        public ImageEntityAction(string id = default(string), string readLink = default(string), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), string alternateName = default(string), string bingId = default(string), string thumbnailUrl = default(string), IList<Thing> provider = default(IList<Thing>), string datePublished = default(string), string text = default(string), IList<Thing> result = default(IList<Thing>), string displayName = default(string), bool? isTopAction = default(bool?), string serviceUrl = default(string), string actionType = default(string), Thing data = default(Thing))
+        public ImageEntityAction(string id = default(string), string readLink = default(string), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), string alternateName = default(string), string bingId = default(string), string thumbnailUrl = default(string), IList<Thing> provider = default(IList<Thing>), string datePublished = default(string), string text = default(string), IList<Thing> result = default(IList<Thing>), string displayName = default(string), bool? isTopAction = default(bool?), string serviceUrl = default(string), string actionType = default(string))
             : base(id, readLink, webSearchUrl, name, url, image, description, alternateName, bingId, thumbnailUrl, provider, datePublished, text, result, displayName, isTopAction, serviceUrl, actionType)
         {
-            Data = data;
             CustomInit();
         }
 
@@ -66,12 +66,6 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets information about the entity.
-        /// </summary>
-        [JsonProperty(PropertyName = "data")]
-        public Thing Data { get; private set; }
 
     }
 }

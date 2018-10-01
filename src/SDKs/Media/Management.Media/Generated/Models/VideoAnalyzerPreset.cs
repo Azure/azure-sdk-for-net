@@ -34,14 +34,23 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="audioLanguage">The language for the audio payload in
         /// the input using the BCP-47 format of 'language tag-region' (e.g:
         /// 'en-US'). The list of supported languages are, 'en-US', 'en-GB',
-        /// 'es-ES', 'es-MX', 'fr-FR', 'it-IT', 'ja-JP', 'pt-BR',
-        /// 'zh-CN'.</param>
-        /// <param name="audioInsightsOnly">Whether to only extract audio
-        /// insights when processing a video file.</param>
-        public VideoAnalyzerPreset(string audioLanguage = default(string), bool? audioInsightsOnly = default(bool?))
+        /// 'es-ES', 'es-MX', 'fr-FR', 'it-IT', 'ja-JP', 'pt-BR', 'zh-CN',
+        /// 'de-DE', 'ar-EG', 'ru-RU', 'hi-IN'. If not specified, automatic
+        /// language detection would be employed. This feature currently
+        /// supports English, Chinese, French, German, Italian, Japanese,
+        /// Spanish, Russian, and Portuguese. The automatic detection works
+        /// best with audio recordings with clearly discernable speech. If
+        /// automatic detection fails to find the language, transcription would
+        /// fallback to English.</param>
+        /// <param name="insightsToExtract">The type of insights to be
+        /// extracted. If not set then based on the content the type will
+        /// selected.  If the content is audi only then only audio insights are
+        /// extraced and if it is video only. Possible values include:
+        /// 'AudioInsightsOnly', 'VideoInsightsOnly', 'AllInsights'</param>
+        public VideoAnalyzerPreset(string audioLanguage = default(string), InsightsType? insightsToExtract = default(InsightsType?))
             : base(audioLanguage)
         {
-            AudioInsightsOnly = audioInsightsOnly;
+            InsightsToExtract = insightsToExtract;
             CustomInit();
         }
 
@@ -51,11 +60,14 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets whether to only extract audio insights when processing
-        /// a video file.
+        /// Gets or sets the type of insights to be extracted. If not set then
+        /// based on the content the type will selected.  If the content is
+        /// audi only then only audio insights are extraced and if it is video
+        /// only. Possible values include: 'AudioInsightsOnly',
+        /// 'VideoInsightsOnly', 'AllInsights'
         /// </summary>
-        [JsonProperty(PropertyName = "audioInsightsOnly")]
-        public bool? AudioInsightsOnly { get; set; }
+        [JsonProperty(PropertyName = "insightsToExtract")]
+        public InsightsType? InsightsToExtract { get; set; }
 
     }
 }

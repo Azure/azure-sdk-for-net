@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -36,7 +35,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="properties">Operation properties.</param>
         /// <param name="origin">Origin of the operation. Can be :
         /// user|system|user,system</param>
-        public Operation(string name, OperationDisplay display, object properties, string origin)
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), object properties = default(object), string origin = default(string))
         {
             Name = name;
             Display = display;
@@ -51,55 +50,29 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the operation. Format:
+        /// Gets name of the operation. Format:
         /// {resourceProviderNamespace}/{resourceType}/{read|write|delete|action}
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets operation display values.
+        /// Gets operation display values.
         /// </summary>
         [JsonProperty(PropertyName = "display")]
-        public OperationDisplay Display { get; set; }
+        public OperationDisplay Display { get; private set; }
 
         /// <summary>
-        /// Gets or sets operation properties.
+        /// Gets operation properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
+        public object Properties { get; private set; }
 
         /// <summary>
-        /// Gets or sets origin of the operation. Can be :
-        /// user|system|user,system
+        /// Gets origin of the operation. Can be : user|system|user,system
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
-        public string Origin { get; set; }
+        public string Origin { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Display == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Display");
-            }
-            if (Properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
-            }
-            if (Origin == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Origin");
-            }
-        }
     }
 }

@@ -95,7 +95,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowRunActions.List(null, "wfName", "rName"));
@@ -139,7 +139,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowRunActions.ListNext(null));
@@ -181,7 +181,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowRunActions.Get(null, "wfName", "rName", "actName"));
@@ -305,7 +305,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateRunActionListResponse1(IPage<WorkflowRunAction> page)
         {
-            Assert.Equal(1, page.Count());
+            Assert.Single(page);
             Assert.Equal("http://management.azure.com/actionNextLink", page.NextPageLink);
             this.ValidateRunAction1(page.First());
         }

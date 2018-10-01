@@ -32,21 +32,21 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the JobInputHttp class.
         /// </summary>
-        /// <param name="label">A label that is assigned to a JobInput, that is
-        /// used to satisfy a reference used in the Transform. For example, a
-        /// Transform can be authored so as to take an image file with the
-        /// label 'xyz' and apply it as an overlay onto the input video before
-        /// it is encoded. When submitting a Job, exactly one of the JobInputs
-        /// should be the image file, and it should have the label
-        /// 'xyz'.</param>
         /// <param name="files">List of files. Required for
         /// JobInputHttp.</param>
+        /// <param name="label">A label that is assigned to a JobInputClip,
+        /// that is used to satisfy a reference used in the Transform. For
+        /// example, a Transform can be authored so as to take an image file
+        /// with the label 'xyz' and apply it as an overlay onto the input
+        /// video before it is encoded. When submitting a Job, exactly one of
+        /// the JobInputs should be the image file, and it should have the
+        /// label 'xyz'.</param>
         /// <param name="baseUri">Base URI for HTTPS job input. It will be
         /// concatenated with provided file names.   If no base uri is given,
         /// then the provided file list is assumed to be fully qualified
         /// uris.</param>
-        public JobInputHttp(string label = default(string), IList<string> files = default(IList<string>), string baseUri = default(string))
-            : base(label, files)
+        public JobInputHttp(IList<string> files = default(IList<string>), string label = default(string), string baseUri = default(string))
+            : base(files, label)
         {
             BaseUri = baseUri;
             CustomInit();

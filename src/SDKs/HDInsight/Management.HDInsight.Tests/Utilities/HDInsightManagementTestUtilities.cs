@@ -133,7 +133,7 @@ namespace Management.HDInsight.Tests
             Assert.Equal(clustername, cluster.Name);
             Assert.Equal(parameters.Properties.Tier, cluster.Properties.Tier);
             Assert.NotNull(cluster.Etag);
-            Assert.True(cluster.Id.EndsWith(clustername));
+            Assert.EndsWith(clustername, cluster.Id);
             Assert.Equal("Running", cluster.Properties.ClusterState);
             Assert.Equal("Microsoft.HDInsight/clusters", cluster.Type);
             Assert.Equal(parameters.Location, cluster.Location);

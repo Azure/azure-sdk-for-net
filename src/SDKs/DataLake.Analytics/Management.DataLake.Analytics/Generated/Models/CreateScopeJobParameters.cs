@@ -38,8 +38,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="properties">The job specific properties.</param>
         /// <param name="name">The friendly name of the job to submit.</param>
         /// <param name="degreeOfParallelism">The degree of parallelism to use
-        /// for this job. This must be greater than 0, if set to less than 0 it
-        /// will default to 1.</param>
+        /// for this job. At most one of degreeOfParallelism and
+        /// degreeOfParallelismPercent should be specified. If none, a default
+        /// value of 1 will be used for degreeOfParallelism.</param>
+        /// <param name="degreeOfParallelismPercent">the degree of parallelism
+        /// in percentage used for this job. At most one of degreeOfParallelism
+        /// and degreeOfParallelismPercent should be specified. If none, a
+        /// default value of 1 will be used for degreeOfParallelism.</param>
         /// <param name="priority">The priority value to use for the current
         /// job. Lower numbers have a higher priority. By default, a job has a
         /// priority of 1000. This must be greater than 0.</param>
@@ -50,8 +55,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// properties.</param>
         /// <param name="tags">The key-value pairs used to add additional
         /// metadata to the job information.</param>
-        public CreateScopeJobParameters(JobType type, CreateJobProperties properties, string name, int? degreeOfParallelism = default(int?), int? priority = default(int?), IList<string> logFilePatterns = default(IList<string>), JobRelationshipProperties related = default(JobRelationshipProperties), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(type, properties, name, degreeOfParallelism, priority, logFilePatterns, related)
+        public CreateScopeJobParameters(JobType type, CreateJobProperties properties, string name, int? degreeOfParallelism = default(int?), double? degreeOfParallelismPercent = default(double?), int? priority = default(int?), IList<string> logFilePatterns = default(IList<string>), JobRelationshipProperties related = default(JobRelationshipProperties), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(type, properties, name, degreeOfParallelism, degreeOfParallelismPercent, priority, logFilePatterns, related)
         {
             Tags = tags;
             CustomInit();
