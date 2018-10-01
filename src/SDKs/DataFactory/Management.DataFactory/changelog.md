@@ -2,6 +2,15 @@
 
 ## Current version
 
+## Version 2.3.0
+
+###  Feature Additions
+        - Added variables support to Pipelines
+		- Added new AppendVariable and SetVariable activities
+		- Added support for SecureInput in activities
+		- Added ScriptActions to on demand HDI linked service
+		- Added support for recursive Cancel operation on runs
+
 ## Version 2.2.0
 
 ###  Feature Additions

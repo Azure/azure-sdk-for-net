@@ -43,19 +43,21 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">The description of the pipeline.</param>
         /// <param name="activities">List of activities in pipeline.</param>
         /// <param name="parameters">List of parameters for pipeline.</param>
+        /// <param name="variables">List of variables for pipeline.</param>
         /// <param name="concurrency">The max number of concurrent runs for the
         /// pipeline.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Pipeline.</param>
         /// <param name="folder">The folder that this Pipeline is in. If not
         /// specified, Pipeline will appear at the root level.</param>
-        public PipelineResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<Activity> activities = default(IList<Activity>), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), int? concurrency = default(int?), IList<object> annotations = default(IList<object>), PipelineFolder folder = default(PipelineFolder))
+        public PipelineResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<Activity> activities = default(IList<Activity>), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IDictionary<string, VariableSpecification> variables = default(IDictionary<string, VariableSpecification>), int? concurrency = default(int?), IList<object> annotations = default(IList<object>), PipelineFolder folder = default(PipelineFolder))
             : base(id, name, type, etag)
         {
             AdditionalProperties = additionalProperties;
             Description = description;
             Activities = activities;
             Parameters = parameters;
+            Variables = variables;
             Concurrency = concurrency;
             Annotations = annotations;
             Folder = folder;
@@ -91,6 +93,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
         public IDictionary<string, ParameterSpecification> Parameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of variables for pipeline.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.variables")]
+        public IDictionary<string, VariableSpecification> Variables { get; set; }
 
         /// <summary>
         /// Gets or sets the max number of concurrent runs for the pipeline.
@@ -137,6 +145,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
                     if (valueElement != null)
                     {
                         valueElement.Validate();
+                    }
+                }
+            }
+            if (Variables != null)
+            {
+                foreach (var valueElement1 in Variables.Values)
+                {
+                    if (valueElement1 != null)
+                    {
+                        valueElement1.Validate();
                     }
                 }
             }

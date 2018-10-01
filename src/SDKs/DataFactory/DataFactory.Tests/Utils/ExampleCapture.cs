@@ -673,6 +673,10 @@ namespace DataFactory.Tests.Utils
                     {
                         { "OutputBlobNameList", new ParameterSpecification { Type = ParameterType.Array } }
                     },
+                Variables = new Dictionary<string, VariableSpecification>
+                    {
+                        { "TestVariableArray", new VariableSpecification { Type = VariableType.Array } }
+                    },
                 Activities = new List<Activity>()
             };
             CopyActivity copyActivity = new CopyActivity

@@ -4,17 +4,11 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-06 --csharp-sdks-folder=F:\g2\azure-sdk-for-net\src\SDKs
-2018-09-07 22:31:03 UTC
-1) azure-rest-api-specs repository information
+2018-10-01 22:05:58 UTC
+Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      7c857063e4b451c7209aa300f01e72665097eaac
-
-2) AutoRest information
+Commit:      46ebe830ad208cd2a84fa8aab988992d6804f2bb
+AutoRest information
 Requested version: latest
 Bootstrapper version:    autorest@2.0.4283
-
-
-Latest installed version:    
-
-
