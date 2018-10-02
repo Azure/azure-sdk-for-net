@@ -5,6 +5,7 @@
     <Description>SignalR.Tests Class Library</Description>
     <AssemblyName>SignalR.Tests</AssemblyName>
     <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

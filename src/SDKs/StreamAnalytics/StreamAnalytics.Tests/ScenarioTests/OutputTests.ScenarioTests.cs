@@ -105,13 +105,13 @@ namespace StreamAnalytics.Tests
 
                 // List output and verify that the output shows up in the list
                 var listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateOutput(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Etag);
 
                 // Get job with output expanded and verify that the output shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(1, getJobResponse.Outputs.Count());
+                Assert.Single(getJobResponse.Outputs);
                 ValidationHelper.ValidateOutput(putResponse.Body, getJobResponse.Outputs.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Outputs.Single().Etag);
 
@@ -120,11 +120,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the output
                 listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with output expanded and verify that there are no outputs after deleting the output
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(0, getJobResponse.Outputs.Count());
+                Assert.Empty(getJobResponse.Outputs);
             }
         }
 
@@ -205,13 +205,13 @@ namespace StreamAnalytics.Tests
 
                 // List output and verify that the output shows up in the list
                 var listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateOutput(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Etag);
 
                 // Get job with output expanded and verify that the output shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(1, getJobResponse.Outputs.Count());
+                Assert.Single(getJobResponse.Outputs);
                 ValidationHelper.ValidateOutput(putResponse.Body, getJobResponse.Outputs.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Outputs.Single().Etag);
 
@@ -220,11 +220,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the output
                 listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with output expanded and verify that there are no outputs after deleting the output
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(0, getJobResponse.Outputs.Count());
+                Assert.Empty(getJobResponse.Outputs);
             }
         }
 
@@ -314,13 +314,13 @@ namespace StreamAnalytics.Tests
 
                 // List output and verify that the output shows up in the list
                 var listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateOutput(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Etag);
 
                 // Get job with output expanded and verify that the output shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(1, getJobResponse.Outputs.Count());
+                Assert.Single(getJobResponse.Outputs);
                 ValidationHelper.ValidateOutput(putResponse.Body, getJobResponse.Outputs.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Outputs.Single().Etag);
 
@@ -329,11 +329,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the output
                 listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with output expanded and verify that there are no outputs after deleting the output
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(0, getJobResponse.Outputs.Count());
+                Assert.Empty(getJobResponse.Outputs);
             }
         }
 
@@ -412,13 +412,13 @@ namespace StreamAnalytics.Tests
 
                 // List output and verify that the output shows up in the list
                 var listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateOutput(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Etag);
 
                 // Get job with output expanded and verify that the output shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(1, getJobResponse.Outputs.Count());
+                Assert.Single(getJobResponse.Outputs);
                 ValidationHelper.ValidateOutput(putResponse.Body, getJobResponse.Outputs.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Outputs.Single().Etag);
 
@@ -427,11 +427,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the output
                 listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with output expanded and verify that there are no outputs after deleting the output
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(0, getJobResponse.Outputs.Count());
+                Assert.Empty(getJobResponse.Outputs);
             }
         }
 
@@ -511,13 +511,13 @@ namespace StreamAnalytics.Tests
 
                 // List output and verify that the output shows up in the list
                 var listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateOutput(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Etag);
 
                 // Get job with output expanded and verify that the output shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(1, getJobResponse.Outputs.Count());
+                Assert.Single(getJobResponse.Outputs);
                 ValidationHelper.ValidateOutput(putResponse.Body, getJobResponse.Outputs.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Outputs.Single().Etag);
 
@@ -526,11 +526,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the output
                 listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with output expanded and verify that there are no outputs after deleting the output
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(0, getJobResponse.Outputs.Count());
+                Assert.Empty(getJobResponse.Outputs);
             }
         }
 
@@ -616,13 +616,13 @@ namespace StreamAnalytics.Tests
 
                 // List output and verify that the output shows up in the list
                 var listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateOutput(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Etag);
 
                 // Get job with output expanded and verify that the output shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(1, getJobResponse.Outputs.Count());
+                Assert.Single(getJobResponse.Outputs);
                 ValidationHelper.ValidateOutput(putResponse.Body, getJobResponse.Outputs.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Outputs.Single().Etag);
 
@@ -631,11 +631,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the output
                 listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with output expanded and verify that there are no outputs after deleting the output
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(0, getJobResponse.Outputs.Count());
+                Assert.Empty(getJobResponse.Outputs);
             }
         }
 
@@ -725,13 +725,13 @@ namespace StreamAnalytics.Tests
 
                 // List output and verify that the output shows up in the list
                 var listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateOutput(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Etag);
 
                 // Get job with output expanded and verify that the output shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(1, getJobResponse.Outputs.Count());
+                Assert.Single(getJobResponse.Outputs);
                 ValidationHelper.ValidateOutput(putResponse.Body, getJobResponse.Outputs.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Outputs.Single().Etag);
 
@@ -740,11 +740,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the output
                 listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with output expanded and verify that there are no outputs after deleting the output
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(0, getJobResponse.Outputs.Count());
+                Assert.Empty(getJobResponse.Outputs);
             }
         }
 
@@ -801,7 +801,7 @@ namespace StreamAnalytics.Tests
                 var testResult = streamAnalyticsManagementClient.Outputs.Test(resourceGroupName, jobName, outputName);
                 Assert.Equal("TestFailed", testResult.Status);
                 Assert.NotNull(testResult.Error);
-                Assert.True(testResult.Error.Message.Contains("either expired or is invalid"));
+                Assert.Contains("either expired or is invalid", testResult.Error.Message);
 
                 // PATCH output
                 var outputPatch = new Output()
@@ -826,13 +826,13 @@ namespace StreamAnalytics.Tests
 
                 // List output and verify that the output shows up in the list
                 var listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateOutput(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Etag);
 
                 // Get job with output expanded and verify that the output shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(1, getJobResponse.Outputs.Count());
+                Assert.Single(getJobResponse.Outputs);
                 ValidationHelper.ValidateOutput(putResponse.Body, getJobResponse.Outputs.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Outputs.Single().Etag);
 
@@ -841,11 +841,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the output
                 listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with output expanded and verify that there are no outputs after deleting the output
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(0, getJobResponse.Outputs.Count());
+                Assert.Empty(getJobResponse.Outputs);
             }
         }
 
@@ -908,7 +908,7 @@ namespace StreamAnalytics.Tests
                 var testResult = streamAnalyticsManagementClient.Outputs.Test(resourceGroupName, jobName, outputName);
                 Assert.Equal("TestFailed", testResult.Status);
                 Assert.NotNull(testResult.Error);
-                Assert.True(testResult.Error.Message.Contains("either expired or is invalid"));
+                Assert.Contains("either expired or is invalid", testResult.Error.Message);
 
                 // PATCH output
                 var outputPatch = new Output()
@@ -939,13 +939,13 @@ namespace StreamAnalytics.Tests
 
                 // List output and verify that the output shows up in the list
                 var listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateOutput(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Etag);
 
                 // Get job with output expanded and verify that the output shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(1, getJobResponse.Outputs.Count());
+                Assert.Single(getJobResponse.Outputs);
                 ValidationHelper.ValidateOutput(putResponse.Body, getJobResponse.Outputs.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Outputs.Single().Etag);
 
@@ -954,11 +954,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the output
                 listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with output expanded and verify that there are no outputs after deleting the output
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
-                Assert.Equal(0, getJobResponse.Outputs.Count());
+                Assert.Empty(getJobResponse.Outputs);
             }
         }
     }

@@ -91,7 +91,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(createTopicAuthorizationRuleResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Rights)
                 {
-                    Assert.True(createTopicAuthorizationRuleResponse.Rights.Any(r => r == right));
+                    Assert.Contains(createTopicAuthorizationRuleResponse.Rights, r => r == right);
                 }
 
                 // Get created Topics AuthorizationRules
@@ -100,14 +100,14 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getTopicsAuthorizationRulesResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Rights)
                 {
-                    Assert.True(getTopicsAuthorizationRulesResponse.Rights.Any(r => r == right));
+                    Assert.Contains(getTopicsAuthorizationRulesResponse.Rights, r => r == right);
                 }
 
                 // Get all Topics AuthorizationRules
                 var getAllNamespaceAuthorizationRulesResponse = ServiceBusManagementClient.Topics.ListAuthorizationRules(resourceGroup, namespaceName, topicName);
                 Assert.NotNull(getAllNamespaceAuthorizationRulesResponse);
-                Assert.Equal(getAllNamespaceAuthorizationRulesResponse.Count(), 1);
-                Assert.True(getAllNamespaceAuthorizationRulesResponse.Any(ns => ns.Name == authorizationRuleName));                
+                Assert.Single(getAllNamespaceAuthorizationRulesResponse);
+                Assert.Contains(getAllNamespaceAuthorizationRulesResponse, ns => ns.Name == authorizationRuleName);                
 
                 // Update topics authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
@@ -122,7 +122,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(updateTopicAuthorizationRuleResponse.Rights.Count == updateTopicsAuthorizationRuleParameter.Rights.Count);
                 foreach (var right in updateTopicsAuthorizationRuleParameter.Rights)
                 {
-                    Assert.True(updateTopicAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
+                    Assert.Contains(updateTopicAuthorizationRuleResponse.Rights, r => r.Equals(right));
                 }
 
                 // Get the updated Topics AuthorizationRule
@@ -133,7 +133,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getTopicAuthorizationRuleResponse.Rights.Count == updateTopicsAuthorizationRuleParameter.Rights.Count);
                 foreach (var right in updateTopicsAuthorizationRuleParameter.Rights)
                 {
-                    Assert.True(getTopicAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
+                    Assert.Contains(getTopicAuthorizationRuleResponse.Rights, r => r.Equals(right));
                 }
 
                 // Get the connectionString to the Topics for a Authorization rule created
