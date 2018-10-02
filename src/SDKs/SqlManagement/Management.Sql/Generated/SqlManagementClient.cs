@@ -378,6 +378,21 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IDatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
+        /// </summary>
+        public virtual IManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations ManagedDatabaseVulnerabilityAssessmentRuleBaselines { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        public virtual IManagedDatabaseVulnerabilityAssessmentScansOperations ManagedDatabaseVulnerabilityAssessmentScans { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseVulnerabilityAssessmentsOperations.
+        /// </summary>
+        public virtual IManagedDatabaseVulnerabilityAssessmentsOperations ManagedDatabaseVulnerabilityAssessments { get; private set; }
+
+        /// <summary>
         /// Gets the IInstanceFailoverGroupsOperations.
         /// </summary>
         public virtual IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; private set; }
@@ -699,6 +714,9 @@ namespace Microsoft.Azure.Management.Sql
             ElasticPoolOperations = new ElasticPoolOperations(this);
             Capabilities = new CapabilitiesOperations(this);
             DatabaseVulnerabilityAssessmentScans = new DatabaseVulnerabilityAssessmentScansOperations(this);
+            ManagedDatabaseVulnerabilityAssessmentRuleBaselines = new ManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations(this);
+            ManagedDatabaseVulnerabilityAssessmentScans = new ManagedDatabaseVulnerabilityAssessmentScansOperations(this);
+            ManagedDatabaseVulnerabilityAssessments = new ManagedDatabaseVulnerabilityAssessmentsOperations(this);
             InstanceFailoverGroups = new InstanceFailoverGroupsOperations(this);
             BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
             TdeCertificates = new TdeCertificatesOperations(this);
