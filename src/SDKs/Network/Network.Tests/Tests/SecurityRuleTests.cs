@@ -133,14 +133,14 @@ namespace Networks.Tests
                 
                 getsecurityRules = networkManagementClient.SecurityRules.List(resourceGroupName, networkSecurityGroupName);
                 
-                Assert.Equal(1, getsecurityRules.Count());
+                Assert.Single(getsecurityRules);
 
                // Delete NSG
                 networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
                 
                 // List NSG
                 var listNsgResponse = networkManagementClient.NetworkSecurityGroups.List(resourceGroupName);
-                Assert.Equal(0, listNsgResponse.Count());
+                Assert.Empty(listNsgResponse);
             }
         }
 

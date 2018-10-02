@@ -39,7 +39,7 @@ namespace AzureRedisCache.Tests
 
                 Assert.Contains(redisCacheName, response.Id);
                 Assert.Equal(redisCacheName, response.Name);
-                Assert.True("creating".Equals(response.ProvisioningState, StringComparison.OrdinalIgnoreCase));
+                Assert.Equal("creating", response.ProvisioningState, ignoreCase: true);
                 Assert.Equal(SkuName.Premium, response.Sku.Name);
                 Assert.Equal(SkuFamily.P, response.Sku.Family);
 

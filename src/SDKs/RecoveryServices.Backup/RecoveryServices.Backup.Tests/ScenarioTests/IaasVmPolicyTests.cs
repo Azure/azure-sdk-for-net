@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             {
                 testHelper.Initialize(context);
                 List<ProtectionPolicyResource> policies = testHelper.ListAllPoliciesWithRetries();
-                Assert.True(policies.Any(policy => policy.Name.ToLower().Equals("defaultpolicy")));
+                Assert.Contains(policies, policy => policy.Name.ToLower().Equals("defaultpolicy"));
 
                 ProtectionPolicyResource defaultPolicy = testHelper.GetPolicyWithRetries("defaultpolicy");
 

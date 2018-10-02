@@ -66,7 +66,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("South Central US", result.Location);
             Assert.Equal("site1", result.Name);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Id);
-            Assert.True(result.Properties.ToString().Contains("Dedicated"));
+            Assert.Contains("Dedicated", result.Properties.ToString());
             Assert.Equal("Succeeded", (result.Properties as JObject)["provisioningState"]);
             Assert.Equal("F1", result.Sku.Name);
             Assert.Equal("Free", result.Sku.Tier);
@@ -113,7 +113,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("South Central US", result.Location);
             Assert.Equal("site1", result.Name);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Id);
-            Assert.True(result.Properties.ToString().Contains("Dedicated"));
+            Assert.Contains("Dedicated", result.Properties.ToString());
             Assert.Equal("Succeeded", (result.Properties as JObject)["provisioningState"]);
             Assert.Equal("F1", result.Sku.Name);
             Assert.Equal("Free", result.Sku.Tier);
@@ -165,7 +165,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("South Central US", result.Location);
             Assert.Equal("site1", result.Name);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Id);
-            Assert.True(result.Properties.ToString().Contains("Dedicated"));
+            Assert.Contains("Dedicated", result.Properties.ToString());
             Assert.Null((result.Properties as JObject)["provisionState"]);
         }
 
@@ -222,7 +222,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("site1", result.First().Name);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.First().Id);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.First().Id);
-            Assert.True(result.First().Properties.ToString().Contains("Dedicated"));
+            Assert.Contains("Dedicated", result.First().Properties.ToString());
             Assert.Equal("Succeeded", (result.First().Properties as JObject)["provisioningState"]);
         }
 
@@ -333,7 +333,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("Succeeded", (result.Properties as JObject)["provisioningState"]);
             Assert.Equal("finance", result.Tags["department"]);
             Assert.Equal("tagvalue", result.Tags["tagname"]);
-            Assert.True(result.Properties.ToString().Contains("Dedicated"));
+            Assert.Contains("Dedicated", result.Properties.ToString());
         }
 
         [Fact]
@@ -399,7 +399,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("Succeeded", (result.Properties as JObject)["provisioningState"]);
             Assert.Equal("finance", result.Tags["department"]);
             Assert.Equal("tagvalue", result.Tags["tagname"]);
-            Assert.True(result.Properties.ToString().Contains("Dedicated"));
+            Assert.Contains("Dedicated", result.Properties.ToString());
             Assert.Equal("SystemAssigned", result.Identity.Type.ToString());
             Assert.Equal("foo", result.Identity.PrincipalId);
         }
@@ -549,7 +549,7 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(true, result);
+            Assert.True(result);
         }
 
         [Fact]
@@ -581,7 +581,7 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(false, result);
+            Assert.False(result);
         }
 
         [Fact]
