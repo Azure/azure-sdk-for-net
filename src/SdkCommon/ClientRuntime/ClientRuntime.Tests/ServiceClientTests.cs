@@ -143,11 +143,14 @@ namespace Microsoft.Rest.ClientRuntime.Tests
 
             var result = fakeClient.DoStuffSync();
 
+            var fakeClient2 = new FakeServiceClient(new FakeHttpHandler(), otherHandles);
+            // Out Of Memory Exception here
+            var weird1 = fakeClient2.HttpMessageHandlers.ToList();
+
             var fakeClient3 = new FakeServiceClient(handler2, otherHandles);
 
             // Out Of Memory Exception here
-            var weird = fakeClient3.HttpMessageHandlers.ToList();
-            var fakeClient2 = new FakeServiceClient(new FakeHttpHandler(), otherHandles);
+            var weird2 = fakeClient3.HttpMessageHandlers.ToList();
         }
 
         [Fact]
