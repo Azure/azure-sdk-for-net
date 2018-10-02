@@ -541,6 +541,10 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='runId'>
         /// The pipeline run identifier.
         /// </param>
+        /// <param name='isRecursive'>
+        /// If true, cancel all the Child pipelines that are triggered by the current
+        /// pipeline.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -559,7 +563,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string factoryName, string runId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string factoryName, string runId, bool? isRecursive = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -621,6 +625,7 @@ namespace Microsoft.Azure.Management.DataFactory
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("factoryName", factoryName);
                 tracingParameters.Add("runId", runId);
+                tracingParameters.Add("isRecursive", isRecursive);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Cancel", tracingParameters);
             }
@@ -632,6 +637,10 @@ namespace Microsoft.Azure.Management.DataFactory
             _url = _url.Replace("{factoryName}", System.Uri.EscapeDataString(factoryName));
             _url = _url.Replace("{runId}", System.Uri.EscapeDataString(runId));
             List<string> _queryParameters = new List<string>();
+            if (isRecursive != null)
+            {
+                _queryParameters.Add(string.Format("isRecursive={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(isRecursive, Client.SerializationSettings).Trim('"'))));
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
