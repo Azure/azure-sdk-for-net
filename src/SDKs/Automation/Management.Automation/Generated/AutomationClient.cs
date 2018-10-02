@@ -163,26 +163,6 @@ namespace Microsoft.Azure.Management.Automation
         public virtual IFieldsOperations Fields { get; private set; }
 
         /// <summary>
-        /// Gets the IRunbookDraftOperations.
-        /// </summary>
-        public virtual IRunbookDraftOperations RunbookDraft { get; private set; }
-
-        /// <summary>
-        /// Gets the IRunbookOperations.
-        /// </summary>
-        public virtual IRunbookOperations Runbook { get; private set; }
-
-        /// <summary>
-        /// Gets the ITestJobStreamsOperations.
-        /// </summary>
-        public virtual ITestJobStreamsOperations TestJobStreams { get; private set; }
-
-        /// <summary>
-        /// Gets the ITestJobOperations.
-        /// </summary>
-        public virtual ITestJobOperations TestJob { get; private set; }
-
-        /// <summary>
         /// Gets the IScheduleOperations.
         /// </summary>
         public virtual IScheduleOperations Schedule { get; private set; }
@@ -276,6 +256,31 @@ namespace Microsoft.Azure.Management.Automation
         /// Gets the INodeCountInformationOperations.
         /// </summary>
         public virtual INodeCountInformationOperations NodeCountInformation { get; private set; }
+
+        /// <summary>
+        /// Gets the IRunbookDraftOperations.
+        /// </summary>
+        public virtual IRunbookDraftOperations RunbookDraft { get; private set; }
+
+        /// <summary>
+        /// Gets the IRunbookOperations.
+        /// </summary>
+        public virtual IRunbookOperations Runbook { get; private set; }
+
+        /// <summary>
+        /// Gets the ITestJobStreamsOperations.
+        /// </summary>
+        public virtual ITestJobStreamsOperations TestJobStreams { get; private set; }
+
+        /// <summary>
+        /// Gets the ITestJobOperations.
+        /// </summary>
+        public virtual ITestJobOperations TestJob { get; private set; }
+
+        /// <summary>
+        /// Gets the IPython2PackageOperations.
+        /// </summary>
+        public virtual IPython2PackageOperations Python2Package { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AutomationClient class.
@@ -495,10 +500,6 @@ namespace Microsoft.Azure.Management.Automation
             Module = new ModuleOperations(this);
             ObjectDataTypes = new ObjectDataTypesOperations(this);
             Fields = new FieldsOperations(this);
-            RunbookDraft = new RunbookDraftOperations(this);
-            Runbook = new RunbookOperations(this);
-            TestJobStreams = new TestJobStreamsOperations(this);
-            TestJob = new TestJobOperations(this);
             Schedule = new ScheduleOperations(this);
             Variable = new VariableOperations(this);
             Webhook = new WebhookOperations(this);
@@ -518,6 +519,11 @@ namespace Microsoft.Azure.Management.Automation
             DscCompilationJobStream = new DscCompilationJobStreamOperations(this);
             DscNodeConfiguration = new DscNodeConfigurationOperations(this);
             NodeCountInformation = new NodeCountInformationOperations(this);
+            RunbookDraft = new RunbookDraftOperations(this);
+            Runbook = new RunbookOperations(this);
+            TestJobStreams = new TestJobStreamsOperations(this);
+            TestJob = new TestJobOperations(this);
+            Python2Package = new Python2PackageOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

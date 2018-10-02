@@ -43,8 +43,9 @@ namespace Microsoft.Azure.Management.Automation
                 new Tuple<string, string, string>("Automation", "NodeReports", "2018-01-15"),
                 new Tuple<string, string, string>("Automation", "ObjectDataTypes", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "Operations", "2015-10-31"),
-                new Tuple<string, string, string>("Automation", "Runbook", "2015-10-31"),
-                new Tuple<string, string, string>("Automation", "RunbookDraft", "2015-10-31"),
+                new Tuple<string, string, string>("Automation", "Python2Package", "2018-06-30"),
+                new Tuple<string, string, string>("Automation", "Runbook", "2018-06-30"),
+                new Tuple<string, string, string>("Automation", "RunbookDraft", "2018-06-30"),
                 new Tuple<string, string, string>("Automation", "Schedule", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "SoftwareUpdateConfigurationMachineRuns", "2017-05-15-preview"),
                 new Tuple<string, string, string>("Automation", "SoftwareUpdateConfigurationRuns", "2017-05-15-preview"),
@@ -53,8 +54,8 @@ namespace Microsoft.Azure.Management.Automation
                 new Tuple<string, string, string>("Automation", "SourceControlSyncJob", "2017-05-15-preview"),
                 new Tuple<string, string, string>("Automation", "SourceControlSyncJobStreams", "2017-05-15-preview"),
                 new Tuple<string, string, string>("Automation", "Statistics", "2015-10-31"),
-                new Tuple<string, string, string>("Automation", "TestJob", "2015-10-31"),
-                new Tuple<string, string, string>("Automation", "TestJobStreams", "2015-10-31"),
+                new Tuple<string, string, string>("Automation", "TestJob", "2018-06-30"),
+                new Tuple<string, string, string>("Automation", "TestJobStreams", "2018-06-30"),
                 new Tuple<string, string, string>("Automation", "Usages", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "Variable", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "Watcher", "2015-10-31"),
@@ -62,5 +63,16 @@ namespace Microsoft.Azure.Management.Automation
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/automation/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "da7505bc2e69ce94b35a30cb5cd882caaa832385";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

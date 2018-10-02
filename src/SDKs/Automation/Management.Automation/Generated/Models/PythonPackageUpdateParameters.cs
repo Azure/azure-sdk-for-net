@@ -11,29 +11,33 @@
 namespace Microsoft.Azure.Management.Automation.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for Publish operation.
+    /// The parameters supplied to the update module operation.
     /// </summary>
-    public partial class RunbookDraftPublishHeaders
+    public partial class PythonPackageUpdateParameters
     {
         /// <summary>
-        /// Initializes a new instance of the RunbookDraftPublishHeaders class.
+        /// Initializes a new instance of the PythonPackageUpdateParameters
+        /// class.
         /// </summary>
-        public RunbookDraftPublishHeaders()
+        public PythonPackageUpdateParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RunbookDraftPublishHeaders class.
+        /// Initializes a new instance of the PythonPackageUpdateParameters
+        /// class.
         /// </summary>
-        /// <param name="location">URL to query for status of the
-        /// operation.</param>
-        public RunbookDraftPublishHeaders(string location = default(string))
+        /// <param name="tags">Gets or sets the tags attached to the
+        /// resource.</param>
+        public PythonPackageUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            Location = location;
+            Tags = tags;
             CustomInit();
         }
 
@@ -43,10 +47,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets URL to query for status of the operation.
+        /// Gets or sets the tags attached to the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }
