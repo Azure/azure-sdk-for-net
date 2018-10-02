@@ -87,19 +87,27 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         public virtual IWebhooksOperations Webhooks { get; private set; }
 
         /// <summary>
-        /// Gets the IBuildsOperations.
+        /// Gets the IRunsOperations.
         /// </summary>
-        public virtual IBuildsOperations Builds { get; private set; }
+        public virtual IRunsOperations Runs { get; private set; }
 
         /// <summary>
-        /// Gets the IBuildStepsOperations.
+        /// Gets the ITasksOperations.
         /// </summary>
-        public virtual IBuildStepsOperations BuildSteps { get; private set; }
+        public virtual ITasksOperations Tasks { get; private set; }
 
         /// <summary>
-        /// Gets the IBuildTasksOperations.
+        /// Initializes a new instance of the ContainerRegistryManagementClient class.
         /// </summary>
-        public virtual IBuildTasksOperations BuildTasks { get; private set; }
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ContainerRegistryManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected ContainerRegistryManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ContainerRegistryManagementClient class.
@@ -184,6 +192,33 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// Thrown when a required parameter is null
         /// </exception>
         public ContainerRegistryManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ContainerRegistryManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ContainerRegistryManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public ContainerRegistryManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -306,9 +341,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             Operations = new Operations(this);
             Replications = new ReplicationsOperations(this);
             Webhooks = new WebhooksOperations(this);
-            Builds = new BuildsOperations(this);
-            BuildSteps = new BuildStepsOperations(this);
-            BuildTasks = new BuildTasksOperations(this);
+            Runs = new RunsOperations(this);
+            Tasks = new TasksOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -339,12 +373,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BuildStepProperties>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BuildStepProperties>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<BuildStepPropertiesUpdateParameters>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<BuildStepPropertiesUpdateParameters>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<QueueBuildRequest>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<QueueBuildRequest>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RunRequest>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RunRequest>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TaskStepProperties>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TaskStepProperties>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TaskStepUpdateParameters>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TaskStepUpdateParameters>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
