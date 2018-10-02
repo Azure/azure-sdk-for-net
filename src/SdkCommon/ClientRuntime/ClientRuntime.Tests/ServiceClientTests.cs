@@ -127,6 +127,29 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.Equal(2, attemptsFailed);
         }
 
+
+        [Fact]
+        public void RetryHandlerRetriesWith500ErrorsDouble()
+        {
+            var handler2 = new FakeHttpHandler();
+            var otherHandles = new DelegatingHandler[] { new RetryAfterDelegatingHandler(), new ContosoMessageHandler() };
+            var fakeClient = new FakeServiceClient(handler2, otherHandles);
+            int attemptsFailed = 0;
+
+            var retryPolicy = new RetryPolicy<FluentWrapperFailureStrategy>(2);
+            fakeClient.SetRetryPolicy(retryPolicy);
+            var retryHandler = fakeClient.HttpMessageHandlers.OfType<RetryDelegatingHandler>().FirstOrDefault();
+            retryPolicy.Retrying += (sender, args) => { attemptsFailed++; };
+
+            var result = fakeClient.DoStuffSync();
+
+            var fakeClient3 = new FakeServiceClient(handler2, otherHandles);
+
+            // Out Of Memory Exception here
+            var weird = fakeClient3.HttpMessageHandlers.ToList();
+            var fakeClient2 = new FakeServiceClient(new FakeHttpHandler(), otherHandles);
+        }
+
         [Fact]
         public void RetryAfterHandleTest()
         {
@@ -342,5 +365,13 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         }
 
 #endif
+    }
+
+    public class FluentWrapperFailureStrategy : ITransientErrorDetectionStrategy
+    {
+        public bool IsTransient(Exception ex)
+        {
+            return true;
+        }
     }
 }
