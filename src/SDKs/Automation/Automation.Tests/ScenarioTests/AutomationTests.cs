@@ -344,7 +344,7 @@ namespace Automation.Tests.ScenarioTests
 
                     Assert.NotNull(module);                    
                     Assert.Equal(ModuleProvisioningState.Creating, module.ProvisioningState);
-                    EnsureModuleReachesSuccessProvisioningState(moduleName, testFixture, out module);
+                    module = EnsureModuleReachesSuccessProvisioningState(moduleName, testFixture);
                     Assert.Equal(moduleName, module.Name);
                     Assert.Equal("1.0", module.Version);
 
@@ -352,7 +352,7 @@ namespace Automation.Tests.ScenarioTests
                     module = testFixture.CreateAutomationModule(moduleName, contentLink2);
                     Assert.NotNull(module);
                     Assert.Equal(ModuleProvisioningState.Creating, module.ProvisioningState);
-                    EnsureModuleReachesSuccessProvisioningState(moduleName, testFixture, out module);
+                    module = EnsureModuleReachesSuccessProvisioningState(moduleName, testFixture);
                     Assert.Equal(moduleName, module.Name);
                     Assert.Equal("2.0", module.Version);
 
@@ -362,6 +362,54 @@ namespace Automation.Tests.ScenarioTests
                     try
                     {
                         testFixture.GetAutomationModule(moduleName);
+                    }
+                    catch (ErrorResponseException)
+                    {
+                        // Exception expected
+                        deleteCompleted = true;
+                    }
+                    Assert.True(deleteCompleted);
+                }
+            }
+        }
+
+        [Fact]
+        public void CanCreateUpdateDeletePython2Packages()
+        {
+            using (var context = MockContext.Start(GetType().FullName))
+            {
+                using (var testFixture = new AutomationTestBase(context))
+                {
+
+                    var python2PackageName = "numpy";
+                    // Content links don't have to be valid for playback. However, these are the actual module download locations used for recording.
+                    var contentLink1 = "https://bhbrahmaprodtestingseau.blob.core.windows.net/module1/numpy-1.14.5-cp27-none-win_amd64.whl";
+                    var contentLink2 = "https://bhbrahmaprodtestingseau.blob.core.windows.net/module2/numpy-1.15.2-cp27-none-win_amd64.whl";
+
+                    testFixture.DeletePython2Package(python2PackageName, true);
+
+                    var python2Package = testFixture.CreateAutomationPython2Package(python2PackageName, contentLink1);
+
+                    Assert.NotNull(python2Package);
+                    Assert.Equal(ModuleProvisioningState.Creating, python2Package.ProvisioningState);
+                    python2Package = EnsurePython2PackageReachesSuccessProvisioningState(python2PackageName, testFixture);
+                    Assert.Equal(python2PackageName, python2Package.Name);
+                    Assert.Equal("1.14.5", python2Package.Version);
+
+                    // Update the module
+                    python2Package = testFixture.CreateAutomationPython2Package(python2PackageName, contentLink2);
+                    Assert.NotNull(python2Package);
+                    Assert.Equal(ModuleProvisioningState.Creating, python2Package.ProvisioningState);
+                    python2Package = EnsurePython2PackageReachesSuccessProvisioningState(python2PackageName, testFixture);
+                    Assert.Equal(python2PackageName, python2Package.Name);
+                    Assert.Equal("1.15.2", python2Package.Version);
+
+                    // Delete the module
+                    bool deleteCompleted = false;
+                    testFixture.DeletePython2Package(python2PackageName);
+                    try
+                    {
+                        testFixture.GetAutomationPython2Package(python2PackageName);
                     }
                     catch (ErrorResponseException)
                     {
@@ -479,23 +527,40 @@ namespace Automation.Tests.ScenarioTests
             }
         }
 
-        private void EnsureModuleReachesSuccessProvisioningState(string moduleName, AutomationTestBase testFixture, out Module module)
+        private Module EnsureModuleReachesSuccessProvisioningState(string moduleName, AutomationTestBase testFixture)
         {
             // Wait for the module Provisioing state to reach Succeeded
+            GetModuleAction getmoduleAction = () => testFixture.GetAutomationModule(moduleName);
+            return TestProvisioningStateSucceeded(getmoduleAction);
+        }
+
+        private Module EnsurePython2PackageReachesSuccessProvisioningState(string moduleName, AutomationTestBase testFixture)
+        {
+            GetModuleAction getPython2PackageAction = () => testFixture.GetAutomationPython2Package(moduleName);
+            return TestProvisioningStateSucceeded(getPython2PackageAction);
+        }
+
+        private delegate Module GetModuleAction();
+
+        private Module TestProvisioningStateSucceeded (GetModuleAction action)
+        {
             var startTime = DateTime.Now;
             var endTime = startTime.AddMinutes(5);
-            bool provisioningSucceeded = false;
+            bool success = false;
+            Module module;
             do
             {
                 Thread.Sleep(50); // Used 5 seconds polling delay in the record mode, using 50 ms in playback for test to complete fast
-                module = testFixture.GetAutomationModule(moduleName);
+                module = action();
                 if (module.ProvisioningState == ModuleProvisioningState.Succeeded)
                 {
-                    provisioningSucceeded = true;
+                    success = true;
                     break;
                 }
+                
             } while (DateTime.Now < endTime);
-            Assert.True(provisioningSucceeded);
+            Assert.True(success);
+            return module;
         }
 
     }
