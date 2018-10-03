@@ -7,7 +7,7 @@ using Sku = Microsoft.Azure.Management.Sql.Models.Sku;
 
 namespace Sql.Tests
 {
-    public class ManagedDatabaseVulnerabilityAssessmentTestFixture : IDisposable
+    public class ManagedInstanceTestFixture : IDisposable
     {
         public SqlManagementTestContext Context { get; set; }
 
@@ -15,7 +15,7 @@ namespace Sql.Tests
 
         public ManagedInstance ManagedInstance { get; set; }
 
-        public ManagedDatabaseVulnerabilityAssessmentTestFixture()
+        public ManagedInstanceTestFixture()
         {
             Context = new SqlManagementTestContext(this);
 
