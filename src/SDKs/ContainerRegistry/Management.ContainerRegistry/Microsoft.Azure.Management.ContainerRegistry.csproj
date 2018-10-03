@@ -12,6 +12,7 @@
 		<PackageReleaseNotes>
 			<![CDATA[
         1) Added support for Azure Container Registry Task service.
+        2) Breaking Changes from 2.8.0-preview: BuildTask is replaced by Task. Build is replaced by Run.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
