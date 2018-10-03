@@ -23,15 +23,14 @@ namespace Management.HDInsight.Tests
     public static class ClusterCreateParametersHelpers
     {
         // Secret values to update while recording tests. Do NOT commit any changes to these values.
-        private const string StorageAccountName = "";
-        private const string StorageAccountKey = "";
+        private const string StorageAccountName = "MyStorageAccount.blob.core.windows.net";
+        private const string StorageAccountKey = "MyKey";
         private const string ApplicationId = "";
         private const string AadTenantId = "";
         private const string CertificatePassword = "";
         private const string ResourceUri = "";
         private const string CertificateFile = @"";
         private const string AdlDefaultStorageAccountName = "";
-
 
 
         // These can be set to anything but all created clusters should be deleted after usage so these aren't secret.

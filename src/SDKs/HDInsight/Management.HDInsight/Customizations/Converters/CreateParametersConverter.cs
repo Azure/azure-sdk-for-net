@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.HDInsight
                     OsType = OSType.Linux,
                     SecurityProfile = clusterCreateParameters.SecurityProfile,
                     StorageProfile = GetStorageProfile(clusterCreateParameters)
-                }
+                },
+                Identity = clusterCreateParameters.ClusterIdentity
             };
 
             return extendedParams;

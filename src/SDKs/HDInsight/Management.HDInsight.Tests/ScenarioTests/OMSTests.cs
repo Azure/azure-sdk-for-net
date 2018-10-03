@@ -24,7 +24,8 @@ namespace Management.HDInsight.Tests
     {
         private const string WorkspaceId = "1d364e89-bb71-4503-aa3d-a23535aea7bd";
         private const string PrimaryKey = "";
-        
+
+
         [Fact]
         public void TestOMSOnRunningCluster()
         {
@@ -44,13 +45,13 @@ namespace Management.HDInsight.Tests
                     PrimaryKey = PrimaryKey
                 };
 
-                client.Extension.EnableMonitoring(rgName, clusterName, request);
-                ClusterMonitoringResponse monitoringStatus = client.Extension.GetMonitoringStatus(rgName, clusterName);
+                client.Extensions.EnableMonitoring(rgName, clusterName, request);
+                ClusterMonitoringResponse monitoringStatus = client.Extensions.GetMonitoringStatus(rgName, clusterName);
                 Assert.True(monitoringStatus.ClusterMonitoringEnabled);
                 Assert.Equal(monitoringStatus.WorkspaceId, WorkspaceId);
 
-                client.Extension.DisableMonitoring(rgName, clusterName);
-                monitoringStatus = client.Extension.GetMonitoringStatus(rgName, clusterName);
+                client.Extensions.DisableMonitoring(rgName, clusterName);
+                monitoringStatus = client.Extensions.GetMonitoringStatus(rgName, clusterName);
                 Assert.False(monitoringStatus.ClusterMonitoringEnabled);
                 Assert.Null(monitoringStatus.WorkspaceId);
             });

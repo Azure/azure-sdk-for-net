@@ -61,7 +61,7 @@ namespace Management.HDInsight.Tests.UnitTests
             string username = "admin";
             string password = "NewPassword123";
             client.Configurations.BeginEnablingHttp(ResourceGroupName, ClusterName, username, password);
-            client.Configurations.BeginUpdateHTTPSettings(ResourceGroupName, ClusterName, ConfigurationKey.Gateway,
+            client.Configurations.BeginUpdate(ResourceGroupName, ClusterName, ConfigurationKey.Gateway,
                 ConfigurationsConverter.Convert(new HttpConnectivitySettings
                 {
                     EnabledCredential = "true",
@@ -72,17 +72,17 @@ namespace Management.HDInsight.Tests.UnitTests
             Assert.Equal(handler.Requests[0], handler.Requests[1]);
         }
 
-        [Fact(Skip ="Failing test needs fixing")]
+        [Fact]
         public void TestDisableHttpCustomization()
         {
             TestDelegatingHandler handler = new TestDelegatingHandler();
             HDInsightManagementClient client = GetHDInsightUnitTestingClient(handler);
 
             client.Configurations.BeginDisablingHttp(ResourceGroupName, ClusterName);
-            client.Configurations.BeginUpdateHTTPSettings(ResourceGroupName, ClusterName, ConfigurationKey.Gateway,
+            client.Configurations.BeginUpdate(ResourceGroupName, ClusterName, ConfigurationKey.Gateway,
                 ConfigurationsConverter.Convert(new HttpConnectivitySettings
                 {
-                    EnabledCredential = "false"
+                    EnabledCredential = "False"
                 }));
 
             Assert.Equal(handler.Requests[0], handler.Requests[1]);
