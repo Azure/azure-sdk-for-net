@@ -18,6 +18,5 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     {
         public const string All = "All";
         public const string Runtime = "Runtime";
-        public const string None = "None";
     }
 }

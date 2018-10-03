@@ -6,14 +6,13 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.ContainerRegistry</PackageId>
 		<Description>Provides management capabilities for Azure Container Registry.</Description>
-		<Version>2.8.0-preview</Version>
+		<Version>3.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.ContainerRegistry</AssemblyName>
 		<PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        1) Added support for Azure Container Registry Build service.
-        2) Added support for registry policy.
-        3) Added support for image import.
+        1) Added support for Azure Container Registry Task service.
+        2) Breaking Changes from 2.8.0-preview: BuildTask is replaced by Task. Build is replaced by Run.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
