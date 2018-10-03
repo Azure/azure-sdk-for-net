@@ -20,7 +20,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
     /// Bing and get back image search results customized to meet your custom
     /// search definition.
     /// </summary>
-    public partial class CustomImageSearchAPI : ServiceClient<CustomImageSearchAPI>, ICustomImageSearchAPI
+    public partial class CustomImageSearchClient : ServiceClient<CustomImageSearchClient>, ICustomImageSearchClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -48,32 +48,45 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         public virtual ICustomInstance CustomInstance { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the CustomImageSearchAPI class.
+        /// Initializes a new instance of the CustomImageSearchClient class.
         /// </summary>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// <param name='httpClient'>
+        /// HttpClient to be used
         /// </param>
-        protected CustomImageSearchAPI(params DelegatingHandler[] handlers) : base(handlers)
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling CustomImageSearchClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected CustomImageSearchClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CustomImageSearchAPI class.
+        /// Initializes a new instance of the CustomImageSearchClient class.
         /// </summary>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected CustomImageSearchAPI(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected CustomImageSearchClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CustomImageSearchAPI class.
+        /// Initializes a new instance of the CustomImageSearchClient class.
+        /// </summary>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        protected CustomImageSearchClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        {
+            Initialize();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CustomImageSearchClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -84,7 +97,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected CustomImageSearchAPI(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected CustomImageSearchClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -94,7 +107,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         }
 
         /// <summary>
-        /// Initializes a new instance of the CustomImageSearchAPI class.
+        /// Initializes a new instance of the CustomImageSearchClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -108,7 +121,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected CustomImageSearchAPI(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected CustomImageSearchClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -118,7 +131,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         }
 
         /// <summary>
-        /// Initializes a new instance of the CustomImageSearchAPI class.
+        /// Initializes a new instance of the CustomImageSearchClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
@@ -129,7 +142,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public CustomImageSearchAPI(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public CustomImageSearchClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -143,7 +156,34 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         }
 
         /// <summary>
-        /// Initializes a new instance of the CustomImageSearchAPI class.
+        /// Initializes a new instance of the CustomImageSearchClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling CustomImageSearchClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public CustomImageSearchClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CustomImageSearchClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
@@ -157,7 +197,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public CustomImageSearchAPI(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public CustomImageSearchClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -171,7 +211,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         }
 
         /// <summary>
-        /// Initializes a new instance of the CustomImageSearchAPI class.
+        /// Initializes a new instance of the CustomImageSearchClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -185,7 +225,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public CustomImageSearchAPI(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public CustomImageSearchClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -204,7 +244,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         }
 
         /// <summary>
-        /// Initializes a new instance of the CustomImageSearchAPI class.
+        /// Initializes a new instance of the CustomImageSearchClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -221,7 +261,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public CustomImageSearchAPI(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public CustomImageSearchClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {

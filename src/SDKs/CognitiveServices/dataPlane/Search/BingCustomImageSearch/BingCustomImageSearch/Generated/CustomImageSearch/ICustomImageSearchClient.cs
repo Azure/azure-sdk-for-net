@@ -15,7 +15,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
     /// Bing and get back image search results customized to meet your custom
     /// search definition.
     /// </summary>
-    public partial interface ICustomImageSearchAPI : System.IDisposable
+    public partial interface ICustomImageSearchClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
