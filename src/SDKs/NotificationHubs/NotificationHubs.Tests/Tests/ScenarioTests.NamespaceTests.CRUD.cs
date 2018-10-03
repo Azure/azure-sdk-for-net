@@ -61,14 +61,14 @@ namespace NotificationHubs.Tests.ScenarioTests
                 var getAllNamespacesResponse = NotificationHubsManagementClient.Namespaces.List(resourceGroup);
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
-                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
                 Assert.True(getAllNamespacesResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
                 //Get all namespaces created within the subscription irrespective of the resourceGroup
                 getAllNamespacesResponse = NotificationHubsManagementClient.Namespaces.ListAll();
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
-                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
 
                 //Update namespace tags and make the namespace critical
                 var updateNamespaceParameter = new NamespaceCreateOrUpdateParameters()
@@ -90,11 +90,11 @@ namespace NotificationHubs.Tests.ScenarioTests
                     updateNamespaceResponse.ProvisioningState.Equals("Succeeded", StringComparison.CurrentCultureIgnoreCase));
                 Assert.Equal(namespaceName, updateNamespaceResponse.Name);
                 //Regression in the service . uncomment after the fix goes out 
-                Assert.Equal(updateNamespaceResponse.Tags.Count, 4);
+                Assert.Equal(4, updateNamespaceResponse.Tags.Count);
                 foreach (var tag in updateNamespaceParameter.Tags)
                 {
-                    Assert.True(updateNamespaceResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
-                    Assert.True(updateNamespaceResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
+                    Assert.Contains(updateNamespaceResponse.Tags, t => t.Key.Equals(tag.Key));
+                    Assert.Contains(updateNamespaceResponse.Tags, t => t.Value.Equals(tag.Value));
                 }
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
@@ -105,11 +105,11 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.Equal(NamespaceType.NotificationHub, getNamespaceResponse.NamespaceType);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(namespaceName, getNamespaceResponse.Name);
-                Assert.Equal(getNamespaceResponse.Tags.Count, 4);
+                Assert.Equal(4, getNamespaceResponse.Tags.Count);
                 foreach (var tag in updateNamespaceParameter.Tags)
                 {
-                    Assert.True(getNamespaceResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
-                    Assert.True(getNamespaceResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
+                    Assert.Contains(getNamespaceResponse.Tags, t => t.Key.Equals(tag.Key));
+                    Assert.Contains(getNamespaceResponse.Tags, t => t.Value.Equals(tag.Value));
                 }
 
                 var updateNamespacePatchParameter = new NamespacePatchParameters()
@@ -125,11 +125,11 @@ namespace NotificationHubs.Tests.ScenarioTests
                 var updateNamespacePatchResponse = NotificationHubsManagementClient.Namespaces.Patch(resourceGroup, namespaceName, updateNamespacePatchParameter);
 
                 Assert.NotNull(updateNamespacePatchResponse);
-                Assert.Equal(updateNamespacePatchResponse.Tags.Count, 2);
+                Assert.Equal(2, updateNamespacePatchResponse.Tags.Count);
                 foreach (var tag in updateNamespacePatchParameter.Tags)
                 {
-                    Assert.True(updateNamespacePatchParameter.Tags.Any(t => t.Key.Equals(tag.Key)));
-                    Assert.True(updateNamespacePatchParameter.Tags.Any(t => t.Value.Equals(tag.Value)));
+                    Assert.Contains(updateNamespacePatchParameter.Tags, t => t.Key.Equals(tag.Key));
+                    Assert.Contains(updateNamespacePatchParameter.Tags, t => t.Value.Equals(tag.Value));
                 }
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
@@ -143,7 +143,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                     }
                     catch (Exception ex)
                     {
-                        Assert.True(ex.Message.Contains("NotFound"));
+                        Assert.Contains("NotFound", ex.Message);
                     }
             }
         }

@@ -383,7 +383,7 @@ namespace Compute.Tests.DiskRPTests
             return disk;
         }
 
-        private Disk GenerateBaseDisk(string diskCreateOption)
+        protected Disk GenerateBaseDisk(string diskCreateOption)
         {
             var disk = new Disk
             {
@@ -476,7 +476,7 @@ namespace Compute.Tests.DiskRPTests
             }
         }
 
-        protected void Validate(Disk diskExpected, Disk diskActual, string location, bool diskHydrated = false)
+        protected void Validate(Disk diskExpected, Disk diskActual, string location, bool diskHydrated = false, bool update = false)
         {
             // disk resource
             Assert.Equal(string.Format("{0}/{1}", ApiConstants.ResourceProviderNamespace, "disks"), diskActual.Type);
@@ -494,6 +494,18 @@ namespace Compute.Tests.DiskRPTests
                 Assert.Equal(diskExpected.DiskSizeGB, diskActual.DiskSizeGB);
             }
 
+            if (!update)
+            {
+                if (diskExpected.DiskIOPSReadWrite != null)
+                {
+                    Assert.Equal(diskExpected.DiskIOPSReadWrite, diskActual.DiskIOPSReadWrite);
+                }
+
+                if (diskExpected.DiskMBpsReadWrite != null)
+                {
+                    Assert.Equal(diskExpected.DiskMBpsReadWrite, diskActual.DiskMBpsReadWrite);
+                }
+            }
 
             // Creation data
             CreationData creationDataExp = diskExpected.CreationData;

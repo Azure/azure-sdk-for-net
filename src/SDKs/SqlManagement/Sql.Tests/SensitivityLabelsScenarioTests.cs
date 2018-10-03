@@ -1,4 +1,7 @@
-﻿using Microsoft.Azure.Management.ResourceManager.Models;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -13,6 +16,7 @@ using Xunit;
 
 namespace Sql.Tests
 {
+#if false
     public class SensitivityLabelsScenarioTests
     {
         private const string s_Current = "current";
@@ -59,7 +63,7 @@ namespace Sql.Tests
                                 LastName varchar(255),
                                 FirstName varchar(255),
                                 Address varchar(255),
-                                City varchar(255) 
+                                City varchar(255)
                             );", s_TableName), connection);
                         command.ExecuteNonQuery();
                     }
@@ -119,4 +123,5 @@ namespace Sql.Tests
             Assert.Equal(s_Current, actual.Name);
         }
     }
+#endif
 }

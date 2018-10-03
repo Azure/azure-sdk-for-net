@@ -42,8 +42,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="submitter">The user or account that submitted the
         /// job.</param>
         /// <param name="degreeOfParallelism">The degree of parallelism used
-        /// for this job. This must be greater than 0, if set to less than 0 it
-        /// will default to 1.</param>
+        /// for this job.</param>
+        /// <param name="degreeOfParallelismPercent">the degree of parallelism
+        /// in percentage used for this job.</param>
         /// <param name="priority">The priority value for the current job.
         /// Lower numbers have a higher priority. By default, a job has a
         /// priority of 1000. This must be greater than 0.</param>
@@ -70,13 +71,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="tags">The key-value pairs used to add additional
         /// metadata to the job information. (Only for use internally with
         /// Scope job type.)</param>
+        /// <param name="hierarchyQueueNode">the name of hierarchy queue node
+        /// this job is assigned to, Null if job has not been assigned yet or
+        /// the account doesn't have hierarchy queue.</param>
         /// <param name="errorMessage">The error message details for the job,
         /// if the job failed.</param>
         /// <param name="stateAuditRecords">The job state audit records,
         /// indicating when various operations have been performed on this
         /// job.</param>
-        public JobInformation(string name, JobType type, JobProperties properties, System.Guid? jobId = default(System.Guid?), string submitter = default(string), int? degreeOfParallelism = default(int?), int? priority = default(int?), System.DateTimeOffset? submitTime = default(System.DateTimeOffset?), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), JobState? state = default(JobState?), JobResult? result = default(JobResult?), string logFolder = default(string), IList<string> logFilePatterns = default(IList<string>), JobRelationshipProperties related = default(JobRelationshipProperties), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<JobErrorDetails> errorMessage = default(IList<JobErrorDetails>), IList<JobStateAuditRecord> stateAuditRecords = default(IList<JobStateAuditRecord>))
-            : base(name, type, jobId, submitter, degreeOfParallelism, priority, submitTime, startTime, endTime, state, result, logFolder, logFilePatterns, related, tags)
+        public JobInformation(string name, JobType type, JobProperties properties, System.Guid? jobId = default(System.Guid?), string submitter = default(string), int? degreeOfParallelism = default(int?), double? degreeOfParallelismPercent = default(double?), int? priority = default(int?), System.DateTimeOffset? submitTime = default(System.DateTimeOffset?), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), JobState? state = default(JobState?), JobResult? result = default(JobResult?), string logFolder = default(string), IList<string> logFilePatterns = default(IList<string>), JobRelationshipProperties related = default(JobRelationshipProperties), IDictionary<string, string> tags = default(IDictionary<string, string>), string hierarchyQueueNode = default(string), IList<JobErrorDetails> errorMessage = default(IList<JobErrorDetails>), IList<JobStateAuditRecord> stateAuditRecords = default(IList<JobStateAuditRecord>))
+            : base(name, type, jobId, submitter, degreeOfParallelism, degreeOfParallelismPercent, priority, submitTime, startTime, endTime, state, result, logFolder, logFilePatterns, related, tags, hierarchyQueueNode)
         {
             ErrorMessage = errorMessage;
             StateAuditRecords = stateAuditRecords;

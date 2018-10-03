@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.ApplicationInsights.Models
+namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// 'availabilityResults/availabilityPercentage',
         /// 'availabilityResults/duration', 'billing/telemetryCount',
         /// 'customEvents/count'</param>
-        public MetricsPostBodySchemaParameters(string metricId, System.TimeSpan? timespan = default(System.TimeSpan?), IList<string> aggregation = default(IList<string>), System.TimeSpan? interval = default(System.TimeSpan?), IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string), string filter = default(string))
+        public MetricsPostBodySchemaParameters(string metricId, string timespan = default(string), IList<string> aggregation = default(IList<string>), System.TimeSpan? interval = default(System.TimeSpan?), IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string), string filter = default(string))
         {
             MetricId = metricId;
             Timespan = timespan;
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "timespan")]
-        public System.TimeSpan? Timespan { get; set; }
+        public string Timespan { get; set; }
 
         /// <summary>
         /// </summary>

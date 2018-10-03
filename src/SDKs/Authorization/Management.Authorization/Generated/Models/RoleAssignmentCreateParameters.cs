@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// user, service principal, or security group.</param>
         /// <param name="canDelegate">The delgation flag used for creating a
         /// role assignment</param>
-        public RoleAssignmentCreateParameters(string roleDefinitionId = default(string), string principalId = default(string), bool? canDelegate = default(bool?))
+        public RoleAssignmentCreateParameters(string roleDefinitionId, string principalId, bool? canDelegate = default(bool?))
         {
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;
@@ -74,5 +74,22 @@ namespace Microsoft.Azure.Management.Authorization.Models
         [JsonProperty(PropertyName = "properties.canDelegate")]
         public bool? CanDelegate { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RoleDefinitionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RoleDefinitionId");
+            }
+            if (PrincipalId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "PrincipalId");
+            }
+        }
     }
 }

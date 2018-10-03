@@ -79,13 +79,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <summary>
         /// Gets list of logins on the target server.
         /// </summary>
-        [JsonProperty(PropertyName = "Logins")]
+        [JsonProperty(PropertyName = "logins")]
         public IList<string> Logins { get; private set; }
 
         /// <summary>
         /// Gets list of agent jobs on the target server.
         /// </summary>
-        [JsonProperty(PropertyName = "AgentJobs")]
+        [JsonProperty(PropertyName = "agentJobs")]
         public IList<string> AgentJobs { get; private set; }
 
         /// <summary>

@@ -77,7 +77,7 @@ namespace Networks.Tests
 
                 // List NSG
                 var listNsgResponse = networkManagementClient.NetworkSecurityGroups.List(resourceGroupName);
-                Assert.Equal(1, listNsgResponse.Count());
+                Assert.Single(listNsgResponse);
                 Assert.Equal(networkSecurityGroupName, listNsgResponse.First().Name);
                 Assert.Equal(6, listNsgResponse.First().DefaultSecurityRules.Count);
                 Assert.Equal("AllowVnetInBound", listNsgResponse.First().DefaultSecurityRules[0].Name);
@@ -90,14 +90,14 @@ namespace Networks.Tests
 
                 // List NSG in a subscription
                 var listNsgSubsciptionResponse = networkManagementClient.NetworkSecurityGroups.ListAll();
-                Assert.NotEqual(0, listNsgSubsciptionResponse.Count());
+                Assert.NotEmpty(listNsgSubsciptionResponse);
 
                 // Delete NSG
                 networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
                 
                 // List NSG
                 listNsgResponse = networkManagementClient.NetworkSecurityGroups.List(resourceGroupName);
-                Assert.Equal(0, listNsgResponse.Count());
+                Assert.Empty(listNsgResponse);
             }
         }
 
@@ -177,7 +177,7 @@ namespace Networks.Tests
 
                 // List NSG
                 var listNsgResponse = networkManagementClient.NetworkSecurityGroups.List(resourceGroupName);
-                Assert.Equal(1, listNsgResponse.Count());
+                Assert.Single(listNsgResponse);
                 Assert.Equal(networkSecurityGroupName, listNsgResponse.First().Name);
                 Assert.Equal(6, listNsgResponse.First().DefaultSecurityRules.Count);
                 Assert.Equal("AllowVnetInBound", listNsgResponse.First().DefaultSecurityRules[0].Name);
@@ -190,7 +190,7 @@ namespace Networks.Tests
 
                 // List NSG in a subscription
                 var listNsgSubsciptionResponse = networkManagementClient.NetworkSecurityGroups.ListAll();
-                Assert.NotEqual(0, listNsgSubsciptionResponse.Count());
+                Assert.NotEmpty(listNsgSubsciptionResponse);
 
                 // Add a new security rule
                 var SecurityRule = new SecurityRule()
@@ -228,7 +228,7 @@ namespace Networks.Tests
 
                 // List Default Security Groups
                 var listDefaultSecurityGroups = networkManagementClient.DefaultSecurityRules.List(resourceGroupName, networkSecurityGroupName);
-                Assert.NotEqual(0, listDefaultSecurityGroups.Count());
+                Assert.NotEmpty(listDefaultSecurityGroups);
 
                 // Get Defaul Security Group
                 var getDefaultSecurityGroups = networkManagementClient.DefaultSecurityRules.Get(resourceGroupName, networkSecurityGroupName, listDefaultSecurityGroups.First().Name);
@@ -239,7 +239,7 @@ namespace Networks.Tests
                 
                 // List NSG
                 listNsgResponse = networkManagementClient.NetworkSecurityGroups.List(resourceGroupName);
-                Assert.Equal(0, listNsgResponse.Count());
+                Assert.Empty(listNsgResponse);
             }
         }
     }

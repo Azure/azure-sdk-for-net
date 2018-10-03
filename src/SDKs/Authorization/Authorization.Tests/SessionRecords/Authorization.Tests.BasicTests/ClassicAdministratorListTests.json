@@ -7,59 +7,58 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dd92333f-bad5-4a4d-843f-335bf5d8d25a"
+          "c661daaa-f979-41bc-b748-b83961bf5ba6"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
+          "FxVersion/4.6.26020.03",
           "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.8.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"test2@rbacCliTest.onmicrosoft.com\",\r\n        \"role\": \"ServiceAdministrator;AccountAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/10030000930A2D88\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"10030000930A2D88\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"stefmil@microsoft.com\",\r\n        \"role\": \"CoAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/1003BFFD801C213F\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"1003BFFD801C213F\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Sat, 10 Mar 2018 00:21:05 GMT"
+          "Wed, 26 Sep 2018 23:38:38 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "Vary": [
-          "Accept-Encoding",
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "westus2:f566efec-5462-4aae-97d0-f1b3635d87b7"
+          "westus2:5be735a7-b5b2-4768-8b3b-3ea8a7d600ca"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14978"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "dff26a77-9fe6-49de-a0e3-f50c1e65d99e"
+          "1b31c57e-5399-4356-9aee-44cbec797f9d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180310T002106Z:dff26a77-9fe6-49de-a0e3-f50c1e65d99e"
+          "WESTUS2:20180926T233839Z:1b31c57e-5399-4356-9aee-44cbec797f9d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "637"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"test2@rbacCliTest.onmicrosoft.com\",\r\n        \"role\": \"ServiceAdministrator;AccountAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/10030000930A2D88\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"10030000930A2D88\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"stefmil@microsoft.com\",\r\n        \"role\": \"CoAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/1003BFFD801C213F\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"1003BFFD801C213F\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

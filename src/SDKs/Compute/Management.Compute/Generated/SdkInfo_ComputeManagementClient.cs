@@ -19,27 +19,41 @@ namespace Microsoft.Azure.Management.Compute
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Compute", "AvailabilitySets", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "Disks", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "Images", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "LogAnalytics", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "Operations", "2018-04-01"),
+                new Tuple<string, string, string>("Compute", "AvailabilitySets", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "Disks", "2018-06-01"),
+                new Tuple<string, string, string>("Compute", "Galleries", "2018-06-01"),
+                new Tuple<string, string, string>("Compute", "GalleryImageVersions", "2018-06-01"),
+                new Tuple<string, string, string>("Compute", "GalleryImages", "2018-06-01"),
+                new Tuple<string, string, string>("Compute", "Images", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "LogAnalytics", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "Operations", "2018-10-01"),
                 new Tuple<string, string, string>("Compute", "ResourceSkus", "2017-09-01"),
-                new Tuple<string, string, string>("Compute", "Snapshots", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "Usage", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineExtensionImages", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineExtensions", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineImages", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineRunCommands", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetExtensions", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetRollingUpgrades", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMs", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSets", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineSizes", "2018-04-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachines", "2018-04-01"),
+                new Tuple<string, string, string>("Compute", "Snapshots", "2018-06-01"),
+                new Tuple<string, string, string>("Compute", "Usage", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineExtensionImages", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineExtensions", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineImages", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineRunCommands", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetExtensions", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetRollingUpgrades", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMs", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSets", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineSizes", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachines", "2018-10-01"),
                 new Tuple<string, string, string>("ContainerService", "ContainerServices", "2017-01-31"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/compute/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\hylee-sdk\\september\\src\\SDKs";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "3f094a4eb44682f1608aaf836ca9ad8a8b15b6b9";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

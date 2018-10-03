@@ -1,48 +1,37 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Compute/artifacttypes/vmextension/types/VMAccessAgent/versions/2.0?api-version=2018-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjRmYjIzZTMtNmJhMy00MWYwLTliNmUtZTQxMTMxZDVkNjFlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LkNvbXB1dGUvYXJ0aWZhY3R0eXBlcy92bWV4dGVuc2lvbi90eXBlcy9WTUFjY2Vzc0FnZW50L3ZlcnNpb25zLzIuMD9hcGktdmVyc2lvbj0yMDE4LTA0LTAx",
+      "RequestUri": "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Compute/artifacttypes/vmextension/types/VMAccessAgent/versions/2.0?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjRmYjIzZTMtNmJhMy00MWYwLTliNmUtZTQxMTMxZDVkNjFlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LkNvbXB1dGUvYXJ0aWZhY3R0eXBlcy92bWV4dGVuc2lvbi90eXBlcy9WTUFjY2Vzc0FnZW50L3ZlcnNpb25zLzIuMD9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2fb5e34c-5cfe-44bb-ac41-db4b5b58f20e"
+          "e587b85f-b0e2-4732-acfe-4888d259430a"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25714.03",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/18.0.0.0"
+          "FxVersion/4.7.3132.0",
+          "OSName/Windows10Enterprise",
+          "OSVersion/6.3.17134",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.2492.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"operatingSystem\": \"Windows\",\r\n    \"computeRole\": \"IaaS\",\r\n    \"vmScaleSetEnabled\": false,\r\n    \"supportsMultipleExtensions\": false\r\n  },\r\n  \"location\": \"westus\",\r\n  \"name\": \"2.0\",\r\n  \"id\": \"/Subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.0\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"operatingSystem\": \"Windows\",\r\n    \"computeRole\": \"IaaS\",\r\n    \"vmScaleSetEnabled\": false,\r\n    \"supportsMultipleExtensions\": false,\r\n    \"rollbackSupported\": false\r\n  },\r\n  \"location\": \"westus\",\r\n  \"name\": \"2.0\",\r\n  \"id\": \"/Subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.0\"\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "438"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 03 May 2018 17:51:53 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,19 +40,29 @@
           "03e6c753-1db2-4ec7-a057-8ff6011fb55c_131679504465927322"
         ],
         "x-ms-request-id": [
-          "acc6ab79-b166-44c2-8b9f-833ae12201de"
+          "ab674819-1752-4a15-8063-a3328657417b"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "ec3898c6-982e-434d-86b3-b1cb41870aca"
+          "d66b5e6c-34a9-4e86-b002-88ab851858f1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180503T175153Z:ec3898c6-982e-434d-86b3-b1cb41870aca"
+          "WESTUS:20180818T083404Z:d66b5e6c-34a9-4e86-b002-88ab851858f1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Sat, 18 Aug 2018 08:34:04 GMT"
         ]
       },
       "StatusCode": 200

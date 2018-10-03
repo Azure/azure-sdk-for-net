@@ -10,6 +10,7 @@ namespace Management.HDInsight.Tests.UnitTests
 {
     using Microsoft.Azure.Management.HDInsight;
     using Microsoft.Azure.Management.HDInsight.Models;
+    using System;
     using System.Collections.Generic;
     using Xunit;
 
@@ -31,6 +32,49 @@ namespace Management.HDInsight.Tests.UnitTests
             createParams.OozieMetastore = new Metastore("server.database.windows.net", "oozieDb", "username", "password");
 
             ExtendedParameterValidators.ValidateSpecConversion(createParams);
+        }
+
+        [Fact]
+        public void CanConvertHadoopClusterWithCustomMetastoresToMarchSpecWithConfigurations()
+        {
+            ClusterCreateParameters createParams = GetClusterCreateParamsWithMinRequiredValues();
+            createParams.HiveMetastore = new Metastore("server.database.windows.net", "hiveDb", "username", "password");
+            createParams.OozieMetastore = new Metastore("server.database.windows.net", "oozieDb", "username", "password");
+            Dictionary<string, string> testConfig = new Dictionary<string, string>
+            {
+                { "key", "value" }
+            };
+            createParams.Configurations.Add(ConfigurationKey.HiveSite, testConfig);
+            createParams.Configurations.Add(ConfigurationKey.HiveEnv, testConfig);
+            createParams.Configurations.Add(ConfigurationKey.OozieEnv, testConfig);
+            createParams.Configurations.Add(ConfigurationKey.OozieSite, testConfig);
+
+            ClusterCreateParametersExtended extendedParams = CreateParametersConverter.GetExtendedClusterCreateParameters("testCluster", createParams);
+            Dictionary<string, Dictionary<string, string>> configurations = extendedParams.Properties.ClusterDefinition.Configurations as Dictionary<string, Dictionary<string, string>>;
+
+            Assert.True(configurations.ContainsKey(ConfigurationKey.HiveSite));
+            Dictionary<string, string> hiveSiteConfig = configurations[ConfigurationKey.HiveSite];
+            Assert.Equal(5, hiveSiteConfig.Count);
+        }
+
+
+        [Fact]
+        public void CantConvertHadoopClusterWithCustomMetastoresToMarchSpecWithConfigurations()
+        {
+            ClusterCreateParameters createParams = GetClusterCreateParamsWithMinRequiredValues();
+            createParams.HiveMetastore = new Metastore("server.database.windows.net", "hiveDb", "username", "password");
+            createParams.OozieMetastore = new Metastore("server.database.windows.net", "oozieDb", "username", "password");
+            Dictionary<string, string> testConfig = new Dictionary<string, string>
+            {
+                { Constants.MetastoreConfigurations.HiveSite.ConnectionUrlKey, "test" }
+            };
+            createParams.Configurations.Add(ConfigurationKey.HiveSite, testConfig);
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(() =>
+            {
+                ExtendedParameterValidators.ValidateSpecConversion(createParams);
+            });
+            Assert.Contains(Constants.MetastoreConfigurations.HiveSite.ConnectionUrlKey, ex.Message);
         }
 
         [Fact]

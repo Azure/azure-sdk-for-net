@@ -52,9 +52,8 @@ namespace CustomerInsights.Tests.Tests
                 Assert.Equal(profileName, profileResult.TypeName);
                 Assert.Equal(profileResult.Name, HubName + "/" + profileName, StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    profileResult.Type,
                     "Microsoft.CustomerInsights/hubs/profiles",
-                    StringComparer.OrdinalIgnoreCase);
+                    profileResult.Type, StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(ProvisioningStates.Succeeded, profileResult.ProvisioningState);
 
                 //Get profile and verify
@@ -62,9 +61,8 @@ namespace CustomerInsights.Tests.Tests
                 Assert.Equal(profileName, profileGetResult.TypeName);
                 Assert.Equal(profileGetResult.Name, HubName + "/" + profileName, StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    profileGetResult.Type,
                     "Microsoft.CustomerInsights/hubs/profiles",
-                    StringComparer.OrdinalIgnoreCase);
+                    profileGetResult.Type, StringComparer.OrdinalIgnoreCase);
             }
         }
 

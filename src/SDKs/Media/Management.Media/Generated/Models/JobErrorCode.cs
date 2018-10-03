@@ -11,149 +11,132 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for JobErrorCode.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(JobErrorCodeConverter))]
-    public struct JobErrorCode : System.IEquatable<JobErrorCode>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum JobErrorCode
     {
-        private JobErrorCode(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
         /// <summary>
         /// Fatal service error, please contact support.
         /// </summary>
-        public static readonly JobErrorCode ServiceError = "ServiceError";
-
+        [EnumMember(Value = "ServiceError")]
+        ServiceError,
         /// <summary>
         /// Transient error, please retry, if retry is unsuccessful, please
         /// contact support.
         /// </summary>
-        public static readonly JobErrorCode ServiceTransientError = "ServiceTransientError";
-
+        [EnumMember(Value = "ServiceTransientError")]
+        ServiceTransientError,
         /// <summary>
         /// While trying to download the input files, the files were not
         /// accessible, please check the availability of the source.
         /// </summary>
-        public static readonly JobErrorCode DownloadNotAccessible = "DownloadNotAccessible";
-
+        [EnumMember(Value = "DownloadNotAccessible")]
+        DownloadNotAccessible,
         /// <summary>
         /// While trying to download the input files, there was an issue during
         /// transfer (storage service, network errors), see details and check
         /// your source.
         /// </summary>
-        public static readonly JobErrorCode DownloadTransientError = "DownloadTransientError";
-
+        [EnumMember(Value = "DownloadTransientError")]
+        DownloadTransientError,
         /// <summary>
         /// While trying to upload the output files, the destination was not
         /// reachable, please check the availability of the destination.
         /// </summary>
-        public static readonly JobErrorCode UploadNotAccessible = "UploadNotAccessible";
-
+        [EnumMember(Value = "UploadNotAccessible")]
+        UploadNotAccessible,
         /// <summary>
         /// While trying to upload the output files, there was an issue during
         /// transfer (storage service, network errors), see details and check
         /// your destination.
         /// </summary>
-        public static readonly JobErrorCode UploadTransientError = "UploadTransientError";
-
+        [EnumMember(Value = "UploadTransientError")]
+        UploadTransientError,
         /// <summary>
         /// There was a problem with the combination of input files and the
         /// configuration settings applied, fix the configuration settings and
         /// retry with the same input, or change input to match the
         /// configuration.
         /// </summary>
-        public static readonly JobErrorCode ConfigurationUnsupported = "ConfigurationUnsupported";
-
+        [EnumMember(Value = "ConfigurationUnsupported")]
+        ConfigurationUnsupported,
         /// <summary>
         /// There was a problem with the input content (for example: zero byte
         /// files, or corrupt/non-decodable files), check the input files.
         /// </summary>
-        public static readonly JobErrorCode ContentMalformed = "ContentMalformed";
-
+        [EnumMember(Value = "ContentMalformed")]
+        ContentMalformed,
         /// <summary>
         /// There was a problem with the format of the input (not valid media
         /// file, or an unsupported file/codec), check the validity of the
         /// input files.
         /// </summary>
-        public static readonly JobErrorCode ContentUnsupported = "ContentUnsupported";
-
-
-        /// <summary>
-        /// Underlying value of enum JobErrorCode
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for JobErrorCode
-        /// </summary>
-        public override string ToString()
+        [EnumMember(Value = "ContentUnsupported")]
+        ContentUnsupported
+    }
+    internal static class JobErrorCodeEnumExtension
+    {
+        internal static string ToSerializedValue(this JobErrorCode? value)
         {
-            return UnderlyingValue.ToString();
+            return value == null ? null : ((JobErrorCode)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Compares enums of type JobErrorCode
-        /// </summary>
-        public bool Equals(JobErrorCode e)
+        internal static string ToSerializedValue(this JobErrorCode value)
         {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
+            switch( value )
+            {
+                case JobErrorCode.ServiceError:
+                    return "ServiceError";
+                case JobErrorCode.ServiceTransientError:
+                    return "ServiceTransientError";
+                case JobErrorCode.DownloadNotAccessible:
+                    return "DownloadNotAccessible";
+                case JobErrorCode.DownloadTransientError:
+                    return "DownloadTransientError";
+                case JobErrorCode.UploadNotAccessible:
+                    return "UploadNotAccessible";
+                case JobErrorCode.UploadTransientError:
+                    return "UploadTransientError";
+                case JobErrorCode.ConfigurationUnsupported:
+                    return "ConfigurationUnsupported";
+                case JobErrorCode.ContentMalformed:
+                    return "ContentMalformed";
+                case JobErrorCode.ContentUnsupported:
+                    return "ContentUnsupported";
+            }
+            return null;
         }
 
-        /// <summary>
-        /// Implicit operator to convert string to JobErrorCode
-        /// </summary>
-        public static implicit operator JobErrorCode(string value)
+        internal static JobErrorCode? ParseJobErrorCode(this string value)
         {
-            return new JobErrorCode(value);
+            switch( value )
+            {
+                case "ServiceError":
+                    return JobErrorCode.ServiceError;
+                case "ServiceTransientError":
+                    return JobErrorCode.ServiceTransientError;
+                case "DownloadNotAccessible":
+                    return JobErrorCode.DownloadNotAccessible;
+                case "DownloadTransientError":
+                    return JobErrorCode.DownloadTransientError;
+                case "UploadNotAccessible":
+                    return JobErrorCode.UploadNotAccessible;
+                case "UploadTransientError":
+                    return JobErrorCode.UploadTransientError;
+                case "ConfigurationUnsupported":
+                    return JobErrorCode.ConfigurationUnsupported;
+                case "ContentMalformed":
+                    return JobErrorCode.ContentMalformed;
+                case "ContentUnsupported":
+                    return JobErrorCode.ContentUnsupported;
+            }
+            return null;
         }
-
-        /// <summary>
-        /// Implicit operator to convert JobErrorCode to string
-        /// </summary>
-        public static implicit operator string(JobErrorCode e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum JobErrorCode
-        /// </summary>
-        public static bool operator == (JobErrorCode e1, JobErrorCode e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum JobErrorCode
-        /// </summary>
-        public static bool operator != (JobErrorCode e1, JobErrorCode e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for JobErrorCode
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is JobErrorCode && Equals((JobErrorCode)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode JobErrorCode
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
     }
 }

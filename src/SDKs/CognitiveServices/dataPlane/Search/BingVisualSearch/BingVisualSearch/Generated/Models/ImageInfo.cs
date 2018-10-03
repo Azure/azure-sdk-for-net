@@ -60,9 +60,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets an image insights token. To get the insights token, call one
-        /// of the Image Search APIs (for example, /images/search). In the
-        /// search results, the
+        /// Gets or sets an image insights token. To get the insights token,
+        /// call one of the Image Search APIs (for example, /images/search). In
+        /// the search results, the
         /// [Image](https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-images-api-v7-reference#image)
         /// object's
         /// [imageInsightsToken](https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-images-api-v7-reference#image-imageinsightstoken)
@@ -71,25 +71,26 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// token if the request includes the image form data.
         /// </summary>
         [JsonProperty(PropertyName = "imageInsightsToken")]
-        public string ImageInsightsToken { get; private set; }
+        public string ImageInsightsToken { get; set; }
 
         /// <summary>
-        /// Gets the URL of the input image. The imageInsightsToken and url
-        /// fields are mutually exclusive; do not specify both. Do not specify
-        /// the URL if the request includes the image form data.
+        /// Gets or sets the URL of the input image. The imageInsightsToken and
+        /// url fields are mutually exclusive; do not specify both. Do not
+        /// specify the URL if the request includes the image form data.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
-        public string Url { get; private set; }
+        public string Url { get; set; }
 
         /// <summary>
-        /// Gets a JSON object consisting of coordinates specifying the four
-        /// corners of a cropped rectangle within the input image. Use the crop
-        /// area to identify the region of interest in the image. You can apply
-        /// the crop area to the images specified using the imageInsightsToken
-        /// or url fields, or an image binary specified in an image form data.
+        /// Gets or sets a JSON object consisting of coordinates specifying the
+        /// four corners of a cropped rectangle within the input image. Use the
+        /// crop area to identify the region of interest in the image. You can
+        /// apply the crop area to the images specified using the
+        /// imageInsightsToken or url fields, or an image binary specified in
+        /// an image form data.
         /// </summary>
         [JsonProperty(PropertyName = "cropArea")]
-        public CropArea CropArea { get; private set; }
+        public CropArea CropArea { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataBox.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -30,13 +32,19 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Initializes a new instance of the ShareCredentialDetails class.
         /// </summary>
         /// <param name="shareName">Name of the share.</param>
+        /// <param name="shareType">Type of the share. Possible values include:
+        /// 'UnknownType', 'HCS', 'BlockBlob', 'PageBlob', 'AzureFile'</param>
         /// <param name="userName">User name for the share.</param>
         /// <param name="password">Password for the share.</param>
-        public ShareCredentialDetails(string shareName = default(string), string userName = default(string), string password = default(string))
+        /// <param name="supportedAccessProtocols">Access protocols supported
+        /// on the device.</param>
+        public ShareCredentialDetails(string shareName = default(string), ShareDestinationFormatType? shareType = default(ShareDestinationFormatType?), string userName = default(string), string password = default(string), IList<AccessProtocol?> supportedAccessProtocols = default(IList<AccessProtocol?>))
         {
             ShareName = shareName;
+            ShareType = shareType;
             UserName = userName;
             Password = password;
+            SupportedAccessProtocols = supportedAccessProtocols;
             CustomInit();
         }
 
@@ -46,22 +54,35 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the share.
+        /// Gets name of the share.
         /// </summary>
         [JsonProperty(PropertyName = "shareName")]
-        public string ShareName { get; set; }
+        public string ShareName { get; private set; }
 
         /// <summary>
-        /// Gets or sets user name for the share.
+        /// Gets type of the share. Possible values include: 'UnknownType',
+        /// 'HCS', 'BlockBlob', 'PageBlob', 'AzureFile'
+        /// </summary>
+        [JsonProperty(PropertyName = "shareType")]
+        public ShareDestinationFormatType? ShareType { get; private set; }
+
+        /// <summary>
+        /// Gets user name for the share.
         /// </summary>
         [JsonProperty(PropertyName = "userName")]
-        public string UserName { get; set; }
+        public string UserName { get; private set; }
 
         /// <summary>
-        /// Gets or sets password for the share.
+        /// Gets password for the share.
         /// </summary>
         [JsonProperty(PropertyName = "password")]
-        public string Password { get; set; }
+        public string Password { get; private set; }
+
+        /// <summary>
+        /// Gets access protocols supported on the device.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedAccessProtocols")]
+        public IList<AccessProtocol?> SupportedAccessProtocols { get; private set; }
 
     }
 }

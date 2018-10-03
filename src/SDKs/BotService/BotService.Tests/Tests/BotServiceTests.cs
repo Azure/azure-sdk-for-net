@@ -28,7 +28,7 @@ namespace BotService.Tests
         }
 
         [Fact]
-        public async Task BotCreateEmailChannel()
+        public void BotCreateEmailChannel()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -46,7 +46,7 @@ namespace BotService.Tests
 
                 // Create bot services
                 Bot bot1 = BotServiceManagementTestUtilities.CreateAndValidateBot(botServiceMgmtClient, rgname);
-                
+
                 // Enable email channel for the demo bot
                 var emailChannel = botServiceMgmtClient.Channels.Create(rgname, bot1.Name, ChannelName.EmailChannel,
                     new BotChannel(location: "global", properties:

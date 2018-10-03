@@ -125,9 +125,8 @@ namespace CustomerInsights.Tests.Tests
                     HubName + "/" + relationshipLinkName,
                     StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    relationshipLink.Type,
                     "Microsoft.CustomerInsights/hubs/relationshipLinks",
-                    StringComparer.OrdinalIgnoreCase);
+                    relationshipLink.Type, StringComparer.OrdinalIgnoreCase);
 
                 relationshipLink = aciClient.RelationshipLinks.Get(ResourceGroupName, HubName, relationshipLinkName);
                 Assert.Equal(relationshipLinkName, relationshipLink.LinkName);
@@ -136,13 +135,12 @@ namespace CustomerInsights.Tests.Tests
                     HubName + "/" + relationshipLinkName,
                     StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    relationshipLink.Type,
                     "Microsoft.CustomerInsights/hubs/relationshipLinks",
-                    StringComparer.OrdinalIgnoreCase);
+                    relationshipLink.Type, StringComparer.OrdinalIgnoreCase);
 
                 var relationshipLinks = aciClient.RelationshipLinks.ListByHub(ResourceGroupName, HubName);
                 Assert.True(relationshipLinks.Any());
-                Assert.True(relationshipLinks.ToList().Any(item => relationshipLinkName == item.LinkName));
+                Assert.Contains(relationshipLinks.ToList(), item => relationshipLinkName == item.LinkName);
 
                 var deleteRelationshipResult =
                     aciClient.RelationshipLinks.DeleteWithHttpMessagesAsync(

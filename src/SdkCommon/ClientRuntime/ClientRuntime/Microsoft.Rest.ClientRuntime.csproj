@@ -9,7 +9,8 @@
     <PackageTags>Microsoft AutoRest ClientRuntime $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        1) Skipping empty product header values when sending requests
+        1) Fix for Retry-After delegating handler
+        2) Fix for memory leak resulted from adding delegate callback on every request
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

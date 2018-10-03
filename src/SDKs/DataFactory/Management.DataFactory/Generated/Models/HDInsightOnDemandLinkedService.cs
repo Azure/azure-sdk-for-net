@@ -124,7 +124,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// the HDInsight cluster.</param>
         /// <param name="zookeeperNodeSize">Specifies the size of the Zoo
         /// Keeper node for the HDInsight cluster.</param>
-        public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object clusterNamePrefix = default(object), object clusterUserName = default(object), SecretBase clusterPassword = default(SecretBase), object clusterSshUserName = default(object), SecretBase clusterSshPassword = default(SecretBase), IList<LinkedServiceReference> additionalLinkedServiceNames = default(IList<LinkedServiceReference>), LinkedServiceReference hcatalogLinkedServiceName = default(LinkedServiceReference), object clusterType = default(object), object sparkVersion = default(object), object coreConfiguration = default(object), object hBaseConfiguration = default(object), object hdfsConfiguration = default(object), object hiveConfiguration = default(object), object mapReduceConfiguration = default(object), object oozieConfiguration = default(object), object stormConfiguration = default(object), object yarnConfiguration = default(object), object encryptedCredential = default(object), object headNodeSize = default(object), object dataNodeSize = default(object), object zookeeperNodeSize = default(object))
+        /// <param name="scriptActions">Custom script actions to run on HDI
+        /// ondemand cluster once it's up. Please refer to
+        /// https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions.</param>
+        public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object clusterNamePrefix = default(object), object clusterUserName = default(object), SecretBase clusterPassword = default(SecretBase), object clusterSshUserName = default(object), SecretBase clusterSshPassword = default(SecretBase), IList<LinkedServiceReference> additionalLinkedServiceNames = default(IList<LinkedServiceReference>), LinkedServiceReference hcatalogLinkedServiceName = default(LinkedServiceReference), object clusterType = default(object), object sparkVersion = default(object), object coreConfiguration = default(object), object hBaseConfiguration = default(object), object hdfsConfiguration = default(object), object hiveConfiguration = default(object), object mapReduceConfiguration = default(object), object oozieConfiguration = default(object), object stormConfiguration = default(object), object yarnConfiguration = default(object), object encryptedCredential = default(object), object headNodeSize = default(object), object dataNodeSize = default(object), object zookeeperNodeSize = default(object), IList<ScriptAction> scriptActions = default(IList<ScriptAction>))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ClusterSize = clusterSize;
@@ -157,6 +160,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             HeadNodeSize = headNodeSize;
             DataNodeSize = dataNodeSize;
             ZookeeperNodeSize = zookeeperNodeSize;
+            ScriptActions = scriptActions;
             CustomInit();
         }
 
@@ -381,6 +385,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object ZookeeperNodeSize { get; set; }
 
         /// <summary>
+        /// Gets or sets custom script actions to run on HDI ondemand cluster
+        /// once it's up. Please refer to
+        /// https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.scriptActions")]
+        public IList<ScriptAction> ScriptActions { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -434,6 +446,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (HcatalogLinkedServiceName != null)
             {
                 HcatalogLinkedServiceName.Validate();
+            }
+            if (ScriptActions != null)
+            {
+                foreach (var element1 in ScriptActions)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }

@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <!-- Please do not move/edit code below this line -->
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+    <!-- Please do not move/edit code below this line -->
+
+    <PropertyGroup>
+        <PackageId>Microsoft.Azure.Management.StorageSync</PackageId>
+        <Description>Provides management capabilities for Azure Storage Sync.</Description>
+        <Version>1.0.0</Version>
+        <AssemblyName>Microsoft.Azure.Management.StorageSync</AssemblyName>    
+        <PackageTags>Microsoft Azure StorageSync;StorageSync;</PackageTags>
+        <PackageReleaseNotes>
+        <![CDATA[
+            This version uses 2018-04-02 StorageSync API specification which introduced the first GA version for Azure File Storage Sync.
+                1. Ability to create and delete Storage Sync Service
+                2. Ability to register and unregister sync server.
+                3. Ability to create SyncGroup for a given Storage Sync Service.
+                4. Ability to create Cloud Endpoint and ServerEndpoint
+      ]]>
+        </PackageReleaseNotes>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    </PropertyGroup>
+
+    <!-- Please do not move/edit code below this line -->
+    <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+    <!-- Please do not move/edit code above this line -->
+</Project>

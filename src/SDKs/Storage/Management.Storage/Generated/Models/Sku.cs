@@ -35,13 +35,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// creation; optional for update. Note that in older versions, sku
         /// name was called accountType. Possible values include:
         /// 'Standard_LRS', 'Standard_GRS', 'Standard_RAGRS', 'Standard_ZRS',
-        /// 'Premium_LRS'</param>
+        /// 'Premium_LRS', 'Premium_ZRS'</param>
         /// <param name="tier">Gets the sku tier. This is based on the SKU
         /// name. Possible values include: 'Standard', 'Premium'</param>
         /// <param name="resourceType">The type of the resource, usually it is
         /// 'storageAccounts'.</param>
         /// <param name="kind">Indicates the type of storage account. Possible
-        /// values include: 'Storage', 'StorageV2', 'BlobStorage'</param>
+        /// values include: 'Storage', 'StorageV2', 'BlobStorage',
+        /// 'FileStorage', 'BlockBlobStorage'</param>
         /// <param name="locations">The set of locations that the SKU is
         /// available. This will be supported and registered Azure Geo Regions
         /// (e.g. West US, East US, Southeast Asia, etc.).</param>
@@ -71,7 +72,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Gets or sets the sku name. Required for account creation; optional
         /// for update. Note that in older versions, sku name was called
         /// accountType. Possible values include: 'Standard_LRS',
-        /// 'Standard_GRS', 'Standard_RAGRS', 'Standard_ZRS', 'Premium_LRS'
+        /// 'Standard_GRS', 'Standard_RAGRS', 'Standard_ZRS', 'Premium_LRS',
+        /// 'Premium_ZRS'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public SkuName Name { get; set; }
@@ -91,7 +93,8 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets indicates the type of storage account. Possible values
-        /// include: 'Storage', 'StorageV2', 'BlobStorage'
+        /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
+        /// 'BlockBlobStorage'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public Kind? Kind { get; private set; }

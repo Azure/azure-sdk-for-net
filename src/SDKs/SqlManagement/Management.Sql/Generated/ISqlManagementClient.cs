@@ -328,11 +328,6 @@ namespace Microsoft.Azure.Management.Sql
         IManagedDatabasesOperations ManagedDatabases { get; }
 
         /// <summary>
-        /// Gets the ISensitivityLabelsOperations.
-        /// </summary>
-        ISensitivityLabelsOperations SensitivityLabels { get; }
-
-        /// <summary>
         /// Gets the IServerAutomaticTuningOperations.
         /// </summary>
         IServerAutomaticTuningOperations ServerAutomaticTuning { get; }
@@ -406,6 +401,16 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedInstanceTdeCertificatesOperations.
         /// </summary>
         IManagedInstanceTdeCertificatesOperations ManagedInstanceTdeCertificates { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceKeysOperations.
+        /// </summary>
+        IManagedInstanceKeysOperations ManagedInstanceKeys { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceEncryptionProtectorsOperations.
+        /// </summary>
+        IManagedInstanceEncryptionProtectorsOperations ManagedInstanceEncryptionProtectors { get; }
 
     }
 }

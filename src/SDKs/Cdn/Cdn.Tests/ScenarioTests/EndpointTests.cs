@@ -703,7 +703,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List endpoints should return one
                 var endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
-                Assert.Equal(1, endpoints.Count());
+                Assert.Single(endpoints);
 
                 // Delete existing endpoint should succeed
                 cdnMgmtClient.Endpoints.Delete(resourceGroupName, profileName, endpointName);
@@ -713,7 +713,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List endpoints should return none
                 endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
-                Assert.Equal(0, endpoints.Count());
+                Assert.Empty(endpoints);
 
                 // Create a cdn endpoint and don't wait for creation to finish
                 endpointName = TestUtilities.GenerateName("endpoint");
@@ -750,7 +750,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List endpoints should return none
                 endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
-                Assert.Equal(0, endpoints.Count());
+                Assert.Empty(endpoints);
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
@@ -789,7 +789,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List endpoints should return none
                 var endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
-                Assert.Equal(0, endpoints.Count());
+                Assert.Empty(endpoints);
 
                 // Create a cdn endpoint should succeed
                 string endpointName = TestUtilities.GenerateName("endpoint");
@@ -817,7 +817,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List endpoints should return one endpoint
                 endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
-                Assert.Equal(1, endpoints.Count());
+                Assert.Single(endpoints);
 
                 // Create a cdn endpoint and don't wait for creation to finish
                 string endpointName2 = TestUtilities.GenerateName("endpoint");
@@ -855,7 +855,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List endpoints should return 1 endpoint
                 endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
-                Assert.Equal(1, endpoints.Count());
+                Assert.Single(endpoints);
 
                 // Wait for second endpoint to complete creation
                 CdnTestUtilities.WaitIfNotInPlaybackMode();
@@ -875,7 +875,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List endpoints should return none
                 endpoints = cdnMgmtClient.Endpoints.ListByProfile(resourceGroupName, profileName);
-                Assert.Equal(0, endpoints.Count());
+                Assert.Empty(endpoints);
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
@@ -1156,7 +1156,7 @@ namespace Cdn.Tests.ScenarioTests
                     profileName,
                     endpointName,
                     "customdomain34.azureedge-test.net");
-                Assert.Equal(output.CustomDomainValidated, true);
+                Assert.True(output.CustomDomainValidated);
 
                 // Validate non-exisiting custom domain should return false
                 output = cdnMgmtClient.Endpoints.ValidateCustomDomain(
@@ -1164,7 +1164,7 @@ namespace Cdn.Tests.ScenarioTests
                     profileName,
                     endpointName,
                     "customdomain4.hello.com");
-                Assert.Equal(output.CustomDomainValidated, false);
+                Assert.False(output.CustomDomainValidated);
 
                 // Validate invalid custom domain should fail
                 Assert.ThrowsAny<ErrorResponseException>(() => {

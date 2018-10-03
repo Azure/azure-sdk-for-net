@@ -7,8 +7,27 @@
 		<PackageId>Microsoft.Azure.Management.DataBox</PackageId>
 		<Description>Microsoft Azure Management DataBox library</Description>
 		<AssemblyName>Microsoft.Azure.Management.DataBox</AssemblyName>
-		<Version>0.9.0-preview</Version>
+		<Version>1.0.0</Version>
 		<PackageTags>AzureDataBox;DataBox;</PackageTags>
+    <PackageReleaseNotes>
+
+      <![CDATA[
+
+                General availability release of the Azure Databox SDK which allows  
+
+                1) Creation, Updation, Deletion of order along with getting order status 
+
+                2) Validating address and its supportability by Azure Data Box service
+                
+                3) Getting device credentials to unlock a device
+                
+                4) Ordering a pickup from logistic partners for the device
+                
+                5) Fetching list of available skus in Data Box family based on customer location
+
+            ]]>
+
+    </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

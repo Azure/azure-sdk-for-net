@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// job names must be between 3 and 24 characters in length and use any
         /// alphanumeric and underscore only
         /// </param>
-        /// <param name='cancellationReason'>
+        /// <param name='reason'>
         /// Reason for cancellation.
         /// </param>
         /// <param name='customHeaders'>
@@ -249,61 +249,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string jobName, CancellationReason cancellationReason, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Provides list of copy logs uri.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The Resource Group Name
-        /// </param>
-        /// <param name='jobName'>
-        /// The name of the job Resource within the specified resource group.
-        /// job names must be between 3 and 24 characters in length and use any
-        /// alphanumeric and underscore only
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<GetCopyLogsUriOutput>> GetCopyLogsUriWithHttpMessagesAsync(string resourceGroupName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get shipping label sas uri.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The Resource Group Name
-        /// </param>
-        /// <param name='jobName'>
-        /// The name of the job Resource within the specified resource group.
-        /// job names must be between 3 and 24 characters in length and use any
-        /// alphanumeric and underscore only
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ShippingLabelDetails>> DownloadShippingLabelUriWithHttpMessagesAsync(string resourceGroupName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string jobName, string reason, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// This method gets the unencrypted secrets related to the job.
         /// </summary>
@@ -330,34 +276,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<UnencryptedSecrets>> ListSecretsWithHttpMessagesAsync(string resourceGroupName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Reports an issue.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The Resource Group Name
-        /// </param>
-        /// <param name='jobName'>
-        /// The name of the job Resource within the specified resource group.
-        /// job names must be between 3 and 24 characters in length and use any
-        /// alphanumeric and underscore only
-        /// </param>
-        /// <param name='reportIssueDetails'>
-        /// Details of reported issue.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> ReportIssueWithHttpMessagesAsync(string resourceGroupName, string jobName, ReportIssueDetails reportIssueDetails, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<UnencryptedCredentials>>> ListCredentialsWithHttpMessagesAsync(string resourceGroupName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new job with the specified parameters. Existing job
         /// cannot be updated with this API and should instead be updated with
@@ -390,6 +309,30 @@ namespace Microsoft.Azure.Management.DataBox
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<JobResource>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string jobName, JobResource jobResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes a job.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The Resource Group Name
+        /// </param>
+        /// <param name='jobName'>
+        /// The name of the job Resource within the specified resource group.
+        /// job names must be between 3 and 24 characters in length and use any
+        /// alphanumeric and underscore only
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the properties of an existing job.
         /// </summary>

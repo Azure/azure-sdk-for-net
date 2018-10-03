@@ -7,15 +7,20 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.3.0-preview</Version>
+		<Version>19.5.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Added PublicIpPrefix & ServiceEndpointPolicy resources
-			- Replaced LoadBalancer's unused OutboundNatRules property with OutboundRules
-			- Added property EnableTcpReset to LoadBalancingRule, InboundNatRule, Inbound NatPool
-			- Added property AllowGlobalReach to ExpressRouteCircuit
-			- Added property ExpressRouteGatewayBypass to VirtualNetworkGatewayConnection
+      - Added AddressPrefixes on Subnet properties
+      - Included required properties for outbound rule 
+      - Azure Firewall FQDN Tag added as a top level resource
+      - Swagger Coverage/Completeness- for operation CheckNameAvailability
+      - Azure Firewall NAT Rule Collection 
+      - Added support for interface endpoints
+      - Added linkedResourceType and hostedWorkloads to nic 
+      - Added App Gateway Trusted root certificate changes 
+      - Added ExpressRoute gateway resource
+      - Added support for delegations on a subnet      
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

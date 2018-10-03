@@ -38,14 +38,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="sourceAddresses">List of source IP addresses for this
         /// rule.</param>
         /// <param name="protocols">Array of ApplicationRuleProtocols.</param>
-        /// <param name="targetUrls">List of URLs for this rule.</param>
-        public AzureFirewallApplicationRule(string name = default(string), string description = default(string), IList<string> sourceAddresses = default(IList<string>), IList<AzureFirewallApplicationRuleProtocol> protocols = default(IList<AzureFirewallApplicationRuleProtocol>), IList<string> targetUrls = default(IList<string>))
+        /// <param name="targetFqdns">List of FQDNs for this rule.</param>
+        /// <param name="fqdnTags">List of FQDN Tags for this rule.</param>
+        public AzureFirewallApplicationRule(string name = default(string), string description = default(string), IList<string> sourceAddresses = default(IList<string>), IList<AzureFirewallApplicationRuleProtocol> protocols = default(IList<AzureFirewallApplicationRuleProtocol>), IList<string> targetFqdns = default(IList<string>), IList<string> fqdnTags = default(IList<string>))
         {
             Name = name;
             Description = description;
             SourceAddresses = sourceAddresses;
             Protocols = protocols;
-            TargetUrls = targetUrls;
+            TargetFqdns = targetFqdns;
+            FqdnTags = fqdnTags;
             CustomInit();
         }
 
@@ -79,10 +81,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<AzureFirewallApplicationRuleProtocol> Protocols { get; set; }
 
         /// <summary>
-        /// Gets or sets list of URLs for this rule.
+        /// Gets or sets list of FQDNs for this rule.
         /// </summary>
-        [JsonProperty(PropertyName = "targetUrls")]
-        public IList<string> TargetUrls { get; set; }
+        [JsonProperty(PropertyName = "targetFqdns")]
+        public IList<string> TargetFqdns { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of FQDN Tags for this rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "fqdnTags")]
+        public IList<string> FqdnTags { get; set; }
 
     }
 }

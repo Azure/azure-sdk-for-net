@@ -6,16 +6,23 @@
     [parameter(Mandatory=$false)]
     [string] $ServicePrincipalSecret,
     [parameter(Mandatory=$false)]
+    [string] $TenantId = "",
+    [parameter(Mandatory=$false)]
     [string] $Environment = "Prod" # Prod for arm prod , DOGFOOD for DOGFOOD
 )
 
-$NonProdTenant = "24c154bb-0619-4338-b30a-6aad6370ee14";
+$OverrideTenant = "24c154bb-0619-4338-b30a-6aad6370ee14";
+
+if($TenantId -ne "")
+{
+    $OverrideTenant = $TenantId;
+}
 
 $env:AZURE_TEST_MODE="Record";
-$str = "SubscriptionId="+$SubscriptionId+";Environment="+$Environment+";ServicePrincipal="+$ServicePrincipal+";ServicePrincipalSecret="+$ServicePrincipalSecret ;
+[string] $str = "SubscriptionId="+$SubscriptionId+";Environment="+$Environment+";ServicePrincipal="+$ServicePrincipal+";ServicePrincipalSecret="+$ServicePrincipalSecret ;
 if ($Environment -ine "Prod")
 {
-    $str+= ";AADTenant="+$NonProdTenant;
+    $str+=";AADTenant="+$OverrideTenant;
 }
 
 $env:TEST_CSM_ORGID_AUTHENTICATION=$str;

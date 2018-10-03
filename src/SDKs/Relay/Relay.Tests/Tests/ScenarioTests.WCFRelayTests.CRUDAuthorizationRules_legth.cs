@@ -58,8 +58,8 @@ namespace Relay.Tests.ScenarioTests
 
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
-                Assert.Equal(createNamespaceResponse.Tags.Count, 2);
-                Assert.Equal(createNamespaceResponse.Type, "Microsoft.Relay/Namespaces");
+                Assert.Equal(2, createNamespaceResponse.Tags.Count);
+                Assert.Equal("Microsoft.Relay/Namespaces", createNamespaceResponse.Type);
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                 // Get the created namespace
@@ -76,14 +76,14 @@ namespace Relay.Tests.ScenarioTests
                 var getAllNamespacesResponse = RelayManagementClient.Namespaces.ListByResourceGroup(resourceGroup);
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
-                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
                 Assert.True(getAllNamespacesResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
                 // Get all namespaces created within the subscription irrespective of the resourceGroup
                 getAllNamespacesResponse = RelayManagementClient.Namespaces.List();
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
-                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
 
                 // Create WCF Relay  - 
                 var wcfRelayName = RelayManagementHelper.WcfPrefix + "thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit";
@@ -98,7 +98,7 @@ namespace Relay.Tests.ScenarioTests
                 Assert.Equal(createdWCFRelayResponse.Name, wcfRelayName);
                 Assert.True(createdWCFRelayResponse.RequiresClientAuthorization);
                 Assert.True(createdWCFRelayResponse.RequiresTransportSecurity);
-                Assert.Equal(createdWCFRelayResponse.RelayType, Relaytype.NetTcp);
+                Assert.Equal(Relaytype.NetTcp, createdWCFRelayResponse.RelayType);
 
                 var getWCFRelaysResponse = RelayManagementClient.WCFRelays.Get(resourceGroup, namespaceName, wcfRelayName);
                 
@@ -120,7 +120,7 @@ namespace Relay.Tests.ScenarioTests
                 Assert.True(createNamespaceAuthorizationRuleResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Rights)
                 {
-                    Assert.True(createNamespaceAuthorizationRuleResponse.Rights.Any(r => r == right));
+                    Assert.Contains(createNamespaceAuthorizationRuleResponse.Rights, r => r == right);
                 }
 
                 // Get created WCFRelay AuthorizationRules
@@ -129,14 +129,14 @@ namespace Relay.Tests.ScenarioTests
                 Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Rights)
                 {
-                    Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Any(r => r == right));
+                    Assert.Contains(getNamespaceAuthorizationRulesResponse.Rights, r => r == right);
                 }
 
                 // Get all WCFRelay AuthorizationRules
                 var getAllNamespaceAuthorizationRulesResponse = RelayManagementClient.WCFRelays.ListAuthorizationRules(resourceGroup, namespaceName,wcfRelayName);
                 Assert.NotNull(getAllNamespaceAuthorizationRulesResponse);
                 Assert.True(getAllNamespaceAuthorizationRulesResponse.Count() >= 1);
-                Assert.True(getAllNamespaceAuthorizationRulesResponse.Any(ns => ns.Name == authorizationRuleName));
+                Assert.Contains(getAllNamespaceAuthorizationRulesResponse, ns => ns.Name == authorizationRuleName);
 
                 // Update WCFRelay authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", RelayManagementHelper.GenerateRandomKey());
@@ -151,7 +151,7 @@ namespace Relay.Tests.ScenarioTests
                 Assert.True(updateNamespaceAuthorizationRuleResponse.Rights.Count == updateNamespaceAuthorizationRuleParameter.Rights.Count);
                 foreach (var right in updateNamespaceAuthorizationRuleParameter.Rights)
                 {
-                    Assert.True(updateNamespaceAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
+                    Assert.Contains(updateNamespaceAuthorizationRuleResponse.Rights, r => r.Equals(right));
                 }
 
                 // Get the WCFRelay namespace AuthorizationRule
@@ -161,7 +161,7 @@ namespace Relay.Tests.ScenarioTests
                 Assert.True(getNamespaceAuthorizationRuleResponse.Rights.Count == updateNamespaceAuthorizationRuleParameter.Rights.Count);
                 foreach (var right in updateNamespaceAuthorizationRuleParameter.Rights)
                 {
-                    Assert.True(getNamespaceAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
+                    Assert.Contains(getNamespaceAuthorizationRuleResponse.Rights, r => r.Equals(right));
                 }
 
                 // Get the connectionString to the WCFRelay for a Authorization rule created
@@ -197,7 +197,7 @@ namespace Relay.Tests.ScenarioTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.True(ex.Message.Contains("NotFound"));
+                    Assert.Contains("NotFound", ex.Message);
                 }
 
                 try
@@ -207,7 +207,7 @@ namespace Relay.Tests.ScenarioTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.True(ex.Message.Contains("NotFound"));
+                    Assert.Contains("NotFound", ex.Message);
                 }
             }
         }

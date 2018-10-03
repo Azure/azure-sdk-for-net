@@ -4,11 +4,9 @@
     <PackageId>Subscription.Tests</PackageId>
     <Description>Subscription.Tests Class Library</Description>
     <AssemblyName>Subscription.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\..\Management.Subscription\Microsoft.Azure.Management.Subscription.csproj" />

@@ -34,9 +34,11 @@ namespace Microsoft.Azure.Management.Media.Models
         /// class.
         /// </summary>
         /// <param name="presetName">The built-in preset to be used for
-        /// encoding videos. Possible values include: 'AdaptiveStreaming',
-        /// 'AACGoodQualityAudio', 'H264MultipleBitrate1080p',
-        /// 'H264MultipleBitrate720p', 'H264MultipleBitrateSD'</param>
+        /// encoding videos. Possible values include: 'H264SingleBitrateSD',
+        /// 'H264SingleBitrate720p', 'H264SingleBitrate1080p',
+        /// 'AdaptiveStreaming', 'AACGoodQualityAudio',
+        /// 'H264MultipleBitrate1080p', 'H264MultipleBitrate720p',
+        /// 'H264MultipleBitrateSD'</param>
         public BuiltInStandardEncoderPreset(EncoderNamedPreset presetName)
         {
             PresetName = presetName;
@@ -50,9 +52,11 @@ namespace Microsoft.Azure.Management.Media.Models
 
         /// <summary>
         /// Gets or sets the built-in preset to be used for encoding videos.
-        /// Possible values include: 'AdaptiveStreaming',
-        /// 'AACGoodQualityAudio', 'H264MultipleBitrate1080p',
-        /// 'H264MultipleBitrate720p', 'H264MultipleBitrateSD'
+        /// Possible values include: 'H264SingleBitrateSD',
+        /// 'H264SingleBitrate720p', 'H264SingleBitrate1080p',
+        /// 'AdaptiveStreaming', 'AACGoodQualityAudio',
+        /// 'H264MultipleBitrate1080p', 'H264MultipleBitrate720p',
+        /// 'H264MultipleBitrateSD'
         /// </summary>
         [JsonProperty(PropertyName = "presetName")]
         public EncoderNamedPreset PresetName { get; set; }

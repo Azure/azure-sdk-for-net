@@ -47,7 +47,7 @@ namespace Backup.Tests
                 // Location properties
                 Assert.Equal(expected.AvailableCapacity, given.AvailableCapacity);
                 Assert.Equal(expected.BackupFrequencyInHours, given.BackupFrequencyInHours);
-                Assert.Equal(expected.EncryptionKeyBase64, given.EncryptionKeyBase64);
+                Assert.Equal(expected.EncryptionCertBase64, given.EncryptionCertBase64);
                 Assert.Equal(expected.IsBackupSchedulerEnabled, given.IsBackupSchedulerEnabled);
                 Assert.Equal(expected.LastBackupTime, given.LastBackupTime);
                 Assert.Equal(expected.NextBackupTime, given.NextBackupTime);
@@ -106,7 +106,7 @@ namespace Backup.Tests
                 backupLocation.Path = @"\\su1fileserver\SU1_Infrastructure_2\BackupStore";
                 backupLocation.UserName = @"azurestack\azurestackadmin";
                 backupLocation.Password = "password";
-                backupLocation.EncryptionKeyBase64 = "Q09WR3dOUEtia0VFeFZFbGdqVXFySm9TbEtxaHNNZ2VxQkdzUUZaVGRCbWtpbHplR2N3Z2hmR05wY2lqTElIbw==";
+                backupLocation.EncryptionCertBase64 = @"encryptionCert";
                 backupLocation.IsBackupSchedulerEnabled = false;
                 backupLocation.BackupFrequencyInHours = 10;
                 backupLocation.BackupRetentionPeriodInDays = 6;
@@ -117,14 +117,14 @@ namespace Backup.Tests
                 result.Path = null;
                 result.UserName = null;
                 result.Password = null;
-                result.EncryptionKeyBase64 = null;
+                result.EncryptionCertBase64 = null;
 
                 result = client.BackupLocations.Update(ResourceGroupName, "local", result);
 
                 Assert.Equal(result.Path, backupLocation.Path);
                 Assert.Equal(result.UserName, backupLocation.UserName);
                 Assert.Null(result.Password);
-                Assert.Null(result.EncryptionKeyBase64);
+                Assert.Null(result.EncryptionCertBase64);
                 Assert.Equal(result.IsBackupSchedulerEnabled, backupLocation.IsBackupSchedulerEnabled);
                 Assert.Equal(result.BackupFrequencyInHours, backupLocation.BackupFrequencyInHours);
                 Assert.Equal(result.BackupRetentionPeriodInDays, backupLocation.BackupRetentionPeriodInDays);

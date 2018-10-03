@@ -4,251 +4,188 @@
 
 namespace Test.Azure.Management.Logic
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Newtonsoft.Json.Linq;
     using Xunit;
 
-    /// <summary>
-    /// Scenario tests for the integration accounts.
-    /// </summary>
     [Collection("IntegrationAccountScenarioTests")]
     public class IntegrationAccountScenarioTests : ScenarioTestsBase
-    {
-        /// <summary>
-        /// Tests the create and delete operations of the integration account.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndDeleteIntegrationAccount()
+    { 
+        [Fact]
+        public void IntegrationAccounts_Create_OK()
         {
-            using (MockContext context = MockContext.Start(this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
-                // Create a IntegrationAccount
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = this.CreateIntegrationAccount(integrationAccountName);
+                var createdIntegrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
+                    integrationAccount);
 
-                // Get the IntegrationAccount and verify the content
-                Assert.Equal(createdAccount.Name, integrationAccountName);
+                this.ValidateIntegrationAccount(integrationAccount, createdIntegrationAccount);
 
-                // Delete the IntegrationAccount
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-
             }
         }
 
-        /// <summary>
-        /// Tests the create, update and delete operations of the integration account.
-        /// </summary>
         [Fact]
-        public void CreateAndUpdateIntegrationAccount()
+        public void IntegrationAccounts_Get_OK()
         {
-            using (MockContext context = MockContext.Start(this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = this.CreateIntegrationAccount(integrationAccountName);
+                var createdIntegrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    integrationAccount);
 
-                // Create a IntegrationAccount
+                var retrievedIntegrationAccount = client.IntegrationAccounts.Get(Constants.DefaultResourceGroup, integrationAccountName);
+
+                this.ValidateIntegrationAccount(integrationAccount, retrievedIntegrationAccount);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccounts_List_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName1 = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount1 = this.CreateIntegrationAccount(integrationAccountName1);
+                var createdIntegrationAccount1 = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName1,
+                    integrationAccount1);
+
+                var integrationAccountName2 = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount2 = this.CreateIntegrationAccount(integrationAccountName2);
+                var createdIntegrationAccount2 = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName2,
+                    integrationAccount2);
+
+                var integrationAccountName3 = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount3 = this.CreateIntegrationAccount(integrationAccountName3);
+                var createdIntegrationAccount3 = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName3,
+                    integrationAccount3);
+
+                var integrationAccounts = client.IntegrationAccounts.ListByResourceGroup(Constants.DefaultResourceGroup);
+
+                Assert.Equal(3, integrationAccounts.Count());
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName1);
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName2);
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName3);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccounts_ListBySubscription_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = this.CreateIntegrationAccount(integrationAccountName);
+                var createdIntegrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    integrationAccount);
+
+                var integrationAccounts = client.IntegrationAccounts.ListBySubscription();
+
+                Assert.NotEmpty(integrationAccounts);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccounts_Update_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = this.CreateIntegrationAccount(integrationAccountName);
+                integrationAccount.Sku.Name = IntegrationAccountSkuName.Basic;
                 var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
+                    integrationAccount);
 
-                // Get the IntegrationAccount and verify the content
-                Assert.NotNull(createdAccount);
-                Assert.Equal(createdAccount.Name, integrationAccountName);
+                var newIntegrationAccount = this.CreateIntegrationAccount(integrationAccountName);
+                newIntegrationAccount.Sku.Name = IntegrationAccountSkuName.Standard;
 
-                var updatedAccount = client.IntegrationAccounts.CreateOrUpdate(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    integrationAccount: new IntegrationAccount
+                var updatedIntegrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    newIntegrationAccount);
+
+                this.ValidateIntegrationAccount(newIntegrationAccount, updatedIntegrationAccount);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccounts_Delete_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = this.CreateIntegrationAccount(integrationAccountName);
+                var createdIntegrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    integrationAccount);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccounts.Get(Constants.DefaultResourceGroup, integrationAccountName));
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccounts_ListContentCallbackUrl_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = this.CreateIntegrationAccount(integrationAccountName);
+                var createdIntegrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    integrationAccount);
+
+                var contentCallbackUrl = client.IntegrationAccounts.ListCallbackUrl(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    new GetCallbackUrlParameters
                     {
-                        Location = Constants.DefaultLocation,
-                        Sku = new IntegrationAccountSku()
-                        {
-                            Name = IntegrationAccountSkuName.Standard
-                        },
-                        Properties = new JObject()
+                        KeyType = "Primary"
                     });
 
-                Assert.NotNull(updatedAccount);
-                // Delete the IntegrationAccount
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+                Assert.NotEmpty(contentCallbackUrl.Value);
 
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
         }
 
-        /// <summary>
-        /// Tests the create and get(by account name) operations of the integration account.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndGetIntegrationAccountByName()
+        private void ValidateIntegrationAccount(IntegrationAccount expected, IntegrationAccount actual)
         {
-            using (MockContext context = MockContext.Start(this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
-
-                // Create a IntegrationAccount
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                Assert.NotNull(createdAccount);
-
-                // Get the IntegrationAccount and verify the content
-                var getAccount = client.IntegrationAccounts.Get(Constants.DefaultResourceGroup, createdAccount.Name);
-                Assert.Equal(createdAccount.Name, getAccount.Name);
-
-                // Delete the IntegrationAccount
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-
-            }
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Location, actual.Location);
+            Assert.Equal(expected.Sku.Name, actual.Sku.Name);
         }
-
-        /// <summary>
-        /// Tests the create and list (by subscription name) operations of the integration account.
-        /// </summary>
-        [Fact]
-        public void ListIntegrationAccountBySubscription()
-        {
-            using (MockContext context = MockContext.Start(this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
-
-                // Create a IntegrationAccount
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                Assert.NotNull(createdAccount);
-
-                // Get the IntegrationAccount and verify the content
-                var accounts = client.IntegrationAccounts.ListBySubscription();
-                Assert.True(accounts.Any());
-
-                // Delete the IntegrationAccount
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-
-            }
-        }
-
-        /// <summary>
-        /// Tests the create and list (by resource group name) operations of the integration account.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void ListIntegrationAccountByResourceGroup()
-        {
-            using (MockContext context = MockContext.Start(this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
-
-                // Create a IntegrationAccount
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-
-                // Get the IntegrationAccount and verify the content
-                var accounts = client.IntegrationAccounts.ListByResourceGroup(Constants.DefaultResourceGroup);
-
-                Assert.True(accounts.Any());
-
-                // Delete the IntegrationAccount
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-
-            }
-        }
-
-        /// <summary>
-        /// Tests the create and update (by account name) operations of the integration account.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void UpdateIntegrationAccount()
-        {
-            using (MockContext context = MockContext.Start(this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
-
-                // Create a IntegrationAccount
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-
-                // Get the IntegrationAccount and verify the content
-                Assert.NotNull(createdAccount);
-                Assert.Equal(createdAccount.Name, integrationAccountName);
-
-                IDictionary<string, string> tags = new Dictionary<string, string>();
-                tags.Add("IntegrationAccount", integrationAccountName);
-
-                //Only the tags property can be patched
-                var updatedAccount = client.IntegrationAccounts.Update(
-                    resourceGroupName: Constants.DefaultResourceGroup,
-                    integrationAccountName: integrationAccountName,
-                    integrationAccount: new IntegrationAccount
-                    {
-                        Tags = tags
-                    });
-
-                Assert.NotNull(updatedAccount);
-                // Delete the IntegrationAccount
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-
-            }
-        }
-
-        /// <summary>
-        /// Tests the integartion account callback URL.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void ListIntegrationAccountCallbackUrl()
-        {
-            using (MockContext context = MockContext.Start(this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
-
-                // Create a IntegrationAccount
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-
-                // Get the IntegrationAccount and verify the content
-                var callbackUrl1 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
-                    integrationAccountName, new GetCallbackUrlParameters());
-
-                Assert.NotNull(callbackUrl1);
-
-                var callbackUrl2 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
-                    integrationAccountName, new GetCallbackUrlParameters());
-
-                Assert.NotNull(callbackUrl2);
-
-                var callbackUrl3 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
-                integrationAccountName, new GetCallbackUrlParameters(DateTime.Today.AddDays(10),KeyType.Primary));
-
-                Assert.NotNull(callbackUrl3);
-
-                var callbackUrl4= client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
-                integrationAccountName, new GetCallbackUrlParameters(keyType: KeyType.Primary));
-
-                Assert.NotNull(callbackUrl4);
-
-                var callbackUrl5 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
-                integrationAccountName, new GetCallbackUrlParameters(notAfter: DateTime.Today.AddDays(10)));
-
-                Assert.NotNull(callbackUrl5);
-
-                // Delete the IntegrationAccount
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-            }
-        }
-
     }
 }

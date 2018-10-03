@@ -7,11 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-		<Version>3.1.0-preview</Version>
+		<Version>3.1.1-preview</Version>
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public preview release of the Azure HDInsight SDK. Fixed customization support for ADLS Gen 2.
+        This is a public preview release of the Azure HDInsight SDK. Fixed customization related to Hive/Oozie metastores and duplicate configurations.
       ]]>
 		</PackageReleaseNotes>
     

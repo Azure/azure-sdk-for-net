@@ -6,9 +6,9 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DataMigration</PackageId>
 		<Description>Provides developers with libraries for the Database Migration Service (DMS) under Azure Resource manager to deploy an instance of DMS. Create, Delete, Create project, Start Migration, and more.</Description>
-		<Version>0.3.0-preview</Version>
+		<Version>0.4.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.DataMigration</AssemblyName>
-		<PackageTags>DataMigration;Data Migration;</PackageTags>
+		<PackageTags>DataMigration;Data Migration;DataMigration_2018-07-15-preview;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
         This is a public preview release of the Azure DMS SDK. Included with this release is support for all service, project and task related APIs required for Sql to Azure Sql Database migration.

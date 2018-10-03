@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.ApplicationInsights.Models
+namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// counter</param>
         /// <param name="instance">The instance of the performance
         /// counter</param>
-        public EventsPerformanceCounterInfo(long? value = default(long?), string name = default(string), string category = default(string), string counter = default(string), string instanceName = default(string), string instance = default(string))
+        public EventsPerformanceCounterInfo(double? value = default(double?), string name = default(string), string category = default(string), string counter = default(string), string instanceName = default(string), string instance = default(string))
         {
             Value = value;
             Name = name;
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// Gets or sets the value of the performance counter
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public long? Value { get; set; }
+        public double? Value { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the performance counter

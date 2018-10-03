@@ -1,4 +1,7 @@
-﻿using Microsoft.Azure.Management.ResourceManager;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
@@ -542,7 +545,7 @@ namespace Sql.Tests
 
                     // List target executions by root job execution
                     sqlClient.JobTargetExecutions.ListByJobExecution(resourceGroup.Name, server.Name, agent.Name, job1.Name, jobExecution.JobExecutionId.Value);
-                    
+
                     // List target executions by job step
                     IPage<JobExecution> targetStepExecutions = sqlClient.JobTargetExecutions.ListByStep(resourceGroup.Name, server.Name, agent.Name, job1.Name, jobExecution.JobExecutionId.Value, step1.Name);
                     Assert.Single(targetStepExecutions);

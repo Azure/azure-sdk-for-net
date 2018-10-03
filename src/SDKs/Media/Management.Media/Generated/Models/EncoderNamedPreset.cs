@@ -11,22 +11,37 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for EncoderNamedPreset.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(EncoderNamedPresetConverter))]
-    public struct EncoderNamedPreset : System.IEquatable<EncoderNamedPreset>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum EncoderNamedPreset
     {
-        private EncoderNamedPreset(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
+        /// <summary>
+        /// Produces an MP4 file where the video is encoded with H.264 codec at
+        /// 2200 kbps and a picture height of 480 pixels, and the stereo audio
+        /// is encoded with AAC-LC codec at 64 kbps.
+        /// </summary>
+        [EnumMember(Value = "H264SingleBitrateSD")]
+        H264SingleBitrateSD,
+        /// <summary>
+        /// Produces an MP4 file where the video is encoded with H.264 codec at
+        /// 4500 kbps and a picture height of 720 pixels, and the stereo audio
+        /// is encoded with AAC-LC codec at 64 kbps.
+        /// </summary>
+        [EnumMember(Value = "H264SingleBitrate720p")]
+        H264SingleBitrate720p,
+        /// <summary>
+        /// Produces an MP4 file where the video is encoded with H.264 codec at
+        /// 6750 kbps and a picture height of 1080 pixels, and the stereo audio
+        /// is encoded with AAC-LC codec at 64 kbps.
+        /// </summary>
+        [EnumMember(Value = "H264SingleBitrate1080p")]
+        H264SingleBitrate1080p,
         /// <summary>
         /// Produces a set of GOP aligned MP4 files with H.264 video and stereo
         /// AAC audio. Auto-generates a bitrate ladder based on the input
@@ -36,104 +51,89 @@ namespace Microsoft.Azure.Management.Media.Models
         /// lower than 3 Mbps. The output will will have video and audio in
         /// separate MP4 files, which is optimal for adaptive streaming.
         /// </summary>
-        public static readonly EncoderNamedPreset AdaptiveStreaming = "AdaptiveStreaming";
-
+        [EnumMember(Value = "AdaptiveStreaming")]
+        AdaptiveStreaming,
         /// <summary>
         /// Produces a single MP4 file containing only stereo audio encoded at
         /// 192 kbps.
         /// </summary>
-        public static readonly EncoderNamedPreset AACGoodQualityAudio = "AACGoodQualityAudio";
-
+        [EnumMember(Value = "AACGoodQualityAudio")]
+        AACGoodQualityAudio,
         /// <summary>
         /// Produces a set of 8 GOP-aligned MP4 files, ranging from 6000 kbps
         /// to 400 kbps, and stereo AAC audio. Resolution starts at 1080p and
         /// goes down to 360p.
         /// </summary>
-        public static readonly EncoderNamedPreset H264MultipleBitrate1080p = "H264MultipleBitrate1080p";
-
+        [EnumMember(Value = "H264MultipleBitrate1080p")]
+        H264MultipleBitrate1080p,
         /// <summary>
         /// Produces a set of 6 GOP-aligned MP4 files, ranging from 3400 kbps
         /// to 400 kbps, and stereo AAC audio. Resolution starts at 720p and
         /// goes down to 360p.
         /// </summary>
-        public static readonly EncoderNamedPreset H264MultipleBitrate720p = "H264MultipleBitrate720p";
-
+        [EnumMember(Value = "H264MultipleBitrate720p")]
+        H264MultipleBitrate720p,
         /// <summary>
         /// Produces a set of 5 GOP-aligned MP4 files, ranging from 1600kbps to
         /// 400 kbps, and stereo AAC audio. Resolution starts at 480p and goes
         /// down to 360p.
         /// </summary>
-        public static readonly EncoderNamedPreset H264MultipleBitrateSD = "H264MultipleBitrateSD";
-
-
-        /// <summary>
-        /// Underlying value of enum EncoderNamedPreset
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for EncoderNamedPreset
-        /// </summary>
-        public override string ToString()
+        [EnumMember(Value = "H264MultipleBitrateSD")]
+        H264MultipleBitrateSD
+    }
+    internal static class EncoderNamedPresetEnumExtension
+    {
+        internal static string ToSerializedValue(this EncoderNamedPreset? value)
         {
-            return UnderlyingValue.ToString();
+            return value == null ? null : ((EncoderNamedPreset)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Compares enums of type EncoderNamedPreset
-        /// </summary>
-        public bool Equals(EncoderNamedPreset e)
+        internal static string ToSerializedValue(this EncoderNamedPreset value)
         {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
+            switch( value )
+            {
+                case EncoderNamedPreset.H264SingleBitrateSD:
+                    return "H264SingleBitrateSD";
+                case EncoderNamedPreset.H264SingleBitrate720p:
+                    return "H264SingleBitrate720p";
+                case EncoderNamedPreset.H264SingleBitrate1080p:
+                    return "H264SingleBitrate1080p";
+                case EncoderNamedPreset.AdaptiveStreaming:
+                    return "AdaptiveStreaming";
+                case EncoderNamedPreset.AACGoodQualityAudio:
+                    return "AACGoodQualityAudio";
+                case EncoderNamedPreset.H264MultipleBitrate1080p:
+                    return "H264MultipleBitrate1080p";
+                case EncoderNamedPreset.H264MultipleBitrate720p:
+                    return "H264MultipleBitrate720p";
+                case EncoderNamedPreset.H264MultipleBitrateSD:
+                    return "H264MultipleBitrateSD";
+            }
+            return null;
         }
 
-        /// <summary>
-        /// Implicit operator to convert string to EncoderNamedPreset
-        /// </summary>
-        public static implicit operator EncoderNamedPreset(string value)
+        internal static EncoderNamedPreset? ParseEncoderNamedPreset(this string value)
         {
-            return new EncoderNamedPreset(value);
+            switch( value )
+            {
+                case "H264SingleBitrateSD":
+                    return EncoderNamedPreset.H264SingleBitrateSD;
+                case "H264SingleBitrate720p":
+                    return EncoderNamedPreset.H264SingleBitrate720p;
+                case "H264SingleBitrate1080p":
+                    return EncoderNamedPreset.H264SingleBitrate1080p;
+                case "AdaptiveStreaming":
+                    return EncoderNamedPreset.AdaptiveStreaming;
+                case "AACGoodQualityAudio":
+                    return EncoderNamedPreset.AACGoodQualityAudio;
+                case "H264MultipleBitrate1080p":
+                    return EncoderNamedPreset.H264MultipleBitrate1080p;
+                case "H264MultipleBitrate720p":
+                    return EncoderNamedPreset.H264MultipleBitrate720p;
+                case "H264MultipleBitrateSD":
+                    return EncoderNamedPreset.H264MultipleBitrateSD;
+            }
+            return null;
         }
-
-        /// <summary>
-        /// Implicit operator to convert EncoderNamedPreset to string
-        /// </summary>
-        public static implicit operator string(EncoderNamedPreset e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum EncoderNamedPreset
-        /// </summary>
-        public static bool operator == (EncoderNamedPreset e1, EncoderNamedPreset e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum EncoderNamedPreset
-        /// </summary>
-        public static bool operator != (EncoderNamedPreset e1, EncoderNamedPreset e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for EncoderNamedPreset
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is EncoderNamedPreset && Equals((EncoderNamedPreset)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode EncoderNamedPreset
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
     }
 }

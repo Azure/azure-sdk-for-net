@@ -24,7 +24,8 @@ namespace Authorization.Tests
 {
     public class BasicTests : TestBase, IClassFixture<TestExecutionContext>
     {
-        public const string ResourceGroup = "resourcegroups/AzureAuthzSDK";
+        public const string ResourceGroupName = "AzureAuthzSDK";
+        public const string ResourceGroup = "resourcegroups/" + ResourceGroupName;
         private readonly ITestOutputHelper _output;
         private TestExecutionContext testContext;
         private const int RoleAssignmentPageSize = 20;
@@ -1171,6 +1172,340 @@ namespace Authorization.Tests
                 }
             }
         }
+
+        #region deny assignments tests
+
+        [Fact]
+        public void DenyAssignmentGetTest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var scope = "/subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+
+                // Currently, only system deny assignments created by whitelisted apps are supported.
+                // So, we have pre-populated the PAS data store with some test deny assignments that we can use here.
+                var assignmentName = "43af7d0c-0bf8-407f-96c0-96a29d076431";
+
+                var assignmentId = string.Format(
+                    "{0}/providers/Microsoft.Authorization/denyAssignments/{1}",
+                    scope,
+                    assignmentName);
+
+                // Get
+                var getResult = client.DenyAssignments.Get(scope, assignmentName);
+                Assert.NotNull(getResult);
+                Assert.Equal(getResult.Id, assignmentId);
+                Assert.Equal(getResult.Name, assignmentName);
+            }
+        }
+
+        [Fact]
+        public void DenyAssignmentGetByIdTest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var scope = "/subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+
+                // Currently, only system deny assignments created by whitelisted apps are supported.
+                // So, we have pre-populated the PAS data store with some test deny assignments that we can use here.
+                var assignmentName = "43af7d0c-0bf8-407f-96c0-96a29d076431";
+
+                var assignmentId = string.Format(
+                    "{0}/providers/Microsoft.Authorization/denyAssignments/{1}",
+                    scope,
+                    assignmentName);
+
+                // Get
+                var getResult = client.DenyAssignments.GetById(assignmentId);
+                Assert.NotNull(getResult);
+                Assert.Equal(getResult.Id, assignmentId);
+                Assert.Equal(getResult.Name, assignmentName);
+            }
+        }
+
+        [Fact]
+        public void DenyAssignmentsListTest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var allDenyAssignments = client.DenyAssignments.List(new ODataQuery<DenyAssignmentFilter>());
+                Assert.NotNull(allDenyAssignments);
+
+                foreach (var assignment in allDenyAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.Principals);
+                    Assert.NotNull(assignment.ExcludePrincipals);
+                    Assert.NotNull(assignment.Scope);
+                    Assert.NotNull(assignment.Permissions);
+                }
+            }
+        }
+
+        [Fact]
+        public void DenyAssignmentListForResourceGroupTest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var allDenyAssignments = client.DenyAssignments.ListForResourceGroup(ResourceGroupName);
+                Assert.NotNull(allDenyAssignments);
+
+                foreach (var assignment in allDenyAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.Principals);
+                    Assert.NotNull(assignment.ExcludePrincipals);
+                    Assert.NotNull(assignment.Scope);
+                    Assert.NotNull(assignment.Permissions);
+                }
+            }
+        }
+
+        [Fact]
+        public void DenyAssignmentListForResourceTest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var allDenyAssignments = client.DenyAssignments.ListForResource(
+                    ResourceGroupName,
+                    resourceProviderNamespace: "Microsoft.Storage",
+                    parentResourcePath: string.Empty,
+                    resourceType: "storageAccounts",
+                    resourceName: "authzsdktestresource");
+
+                Assert.NotNull(allDenyAssignments);
+
+                foreach (var assignment in allDenyAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.Principals);
+                    Assert.NotNull(assignment.ExcludePrincipals);
+                    Assert.NotNull(assignment.Scope);
+                    Assert.NotNull(assignment.Permissions);
+                }
+            }
+        }
+
+        [Fact]
+        public void DenyAssignmentListForScopeTest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var allDenyAssignments = client.DenyAssignments.ListForScope("/subscriptions/" + client.SubscriptionId + "/" + ResourceGroup);
+                Assert.NotNull(allDenyAssignments);
+
+                foreach (var assignment in allDenyAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.Principals);
+                    Assert.NotNull(assignment.ExcludePrincipals);
+                    Assert.NotNull(assignment.Scope);
+                    Assert.NotNull(assignment.Permissions);
+                }
+            }
+        }
+
+        [Fact]
+        public void DenyAssignmentsListUsingAtScopeFilterTest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var allDenyAssignments = client.DenyAssignments.List(new ODataQuery<DenyAssignmentFilter>(f => f.AtScope()));
+                Assert.NotNull(allDenyAssignments);
+
+                foreach (var assignment in allDenyAssignments)
+                {
+                    Assert.DoesNotContain(ResourceGroup, assignment.Scope);
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.Principals);
+                    Assert.NotNull(assignment.ExcludePrincipals);
+                    Assert.NotNull(assignment.Scope);
+                    Assert.NotNull(assignment.Permissions);
+                }
+            }
+        }
+
+        [Fact]
+        public void DenyAssignmentsListUsingAssignedToFilterTest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var principalId = "f8d526a054eb4941ae69ebf4a334d0f0";
+                var allDenyAssignments = client.DenyAssignments.List(new ODataQuery<DenyAssignmentFilter>(f => f.AssignedTo(principalId)));
+                Assert.NotNull(allDenyAssignments);
+
+                foreach (var assignment in allDenyAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.Principals);
+                    Assert.NotNull(assignment.ExcludePrincipals);
+                    Assert.NotNull(assignment.Scope);
+                    Assert.NotNull(assignment.Permissions);
+                }
+            }
+        }
+
+        [Fact]
+        public void DenyAssignmentsListUsingDenyAssignmentNameFilterTest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var denyAssignmentName = "AzureAuthzSDK_22704996-FBD0-4AB1-8625-722D897825D2";
+                var allDenyAssignments = client.DenyAssignments.List(new ODataQuery<DenyAssignmentFilter>(f => f.DenyAssignmentName == denyAssignmentName));
+
+                Assert.NotNull(allDenyAssignments);
+
+                foreach (var assignment in allDenyAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.Principals);
+                    Assert.NotNull(assignment.ExcludePrincipals);
+                    Assert.NotNull(assignment.Scope);
+                    Assert.NotNull(assignment.Permissions);
+                }
+            }
+        }
+
+        [Fact(Skip = "Enable after principalId filter change gets deployed to PROD")]
+        public void DenyAssignmentsListUsingPrincipalIdFilterTest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var principalId = "f8d526a054eb4941ae69ebf4a334d0f0";
+                var allDenyAssignments = client.DenyAssignments.List(new ODataQuery<DenyAssignmentFilter>(f => f.PrincipalId == principalId));
+
+                Assert.NotNull(allDenyAssignments);
+
+                foreach (var assignment in allDenyAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.Principals);
+                    Assert.NotNull(assignment.ExcludePrincipals);
+                    Assert.NotNull(assignment.Scope);
+                    Assert.NotNull(assignment.Permissions);
+                }
+            }
+        }
+
+        [Fact]
+        public void DenyAssignmentsListUsingGdprExportPrincipalIdFilterTest()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var principalId = "f8d526a054eb4941ae69ebf4a334d0f0";
+                var allDenyAssignments = client.DenyAssignments.List(new ODataQuery<DenyAssignmentFilter>(f => f.GdprExportPrincipalId == principalId));
+
+                Assert.NotNull(allDenyAssignments);
+
+                foreach (var assignment in allDenyAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.DenyAssignmentName);
+                    Assert.NotNull(assignment.Description);
+                    Assert.Null(assignment.Principals);
+                    Assert.Null(assignment.ExcludePrincipals);
+                    Assert.Null(assignment.Scope);
+                    Assert.Null(assignment.DoNotApplyToChildScopes);
+                    Assert.Null(assignment.Permissions);
+                    Assert.Null(assignment.IsSystemProtected);
+                }
+            }
+        }
+
+        #endregion
 
         private static T GetValueFromTestContext<T>(Func<T> constructor, Func<string, T> parser, string mockName)
         {

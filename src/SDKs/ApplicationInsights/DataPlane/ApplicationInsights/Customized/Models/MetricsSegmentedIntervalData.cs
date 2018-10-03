@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Microsoft.Azure.ApplicationInsights.Models
+namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {
     /// <summary>
     /// A segment of intervaled data.

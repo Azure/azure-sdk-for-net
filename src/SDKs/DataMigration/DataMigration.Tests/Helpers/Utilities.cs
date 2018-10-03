@@ -93,7 +93,7 @@ namespace DataMigration.Tests.Helpers
             }
         }
 
-        public static void WaitIfNotInPlaybackMode(int minutesToWait = 5)
+        public static void WaitIfNotInPlaybackMode(int minutesToWait = 12)
         {
             if (HttpMockServer.Mode != HttpRecorderMode.Playback)
             {

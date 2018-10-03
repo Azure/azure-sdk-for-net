@@ -9,8 +9,7 @@
     <PackageTags>Microsoft Azure AutoRest ClientRuntime REST  $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Updating Common Error response model with 'AdditionalInfo' as a new property for providing more information on the error occured.
-		This new property will provide the type of error e.g. PolicyViolation and its details.
+        Honoring Retry-After timeout sent from service side.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

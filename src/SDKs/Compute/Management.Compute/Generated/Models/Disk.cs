@@ -59,7 +59,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// snapshot</param>
         /// <param name="provisioningState">The disk provisioning
         /// state.</param>
-        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettings encryptionSettings = default(EncryptionSettings), string provisioningState = default(string))
+        /// <param name="diskIOPSReadWrite">The number of IOPS allowed for this
+        /// disk; only settable for UltraSSD disks. One operation can transfer
+        /// between 4k and 256k bytes.</param>
+        /// <param name="diskMBpsReadWrite">The bandwidth allowed for this
+        /// disk; only settable for UltraSSD disks. MBps means millions of
+        /// bytes per second - MB here uses the ISO notation, of powers of
+        /// 10.</param>
+        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettings encryptionSettings = default(EncryptionSettings), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), int? diskMBpsReadWrite = default(int?))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
@@ -71,6 +78,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             DiskSizeGB = diskSizeGB;
             EncryptionSettings = encryptionSettings;
             ProvisioningState = provisioningState;
+            DiskIOPSReadWrite = diskIOPSReadWrite;
+            DiskMBpsReadWrite = diskMBpsReadWrite;
             CustomInit();
         }
 
@@ -138,6 +147,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the number of IOPS allowed for this disk; only
+        /// settable for UltraSSD disks. One operation can transfer between 4k
+        /// and 256k bytes.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diskIOPSReadWrite")]
+        public long? DiskIOPSReadWrite { get; set; }
+
+        /// <summary>
+        /// Gets or sets the bandwidth allowed for this disk; only settable for
+        /// UltraSSD disks. MBps means millions of bytes per second - MB here
+        /// uses the ISO notation, of powers of 10.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diskMBpsReadWrite")]
+        public int? DiskMBpsReadWrite { get; set; }
 
         /// <summary>
         /// Validate the object.

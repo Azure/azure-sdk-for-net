@@ -1,5 +1,4 @@
-﻿
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager;
@@ -45,7 +44,7 @@ namespace Sql.Tests
                 Assert.NotNull(mdb1);
 
                 // Create a database with all parameters specified
-                // 
+                //
                 mdbName = SqlManagementTestUtilities.GenerateName();
                 var mdb2Input = new ManagedDatabase()
                 {
@@ -100,7 +99,7 @@ namespace Sql.Tests
                 // List all databases
                 //
                 var listResponse = sqlClient.ManagedDatabases.ListByInstance(resourceGroup, managedInstance.Name);
-                
+
                 // Check that all created Managed Databases are created
                 foreach (var db in inputs.Keys)
                 {
@@ -116,6 +115,6 @@ namespace Sql.Tests
                 }
 
             }
-        }    
+        }
     }
 }

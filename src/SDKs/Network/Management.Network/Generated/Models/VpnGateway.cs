@@ -48,18 +48,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
-        /// <param name="policies">The policies applied to this vpn
+        /// <param name="vpnGatewayScaleUnit">The scale unit for this vpn
         /// gateway.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), IList<VpnConnection> connections = default(IList<VpnConnection>), BgpSettings bgpSettings = default(BgpSettings), string provisioningState = default(string), Policies policies = default(Policies), string etag = default(string))
+        public VpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), IList<VpnConnection> connections = default(IList<VpnConnection>), BgpSettings bgpSettings = default(BgpSettings), string provisioningState = default(string), int? vpnGatewayScaleUnit = default(int?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualHub = virtualHub;
             Connections = connections;
             BgpSettings = bgpSettings;
             ProvisioningState = provisioningState;
-            Policies = policies;
+            VpnGatewayScaleUnit = vpnGatewayScaleUnit;
             Etag = etag;
             CustomInit();
         }
@@ -95,10 +95,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets or sets the policies applied to this vpn gateway.
+        /// Gets or sets the scale unit for this vpn gateway.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.policies")]
-        public Policies Policies { get; set; }
+        [JsonProperty(PropertyName = "properties.vpnGatewayScaleUnit")]
+        public int? VpnGatewayScaleUnit { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

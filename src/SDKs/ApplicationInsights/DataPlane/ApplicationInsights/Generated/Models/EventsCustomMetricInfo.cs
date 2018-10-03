@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.ApplicationInsights.Models
+namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// metric</param>
         /// <param name="valueStdDev">The standard deviation of the custom
         /// metric</param>
-        public EventsCustomMetricInfo(string name = default(string), double? value = default(double?), double? valueSum = default(double?), double? valueCount = default(double?), double? valueMin = default(double?), double? valueMax = default(double?), double? valueStdDev = default(double?))
+        public EventsCustomMetricInfo(string name = default(string), double? value = default(double?), double? valueSum = default(double?), int? valueCount = default(int?), double? valueMin = default(double?), double? valueMax = default(double?), double? valueStdDev = default(double?))
         {
             Name = name;
             Value = value;
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// Gets or sets the count of the custom metric
         /// </summary>
         [JsonProperty(PropertyName = "valueCount")]
-        public double? ValueCount { get; set; }
+        public int? ValueCount { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum value of the custom metric

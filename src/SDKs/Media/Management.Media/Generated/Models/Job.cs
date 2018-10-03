@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// jobs. If not set, the default is normal. Possible values include:
         /// 'Low', 'Normal', 'High'</param>
         /// <param name="correlationData">Customer provided correlation data
-        /// that will be returned in Job completed events.</param>
+        /// that will be returned in Job and JobOutput state events.</param>
         public Job(JobInput input, IList<JobOutput> outputs, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), JobState state = default(JobState), string description = default(string), System.DateTime lastModified = default(System.DateTime), Priority? priority = default(Priority?), IDictionary<string, string> correlationData = default(IDictionary<string, string>))
             : base(id, name, type)
         {
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Media.Models
 
         /// <summary>
         /// Gets or sets customer provided correlation data that will be
-        /// returned in Job completed events.
+        /// returned in Job and JobOutput state events.
         /// </summary>
         [JsonProperty(PropertyName = "properties.correlationData")]
         public IDictionary<string, string> CorrelationData { get; set; }

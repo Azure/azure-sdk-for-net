@@ -5,11 +5,9 @@
     <PackageId>DataLakeAnalytics.Tests</PackageId>
     <Description>DataLakeAnalytics.Tests Class Library</Description>
     <AssemblyName>DataLakeAnalytics.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />

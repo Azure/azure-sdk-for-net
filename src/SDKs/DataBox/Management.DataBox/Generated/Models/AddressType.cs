@@ -21,10 +21,19 @@ namespace Microsoft.Azure.Management.DataBox.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum AddressType
     {
+        /// <summary>
+        /// Address type not known.
+        /// </summary>
         [EnumMember(Value = "None")]
         None,
+        /// <summary>
+        /// Residential Address.
+        /// </summary>
         [EnumMember(Value = "Residential")]
         Residential,
+        /// <summary>
+        /// Commercial Address.
+        /// </summary>
         [EnumMember(Value = "Commercial")]
         Commercial
     }

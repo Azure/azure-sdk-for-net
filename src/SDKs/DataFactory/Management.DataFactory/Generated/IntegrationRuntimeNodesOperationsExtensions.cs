@@ -22,6 +22,58 @@ namespace Microsoft.Azure.Management.DataFactory
     public static partial class IntegrationRuntimeNodesOperationsExtensions
     {
             /// <summary>
+            /// Gets a self-hosted integration runtime node.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            /// <param name='nodeName'>
+            /// The integration runtime node name.
+            /// </param>
+            public static SelfHostedIntegrationRuntimeNode Get(this IIntegrationRuntimeNodesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName)
+            {
+                return operations.GetAsync(resourceGroupName, factoryName, integrationRuntimeName, nodeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a self-hosted integration runtime node.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            /// <param name='nodeName'>
+            /// The integration runtime node name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SelfHostedIntegrationRuntimeNode> GetAsync(this IIntegrationRuntimeNodesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, nodeName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes a self-hosted integration runtime node.
             /// </summary>
             /// <param name='operations'>

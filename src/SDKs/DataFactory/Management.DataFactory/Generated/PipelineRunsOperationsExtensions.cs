@@ -128,9 +128,13 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='runId'>
             /// The pipeline run identifier.
             /// </param>
-            public static void Cancel(this IPipelineRunsOperations operations, string resourceGroupName, string factoryName, string runId)
+            /// <param name='isRecursive'>
+            /// If true, cancel all the Child pipelines that are triggered by the current
+            /// pipeline.
+            /// </param>
+            public static void Cancel(this IPipelineRunsOperations operations, string resourceGroupName, string factoryName, string runId, bool? isRecursive = default(bool?))
             {
-                operations.CancelAsync(resourceGroupName, factoryName, runId).GetAwaiter().GetResult();
+                operations.CancelAsync(resourceGroupName, factoryName, runId, isRecursive).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -148,12 +152,16 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='runId'>
             /// The pipeline run identifier.
             /// </param>
+            /// <param name='isRecursive'>
+            /// If true, cancel all the Child pipelines that are triggered by the current
+            /// pipeline.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CancelAsync(this IPipelineRunsOperations operations, string resourceGroupName, string factoryName, string runId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CancelAsync(this IPipelineRunsOperations operations, string resourceGroupName, string factoryName, string runId, bool? isRecursive = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CancelWithHttpMessagesAsync(resourceGroupName, factoryName, runId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.CancelWithHttpMessagesAsync(resourceGroupName, factoryName, runId, isRecursive, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }
