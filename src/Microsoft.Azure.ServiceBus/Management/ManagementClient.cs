@@ -634,7 +634,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <summary>
         /// Adds a new rule to the subscription under given topic.
         /// </summary>
-        /// <param name="topicName">The topic name relative to the service namespace base address.</param>
+        /// <param name="topicPath">The topic path relative to the service namespace base address.</param>
         /// <param name="subscriptionName">The name of the subscription.</param>
         /// <param name="ruleDescription">A <see cref="RuleDescription"/> object describing the attributes with which the messages are matched and acted upon.</param>
         /// <param name="cancellationToken"></param>
@@ -646,16 +646,16 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <exception cref="ServerBusyException">The server is busy. You should wait before you retry the operation.</exception>
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
         /// <returns><see cref="RuleDescription"/> of the recently created rule.</returns>
-        public virtual async Task<RuleDescription> CreateRuleAsync(string topicName, string subscriptionName, RuleDescription ruleDescription, CancellationToken cancellationToken = default)
+        public virtual async Task<RuleDescription> CreateRuleAsync(string topicPath, string subscriptionName, RuleDescription ruleDescription, CancellationToken cancellationToken = default)
         {
-            EntityNameHelper.CheckValidTopicName(topicName);
-            EntityNameHelper.CheckValidSubscriptionName(topicName);
+            EntityNameHelper.CheckValidTopicName(topicPath);
+            EntityNameHelper.CheckValidSubscriptionName(subscriptionName);
             ruleDescription = ruleDescription ?? throw new ArgumentNullException(nameof(ruleDescription));
 
             var atomRequest = ruleDescription.Serialize().ToString();
 
             var content = await PutEntity(
-                EntityNameHelper.FormatRulePath(topicName, subscriptionName, ruleDescription.Name),
+                EntityNameHelper.FormatRulePath(topicPath, subscriptionName, ruleDescription.Name),
                 atomRequest,
                 false,
                 null, 
