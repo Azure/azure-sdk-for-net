@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
     /// Cloud Endpoint object.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class CloudEndpoint : Resource
+    public partial class CloudEndpoint : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the CloudEndpoint class.

@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Management.StorageSync
             RegisteredServers = new RegisteredServersOperations(this);
             Workflows = new WorkflowsOperations(this);
             BaseUri = new System.Uri("https://azure.microsoft.com");
-            ApiVersion = "2018-04-02";
+            ApiVersion = "2018-07-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

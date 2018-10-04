@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
     /// Workflow resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Workflow : Resource
+    public partial class Workflow : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the Workflow class.

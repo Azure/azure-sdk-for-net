@@ -11,30 +11,28 @@
 namespace Microsoft.Azure.Management.StorageSync.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Array of Workflow
+    /// Trigger Rollover Request.
     /// </summary>
-    public partial class WorkflowArray
+    public partial class TriggerRolloverRequest
     {
         /// <summary>
-        /// Initializes a new instance of the WorkflowArray class.
+        /// Initializes a new instance of the TriggerRolloverRequest class.
         /// </summary>
-        public WorkflowArray()
+        public TriggerRolloverRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the WorkflowArray class.
+        /// Initializes a new instance of the TriggerRolloverRequest class.
         /// </summary>
-        /// <param name="value">Collection of workflow items.</param>
-        public WorkflowArray(IList<Workflow> value = default(IList<Workflow>))
+        /// <param name="certificateData">Certificate Data</param>
+        public TriggerRolloverRequest(string certificateData = default(string))
         {
-            Value = value;
+            CertificateData = certificateData;
             CustomInit();
         }
 
@@ -44,10 +42,10 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets collection of workflow items.
+        /// Gets or sets certificate Data
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<Workflow> Value { get; set; }
+        [JsonProperty(PropertyName = "certificateData")]
+        public string CertificateData { get; set; }
 
     }
 }
