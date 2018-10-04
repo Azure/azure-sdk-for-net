@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.PolicyInsights
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PolicyEventsOperations operations.
+    /// PolicyTrackedResourcesOperations operations.
     /// </summary>
-    internal partial class PolicyEventsOperations : IServiceOperations<PolicyInsightsClient>, IPolicyEventsOperations
+    internal partial class PolicyTrackedResourcesOperations : IServiceOperations<PolicyInsightsClient>, IPolicyTrackedResourcesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the PolicyEventsOperations class.
+        /// Initializes a new instance of the PolicyTrackedResourcesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal PolicyEventsOperations(PolicyInsightsClient client)
+        internal PolicyTrackedResourcesOperations(PolicyInsightsClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         public PolicyInsightsClient Client { get; private set; }
 
         /// <summary>
-        /// Queries policy events for the resources under the management group.
+        /// Queries policy tracked resources under the management group.
         /// </summary>
         /// <param name='managementGroupName'>
         /// Management group name.
@@ -80,49 +80,24 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyEventsQueryResults>> ListQueryResultsForManagementGroupWithHttpMessagesAsync(string managementGroupName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyTrackedResource>>> ListQueryResultsForManagementGroupWithHttpMessagesAsync(string managementGroupName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (managementGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupName");
             }
-            string policyEventsResource = "default";
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2018-04-04";
+            string policyTrackedResourcesResource = "default";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
                 top = queryOptions.Top;
             }
-            string orderBy = default(string);
-            if (queryOptions != null)
-            {
-                orderBy = queryOptions.OrderBy;
-            }
-            string select = default(string);
-            if (queryOptions != null)
-            {
-                select = queryOptions.Select;
-            }
-            System.DateTime? fromParameter = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                fromParameter = queryOptions.FromProperty;
-            }
-            System.DateTime? to = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                to = queryOptions.To;
-            }
             string filter = default(string);
             if (queryOptions != null)
             {
                 filter = queryOptions.Filter;
-            }
-            string apply = default(string);
-            if (queryOptions != null)
-            {
-                apply = queryOptions.Apply;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -131,26 +106,21 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("policyEventsResource", policyEventsResource);
                 tracingParameters.Add("managementGroupsNamespace", managementGroupsNamespace);
                 tracingParameters.Add("managementGroupName", managementGroupName);
+                tracingParameters.Add("policyTrackedResourcesResource", policyTrackedResourcesResource);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
-                tracingParameters.Add("orderBy", orderBy);
-                tracingParameters.Add("select", select);
-                tracingParameters.Add("fromParameter", fromParameter);
-                tracingParameters.Add("to", to);
                 tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apply", apply);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForManagementGroup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults").ToString();
-            _url = _url.Replace("{policyEventsResource}", System.Uri.EscapeDataString(policyEventsResource));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/{managementGroupsNamespace}/managementGroups/{managementGroupName}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults").ToString();
             _url = _url.Replace("{managementGroupsNamespace}", System.Uri.EscapeDataString(managementGroupsNamespace));
             _url = _url.Replace("{managementGroupName}", System.Uri.EscapeDataString(managementGroupName));
+            _url = _url.Replace("{policyTrackedResourcesResource}", System.Uri.EscapeDataString(policyTrackedResourcesResource));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -160,29 +130,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
             }
-            if (orderBy != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", System.Uri.EscapeDataString(orderBy)));
-            }
-            if (select != null)
-            {
-                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(select)));
-            }
-            if (fromParameter != null)
-            {
-                _queryParameters.Add(string.Format("$from={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(fromParameter, Client.SerializationSettings).Trim('"'))));
-            }
-            if (to != null)
-            {
-                _queryParameters.Add(string.Format("$to={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(to, Client.SerializationSettings).Trim('"'))));
-            }
             if (filter != null)
             {
                 _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (apply != null)
-            {
-                _queryParameters.Add(string.Format("$apply={0}", System.Uri.EscapeDataString(apply)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -272,7 +222,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicyEventsQueryResults>();
+            var _result = new AzureOperationResponse<IPage<PolicyTrackedResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -285,7 +235,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicyEventsQueryResults>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyTrackedResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -305,7 +255,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy events for the resources under the subscription.
+        /// Queries policy tracked resources under the subscription.
         /// </summary>
         /// <param name='subscriptionId'>
         /// Microsoft Azure subscription ID.
@@ -334,48 +284,23 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionWithHttpMessagesAsync(string subscriptionId, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyTrackedResource>>> ListQueryResultsForSubscriptionWithHttpMessagesAsync(string subscriptionId, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (subscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
-            string policyEventsResource = "default";
-            string apiVersion = "2018-04-04";
+            string policyTrackedResourcesResource = "default";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
                 top = queryOptions.Top;
             }
-            string orderBy = default(string);
-            if (queryOptions != null)
-            {
-                orderBy = queryOptions.OrderBy;
-            }
-            string select = default(string);
-            if (queryOptions != null)
-            {
-                select = queryOptions.Select;
-            }
-            System.DateTime? fromParameter = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                fromParameter = queryOptions.FromProperty;
-            }
-            System.DateTime? to = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                to = queryOptions.To;
-            }
             string filter = default(string);
             if (queryOptions != null)
             {
                 filter = queryOptions.Filter;
-            }
-            string apply = default(string);
-            if (queryOptions != null)
-            {
-                apply = queryOptions.Apply;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -384,23 +309,18 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("policyEventsResource", policyEventsResource);
+                tracingParameters.Add("policyTrackedResourcesResource", policyTrackedResourcesResource);
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
-                tracingParameters.Add("orderBy", orderBy);
-                tracingParameters.Add("select", select);
-                tracingParameters.Add("fromParameter", fromParameter);
-                tracingParameters.Add("to", to);
                 tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apply", apply);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForSubscription", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults").ToString();
-            _url = _url.Replace("{policyEventsResource}", System.Uri.EscapeDataString(policyEventsResource));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults").ToString();
+            _url = _url.Replace("{policyTrackedResourcesResource}", System.Uri.EscapeDataString(policyTrackedResourcesResource));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -411,29 +331,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
             }
-            if (orderBy != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", System.Uri.EscapeDataString(orderBy)));
-            }
-            if (select != null)
-            {
-                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(select)));
-            }
-            if (fromParameter != null)
-            {
-                _queryParameters.Add(string.Format("$from={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(fromParameter, Client.SerializationSettings).Trim('"'))));
-            }
-            if (to != null)
-            {
-                _queryParameters.Add(string.Format("$to={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(to, Client.SerializationSettings).Trim('"'))));
-            }
             if (filter != null)
             {
                 _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (apply != null)
-            {
-                _queryParameters.Add(string.Format("$apply={0}", System.Uri.EscapeDataString(apply)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -523,7 +423,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicyEventsQueryResults>();
+            var _result = new AzureOperationResponse<IPage<PolicyTrackedResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -536,7 +436,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicyEventsQueryResults>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyTrackedResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -556,13 +456,13 @@ namespace Microsoft.Azure.Management.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy events for the resources under the resource group.
+        /// Queries policy tracked resources under the resource group.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// Microsoft Azure subscription ID.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Resource group name.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Microsoft Azure subscription ID.
         /// </param>
         /// <param name='queryOptions'>
         /// Additional parameters for the operation
@@ -588,52 +488,27 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyTrackedResource>>> ListQueryResultsForResourceGroupWithHttpMessagesAsync(string resourceGroupName, string subscriptionId, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (subscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
-            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string policyEventsResource = "default";
-            string apiVersion = "2018-04-04";
+            if (subscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
+            }
+            string policyTrackedResourcesResource = "default";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
                 top = queryOptions.Top;
             }
-            string orderBy = default(string);
-            if (queryOptions != null)
-            {
-                orderBy = queryOptions.OrderBy;
-            }
-            string select = default(string);
-            if (queryOptions != null)
-            {
-                select = queryOptions.Select;
-            }
-            System.DateTime? fromParameter = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                fromParameter = queryOptions.FromProperty;
-            }
-            System.DateTime? to = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                to = queryOptions.To;
-            }
             string filter = default(string);
             if (queryOptions != null)
             {
                 filter = queryOptions.Filter;
-            }
-            string apply = default(string);
-            if (queryOptions != null)
-            {
-                apply = queryOptions.Apply;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -642,26 +517,21 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("policyEventsResource", policyEventsResource);
-                tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("policyTrackedResourcesResource", policyTrackedResourcesResource);
+                tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
-                tracingParameters.Add("orderBy", orderBy);
-                tracingParameters.Add("select", select);
-                tracingParameters.Add("fromParameter", fromParameter);
-                tracingParameters.Add("to", to);
                 tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apply", apply);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForResourceGroup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults").ToString();
-            _url = _url.Replace("{policyEventsResource}", System.Uri.EscapeDataString(policyEventsResource));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{policyTrackedResourcesResource}", System.Uri.EscapeDataString(policyTrackedResourcesResource));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -671,29 +541,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
             }
-            if (orderBy != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", System.Uri.EscapeDataString(orderBy)));
-            }
-            if (select != null)
-            {
-                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(select)));
-            }
-            if (fromParameter != null)
-            {
-                _queryParameters.Add(string.Format("$from={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(fromParameter, Client.SerializationSettings).Trim('"'))));
-            }
-            if (to != null)
-            {
-                _queryParameters.Add(string.Format("$to={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(to, Client.SerializationSettings).Trim('"'))));
-            }
             if (filter != null)
             {
                 _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (apply != null)
-            {
-                _queryParameters.Add(string.Format("$apply={0}", System.Uri.EscapeDataString(apply)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -783,7 +633,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicyEventsQueryResults>();
+            var _result = new AzureOperationResponse<IPage<PolicyTrackedResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -796,7 +646,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicyEventsQueryResults>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyTrackedResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -816,7 +666,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy events for the resource.
+        /// Queries policy tracked resources under the resource.
         /// </summary>
         /// <param name='resourceId'>
         /// Resource ID.
@@ -845,48 +695,23 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyEventsQueryResults>> ListQueryResultsForResourceWithHttpMessagesAsync(string resourceId, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyTrackedResource>>> ListQueryResultsForResourceWithHttpMessagesAsync(string resourceId, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
-            string policyEventsResource = "default";
-            string apiVersion = "2018-04-04";
+            string policyTrackedResourcesResource = "default";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
                 top = queryOptions.Top;
             }
-            string orderBy = default(string);
-            if (queryOptions != null)
-            {
-                orderBy = queryOptions.OrderBy;
-            }
-            string select = default(string);
-            if (queryOptions != null)
-            {
-                select = queryOptions.Select;
-            }
-            System.DateTime? fromParameter = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                fromParameter = queryOptions.FromProperty;
-            }
-            System.DateTime? to = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                to = queryOptions.To;
-            }
             string filter = default(string);
             if (queryOptions != null)
             {
                 filter = queryOptions.Filter;
-            }
-            string apply = default(string);
-            if (queryOptions != null)
-            {
-                apply = queryOptions.Apply;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -895,24 +720,19 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("policyEventsResource", policyEventsResource);
                 tracingParameters.Add("resourceId", resourceId);
+                tracingParameters.Add("policyTrackedResourcesResource", policyTrackedResourcesResource);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
-                tracingParameters.Add("orderBy", orderBy);
-                tracingParameters.Add("select", select);
-                tracingParameters.Add("fromParameter", fromParameter);
-                tracingParameters.Add("to", to);
                 tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apply", apply);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForResource", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceId}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults").ToString();
-            _url = _url.Replace("{policyEventsResource}", System.Uri.EscapeDataString(policyEventsResource));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceId}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults").ToString();
             _url = _url.Replace("{resourceId}", resourceId);
+            _url = _url.Replace("{policyTrackedResourcesResource}", System.Uri.EscapeDataString(policyTrackedResourcesResource));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -922,29 +742,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
             }
-            if (orderBy != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", System.Uri.EscapeDataString(orderBy)));
-            }
-            if (select != null)
-            {
-                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(select)));
-            }
-            if (fromParameter != null)
-            {
-                _queryParameters.Add(string.Format("$from={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(fromParameter, Client.SerializationSettings).Trim('"'))));
-            }
-            if (to != null)
-            {
-                _queryParameters.Add(string.Format("$to={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(to, Client.SerializationSettings).Trim('"'))));
-            }
             if (filter != null)
             {
                 _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (apply != null)
-            {
-                _queryParameters.Add(string.Format("$apply={0}", System.Uri.EscapeDataString(apply)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1034,7 +834,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicyEventsQueryResults>();
+            var _result = new AzureOperationResponse<IPage<PolicyTrackedResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1047,7 +847,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicyEventsQueryResults>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyTrackedResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1067,16 +867,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy events for the subscription level policy set definition.
+        /// Queries policy tracked resources under the management group.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// Microsoft Azure subscription ID.
-        /// </param>
-        /// <param name='policySetDefinitionName'>
-        /// Policy set definition name.
-        /// </param>
-        /// <param name='queryOptions'>
-        /// Additional parameters for the operation
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1099,53 +893,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyEventsQueryResults>> ListQueryResultsForPolicySetDefinitionWithHttpMessagesAsync(string subscriptionId, string policySetDefinitionName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyTrackedResource>>> ListQueryResultsForManagementGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (subscriptionId == null)
+            if (nextPageLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
-            }
-            if (policySetDefinitionName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policySetDefinitionName");
-            }
-            string policyEventsResource = "default";
-            string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-04-04";
-            int? top = default(int?);
-            if (queryOptions != null)
-            {
-                top = queryOptions.Top;
-            }
-            string orderBy = default(string);
-            if (queryOptions != null)
-            {
-                orderBy = queryOptions.OrderBy;
-            }
-            string select = default(string);
-            if (queryOptions != null)
-            {
-                select = queryOptions.Select;
-            }
-            System.DateTime? fromParameter = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                fromParameter = queryOptions.FromProperty;
-            }
-            System.DateTime? to = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                to = queryOptions.To;
-            }
-            string filter = default(string);
-            if (queryOptions != null)
-            {
-                filter = queryOptions.Filter;
-            }
-            string apply = default(string);
-            if (queryOptions != null)
-            {
-                apply = queryOptions.Apply;
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1154,61 +906,14 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("policyEventsResource", policyEventsResource);
-                tracingParameters.Add("subscriptionId", subscriptionId);
-                tracingParameters.Add("authorizationNamespace", authorizationNamespace);
-                tracingParameters.Add("policySetDefinitionName", policySetDefinitionName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("orderBy", orderBy);
-                tracingParameters.Add("select", select);
-                tracingParameters.Add("fromParameter", fromParameter);
-                tracingParameters.Add("to", to);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apply", apply);
+                tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForPolicySetDefinition", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForManagementGroupNext", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults").ToString();
-            _url = _url.Replace("{policyEventsResource}", System.Uri.EscapeDataString(policyEventsResource));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
-            _url = _url.Replace("{authorizationNamespace}", System.Uri.EscapeDataString(authorizationNamespace));
-            _url = _url.Replace("{policySetDefinitionName}", System.Uri.EscapeDataString(policySetDefinitionName));
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
-            }
-            if (orderBy != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", System.Uri.EscapeDataString(orderBy)));
-            }
-            if (select != null)
-            {
-                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(select)));
-            }
-            if (fromParameter != null)
-            {
-                _queryParameters.Add(string.Format("$from={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(fromParameter, Client.SerializationSettings).Trim('"'))));
-            }
-            if (to != null)
-            {
-                _queryParameters.Add(string.Format("$to={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(to, Client.SerializationSettings).Trim('"'))));
-            }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (apply != null)
-            {
-                _queryParameters.Add(string.Format("$apply={0}", System.Uri.EscapeDataString(apply)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -1297,7 +1002,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicyEventsQueryResults>();
+            var _result = new AzureOperationResponse<IPage<PolicyTrackedResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1310,7 +1015,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicyEventsQueryResults>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyTrackedResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1330,16 +1035,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy events for the subscription level policy definition.
+        /// Queries policy tracked resources under the subscription.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// Microsoft Azure subscription ID.
-        /// </param>
-        /// <param name='policyDefinitionName'>
-        /// Policy definition name.
-        /// </param>
-        /// <param name='queryOptions'>
-        /// Additional parameters for the operation
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1362,53 +1061,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyEventsQueryResults>> ListQueryResultsForPolicyDefinitionWithHttpMessagesAsync(string subscriptionId, string policyDefinitionName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyTrackedResource>>> ListQueryResultsForSubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (subscriptionId == null)
+            if (nextPageLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
-            }
-            if (policyDefinitionName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyDefinitionName");
-            }
-            string policyEventsResource = "default";
-            string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-04-04";
-            int? top = default(int?);
-            if (queryOptions != null)
-            {
-                top = queryOptions.Top;
-            }
-            string orderBy = default(string);
-            if (queryOptions != null)
-            {
-                orderBy = queryOptions.OrderBy;
-            }
-            string select = default(string);
-            if (queryOptions != null)
-            {
-                select = queryOptions.Select;
-            }
-            System.DateTime? fromParameter = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                fromParameter = queryOptions.FromProperty;
-            }
-            System.DateTime? to = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                to = queryOptions.To;
-            }
-            string filter = default(string);
-            if (queryOptions != null)
-            {
-                filter = queryOptions.Filter;
-            }
-            string apply = default(string);
-            if (queryOptions != null)
-            {
-                apply = queryOptions.Apply;
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1417,61 +1074,14 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("policyEventsResource", policyEventsResource);
-                tracingParameters.Add("subscriptionId", subscriptionId);
-                tracingParameters.Add("authorizationNamespace", authorizationNamespace);
-                tracingParameters.Add("policyDefinitionName", policyDefinitionName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("orderBy", orderBy);
-                tracingParameters.Add("select", select);
-                tracingParameters.Add("fromParameter", fromParameter);
-                tracingParameters.Add("to", to);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apply", apply);
+                tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForPolicyDefinition", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForSubscriptionNext", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults").ToString();
-            _url = _url.Replace("{policyEventsResource}", System.Uri.EscapeDataString(policyEventsResource));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
-            _url = _url.Replace("{authorizationNamespace}", System.Uri.EscapeDataString(authorizationNamespace));
-            _url = _url.Replace("{policyDefinitionName}", System.Uri.EscapeDataString(policyDefinitionName));
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
-            }
-            if (orderBy != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", System.Uri.EscapeDataString(orderBy)));
-            }
-            if (select != null)
-            {
-                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(select)));
-            }
-            if (fromParameter != null)
-            {
-                _queryParameters.Add(string.Format("$from={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(fromParameter, Client.SerializationSettings).Trim('"'))));
-            }
-            if (to != null)
-            {
-                _queryParameters.Add(string.Format("$to={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(to, Client.SerializationSettings).Trim('"'))));
-            }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (apply != null)
-            {
-                _queryParameters.Add(string.Format("$apply={0}", System.Uri.EscapeDataString(apply)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -1560,7 +1170,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicyEventsQueryResults>();
+            var _result = new AzureOperationResponse<IPage<PolicyTrackedResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1573,7 +1183,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicyEventsQueryResults>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyTrackedResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1593,16 +1203,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy events for the subscription level policy assignment.
+        /// Queries policy tracked resources under the resource group.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// Microsoft Azure subscription ID.
-        /// </param>
-        /// <param name='policyAssignmentName'>
-        /// Policy assignment name.
-        /// </param>
-        /// <param name='queryOptions'>
-        /// Additional parameters for the operation
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1625,53 +1229,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentWithHttpMessagesAsync(string subscriptionId, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyTrackedResource>>> ListQueryResultsForResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (subscriptionId == null)
+            if (nextPageLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
-            }
-            if (policyAssignmentName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
-            }
-            string policyEventsResource = "default";
-            string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-04-04";
-            int? top = default(int?);
-            if (queryOptions != null)
-            {
-                top = queryOptions.Top;
-            }
-            string orderBy = default(string);
-            if (queryOptions != null)
-            {
-                orderBy = queryOptions.OrderBy;
-            }
-            string select = default(string);
-            if (queryOptions != null)
-            {
-                select = queryOptions.Select;
-            }
-            System.DateTime? fromParameter = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                fromParameter = queryOptions.FromProperty;
-            }
-            System.DateTime? to = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                to = queryOptions.To;
-            }
-            string filter = default(string);
-            if (queryOptions != null)
-            {
-                filter = queryOptions.Filter;
-            }
-            string apply = default(string);
-            if (queryOptions != null)
-            {
-                apply = queryOptions.Apply;
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1680,61 +1242,14 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("policyEventsResource", policyEventsResource);
-                tracingParameters.Add("subscriptionId", subscriptionId);
-                tracingParameters.Add("authorizationNamespace", authorizationNamespace);
-                tracingParameters.Add("policyAssignmentName", policyAssignmentName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("orderBy", orderBy);
-                tracingParameters.Add("select", select);
-                tracingParameters.Add("fromParameter", fromParameter);
-                tracingParameters.Add("to", to);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apply", apply);
+                tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForSubscriptionLevelPolicyAssignment", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForResourceGroupNext", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults").ToString();
-            _url = _url.Replace("{policyEventsResource}", System.Uri.EscapeDataString(policyEventsResource));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
-            _url = _url.Replace("{authorizationNamespace}", System.Uri.EscapeDataString(authorizationNamespace));
-            _url = _url.Replace("{policyAssignmentName}", System.Uri.EscapeDataString(policyAssignmentName));
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
-            }
-            if (orderBy != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", System.Uri.EscapeDataString(orderBy)));
-            }
-            if (select != null)
-            {
-                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(select)));
-            }
-            if (fromParameter != null)
-            {
-                _queryParameters.Add(string.Format("$from={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(fromParameter, Client.SerializationSettings).Trim('"'))));
-            }
-            if (to != null)
-            {
-                _queryParameters.Add(string.Format("$to={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(to, Client.SerializationSettings).Trim('"'))));
-            }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (apply != null)
-            {
-                _queryParameters.Add(string.Format("$apply={0}", System.Uri.EscapeDataString(apply)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -1823,7 +1338,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicyEventsQueryResults>();
+            var _result = new AzureOperationResponse<IPage<PolicyTrackedResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1836,7 +1351,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicyEventsQueryResults>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyTrackedResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1856,19 +1371,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy events for the resource group level policy assignment.
+        /// Queries policy tracked resources under the resource.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// Microsoft Azure subscription ID.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Resource group name.
-        /// </param>
-        /// <param name='policyAssignmentName'>
-        /// Policy assignment name.
-        /// </param>
-        /// <param name='queryOptions'>
-        /// Additional parameters for the operation
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1891,57 +1397,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyTrackedResource>>> ListQueryResultsForResourceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (subscriptionId == null)
+            if (nextPageLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (policyAssignmentName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
-            }
-            string policyEventsResource = "default";
-            string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-04-04";
-            int? top = default(int?);
-            if (queryOptions != null)
-            {
-                top = queryOptions.Top;
-            }
-            string orderBy = default(string);
-            if (queryOptions != null)
-            {
-                orderBy = queryOptions.OrderBy;
-            }
-            string select = default(string);
-            if (queryOptions != null)
-            {
-                select = queryOptions.Select;
-            }
-            System.DateTime? fromParameter = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                fromParameter = queryOptions.FromProperty;
-            }
-            System.DateTime? to = default(System.DateTime?);
-            if (queryOptions != null)
-            {
-                to = queryOptions.To;
-            }
-            string filter = default(string);
-            if (queryOptions != null)
-            {
-                filter = queryOptions.Filter;
-            }
-            string apply = default(string);
-            if (queryOptions != null)
-            {
-                apply = queryOptions.Apply;
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1950,63 +1410,14 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("policyEventsResource", policyEventsResource);
-                tracingParameters.Add("subscriptionId", subscriptionId);
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("authorizationNamespace", authorizationNamespace);
-                tracingParameters.Add("policyAssignmentName", policyAssignmentName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("orderBy", orderBy);
-                tracingParameters.Add("select", select);
-                tracingParameters.Add("fromParameter", fromParameter);
-                tracingParameters.Add("to", to);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apply", apply);
+                tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForResourceGroupLevelPolicyAssignment", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForResourceNext", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults").ToString();
-            _url = _url.Replace("{policyEventsResource}", System.Uri.EscapeDataString(policyEventsResource));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{authorizationNamespace}", System.Uri.EscapeDataString(authorizationNamespace));
-            _url = _url.Replace("{policyAssignmentName}", System.Uri.EscapeDataString(policyAssignmentName));
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
-            }
-            if (orderBy != null)
-            {
-                _queryParameters.Add(string.Format("$orderby={0}", System.Uri.EscapeDataString(orderBy)));
-            }
-            if (select != null)
-            {
-                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(select)));
-            }
-            if (fromParameter != null)
-            {
-                _queryParameters.Add(string.Format("$from={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(fromParameter, Client.SerializationSettings).Trim('"'))));
-            }
-            if (to != null)
-            {
-                _queryParameters.Add(string.Format("$to={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(to, Client.SerializationSettings).Trim('"'))));
-            }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (apply != null)
-            {
-                _queryParameters.Add(string.Format("$apply={0}", System.Uri.EscapeDataString(apply)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -2095,7 +1506,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicyEventsQueryResults>();
+            var _result = new AzureOperationResponse<IPage<PolicyTrackedResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2108,183 +1519,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicyEventsQueryResults>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Gets OData metadata XML document.
-        /// </summary>
-        /// <param name='scope'>
-        /// A valid scope, i.e. management group, subscription, resource group, or
-        /// resource ID. Scope used has no effect on metadata returned.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="QueryFailureException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<string>> GetMetadataWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (scope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
-            }
-            string apiVersion = "2018-04-04";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("scope", scope);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetMetadata", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.PolicyInsights/policyEvents/$metadata").ToString();
-            _url = _url.Replace("{scope}", scope);
-            List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new QueryFailureException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    QueryFailure _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<QueryFailure>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<string>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyTrackedResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

@@ -14,28 +14,27 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
     using System.Linq;
 
     /// <summary>
-    /// Error definition.
+    /// Scenario specific error details.
     /// </summary>
-    public partial class QueryFailureError
+    public partial class TypedErrorInfo
     {
         /// <summary>
-        /// Initializes a new instance of the QueryFailureError class.
+        /// Initializes a new instance of the TypedErrorInfo class.
         /// </summary>
-        public QueryFailureError()
+        public TypedErrorInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the QueryFailureError class.
+        /// Initializes a new instance of the TypedErrorInfo class.
         /// </summary>
-        /// <param name="code">Service specific error code which serves as the
-        /// substatus for the HTTP error code.</param>
-        /// <param name="message">Description of the error.</param>
-        public QueryFailureError(string code = default(string), string message = default(string))
+        /// <param name="type">The type of included error details.</param>
+        /// <param name="info">The scenario specific error details.</param>
+        public TypedErrorInfo(string type = default(string), object info = default(object))
         {
-            Code = code;
-            Message = message;
+            Type = type;
+            Info = info;
             CustomInit();
         }
 
@@ -45,17 +44,16 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets service specific error code which serves as the substatus for
-        /// the HTTP error code.
+        /// Gets the type of included error details.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; private set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
-        /// Gets description of the error.
+        /// Gets the scenario specific error details.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; private set; }
+        [JsonProperty(PropertyName = "info")]
+        public object Info { get; private set; }
 
     }
 }

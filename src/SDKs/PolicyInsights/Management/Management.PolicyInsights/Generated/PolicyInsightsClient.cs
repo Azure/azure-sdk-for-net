@@ -44,26 +44,32 @@ namespace Microsoft.Azure.Management.PolicyInsights
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// API version to use with the client requests.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
+        /// Gets the IPolicyTrackedResourcesOperations.
+        /// </summary>
+        public virtual IPolicyTrackedResourcesOperations PolicyTrackedResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IRemediationsOperations.
+        /// </summary>
+        public virtual IRemediationsOperations Remediations { get; private set; }
 
         /// <summary>
         /// Gets the IPolicyEventsOperations.
@@ -79,6 +85,19 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the PolicyInsightsClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling PolicyInsightsClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected PolicyInsightsClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the PolicyInsightsClient class.
@@ -163,6 +182,33 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// Thrown when a required parameter is null
         /// </exception>
         public PolicyInsightsClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the PolicyInsightsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling PolicyInsightsClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public PolicyInsightsClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -281,11 +327,12 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// </summary>
         private void Initialize()
         {
+            PolicyTrackedResources = new PolicyTrackedResourcesOperations(this);
+            Remediations = new RemediationsOperations(this);
             PolicyEvents = new PolicyEventsOperations(this);
             PolicyStates = new PolicyStatesOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-04-04";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -302,6 +349,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -315,6 +363,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }
