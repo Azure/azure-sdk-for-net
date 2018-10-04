@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
     /// Registered Server resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class RegisteredServer : Resource
+    public partial class RegisteredServer : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the RegisteredServer class.

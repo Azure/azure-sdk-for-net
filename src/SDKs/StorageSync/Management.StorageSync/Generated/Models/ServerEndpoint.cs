@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
     /// Server Endpoint object.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ServerEndpoint : Resource
+    public partial class ServerEndpoint : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the ServerEndpoint class.
@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// 'on', 'off'</param>
         /// <param name="volumeFreeSpacePercent">Level of free space to be
         /// maintained by Cloud Tiering if it is enabled.</param>
+        /// <param name="tierFilesOlderThanDays">Tier files older than
+        /// days.</param>
         /// <param name="friendlyName">Friendly Name</param>
         /// <param name="serverResourceId">Server Resource Id.</param>
         /// <param name="provisioningState">ServerEndpoint Provisioning
@@ -51,12 +53,13 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="lastOperationName">Resource Last Operation
         /// Name</param>
         /// <param name="syncStatus">Sync Health Status</param>
-        public ServerEndpoint(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), object syncStatus = default(object))
+        public ServerEndpoint(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), object syncStatus = default(object))
             : base(id, name, type)
         {
             ServerLocalPath = serverLocalPath;
             CloudTiering = cloudTiering;
             VolumeFreeSpacePercent = volumeFreeSpacePercent;
+            TierFilesOlderThanDays = tierFilesOlderThanDays;
             FriendlyName = friendlyName;
             ServerResourceId = serverResourceId;
             ProvisioningState = provisioningState;
@@ -89,6 +92,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.volumeFreeSpacePercent")]
         public int? VolumeFreeSpacePercent { get; set; }
+
+        /// <summary>
+        /// Gets or sets tier files older than days.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tierFilesOlderThanDays")]
+        public int? TierFilesOlderThanDays { get; set; }
 
         /// <summary>
         /// Gets or sets friendly Name
@@ -141,6 +150,14 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             if (VolumeFreeSpacePercent < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "VolumeFreeSpacePercent", 0);
+            }
+            if (TierFilesOlderThanDays > 2147483647)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "TierFilesOlderThanDays", 2147483647);
+            }
+            if (TierFilesOlderThanDays < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "TierFilesOlderThanDays", 0);
             }
         }
     }

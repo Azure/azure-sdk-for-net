@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <param name='syncGroupName'>
         /// Name of Sync Group resource.
         /// </param>
-        /// <param name='parameters'>
-        /// Sync Group Body
+        /// <param name='properties'>
+        /// The parameters used to create the sync group
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SyncGroup,SyncGroupsCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, SyncGroupCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SyncGroup,SyncGroupsCreateHeaders>> CreateWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, object properties = default(object), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a given SyncGroup.
         /// </summary>
