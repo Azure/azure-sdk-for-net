@@ -71,8 +71,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public async Task ClientSecretRedactionTest()
         {
             AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider(Constants.ClientSecretConnString);
-            
-                var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => azureServiceTokenProvider.GetAccessTokenAsync(Constants.KeyVaultResourceId)));
+
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => azureServiceTokenProvider.GetAccessTokenAsync(Constants.KeyVaultResourceId)));
 
             Assert.Contains(Constants.KeyVaultResourceId, exception.Message);
             Assert.Contains(Constants.TenantId, exception.Message);

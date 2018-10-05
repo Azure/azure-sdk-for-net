@@ -18,8 +18,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private readonly string _azureAdInstance;
         private readonly IAuthenticationContext _authenticationContext;
 
-        internal ClientSecretAccessTokenProvider(string clientId,
-            string clientSecret, string tenantId, string azureAdInstance, IAuthenticationContext authenticationContext)
+        internal ClientSecretAccessTokenProvider(string clientId, string clientSecret,
+            string tenantId, string azureAdInstance, IAuthenticationContext authenticationContext = null)
         {
             if (string.IsNullOrWhiteSpace(clientId))
             {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             _clientSecret = clientSecret;
             _tenantId = tenantId;
             _azureAdInstance = azureAdInstance;
-            _authenticationContext = authenticationContext;
+            _authenticationContext = authenticationContext ?? new AdalAuthenticationContext();
 
             PrincipalUsed = new Principal
             {

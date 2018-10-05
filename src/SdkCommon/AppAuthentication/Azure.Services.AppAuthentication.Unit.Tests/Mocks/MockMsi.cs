@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
     /// https://docs.microsoft.com/en-us/azure/app-service/app-service-managed-service-identity
     /// https://docs.microsoft.com/en-us/azure/active-directory/msi-overview
     /// </summary>
-    class MockMsi : HttpMessageHandler
+    internal class MockMsi : HttpMessageHandler
     {
         // HitCount is used to test if the cache is hit as expected.
         public int HitCount;
@@ -64,6 +64,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                             Constants.JsonContentType)
                     };
                     break;
+
                 case MsiTestType.MsiAppServicesFailure:
                     throw new HttpRequestException();
 
@@ -84,6 +85,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                             Constants.JsonContentType)
                     };
                     break;
+
                 case MsiTestType.MsiAppServicesSuccess:
                 case MsiTestType.MsiAzureVmSuccess:
                     responseMessage = new HttpResponseMessage

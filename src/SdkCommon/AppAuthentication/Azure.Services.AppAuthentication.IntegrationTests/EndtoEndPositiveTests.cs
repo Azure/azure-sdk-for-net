@@ -133,20 +133,30 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
             }
         }
 #endif
+
+        private enum CertIdentifierType
+        {
+            SubjectName,
+            Thumbprint,
+            KeyVaultCertificateSecretIdentifier
+        }
+
         /// <summary>
         /// One must be logged in using Azure CLI and set AppAuthenticationTestCertUrl to a secret URL for a certificate in Key Vault before running this test.
         /// The test creates a new Azure AD application and service principal, uses the cert as the credential, and then uses the library to authenticate to it, using the cert. 
         /// After the cert, the Azure AD application is deleted. Cert is removed from current user store on the machine. 
         /// </summary>
-        /// <param name="isThumbprint"></param>
+        /// <param name="certIdentifierType"></param>
         /// <returns></returns>
-        private async Task GetTokenUsingServicePrincipalWithCertTestImpl(bool isThumbprint)
+        private async Task GetTokenUsingServicePrincipalWithCertTestImpl(CertIdentifierType certIdentifierType)
         {
+            string testCertUrl = Environment.GetEnvironmentVariable(Constants.TestCertUrlEnv);
+
             // Get a certificate from key vault. 
             // For security, this certificate is not hard coded in the test case, since it gets added as app credential in Azure AD, and may not get removed. 
             AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider(Constants.AzureCliConnectionString);
             KeyVaultHelper keyVaultHelper = new KeyVaultHelper(new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback)));
-            string certAsString = await keyVaultHelper.ExportCertificateAsBlob(Environment.GetEnvironmentVariable(Constants.TestCertUrlEnv)).ConfigureAwait(false);
+            string certAsString = await keyVaultHelper.ExportCertificateAsBlob(testCertUrl).ConfigureAwait(false);
 
             X509Certificate2 cert = new X509Certificate2(Convert.FromBase64String(certAsString), string.Empty);
             
@@ -160,14 +170,29 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
 
             string thumbprint = cert.Thumbprint?.ToLower();
 
-            // Construct connection string using client id and cert name
-            string thumbprintOrSubjectName = isThumbprint ? $"CertificateThumbprint={thumbprint}" : $"CertificateSubjectName={cert.Subject}";
-            string connectionString = $"RunAs=App;AppId={app.AppId};TenantId={_tenantId};{thumbprintOrSubjectName};CertificateStoreLocation={Constants.CurrentUserStore};";
+            // Construct connection string using client id and cert info
+            string connectionString = null;
+            switch (certIdentifierType)
+            {
+                case CertIdentifierType.SubjectName:
+                case CertIdentifierType.Thumbprint:
+                    string thumbprintOrSubjectName = (certIdentifierType == CertIdentifierType.Thumbprint) ? $"CertificateThumbprint={thumbprint}" : $"CertificateSubjectName={cert.Subject}";
+                    connectionString = $"RunAs=App;AppId={app.AppId};TenantId={_tenantId};{thumbprintOrSubjectName};CertificateStoreLocation={Constants.CurrentUserStore};";
+                    break;
+                case CertIdentifierType.KeyVaultCertificateSecretIdentifier:
+                    connectionString = $"RunAs=App;AppId={app.AppId};TenantId={_tenantId};CertificateKeyVaultCertificateSecretIdentifier={testCertUrl};";
+                    break;
+            }
+            
             AzureServiceTokenProvider astp =
                 new AzureServiceTokenProvider(connectionString);
 
-            // Import the certificate
-            CertUtil.ImportCertificate(cert);
+            if (certIdentifierType == CertIdentifierType.SubjectName ||
+                certIdentifierType == CertIdentifierType.Thumbprint)
+            {
+                // Import the certificate
+                CertUtil.ImportCertificate(cert);
+            }
 
             while (authResult == null && count > 0)
             {
@@ -186,11 +211,15 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
                 }
             }
 
-            // Delete the cert
-            CertUtil.DeleteCertificate(cert.Thumbprint);
+            if (certIdentifierType == CertIdentifierType.SubjectName ||
+               certIdentifierType == CertIdentifierType.Thumbprint)
+            {
+                // Delete the cert
+                CertUtil.DeleteCertificate(cert.Thumbprint);
 
-            var deletedCert = CertUtil.GetCertificate(cert.Thumbprint);
-            Assert.Null(deletedCert);
+                var deletedCert = CertUtil.GetCertificate(cert.Thumbprint);
+                Assert.Null(deletedCert);
+            }
 
             // Get token again using a cert which is deleted, but in the cache
             await astp.GetAccessTokenAsync(Constants.SqlAzureResourceId, _tenantId);
@@ -205,15 +234,21 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
         [Fact]
         public async Task GetTokenThumbprintTest()
         {
-            await GetTokenUsingServicePrincipalWithCertTestImpl(false);
+            await GetTokenUsingServicePrincipalWithCertTestImpl(CertIdentifierType.Thumbprint);
         }
 
         [Fact]
         public async Task GetTokenSubjectNameTest()
         {
-            await GetTokenUsingServicePrincipalWithCertTestImpl(true);
+            await GetTokenUsingServicePrincipalWithCertTestImpl(CertIdentifierType.SubjectName);
         }
-        
+
+        [Fact]
+        public async Task GetTokenKeyVaultIdentifierTest()
+        {
+            await GetTokenUsingServicePrincipalWithCertTestImpl(CertIdentifierType.KeyVaultCertificateSecretIdentifier);
+        }
+
         [Fact]
         public async Task GetTokenUsingServicePrincipalWithClientSecretTest()
         {

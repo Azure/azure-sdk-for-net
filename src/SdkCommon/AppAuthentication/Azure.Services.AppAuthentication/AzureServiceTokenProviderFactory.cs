@@ -24,8 +24,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private const string TenantId = "TenantId";
         private const string CertificateSubjectName = "CertificateSubjectName";
         private const string CertificateThumbprint = "CertificateThumbprint";
+        private const string KeyVaultSecretIdentifier = "KeyVaultSecretIdentifier";
         private const string CertificateStoreLocation = "CertificateStoreLocation";
-
+        
         /// <summary>
         /// Returns a specific token provider based on authentication option specified in the connection string. 
         /// </summary>
@@ -90,18 +91,30 @@ namespace Microsoft.Azure.Services.AppAuthentication
                                 connectionSettings.ContainsKey(CertificateThumbprint)
                                     ? connectionSettings[CertificateThumbprint]
                                     : connectionSettings[CertificateSubjectName],
-                                connectionSettings.ContainsKey(CertificateThumbprint),
+                                connectionSettings.ContainsKey(CertificateThumbprint)
+                                    ? ClientCertificateAzureServiceTokenProvider.CertificateIdentifierType.Thumbprint
+                                    : ClientCertificateAzureServiceTokenProvider.CertificateIdentifierType.SubjectName,
                                 connectionSettings[CertificateStoreLocation],
                                 connectionSettings[TenantId],
-                                azureAdInstance,
-                                new AdalAuthenticationContext());
+                                azureAdInstance);
                     }
                     else if (connectionSettings.ContainsKey(CertificateThumbprint) ||
                              connectionSettings.ContainsKey(CertificateSubjectName))
                     {
-                        // if certificate thumbprint or subject name are specified but certification store location is not, throw error
+                        // if certificate thumbprint or subject name are specified but certificate store location is not, throw error
                         throw new ArgumentException($"Connection string {connectionString} is not valid. Must contain '{CertificateStoreLocation}' attribute and it must not be empty " +
                                                     $"when using '{CertificateThumbprint}' and '{CertificateSubjectName}' attributes");
+                    }
+                    else if (connectionSettings.ContainsKey(KeyVaultSecretIdentifier))
+                    {
+                        azureServiceTokenProvider =
+                            new ClientCertificateAzureServiceTokenProvider(
+                                connectionSettings[AppId],
+                                connectionSettings[KeyVaultSecretIdentifier],
+                                ClientCertificateAzureServiceTokenProvider.CertificateIdentifierType.KeyVaultSecretIdentifier,
+                                null, // storeLocation unused
+                                connectionSettings[TenantId],
+                                azureAdInstance);
                     }
                     else if (connectionSettings.ContainsKey(AppKey))
                     {
@@ -112,8 +125,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                                 connectionSettings[AppId],
                                 connectionSettings[AppKey],
                                 connectionSettings[TenantId],
-                                azureAdInstance,
-                                new AdalAuthenticationContext());
+                                azureAdInstance);
                     }
                     else
                     {

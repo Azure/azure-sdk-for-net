@@ -27,7 +27,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         internal const string VisualStudioUsed = "Tried to get token using Visual Studio.";
 
-        internal const string CertificateNotFound = "Specified certificate was not found. ";
+        internal const string LocalCertificateNotFound = "Specified certificate was not found.";
+
+        internal const string KeyVaultCertificateRetrievalError = "Specified Key Vault certificate was unable to be retrieved.";
 
         internal const string MissingResource = "Resource must be specified.";
 

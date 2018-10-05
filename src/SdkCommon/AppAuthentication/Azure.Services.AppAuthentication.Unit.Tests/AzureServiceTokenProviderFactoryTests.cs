@@ -180,6 +180,11 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.NotNull(provider);
             Assert.Equal(Constants.CertificateConnStringSubjectNameCurrentUser, provider.ConnectionString);
             Assert.IsType<ClientCertificateAzureServiceTokenProvider>(provider);
+
+            provider = AzureServiceTokenProviderFactory.Create(Constants.CertificateConnStringKeyVaultSecretIdentifier, Constants.AzureAdInstance);
+            Assert.NotNull(provider);
+            Assert.Equal(Constants.CertificateConnStringKeyVaultSecretIdentifier, provider.ConnectionString);
+            Assert.IsType<ClientCertificateAzureServiceTokenProvider>(provider);
         }
 
         [Fact]

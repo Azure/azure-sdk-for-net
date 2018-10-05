@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                 // Craft request as per the MSI protocol
                 var requestUrl = isAppServicesMsiAvailable
-                    ? $"{msiEndpoint}?resource={resource}&api-version=2017-09-01" // TODO: include support for App Service user-assigned ID preemptively?
+                    ? $"{msiEndpoint}?resource={resource}&api-version=2017-09-01"
                     : $"{AzureVmIdmsEndpoint}?resource={resource}{clientIdParameter}&api-version=2018-02-01";
 
                 // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpclient. 
