@@ -198,9 +198,9 @@ namespace Microsoft.Azure.ServiceBus {
         /// <summary>
         ///   Looks up a localized string similar to List of lock tokens cannot be empty.
         /// </summary>
-        internal static string ListOfLockTokensCannotBeEmty {
+        internal static string ListOfLockTokensCannotBeEmpty {
             get {
-                return ResourceManager.GetString("ListOfLockTokensCannotBeEmty", resourceCulture);
+                return ResourceManager.GetString("ListOfLockTokensCannotBeEmpty", resourceCulture);
             }
         }
         

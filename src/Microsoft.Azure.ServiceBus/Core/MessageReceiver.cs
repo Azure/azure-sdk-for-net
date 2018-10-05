@@ -512,7 +512,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             var lockTokenList = lockTokens.ToList();
             if (lockTokenList.Count == 0)
             {
-                throw Fx.Exception.Argument(nameof(lockTokens), Resources.ListOfLockTokensCannotBeEmty);
+                throw Fx.Exception.Argument(nameof(lockTokens), Resources.ListOfLockTokensCannotBeEmpty);
             }
 
             MessagingEventSource.Log.MessageCompleteStart(this.ClientId, lockTokenList.Count, lockTokenList);

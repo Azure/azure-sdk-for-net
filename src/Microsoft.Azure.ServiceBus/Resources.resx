@@ -159,7 +159,7 @@
   <data name="TokenMissingExpiresOn" xml:space="preserve">
     <value>The provided token does not specify the 'ExpiresOn' value.</value>
   </data>
-  <data name="ListOfLockTokensCannotBeEmty" xml:space="preserve">
+  <data name="ListOfLockTokensCannotBeEmpty" xml:space="preserve">
     <value>List of lock tokens cannot be empty</value>
   </data>
   <data name="NotSupportedPropertyType" xml:space="preserve">
