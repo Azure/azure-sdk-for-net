@@ -15,6 +15,9 @@
     <PackageProjectUrl>https://github.com/Azure/azure-service-bus-dotnet</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/Azure/azure-service-bus-dotnet/master/LICENSE</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
@@ -29,12 +32,7 @@
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.17.2, 4.0.0)" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.4.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="[5.2.2, 6.0.0)" />
-  </ItemGroup>
-
-  <ItemGroup Label="SourceLink to embed PDBs with the assembly">
-    <PackageReference Include="SourceLink.Create.GitHub" Version="2.8.3" PrivateAssets="All" />
-    <PackageReference Include="SourceLink.Copy.PdbFiles" Version="2.8.3" PrivateAssets="All" />
-    <DotNetCliToolReference Include="dotnet-sourcelink-git" Version="2.8.3" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
