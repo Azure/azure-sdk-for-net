@@ -6,13 +6,18 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Blueprint</PackageId>
     <Description>Provides Microsoft Azure Blueprint management operations including the ability to create, update and delete Blueprint definition and assignment.</Description>
-    <Version>0.9.0-Preview</Version>
+    <Version>0.9.1-Preview</Version>
     <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
     <AssemblyTitle>Microsoft Azure Blueprint Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Blueprint</AssemblyName>
     <PackageTags>Blueprint;</PackageTags>
     <PackageReleaseNotes>
-<![CDATA[This is a preview release sdk for Azure Blueprint, allows you to do Blueprint definition and assignment CRUD.]]>
+<![CDATA[This is a preview release sdk for Azure Blueprint, allows you to do Blueprint definition and assignment CRUD.
+
+ChangeNotes for 0.9.1:
+ - Add constants for string enum
+ - Add constructor for BlueprintManagementClient to have change to override api-version
+]]>
     </PackageReleaseNotes>
   </PropertyGroup>
 

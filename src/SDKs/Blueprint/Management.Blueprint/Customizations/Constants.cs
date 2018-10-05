@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.Blueprint
 {
@@ -47,6 +44,12 @@ namespace Microsoft.Azure.Management.Blueprint
             public const string Locking = "Locking";
             public const string Deleting = "Deleting";
 
+        }
+
+        public static class AssignmentLockMode
+        {
+            public const string None = "none";
+            public const string AllResources = "allResources";
         }
     }
 }
