@@ -126,6 +126,11 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual ITriggersOperations Triggers { get; private set; }
 
         /// <summary>
+        /// Gets the IRerunTriggersOperations.
+        /// </summary>
+        public virtual IRerunTriggersOperations RerunTriggers { get; private set; }
+
+        /// <summary>
         /// Gets the ITriggerRunsOperations.
         /// </summary>
         public virtual ITriggerRunsOperations TriggerRuns { get; private set; }
@@ -381,6 +386,7 @@ namespace Microsoft.Azure.Management.DataFactory
             PipelineRuns = new PipelineRunsOperations(this);
             ActivityRuns = new ActivityRunsOperations(this);
             Triggers = new TriggersOperations(this);
+            RerunTriggers = new RerunTriggersOperations(this);
             TriggerRuns = new TriggerRunsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-06-01";
@@ -429,14 +435,14 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Activity>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Trigger>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Trigger>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DependencyReference>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DependencyReference>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetCompression>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetCompression>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetStorageFormat>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetStorageFormat>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DependencyReference>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DependencyReference>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopySource>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySource>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopyTranslator>("type"));
