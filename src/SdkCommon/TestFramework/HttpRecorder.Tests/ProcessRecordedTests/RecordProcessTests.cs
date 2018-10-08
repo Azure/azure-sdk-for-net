@@ -17,67 +17,6 @@ namespace HttpRecorder.Tests.ProcessRecordedTests
 
     public class CompactLroRequestsTests : ProcessRecordingTestBase
     {
-#if DEBUG
-        [Fact]
-        public void CRUDLroCompact()
-        {
-            string testIdentity = this.GetType().Name;
-            LroResponseData responseData = new LroResponseData();
-            List<HttpResponseMessage> responses = new List<HttpResponseMessage>();
-            int putPollingCount = 20;
-            int postPollingCount = 30;
-            int deletePollingCount = 50;
-
-            responses = this.AppendResponse(
-                responseData.PutLroResponse(putPollingCount, LroHeaders.Location_And_AzureAsync),
-                responseData.PostLroResponse(postPollingCount, LroHeaders.Location_And_AzureAsync),
-                responseData.DeleteLroResponse(deletePollingCount, LroHeaders.Location_And_AzureAsync));
-
-            LroResponseHandler lroHandler = new LroResponseHandler(responses);
-
-            // RECORD
-            this.CurrentRecordMode = HttpRecorderMode.Record;
-            HttpMockServer.Initialize(testIdentity, TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Record);
-            CreateRedisClient(lroHandler);
-            CreateResource(this.TestClient);
-            PostRequest(this.TestClient);
-            DeleteResource(this.TestClient);
-            string recordedFilePath = HttpMockServer.Flush(this.CurrentDir);
-
-            CompactRecordedFile(recordedFilePath);
-
-            // PLAYBACK
-            HttpMockServer.RecordsDirectory = "";
-            HttpMockServer.Initialize(testIdentity, TestUtilities.GetCurrentMethodName(), HttpRecorderMode.Playback);
-
-            responses = this.AppendResponse(
-                responseData.PutLroResponse(putPollingCount, LroHeaders.Location_And_AzureAsync),
-                responseData.PostLroResponse(postPollingCount, LroHeaders.Location_And_AzureAsync),
-                responseData.DeleteLroResponse(deletePollingCount, LroHeaders.Location_And_AzureAsync));
-
-            lroHandler = new LroResponseHandler(responses);
-
-            CreateRedisClient(lroHandler);
-            CreateResource(this.TestClient);
-            PostRequest(this.TestClient);
-            DeleteResource(this.TestClient);
-            Assert.True(true);
-        }
-
-        #region Compact Files
-
-
-
-        #endregion
-#endif
-
-        void CompactRecordedFile(string filePathToCompact)
-        {
-            ProcessRecordedFiles procRecFile = new ProcessRecordedFiles(filePathToCompact);
-            procRecFile.CompactLroPolling();
-            procRecFile.SerializeCompactData();
-        }
-
         #region Drive Operations
         RedisResource CreateResource(IRedisManagementClient client)
         {
