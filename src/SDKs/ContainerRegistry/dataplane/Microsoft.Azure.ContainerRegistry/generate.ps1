@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider  "containerregistry/data-plane/Microsoft.ContainerRegistry" -AutoRestVersion "latest"

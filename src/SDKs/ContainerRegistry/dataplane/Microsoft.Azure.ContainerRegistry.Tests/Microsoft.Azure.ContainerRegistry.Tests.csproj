@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.ContainerRegistry.Tests</PackageId>
+    <Description>Microsoft.Azure.ContainerRegistry tests Library</Description>
+    <AssemblyName>Microsoft.Azure.ContainerRegistry.Tests</AssemblyName>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Tests\ACRTestUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\ContainerRegistry.Tests\Helpers\RecordedDelegatingHandler.cs" Link="Helpers\RecordedDelegatingHandler.cs" />
+  </ItemGroup>
+  <!--<PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>-->
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.ContainerRegistry" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview, 2.0.0)" />
+    <ProjectReference Include="..\Microsoft.Azure.ContainerRegistry\Microsoft.Azure.ContainerRegistry.csproj" />    
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Helpers\ACRTestUtil.cs" />
+  </ItemGroup>
+</Project>
