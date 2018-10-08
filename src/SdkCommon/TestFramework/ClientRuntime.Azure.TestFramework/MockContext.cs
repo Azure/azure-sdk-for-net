@@ -48,8 +48,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         }
 
         internal bool OptimizeTestRecordingFile { get; set; } = false;
-        
-        
+
+
         /// <summary>
         /// Return a new UndoContext
         /// </summary>
@@ -96,7 +96,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         }
 
         /// <summary>
-        /// Creates Graph client object 
+        /// Creates Graph client object
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="handlers">Delegating existingHandlers</param>
@@ -110,7 +110,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         }
 
         /// <summary>
-        /// Creates Graph client object 
+        /// Creates Graph client object
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="handlers">Delegating existingHandlers</param>
@@ -119,7 +119,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             TestEnvironment currentEnvironment,
             bool internalBaseUri = false,
             params DelegatingHandler[] handlers) where T : class
-        {            
+        {
             if(!currentEnvironment.TokenInfo.ContainsKey(TokenAudience.Graph))
             {
                 throw new ArgumentNullException(
@@ -146,7 +146,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             return GetServiceClientWithCredentials<T>(TestFxEnvironment, credentials, handlers: handlers);
         }
-        
+
         /// <summary>
         /// Get a test environment, allowing the test to customize the creation options
         /// </summary>
@@ -172,10 +172,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <param name="handlers">Delegating existingHandlers</param>
         /// <returns></returns>
         public T GetServiceClientWithCredentials<T>(
-            TestEnvironment currentEnvironment, 
+            TestEnvironment currentEnvironment,
             object credentials,
             Uri baseUri,
-            bool internalBaseUri = false, 
+            bool internalBaseUri = false,
             params DelegatingHandler[] handlers) where T : class
         {
             T client;
@@ -263,7 +263,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
         }
 
-        protected DelegatingHandler[] AddHandlers(TestEnvironment currentEnvironment, 
+        protected DelegatingHandler[] AddHandlers(TestEnvironment currentEnvironment,
             params DelegatingHandler[] existingHandlers)
         {
             HttpMockServer server;
@@ -305,18 +305,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 }
             }
 
-            string recordedFilePath = HttpMockServer.Flush();
-
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
-            {
-                // this check should be removed once we make the optimizatoin default
-                if(OptimizeTestRecordingFile)
-                {
-                    ProcessRecordedFiles procRecFile = new ProcessRecordedFiles(recordedFilePath);
-                    procRecFile.CompactLroPolling();
-                    procRecFile.SerializeCompactData();
-                }
-            }
+            HttpMockServer.Flush();
         }
 
         private static bool MockServerInHandlers(List<DelegatingHandler> handlers)
@@ -340,7 +329,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 && handler.InnerHandler is DelegatingHandler
                 && HandlerContains<T1>(handler.InnerHandler as DelegatingHandler)));
         }
-        
+
         /// <summary>
         /// Dispose only if we have not previously been disposed
         /// </summary>
@@ -360,6 +349,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         public void Dispose()
         {
             this.Dispose(true);
-        }        
+        }
     }
 }

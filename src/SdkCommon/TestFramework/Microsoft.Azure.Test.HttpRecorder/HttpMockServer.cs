@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
                         string.Format("Unable to find recorded mock file '{0}'.", fileName), "callerIdentity");
                 }
                 else
-                { 
+                {
                     RecordEntryPack pack = RecordEntryPack.Deserialize(fileName);
                     lock (records)
                     {
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
                     HttpResponseMessage result = queue.Dequeue().GetResponse();
                     result = AddTestModeHeaders(result);
-                    
+
                     result.RequestMessage = request;
                     return Task.FromResult(result);
                 }
@@ -286,16 +286,11 @@ namespace Microsoft.Azure.Test.HttpRecorder
             }
         }
 
-        public static string Flush(string outputPath = null)
+        public static void Flush(string outputPath = null)
         {
-            string fileName = string.Empty;
             if (Mode == HttpRecorderMode.Record && records.Count > 0)
             {
                 RecordEntryPack pack = new RecordEntryPack();
-                string perfImpactFileName = string.Empty;
-                string fileDirectory = outputPath ?? RecordsDirectory;
-                fileDirectory = Path.Combine(fileDirectory, CallerIdentity);
-                RecorderUtilities.EnsureDirectoryExists(fileDirectory);
 
                 lock (records)
                 {
@@ -307,17 +302,20 @@ namespace Microsoft.Azure.Test.HttpRecorder
                     }
                 }
 
-                fileName = (TestIdentity ?? "record") + ".json";                
-                fileName = Path.Combine(fileDirectory, fileName);
                 pack.Variables = Variables;
+
+                string fileDirectory = outputPath ?? RecordsDirectory;
+                string fileName = (TestIdentity ?? "record") + ".json";
+                fileDirectory = Path.Combine(fileDirectory, CallerIdentity);
+                RecorderUtilities.EnsureDirectoryExists(fileDirectory);
+
                 pack.Names = names.Names;
+                fileName = Path.Combine(fileDirectory, fileName);
 
                 pack.Serialize(fileName);
             }
 
             servers.ForEach(s => s.Dispose());
-
-            return fileName;
         }
 
         public static HttpRecorderMode GetCurrentMode()
