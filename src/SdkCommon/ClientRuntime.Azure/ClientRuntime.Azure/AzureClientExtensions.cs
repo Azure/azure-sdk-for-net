@@ -77,8 +77,6 @@ namespace Microsoft.Rest.Azure
             IAzureLRO<TBody, THeader> lro = ScheduleLRO<TBody, THeader>(client, response, customHeaders, cancellationToken);
             await lro.BeginLROAsync();
             return await lro.GetLROResults();
-
-            //return await LegacyLro<TBody, THeader>(client, response, customHeaders, cancellationToken);
         }
 
         internal static IAzureLRO<TResourceBody, TRequestHeaders> ScheduleLRO<TResourceBody, TRequestHeaders>(
@@ -779,11 +777,6 @@ namespace Microsoft.Rest.Azure
                     {
                         asyncOperation = null;
                     }
-                    //else
-                    //{
-                    //    // there is no error body, so asynOperation is of no use for us at this stage, we will continue analyzing the response and try to find provisioning state etc
-                    //    asyncOperation = null;
-                    //}
                 }
             }
             else
