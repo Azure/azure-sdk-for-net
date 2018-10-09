@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Azure.Management.Network;
+using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
+using Xunit;
 using Sku = Microsoft.Azure.Management.Sql.Models.Sku;
 
 namespace Sql.Tests
@@ -25,6 +28,9 @@ namespace Sql.Tests
 
                 ResourceGroup = Context.CreateResourceGroup();
 
+                // Create vnet and get the subnet id
+                VirtualNetwork vnet = CreateVirtualNetwork(Context, ResourceGroup, TestEnvironmentUtilities.DefaultLocationId);
+                
                 Sku sku = new Sku();
                 sku.Name = "MIGP8G4";
                 sku.Tier = "GeneralPurpose";
@@ -34,16 +40,148 @@ namespace Sql.Tests
                         AdministratorLogin = SqlManagementTestUtilities.DefaultLogin,
                         AdministratorLoginPassword = SqlManagementTestUtilities.DefaultPassword,
                         Sku = sku,
-                        SubnetId =
-                            "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/RG_MIPlayground/providers/Microsoft.Network/virtualNetworks/VNET_MIPlayground/subnets/MISubnet",
+                        SubnetId = vnet.Subnets[0].Id,
                         Tags = new Dictionary<string, string>(),
                         Location = TestEnvironmentUtilities.DefaultLocationId,
                     });
             }
-            catch(Exception)
+            catch(Exception ex)
             {
                 Context.Dispose();
             }
+        }
+
+        private VirtualNetwork CreateVirtualNetwork(SqlManagementTestContext context, ResourceGroup resourceGroup, string location)
+        {
+            NetworkManagementClient networkClient = context.GetClient<NetworkManagementClient>();
+
+            // Create vnet andinitialize subnets
+            string vnetName = SqlManagementTestUtilities.GenerateName();
+
+            // Create network security group
+            NetworkSecurityGroup networkSecurityGroupParams = new NetworkSecurityGroup()
+            {
+                Location = TestEnvironmentUtilities.DefaultLocationId,
+                SecurityRules = new List<SecurityRule>()
+                {
+                    new SecurityRule()
+                    {
+                        Direction = "Inbound",
+                        Name = "allow_management_inbound",
+                        DestinationAddressPrefix = "*",
+                        DestinationPortRanges = new List<string>() { "1433", "1434", "5022", "9000", "9003", "1438", "1440", "1452", "80", "443" },
+                        SourceAddressPrefix = "*",
+                        SourcePortRange = "*",
+                        Protocol = "Tcp",
+                        Access = "Allow",
+                        Priority = 100
+                    },
+                    new SecurityRule()
+                    {
+                        Direction = "Inbound",
+                        Name = "allow_misubnet_inbound",
+                        DestinationPortRange = "*",
+                        DestinationAddressPrefix = "*",
+                        SourceAddressPrefix = "10.0.0.0/26",
+                        SourcePortRange = "*",
+                        Protocol = "*",
+                        Access = "Allow",
+                        Priority = 200
+                    },
+                    new SecurityRule()
+                    {
+                        Direction = "Inbound",
+                        Name = "allow_health_probe",
+                        DestinationAddressPrefix = "*",
+                        DestinationPortRange = "*",
+                        SourceAddressPrefix = "AzureLoadBalancer",
+                        SourcePortRange = "*",
+                        Protocol = "*",
+                        Access = "Allow",
+                        Priority = 300
+                    },
+                    new SecurityRule()
+                    {
+                        Direction = "Outbound",
+                        Name = "allow_management_outbound",
+                        DestinationAddressPrefix = "*",
+                        DestinationPortRanges = new List<string>() { "80", "443", "12000" },
+                        Protocol = "*",
+                        SourceAddressPrefix = "*",
+                        SourcePortRange = "*",
+                        Access = "Allow",
+                        Priority = 100
+                    },
+                    new SecurityRule()
+                    {
+                        Direction = "Outbound",
+                        Name = "allow_misubnet_outbound",
+                        DestinationAddressPrefix = "10.0.0.0/26",
+                        DestinationPortRange = "*",
+                        Protocol = "*",
+                        SourceAddressPrefix = "*",
+                        SourcePortRange = "*",
+                        Access = "Allow",
+                        Priority = 200
+                    }
+                }
+            };
+            string networkSecurityGroupName = SqlManagementTestUtilities.GenerateName();
+            networkClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroup.Name, networkSecurityGroupName, networkSecurityGroupParams);
+            NetworkSecurityGroup securityGroup = networkClient.NetworkSecurityGroups.Get(resourceGroup.Name, networkSecurityGroupName);
+
+            // Create route table
+            RouteTable routeTableParams = new RouteTable()
+            {
+                Location = TestEnvironmentUtilities.DefaultLocationId,
+                Routes = new List<Route>()
+                {
+                    new Route()
+                    {
+                        Name = SqlManagementTestUtilities.GenerateName(),
+                        AddressPrefix = "0.0.0.0/0",
+                        NextHopType = "Internet"
+                    }
+                }
+            };
+            string routeTableName = SqlManagementTestUtilities.GenerateName();
+            networkClient.RouteTables.CreateOrUpdate(resourceGroup.Name, routeTableName, routeTableParams);
+            RouteTable routeTable = networkClient.RouteTables.Get(resourceGroup.Name, routeTableName);
+
+            // Create subnet
+            List<Subnet> subnetList = new List<Subnet>();
+            Subnet subnet = new Subnet()
+            {
+                Name = "MISubnet",
+                AddressPrefix = "10.0.0.0/26",
+                NetworkSecurityGroup = securityGroup,
+                RouteTable = routeTable
+            };
+            subnetList.Add(subnet);
+
+            // Create vnet
+            var vnet = new VirtualNetwork()
+            {
+                Location = location,
+
+                AddressSpace = new AddressSpace()
+                {
+                    AddressPrefixes = new List<string>()
+                        {
+                            "10.0.0.0/22",
+                        }
+                },
+                Subnets = subnetList
+            };
+
+            // Put Vnet
+            var putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(resourceGroup.Name, vnetName, vnet);
+            Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
+
+            // Get Vnets
+            var getVnetResponse = networkClient.VirtualNetworks.Get(resourceGroup.Name, vnetName);
+
+            return getVnetResponse;
         }
 
         public void Dispose()
