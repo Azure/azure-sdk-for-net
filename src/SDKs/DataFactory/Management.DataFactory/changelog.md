@@ -10,6 +10,7 @@
 		- Added support for SecureInput in activities
 		- Added ScriptActions to on demand HDI linked service
 		- Added support for recursive Cancel operation on runs
+		- Added TumblingWindowRerunTrigger API
 
 ## Version 2.2.0
 
