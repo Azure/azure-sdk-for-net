@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Build.BootstrapTasks
         const string LKG_AKAMS_URI = @"http://aka.ms/AzNetSDKBuildTools";
         const string LATEST_AKAMS_URI = @"http://aka.ms/LatestBuildTools";
 
-        const string COPY_TO_RELATIVEPATH = @"tools\SdkBuildTools\";
+        const string COPY_TO_RELATIVEPATH = @"tools\BuildToolsForSdk\";
         const string COPY_FROM_RELATIVEPATH = @"tools\BuildAssets\";
         const string DEFAULT_REMOTE_ROOT_DIR = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/";
         //const string DEFAULT_REMOTE_ROOT_DIR = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/SdkBuildTools/";
