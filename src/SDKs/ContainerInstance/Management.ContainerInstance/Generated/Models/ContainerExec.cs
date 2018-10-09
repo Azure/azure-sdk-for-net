@@ -11,30 +11,31 @@
 namespace Microsoft.Azure.Management.ContainerInstance.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The container exec request.
+    /// The container execution command, for liveness or readiness probe
     /// </summary>
-    public partial class ContainerExecRequest
+    public partial class ContainerExec
     {
         /// <summary>
-        /// Initializes a new instance of the ContainerExecRequest class.
+        /// Initializes a new instance of the ContainerExec class.
         /// </summary>
-        public ContainerExecRequest()
+        public ContainerExec()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ContainerExecRequest class.
+        /// Initializes a new instance of the ContainerExec class.
         /// </summary>
-        /// <param name="command">The command to be executed.</param>
-        /// <param name="terminalSize">The size of the terminal.</param>
-        public ContainerExecRequest(string command = default(string), ContainerExecRequestTerminalSize terminalSize = default(ContainerExecRequestTerminalSize))
+        /// <param name="command">The commands to execute within the
+        /// container.</param>
+        public ContainerExec(IList<string> command = default(IList<string>))
         {
             Command = command;
-            TerminalSize = terminalSize;
             CustomInit();
         }
 
@@ -44,16 +45,10 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the command to be executed.
+        /// Gets or sets the commands to execute within the container.
         /// </summary>
         [JsonProperty(PropertyName = "command")]
-        public string Command { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size of the terminal.
-        /// </summary>
-        [JsonProperty(PropertyName = "terminalSize")]
-        public ContainerExecRequestTerminalSize TerminalSize { get; set; }
+        public IList<string> Command { get; set; }
 
     }
 }

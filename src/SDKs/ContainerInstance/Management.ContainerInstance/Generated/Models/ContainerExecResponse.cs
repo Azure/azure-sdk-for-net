@@ -45,16 +45,16 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the uri for the exec websocket.
+        /// Gets or sets the uri for the exec websocket.
         /// </summary>
         [JsonProperty(PropertyName = "webSocketUri")]
-        public string WebSocketUri { get; private set; }
+        public string WebSocketUri { get; set; }
 
         /// <summary>
-        /// Gets the password to start the exec command.
+        /// Gets or sets the password to start the exec command.
         /// </summary>
         [JsonProperty(PropertyName = "password")]
-        public string Password { get; private set; }
+        public string Password { get; set; }
 
     }
 }
