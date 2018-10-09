@@ -13,9 +13,6 @@
 			<![CDATA[
 New features:
 - Support Vulnerability Assessment on Managed Instance
-- Added support for Managed Instance keys and encryption protectors.
-- Added support for DatabaseVulnerabilityAssessment.StorageAccountAccessKey, which causes DatabaseVulnerabilityAssessment.StorageContainerSasKey to no longer be a required property.
-- Added support for Managed Instance DnsZone, DnsZonePartner and Collation properties
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
