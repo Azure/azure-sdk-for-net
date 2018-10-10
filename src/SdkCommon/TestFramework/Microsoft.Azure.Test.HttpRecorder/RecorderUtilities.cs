@@ -118,10 +118,20 @@ namespace Microsoft.Azure.Test.HttpRecorder
             {
                 case RecordEntryContentType.Binary:
                     {
-                        hashBytes = Convert.FromBase64String(contentData);
-                        if (hashBytes != null)
+                        try
                         {
-                            createdContent = new ByteArrayContent(hashBytes);
+                            hashBytes = Convert.FromBase64String(contentData);
+                            if (hashBytes != null)
+                            {
+                                createdContent = new ByteArrayContent(hashBytes);
+                            }
+                        }
+                        catch
+                        {
+                            if (contentData != null)
+                                createdContent = new StringContent(contentData);
+                            else
+                                createdContent = new StringContent(string.Empty);
                         }
                         break;
                     }
