@@ -81,10 +81,11 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public HttpResponseMessage GetResponse()
         {
-            HttpResponseMessage response = new HttpResponseMessage();
+            HttpResponseMessage response = new HttpResponseMessage();            
             response.StatusCode = StatusCode;
             ResponseHeaders.ForEach(h => response.Headers.TryAddWithoutValidation(h.Key, h.Value));
-            response.Content = RecorderUtilities.CreateHttpContent(ResponseBody);
+            ResponseContentType = RecorderUtilities.GetContetTypeFromHeaders(ResponseHeaders);
+            response.Content = RecorderUtilities.CreateHttpContent(ResponseBody, ResponseContentType);
             ResponseHeaders.ForEach(h => response.Content.Headers.TryAddWithoutValidation(h.Key, h.Value));
             return response;
         }

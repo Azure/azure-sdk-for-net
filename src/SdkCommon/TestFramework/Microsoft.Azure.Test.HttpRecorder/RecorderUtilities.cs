@@ -22,11 +22,22 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public static bool IsHttpContentBinary(HttpContent content)
         {
-            bool isBinary = false;
+            //bool isBinary = false;
             var contentType = content?.Headers?.ContentType?.MediaType;
+            return IsHttpContentBinary(contentType);
+
+            //if (contentType != null)
+            //    isBinary = ( (content != null) && (binaryMimeRegex.IsMatch(contentType)) );
+
+            //return isBinary;
+        }
+
+        public static bool IsHttpContentBinary(string contentType)
+        {
+            bool isBinary = false;
 
             if (contentType != null)
-                isBinary = ( (content != null) && (binaryMimeRegex.IsMatch(contentType)) );
+                isBinary = ((contentType != null) && (binaryMimeRegex.IsMatch(contentType)));
 
             return isBinary;
         }
@@ -57,6 +68,32 @@ namespace Microsoft.Azure.Test.HttpRecorder
             }
         }
 
+        public static RecordEntryContentType GetContetTypeFromHeaders(Dictionary<string, List<string>> responseHeaders)
+        {
+            string mimeType = string.Empty;
+            RecordEntryContentType contentType = RecordEntryContentType.Null;
+            var header = responseHeaders.Where<KeyValuePair<string, List<string>>>((hkv) => hkv.Key.Equals("Content-Type", StringComparison.OrdinalIgnoreCase));
+
+           if(header.Any<KeyValuePair<string, List<string>>>())
+            {
+                mimeType = header.First<KeyValuePair<string, List<string>>>().Value?.First<string>();
+            }
+
+           if(!string.IsNullOrWhiteSpace(mimeType))
+            {
+                if(IsHttpContentBinary(mimeType))
+                {
+                    contentType = RecordEntryContentType.Binary;
+                }
+                else
+                {
+                    contentType = RecordEntryContentType.Ascii;
+                }
+            }
+
+            return contentType;
+        }
+
         public static string FormatHttpContent(HttpContent httpContent)
         {
             string formattedContent = string.Empty;
@@ -72,36 +109,78 @@ namespace Microsoft.Azure.Test.HttpRecorder
             return formattedContent;
         }
 
-        public static HttpContent CreateHttpContent(string contentData)
+        public static HttpContent CreateHttpContent(string contentData, RecordEntryContentType recordContentType)
         {
             HttpContent createdContent = null;
             byte[] hashBytes = null;
-            bool isContentDataBinary = true;
-            
-            if (contentData != null)
-            {
-                try
-                {
-                    hashBytes = Convert.FromBase64String(contentData);
-                    if (hashBytes != null)
-                    {
-                        createdContent = new ByteArrayContent(hashBytes);
-                    }
-                }
-                catch { isContentDataBinary = false; }
 
-                if (isContentDataBinary == false)
-                {
-                    createdContent = new StringContent(contentData);
-                }
-            }
-            else
+            switch (recordContentType)
             {
-                createdContent = new StringContent(string.Empty);
+                case RecordEntryContentType.Binary:
+                    {
+                        try
+                        {
+                            hashBytes = Convert.FromBase64String(contentData);
+                            if (hashBytes != null)
+                            {
+                                createdContent = new ByteArrayContent(hashBytes);
+                            }
+                        }
+                        catch
+                        {
+                            if (contentData != null)
+                                createdContent = new StringContent(contentData);
+                            else
+                                createdContent = new StringContent(string.Empty);
+                        }
+                        break;
+                    }
+                case RecordEntryContentType.Ascii:
+                    {
+                        createdContent = new StringContent(contentData);
+                        break;
+                    }
+                case RecordEntryContentType.Null:
+                default:
+                    {
+                        createdContent = new StringContent(string.Empty);
+                        break;
+                    }
             }
 
             return createdContent;
         }
+
+        //public static HttpContent CreateHttpContent(string contentData)
+        //{
+        //    HttpContent createdContent = null;
+        //    byte[] hashBytes = null;
+        //    bool isContentDataBinary = true;
+            
+        //    if (contentData != null)
+        //    {
+        //        try
+        //        {
+        //            hashBytes = Convert.FromBase64String(contentData);
+        //            if (hashBytes != null)
+        //            {
+        //                createdContent = new ByteArrayContent(hashBytes);
+        //            }
+        //        }
+        //        catch { isContentDataBinary = false; }
+
+        //        if (isContentDataBinary == false)
+        //        {
+        //            createdContent = new StringContent(contentData);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        createdContent = new StringContent(string.Empty);
+        //    }
+
+        //    return createdContent;
+        //}
 
         /// <summary>
         /// Formats the given XML into indented way.
