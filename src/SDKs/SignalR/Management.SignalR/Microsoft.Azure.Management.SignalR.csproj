@@ -6,7 +6,7 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.SignalR</PackageId>
 		<Description>Provides management capabilities for Azure SignalR.</Description>
-		<Version>0.10.0-preview</Version>
+		<Version>0.10.1-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.SignalR</AssemblyName>
 		<PackageTags>Microsoft Azure SignalR;SignalR;</PackageTags>
 		<PackageReleaseNotes>

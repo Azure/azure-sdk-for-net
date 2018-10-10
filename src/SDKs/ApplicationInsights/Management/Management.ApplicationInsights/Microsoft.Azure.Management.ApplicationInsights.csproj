@@ -5,7 +5,7 @@
 
 	<PropertyGroup>
 		<Description>Microsoft Azure Application Insights Library</Description>
-		<Version>0.1.1-preview</Version>
+		<Version>0.1.2-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.ApplicationInsights</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.ApplicationInsights</PackageId>
 		<PackageTags>Management.ApplicationInsights;</PackageTags>

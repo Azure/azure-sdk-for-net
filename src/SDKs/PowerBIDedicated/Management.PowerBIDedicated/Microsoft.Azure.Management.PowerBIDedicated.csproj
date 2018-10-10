@@ -7,7 +7,7 @@
 		<PackageId>Microsoft.Azure.Management.PowerBIDedicated</PackageId>
 		<Description>Provides management capabilities for Azure PowerBI Dedicated accounts.</Description>
 		<AssemblyTitle>Microsoft Azure PowerBI Dedicated Management Library</AssemblyTitle>
-		<Version>0.10.0-preview</Version>
+		<Version>0.10.1-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.PowerBIDedicated</AssemblyName>
 		<PackageTags>PowerBIDedicated;</PackageTags>
 		<PackageReleaseNotes>

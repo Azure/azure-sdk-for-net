@@ -7,7 +7,7 @@
         <PackageId>Microsoft.Azure.Management.MachineLearningCompute</PackageId>
         <Description>Provides developers with a library to create and manage machine learning compute resources.</Description>
         <AssemblyName>Microsoft.Azure.Management.MachineLearningCompute</AssemblyName>
-        <Version>0.3.0</Version>
+        <Version>0.3.1</Version>
         <PackageTags>Microsoft Azure Machine Learning Compute management;</PackageTags>
         <PackageReleaseNotes>Added optional 'deleteAll' parameter to delete all resources associated with the cluster.</PackageReleaseNotes>
     </PropertyGroup>
