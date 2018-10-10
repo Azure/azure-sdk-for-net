@@ -11,7 +11,7 @@
 		<PackageTags>Microsoft Azure Container Instance Management;Container Instance;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a release of the Azure Container Instance SDK. Included with this release is async operation.
+        This is a release of the Azure Container Instance SDK. Included with this release is MSI identity operations.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
