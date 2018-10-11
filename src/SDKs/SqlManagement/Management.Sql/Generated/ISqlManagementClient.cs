@@ -368,6 +368,21 @@ namespace Microsoft.Azure.Management.Sql
         IDatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans { get; }
 
         /// <summary>
+        /// Gets the IManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
+        /// </summary>
+        IManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations ManagedDatabaseVulnerabilityAssessmentRuleBaselines { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        IManagedDatabaseVulnerabilityAssessmentScansOperations ManagedDatabaseVulnerabilityAssessmentScans { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseVulnerabilityAssessmentsOperations.
+        /// </summary>
+        IManagedDatabaseVulnerabilityAssessmentsOperations ManagedDatabaseVulnerabilityAssessments { get; }
+
+        /// <summary>
         /// Gets the IInstanceFailoverGroupsOperations.
         /// </summary>
         IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; }
