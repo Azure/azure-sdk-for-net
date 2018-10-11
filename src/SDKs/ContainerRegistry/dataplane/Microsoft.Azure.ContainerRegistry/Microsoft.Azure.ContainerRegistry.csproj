@@ -1,17 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.Azure.ContainerRegistry</PackageId>
     <Description>Provides management capabilities for Azure Container Registry.</Description>
     <AssemblyTitle>Microsoft Azure Container Registry</AssemblyTitle>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>
     <AssemblyName>Microsoft.Azure.ContainerRegistry</AssemblyName>
     <PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-        * Added support for repository management.
-      ]]>
-    </PackageReleaseNotes>
+    <PackageReleaseNotes>Added capabilities to manage repository, tag and manifest.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
@@ -21,6 +17,6 @@
   </ItemGroup>
 
   <!-- Please do not move/edit code below this line -->
-	<Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
-	<!-- Please do not move/edit code above this line -->
+  <Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
 </Project>

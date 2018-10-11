@@ -4,7 +4,7 @@
     <PackageId>Microsoft.Azure.ContainerRegistry.Tests</PackageId>
     <Description>Microsoft.Azure.ContainerRegistry tests Library</Description>
     <AssemblyName>Microsoft.Azure.ContainerRegistry.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Tests\ACRTestUtil.cs" />
@@ -12,9 +12,6 @@
   <ItemGroup>
     <Compile Include="..\..\ContainerRegistry.Tests\Helpers\RecordedDelegatingHandler.cs" Link="Helpers\RecordedDelegatingHandler.cs" />
   </ItemGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
