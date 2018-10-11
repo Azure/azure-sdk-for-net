@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.ContainerInstance
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ContainerLogsOperations operations.
+    /// ServiceAssociationLinkOperations operations.
     /// </summary>
-    internal partial class ContainerLogsOperations : IServiceOperations<ContainerInstanceManagementClient>, IContainerLogsOperations
+    internal partial class ServiceAssociationLinkOperations : IServiceOperations<ContainerInstanceManagementClient>, IServiceAssociationLinkOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ContainerLogsOperations class.
+        /// Initializes a new instance of the ServiceAssociationLinkOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ContainerLogsOperations(ContainerInstanceManagementClient client)
+        internal ServiceAssociationLinkOperations(ContainerInstanceManagementClient client)
         {
             if (client == null)
             {
@@ -51,24 +51,20 @@ namespace Microsoft.Azure.Management.ContainerInstance
         public ContainerInstanceManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get the logs for a specified container instance.
+        /// Delete the container instance service association link for the subnet.
         /// </summary>
         /// <remarks>
-        /// Get the logs for a specified container instance in a specified resource
-        /// group and container group.
+        /// Delete the container instance service association link for the subnet. This
+        /// operation unblocks user from deleting subnet.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='containerGroupName'>
-        /// The name of the container group.
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
         /// </param>
-        /// <param name='containerName'>
-        /// The name of the container instance.
-        /// </param>
-        /// <param name='tail'>
-        /// The number of lines to show from the tail of the container instance log. If
-        /// not provided, all available logs are shown up to 4mb.
+        /// <param name='subnetName'>
+        /// The name of the subnet.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -79,9 +75,6 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -91,7 +84,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Logs>> ListWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -105,13 +98,13 @@ namespace Microsoft.Azure.Management.ContainerInstance
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (containerGroupName == null)
+            if (virtualNetworkName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "containerGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualNetworkName");
             }
-            if (containerName == null)
+            if (subnetName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "containerName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "subnetName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -121,27 +114,22 @@ namespace Microsoft.Azure.Management.ContainerInstance
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("containerGroupName", containerGroupName);
-                tracingParameters.Add("containerName", containerName);
-                tracingParameters.Add("tail", tail);
+                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("subnetName", subnetName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/logs").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/providers/Microsoft.ContainerInstance/serviceAssociationLinks/default").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{containerGroupName}", System.Uri.EscapeDataString(containerGroupName));
-            _url = _url.Replace("{containerName}", System.Uri.EscapeDataString(containerName));
+            _url = _url.Replace("{virtualNetworkName}", System.Uri.EscapeDataString(virtualNetworkName));
+            _url = _url.Replace("{subnetName}", System.Uri.EscapeDataString(subnetName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (tail != null)
-            {
-                _queryParameters.Add(string.Format("tail={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(tail, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -150,7 +138,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -201,7 +189,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -236,30 +224,12 @@ namespace Microsoft.Azure.Management.ContainerInstance
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Logs>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Logs>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
             }
             if (_shouldTrace)
             {

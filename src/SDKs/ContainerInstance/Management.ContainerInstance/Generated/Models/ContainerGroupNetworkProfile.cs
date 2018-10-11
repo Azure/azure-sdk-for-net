@@ -10,33 +10,32 @@
 
 namespace Microsoft.Azure.Management.ContainerInstance.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The size of the terminal.
+    /// Container group network profile information.
     /// </summary>
-    public partial class ContainerExecRequestTerminalSize
+    public partial class ContainerGroupNetworkProfile
     {
         /// <summary>
-        /// Initializes a new instance of the ContainerExecRequestTerminalSize
+        /// Initializes a new instance of the ContainerGroupNetworkProfile
         /// class.
         /// </summary>
-        public ContainerExecRequestTerminalSize()
+        public ContainerGroupNetworkProfile()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ContainerExecRequestTerminalSize
+        /// Initializes a new instance of the ContainerGroupNetworkProfile
         /// class.
         /// </summary>
-        /// <param name="rows">The row size of the terminal</param>
-        /// <param name="cols">The column size of the terminal</param>
-        public ContainerExecRequestTerminalSize(int? rows = default(int?), int? cols = default(int?))
+        /// <param name="id">The identifier for a network profile.</param>
+        public ContainerGroupNetworkProfile(string id)
         {
-            Rows = rows;
-            Cols = cols;
+            Id = id;
             CustomInit();
         }
 
@@ -46,16 +45,23 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the row size of the terminal
+        /// Gets or sets the identifier for a network profile.
         /// </summary>
-        [JsonProperty(PropertyName = "rows")]
-        public int? Rows { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the column size of the terminal
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "cols")]
-        public int? Cols { get; set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Id == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+            }
+        }
     }
 }
