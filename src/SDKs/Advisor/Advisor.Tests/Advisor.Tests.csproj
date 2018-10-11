@@ -2,12 +2,9 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
     <PackageId>Advisor.Tests</PackageId>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>
     <Description>Advisor.Tests Class library</Description>
-    <AssemblyName>Advisor.Tests</AssemblyName>
-  </PropertyGroup>
-
-  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
 
