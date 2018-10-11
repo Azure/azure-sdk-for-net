@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-namespace Microsoft.Azure.ContainerRegistry.Tests
+namespace ContainerRegistry.Tests
 {
     using System;
     using System.Net;
@@ -10,7 +10,8 @@ namespace Microsoft.Azure.ContainerRegistry.Tests
     using global::ContainerRegistry.Tests;
     using Microsoft.Azure.Management.ContainerRegistry;
     using Microsoft.Rest;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;    
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Microsoft.Azure.ContainerRegistry;
 
     public static class ACRTestUtil
     {

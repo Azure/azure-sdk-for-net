@@ -2,14 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Microsoft.Azure.ContainerRegistry.Models;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace Microsoft.Azure.ContainerRegistry.Tests
+namespace ContainerRegistry.Tests
 {
+    using Microsoft.Azure.ContainerRegistry;
+    using Microsoft.Azure.ContainerRegistry.Models;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Xunit;
+
     public class TagTests
     {
         [Fact]

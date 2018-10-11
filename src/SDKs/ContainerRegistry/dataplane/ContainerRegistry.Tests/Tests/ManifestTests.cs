@@ -2,8 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-namespace Microsoft.Azure.ContainerRegistry.Tests
+namespace ContainerRegistry.Tests
 {
+    using Microsoft.Azure.ContainerRegistry;
     using Microsoft.Azure.ContainerRegistry.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System.Collections.Generic;
