@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "graphrbac/data-plane" -AutoRestVersion "latest"
