@@ -144,10 +144,19 @@ namespace Microsoft.Rest
                 if(_defaultUserAgentInfoList == null)
                 {
                     _defaultUserAgentInfoList = new List<ProductInfoHeaderValue>();
-                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(FXVERSION, FrameworkVersion));
+                    if (!string.IsNullOrWhiteSpace(FrameworkVersion))
+                    {
+                        _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(FXVERSION, FrameworkVersion));
+                    }
 #if FullNetFx
-                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSNAME, OsName));
-                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
+                    if (!string.IsNullOrWhiteSpace(OsName))
+                    {
+                        _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSNAME, OsName));
+                    }
+                    if (!string.IsNullOrWhiteSpace(OsVersion))
+                    {
+                        _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
+                    }
 #endif
                 }
 
