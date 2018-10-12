@@ -5,7 +5,6 @@ namespace Microsoft.Azure.ServiceBus
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
     using Primitives;
 
@@ -22,7 +21,6 @@ namespace Microsoft.Azure.ServiceBus
         static readonly TimeSpan DefaultRetryMaxBackoff = TimeSpan.FromSeconds(30);
 
         readonly object serverBusyLock = new object();
-        Timer serverBusyResetTimer;
 
         // This is a volatile copy of IsServerBusy. IsServerBusy is synchronized with a lock, whereas encounteredServerBusy is kept volatile for performance reasons.
         volatile bool encounteredServerBusy;
@@ -30,7 +28,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary></summary>
         protected RetryPolicy()
         {
-            this.serverBusyResetTimer = new Timer(OnTimerCallback, this, TimeSpan.FromMilliseconds(-1), TimeSpan.FromMilliseconds(-1));
         }
 
         /// <summary>
@@ -168,7 +165,7 @@ namespace Microsoft.Azure.ServiceBus
                     this.ServerBusyExceptionMessage = string.IsNullOrWhiteSpace(exceptionMessage) ?
                         Resources.DefaultServerBusyException : exceptionMessage;
                     this.IsServerBusy = true;
-                    this.serverBusyResetTimer.Change(RetryPolicy.ServerBusyBaseSleepTime, TimeSpan.FromMilliseconds(-1));
+                    TaskExtensionHelper.Schedule(ScheduleResetServerBusy);
                 }
             }
         }
@@ -187,7 +184,6 @@ namespace Microsoft.Azure.ServiceBus
                     this.encounteredServerBusy = false;
                     this.ServerBusyExceptionMessage = Resources.DefaultServerBusyException;
                     this.IsServerBusy = false;
-                    this.serverBusyResetTimer.Change(TimeSpan.FromMilliseconds(-1), TimeSpan.FromMilliseconds(-1));
                 }
             }
         }
@@ -199,10 +195,10 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns></returns>
         protected abstract bool OnShouldRetry(TimeSpan remainingTime, int currentRetryCount, out TimeSpan retryInterval);
 
-        static void OnTimerCallback(object state)
+        private async Task ScheduleResetServerBusy()
         {
-            var thisPtr = (RetryPolicy)state;
-            thisPtr.ResetServerBusy();
+            await Task.Delay(RetryPolicy.ServerBusyBaseSleepTime).ConfigureAwait(false);
+            ResetServerBusy();
         }
     }
 }
