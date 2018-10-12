@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Microsoft.Azure.Test.HttpRecorder</Description>
     <AssemblyTitle>HttpRecorder Library for recording Clinet/Server communication in Azure</AssemblyTitle>
-    <Version>1.12.0</Version>
+    <Version>1.12.1</Version>
     <AssemblyName>Microsoft.Azure.Test.HttpRecorder</AssemblyName>
     <PackageId>Microsoft.Azure.Test.HttpRecorder</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime HttpRecorder REST;$(CommonNugetPackageTags)</PackageTags>

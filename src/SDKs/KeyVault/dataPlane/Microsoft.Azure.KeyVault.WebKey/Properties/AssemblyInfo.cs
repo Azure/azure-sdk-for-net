@@ -8,7 +8,7 @@ using System.Reflection;
 [assembly: AssemblyTitle("Microsoft Azure Key Vault WebKey")]
 [assembly: AssemblyDescription("Microsoft Azure Key Vault WebKey Class Library.")]
 
-[assembly: AssemblyVersion("3.0.1.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
 [assembly: AssemblyFileVersion("3.0.1.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure Traffic Manager Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Traffic Manager management functions for managing the Microsoft Azure Traffic Manager service.")]
 
-[assembly: AssemblyVersion("2.5.3.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.5.3.0")]
 
 [assembly: AssemblyConfiguration("")]
