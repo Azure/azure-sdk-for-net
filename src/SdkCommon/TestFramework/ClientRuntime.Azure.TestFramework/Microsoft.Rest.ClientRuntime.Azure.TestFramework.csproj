@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Microsoft.Rest.ClientRuntime.Azure.TestFramework</Description>
     <AssemblyTitle>Test framework for Microsoft AutoRest Generated Clients</AssemblyTitle>
-    <Version>1.7.5</Version>
+    <Version>1.7.6</Version>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure.TestFramework</AssemblyName>
     <PackageId>Microsoft.Rest.ClientRuntime.Azure.TestFramework</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime REST TestFramework</PackageTags>
@@ -32,14 +32,14 @@
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0, 4.0.0)" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2]" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.3.4, 3.0.0)" Condition=" '$(ProjectRefApplicable)' != 'true' "/>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.3.5, 3.0.0)" Condition=" '$(ProjectRefApplicable)' != 'true' "/>
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0, 4.0.0)" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2]" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.3.4, 3.0.0)" Condition=" '$(ProjectRefApplicable)' != 'true' "/>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.3.5, 3.0.0)" Condition=" '$(ProjectRefApplicable)' != 'true' "/>
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
@@ -65,7 +65,7 @@
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0, 4.0.0)" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2, 6.0.0)" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.3.4, 3.0.0)" Condition=" '$(ProjectRefApplicable)' != 'true' "/>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.3.5, 3.0.0)" Condition=" '$(ProjectRefApplicable)' != 'true' "/>
   </ItemGroup>
   <!--
   <Choose>
