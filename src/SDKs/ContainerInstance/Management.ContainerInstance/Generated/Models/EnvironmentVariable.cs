@@ -32,10 +32,13 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// </summary>
         /// <param name="name">The name of the environment variable.</param>
         /// <param name="value">The value of the environment variable.</param>
-        public EnvironmentVariable(string name, string value)
+        /// <param name="secureValue">The value of the secure environment
+        /// variable.</param>
+        public EnvironmentVariable(string name, string value = default(string), string secureValue = default(string))
         {
             Name = name;
             Value = value;
+            SecureValue = secureValue;
             CustomInit();
         }
 
@@ -57,6 +60,12 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         public string Value { get; set; }
 
         /// <summary>
+        /// Gets or sets the value of the secure environment variable.
+        /// </summary>
+        [JsonProperty(PropertyName = "secureValue")]
+        public string SecureValue { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -67,10 +76,6 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Value == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
             }
         }
     }

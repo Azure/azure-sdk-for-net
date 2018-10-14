@@ -19,29 +19,26 @@ namespace Microsoft.Azure.Management.ContainerInstance
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ContainerLogsOperations operations.
+    /// ServiceAssociationLinkOperations operations.
     /// </summary>
-    public partial interface IContainerLogsOperations
+    public partial interface IServiceAssociationLinkOperations
     {
         /// <summary>
-        /// Get the logs for a specified container instance.
+        /// Delete the container instance service association link for the
+        /// subnet.
         /// </summary>
         /// <remarks>
-        /// Get the logs for a specified container instance in a specified
-        /// resource group and container group.
+        /// Delete the container instance service association link for the
+        /// subnet. This operation unblocks user from deleting subnet.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='containerGroupName'>
-        /// The name of the container group.
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
         /// </param>
-        /// <param name='containerName'>
-        /// The name of the container instance.
-        /// </param>
-        /// <param name='tail'>
-        /// The number of lines to show from the tail of the container instance
-        /// log. If not provided, all available logs are shown up to 4mb.
+        /// <param name='subnetName'>
+        /// The name of the subnet.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,12 +49,9 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Logs>> ListWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
