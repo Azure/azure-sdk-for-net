@@ -9,8 +9,7 @@
     <PackageTags>Microsoft AutoRest ClientRuntime $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        1) Fix for Retry-After delegating handler
-        2) Fix for memory leak resulted from adding delegate callback on every request
+        1) Fix for DelegatingHandler chaining in the Service Client chaining pipeline. 
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

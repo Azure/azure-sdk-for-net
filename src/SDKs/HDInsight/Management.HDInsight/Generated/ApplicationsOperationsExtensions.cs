@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
-            public static IPage<Application> List(this IApplicationsOperations operations, string resourceGroupName, string clusterName)
+            public static IPage<Application> ListByCluster(this IApplicationsOperations operations, string resourceGroupName, string clusterName)
             {
-                return operations.ListAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                return operations.ListByClusterAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -53,16 +53,16 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Application>> ListAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Application>> ListByClusterAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByClusterWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists properties of the specified application.
+            /// Gets properties of the specified application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             /// <summary>
-            /// Lists properties of the specified application.
+            /// Gets properties of the specified application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='parameters'>
             /// The application create request.
             /// </param>
-            public static Application Create(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationProperties parameters)
+            public static Application Create(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, Application parameters)
             {
                 return operations.CreateAsync(resourceGroupName, clusterName, applicationName, parameters).GetAwaiter().GetResult();
             }
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Application> CreateAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Application> CreateAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, Application parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='parameters'>
             /// The application create request.
             /// </param>
-            public static Application BeginCreate(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationProperties parameters)
+            public static Application BeginCreate(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, Application parameters)
             {
                 return operations.BeginCreateAsync(resourceGroupName, clusterName, applicationName, parameters).GetAwaiter().GetResult();
             }
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Application> BeginCreateAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Application> BeginCreateAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, Application parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -306,9 +306,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Application> ListNext(this IApplicationsOperations operations, string nextPageLink)
+            public static IPage<Application> ListByClusterNext(this IApplicationsOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByClusterNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -323,9 +323,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Application>> ListNextAsync(this IApplicationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Application>> ListByClusterNextAsync(this IApplicationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByClusterNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -25,28 +25,6 @@ namespace Management.HDInsight.Tests
     public class LocationsTests
     {
         [Fact]
-        public void TestGetCapabilities()
-        {
-            string suiteName = GetType().FullName;
-            string testName = "TestGetCapabilities";
-
-            using (MockContext context = MockContext.Start(suiteName, testName))
-            {
-                var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(context, handler);
-
-                CapabilitiesResult capabilities = client.Locations.GetCapabilities(HDInsightManagementTestUtilities.DefaultLocation);
-                Assert.NotNull(capabilities);
-                Assert.NotNull(capabilities.Features);
-                Assert.NotNull(capabilities.Quota);
-                Assert.NotNull(capabilities.Regions);
-                Assert.NotNull(capabilities.Versions);
-                Assert.NotNull(capabilities.VmSizeFilters);
-                Assert.NotNull(capabilities.VmSizes);
-            }
-        }
-
-        [Fact]
         public void TestGetUsages()
         {
             string suiteName = GetType().FullName;
