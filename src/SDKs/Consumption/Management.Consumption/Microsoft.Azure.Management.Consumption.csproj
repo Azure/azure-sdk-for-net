@@ -9,11 +9,7 @@
         <VersionPrefix>3.0.2</VersionPrefix>    
         <AssemblyName>Microsoft.Azure.Management.Consumption</AssemblyName>    
         <PackageTags>Consumptionmanagement;Consumption;</PackageTags>
-      <PackageReleaseNotes>
-        <![CDATA[
-        This is a public release of the Azure Consunmption SDK that provides access to consumption resources for Azure Enterprise Subscriptions. Included with this release is addding Marketplace, Budget and Pricesheet APIs.
-      ]]>
-      </PackageReleaseNotes>
+      <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newntonsoft nuget package.</PackageReleaseNotes>
     </PropertyGroup>
   
     <PropertyGroup>

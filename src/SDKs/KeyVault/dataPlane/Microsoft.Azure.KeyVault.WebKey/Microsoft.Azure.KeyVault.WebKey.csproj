@@ -7,13 +7,7 @@
     <AssemblyName>Microsoft.Azure.KeyVault.WebKey</AssemblyName>
     <VersionPrefix>3.0.1</VersionPrefix>
     <PackageTags>Microsoft Azure Key Vault WebKey</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-        * Adding support for eliptical curve keys.
-          * supported curves: P-256, P-384, P-521, P256K
-          * supported algorithms: ES256, ES384, ES512, ES256K
-      ]]>
-    </PackageReleaseNotes>
+    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newntonsoft nuget package.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

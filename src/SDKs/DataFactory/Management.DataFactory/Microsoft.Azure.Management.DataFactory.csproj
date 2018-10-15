@@ -9,16 +9,7 @@
 		<Version>2.3.1</Version>
 		<AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
 		<PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
-		<PackageReleaseNotes>
-			<![CDATA[
-		- Added variables support to Pipelines
-		- Added new AppendVariable and SetVariable activities
-		- Added support for SecureInput in activities
-		- Added ScriptActions to on demand HDI linked service
-		- Added support for recursive Cancel operation on runs
-		- Added TumblingWindowRerunTrigger API
-            ]]>
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newntonsoft nuget package.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

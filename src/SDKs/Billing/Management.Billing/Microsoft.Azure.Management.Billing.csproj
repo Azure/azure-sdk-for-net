@@ -9,11 +9,7 @@
 		<AssemblyName>Microsoft.Azure.Management.Billing</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.Billing</PackageId>
 		<PackageTags>Microsoft Azure Billing management;Billing;Billing management;</PackageTags>
-		<PackageReleaseNotes>
-			<![CDATA[
-			This is a public preview release of the Azure Billing SDK. Included with this release is support for enrollment accounts.
-			]]>
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newntonsoft nuget package.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup>

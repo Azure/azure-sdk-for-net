@@ -10,7 +10,7 @@
 		<AssemblyName>Microsoft.Azure.Management.Search</AssemblyName>
 		<Version>2.0.1</Version>
 		<PackageTags>Microsoft Azure Search;Microsoft Azure Search Management;</PackageTags>
-		<PackageReleaseNotes>This is the Azure Search Management SDK for .NET, based on version 2015-08-19 of the Azure Search Management REST API. It includes support for programmatically provisioning and managing Search services and API keys. It supports all available SKUs, including the new S3 and S3 High-Density SKUs.</PackageReleaseNotes>
+		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newntonsoft nuget package.</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<PropertyGroup>

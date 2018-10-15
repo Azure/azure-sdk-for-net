@@ -7,7 +7,7 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure MarketplaceOrdering Agreements Library")]
 [assembly: AssemblyDescription("Provides developers with a library to get and set legal terms for Azure Marketplace Offers.")]
 
-[assembly: AssemblyVersion("1.0.1.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.1.0")]
 
 [assembly: AssemblyConfiguration("")]
