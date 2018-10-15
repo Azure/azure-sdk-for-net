@@ -131,13 +131,13 @@ namespace Microsoft.Rest
         /// <returns>Value for provided HKLM key</returns>
         private string ReadHKLMRegistry(string path, string key)
         {
-            if (IsMonoFramework)
+           try
             {
-                return string.Empty;
-            }
+                if (IsMonoFramework)
+                {
+                    return string.Empty;
+                }
 
-            try
-            {
                 using (RegistryKey rk = Registry.LocalMachine.OpenSubKey(path))
                 {
                     if (rk == null) return "";
@@ -159,18 +159,20 @@ namespace Microsoft.Rest
                 if(_defaultUserAgentInfoList == null)
                 {
                     _defaultUserAgentInfoList = new List<ProductInfoHeaderValue>();
+                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(FXVERSION, FrameworkVersion));
+#if FullNetFx
                     if (!IsMonoFramework)
                     {
-                        _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(FXVERSION, FrameworkVersion));
-#if FullNetFx
                         _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSNAME, OsName));
                         _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
-#endif
                     }
-#if FullNetFx
-                    if (IsMonoFramework)
+                    else
                     {
-                        _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSVERSION, Environment.OSVersion.Platform.ToString()));
+                        string monoOsName = Environment.OSVersion.Platform.ToString();
+                        if (!string.IsNullOrWhiteSpace(monoOsName))
+                        {
+                            _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSNAME, monoOsName));
+                        }   
                     }
 #endif
                 }
