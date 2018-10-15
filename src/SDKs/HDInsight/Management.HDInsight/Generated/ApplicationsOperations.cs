@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Application>>> ListWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Application>>> ListByClusterWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByCluster", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.HDInsight
         }
 
         /// <summary>
-        /// Lists properties of the specified application.
+        /// Gets properties of the specified application.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -462,7 +462,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Application>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationName, ApplicationProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Application>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationName, Application parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<Application> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -530,7 +530,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Application>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationName, ApplicationProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Application>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationName, Application parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -914,7 +914,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Application>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Application>>> ListByClusterNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -929,7 +929,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByClusterNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";

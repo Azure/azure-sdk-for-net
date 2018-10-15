@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.HDInsight
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ExtensionOperations operations.
+    /// ExtensionsOperations operations.
     /// </summary>
-    public partial interface IExtensionOperations
+    public partial interface IExtensionsOperations
     {
         /// <summary>
         /// Enables the Operations Management Suite (OMS) on the HDInsight
@@ -229,5 +229,58 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginDisableMonitoringWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates an HDInsight cluster extension.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='extensionName'>
+        /// The name of the cluster extension.
+        /// </param>
+        /// <param name='parameters'>
+        /// The cluster extensions create request.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string extensionName, Extension parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes the specified extension for HDInsight cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='extensionName'>
+        /// The name of the cluster extension.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, string extensionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

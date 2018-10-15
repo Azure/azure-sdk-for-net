@@ -59,19 +59,20 @@ namespace Microsoft.Azure.Management.HDInsight
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -96,9 +97,9 @@ namespace Microsoft.Azure.Management.HDInsight
         public virtual IConfigurationsOperations Configurations { get; private set; }
 
         /// <summary>
-        /// Gets the IExtensionOperations.
+        /// Gets the IExtensionsOperations.
         /// </summary>
-        public virtual IExtensionOperations Extension { get; private set; }
+        public virtual IExtensionsOperations Extensions { get; private set; }
 
         /// <summary>
         /// Gets the IScriptActionsOperations.
@@ -114,6 +115,19 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the HDInsightManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling HDInsightManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected HDInsightManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the HDInsightManagementClient class.
@@ -198,6 +212,33 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Thrown when a required parameter is null
         /// </exception>
         public HDInsightManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the HDInsightManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling HDInsightManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public HDInsightManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -320,12 +361,12 @@ namespace Microsoft.Azure.Management.HDInsight
             Applications = new ApplicationsOperations(this);
             Locations = new LocationsOperations(this);
             Configurations = new ConfigurationsOperations(this);
-            Extension = new ExtensionOperations(this);
+            Extensions = new ExtensionsOperations(this);
             ScriptActions = new ScriptActionsOperations(this);
             ScriptExecutionHistory = new ScriptExecutionHistoryOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2015-03-01-preview";
+            ApiVersion = "2018-06-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

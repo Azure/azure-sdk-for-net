@@ -7,11 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-		<Version>3.1.1-preview</Version>
+		<Version>4.0.0-preview</Version>
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public preview release of the Azure HDInsight SDK. Fixed customization related to Hive/Oozie metastores and duplicate configurations.
+        This is a public preview release of the Azure HDInsight SDK. Added support for Enterprise Security Package with a user's AAD-DS. Regenerated with API version 2018-06-01-preview.
       ]]>
 		</PackageReleaseNotes>
     

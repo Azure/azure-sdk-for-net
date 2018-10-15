@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="container">The container in the storage account, only
         /// to be specified for WASB storage accounts.</param>
         /// <param name="fileSystem">The filesystem, only to be specified for
-        /// Azure Data Lake Storage Gen 2.</param>
+        /// Azure Data Lake Storage type Gen 2.</param>
         /// <param name="key">The storage account access key.</param>
         public StorageAccount(string name = default(string), bool? isDefault = default(bool?), string container = default(string), string fileSystem = default(string), string key = default(string))
         {
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
 
         /// <summary>
         /// Gets or sets the filesystem, only to be specified for Azure Data
-        /// Lake Storage Gen 2.
+        /// Lake Storage type Gen 2.
         /// </summary>
         [JsonProperty(PropertyName = "fileSystem")]
         public string FileSystem { get; set; }

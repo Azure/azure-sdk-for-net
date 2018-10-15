@@ -40,11 +40,14 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="etag">The ETag for the resource</param>
         /// <param name="properties">The properties of the cluster.</param>
-        public Cluster(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), ClusterGetProperties properties = default(ClusterGetProperties))
+        /// <param name="identity">The identity of the cluster, if
+        /// configured.</param>
+        public Cluster(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), ClusterGetProperties properties = default(ClusterGetProperties), ClusterIdentity identity = default(ClusterIdentity))
             : base(id, name, type, location, tags)
         {
             Etag = etag;
             Properties = properties;
+            Identity = identity;
             CustomInit();
         }
 
@@ -64,6 +67,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public ClusterGetProperties Properties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the cluster, if configured.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ClusterIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.
