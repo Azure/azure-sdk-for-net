@@ -4,13 +4,12 @@
     <Description>Infrastructure for error handling, tracing, and HttpClient pipeline configuration. Required by client libraries generated using AutoRest.</Description>
     <AssemblyName>Microsoft.Rest.ClientRuntime</AssemblyName>
     <AssemblyTitle>Client Runtime Library for Microsoft AutoRest Generated Clients</AssemblyTitle>
-    <Version>2.3.14</Version>
+    <Version>2.3.15</Version>
     <PackageId>Microsoft.Rest.ClientRuntime</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        1) Fix for Retry-After delegating handler
-        2) Fix for memory leak resulted from adding delegate callback on every request
+        1) Fix for DelegatingHandler chaining in the Service Client chaining pipeline. 
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
