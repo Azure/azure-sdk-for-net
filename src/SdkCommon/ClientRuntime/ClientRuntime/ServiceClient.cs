@@ -55,6 +55,24 @@ namespace Microsoft.Rest
         /// </summary>
         private string _fxVersion;
 
+        private bool IsMonoFramework
+        {
+            get {
+                bool result = false;
+#if FullNetFx
+                switch (Environment.OSVersion.Platform)
+                {
+                    case PlatformID.Unix:
+                    case PlatformID.MacOSX:
+                    case PlatformID.Xbox:
+                        result = true;
+                        break;
+                }
+#endif
+                return result;
+            }
+        }
+
         #region Full Net Fx specific code
 #if FullNetFx
         /// <summary>
@@ -113,12 +131,9 @@ namespace Microsoft.Rest
         /// <returns>Value for provided HKLM key</returns>
         private string ReadHKLMRegistry(string path, string key)
         {
-            switch (Environment.OSVersion.Platform)
+            if (IsMonoFramework)
             {
-                case PlatformID.Unix:
-                case PlatformID.MacOSX:
-                case PlatformID.Xbox:
-                    return string.Empty;
+                return string.Empty;
             }
 
             try
@@ -144,18 +159,18 @@ namespace Microsoft.Rest
                 if(_defaultUserAgentInfoList == null)
                 {
                     _defaultUserAgentInfoList = new List<ProductInfoHeaderValue>();
-                    if (!string.IsNullOrWhiteSpace(FrameworkVersion))
+                    if (!IsMonoFramework)
                     {
                         _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(FXVERSION, FrameworkVersion));
+#if FullNetFx
+                        _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSNAME, OsName));
+                        _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
+#endif
                     }
 #if FullNetFx
-                    if (!string.IsNullOrWhiteSpace(OsName))
+                    if (IsMonoFramework)
                     {
-                        _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSNAME, OsName));
-                    }
-                    if (!string.IsNullOrWhiteSpace(OsVersion))
-                    {
-                        _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
+                        _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSVERSION, Environment.OSVersion.Platform.ToString()));
                     }
 #endif
                 }
