@@ -26,5 +26,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/TextAnalytics/readme.md --csharp --version=latest --reflect-api-versions --tag=release_2_1 --csharp.output-folder=C:\\azure-sdk-for-net\\src\\SDKs\\CognitiveServices\\dataPlane\\Language\\TextAnalytics\\TextAnalytics-2.1-preview\\Generated\\TextAnalytics-2.1-preview";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "9f34cb66f86adbb558cefaf507294cab4a469d0a";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+
