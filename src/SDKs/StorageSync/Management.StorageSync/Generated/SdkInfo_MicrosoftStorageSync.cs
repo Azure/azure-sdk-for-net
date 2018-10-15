@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.StorageSync
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/storagesync/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=H:\\csharpsdk\\azure-sdk-for-net\\src\\SDKs";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "1cd64f3a616030e9e8bf26b9f708a3bdc8f53a5d";
+      public static readonly String GithubCommidId = "98f4435055242d841b6a2818cdec1f0bfc2c0cc2";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
