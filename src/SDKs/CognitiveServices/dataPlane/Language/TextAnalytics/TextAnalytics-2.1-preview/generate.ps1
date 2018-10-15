@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "cognitiveservices/data-plane/TextAnalytics" -AutoRestVersion "latest" -SdkGenerationDirectory "$PSScriptRoot\Generated\TextAnalytics"
+Start-AutoRestCodeGeneration -ResourceProvider "cognitiveservices/data-plane/TextAnalytics" -AutoRestVersion "latest" -SdkGenerationDirectory "$PSScriptRoot\Generated\TextAnalytics-2.1-preview" -ConfigFileTag "release_2_1"
