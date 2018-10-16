@@ -8,7 +8,7 @@
     <AssemblyName>Microsoft.Azure.EventGrid.Tests</AssemblyName>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
