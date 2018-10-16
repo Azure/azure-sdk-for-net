@@ -9,7 +9,7 @@
     <PackageTags>Microsoft AutoRest ClientRuntime $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        1) Fix for Default User Agent headers for mono on non windows
+        1) Fix for DelegatingHandler chaining in the Service Client chaining pipeline. 
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
