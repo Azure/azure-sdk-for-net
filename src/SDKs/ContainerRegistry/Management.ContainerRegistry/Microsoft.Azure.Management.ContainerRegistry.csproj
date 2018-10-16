@@ -6,16 +6,10 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.ContainerRegistry</PackageId>
 		<Description>Provides management capabilities for Azure Container Registry.</Description>
-		<Version>2.0.0</Version>
+		<Version>2.0.1</Version>
 		<AssemblyName>Microsoft.Azure.Management.ContainerRegistry</AssemblyName>
 		<PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
-		<PackageReleaseNotes>
-			<![CDATA[
-        1) Added support for managed registries that can be created with Basic, Standard, Premium SKU.
-        2) Bring your own storage registries can still be created with Classic SKU.
-        3) Added support for webhooks and replications.
-      ]]>
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newntonsoft nuget package.</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<PropertyGroup>
