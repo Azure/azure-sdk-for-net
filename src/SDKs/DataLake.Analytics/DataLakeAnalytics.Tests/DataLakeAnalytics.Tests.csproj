@@ -8,7 +8,7 @@
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
