@@ -8,7 +8,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Data Migration Resources.")]
 
 [assembly: AssemblyVersion("0.3.0")]
-[assembly: AssemblyFileVersion("0.2.0")]
+[assembly: AssemblyFileVersion("0.3.1")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
