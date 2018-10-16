@@ -7,17 +7,9 @@
 		<PackageId>Microsoft.Azure.Management.Reservations</PackageId>
 		<Description>Microsoft.Azure.Management.Reservations Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Reservations</AssemblyName>
-		<Version>1.8.0-preview</Version>
+		<Version>1.8.1-preview</Version>
     <PackageTags>Reservations;</PackageTags>
-		<PackageReleaseNotes>
-			<![CDATA[
-        This is a public preview release of the Azure Reservations SDK. Included with this release is 
-        - Updating the Catalogs and Patch API with additional parameters
-        - Removed Kind from ReservationsProperties
-        - Support for different ReservedResourceTypes (VirtualMachines, SqlDatabases, SuseLinux)
-        - Support for InstanceFlexibility
-      ]]>
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newntonsoft nuget package.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
