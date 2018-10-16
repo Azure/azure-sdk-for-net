@@ -1,5 +1,11 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
 
+### Changes in 3.5.2-preview
+
+**Notes**
+
+- Added two additional job states to support scope jobs - Yielded and Finalizing
+
 ### Changes in 3.5.1-preview
 
 **Notes**
