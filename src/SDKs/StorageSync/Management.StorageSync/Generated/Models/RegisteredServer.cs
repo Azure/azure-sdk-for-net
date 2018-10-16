@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
     /// Registered Server resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class RegisteredServer : Resource
+    public partial class RegisteredServer : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the RegisteredServer class.
@@ -64,7 +64,9 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="serviceLocation">Service Location</param>
         /// <param name="friendlyName">Friendly Name</param>
         /// <param name="managementEndpointUri">Management Endpoint Uri</param>
-        public RegisteredServer(string id = default(string), string name = default(string), string type = default(string), string serverCertificate = default(string), string agentVersion = default(string), string serverOSVersion = default(string), int? serverManagementtErrorCode = default(int?), string lastHeartBeat = default(string), string provisioningState = default(string), string serverRole = default(string), string clusterId = default(string), string clusterName = default(string), string serverId = default(string), string storageSyncServiceUid = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), string discoveryEndpointUri = default(string), string resourceLocation = default(string), string serviceLocation = default(string), string friendlyName = default(string), string managementEndpointUri = default(string))
+        /// <param name="monitoringConfiguration">Monitoring
+        /// Configuration</param>
+        public RegisteredServer(string id = default(string), string name = default(string), string type = default(string), string serverCertificate = default(string), string agentVersion = default(string), string serverOSVersion = default(string), int? serverManagementtErrorCode = default(int?), string lastHeartBeat = default(string), string provisioningState = default(string), string serverRole = default(string), string clusterId = default(string), string clusterName = default(string), string serverId = default(string), string storageSyncServiceUid = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), string discoveryEndpointUri = default(string), string resourceLocation = default(string), string serviceLocation = default(string), string friendlyName = default(string), string managementEndpointUri = default(string), string monitoringConfiguration = default(string))
             : base(id, name, type)
         {
             ServerCertificate = serverCertificate;
@@ -85,6 +87,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             ServiceLocation = serviceLocation;
             FriendlyName = friendlyName;
             ManagementEndpointUri = managementEndpointUri;
+            MonitoringConfiguration = monitoringConfiguration;
             CustomInit();
         }
 
@@ -200,6 +203,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.managementEndpointUri")]
         public string ManagementEndpointUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets monitoring Configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.monitoringConfiguration")]
+        public string MonitoringConfiguration { get; set; }
 
     }
 }
