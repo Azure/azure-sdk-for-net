@@ -17,36 +17,34 @@ namespace Microsoft.Azure.EventGrid.Models
 
     /// <summary>
     /// Schema of the Data property of an EventGridEvent for a
-    /// Microsoft.Media.JobStateChange event.
+    /// Microsoft.Media.JobOutputStateChange event.
     /// </summary>
-    public partial class MediaJobStateChangeEventData
+    public partial class MediaJobOutputStateChangeEventData
     {
         /// <summary>
-        /// Initializes a new instance of the MediaJobStateChangeEventData
-        /// class.
+        /// Initializes a new instance of the
+        /// MediaJobOutputStateChangeEventData class.
         /// </summary>
-        public MediaJobStateChangeEventData()
+        public MediaJobOutputStateChangeEventData()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MediaJobStateChangeEventData
-        /// class.
+        /// Initializes a new instance of the
+        /// MediaJobOutputStateChangeEventData class.
         /// </summary>
         /// <param name="previousState">The previous state of the Job. Possible
         /// values include: 'Canceled', 'Canceling', 'Error', 'Finished',
         /// 'Processing', 'Queued', 'Scheduled'</param>
-        /// <param name="state">The new state of the Job. Possible values
-        /// include: 'Canceled', 'Canceling', 'Error', 'Finished',
-        /// 'Processing', 'Queued', 'Scheduled'</param>
-        /// <param name="correlationData">Gets the Job correlation
+        /// <param name="output">Gets the output.</param>
+        /// <param name="jobCorrelationData">Gets the Job correlation
         /// data.</param>
-        public MediaJobStateChangeEventData(MediaJobState previousState = default(MediaJobState), MediaJobState state = default(MediaJobState), IDictionary<string, string> correlationData = default(IDictionary<string, string>))
+        public MediaJobOutputStateChangeEventData(MediaJobState previousState = default(MediaJobState), MediaJobOutput output = default(MediaJobOutput), IDictionary<string, string> jobCorrelationData = default(IDictionary<string, string>))
         {
             PreviousState = previousState;
-            State = state;
-            CorrelationData = correlationData;
+            Output = output;
+            JobCorrelationData = jobCorrelationData;
             CustomInit();
         }
 
@@ -64,18 +62,29 @@ namespace Microsoft.Azure.EventGrid.Models
         public MediaJobState PreviousState { get; private set; }
 
         /// <summary>
-        /// Gets the new state of the Job. Possible values include: 'Canceled',
-        /// 'Canceling', 'Error', 'Finished', 'Processing', 'Queued',
-        /// 'Scheduled'
+        /// Gets the output.
         /// </summary>
-        [JsonProperty(PropertyName = "state")]
-        public MediaJobState State { get; private set; }
+        [JsonProperty(PropertyName = "output")]
+        public MediaJobOutput Output { get; set; }
 
         /// <summary>
         /// Gets the Job correlation data.
         /// </summary>
-        [JsonProperty(PropertyName = "correlationData")]
-        public IDictionary<string, string> CorrelationData { get; set; }
+        [JsonProperty(PropertyName = "jobCorrelationData")]
+        public IDictionary<string, string> JobCorrelationData { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Output != null)
+            {
+                Output.Validate();
+            }
+        }
     }
 }
