@@ -39,8 +39,9 @@ namespace Authorization.Tests
 			if (HttpMockServer.Mode == HttpRecorderMode.Record)
 			{
 				var environment = TestEnvironmentFactory.GetTestEnvironment();
-				result.TenantId = environment.Tenant;
-				result.Domain = environment.UserName
+                //// result.TenantId = environment.Tenant;
+                result.TenantId = "1273adef-00a3-4086-a51a-dbcce1857d36";
+                result.Domain = environment.UserName
 							.Split(new[] { "@" }, StringSplitOptions.RemoveEmptyEntries)
 							.Last();
 
