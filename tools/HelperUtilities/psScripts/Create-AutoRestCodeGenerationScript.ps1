@@ -28,7 +28,7 @@ Param(
     [Parameter(Mandatory = $false, HelpMessage="If path for the sdk directory has not been properly set up in the config file, use this param to set it explicitly. It is recommended to set the `--csharp-sdks-folder` in the config file, this is a worst case backdoor. Eg. PSScript\Generated")]
     [string] $SdkGenerationDirectory
 )
-$SdkGenerationDirectory = ""
+
 $ScriptPath = $(Resolve-Path -Path $ScriptPath)
 if(!$(Test-Path -Path $ScriptPath))
 {
