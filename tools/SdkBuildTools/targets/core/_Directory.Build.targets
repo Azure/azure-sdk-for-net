@@ -1,0 +1,4 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Condition="Exists('$(NetSdkBuildTargetsDir)\common.targets')" Project="$(NetSdkBuildTargetsDir)\common.targets" />
+	<Import Condition="Exists('$(NetSdkBuildTargetsDir)\ideCmd.targets')" Project="$(NetSdkBuildTargetsDir)\ideCmd.targets" />
+</Project>
