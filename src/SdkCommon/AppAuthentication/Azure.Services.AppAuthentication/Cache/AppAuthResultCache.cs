@@ -7,14 +7,14 @@ using System.Collections.Concurrent;
 namespace Microsoft.Azure.Services.AppAuthentication
 {
     /// <summary>
-    /// Cache for access tokens. 
+    /// Cache for app authentication results 
     /// </summary>
     internal class AppAuthResultCache
     {
         private static readonly ConcurrentDictionary<string, Tuple<AppAuthenticationResult, Principal>> CacheDictionary = new ConcurrentDictionary<string, Tuple<AppAuthenticationResult, Principal>>();
 
         /// <summary>
-        /// Gets the token from the cache. If it is present, and not about to expire, it is returned. 
+        /// Gets the app authentication result from the cache. If it is present, and token is not about to expire, it is returned.
         /// </summary>
         /// <param name="cacheKey"></param>
         /// <returns></returns>
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         }
 
         /// <summary>
-        /// Tuple of access token and principal are added to the cache after the token is aquired. 
+        /// Tuple of app authentication result and principal are added to the cache after the token is acquired.
         /// </summary>
         /// <param name="cacheKey"></param>
         /// <param name="resultTuple"></param>

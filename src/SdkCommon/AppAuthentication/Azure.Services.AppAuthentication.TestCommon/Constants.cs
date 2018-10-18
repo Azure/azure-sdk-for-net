@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         // Azure AD related constants
         public static readonly string TenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
         public static readonly string TestAppId = "f0b1f84a-ec74-4cef-8034-adbad168ce33";
+        public static readonly string TestUserAssignedManagedIdentityId = "942343b1-4af2-490c-b6d9-9250b8f2808c";
         public static readonly string AzureAdInstance = "https://login.microsoftonline.com/";
 
         // Error messages
@@ -33,7 +34,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string NoConnectionString = "[No connection string specified]";
         public static readonly string ConnectionStringEmpty = "Connection string is empty.";
         public static readonly string InvalidCertLocationError = "is not valid. Valid values are CurrentUser and LocalMachine.";
-        public static readonly string ConnectionStringNotHaveAtLeastOneRequiredKey = "is not valid. Must contain at least one of";
+        public static readonly string ConnectionStringMissingCertLocation = "attribute and it must not be empty when using";
         public static readonly string KeyRepeatedInConnectionString = "is repeated";
         public static readonly string InvalidConnectionString = "is not valid";
         public static readonly string Redacted = "<<Redacted>>";
@@ -43,6 +44,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string DeveloperToolError = "You are not logged in.";
         public static readonly string JsonParseErrorException = "There was an error deserializing the object of type";
         public static readonly string TokenNotInExpectedFormatError = "Index was outside the bounds of the array";
+        public static readonly string SqlAppAuthProviderInvalidAuthority = "The Azure AD instance could not be parsed";
+        public static readonly string SqlAppAuthProviderInvalidResource = "A resource must be specified";
 
         // Connection strings
         public static readonly string ClientSecret = "Secret";
@@ -59,6 +62,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string AzureCliConnectionStringNoRunAs = "DeveloperTool=AzureCLI";
         public static readonly string ActiveDirectoryIntegratedConnectionString = "RunAs=CurrentUser;";
         public static readonly string ManagedServiceIdentityConnectionString = "RunAs=App;";
+        public static readonly string ManagedUserAssignedIdentityConnectionString = $"RunAs=App;AppId={TestUserAssignedManagedIdentityId};TenantId={TenantId}";
         public static readonly string CertificateConnStringThumbprintLocalMachine = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;CertificateStoreLocation=LocalMachine";
         public static readonly string CertificateConnStringThumbprintInvalidLocation = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;CertificateStoreLocation=InvalidLocation";
         public static readonly string AppConnStringNoLocationOrAppKey = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;";
@@ -100,7 +104,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string LocalAppDataEnv = "LOCALAPPDATA";
         public static readonly string TokenProviderFileNotFound = "Visual Studio Token provider file not found at ";
         public static readonly string TokenProviderExceptionMessage = "Exception for Visual Studio token provider";
-        public static readonly string PreferenceNotFound= "'Preference' was not found";
+        public static readonly string PreferenceNotFound = "'Preference' was not found";
         public static readonly string TokenProviderFileFormatExceptionMessage = "VisualStudio Token Provider File is not in the expected format.";
 
         // Test files path

@@ -74,6 +74,16 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
+        ///  The response has claims as expected from MSI response with user-assigned managed identity
+        /// </summary>
+        /// <returns></returns>
+        internal static string GetManagedIdentityTokenResponse()
+        {
+            return
+                "{\"access_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjdfWnVmMXR2a3dMeFlhSFMzcTZsVWpVWUlHdyIsImtpZCI6IjdfWnVmMXR2a3dMeFlhSFMzcTZsVWpVWUlHdyJ9.eyJhdWQiOiJodHRwczovL3ZhdWx0LmF6dXJlLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTM2MDkxMTk1LCJuYmYiOjE1MzYwOTExOTUsImV4cCI6MTUzNjEyMDI5NSwiYWlvIjoiNDJCZ1lJaW8zK3N1cE1XOVcrZWd4UGZNK3pFbUFBPT0iLCJhcHBpZCI6Ijk0MjM0M2IxLTRhZjItNDkwYy1iNmQ5LTkyNTBiOGYyODA4YyIsImFwcGlkYWNyIjoiMiIsImVfZXhwIjoyODgwMDAsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny8iLCJvaWQiOiJiMzllNTZiZS1jZThiLTQyYjAtYjY3ZS0xYWI5YmU4ODUxZmQiLCJzdWIiOiJiMzllNTZiZS1jZThiLTQyYjAtYjY3ZS0xYWI5YmU4ODUxZmQiLCJ0aWQiOiI3MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDciLCJ1dGkiOiJtcVk3QnJfOENVS3hnd1JteW11RkFBIiwidmVyIjoiMS4wIiwieG1zX21pcmlkIjoiL3N1YnNjcmlwdGlvbnMvYmRkNzg5ZjMtZDlkMS00YmVhLWFjMTQtMzBhMzllZDY2ZDMzL3Jlc291cmNlZ3JvdXBzL3Rlc3RiZWQvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkSWRlbnRpdHkvdXNlckFzc2lnbmVkSWRlbnRpdGllcy9UZXN0QmVkTWFuYWdlZElkZW50aXR5In0.ic31ZbWlTJ72DLGDmwbuPQJi1Lw_pw7UdBUauXD9MpDznSts2j3GXpa9mldiEeTeUAKtygt2ncnjStUaIlxfh94wxT37V5NElEwE2yVjY1mD1yRkTN9MIB8QQijkzNgzKms6y-zWn0i7oLCV6fdOZInrSLB9zd_X4AJI4LAGLvpzzt7cemNYRtNH4OJa3tTQP6vxh5wLY_gVlfSnOe1zX2RCXcOX3SC4YgOdo-L0n9w4iMV4HrQo6sfN5F5Rtaqi4MlwsuNuMiPZO0S8B73Qy3SFMQD3P2j_u47c5TI-PBa69ORqIEtbdg9FUIjY1_dBKgruJCXSm9tA0WvX-P0u5A\",\"client_id\":\"942343b1-4af2-490c-b6d9-9250b8f2808c\",\"expires_in\":\"28799\",\"expires_on\":\"1536120295\",\"ext_expires_in\":\"288000\",\"not_before\":\"1536091195\",\"resource\":\"https://vault.azure.net/\",\"token_type\":\"Bearer\"}";
+        }
+
+        /// <summary>
         ///  The response from MSI missing token
         /// </summary>
         /// <returns></returns>

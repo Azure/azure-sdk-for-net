@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
 
                 var delta = expiration.UtcDateTime - expiresOn.UtcDateTime;
 
-                // the expirations can differ a fraction of a second
+                // the expirations can differ a fraction of a second for integration/E2E tests
                 Assert.True(delta < TimeSpan.FromSeconds(1));
             }
 

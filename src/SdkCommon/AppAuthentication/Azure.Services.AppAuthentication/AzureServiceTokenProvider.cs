@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// KeyVaultClient keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
         /// </code>
         /// </example>
-        public TokenCallback KeyVaultTokenCallback => async (a, r, s) => 
-        {
-            var authResult = await GetAuthResultAsyncImpl(a, r, s).ConfigureAwait(false);
+        public TokenCallback KeyVaultTokenCallback => async (authority, resource, scope) => 
+        {   
+            var authResult = await GetAuthResultAsyncImpl(authority, resource, scope).ConfigureAwait(false);
             return authResult.AccessToken;
         };
 
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns></returns>
         private async Task<AppAuthenticationResult> GetAuthResultAsyncImpl(string authority, string resource, string scope)
         {
-            // Check if the token is present in cache, for the given connection string, authority, and resource
+            // Check if the auth result is present in cache, for the given connection string, authority, and resource
             // This is an in-memory global cache, that will be used across instances of this class. 
             string cacheKey = $"ConnectionString:{_connectionString};Authority:{authority};Resource:{resource}";
 
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             try
             {
-                // Check again if the token is in the cache now, the first thread may have gotten it.
+                // Check again if the auth result is in the cache now, the first thread may have gotten it.
                 cachedAuthResult = AppAuthResultCache.Get(cacheKey);
 
                 if (cachedAuthResult != null)
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     return cachedAuthResult.Item1;
                 }
 
-                // If the token was not in cache, try to get it
+                // If the auth result was not in cache, try to get it
                 List<NonInteractiveAzureServiceTokenProviderBase> tokenProviders = GetTokenProviders();
                 
                 // Try to get the token using the selected providers
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 {
                     try
                     {
-                        // Get the token, add to the cache, and return the token.
+                        // Get the auth result, add to the cache, and return the auth result.
                         var authResult = await tokenProvider.GetAuthResultAsync(authority, resource,
                                 string.Empty)
                             .ConfigureAwait(false);

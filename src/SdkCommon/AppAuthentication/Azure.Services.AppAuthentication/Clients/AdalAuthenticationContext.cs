@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
     internal class AdalAuthenticationContext : IAuthenticationContext
     {
         /// <summary>
-        /// Used to get token for Integrated Windows Authentication scenario. 
+        /// Used to get authentication result for Integrated Windows Authentication scenario. 
         /// </summary>
         /// <param name="authority"></param>
         /// <param name="resource"></param>
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         }
 
         /// <summary>
-        /// Used to get token for Integrated Windows Authentication scenario, where the token may already be in ADAL cache. 
+        /// Used to get authentication result for Integrated Windows Authentication scenario, where the token may already be in ADAL cache. 
         /// </summary>
         /// <param name="authority"></param>
         /// <param name="resource"></param>
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         }
 
         /// <summary>
-        /// Used to get token for client credentials flow using a client secret. 
+        /// Used to get authentication result for client credentials flow using a client secret. 
         /// </summary>
         /// <param name="authority"></param>
         /// <param name="resource"></param>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         }
 
         /// <summary>
-        /// Used to get token for client credentials flow using a client certificate. 
+        /// Used to get authentication for client credentials flow using a client certificate. 
         /// </summary>
         /// <param name="authority"></param>
         /// <param name="resource"></param>
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         public async Task<AppAuthenticationResult> AcquireTokenAsync(string authority, string resource, IClientAssertionCertificate clientCertificate)
         {
             AuthenticationContext authenticationContext = new AuthenticationContext(authority);
-            var authResult = await authenticationContext.AcquireTokenAsync(resource, clientCertificate).ConfigureAwait(false);
+            var authResult = await authenticationContext.AcquireTokenAsync(resource, clientCertificate, true).ConfigureAwait(false);
             return AppAuthenticationResult.Create(authResult);
         }
     }

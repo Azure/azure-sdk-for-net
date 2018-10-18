@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             var authResult = await provider.GetAuthResultAsync(Constants.KeyVaultResourceId, string.Empty).ConfigureAwait(false);
 
-            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.UserType, Constants.TenantId);
+            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.UserType, Constants.TenantId, expiresOn: authResult.ExpiresOn);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             var authResult = await provider.GetAuthResultAsync(Constants.KeyVaultResourceId, string.Empty).ConfigureAwait(false);
 
-            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.UserType, Constants.TenantId);
+            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.UserType, Constants.TenantId, expiresOn: authResult.ExpiresOn);
         }
 
         /// <summary>

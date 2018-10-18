@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // Get token and validate it
             var authResult = await visualStudioAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
 
-            Validator.ValidateToken(authResult.AccessToken, visualStudioAccessTokenProvider.PrincipalUsed, Constants.UserType, Constants.TenantId);
+            Validator.ValidateToken(authResult.AccessToken, visualStudioAccessTokenProvider.PrincipalUsed, Constants.UserType, Constants.TenantId, expiresOn: authResult.ExpiresOn);
         }
 
         /// <summary>

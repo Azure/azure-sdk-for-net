@@ -1,10 +1,6 @@
 ﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Services.AppAuthentication
 {
@@ -20,19 +16,19 @@ namespace Microsoft.Azure.Services.AppAuthentication
         public string AccessToken { get; private set; }
 
         /// <summary>
-        /// When the token is valid to
+        /// The time when the access token expires
         /// </summary>
         [DataMember]
         public DateTimeOffset ExpiresOn { get; private set; }
 
         /// <summary>
-        /// The resource the token request is authorized for
+        /// The Resource URI of the receiving web service
         /// </summary>
         [DataMember]
         public string Resource { get; private set; }
 
         /// <summary>
-        /// The type of access token returned
+        /// Indicates the token type value
         /// </summary>
         [DataMember]
         public string TokenType { get; private set; }
@@ -41,10 +37,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// Return true when access token is near expiration
         /// </summary>
         /// <returns></returns>
-        public bool IsNearExpiry()
+        internal bool IsNearExpiry()
         {
             // If the expiration time is within the next 5 minutes, the token is about to expire
-            return ExpiresOn < DateTimeOffset.Now.AddMinutes(5);
+            return ExpiresOn < DateTimeOffset.UtcNow.AddMinutes(5);
         }
 
         internal static AppAuthenticationResult Create(TokenResponse response, TokenResponse.DateFormat dateFormat)
@@ -95,7 +91,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             return result;
         }
 
-        // for unit testing
+        // For unit testing
         internal static AppAuthenticationResult Create(string accessToken)
         {
             if (string.IsNullOrEmpty(accessToken))
@@ -105,7 +101,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             var tokenObj = AppAuthentication.AccessToken.Parse(accessToken);
 
-            var result = new AppAuthenticationResult()
+            var result = new AppAuthenticationResult
             {
                 AccessToken = accessToken,
                 ExpiresOn = AppAuthentication.AccessToken.UnixTimeEpoch.AddSeconds(tokenObj.ExpiryTime)

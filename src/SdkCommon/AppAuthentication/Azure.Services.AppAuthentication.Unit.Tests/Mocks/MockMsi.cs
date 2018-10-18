@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MsiAppServicesSuccess,
             MsiAppServicesFailure,
             MsiAzureVmSuccess,
+            MsiUserAssignedIdentityAzureVmSuccess,
             MsiAppJsonParseFailure,
             MsiMissingToken,
             MsiAppServicesIncorrectRequest
@@ -88,6 +89,15 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     responseMessage = new HttpResponseMessage
                     {
                         Content = new StringContent(TokenHelper.GetMsiTokenResponse(),
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+
+                case MsiTestType.MsiUserAssignedIdentityAzureVmSuccess:
+                    responseMessage = new HttpResponseMessage
+                    {
+                        Content = new StringContent(TokenHelper.GetManagedIdentityTokenResponse(),
                             Encoding.UTF8,
                             Constants.JsonContentType)
                     };

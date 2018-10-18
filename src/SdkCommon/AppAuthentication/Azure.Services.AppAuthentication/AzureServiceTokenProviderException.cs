@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         internal const string CertificateNotFound = "Specified certificate was not found. ";
 
-        internal const string MissingResource = "Resouce must be specified.";
-        
+        internal const string MissingResource = "Resource must be specified.";
+
 
         /// <summary>
         /// Creates an instance of AzureServiceTokenProviderException. 

@@ -22,19 +22,48 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
         }
 
-        [Fact]
-        public async Task GetTokenUsingMsiAzureVm()
+        private async Task GetTokenUsingManagedIdentityAzureVm(bool specifyUserAssignedManagedIdentity)
         {
-            // MockMsi is being asked to act like response from Azure VM MSI suceeded. 
-            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAzureVmSuccess);
+            string expectedAppId;
+            string managedIdentityArgument;
+            MockMsi.MsiTestType msiTestType;
+
+            // Determine arguments and expected values based whether user-assigned managed identity is used
+            if (specifyUserAssignedManagedIdentity)
+            {
+                managedIdentityArgument = Constants.TestUserAssignedManagedIdentityId;
+                msiTestType = MockMsi.MsiTestType.MsiUserAssignedIdentityAzureVmSuccess;
+                expectedAppId = Constants.TestUserAssignedManagedIdentityId;
+            }
+            else
+            {
+                managedIdentityArgument = null;
+                msiTestType = MockMsi.MsiTestType.MsiAzureVmSuccess;
+                expectedAppId = Constants.TestAppId;
+            }
+
+            // MockMsi is being asked to act like response from Azure VM MSI succeeded. 
+            MockMsi mockMsi = new MockMsi(msiTestType);
             HttpClient httpClient = new HttpClient(mockMsi);
-            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient, managedIdentityArgument);
 
             // Get token.
             var authResult = await msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
 
             // Check if the principalused and type are as expected. 
-            Validator.ValidateToken(authResult.AccessToken, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
+            Validator.ValidateToken(authResult.AccessToken, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, expectedAppId, expiresOn: authResult.ExpiresOn);
+        }
+
+        [Fact]
+        public async Task GetTokenUsingMsiAzureVm()
+        {
+            await GetTokenUsingManagedIdentityAzureVm(false);
+        }
+
+        [Fact]
+        public async Task GetTokenUsingUserAssignedManagedIdentityAzureVm()
+        {
+            await GetTokenUsingManagedIdentityAzureVm(true);
         }
 
         /// <summary>
@@ -94,7 +123,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
 
-            Validator.ValidateToken(authResult.AccessToken, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
+            Validator.ValidateToken(authResult.AccessToken, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, expiresOn: authResult.ExpiresOn);
         }
 
         /// <summary>

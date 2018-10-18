@@ -72,12 +72,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
             else if (string.Equals(runAs, App, StringComparison.OrdinalIgnoreCase))
             {
                 // If RunAs=App
-                // If AppId key is present, use certificate or Client Secret based token provider
+                // If AppId key is present, use certificate, client secret, or MSI (with user assigned identity) based token provider
                 if (connectionSettings.ContainsKey(AppId))
                 {
                     ValidateAttribute(connectionSettings, AppId, connectionString);
                     ValidateAttribute(connectionSettings, TenantId, connectionString);
-                    ValidateAttributes(connectionSettings, new List<string> { CertificateStoreLocation, AppKey}, connectionString);
 
                     if (connectionSettings.ContainsKey(CertificateStoreLocation))
                     {
@@ -97,7 +96,14 @@ namespace Microsoft.Azure.Services.AppAuthentication
                                 azureAdInstance,
                                 new AdalAuthenticationContext());
                     }
-                    else
+                    else if (connectionSettings.ContainsKey(CertificateThumbprint) ||
+                             connectionSettings.ContainsKey(CertificateSubjectName))
+                    {
+                        // if certificate thumbprint or subject name are specified but certification store location is not, throw error
+                        throw new ArgumentException($"Connection string {connectionString} is not valid. Must contain '{CertificateStoreLocation}' attribute and it must not be empty " +
+                                                    $"when using '{CertificateThumbprint}' and '{CertificateSubjectName}' attributes");
+                    }
+                    else if (connectionSettings.ContainsKey(AppKey))
                     {
                         ValidateAttribute(connectionSettings, AppKey, connectionString);
 
@@ -109,10 +115,15 @@ namespace Microsoft.Azure.Services.AppAuthentication
                                 azureAdInstance,
                                 new AdalAuthenticationContext());
                     }
+                    else
+                    {
+                        // If certificate or client secret are not specified, use the specified managed identity
+                        azureServiceTokenProvider = new MsiAccessTokenProvider(connectionSettings[AppId]);
+                    }
                 }
                 else
                 {
-                    // If AppId is not specified, use Managed service identity
+                    // If AppId is not specified, use Managed Service Identity
                     azureServiceTokenProvider = new MsiAccessTokenProvider();
                 }
             }
@@ -123,7 +134,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             }
 
             azureServiceTokenProvider.ConnectionString = connectionString;
-            
+
             return azureServiceTokenProvider;
 
         }

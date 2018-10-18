@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             }
         }
 
-        public static DateTimeOffset UnixTimeEpoch => new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        internal static DateTimeOffset UnixTimeEpoch => new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         private static byte[] DecodeBytes(string arg)
         {

@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
 #if FullNetFx
         /// <summary>
         /// Test case where token is fetched using Integrated Windows Authentication. 
-        /// Person runnning the test must be using domain joined machine, where domain is federated with Azure AD. 
+        /// Person running the test must be using domain joined machine, where domain is federated with Azure AD. 
         /// </summary>
         /// <returns></returns>
         [Fact]

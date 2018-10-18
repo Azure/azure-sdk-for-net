@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             var authResult = await clientSecretAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
 
             // Check if the principal used and type were as expected. 
-            Validator.ValidateToken(authResult.AccessToken, clientSecretAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
+            Validator.ValidateToken(authResult.AccessToken, clientSecretAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, expiresOn: authResult.ExpiresOn);
         }
 
         /// <summary>

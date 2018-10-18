@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // Delete the cert, since testing is done. 
             CertUtil.DeleteCertificate(cert.Thumbprint);
 
-            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint);
+            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint, expiresOn: authResult.ExpiresOn);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // Delete the cert, since testing is done. 
             CertUtil.DeleteCertificate(cert.Thumbprint);
 
-            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint);
+            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint, expiresOn: authResult.ExpiresOn);
         }
 
         /// <summary>
