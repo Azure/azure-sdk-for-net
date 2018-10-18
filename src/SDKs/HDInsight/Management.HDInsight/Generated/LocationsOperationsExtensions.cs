@@ -22,47 +22,13 @@ namespace Microsoft.Azure.Management.HDInsight
     public static partial class LocationsOperationsExtensions
     {
             /// <summary>
-            /// Gets the capabilities for the specified location.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// The location.
-            /// </param>
-            public static CapabilitiesResult GetCapabilities(this ILocationsOperations operations, string location)
-            {
-                return operations.GetCapabilitiesAsync(location).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the capabilities for the specified location.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// The location.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CapabilitiesResult> GetCapabilitiesAsync(this ILocationsOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetCapabilitiesWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Lists the usages for the specified location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
-            /// The location.
+            /// The location to get capabilities for.
             /// </param>
             public static UsagesListResult ListUsages(this ILocationsOperations operations, string location)
             {
@@ -76,7 +42,7 @@ namespace Microsoft.Azure.Management.HDInsight
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
-            /// The location.
+            /// The location to get capabilities for.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -55,6 +55,24 @@ namespace Microsoft.Rest
         /// </summary>
         private string _fxVersion;
 
+        private bool IsMonoFramework
+        {
+            get {
+                bool result = false;
+#if FullNetFx
+                switch (Environment.OSVersion.Platform)
+                {
+                    case PlatformID.Unix:
+                    case PlatformID.MacOSX:
+                    case PlatformID.Xbox:
+                        result = true;
+                        break;
+                }
+#endif
+                return result;
+            }
+        }
+
         #region Full Net Fx specific code
 #if FullNetFx
         /// <summary>
@@ -113,16 +131,13 @@ namespace Microsoft.Rest
         /// <returns>Value for provided HKLM key</returns>
         private string ReadHKLMRegistry(string path, string key)
         {
-            switch (Environment.OSVersion.Platform)
+           try
             {
-                case PlatformID.Unix:
-                case PlatformID.MacOSX:
-                case PlatformID.Xbox:
+                if (IsMonoFramework)
+                {
                     return string.Empty;
-            }
+                }
 
-            try
-            {
                 using (RegistryKey rk = Registry.LocalMachine.OpenSubKey(path))
                 {
                     if (rk == null) return "";
@@ -146,8 +161,19 @@ namespace Microsoft.Rest
                     _defaultUserAgentInfoList = new List<ProductInfoHeaderValue>();
                     _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(FXVERSION, FrameworkVersion));
 #if FullNetFx
-                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSNAME, OsName));
-                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
+                    if (!IsMonoFramework)
+                    {
+                        _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSNAME, OsName));
+                        _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
+                    }
+                    else
+                    {
+                        string monoOsName = Environment.OSVersion.Platform.ToString();
+                        if (!string.IsNullOrWhiteSpace(monoOsName))
+                        {
+                            _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSNAME, monoOsName));
+                        }   
+                    }
 #endif
                 }
 
@@ -433,27 +459,8 @@ namespace Microsoft.Rest
                 }
 
                 HttpClientHandler = httpClientHandler;
-                // Now, the RetryAfterDelegatingHandler should be the absoulte outermost handler 
-                // because it's extremely lightweight and non-interfering
-                DelegatingHandler currentHandler =
-                    new RetryDelegatingHandler(new RetryAfterDelegatingHandler {InnerHandler = httpClientHandler});
 
-                if (handlers != null)
-                {
-                    for (int i = handlers.Length - 1; i >= 0; --i)
-                    {
-                        DelegatingHandler handler = handlers[i];
-                        // Non-delegating handlers are ignored since we always 
-                        // have RetryDelegatingHandler as the outer-most handler
-                        while (handler.InnerHandler is DelegatingHandler)
-                        {
-                            handler = handler.InnerHandler as DelegatingHandler;
-                        }
-
-                        handler.InnerHandler = currentHandler;
-                        currentHandler = handlers[i];
-                    }
-                }
+                DelegatingHandler currentHandler = CreateHttpHandlerPipeline(httpClientHandler, handlers);
 
                 HttpClient = new HttpClient(currentHandler, false);
                 FirstMessageHandler = currentHandler;
@@ -467,7 +474,41 @@ namespace Microsoft.Rest
             //DefaultUserAgentInfoList.ForEach((pInfo) => HttpClient.DefaultRequestHeaders.UserAgent.Add(pInfo));
             SetUserAgent(this.GetType().FullName, ClientVersion);
         }
-        
+
+        /// <summary>
+        /// Creates <see cref="DelegatingHandler"/> pipeline chain that will be used for further communication. The handlers are invoked in a top-down fashion. That is, the first entry is invoked first for 
+        /// an outbound request message but last for an inbound response message. 
+        /// </summary>
+        /// <param name="httpClientHandler">HttpClientHandler</param>
+        /// <param name="handlers">List of handlers from top to bottom (outer handler is the first in the list)</param>
+        /// <returns></returns>
+        protected virtual DelegatingHandler CreateHttpHandlerPipeline(HttpClientHandler httpClientHandler, params DelegatingHandler[] handlers)
+        {
+            // Now, the RetryAfterDelegatingHandler should be the absoulte outermost handler 
+            // because it's extremely lightweight and non-interfering
+            DelegatingHandler currentHandler =
+                new RetryDelegatingHandler(new RetryAfterDelegatingHandler { InnerHandler = httpClientHandler });
+
+            if (handlers != null)
+            {
+                for (int i = handlers.Length - 1; i >= 0; --i)
+                {
+                    DelegatingHandler handler = handlers[i];
+                    // Non-delegating handlers are ignored since we always 
+                    // have RetryDelegatingHandler as the outer-most handler
+                    while (handler.InnerHandler is DelegatingHandler)
+                    {
+                        handler = handler.InnerHandler as DelegatingHandler;
+                    }
+
+                    handler.InnerHandler = currentHandler;
+                    currentHandler = handlers[i];
+                }
+            }
+
+            return currentHandler;
+        }
+
         /// <summary>
         /// Sets the product name to be used in the user agent header when making requests
         /// </summary>

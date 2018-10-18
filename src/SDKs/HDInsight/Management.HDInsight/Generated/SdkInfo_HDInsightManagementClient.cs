@@ -19,14 +19,14 @@ namespace Microsoft.Azure.Management.HDInsight
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("HDInsight", "Applications", "2015-03-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "Clusters", "2015-03-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "Configurations", "2015-03-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "Extension", "2015-03-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "Locations", "2015-03-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "Operations", "2015-03-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "ScriptActions", "2015-03-01-preview"),
-                new Tuple<string, string, string>("HDInsight", "ScriptExecutionHistory", "2015-03-01-preview"),
+                new Tuple<string, string, string>("HDInsight", "Applications", "2018-06-01-preview"),
+                new Tuple<string, string, string>("HDInsight", "Clusters", "2018-06-01-preview"),
+                new Tuple<string, string, string>("HDInsight", "Configurations", "2018-06-01-preview"),
+                new Tuple<string, string, string>("HDInsight", "Extensions", "2018-06-01-preview"),
+                new Tuple<string, string, string>("HDInsight", "Locations", "2018-06-01-preview"),
+                new Tuple<string, string, string>("HDInsight", "Operations", "2018-06-01-preview"),
+                new Tuple<string, string, string>("HDInsight", "ScriptActions", "2018-06-01-preview"),
+                new Tuple<string, string, string>("HDInsight", "ScriptExecutionHistory", "2018-06-01-preview"),
               }.AsEnumerable();
           }
       }

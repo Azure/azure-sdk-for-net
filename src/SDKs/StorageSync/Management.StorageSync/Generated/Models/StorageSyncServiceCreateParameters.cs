@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.StorageSync.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -45,10 +46,11 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// tags can be provided for a resource. Each tag must have a key with
         /// a length no greater than 128 characters and a value with a length
         /// no greater than 256 characters.</param>
-        public StorageSyncServiceCreateParameters(string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public StorageSyncServiceCreateParameters(string location, IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object))
         {
             Location = location;
             Tags = tags;
+            Properties = properties;
             CustomInit();
         }
 
@@ -78,5 +80,23 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public object Properties { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+        }
     }
 }

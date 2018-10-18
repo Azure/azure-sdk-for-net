@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datalake-analytics/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\git\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datalake-analytics/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=A:\\azure-sdk-for-net\\src\\SDKs";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "a5dfa4633f54a435862e3d7c454541ac6dc7732a";
+      public static readonly String GithubCommidId = "bad3cbbc7f3bd4f2ff018ff936be010a8fd2c4bb";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
