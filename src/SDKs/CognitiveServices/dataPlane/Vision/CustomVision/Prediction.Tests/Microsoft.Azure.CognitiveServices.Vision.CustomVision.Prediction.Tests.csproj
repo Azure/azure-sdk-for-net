@@ -5,7 +5,6 @@
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests</AssemblyName>
     <Version>1.0.0</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <TargetFrameworks>net452</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
