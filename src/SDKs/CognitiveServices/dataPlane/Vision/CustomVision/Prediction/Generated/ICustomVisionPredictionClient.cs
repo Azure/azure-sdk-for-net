@@ -21,12 +21,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
 
     /// <summary>
     /// </summary>
-    public partial interface IPredictionEndpoint : System.IDisposable
+    public partial interface ICustomVisionPredictionClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -41,6 +40,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <summary>
         /// </summary>
         string ApiKey { get; set; }
+
+        /// <summary>
+        /// Supported Cognitive Services endpoints
+        /// </summary>
+        string Endpoint { get; set; }
 
 
         /// <summary>
