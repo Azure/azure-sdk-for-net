@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Language.TextAnalytics", "TextAnalytics\Microsoft.Azure.CognitiveServices.Language.TextAnalytics.csproj", "{6807B854-8528-4FEE-A25D-C43C3AA2D601}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Language.TextAnalytics-2.1-preview", "TextAnalytics-2.1-preview\Microsoft.Azure.CognitiveServices.Language.TextAnalytics-2.1-preview.csproj", "{6807B854-8528-4FEE-A25D-C43C3AA2D601}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests", "TextAnalytics.Tests\Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests.csproj", "{5987D97A-E532-450C-BF22-A1F595C927F1}"
 EndProject
 Global
