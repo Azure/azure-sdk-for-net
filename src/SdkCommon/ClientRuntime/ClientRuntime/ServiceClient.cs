@@ -33,6 +33,10 @@ namespace Microsoft.Rest
         private List<ProductInfoHeaderValue> _defaultUserAgentInfoList;
 
         private PlatformInfo _platformInfo;
+
+        private string _osName;
+
+        private string _osVersion;
         
         /// <summary>
         /// Indicates whether the ServiceClient has been disposed. 
@@ -94,7 +98,13 @@ namespace Microsoft.Rest
         {
             get
             {
-                return PlatformInfo.OsInfo.OsName;
+                if(string.IsNullOrWhiteSpace(_osName))
+                {
+                    _osName = PlatformInfo.OsInfo.OsName;
+                    _osName = CleanUserAgentInfoEntry(_osName);
+                }
+
+                return _osName;
             }
         }
 
@@ -106,7 +116,13 @@ namespace Microsoft.Rest
         {
             get
             {
-                return PlatformInfo.OsInfo.OsVersion;
+                if(string.IsNullOrWhiteSpace(_osVersion))
+                {
+                    _osVersion = PlatformInfo.OsInfo.OsVersion;
+                    _osVersion = CleanUserAgentInfoEntry(_osVersion);
+                }
+
+                return _osVersion;
             }
         }
 //#endif

@@ -45,5 +45,32 @@ namespace ClientRuntime.FullDesktop.Tests
             var retrievedVersion = userAgentVersion.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(newSampleProd)).FirstOrDefault<ProductInfoHeaderValue>();
             Assert.Equal(retrievedVersion?.Product?.Version, sampleVersion);
         }
+
+        [Fact]
+        public void AddDuplicateUserAgentInfo()
+        {
+            // FullNetFx -- Default (3) + 1 (TestClient) + 1 added below = 5
+            // NetCore -- Default (1 as OS Name and version is not applicable in netCore) + 1 (TestClient) + 1 (below) = 3
+            string defaultProductName = "FxVersion";
+            string testProductName = "TestProduct";
+            string testProductVersion = "1.0.0.0";
+
+            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
+            fakeClient.SetUserAgent(testProductName, testProductVersion);
+
+//#if FullNetFx
+//            Assert.Equal(5, fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Count);
+//# elif !FullNetFx
+//            Assert.Equal(3, fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Count);
+//#endif
+
+            fakeClient.SetUserAgent(testProductName, testProductVersion);
+
+//#if FullNetFx
+            Assert.Equal(5, fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Count);
+//# elif !FullNetFx
+//            Assert.Equal(3, fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Count);
+//#endif
+        }
     }
 }

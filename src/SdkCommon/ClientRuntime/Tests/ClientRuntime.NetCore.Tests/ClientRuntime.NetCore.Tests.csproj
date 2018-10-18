@@ -8,7 +8,7 @@
     <PackageTags>Microsoft AutoRest ClientRuntime REST</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
