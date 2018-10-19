@@ -7,8 +7,8 @@
 
     public class BaseTest
     {
-        protected const string ResourceGroupName = "to-delete-01";
-        protected const string AutomationAccountName = "fbs-aa-01";
+        protected const string ResourceGroupName = "JemalEAPRG";
+        protected const string AutomationAccountName = "JemaltestAccountEAP";
         protected const string updateConfigurationName_01 = "test-suc-001";
         protected const string updateConfigurationName_02 = "test-suc-002";
         protected const string VM_01 = "/subscriptions/05fd3142-4b8e-4b16-8da9-98b4bbfd722d/resourceGroups/compute-01/providers/Microsoft.Compute/virtualMachines/vm-arm-01";

@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Automation.Tests": {
+      "commandName": "Project"
+    }
+  }
+}
