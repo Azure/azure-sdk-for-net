@@ -525,7 +525,8 @@ namespace Microsoft.Rest
             if (!_disposed && HttpClient != null && !string.IsNullOrWhiteSpace(version))
             {
                 string cleanedProductName = CleanUserAgentInfoEntry(productName);
-                AddUserAgentEntry(new ProductInfoHeaderValue(cleanedProductName, version));
+                string cleanedProductVersion = CleanUserAgentInfoEntry(version);
+                AddUserAgentEntry(new ProductInfoHeaderValue(cleanedProductName, cleanedProductVersion));
                 return true;
             }
 
@@ -540,8 +541,10 @@ namespace Microsoft.Rest
         /// <returns></returns>
         private string CleanUserAgentInfoEntry(string infoEntry)
         {
-            Regex pattern = new Regex("[~`!@#$%^&*(),<>?{} ]");
+            Regex pattern = new Regex("[©:;=~`!@#$%^&*(),<>?{} ]");
+            Regex spChrPattern = new Regex("\\\\r\\\\n?|\\\\r|\\\\n|\\\\");
             infoEntry = pattern.Replace(infoEntry, "");
+            infoEntry = spChrPattern.Replace(infoEntry, "");
 
             return infoEntry;
         }

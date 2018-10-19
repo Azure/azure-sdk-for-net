@@ -4,6 +4,7 @@
 namespace ClientRuntime.FullDesktop.Tests
 {
     using ClientRuntime.Tests.Common.Fakes;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -11,6 +12,34 @@ namespace ClientRuntime.FullDesktop.Tests
 
     public class FullFxServiceClientTests
     {
+        string str = @"Linux4.4.0-93-generic11614.04.1-UbuntuSMPMonAug1416:07:05UTC2017";
+
+        [Fact]
+        public void VerifyDifferentUserAgentStrings()
+        {
+            Dictionary<string, string> spChars = new Dictionary<string, string>() {
+                { "p1", @"Linux4.4.0-93-generic11614.04.1-UbuntuSMPMonAug1416:07:05UTC2017" },
+                { "p2", @"Linux4.4.0-93-generic;11614" },
+                { "p3", @"Linux4.4.0-93-generic=11614" },
+                { "p4", @"©Linux4" },
+                { "p5", @"Linux4    generic" },
+                { "p6", @"Linux4 "+
+                            "generic" },
+                { "p7", @"Linux4\r\ngeneric" },
+                { "p8", @"Linux4\rgeneric" },
+                { "p9", @"Linux4\ngeneric" },
+                { "p10", @"Linux4\generic" }
+            };
+
+            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
+            foreach(KeyValuePair<string, string> kv in spChars)
+            {
+                fakeClient.SetUserAgent(kv.Key, kv.Value);
+            }
+
+            // If we get an exception, meaning user agent string is not compatible.
+        }
+
         [Fact]
         public void VerifyOsInfoInUserAgent()
         {
