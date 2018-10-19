@@ -550,7 +550,7 @@ namespace Automation.Tests.ScenarioTests
             Module module;
             do
             {
-                Thread.Sleep(5000); // Used 5 seconds polling delay in the record mode, using 50 ms in playback for test to complete fast
+                Thread.Sleep(50); // Used 5 seconds polling delay in the record mode, using 50 ms in playback for test to complete fast
                 module = action();
                 if (module.ProvisioningState == ModuleProvisioningState.Succeeded)
                 {
