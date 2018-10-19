@@ -9,7 +9,7 @@
     <AssemblyName>Microsoft.Azure.Management.ResourceGraph</AssemblyName>
     <Version>0.10.0-preview</Version>
     <PackageTags>Azure;ResourceGraph;</PackageTags>
-    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newntonsoft nuget package.</PackageReleaseNotes>
+    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
