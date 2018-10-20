@@ -2,6 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using Microsoft.Rest.ClientRuntime.Tests.Fakes;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 
@@ -20,5 +24,21 @@ namespace Microsoft.Rest.ClientRuntime.Tests.TransientFaultHandling
             Assert.Equal(false, condition.RetryAllowed);
             Assert.Equal(TimeSpan.Zero, condition.DelayBeforeRetry);
         }
+
+
+        [Fact]
+        public void InstantiateRetryDelegatingHandler()
+        {
+            RetryDelegatingHandler retryHandler = new RetryDelegatingHandler();
+            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler(), retryHandler);
+
+            var handlers = fakeClient.HttpMessageHandlers;
+            if(handlers.Any<HttpMessageHandler>())
+            {
+                List<HttpMessageHandler> handlerList = handlers.ToList<HttpMessageHandler>();
+                Assert.Equal(4, handlerList.Count);
+            }
+        }
+
     }
 }

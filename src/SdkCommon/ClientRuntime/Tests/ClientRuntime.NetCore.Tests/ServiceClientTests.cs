@@ -262,8 +262,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         [Fact]
         public void AddDuplicateUserAgentInfo()
         {
-            // FullNetFx -- Default (3) + 1 (TestClient) + 1 added below = 5
-            // NetCore -- Default (1 as OS Name and version is not applicable in netCore) + 1 (TestClient) + 1 (below) = 3
+            // NetCore Default (3) + 1 (TestClient) + 1 added below = 5
             string defaultProductName = "FxVersion";
             string testProductName = "TestProduct";
             string testProductVersion = "1.0.0.0";
@@ -271,19 +270,10 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
             fakeClient.SetUserAgent(testProductName, testProductVersion);
 
-#if FullNetFx
             Assert.Equal(5, fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Count);
-# elif !FullNetFx
-            Assert.Equal(3, fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Count);
-#endif
-
             fakeClient.SetUserAgent(testProductName, testProductVersion);
 
-#if FullNetFx
             Assert.Equal(5, fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Count);
-# elif !FullNetFx
-            Assert.Equal(3, fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Count);
-#endif
         }
 
         [Fact]
@@ -303,44 +293,42 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             }
         }
 
+//#if FullNetFx
+//        [Fact]
+//        public void VerifyOsInfoInUserAgent()
+//        {
+//            string osInfoProductName = "OSName";
 
+//            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
+//            HttpResponseMessage response = fakeClient.DoStuffSync();
+//            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
 
-#if FullNetFx
-        [Fact]
-        public void VerifyOsInfoInUserAgent()
-        {
-            string osInfoProductName = "OSName";
+//            var osProduct = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(osInfoProductName)).FirstOrDefault<ProductInfoHeaderValue>();
 
-            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
-            HttpResponseMessage response = fakeClient.DoStuffSync();
-            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
+//            Assert.NotEmpty(osProduct.Product.Name);
+//            Assert.NotEmpty(osProduct.Product.Version);
+//        }
 
-            var osProduct = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(osInfoProductName)).FirstOrDefault<ProductInfoHeaderValue>();
+//        [Fact]
+//        public void AddingSpCharsInUserAgent()
+//        {
+//            string sampleProd = "SampleProdName";
+//            string newSampleProd = "NewSampleProdName";
+//            string spChars = "*()!@#$%^&";
+//            string sampleVersion = "1.*.0.*";
 
-            Assert.NotEmpty(osProduct.Product.Name);
-            Assert.NotEmpty(osProduct.Product.Version);
-        }
+//            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
+//            fakeClient.SetUserAgent(string.Concat(sampleProd, spChars));
+//            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
+//            var retrievedProdInfo = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(sampleProd)).FirstOrDefault<ProductInfoHeaderValue>();
+//            Assert.Equal(retrievedProdInfo?.Product?.Name, sampleProd);
 
-        [Fact]
-        public void AddingSpCharsInUserAgent()
-        {
-            string sampleProd = "SampleProdName";
-            string newSampleProd = "NewSampleProdName";
-            string spChars = "*()!@#$%^&";
-            string sampleVersion = "1.*.0.*";
+//            fakeClient.SetUserAgent(newSampleProd, sampleVersion);
+//            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentVersion = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
+//            var retrievedVersion = userAgentVersion.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(newSampleProd)).FirstOrDefault<ProductInfoHeaderValue>();
+//            Assert.Equal(retrievedVersion?.Product?.Version, sampleVersion);
+//        }
 
-            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
-            fakeClient.SetUserAgent(string.Concat(sampleProd, spChars));
-            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
-            var retrievedProdInfo = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(sampleProd)).FirstOrDefault<ProductInfoHeaderValue>();
-            Assert.Equal(retrievedProdInfo?.Product?.Name, sampleProd);
-
-            fakeClient.SetUserAgent(newSampleProd, sampleVersion);
-            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentVersion = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
-            var retrievedVersion = userAgentVersion.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(newSampleProd)).FirstOrDefault<ProductInfoHeaderValue>();
-            Assert.Equal(retrievedVersion?.Product?.Version, sampleVersion);
-        }
-
-#endif
+//#endif
     }
 }
