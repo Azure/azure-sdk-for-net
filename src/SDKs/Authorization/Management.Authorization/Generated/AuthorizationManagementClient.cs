@@ -21,14 +21,6 @@ namespace Microsoft.Azure.Management.Authorization
     using System.Net;
     using System.Net.Http;
 
-    /// <summary>
-    /// Role based access control provides you a way to apply granular level
-    /// policy administration down to individual resources or resource groups.
-    /// These operations enable you to manage role definitions and role
-    /// assignments. A role definition describes the set of actions that can be
-    /// performed on resources. A role assignment grants access to Azure Active
-    /// Directory users.
-    /// </summary>
     public partial class AuthorizationManagementClient : ServiceClient<AuthorizationManagementClient>, IAuthorizationManagementClient, IAzureClient
     {
         /// <summary>
@@ -85,19 +77,24 @@ namespace Microsoft.Azure.Management.Authorization
         public virtual IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; private set; }
 
         /// <summary>
-        /// Gets the IPermissionsOperations.
-        /// </summary>
-        public virtual IPermissionsOperations Permissions { get; private set; }
-
-        /// <summary>
         /// Gets the IRoleAssignmentsOperations.
         /// </summary>
         public virtual IRoleAssignmentsOperations RoleAssignments { get; private set; }
 
         /// <summary>
+        /// Gets the IPermissionsOperations.
+        /// </summary>
+        public virtual IPermissionsOperations Permissions { get; private set; }
+
+        /// <summary>
         /// Gets the IRoleDefinitionsOperations.
         /// </summary>
         public virtual IRoleDefinitionsOperations RoleDefinitions { get; private set; }
+
+        /// <summary>
+        /// Gets the IDenyAssignmentsOperations.
+        /// </summary>
+        public virtual IDenyAssignmentsOperations DenyAssignments { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AuthorizationManagementClient class.
@@ -342,9 +339,10 @@ namespace Microsoft.Azure.Management.Authorization
         {
             ClassicAdministrators = new ClassicAdministratorsOperations(this);
             ProviderOperationsMetadata = new ProviderOperationsMetadataOperations(this);
-            Permissions = new PermissionsOperations(this);
             RoleAssignments = new RoleAssignmentsOperations(this);
+            Permissions = new PermissionsOperations(this);
             RoleDefinitions = new RoleDefinitionsOperations(this);
+            DenyAssignments = new DenyAssignmentsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

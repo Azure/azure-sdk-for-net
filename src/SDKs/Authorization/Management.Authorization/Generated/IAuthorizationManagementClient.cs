@@ -16,12 +16,6 @@ namespace Microsoft.Azure.Management.Authorization
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Role based access control provides you a way to apply granular level
-    /// policy administration down to individual resources or resource groups.
-    /// These operations enable you to manage role definitions and role
-    /// assignments. A role definition describes the set of actions that can be
-    /// performed on resources. A role assignment grants access to Azure Active
-    /// Directory users.
     /// </summary>
     public partial interface IAuthorizationManagementClient : System.IDisposable
     {
@@ -80,19 +74,24 @@ namespace Microsoft.Azure.Management.Authorization
         IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; }
 
         /// <summary>
-        /// Gets the IPermissionsOperations.
-        /// </summary>
-        IPermissionsOperations Permissions { get; }
-
-        /// <summary>
         /// Gets the IRoleAssignmentsOperations.
         /// </summary>
         IRoleAssignmentsOperations RoleAssignments { get; }
 
         /// <summary>
+        /// Gets the IPermissionsOperations.
+        /// </summary>
+        IPermissionsOperations Permissions { get; }
+
+        /// <summary>
         /// Gets the IRoleDefinitionsOperations.
         /// </summary>
         IRoleDefinitionsOperations RoleDefinitions { get; }
+
+        /// <summary>
+        /// Gets the IDenyAssignmentsOperations.
+        /// </summary>
+        IDenyAssignmentsOperations DenyAssignments { get; }
 
     }
 }
