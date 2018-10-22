@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <summary>
         /// Initializes a new instance of the TriggerRolloverRequest class.
         /// </summary>
-        /// <param name="certificateData">Certificate Data</param>
-        public TriggerRolloverRequest(string certificateData = default(string))
+        /// <param name="serverCertificate">Certificate Data</param>
+        public TriggerRolloverRequest(string serverCertificate = default(string))
         {
-            CertificateData = certificateData;
+            ServerCertificate = serverCertificate;
             CustomInit();
         }
 
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <summary>
         /// Gets or sets certificate Data
         /// </summary>
-        [JsonProperty(PropertyName = "certificateData")]
-        public string CertificateData { get; set; }
+        [JsonProperty(PropertyName = "serverCertificate")]
+        public string ServerCertificate { get; set; }
 
     }
 }
