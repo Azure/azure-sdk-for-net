@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Search
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class, new()
+            CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             JsonSerializerSettings deserializationSettings =
                 JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings);
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Search
             IEnumerable<string> selectedFields,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class, new()
+            CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             JsonSerializerSettings deserializationSettings =
                 JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings);
@@ -459,7 +459,7 @@ namespace Microsoft.Azure.Search
             SuggestParameters suggestParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class, new()
+            CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             JsonSerializerSettings deserializationSettings =
                 JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings);
