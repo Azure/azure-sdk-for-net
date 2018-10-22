@@ -13,20 +13,20 @@ namespace Microsoft.Azure.Search.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class DocumentLookupResult
+    internal partial class DocumentLookupResultProxy
     {
         /// <summary>
-        /// Initializes a new instance of the DocumentLookupResult class.
+        /// Initializes a new instance of the DocumentLookupResultProxy class.
         /// </summary>
-        public DocumentLookupResult()
+        public DocumentLookupResultProxy()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DocumentLookupResult class.
+        /// Initializes a new instance of the DocumentLookupResultProxy class.
         /// </summary>
-        public DocumentLookupResult(object document = default(object))
+        public DocumentLookupResultProxy(object document = default(object))
         {
             Document = document;
             CustomInit();

@@ -697,7 +697,7 @@ namespace Microsoft.Azure.Search
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DocumentLookupResult>> LookupWithHttpMessagesAsync(string key, IList<string> selectedFields = default(IList<string>), string accept = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null)
+        public async Task<AzureOperationResponse<DocumentLookupResultProxy>> LookupWithHttpMessagesAsync(string key, IList<string> selectedFields = default(IList<string>), string accept = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null)
         {
             if (Client.SearchServiceName == null)
             {
@@ -863,7 +863,7 @@ namespace Microsoft.Azure.Search
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<DocumentLookupResult>();
+            var _result = new AzureOperationResponse<DocumentLookupResultProxy>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -876,7 +876,7 @@ namespace Microsoft.Azure.Search
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DocumentLookupResult>(_responseContent, requestDeserializerSettings == null ? Client.DeserializationSettings : requestDeserializerSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DocumentLookupResultProxy>(_responseContent, requestDeserializerSettings == null ? Client.DeserializationSettings : requestDeserializerSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1129,12 +1129,12 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Suggests query terms based on input text and matching documents in the
-        /// Azure Search index.
+        /// Suggests documents in the Azure Search index that match the given partial
+        /// query text.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
         /// </summary>
         /// <param name='searchText'>
-        /// The search text to use to suggest queries. Must be at least 1 character,
+        /// The search text to use to suggest documents. Must be at least 1 character,
         /// and no more than 100 characters.
         /// </param>
         /// <param name='suggesterName'>
@@ -1465,8 +1465,8 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Suggests query terms based on input text and matching documents in the
-        /// Azure Search index.
+        /// Suggests documents in the Azure Search index that match the given partial
+        /// query text.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
         /// </summary>
         /// <param name='suggestRequest'>

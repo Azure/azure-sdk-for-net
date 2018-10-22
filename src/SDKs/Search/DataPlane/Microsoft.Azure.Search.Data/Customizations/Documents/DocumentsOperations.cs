@@ -19,7 +19,8 @@ namespace Microsoft.Azure.Search
     internal class DocumentsOperations : IServiceOperations<SearchIndexClient>, IDocumentsOperations
     {
         internal static readonly string[] SelectAll = new[] { "*" };
-        internal static readonly string Accept = "application/json; odata.metadata = none";
+        internal static readonly string Accept = "application/json;odata.metadata=none";
+        internal static readonly string searchParameter = "search";
 
         /// <summary>
         /// Initializes a new instance of the DocumentsOperations class.
@@ -224,7 +225,7 @@ namespace Microsoft.Azure.Search
             JsonSerializerSettings deserializationSettings =
                 JsonUtility.CreateDocumentDeserializerSettings(this.Client.DeserializationSettings);
 
-            AzureOperationResponse<DocumentLookupResult> response 
+            AzureOperationResponse<DocumentLookupResultProxy> response 
                 = await this.Client.DocumentsProxy.LookupWithHttpMessagesAsync(
                     key,
                     selectedFields.ToList(),
@@ -253,7 +254,7 @@ namespace Microsoft.Azure.Search
             JsonSerializerSettings deserializationSettings =
                 JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings);
 
-            AzureOperationResponse<DocumentLookupResult> response
+            AzureOperationResponse<DocumentLookupResultProxy> response
                 = await this.Client.DocumentsProxy.LookupWithHttpMessagesAsync(
                     key,
                     selectedFields.ToList(),
@@ -287,7 +288,7 @@ namespace Microsoft.Azure.Search
                 JsonUtility.CreateDocumentSerializerSettings(this.Client.SerializationSettings);
 
             AzureOperationResponse<DocumentIndexResult> result
-                = await this.Client.DocumentsProxy.DocumentIndexWithHttpMessagesAsync(batch, searchRequestOptions, customHeaders, cancellationToken, requestSerializerSettings: serializationSettings);
+                = await this.Client.DocumentsProxy.DocumentIndexWithHttpMessagesAsync(batch, searchRequestOptions, customHeaders, cancellationToken, requestSerializerSettings: serializationSettings).ConfigureAwait(false);
 
             CheckForPartialFailure(result);
 
@@ -366,7 +367,7 @@ namespace Microsoft.Azure.Search
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class, new()
+            CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             JsonSerializerSettings deserializationSettings =
                 JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings);
@@ -556,13 +557,13 @@ namespace Microsoft.Azure.Search
             }
         }
 
+
         private static Dictionary<string, List<string>> ParseQueryParameters(string url)
         {
             string queryString = url.Substring(url.IndexOf('?'));
             queryString = WebUtility.UrlDecode(queryString);
 
-            Dictionary<string, List<string>> parameters =
-                new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+            var parameters = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
             foreach (string parameter in queryString.Split('&'))
             {

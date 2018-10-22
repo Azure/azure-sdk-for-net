@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DocumentLookupResult>> LookupWithHttpMessagesAsync(string key, IList<string> selectedFields = default(IList<string>), string accept = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
+        Task<AzureOperationResponse<DocumentLookupResultProxy>> LookupWithHttpMessagesAsync(string key, IList<string> selectedFields = default(IList<string>), string accept = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
         /// <summary>
         /// Searches for documents in the Azure Search index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents" />
@@ -145,12 +145,12 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<DocumentSearchResultProxy>> SearchPostWithHttpMessagesAsync(SearchParametersPayload searchRequest, string accept = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
         /// <summary>
-        /// Suggests query terms based on input text and matching documents in
-        /// the Azure Search index.
+        /// Suggests documents in the Azure Search index that match the given
+        /// partial query text.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
         /// </summary>
         /// <param name='searchText'>
-        /// The search text to use to suggest queries. Must be at least 1
+        /// The search text to use to suggest documents. Must be at least 1
         /// character, and no more than 100 characters.
         /// </param>
         /// <param name='suggesterName'>
@@ -184,8 +184,8 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<DocumentSuggestResultProxy>> SuggestGetWithHttpMessagesAsync(string searchText, string suggesterName, string accept = default(string), SuggestParameters suggestParameters = default(SuggestParameters), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings requestDeserializerSettings = null);
         /// <summary>
-        /// Suggests query terms based on input text and matching documents in
-        /// the Azure Search index.
+        /// Suggests documents in the Azure Search index that match the given
+        /// partial query text.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
         /// </summary>
         /// <param name='suggestRequest'>

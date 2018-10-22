@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Search.Serialization
     /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
     /// </typeparam>
     internal class SearchDocumentConverter<TDoc> : JsonConverter
-         where TDoc : class, new()
+         where TDoc : class
     {
         private static readonly string[] EmptyStringArray = new string[0];
 

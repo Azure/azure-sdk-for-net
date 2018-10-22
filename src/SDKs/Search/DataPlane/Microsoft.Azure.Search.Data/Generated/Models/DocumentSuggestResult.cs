@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class DocumentSuggestResultProxy
+    internal partial class DocumentSuggestResultProxy
     {
         /// <summary>
         /// Initializes a new instance of the DocumentSuggestResultProxy class.

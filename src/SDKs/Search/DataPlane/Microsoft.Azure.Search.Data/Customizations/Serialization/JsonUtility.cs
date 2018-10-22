@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Search.Serialization
             CreateSerializerSettings<T>(baseSettings, useCamelCase);
 
         public static JsonSerializerSettings CreateTypedDeserializerSettings<T>(JsonSerializerSettings baseSettings)
-            where T : class, new() =>
+            where T : class =>
             CreateDeserializerSettings<T>(baseSettings);
 
         public static JsonSerializerSettings CreateDocumentSerializerSettings(JsonSerializerSettings baseSettings) =>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Search.Serialization
 
         private static JsonSerializerSettings CreateDeserializerSettings<TDoc>(
             JsonSerializerSettings baseSettings)
-            where TDoc : class, new()
+            where TDoc : class
         {
             JsonSerializerSettings settings = CopySettings(baseSettings);
             settings.Converters.Add(new GeographyPointConverter());

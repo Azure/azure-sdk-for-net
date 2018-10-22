@@ -4,14 +4,14 @@
 
 namespace Microsoft.Azure.Search.Models
 {
-    public class SearchDocument
+    internal class SearchDocument
     {
         public SearchDocument() { }
 
-        public double Score;
+        public double Score { get; set; } 
 
-        public HitHighlights Highlights;
+        public HitHighlights Highlights { get; set; }
 
-        public object Document;
+        public object Document { get; set; }
     }
 }

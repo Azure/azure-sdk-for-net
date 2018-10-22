@@ -919,7 +919,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private static void AssertIsPartialFailure(IndexBatchException e, params string[] expectedFailedKeys)
         {
-            //Assert.Equal((HttpStatusCode)207, e.Response.StatusCode);
+            Assert.Equal((HttpStatusCode)207, e.Response.StatusCode);
 
             IEnumerable<string> actualFailedKeys = e.IndexingResults.Where(r => !r.Succeeded).Select(r => r.Key);
             Assert.Equal(expectedFailedKeys, actualFailedKeys);

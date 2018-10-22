@@ -265,7 +265,10 @@ namespace Microsoft.Azure.Search.Tests
 
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>("luxury", searchParameters);
-
+            /*
+            response =
+                client.Documents.Search<Hotel>("luxury", searchParameters);
+                */
             var expectedDoc = new Hotel() { HotelName = "Fancy Stay", BaseRate = 199 };
 
             Assert.NotNull(response.Results);

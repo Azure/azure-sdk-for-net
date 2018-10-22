@@ -26,11 +26,11 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the IndexAction class.
         /// </summary>
-        /// <param name="actionType">Possible values include: 'upload',
+        /// <param name="searchAction">Possible values include: 'upload',
         /// 'merge', 'mergeOrUpload', 'delete'</param>
-        public IndexAction(IndexActionType? actionType = default(IndexActionType?), object document = default(object))
+        public IndexAction(SearchActionType? searchAction = default(SearchActionType?), object document = default(object))
         {
-            ActionType = actionType;
+            SearchAction = searchAction;
             Document = document;
             CustomInit();
         }
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Search.Models
         /// Gets or sets possible values include: 'upload', 'merge',
         /// 'mergeOrUpload', 'delete'
         /// </summary>
-        [JsonProperty(PropertyName = "actionType")]
-        public IndexActionType? ActionType { get; set; }
+        [JsonProperty(PropertyName = "searchAction")]
+        public SearchActionType? SearchAction { get; set; }
 
         /// <summary>
         /// </summary>

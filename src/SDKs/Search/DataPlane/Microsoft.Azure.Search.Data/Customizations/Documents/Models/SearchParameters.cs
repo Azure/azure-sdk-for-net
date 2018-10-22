@@ -55,47 +55,31 @@ namespace Microsoft.Azure.Search.Models
         internal static SearchParameters FromDictionary(Dictionary<string, List<string>> parameters)
         {
             List<string> values = new List<string>();
-
-            int? Top = null;
-            if (parameters.TryGetValue("$top", out values))
+            var searchParameters = new SearchParameters()
             {
-                Top = Convert.ToInt32(values.First());
-            }
-
-            int? Skip = null;
-            if (parameters.TryGetValue("$skip", out values))
-            {
-                Skip = Convert.ToInt32(values.First());
-            }
-
-            QueryType? queryType = null;
-            if (parameters.TryGetValue("queryType", out values))
-            {
-                queryType = values.First().ParseQueryType();
-            }
-
-            SearchMode? searchMode = null;
-            if (parameters.TryGetValue("searchMode", out values))
-            {
-                searchMode = values.First().ParseSearchMode();
-            }
-
-            return new SearchParameters()
-            {
-                QueryType = queryType ?? queryType.Value,
-                SearchMode = searchMode ?? searchMode.Value,
                 HighlightPreTag = parameters.TryGetValue("highlightPreTag", out values) ? values.First() : null,
                 HighlightPostTag = parameters.TryGetValue("highlightPostTag", out values) ? values.First() : null,
                 SearchFields = parameters.TryGetValue("searchFields", out values) ? values : null,
                 IncludeTotalResultCount = parameters.TryGetValue("$count", out values) ? Convert.ToBoolean(values.First()) : false,
-                Top = Top,
-                Skip = Skip,
+                Top = parameters.TryGetValue("$top", out values) ? Convert.ToInt32(values.First()) : (int?)null,
+                Skip = parameters.TryGetValue("$skip", out values) ? Convert.ToInt32(values.First()) : (int?)null,
                 Select = parameters.TryGetValue("$select", out values) ? values : null,
                 OrderBy = parameters.TryGetValue("$orderby", out values) ? values : null,
                 Filter = parameters.TryGetValue("$filter", out values) ? values.First() : null,
                 ScoringProfile = parameters.TryGetValue("scoringProfile", out values) ? values.First() : null,
                 ScoringParameterStrings = parameters.TryGetValue("scoringParameter", out values) ? values : null
             };
+
+            if (parameters.TryGetValue("queryType", out values))
+            {
+                searchParameters.QueryType = values.First().ParseQueryType().Value;
+            }
+
+            if (parameters.TryGetValue("searchMode", out values))
+            {
+                searchParameters.SearchMode = values.First().ParseSearchMode().Value;
+            }
+            return searchParameters;
         }
 
     }

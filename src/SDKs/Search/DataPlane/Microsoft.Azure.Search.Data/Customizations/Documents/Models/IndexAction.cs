@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Search.Models
             Throw.IfArgumentNull(keyName, "keyName");
             Throw.IfArgumentNull(keyValue, "keyValue");
 
-            return new IndexAction(IndexActionType.Delete, new Document() { { keyName, keyValue } });
+            return new IndexAction(SearchActionType.Delete, new Document() { { keyName, keyValue } });
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexAction.</returns>
         public static IndexAction Delete(object document)
         {
-            return new IndexAction(IndexActionType.Delete, document);
+            return new IndexAction(SearchActionType.Delete, document);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexAction.</returns>
         public static IndexAction Merge(object document)
         {
-            return new IndexAction(IndexActionType.Merge, document);
+            return new IndexAction(SearchActionType.Merge, document);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexAction.</returns>
         public static IndexAction MergeOrUpload(object document)
         {
-            return new IndexAction(IndexActionType.MergeOrUpload, document);
+            return new IndexAction(SearchActionType.MergeOrUpload, document);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexAction.</returns>
         public static IndexAction Upload(object document)
         {
-            return new IndexAction(IndexActionType.Upload, document);
+            return new IndexAction(SearchActionType.Upload, document);
         }
     }
 }

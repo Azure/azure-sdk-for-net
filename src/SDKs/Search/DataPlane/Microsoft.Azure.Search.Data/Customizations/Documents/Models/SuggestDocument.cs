@@ -4,12 +4,12 @@
 
 namespace Microsoft.Azure.Search.Models
 {
-    public class SuggestDocument
+    internal class SuggestDocument
     {
         public SuggestDocument() { }
 
-        public string Text;
+        public string Text { get; set; }
 
-        public object Document;
+        public object Document { get; set; }
     }
 }

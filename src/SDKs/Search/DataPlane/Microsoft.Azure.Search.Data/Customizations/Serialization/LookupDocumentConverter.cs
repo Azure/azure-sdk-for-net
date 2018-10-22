@@ -19,25 +19,13 @@ namespace Microsoft.Azure.Search.Serialization
     internal class LookupDocumentConverter<TDoc> : JsonConverter
         where TDoc : class
     {
-        public override bool CanRead
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool CanRead => true;
 
-        public override bool CanWrite
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public override bool CanWrite => false;
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(DocumentLookupResult).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
+            return typeof(DocumentLookupResultProxy).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
         public override object ReadJson(
@@ -46,7 +34,7 @@ namespace Microsoft.Azure.Search.Serialization
             object existingValue,
             JsonSerializer serializer)
         {
-            return new DocumentLookupResult() {
+            return new DocumentLookupResultProxy() {
                 Document = serializer.Deserialize<TDoc>(reader)
             };
         }

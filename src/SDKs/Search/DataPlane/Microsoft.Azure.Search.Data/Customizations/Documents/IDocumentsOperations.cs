@@ -484,7 +484,7 @@ namespace Microsoft.Azure.Search
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class, new();
+            CancellationToken cancellationToken = default(CancellationToken)) where T : class;
 
         /// <summary>
         /// Suggests query terms based on input text and matching documents in the Azure Search index.

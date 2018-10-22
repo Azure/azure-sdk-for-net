@@ -38,14 +38,14 @@ namespace Microsoft.Azure.Search.Models
         /// set to true, the query will find terms even if there's a
         /// substituted or missing character in the search text. While this
         /// provides a better experience in some scenarios it comes at a
-        /// performance cost as fuzzy autocomplete queries are slower and
+        /// performance cost as fuzzy suggestions queries are slower and
         /// consume more resources.</param>
         /// <param name="highlightPostTag">A string tag that is appended to hit
-        /// highlights. Must be set with HighlightPreTag. Default is
-        /// "".</param>
+        /// highlights. Must be set with HighlightPreTag. Default is the empty
+        /// string</param>
         /// <param name="highlightPreTag">A string tag that is prepended to hit
-        /// highlights. Must be set with HighlightPostTag. Default is
-        /// "".</param>
+        /// highlights. Must be set with HighlightPostTag. Default is the empty
+        /// string.</param>
         /// <param name="minimumCoverage">A number between 0 and 100 indicating
         /// the percentage of the index that must be covered by a suggestions
         /// query in order for the query to be reported as a success. This
@@ -100,21 +100,21 @@ namespace Microsoft.Azure.Search.Models
         /// query will find terms even if there's a substituted or missing
         /// character in the search text. While this provides a better
         /// experience in some scenarios it comes at a performance cost as
-        /// fuzzy autocomplete queries are slower and consume more resources.
+        /// fuzzy suggestions queries are slower and consume more resources.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public bool UseFuzzyMatching { get; set; }
 
         /// <summary>
         /// Gets or sets a string tag that is appended to hit highlights. Must
-        /// be set with HighlightPreTag. Default is "".
+        /// be set with HighlightPreTag. Default is the empty string
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public string HighlightPostTag { get; set; }
 
         /// <summary>
         /// Gets or sets a string tag that is prepended to hit highlights. Must
-        /// be set with HighlightPostTag. Default is "".
+        /// be set with HighlightPostTag. Default is the empty string.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public string HighlightPreTag { get; set; }

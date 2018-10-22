@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Search.Serialization
                     w.WritePropertyName("@search.action");
 
                     var converter = new StringEnumConverter();
-                    converter.WriteJson(w, action.ActionType, serializer);
+                    converter.WriteJson(w, action.SearchAction, serializer);
                 };
 
             serializer.Serialize(injectingWriter, action.Document);

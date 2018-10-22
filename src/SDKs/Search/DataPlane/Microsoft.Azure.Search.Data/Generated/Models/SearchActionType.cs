@@ -16,10 +16,10 @@ namespace Microsoft.Azure.Search.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for IndexActionType.
+    /// Defines values for SearchActionType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum IndexActionType
+    public enum SearchActionType
     {
         [EnumMember(Value = "upload")]
         Upload,
@@ -30,41 +30,41 @@ namespace Microsoft.Azure.Search.Models
         [EnumMember(Value = "delete")]
         Delete
     }
-    internal static class IndexActionTypeEnumExtension
+    internal static class SearchActionTypeEnumExtension
     {
-        internal static string ToSerializedValue(this IndexActionType? value)
+        internal static string ToSerializedValue(this SearchActionType? value)
         {
-            return value == null ? null : ((IndexActionType)value).ToSerializedValue();
+            return value == null ? null : ((SearchActionType)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this IndexActionType value)
+        internal static string ToSerializedValue(this SearchActionType value)
         {
             switch( value )
             {
-                case IndexActionType.Upload:
+                case SearchActionType.Upload:
                     return "upload";
-                case IndexActionType.Merge:
+                case SearchActionType.Merge:
                     return "merge";
-                case IndexActionType.MergeOrUpload:
+                case SearchActionType.MergeOrUpload:
                     return "mergeOrUpload";
-                case IndexActionType.Delete:
+                case SearchActionType.Delete:
                     return "delete";
             }
             return null;
         }
 
-        internal static IndexActionType? ParseIndexActionType(this string value)
+        internal static SearchActionType? ParseSearchActionType(this string value)
         {
             switch( value )
             {
                 case "upload":
-                    return IndexActionType.Upload;
+                    return SearchActionType.Upload;
                 case "merge":
-                    return IndexActionType.Merge;
+                    return SearchActionType.Merge;
                 case "mergeOrUpload":
-                    return IndexActionType.MergeOrUpload;
+                    return SearchActionType.MergeOrUpload;
                 case "delete":
-                    return IndexActionType.Delete;
+                    return SearchActionType.Delete;
             }
             return null;
         }
