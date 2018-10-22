@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Search.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -28,7 +29,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="searchAction">Possible values include: 'upload',
         /// 'merge', 'mergeOrUpload', 'delete'</param>
-        public IndexAction(SearchActionType? searchAction = default(SearchActionType?), object document = default(object))
+        public IndexAction(SearchActionType searchAction, object document)
         {
             SearchAction = searchAction;
             Document = document;
@@ -45,12 +46,25 @@ namespace Microsoft.Azure.Search.Models
         /// 'mergeOrUpload', 'delete'
         /// </summary>
         [JsonProperty(PropertyName = "searchAction")]
-        public SearchActionType? SearchAction { get; set; }
+        public SearchActionType SearchAction { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "document")]
         public object Document { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Document == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Document");
+            }
+        }
     }
 }
