@@ -11,108 +11,65 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for StreamingLocatorContentKeyType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(StreamingLocatorContentKeyTypeConverter))]
-    public struct StreamingLocatorContentKeyType : System.IEquatable<StreamingLocatorContentKeyType>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum StreamingLocatorContentKeyType
     {
-        private StreamingLocatorContentKeyType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
         /// <summary>
         /// Common Encryption using CENC
         /// </summary>
-        public static readonly StreamingLocatorContentKeyType CommonEncryptionCenc = "CommonEncryptionCenc";
-
+        [EnumMember(Value = "CommonEncryptionCenc")]
+        CommonEncryptionCenc,
         /// <summary>
         /// Common Encryption using CBCS
         /// </summary>
-        public static readonly StreamingLocatorContentKeyType CommonEncryptionCbcs = "CommonEncryptionCbcs";
-
+        [EnumMember(Value = "CommonEncryptionCbcs")]
+        CommonEncryptionCbcs,
         /// <summary>
         /// Envelope Encryption
         /// </summary>
-        public static readonly StreamingLocatorContentKeyType EnvelopeEncryption = "EnvelopeEncryption";
-
-
-        /// <summary>
-        /// Underlying value of enum StreamingLocatorContentKeyType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for StreamingLocatorContentKeyType
-        /// </summary>
-        public override string ToString()
+        [EnumMember(Value = "EnvelopeEncryption")]
+        EnvelopeEncryption
+    }
+    internal static class StreamingLocatorContentKeyTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this StreamingLocatorContentKeyType? value)
         {
-            return UnderlyingValue.ToString();
+            return value == null ? null : ((StreamingLocatorContentKeyType)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Compares enums of type StreamingLocatorContentKeyType
-        /// </summary>
-        public bool Equals(StreamingLocatorContentKeyType e)
+        internal static string ToSerializedValue(this StreamingLocatorContentKeyType value)
         {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
+            switch( value )
+            {
+                case StreamingLocatorContentKeyType.CommonEncryptionCenc:
+                    return "CommonEncryptionCenc";
+                case StreamingLocatorContentKeyType.CommonEncryptionCbcs:
+                    return "CommonEncryptionCbcs";
+                case StreamingLocatorContentKeyType.EnvelopeEncryption:
+                    return "EnvelopeEncryption";
+            }
+            return null;
         }
 
-        /// <summary>
-        /// Implicit operator to convert string to
-        /// StreamingLocatorContentKeyType
-        /// </summary>
-        public static implicit operator StreamingLocatorContentKeyType(string value)
+        internal static StreamingLocatorContentKeyType? ParseStreamingLocatorContentKeyType(this string value)
         {
-            return new StreamingLocatorContentKeyType(value);
+            switch( value )
+            {
+                case "CommonEncryptionCenc":
+                    return StreamingLocatorContentKeyType.CommonEncryptionCenc;
+                case "CommonEncryptionCbcs":
+                    return StreamingLocatorContentKeyType.CommonEncryptionCbcs;
+                case "EnvelopeEncryption":
+                    return StreamingLocatorContentKeyType.EnvelopeEncryption;
+            }
+            return null;
         }
-
-        /// <summary>
-        /// Implicit operator to convert StreamingLocatorContentKeyType to
-        /// string
-        /// </summary>
-        public static implicit operator string(StreamingLocatorContentKeyType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum StreamingLocatorContentKeyType
-        /// </summary>
-        public static bool operator == (StreamingLocatorContentKeyType e1, StreamingLocatorContentKeyType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum StreamingLocatorContentKeyType
-        /// </summary>
-        public static bool operator != (StreamingLocatorContentKeyType e1, StreamingLocatorContentKeyType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for StreamingLocatorContentKeyType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is StreamingLocatorContentKeyType && Equals((StreamingLocatorContentKeyType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode StreamingLocatorContentKeyType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
     }
 }

@@ -34,7 +34,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         /// <param name="name">Resource name to verify.</param>
         /// <param name="type">Resource type used for verification. Possible
-        /// values include: 'Site', 'Slot', 'HostingEnvironment'</param>
+        /// values include: 'Site', 'Slot', 'HostingEnvironment',
+        /// 'PublishingUser', 'Microsoft.Web/sites',
+        /// 'Microsoft.Web/sites/slots', 'Microsoft.Web/hostingEnvironments',
+        /// 'Microsoft.Web/publishingUsers'</param>
         /// <param name="isFqdn">Is fully qualified domain name.</param>
         public ResourceNameAvailabilityRequest(string name, string type, bool? isFqdn = default(bool?))
         {
@@ -57,7 +60,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Gets or sets resource type used for verification. Possible values
-        /// include: 'Site', 'Slot', 'HostingEnvironment'
+        /// include: 'Site', 'Slot', 'HostingEnvironment', 'PublishingUser',
+        /// 'Microsoft.Web/sites', 'Microsoft.Web/sites/slots',
+        /// 'Microsoft.Web/hostingEnvironments',
+        /// 'Microsoft.Web/publishingUsers'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

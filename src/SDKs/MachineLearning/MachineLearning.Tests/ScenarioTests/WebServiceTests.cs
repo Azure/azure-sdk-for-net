@@ -105,7 +105,7 @@ namespace MachineLearning.Tests.ScenarioTests
                     //Validate that the expected not found exception is thrown after deletion when trying to access the service
                     var expectedCloudException = Assert.Throws<CloudException>(() => amlServicesClient.WebServices.Get(resourceGroupName, webServiceName));
                     Assert.NotNull(expectedCloudException.Body);
-                    Assert.True(string.Equals(expectedCloudException.Body.Code, "NotFound"));
+                    Assert.Equal("NotFound", expectedCloudException.Body.Code);
                 }
                 catch (Exception ex)
                 {
@@ -194,7 +194,7 @@ namespace MachineLearning.Tests.ScenarioTests
                     //Validate that the expected not found exception is thrown before create the regional properties
                     var expectedCloudException = Assert.Throws<CloudException>(() => amlServicesClient.WebServices.Get(resourceGroupName, webServiceName, NewRegion));
                     Assert.NotNull(expectedCloudException.Body);
-                    Assert.True(string.Equals(expectedCloudException.Body.Code, "NotFound"));
+                    Assert.Equal("NotFound", expectedCloudException.Body.Code);
 
                     // Submit some updates to this resource
                     amlServicesClient.WebServices.CreateRegionalPropertiesWithRequestId(resourceGroupName, webServiceName, NewRegion);
@@ -264,7 +264,7 @@ namespace MachineLearning.Tests.ScenarioTests
                     //Validate that the expected not found exception is thrown after deletion when trying to access the service
                     var expectedCloudException = Assert.Throws<CloudException>(() => amlServicesClient.WebServices.Get(resourceGroupName, webServiceName));
                     Assert.NotNull(expectedCloudException.Body);
-                    Assert.True(string.Equals(expectedCloudException.Body.Code, "NotFound"));
+                    Assert.Equal("NotFound", expectedCloudException.Body.Code);
                 }
                 catch (Exception ex)
                 {
@@ -319,9 +319,9 @@ namespace MachineLearning.Tests.ScenarioTests
                     string service1ExpectedId = string.Format(CultureInfo.InvariantCulture, WebServiceTests.ResourceIdFormat, amlServicesClient.SubscriptionId, resourceGroupName, webServiceName);
                     string service2ExpectedId = string.Format(CultureInfo.InvariantCulture, WebServiceTests.ResourceIdFormat, amlServicesClient.SubscriptionId, resourceGroupName, service2Name);
                     string service3ExpectedId = string.Format(CultureInfo.InvariantCulture, WebServiceTests.ResourceIdFormat, amlServicesClient.SubscriptionId, resourceGroupName, service3Name);
-                    Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service1ExpectedId, StringComparison.OrdinalIgnoreCase)));
-                    Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service2ExpectedId, StringComparison.OrdinalIgnoreCase)));
-                    Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service3ExpectedId, StringComparison.OrdinalIgnoreCase)));
+                    Assert.Contains(servicesList, svc => string.Equals(svc.Id, service1ExpectedId, StringComparison.OrdinalIgnoreCase));
+                    Assert.Contains(servicesList, svc => string.Equals(svc.Id, service2ExpectedId, StringComparison.OrdinalIgnoreCase));
+                    Assert.Contains(servicesList, svc => string.Equals(svc.Id, service3ExpectedId, StringComparison.OrdinalIgnoreCase));
 
                     // Validate that all services are called when getting the AML service resource list for the subscription
                     var servicesInSubscription = amlServicesClient.WebServices.ListBySubscriptionIdWithHttpMessagesAsync().Result;
@@ -329,11 +329,11 @@ namespace MachineLearning.Tests.ScenarioTests
                     servicesList = servicesInSubscription.Body.ToList();
                     Assert.NotNull(servicesList);
                     Assert.True(servicesList.Count >= 4);
-                    Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service1ExpectedId, StringComparison.OrdinalIgnoreCase)));
-                    Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service2ExpectedId, StringComparison.OrdinalIgnoreCase)));
-                    Assert.True(servicesList.Any(svc => string.Equals(svc.Id, service3ExpectedId, StringComparison.OrdinalIgnoreCase)));
+                    Assert.Contains(servicesList, svc => string.Equals(svc.Id, service1ExpectedId, StringComparison.OrdinalIgnoreCase));
+                    Assert.Contains(servicesList, svc => string.Equals(svc.Id, service2ExpectedId, StringComparison.OrdinalIgnoreCase));
+                    Assert.Contains(servicesList, svc => string.Equals(svc.Id, service3ExpectedId, StringComparison.OrdinalIgnoreCase));
                     string otherServiceExpectedId = string.Format(CultureInfo.InvariantCulture, WebServiceTests.ResourceIdFormat, amlServicesClient.SubscriptionId, otherResourceGroupName, otherServiceName);
-                    Assert.True(servicesList.Any(svc => string.Equals(svc.Id, otherServiceExpectedId, StringComparison.OrdinalIgnoreCase)));
+                    Assert.Contains(servicesList, svc => string.Equals(svc.Id, otherServiceExpectedId, StringComparison.OrdinalIgnoreCase));
                 }
                 catch(Exception ex)
                 {

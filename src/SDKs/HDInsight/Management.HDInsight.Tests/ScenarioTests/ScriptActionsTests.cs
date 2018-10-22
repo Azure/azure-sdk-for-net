@@ -54,8 +54,8 @@ namespace Management.HDInsight.Tests
                 client.Clusters.ExecuteScriptActions(rgName, clusterName, scriptActionParams, true);
 
                 //List script actions and validate script is persisted.
-                IPage<RuntimeScriptActionDetail> scriptActionsList = client.ScriptActions.ListPersistedScripts(rgName, clusterName);
-                Assert.Equal(1, scriptActionsList.Count());
+                IPage<RuntimeScriptActionDetail> scriptActionsList = client.ScriptActions.ListByCluster(rgName, clusterName);
+                Assert.Single(scriptActionsList);
                 RuntimeScriptActionDetail scriptAction = scriptActionsList.First();
                 Assert.Equal(scriptActionParams[0].Name, scriptAction.Name);
                 Assert.Equal(scriptActionParams[0].Uri, scriptAction.Uri);
@@ -65,12 +65,12 @@ namespace Management.HDInsight.Tests
                 client.ScriptActions.Delete(rgName, clusterName, scriptName);
 
                 //List script actions and validate script is deleted.
-                scriptActionsList = client.ScriptActions.ListPersistedScripts(rgName, clusterName);
-                Assert.Equal(0, scriptActionsList.Count());
+                scriptActionsList = client.ScriptActions.ListByCluster(rgName, clusterName);
+                Assert.Empty(scriptActionsList);
 
                 //List script action history and validate script appears there.
-                IPage<RuntimeScriptActionDetail> listHistoryResponse = client.ScriptExecutionHistory.List(rgName, clusterName);
-                Assert.Equal(1, listHistoryResponse.Count());
+                IPage<RuntimeScriptActionDetail> listHistoryResponse = client.ScriptExecutionHistory.ListByCluster(rgName, clusterName);
+                Assert.Single(listHistoryResponse);
                 scriptAction = listHistoryResponse.First();
                 Assert.Equal(1, scriptAction.ExecutionSummary.Count);
                 Assert.Equal(scriptActionParams[0].Name, scriptAction.Name);
@@ -87,7 +87,7 @@ namespace Management.HDInsight.Tests
                 client.Clusters.ExecuteScriptActions(rgName, clusterName, scriptActionParams, false);
 
                 //List script action history and validate the new script also appears.
-                listHistoryResponse = client.ScriptExecutionHistory.List(rgName, clusterName);
+                listHistoryResponse = client.ScriptExecutionHistory.ListByCluster(rgName, clusterName);
                 Assert.Equal(2, listHistoryResponse.Count());
                 scriptAction = listHistoryResponse.FirstOrDefault(a => a.Name.Equals(scriptActionParams[0].Name, StringComparison.OrdinalIgnoreCase));
                 Assert.NotNull(scriptAction);
@@ -106,8 +106,8 @@ namespace Management.HDInsight.Tests
                 CloudException ex = Assert.Throws<CloudException>(() => client.Clusters.ExecuteScriptActions(rgName, clusterName, failingScriptActionParams, true));
 
                 //List script action list and validate the promoted script is the only one there.
-                scriptActionsList = client.ScriptActions.ListPersistedScripts(rgName, clusterName);
-                Assert.Equal(1, scriptActionsList.Count());
+                scriptActionsList = client.ScriptActions.ListByCluster(rgName, clusterName);
+                Assert.Single(scriptActionsList);
                 Assert.Equal(1, scriptAction.ExecutionSummary.Count);
                 Assert.Equal(scriptActionParams[0].Name, scriptAction.Name);
                 Assert.Equal(scriptActionParams[0].Uri, scriptAction.Uri);
@@ -115,7 +115,7 @@ namespace Management.HDInsight.Tests
                 Assert.Equal("Succeeded", scriptAction.Status);
 
                 //List script action history and validate all three scripts are there.
-                listHistoryResponse = client.ScriptExecutionHistory.List(rgName, clusterName);
+                listHistoryResponse = client.ScriptExecutionHistory.ListByCluster(rgName, clusterName);
                 Assert.Equal(3, listHistoryResponse.Count());
                 Assert.Equal(2, listHistoryResponse.Count(a => a.Status == "Succeeded"));
                 Assert.Equal(1, listHistoryResponse.Count(a => a.Status == "Failed"));

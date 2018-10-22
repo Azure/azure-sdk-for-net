@@ -684,6 +684,49 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Renew a domain.
+            /// </summary>
+            /// <remarks>
+            /// Renew a domain.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='domainName'>
+            /// Name of the domain.
+            /// </param>
+            public static void Renew(this IDomainsOperations operations, string resourceGroupName, string domainName)
+            {
+                operations.RenewAsync(resourceGroupName, domainName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Renew a domain.
+            /// </summary>
+            /// <remarks>
+            /// Renew a domain.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='domainName'>
+            /// Name of the domain.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RenewAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RenewWithHttpMessagesAsync(resourceGroupName, domainName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Creates or updates a domain.
             /// </summary>
             /// <remarks>

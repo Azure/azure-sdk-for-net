@@ -24,11 +24,9 @@ restoreBuildCR() {
 
     echo "Running ClientRuntime Tests $netcore20"
     #dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore20
-    dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore20
+    dotnet test src/SdkCommon/ClientRuntime/Tests/ClientRuntime.NetCore.Tests/ClientRuntime.NetCore.Tests.csproj -f $netcore20
     dotnet test src/SdkCommon/ClientRuntime.Azure/Tests/CR.Azure.NetCore.Tests/CR.Azure.NetCore.Tests.csproj -f $netcore20
     #dotnet test src/SdkCommon/Auth/Az.Auth/Az.Auth.Tests//ClientRuntime.Azure.Tests/Microsoft.Rest.ClientRuntime.Azure.Tests.csproj -f $netcore20
-    
-
 }
 
 restoreBuildAzStack() {
@@ -165,7 +163,7 @@ skip_Rps() {
     #printf "checking......$1\n"
     if [[ ("$1" =~ "Authorization")  || ( "$1" =~ "Gallery" ) || ("$1" =~ "Automation") || ( "$1" =~ "Intune" ) || ( "$1" =~ "DataLake.Store" ) 
                 || ( "$1" =~ "Monitor" ) || ( "$1" =~ "RedisCache" ) || ( "$1" =~ "Search" ) || ( "$1" =~ "KeyVault.Tests" ) 
-                || ( "$1" =~ "DeviceProvisioningServices") || ("$1" =~ "ServerManagement")
+                || ( "$1" =~ "DeviceProvisioningServices") || ("$1" =~ "ServerManagement") || ( "$1" =~ "BotService")
                 || ("$1" =~ "Batch") || ("$1" =~ "KeyVault")
                 || ( "$1" =~ "KeyVault.TestFramework") || ( "$1" =~ "Subscription.FullDesktop.Tests") ]]; then                
         retVal=true

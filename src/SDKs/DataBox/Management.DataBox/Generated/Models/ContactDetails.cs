@@ -32,16 +32,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the ContactDetails class.
         /// </summary>
+        /// <param name="contactName">Contact name of the person.</param>
         /// <param name="phone">Phone number of the contact person.</param>
         /// <param name="emailList">List of Email-ids to be notified about job
         /// progress.</param>
-        /// <param name="contactName">Contact name of the person.</param>
         /// <param name="phoneExtension">Phone extension number of the contact
         /// person.</param>
         /// <param name="mobile">Mobile number of the contact person.</param>
         /// <param name="notificationPreference">Notification preference for a
         /// job stage.</param>
-        public ContactDetails(string phone, IList<string> emailList, string contactName = default(string), string phoneExtension = default(string), string mobile = default(string), IList<NotificationPreference> notificationPreference = default(IList<NotificationPreference>))
+        public ContactDetails(string contactName, string phone, IList<string> emailList, string phoneExtension = default(string), string mobile = default(string), IList<NotificationPreference> notificationPreference = default(IList<NotificationPreference>))
         {
             ContactName = contactName;
             Phone = phone;
@@ -101,6 +101,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (ContactName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ContactName");
+            }
             if (Phone == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Phone");

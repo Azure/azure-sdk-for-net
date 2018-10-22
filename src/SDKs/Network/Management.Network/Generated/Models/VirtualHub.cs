@@ -41,21 +41,33 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="virtualWan">The VirtualWAN to which the VirtualHub
         /// belongs</param>
-        /// <param name="hubVirtualNetworkConnections">list of all vnet
+        /// <param name="vpnGateway">The VpnGateway associated with this
+        /// VirtualHub</param>
+        /// <param name="p2SVpnGateway">The P2SVpnGateway associated with this
+        /// VirtualHub</param>
+        /// <param name="expressRouteGateway">The expressRouteGateway
+        /// associated with this VirtualHub</param>
+        /// <param name="virtualNetworkConnections">list of all vnet
         /// connections with this VirtualHub.</param>
         /// <param name="addressPrefix">Address-prefix for this
         /// VirtualHub.</param>
+        /// <param name="routeTable">The routeTable associated with this
+        /// virtual hub.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), IList<HubVirtualNetworkConnection> hubVirtualNetworkConnections = default(IList<HubVirtualNetworkConnection>), string addressPrefix = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), IList<HubVirtualNetworkConnection> virtualNetworkConnections = default(IList<HubVirtualNetworkConnection>), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualWan = virtualWan;
-            HubVirtualNetworkConnections = hubVirtualNetworkConnections;
+            VpnGateway = vpnGateway;
+            P2SVpnGateway = p2SVpnGateway;
+            ExpressRouteGateway = expressRouteGateway;
+            VirtualNetworkConnections = virtualNetworkConnections;
             AddressPrefix = addressPrefix;
+            RouteTable = routeTable;
             ProvisioningState = provisioningState;
             Etag = etag;
             CustomInit();
@@ -73,16 +85,41 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource VirtualWan { get; set; }
 
         /// <summary>
+        /// Gets or sets the VpnGateway associated with this VirtualHub
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vpnGateway")]
+        public SubResource VpnGateway { get; set; }
+
+        /// <summary>
+        /// Gets or sets the P2SVpnGateway associated with this VirtualHub
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.p2SVpnGateway")]
+        public SubResource P2SVpnGateway { get; set; }
+
+        /// <summary>
+        /// Gets or sets the expressRouteGateway associated with this
+        /// VirtualHub
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.expressRouteGateway")]
+        public SubResource ExpressRouteGateway { get; set; }
+
+        /// <summary>
         /// Gets or sets list of all vnet connections with this VirtualHub.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.hubVirtualNetworkConnections")]
-        public IList<HubVirtualNetworkConnection> HubVirtualNetworkConnections { get; set; }
+        [JsonProperty(PropertyName = "properties.virtualNetworkConnections")]
+        public IList<HubVirtualNetworkConnection> VirtualNetworkConnections { get; set; }
 
         /// <summary>
         /// Gets or sets address-prefix for this VirtualHub.
         /// </summary>
         [JsonProperty(PropertyName = "properties.addressPrefix")]
         public string AddressPrefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets the routeTable associated with this virtual hub.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routeTable")]
+        public VirtualHubRouteTable RouteTable { get; set; }
 
         /// <summary>
         /// Gets or sets the provisioning state of the resource. Possible

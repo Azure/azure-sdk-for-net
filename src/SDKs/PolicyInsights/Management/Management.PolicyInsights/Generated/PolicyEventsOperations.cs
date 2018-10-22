@@ -86,12 +86,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             string policyEventsResource = "default";
             string managementGroupsNamespace = "Microsoft.Management";
+            string apiVersion = "2018-04-04";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -137,6 +134,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("policyEventsResource", policyEventsResource);
                 tracingParameters.Add("managementGroupsNamespace", managementGroupsNamespace);
                 tracingParameters.Add("managementGroupName", managementGroupName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("orderBy", orderBy);
                 tracingParameters.Add("select", select);
@@ -154,9 +152,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{managementGroupsNamespace}", System.Uri.EscapeDataString(managementGroupsNamespace));
             _url = _url.Replace("{managementGroupName}", System.Uri.EscapeDataString(managementGroupName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (top != null)
             {
@@ -342,11 +340,8 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             string policyEventsResource = "default";
+            string apiVersion = "2018-04-04";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -391,6 +386,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyEventsResource", policyEventsResource);
                 tracingParameters.Add("subscriptionId", subscriptionId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("orderBy", orderBy);
                 tracingParameters.Add("select", select);
@@ -407,9 +403,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{policyEventsResource}", System.Uri.EscapeDataString(policyEventsResource));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (top != null)
             {
@@ -602,11 +598,8 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             string policyEventsResource = "default";
+            string apiVersion = "2018-04-04";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -652,6 +645,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("policyEventsResource", policyEventsResource);
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("orderBy", orderBy);
                 tracingParameters.Add("select", select);
@@ -669,9 +663,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (top != null)
             {
@@ -857,11 +851,8 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             string policyEventsResource = "default";
+            string apiVersion = "2018-04-04";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -906,6 +897,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyEventsResource", policyEventsResource);
                 tracingParameters.Add("resourceId", resourceId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("orderBy", orderBy);
                 tracingParameters.Add("select", select);
@@ -922,9 +914,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{policyEventsResource}", System.Uri.EscapeDataString(policyEventsResource));
             _url = _url.Replace("{resourceId}", resourceId);
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (top != null)
             {
@@ -1117,12 +1109,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policySetDefinitionName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             string policyEventsResource = "default";
             string authorizationNamespace = "Microsoft.Authorization";
+            string apiVersion = "2018-04-04";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1169,6 +1158,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("authorizationNamespace", authorizationNamespace);
                 tracingParameters.Add("policySetDefinitionName", policySetDefinitionName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("orderBy", orderBy);
                 tracingParameters.Add("select", select);
@@ -1187,9 +1177,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{authorizationNamespace}", System.Uri.EscapeDataString(authorizationNamespace));
             _url = _url.Replace("{policySetDefinitionName}", System.Uri.EscapeDataString(policySetDefinitionName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (top != null)
             {
@@ -1382,12 +1372,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyDefinitionName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             string policyEventsResource = "default";
             string authorizationNamespace = "Microsoft.Authorization";
+            string apiVersion = "2018-04-04";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1434,6 +1421,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("authorizationNamespace", authorizationNamespace);
                 tracingParameters.Add("policyDefinitionName", policyDefinitionName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("orderBy", orderBy);
                 tracingParameters.Add("select", select);
@@ -1452,9 +1440,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{authorizationNamespace}", System.Uri.EscapeDataString(authorizationNamespace));
             _url = _url.Replace("{policyDefinitionName}", System.Uri.EscapeDataString(policyDefinitionName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (top != null)
             {
@@ -1647,12 +1635,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             string policyEventsResource = "default";
             string authorizationNamespace = "Microsoft.Authorization";
+            string apiVersion = "2018-04-04";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1699,6 +1684,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("authorizationNamespace", authorizationNamespace);
                 tracingParameters.Add("policyAssignmentName", policyAssignmentName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("orderBy", orderBy);
                 tracingParameters.Add("select", select);
@@ -1717,9 +1703,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{authorizationNamespace}", System.Uri.EscapeDataString(authorizationNamespace));
             _url = _url.Replace("{policyAssignmentName}", System.Uri.EscapeDataString(policyAssignmentName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (top != null)
             {
@@ -1919,12 +1905,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             string policyEventsResource = "default";
             string authorizationNamespace = "Microsoft.Authorization";
+            string apiVersion = "2018-04-04";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1972,6 +1955,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("authorizationNamespace", authorizationNamespace);
                 tracingParameters.Add("policyAssignmentName", policyAssignmentName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("orderBy", orderBy);
                 tracingParameters.Add("select", select);
@@ -1991,9 +1975,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{authorizationNamespace}", System.Uri.EscapeDataString(authorizationNamespace));
             _url = _url.Replace("{policyAssignmentName}", System.Uri.EscapeDataString(policyAssignmentName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (top != null)
             {
@@ -2177,10 +2161,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2018-04-04";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2189,6 +2170,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetMetadata", tracingParameters);
             }
@@ -2197,9 +2179,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.PolicyInsights/policyEvents/$metadata").ToString();
             _url = _url.Replace("{scope}", scope);
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

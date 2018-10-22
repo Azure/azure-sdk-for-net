@@ -178,6 +178,8 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         public Dictionary<string, string> Tags { get; private set; }
 
+        public ClusterIdentity ClusterIdentity { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
         /// </summary>
@@ -226,6 +228,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             this.ComponentVersion = parameters.ComponentVersion;
             this.DefaultStorageInfo = parameters.DefaultStorageInfo;
             this.Tags = parameters.Tags;
+            this.ClusterIdentity = parameters.ClusterIdentity;
         }
     }
 }

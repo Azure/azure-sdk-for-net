@@ -85,12 +85,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> ServiceResources { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the service end point policy
+        /// Gets the provisioning state of the service end point policy
         /// definition. Possible values are: 'Updating', 'Deleting', and
         /// 'Failed'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the resource that is unique within a

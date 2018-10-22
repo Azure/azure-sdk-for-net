@@ -40,7 +40,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         [EnumMember(Value = "Paused")]
         Paused,
         [EnumMember(Value = "WaitingForCapacity")]
-        WaitingForCapacity
+        WaitingForCapacity,
+        [EnumMember(Value = "Yielded")]
+        Yielded,
+        [EnumMember(Value = "Finalizing")]
+        Finalizing
     }
     internal static class JobStateEnumExtension
     {
@@ -73,6 +77,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
                     return "Paused";
                 case JobState.WaitingForCapacity:
                     return "WaitingForCapacity";
+                case JobState.Yielded:
+                    return "Yielded";
+                case JobState.Finalizing:
+                    return "Finalizing";
             }
             return null;
         }
@@ -101,6 +109,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
                     return JobState.Paused;
                 case "WaitingForCapacity":
                     return JobState.WaitingForCapacity;
+                case "Yielded":
+                    return JobState.Yielded;
+                case "Finalizing":
+                    return JobState.Finalizing;
             }
             return null;
         }

@@ -171,7 +171,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Get origins on endpoint should return one
                 var origins = cdnMgmtClient.Origins.ListByEndpoint(resourceGroupName, profileName, endpointName);
-                Assert.Equal(1, origins.Count());
+                Assert.Single(origins);
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);

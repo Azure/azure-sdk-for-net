@@ -59,7 +59,7 @@ namespace Management.HDInsight.Tests
                 ValidateHttpSettings(httpSettings, createParams.UserName, createParams.Password);
                 
                 string newPassword = "NewPassword1!";
-                client.Configurations.UpdateHTTPSettings(rgName, clusterName, ConfigurationKey.Gateway,
+                client.Configurations.Update(rgName, clusterName, ConfigurationKey.Gateway,
                     ConfigurationsConverter.Convert(new HttpConnectivitySettings
                     {
                         EnabledCredential = "true",

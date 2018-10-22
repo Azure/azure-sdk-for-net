@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -30,10 +29,11 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="name">The sku name.</param>
+        /// <param name="name">The sku name. Possible values include:
+        /// 'DataBox', 'DataBoxDisk', 'DataBoxHeavy'</param>
         /// <param name="displayName">The display name of the sku.</param>
         /// <param name="family">The sku family.</param>
-        public Sku(string name, string displayName = default(string), string family = default(string))
+        public Sku(SkuName name, string displayName = default(string), string family = default(string))
         {
             Name = name;
             DisplayName = displayName;
@@ -47,10 +47,11 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the sku name.
+        /// Gets or sets the sku name. Possible values include: 'DataBox',
+        /// 'DataBoxDisk', 'DataBoxHeavy'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public SkuName Name { get; set; }
 
         /// <summary>
         /// Gets or sets the display name of the sku.
@@ -67,15 +68,11 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
         }
     }
 }

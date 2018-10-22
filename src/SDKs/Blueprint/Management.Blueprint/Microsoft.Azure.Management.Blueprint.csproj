@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code below this line -->
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.Blueprint</PackageId>
+    <Description>Provides Microsoft Azure Blueprint management operations including the ability to create, update and delete Blueprint definition and assignment.</Description>
+    <Version>0.9.1-Preview</Version>
+    <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
+    <AssemblyTitle>Microsoft Azure Blueprint Management Library</AssemblyTitle>
+    <AssemblyName>Microsoft.Azure.Management.Blueprint</AssemblyName>
+    <PackageTags>Blueprint;</PackageTags>
+    <PackageReleaseNotes>
+<![CDATA[This is a preview release sdk for Azure Blueprint, allows you to do Blueprint definition and assignment CRUD.
+
+ChangeNotes for 0.9.1:
+ - Add constants for string enum
+ - Add constructor for BlueprintManagementClient to have change to override api-version
+]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>

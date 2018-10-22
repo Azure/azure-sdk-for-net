@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Azure.ApplicationInsights;
-using Microsoft.Azure.ApplicationInsights.Models;
+using Microsoft.Azure.ApplicationInsights.Query;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
+using System.Runtime.Serialization;
+using System;
 
 namespace Data.ApplicationInsights.Tests.Metrics
 {
@@ -25,7 +27,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
                 };
 
                 var client = GetClient(ctx);
-                var metrics = await client.GetMetricsAsync(metricRequest);
+                var metrics = await client.Metrics.GetMultipleAsync(DefaultAppId, metricRequest);
 
                 Assert.NotNull(metrics);
                 Assert.Equal(1, metrics.Count);

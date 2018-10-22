@@ -360,7 +360,7 @@ namespace ServerManagement.Tests
 
                     // make sure this resource group just has the one node 
                     nodes = await client.Node.ListForResourceGroupAsync(ResourceGroup);
-                    Assert.Equal(1, nodes.Count());
+                    Assert.Single(nodes);
 
                     WriteLine("Creating Session");
                     // Create a session for this node.

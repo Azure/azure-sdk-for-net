@@ -32,16 +32,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the MigrateMySqlRequest class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="connectionString">Connection string to the remote
         /// MySQL database.</param>
         /// <param name="migrationType">The type of migration operation to be
         /// done. Possible values include: 'LocalToRemote',
         /// 'RemoteToLocal'</param>
-        public MigrateMySqlRequest(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string connectionString = default(string), MySqlMigrationType? migrationType = default(MySqlMigrationType?))
+        /// <param name="id">Resource Id.</param>
+        /// <param name="name">Resource Name.</param>
+        /// <param name="kind">Kind of resource.</param>
+        /// <param name="type">Resource type.</param>
+        public MigrateMySqlRequest(string connectionString, MySqlMigrationType migrationType, string id = default(string), string name = default(string), string kind = default(string), string type = default(string))
             : base(id, name, kind, type)
         {
             ConnectionString = connectionString;
@@ -65,7 +65,20 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// values include: 'LocalToRemote', 'RemoteToLocal'
         /// </summary>
         [JsonProperty(PropertyName = "properties.migrationType")]
-        public MySqlMigrationType? MigrationType { get; set; }
+        public MySqlMigrationType MigrationType { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ConnectionString == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
+            }
+        }
     }
 }

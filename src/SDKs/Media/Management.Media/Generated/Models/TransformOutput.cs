@@ -37,8 +37,10 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="onError">A Transform can define more than one outputs.
         /// This property defines what the service should do when one output
         /// fails - either continue to produce other outputs, or, stop the
-        /// other outputs. The default is stop. Possible values include:
-        /// 'StopProcessingJob', 'ContinueJob'</param>
+        /// other outputs. The overall Job state will not reflect failures of
+        /// outputs that are specified with 'ContinueJob'. The default is
+        /// 'StopProcessingJob'. Possible values include: 'StopProcessingJob',
+        /// 'ContinueJob'</param>
         /// <param name="relativePriority">Sets the relative priority of the
         /// TransformOutputs within a Transform. This sets the priority that
         /// the service uses for processing TransformOutputs. The default
@@ -61,8 +63,10 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Gets or sets a Transform can define more than one outputs. This
         /// property defines what the service should do when one output fails -
         /// either continue to produce other outputs, or, stop the other
-        /// outputs. The default is stop. Possible values include:
-        /// 'StopProcessingJob', 'ContinueJob'
+        /// outputs. The overall Job state will not reflect failures of outputs
+        /// that are specified with 'ContinueJob'. The default is
+        /// 'StopProcessingJob'. Possible values include: 'StopProcessingJob',
+        /// 'ContinueJob'
         /// </summary>
         [JsonProperty(PropertyName = "onError")]
         public OnErrorType? OnError { get; set; }

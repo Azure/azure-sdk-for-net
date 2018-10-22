@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.ResourceGraph/resources?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VHcmFwaC9yZXNvdXJjZXM/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestMethod": "POST",
+      "RequestBody": "{\"subscriptions\": [\"00000000-0000-0000-0000-000000000000\"], \"query\": \"project id, location | limit 10\", \"facets\": [{\"expression\": \"location\", \"options\": {\"sortOrder\": \"desc\", \"$top\": 4}}, {\"expression\": \"nonExistingColumn\", \"options\": {\"sortOrder\": \"desc\", \"$top\": 4}}]}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "077d2050-2bc1-4be5-a8d0-9001e8a502db"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.Azure.Management.ResourceGraph.ResourceGraphClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "403"
+        ]
+     },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 31 Aug 2018 23:24:55 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "e9d37026-4efc-4c35-886a-0bc3bbe600ad"
+        ],
+        "x-ms-correlation-request-id": [
+          "e9d37026-4efc-4c35-886a-0bc3bbe600ad"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180831T232456Z:e9d37026-4efc-4c35-886a-0bc3bbe600ad"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "2472"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+     },
+      "ResponseBody": "{\"totalRecords\":10,\"count\":10,\"data\":{\"columns\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"location\",\"type\":\"string\"}],\"rows\":[[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/zarttest1f000000-14b9-43b9-8836-3b8df81aa6f2/providers/Microsoft.StreamAnalytics/streamingjobs/zarttest28000000\",\"southcentralus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test/providers/Microsoft.Storage/storageAccounts/testsouthcentralus\",\"southcentralus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/newzarttest30000000-5d0c-432c-8652-102e3aa336b6/providers/Microsoft.Storage/storageAccounts/zarttest93000000\",\"eastus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/backup/providers/Microsoft.ClassicCompute/domainNames/rp-a\",\"westcentralus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test/providers/Microsoft.Storage/storageAccounts/test1\",\"southcentralus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/k8stest_centralus/providers/Microsoft.Compute/virtualMachines/aks-default-34000000-0/extensions/cse-agent-0\",\"centralus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/pere/providers/Microsoft.Network/networkSecurityGroups/shouldFail-nsg\",\"eastus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/newzarttestdd000000-bfc5-44f1-b6a9-aabdc7a1e614/providers/Microsoft.Storage/storageAccounts/zarttest43000000\",\"eastus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/newzarttest60000000-3713-4c51-9e6b-c96a30f0fbb7/providers/Microsoft.Storage/storageAccounts/zarttestd2000000\",\"eastus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ManageRG/providers/Microsoft.EventHub/namespaces/resourceuse\",\"eastus\"]]},\"facets\":[{\"expression\":\"location\",\"totalRecords\":4,\"count\":4,\"data\":{\"columns\":[{\"name\":\"location\",\"type\":\"string\"},{\"name\":\"count\",\"type\":\"integer\"}],\"rows\":[[\"eastus\",5],[\"southcentralus\",3],[\"centralus\",1],[\"westcentralus\",1]]},\"resultType\":\"FacetResult\"},{\"expression\":\"nonExistingColumn\",\"errors\":[{\"code\":\"NoValidColumns\",\"message\":\"No valid columns in facet expression.\"},{\"code\":\"InvalidColumnNames\",\"message\":\"Invalid column names: [nonExistingColumn].\"}],\"resultType\":\"FacetError\"}],\"resultTruncated\":\"false\"}",
+      "StatusCode": 200
+   }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "00000000-0000-0000-0000-000000000000"
+  }
+}

@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     using System.Collections;
     using System.Collections.Generic;
     using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// Extension methods for ReplicationsOperations.
@@ -61,7 +60,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Replication> GetAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Replication> GetAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -123,7 +122,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Replication> CreateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Replication> CreateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, location, tags, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -169,7 +168,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -220,7 +219,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Replication> UpdateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Replication> UpdateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, tags, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -260,7 +259,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Replication>> ListAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<IPage<Replication>> ListAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, registryName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -322,7 +321,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Replication> BeginCreateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Replication> BeginCreateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, location, tags, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -368,7 +367,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -419,7 +418,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Replication> BeginUpdateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Replication> BeginUpdateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, tags, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -453,7 +452,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Replication>> ListNextAsync(this IReplicationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<IPage<Replication>> ListNextAsync(this IReplicationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

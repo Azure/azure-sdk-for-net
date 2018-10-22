@@ -90,22 +90,20 @@ namespace CustomerInsights.Tests.Tests
                 Assert.Equal(linkName, createLinkResult.LinkName);
                 Assert.Equal(createLinkResult.Name, HubName + "/" + linkName, StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    createLinkResult.Type,
                     "Microsoft.CustomerInsights/hubs/links",
-                    StringComparer.OrdinalIgnoreCase);
+                    createLinkResult.Type, StringComparer.OrdinalIgnoreCase);
 
                 var getLinkResult = aciClient.Links.Get(ResourceGroupName, HubName, linkName);
                 Assert.Equal(linkName, getLinkResult.LinkName);
                 Assert.Equal(getLinkResult.Name, HubName + "/" + linkName, StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    getLinkResult.Type,
                     "Microsoft.CustomerInsights/hubs/links",
-                    StringComparer.OrdinalIgnoreCase);
+                    getLinkResult.Type, StringComparer.OrdinalIgnoreCase);
 
                 var listlinkResult = aciClient.Links.ListByHub(ResourceGroupName, HubName);
 
                 Assert.True(listlinkResult.ToList().Count >= 1);
-                Assert.True(listlinkResult.ToList().Any(linkReturned => linkName == linkReturned.LinkName));
+                Assert.Contains(listlinkResult.ToList(), linkReturned => linkName == linkReturned.LinkName);
             }
         }
     }

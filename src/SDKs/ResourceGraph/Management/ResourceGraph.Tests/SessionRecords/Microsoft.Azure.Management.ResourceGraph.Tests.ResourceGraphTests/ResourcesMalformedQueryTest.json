@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.ResourceGraph/resources?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VHcmFwaC9yZXNvdXJjZXM/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestMethod": "POST",
+      "RequestBody": "{\"subscriptions\": [\"d0610b27-9663-4c05-89f8-5b4be01e86a5\"], \"query\": \"project id, location | where where\"}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "23f526de-829e-46db-a108-8ab2c2a34d7e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.Azure.Management.ResourceGraph.ResourceGraphClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "125"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 31 Aug 2018 23:24:52 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "c213e6d0-e1e0-4e91-8a4e-e1d1843b3bbd"
+        ],
+        "x-ms-correlation-request-id": [
+          "c213e6d0-e1e0-4e91-8a4e-e1d1843b3bbd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180831T232453Z:c213e6d0-e1e0-4e91-8a4e-e1d1843b3bbd"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\"error\":{\"code\":\"InvalidQuery\",\"message\":\"Query validation error\",\"details\":[{\"code\":\"ParserFailure\",\"message\":\"Parser failure\",\"line\":1,\"characterPositionInLine\":34,\"token\":\"<EOF>\",\"expectedToken\":\"\u0178\"}]}}",
+      "StatusCode": 400
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "00000000-0000-0000-0000-000000000000"
+  }
+}

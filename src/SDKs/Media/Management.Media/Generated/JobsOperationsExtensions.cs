@@ -258,6 +258,70 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
+            /// Update Job
+            /// </summary>
+            /// <remarks>
+            /// Updates a Job.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='transformName'>
+            /// The Transform name.
+            /// </param>
+            /// <param name='jobName'>
+            /// The Job name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request parameters
+            /// </param>
+            public static Job Update(this IJobsOperations operations, string resourceGroupName, string accountName, string transformName, string jobName, Job parameters)
+            {
+                return operations.UpdateAsync(resourceGroupName, accountName, transformName, jobName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update Job
+            /// </summary>
+            /// <remarks>
+            /// Updates a Job.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='transformName'>
+            /// The Transform name.
+            /// </param>
+            /// <param name='jobName'>
+            /// The Job name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The request parameters
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Job> UpdateAsync(this IJobsOperations operations, string resourceGroupName, string accountName, string transformName, string jobName, Job parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, transformName, jobName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Cancel Job
             /// </summary>
             /// <remarks>

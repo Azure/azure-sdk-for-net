@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Azure.ApplicationInsights;
-using Microsoft.Azure.ApplicationInsights.Models;
+using Microsoft.Azure.ApplicationInsights.Query;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
@@ -15,13 +16,13 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = new TimeSpan(12, 0, 0);
+                var timespan = "PT12H";
                 var interval = new TimeSpan(1, 0, 0);
-                var aggregation = new[] { "avg" };
+                var aggregation = new List<string> { MetricsAggregation.Avg };
                 var segments = new[] { "request/resultCode" };
 
                 var client = GetClient(ctx);
-                var metric = await client.GetIntervaledSegmentedMetricAsync(metricId, timespan, interval, aggregation, segments);
+                var metric = await client.Metrics.GetIntervaledSegmentedMetricAsync(DefaultAppId, metricId, timespan, interval, aggregation, segments);
 
                 Assert.Equal(interval, metric.Interval);
                 Assert.Equal(13, metric.Intervals.Count); // Actually 13 because of time rounding, I suppose
@@ -49,13 +50,19 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = new TimeSpan(12, 0, 0);
+                var timespan = "PT12H";
                 var interval = new TimeSpan(1, 0, 0);
-                var aggregation = new[] { "avg", "count", "max", "min", "sum" };
+                var aggregation = new List<string> { 
+                    MetricsAggregation.Avg,
+                    MetricsAggregation.Count,
+                    MetricsAggregation.Min,
+                    MetricsAggregation.Max,
+                    MetricsAggregation.Sum 
+                };
                 var segments = new[] { "request/resultCode" };
 
                 var client = GetClient(ctx);
-                var metric = await client.GetIntervaledSegmentedMetricAsync(metricId, timespan, interval, aggregation, segments);
+                var metric = await client.Metrics.GetIntervaledSegmentedMetricAsync(DefaultAppId, metricId, timespan, interval, aggregation, segments);
 
                 Assert.Equal(interval, metric.Interval);
                 Assert.Equal(13, metric.Intervals.Count); // Actually 13 because of time rounding, I suppose
@@ -83,13 +90,13 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = new TimeSpan(12, 0, 0);
+                var timespan = "PT12H";
                 var interval = new TimeSpan(1, 0, 0);
-                var aggregation = new[] { "avg" };
+                var aggregation = new List<string> { MetricsAggregation.Avg };
                 var segments = new[] { "request/name", "request/resultCode" };
 
                 var client = GetClient(ctx);
-                var metric = await client.GetIntervaledSegmentedMetricAsync(metricId, timespan, interval, aggregation, segments);
+                var metric = await client.Metrics.GetIntervaledSegmentedMetricAsync(DefaultAppId, metricId, timespan, interval, aggregation, segments);
 
                 Assert.Equal(interval, metric.Interval);
                 Assert.Equal(13, metric.Intervals.Count); // Actually 13 because of time rounding, I suppose
@@ -126,13 +133,19 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = new TimeSpan(12, 0, 0);
+                var timespan = "PT12H";
                 var interval = new TimeSpan(1, 0, 0);
-                var aggregation = new[] { "avg", "count", "max", "min", "sum" };
+                var aggregation = new List<string> { 
+                    MetricsAggregation.Avg,
+                    MetricsAggregation.Count,
+                    MetricsAggregation.Min,
+                    MetricsAggregation.Max,
+                    MetricsAggregation.Sum 
+                };
                 var segments = new[] { "request/name", "request/resultCode" };
 
                 var client = GetClient(ctx);
-                var metric = await client.GetIntervaledSegmentedMetricAsync(metricId, timespan, interval, aggregation, segments);
+                var metric = await client.Metrics.GetIntervaledSegmentedMetricAsync(DefaultAppId, metricId, timespan, interval, aggregation, segments);
 
                 Assert.Equal(interval, metric.Interval);
                 Assert.Equal(13, metric.Intervals.Count); // Actually 13 because of time rounding, I suppose

@@ -27,17 +27,20 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the ImportSource class.
         /// </summary>
-        /// <param name="resourceId">The resource identifier of the target
-        /// Azure Container Registry.</param>
         /// <param name="sourceImage">Repository name of the source image.
         /// Specify an image by repository ('hello-world'). This will use the
         /// 'latest' tag.
         /// Specify an image by tag ('hello-world:latest').
         /// Specify an image by sha256-based manifest digest
         /// ('hello-world@sha256:abc123').</param>
-        public ImportSource(string resourceId, string sourceImage)
+        /// <param name="resourceId">The resource identifier of the source
+        /// Azure Container Registry.</param>
+        /// <param name="registryUri">The address of the source
+        /// registry.</param>
+        public ImportSource(string sourceImage, string resourceId = default(string), string registryUri = default(string))
         {
             ResourceId = resourceId;
+            RegistryUri = registryUri;
             SourceImage = sourceImage;
             CustomInit();
         }
@@ -48,11 +51,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource identifier of the target Azure Container
+        /// Gets or sets the resource identifier of the source Azure Container
         /// Registry.
         /// </summary>
         [JsonProperty(PropertyName = "resourceId")]
         public string ResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the address of the source registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "registryUri")]
+        public string RegistryUri { get; set; }
 
         /// <summary>
         /// Gets or sets repository name of the source image.
@@ -73,10 +82,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ResourceId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ResourceId");
-            }
             if (SourceImage == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "SourceImage");

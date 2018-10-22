@@ -13,6 +13,7 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 			This is a public preview release of the Azure Authorization SDK. Included with this release is the addition of principal type to Role Assignments. 
+			This is a public preview release of the Azure Authorization SDK. Included with this release is support for retrieving Deny Assignments.
 			]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

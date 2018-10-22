@@ -11,10 +11,12 @@
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// AgentJob level output for the task that validates connection to SQL
+    /// Agent Job level output for the task that validates connection to SQL
     /// Server and also validates source server requirements
     /// </summary>
     [Newtonsoft.Json.JsonObject("AgentJobLevelOutput")]
@@ -34,15 +36,17 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// ConnectToSourceSqlServerTaskOutputAgentJobLevel class.
         /// </summary>
         /// <param name="id">Result identifier</param>
-        /// <param name="name">AgentJob name</param>
-        /// <param name="jobCategory">The type of AgentJob.</param>
-        /// <param name="isEnabled">The state of the original AgentJob.</param>
-        /// <param name="jobOwner">The owner of the AgentJob</param>
-        /// <param name="lastExecutedOn">UTC Date and time when the AgentJob
+        /// <param name="name">Agent Job name</param>
+        /// <param name="jobCategory">The type of Agent Job.</param>
+        /// <param name="isEnabled">The state of the original Agent
+        /// Job.</param>
+        /// <param name="jobOwner">The owner of the Agent Job</param>
+        /// <param name="lastExecutedOn">UTC Date and time when the Agent Job
         /// was last executed.</param>
+        /// <param name="validationErrors">Validation errors</param>
         /// <param name="migrationEligibility">Information about eligiblity of
         /// agent job for migration.</param>
-        public ConnectToSourceSqlServerTaskOutputAgentJobLevel(string id = default(string), string name = default(string), string jobCategory = default(string), bool? isEnabled = default(bool?), string jobOwner = default(string), System.DateTimeOffset? lastExecutedOn = default(System.DateTimeOffset?), MigrationEligibilityInfo migrationEligibility = default(MigrationEligibilityInfo))
+        public ConnectToSourceSqlServerTaskOutputAgentJobLevel(string id = default(string), string name = default(string), string jobCategory = default(string), bool? isEnabled = default(bool?), string jobOwner = default(string), System.DateTimeOffset? lastExecutedOn = default(System.DateTimeOffset?), IList<ReportableException> validationErrors = default(IList<ReportableException>), MigrationEligibilityInfo migrationEligibility = default(MigrationEligibilityInfo))
             : base(id)
         {
             Name = name;
@@ -50,6 +54,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             IsEnabled = isEnabled;
             JobOwner = jobOwner;
             LastExecutedOn = lastExecutedOn;
+            ValidationErrors = validationErrors;
             MigrationEligibility = migrationEligibility;
             CustomInit();
         }
@@ -60,34 +65,40 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets agentJob name
+        /// Gets agent Job name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the type of AgentJob.
+        /// Gets the type of Agent Job.
         /// </summary>
         [JsonProperty(PropertyName = "jobCategory")]
         public string JobCategory { get; private set; }
 
         /// <summary>
-        /// Gets the state of the original AgentJob.
+        /// Gets the state of the original Agent Job.
         /// </summary>
         [JsonProperty(PropertyName = "isEnabled")]
         public bool? IsEnabled { get; private set; }
 
         /// <summary>
-        /// Gets the owner of the AgentJob
+        /// Gets the owner of the Agent Job
         /// </summary>
         [JsonProperty(PropertyName = "jobOwner")]
         public string JobOwner { get; private set; }
 
         /// <summary>
-        /// Gets UTC Date and time when the AgentJob was last executed.
+        /// Gets UTC Date and time when the Agent Job was last executed.
         /// </summary>
         [JsonProperty(PropertyName = "lastExecutedOn")]
         public System.DateTimeOffset? LastExecutedOn { get; private set; }
+
+        /// <summary>
+        /// Gets validation errors
+        /// </summary>
+        [JsonProperty(PropertyName = "validationErrors")]
+        public IList<ReportableException> ValidationErrors { get; private set; }
 
         /// <summary>
         /// Gets information about eligiblity of agent job for migration.

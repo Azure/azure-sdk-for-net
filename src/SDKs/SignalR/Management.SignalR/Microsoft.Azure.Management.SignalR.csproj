@@ -6,13 +6,15 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.SignalR</PackageId>
 		<Description>Provides management capabilities for Azure SignalR.</Description>
-		<Version>0.9.0-preview</Version>
+		<Version>0.10.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.SignalR</AssemblyName>
 		<PackageTags>Microsoft Azure SignalR;SignalR;</PackageTags>
 		<PackageReleaseNotes>
-			<![CDATA[
-        This is preview release of the Azure SignalR SDK.
-      ]]>
+		<![CDATA[
+		1) Add support for the usage quota query.
+		2) Add version property to the model SignalRResource.
+		3) Add connection string properties to the model SignalRKeys.
+		]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
 

@@ -21,16 +21,34 @@ namespace Microsoft.Azure.Management.DataBox.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum NotificationStageName
     {
+        /// <summary>
+        /// Notification at device prepared stage.
+        /// </summary>
         [EnumMember(Value = "DevicePrepared")]
         DevicePrepared,
+        /// <summary>
+        /// Notification at device dispatched stage.
+        /// </summary>
         [EnumMember(Value = "Dispatched")]
         Dispatched,
+        /// <summary>
+        /// Notification at device delivered stage.
+        /// </summary>
         [EnumMember(Value = "Delivered")]
         Delivered,
+        /// <summary>
+        /// Notification at device picked up from user stage.
+        /// </summary>
         [EnumMember(Value = "PickedUp")]
         PickedUp,
+        /// <summary>
+        /// Notification at device received at azure datacenter stage.
+        /// </summary>
         [EnumMember(Value = "AtAzureDC")]
         AtAzureDC,
+        /// <summary>
+        /// Notification at data copy started stage.
+        /// </summary>
         [EnumMember(Value = "DataCopy")]
         DataCopy
     }

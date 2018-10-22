@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -32,12 +31,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the AccountCredentialDetails class.
         /// </summary>
+        /// <param name="accountName">Name of the account.</param>
+        /// <param name="accountConnectionString">Connection string of the
+        /// account endpoint to use the account as a storage endpoint on the
+        /// device.</param>
         /// <param name="shareCredentialDetails">Per share level unencrypted
         /// access credentials.</param>
-        /// <param name="accountName">Name of the account.</param>
-        public AccountCredentialDetails(IList<ShareCredentialDetails> shareCredentialDetails, string accountName = default(string))
+        public AccountCredentialDetails(string accountName = default(string), string accountConnectionString = default(string), IList<ShareCredentialDetails> shareCredentialDetails = default(IList<ShareCredentialDetails>))
         {
             AccountName = accountName;
+            AccountConnectionString = accountConnectionString;
             ShareCredentialDetails = shareCredentialDetails;
             CustomInit();
         }
@@ -48,29 +51,23 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the account.
+        /// Gets name of the account.
         /// </summary>
         [JsonProperty(PropertyName = "accountName")]
-        public string AccountName { get; set; }
+        public string AccountName { get; private set; }
 
         /// <summary>
-        /// Gets or sets per share level unencrypted access credentials.
+        /// Gets connection string of the account endpoint to use the account
+        /// as a storage endpoint on the device.
+        /// </summary>
+        [JsonProperty(PropertyName = "accountConnectionString")]
+        public string AccountConnectionString { get; private set; }
+
+        /// <summary>
+        /// Gets per share level unencrypted access credentials.
         /// </summary>
         [JsonProperty(PropertyName = "shareCredentialDetails")]
-        public IList<ShareCredentialDetails> ShareCredentialDetails { get; set; }
+        public IList<ShareCredentialDetails> ShareCredentialDetails { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ShareCredentialDetails == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ShareCredentialDetails");
-            }
-        }
     }
 }

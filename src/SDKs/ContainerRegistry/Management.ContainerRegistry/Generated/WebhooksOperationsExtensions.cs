@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     using Microsoft.Rest.Azure;
     using Models;
     using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// Extension methods for WebhooksOperations.
@@ -59,7 +58,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Webhook> GetAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Webhook> GetAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, registryName, webhookName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -111,7 +110,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Webhook> CreateAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, WebhookCreateParameters webhookCreateParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Webhook> CreateAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, WebhookCreateParameters webhookCreateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, registryName, webhookName, webhookCreateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -157,7 +156,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, registryName, webhookName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -206,7 +205,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Webhook> UpdateAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, WebhookUpdateParameters webhookUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Webhook> UpdateAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, WebhookUpdateParameters webhookUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, registryName, webhookName, webhookUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -246,7 +245,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Webhook>> ListAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<IPage<Webhook>> ListAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, registryName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -292,7 +291,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EventInfo> PingAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<EventInfo> PingAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PingWithHttpMessagesAsync(resourceGroupName, registryName, webhookName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -338,7 +337,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CallbackConfig> GetCallbackConfigAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<CallbackConfig> GetCallbackConfigAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetCallbackConfigWithHttpMessagesAsync(resourceGroupName, registryName, webhookName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -384,7 +383,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<EventModel>> ListEventsAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<IPage<EventModel>> ListEventsAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListEventsWithHttpMessagesAsync(resourceGroupName, registryName, webhookName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -436,7 +435,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Webhook> BeginCreateAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, WebhookCreateParameters webhookCreateParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Webhook> BeginCreateAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, WebhookCreateParameters webhookCreateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, registryName, webhookName, webhookCreateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -482,7 +481,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, registryName, webhookName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -531,7 +530,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Webhook> BeginUpdateAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, WebhookUpdateParameters webhookUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Webhook> BeginUpdateAsync(this IWebhooksOperations operations, string resourceGroupName, string registryName, string webhookName, WebhookUpdateParameters webhookUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, registryName, webhookName, webhookUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -565,7 +564,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Webhook>> ListNextAsync(this IWebhooksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<IPage<Webhook>> ListNextAsync(this IWebhooksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -599,7 +598,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<EventModel>> ListEventsNextAsync(this IWebhooksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<IPage<EventModel>> ListEventsNextAsync(this IWebhooksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListEventsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

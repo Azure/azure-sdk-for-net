@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="name">Name of the database</param>
         /// <param name="restoreDatabaseName">Name of the database at
         /// destination</param>
-        /// <param name="backupFileShare">Backup file share information for
-        /// this database.</param>
+        /// <param name="backupAndRestoreFolder">The backup and restore
+        /// folder</param>
         /// <param name="databaseFiles">The list of database files</param>
-        public MigrateSqlServerSqlServerDatabaseInput(string name = default(string), string restoreDatabaseName = default(string), FileShare backupFileShare = default(FileShare), IList<DatabaseFileInput> databaseFiles = default(IList<DatabaseFileInput>))
+        public MigrateSqlServerSqlServerDatabaseInput(string name = default(string), string restoreDatabaseName = default(string), string backupAndRestoreFolder = default(string), IList<DatabaseFileInput> databaseFiles = default(IList<DatabaseFileInput>))
         {
             Name = name;
             RestoreDatabaseName = restoreDatabaseName;
-            BackupFileShare = backupFileShare;
+            BackupAndRestoreFolder = backupAndRestoreFolder;
             DatabaseFiles = databaseFiles;
             CustomInit();
         }
@@ -66,10 +66,10 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public string RestoreDatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets backup file share information for this database.
+        /// Gets or sets the backup and restore folder
         /// </summary>
-        [JsonProperty(PropertyName = "backupFileShare")]
-        public FileShare BackupFileShare { get; set; }
+        [JsonProperty(PropertyName = "backupAndRestoreFolder")]
+        public string BackupAndRestoreFolder { get; set; }
 
         /// <summary>
         /// Gets or sets the list of database files
@@ -77,18 +77,5 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         [JsonProperty(PropertyName = "databaseFiles")]
         public IList<DatabaseFileInput> DatabaseFiles { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (BackupFileShare != null)
-            {
-                BackupFileShare.Validate();
-            }
-        }
     }
 }

@@ -2,14 +2,14 @@
   <PropertyGroup>
     <Description>Microsoft.Azure.Test.HttpRecorder</Description>
     <AssemblyTitle>HttpRecorder Library for recording Clinet/Server communication in Azure</AssemblyTitle>
-    <Version>1.11.0</Version>
+    <Version>1.13.0</Version>
     <AssemblyName>Microsoft.Azure.Test.HttpRecorder</AssemblyName>
     <PackageId>Microsoft.Azure.Test.HttpRecorder</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime HttpRecorder REST;$(CommonNugetPackageTags)</PackageTags>
     <DefaultItemExcludes>$(DefaultItemExcludes);HttpRecorder.csproj</DefaultItemExcludes>
     <PackageReleaseNotes>
       <![CDATA[
-      1) Optimizing recorded files for LRO scenarios
+      1) Adding ability to detect content-type during playback
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

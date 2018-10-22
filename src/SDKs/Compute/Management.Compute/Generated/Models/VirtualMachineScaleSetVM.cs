@@ -50,6 +50,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the virtual machine.</param>
         /// <param name="storageProfile">Specifies the storage settings for the
         /// virtual machine disks.</param>
+        /// <param name="additionalCapabilities">Specifies additional
+        /// capabilities enabled or disabled on the virtual machine in the
+        /// scale set. For instance: whether the virtual machine has the
+        /// capability to support attaching managed data disks with
+        /// UltraSSD_LRS storage account type.</param>
         /// <param name="osProfile">Specifies the operating system settings for
         /// the virtual machine.</param>
         /// <param name="networkProfile">Specifies the network interfaces of
@@ -93,7 +98,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="resources">The virtual machine child extension
         /// resources.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), string vmId = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), IList<string> zones = default(IList<string>))
+        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), string vmId = default(string), VirtualMachineScaleSetVMInstanceView instanceView = default(VirtualMachineScaleSetVMInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             InstanceId = instanceId;
@@ -103,6 +108,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             InstanceView = instanceView;
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
+            AdditionalCapabilities = additionalCapabilities;
             OsProfile = osProfile;
             NetworkProfile = networkProfile;
             DiagnosticsProfile = diagnosticsProfile;
@@ -149,7 +155,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets the virtual machine instance view.
         /// </summary>
         [JsonProperty(PropertyName = "properties.instanceView")]
-        public VirtualMachineInstanceView InstanceView { get; private set; }
+        public VirtualMachineScaleSetVMInstanceView InstanceView { get; private set; }
 
         /// <summary>
         /// Gets or sets specifies the hardware settings for the virtual
@@ -164,6 +170,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageProfile")]
         public StorageProfile StorageProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies additional capabilities enabled or disabled
+        /// on the virtual machine in the scale set. For instance: whether the
+        /// virtual machine has the capability to support attaching managed
+        /// data disks with UltraSSD_LRS storage account type.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.additionalCapabilities")]
+        public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the operating system settings for the

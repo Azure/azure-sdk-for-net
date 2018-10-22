@@ -37,17 +37,22 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Source SQL Server</param>
         /// <param name="checkPermissionsGroup">Permission group for
         /// validations. Possible values include: 'Default',
-        /// 'MigrationFromSqlServerToAzureDB'</param>
+        /// 'MigrationFromSqlServerToAzureDB',
+        /// 'MigrationFromSqlServerToAzureMI',
+        /// 'MigrationFromMySQLToAzureDBForMySQL'</param>
         /// <param name="collectLogins">Flag for whether to collect logins from
         /// source server.</param>
         /// <param name="collectAgentJobs">Flag for whether to collect agent
         /// jobs from source server.</param>
-        public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, string checkPermissionsGroup = default(string), bool? collectLogins = default(bool?), bool? collectAgentJobs = default(bool?))
+        /// <param name="collectTdeCertificateInfo">Flag for whether to collect
+        /// TDE Certificate names from source server.</param>
+        public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, string checkPermissionsGroup = default(string), bool? collectLogins = default(bool?), bool? collectAgentJobs = default(bool?), bool? collectTdeCertificateInfo = default(bool?))
         {
             SourceConnectionInfo = sourceConnectionInfo;
             CheckPermissionsGroup = checkPermissionsGroup;
             CollectLogins = collectLogins;
             CollectAgentJobs = collectAgentJobs;
+            CollectTdeCertificateInfo = collectTdeCertificateInfo;
             CustomInit();
         }
 
@@ -64,7 +69,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
 
         /// <summary>
         /// Gets or sets permission group for validations. Possible values
-        /// include: 'Default', 'MigrationFromSqlServerToAzureDB'
+        /// include: 'Default', 'MigrationFromSqlServerToAzureDB',
+        /// 'MigrationFromSqlServerToAzureMI',
+        /// 'MigrationFromMySQLToAzureDBForMySQL'
         /// </summary>
         [JsonProperty(PropertyName = "checkPermissionsGroup")]
         public string CheckPermissionsGroup { get; set; }
@@ -72,15 +79,22 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <summary>
         /// Gets or sets flag for whether to collect logins from source server.
         /// </summary>
-        [JsonProperty(PropertyName = "CollectLogins")]
+        [JsonProperty(PropertyName = "collectLogins")]
         public bool? CollectLogins { get; set; }
 
         /// <summary>
         /// Gets or sets flag for whether to collect agent jobs from source
         /// server.
         /// </summary>
-        [JsonProperty(PropertyName = "CollectAgentJobs")]
+        [JsonProperty(PropertyName = "collectAgentJobs")]
         public bool? CollectAgentJobs { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag for whether to collect TDE Certificate names from
+        /// source server.
+        /// </summary>
+        [JsonProperty(PropertyName = "collectTdeCertificateInfo")]
+        public bool? CollectTdeCertificateInfo { get; set; }
 
         /// <summary>
         /// Validate the object.

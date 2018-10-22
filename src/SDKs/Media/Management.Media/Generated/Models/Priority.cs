@@ -11,107 +11,66 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for Priority.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(PriorityConverter))]
-    public struct Priority : System.IEquatable<Priority>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum Priority
     {
-        private Priority(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
         /// <summary>
         /// Used for TransformOutputs that can be generated after Normal and
         /// High priority TransformOutputs.
         /// </summary>
-        public static readonly Priority Low = "Low";
-
+        [EnumMember(Value = "Low")]
+        Low,
         /// <summary>
         /// Used for TransformOutputs that can be generated at Normal priority.
         /// </summary>
-        public static readonly Priority Normal = "Normal";
-
+        [EnumMember(Value = "Normal")]
+        Normal,
         /// <summary>
         /// Used for TransformOutputs that should take precedence over others.
         /// </summary>
-        public static readonly Priority High = "High";
-
-
-        /// <summary>
-        /// Underlying value of enum Priority
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for Priority
-        /// </summary>
-        public override string ToString()
+        [EnumMember(Value = "High")]
+        High
+    }
+    internal static class PriorityEnumExtension
+    {
+        internal static string ToSerializedValue(this Priority? value)
         {
-            return UnderlyingValue.ToString();
+            return value == null ? null : ((Priority)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Compares enums of type Priority
-        /// </summary>
-        public bool Equals(Priority e)
+        internal static string ToSerializedValue(this Priority value)
         {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
+            switch( value )
+            {
+                case Priority.Low:
+                    return "Low";
+                case Priority.Normal:
+                    return "Normal";
+                case Priority.High:
+                    return "High";
+            }
+            return null;
         }
 
-        /// <summary>
-        /// Implicit operator to convert string to Priority
-        /// </summary>
-        public static implicit operator Priority(string value)
+        internal static Priority? ParsePriority(this string value)
         {
-            return new Priority(value);
+            switch( value )
+            {
+                case "Low":
+                    return Priority.Low;
+                case "Normal":
+                    return Priority.Normal;
+                case "High":
+                    return Priority.High;
+            }
+            return null;
         }
-
-        /// <summary>
-        /// Implicit operator to convert Priority to string
-        /// </summary>
-        public static implicit operator string(Priority e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum Priority
-        /// </summary>
-        public static bool operator == (Priority e1, Priority e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum Priority
-        /// </summary>
-        public static bool operator != (Priority e1, Priority e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for Priority
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is Priority && Equals((Priority)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode Priority
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
     }
 }

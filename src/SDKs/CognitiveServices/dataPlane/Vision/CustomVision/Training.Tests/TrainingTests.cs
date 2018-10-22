@@ -295,7 +295,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "GetIterations", RecorderMode);
 
-                var projectId = await CreateTrainedImageClassificationProjectAsync();
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -335,7 +335,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "GetIterationPerformance", RecorderMode);
 
-                var projectId = await CreateTrainedImageClassificationProjectAsync();
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -371,7 +371,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "ExportTests", RecorderMode);
 
-                var projectId = await CreateTrainedImageClassificationProjectAsync(ExportableDomain);
+                var projectId = CreateTrainedImageClassificationProjectAsync(ExportableDomain);
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -407,7 +407,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "TrainProject", RecorderMode);
 
-                var projectId = await CreateTrainedImageClassificationProjectAsync();
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -436,7 +436,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "GetTaggedImages", RecorderMode);
 
-                var projectId = await CreateTrainedImageClassificationProjectAsync();
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -472,7 +472,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "GetUntaggedImages", RecorderMode);
 
-                var projectId = await CreateTrainedImageClassificationProjectAsync();
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -490,7 +490,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "ImageTagManipulation", RecorderMode);
 
-                var projectId = await CreateTrainedImageClassificationProjectAsync();
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -550,7 +550,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "QuickTests", RecorderMode);
 
-                var projectId = await CreateTrainedImageClassificationProjectAsync();
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -585,7 +585,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromPredictions", RecorderMode);
 
-                var projectId = await CreateTrainedImageClassificationProjectAsync();
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -609,7 +609,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "QueryPredictionResults", RecorderMode);
 
-                var projectId = await CreateTrainedImageClassificationProjectAsync();
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -640,7 +640,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "DeletePrediction", RecorderMode);
 
-                var projectId = await CreateTrainedImageClassificationProjectAsync();
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -663,7 +663,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "GetImagesByIds", RecorderMode);
 
-                var projectId = await CreateTrainedImageClassificationProjectAsync();
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -697,7 +697,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "ImageCounts", RecorderMode);
 
-                var projectId = await CreateTrainedImageClassificationProjectAsync();
+                var projectId = CreateTrainedImageClassificationProjectAsync();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -722,7 +722,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "DownloadRegions", RecorderMode);
 
-                var projectId = await CreateTrainedObjDetectionProject();
+                var projectId = CreateTrainedObjDetectionProject();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -746,7 +746,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "RegionManipulation", RecorderMode);
 
-                var projectId = await CreateTrainedObjDetectionProject();
+                var projectId = CreateTrainedObjDetectionProject();
 
                 ITrainingApi client = GetTrainingClient();
 
@@ -798,7 +798,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "ObjDetectionPrediction", RecorderMode);
 
-                var projectId = await CreateTrainedObjDetectionProject();
+                var projectId = CreateTrainedObjDetectionProject();
 
                 ITrainingApi client = GetTrainingClient();
 

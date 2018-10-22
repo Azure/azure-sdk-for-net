@@ -14,7 +14,7 @@ namespace Microsoft.Azure.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Information about the device twin, which is the cloud represenation of
+    /// Information about the device twin, which is the cloud representation of
     /// application device metadata.
     /// </summary>
     public partial class DeviceTwinInfo

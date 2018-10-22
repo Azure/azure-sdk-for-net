@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using System.Linq;
 
     /// <summary>
-    /// Error reponse indicates EventHub service is not able to process the
+    /// Error response that indicates the service is not able to process the
     /// incoming request. The reason is provided in the error message.
     /// </summary>
     public partial class ErrorResponse

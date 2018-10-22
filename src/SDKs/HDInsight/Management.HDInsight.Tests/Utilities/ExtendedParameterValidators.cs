@@ -123,7 +123,7 @@ namespace Management.HDInsight.Tests.UnitTests
             Assert.NotNull(osProfile.LinuxOperatingSystemProfile);
             if (!string.IsNullOrEmpty(createParams.SshPublicKey))
             {
-                Assert.True(osProfile.LinuxOperatingSystemProfile.SshProfile.PublicKeys.Any(s => s.CertificateData == createParams.SshPublicKey));
+                Assert.Contains(osProfile.LinuxOperatingSystemProfile.SshProfile.PublicKeys, s => s.CertificateData == createParams.SshPublicKey);
             }
             Assert.Equal(createParams.SshUserName, osProfile.LinuxOperatingSystemProfile.Username);
             Assert.Equal(createParams.SshPassword, osProfile.LinuxOperatingSystemProfile.Password);

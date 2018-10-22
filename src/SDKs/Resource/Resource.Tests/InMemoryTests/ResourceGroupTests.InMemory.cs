@@ -305,7 +305,7 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(0, result.Count());
+            Assert.Empty(result);
         }
         
         [Fact]
@@ -337,7 +337,7 @@ namespace ResourceGroups.Tests
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-            Assert.True(handler.Uri.ToString().Contains("$top=5"));
+            Assert.Contains("$top=5", handler.Uri.ToString());
 
             // Validate result
             Assert.Equal(2, result.Count());

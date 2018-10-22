@@ -113,7 +113,7 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 var getResponseMigrationConfiguration = ServiceBusManagementClient.MigrationConfigs.Get(resourceGroup, namespaceNameStandrad);
                 // Wait and check for Provisioning state is succeeded
-                while (getResponseMigrationConfiguration.ProvisioningState != "Succeeded" || getResponseMigrationConfiguration.PendingReplicationOperationsCount.HasValue && getResponseMigrationConfiguration.PendingReplicationOperationsCount !=0)
+                while (getResponseMigrationConfiguration.MigrationState != "Active" || getResponseMigrationConfiguration.PendingReplicationOperationsCount.HasValue && getResponseMigrationConfiguration.PendingReplicationOperationsCount !=0)
                 {
                     getResponseMigrationConfiguration = ServiceBusManagementClient.MigrationConfigs.Get(resourceGroup, namespaceNameStandrad);
                     TestUtilities.Wait(TimeSpan.FromSeconds(30));
@@ -139,7 +139,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 TestUtilities.Wait(TimeSpan.FromSeconds(60));
 
                 // Wait and check for Provisioning state is succeeded for standard namespace
-                while (!this.ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceNameStandrad).ProvisioningState.Equals("Succeeded"))
+                while (!this.ServiceBusManagementClient.MigrationConfigs.Get(resourceGroup, namespaceNameStandrad).MigrationState.Equals("Active"))
                 {
                     TestUtilities.Wait(TimeSpan.FromSeconds(30));
                 }
