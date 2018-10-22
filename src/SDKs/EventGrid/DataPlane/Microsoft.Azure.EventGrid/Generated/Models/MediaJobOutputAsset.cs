@@ -16,6 +16,7 @@ namespace Microsoft.Azure.EventGrid.Models
     /// <summary>
     /// The event data for a Job output asset.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("#Microsoft.Media.JobOutputAsset")]
     public partial class MediaJobOutputAsset : MediaJobOutput
     {
         /// <summary>
