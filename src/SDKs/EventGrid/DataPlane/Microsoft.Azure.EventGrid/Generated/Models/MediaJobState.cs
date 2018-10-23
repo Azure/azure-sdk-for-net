@@ -16,10 +16,10 @@ namespace Microsoft.Azure.EventGrid.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for JobState.
+    /// Defines values for MediaJobState.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum JobState
+    public enum MediaJobState
     {
         /// <summary>
         /// The job was canceled. This is a final state for the job.
@@ -61,53 +61,53 @@ namespace Microsoft.Azure.EventGrid.Models
         [EnumMember(Value = "Scheduled")]
         Scheduled
     }
-    internal static class JobStateEnumExtension
+    internal static class MediaJobStateEnumExtension
     {
-        internal static string ToSerializedValue(this JobState? value)
+        internal static string ToSerializedValue(this MediaJobState? value)
         {
-            return value == null ? null : ((JobState)value).ToSerializedValue();
+            return value == null ? null : ((MediaJobState)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this JobState value)
+        internal static string ToSerializedValue(this MediaJobState value)
         {
             switch( value )
             {
-                case JobState.Canceled:
+                case MediaJobState.Canceled:
                     return "Canceled";
-                case JobState.Canceling:
+                case MediaJobState.Canceling:
                     return "Canceling";
-                case JobState.Error:
+                case MediaJobState.Error:
                     return "Error";
-                case JobState.Finished:
+                case MediaJobState.Finished:
                     return "Finished";
-                case JobState.Processing:
+                case MediaJobState.Processing:
                     return "Processing";
-                case JobState.Queued:
+                case MediaJobState.Queued:
                     return "Queued";
-                case JobState.Scheduled:
+                case MediaJobState.Scheduled:
                     return "Scheduled";
             }
             return null;
         }
 
-        internal static JobState? ParseJobState(this string value)
+        internal static MediaJobState? ParseMediaJobState(this string value)
         {
             switch( value )
             {
                 case "Canceled":
-                    return JobState.Canceled;
+                    return MediaJobState.Canceled;
                 case "Canceling":
-                    return JobState.Canceling;
+                    return MediaJobState.Canceling;
                 case "Error":
-                    return JobState.Error;
+                    return MediaJobState.Error;
                 case "Finished":
-                    return JobState.Finished;
+                    return MediaJobState.Finished;
                 case "Processing":
-                    return JobState.Processing;
+                    return MediaJobState.Processing;
                 case "Queued":
-                    return JobState.Queued;
+                    return MediaJobState.Queued;
                 case "Scheduled":
-                    return JobState.Scheduled;
+                    return MediaJobState.Scheduled;
             }
             return null;
         }
