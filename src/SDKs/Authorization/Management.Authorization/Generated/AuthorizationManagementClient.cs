@@ -77,14 +77,14 @@ namespace Microsoft.Azure.Management.Authorization
         public virtual IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; private set; }
 
         /// <summary>
-        /// Gets the IPermissionsOperations.
-        /// </summary>
-        public virtual IPermissionsOperations Permissions { get; private set; }
-
-        /// <summary>
         /// Gets the IRoleAssignmentsOperations.
         /// </summary>
         public virtual IRoleAssignmentsOperations RoleAssignments { get; private set; }
+
+        /// <summary>
+        /// Gets the IPermissionsOperations.
+        /// </summary>
+        public virtual IPermissionsOperations Permissions { get; private set; }
 
         /// <summary>
         /// Gets the IRoleDefinitionsOperations.
@@ -339,8 +339,8 @@ namespace Microsoft.Azure.Management.Authorization
         {
             ClassicAdministrators = new ClassicAdministratorsOperations(this);
             ProviderOperationsMetadata = new ProviderOperationsMetadataOperations(this);
-            Permissions = new PermissionsOperations(this);
             RoleAssignments = new RoleAssignmentsOperations(this);
+            Permissions = new PermissionsOperations(this);
             RoleDefinitions = new RoleDefinitionsOperations(this);
             DenyAssignments = new DenyAssignmentsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");

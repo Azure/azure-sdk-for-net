@@ -7,14 +7,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "539883f1-adff-4261-b3cb-67ea0946c99b"
+          "2e8b76dc-aade-482c-8dd3-9f8b8f9151ba"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26020.03",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.8.0.0"
+          "FxVersion/4.6.26614.01",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.9.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -22,7 +22,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:36:58 GMT"
+          "Mon, 22 Oct 2018 21:28:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -37,7 +37,7 @@
           "1"
         ],
         "x-ms-request-id": [
-          "bd118e87-0ff6-4383-9995-d9473d8f0bd4"
+          "75604f0f-74c2-4e6e-af9b-f81d15fe6b97"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -46,13 +46,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "b6b660ef-8d14-4390-9463-9599e21bde5f"
+          "b21fa2cd-315a-4c76-90bc-a41b46d09d4b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180926T233659Z:b6b660ef-8d14-4390-9463-9599e21bde5f"
+          "WESTUS2:20181022T212807Z:b21fa2cd-315a-4c76-90bc-a41b46d09d4b"
         ],
         "Content-Length": [
           "82"
