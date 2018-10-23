@@ -13,8 +13,7 @@ namespace EventGrid.Tests.ScenarioTests
 {
     public partial class ScenarioTests
     {
-        // TODO: Replace with a valid Azure Function URL that supports subscription validation handshake before recording tests.
-        const string AzureFunctionEndpointUrl = "https://kalsfunc1.azurewebsites.net/api/HttpTriggerCSharp1?code=hidden";
+        const string AzureFunctionEndpointUrl = "https://eventgridrunnerfunction.azurewebsites.net/api/HttpTriggerCSharp1?code=<Hidden>";
 
         [Fact]
         public void EventSubscriptionCreateGetUpdateDelete()
@@ -66,18 +65,31 @@ namespace EventGrid.Tests.ScenarioTests
                 var eventSubscriptionName = TestUtilities.GenerateName(EventGridManagementHelper.EventSubscriptionPrefix);
                 string scope = $"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/{resourceGroup}/providers/Microsoft.EventGrid/topics/{topicName}";
 
+                var advFilters = new AdvancedFilter[]
+                {
+                    new StringContainsAdvancedFilter("topic", new[] { "runner" }),
+                    new StringEndsWithAdvancedFilter("data.EventData", new[] { "Info" }),
+                    new NumberInAdvancedFilter("data.key1", new List<double?> {1.0, 2.0, 3.0}),
+                    new BoolEqualsAdvancedFilter("data.key2", true),
+                    new StringContainsAdvancedFilter("dataversion", new[] { "3.0" }),
+                };
+
+                var expDate = DateTime.UtcNow.AddMinutes(2);
+
                 EventSubscription eventSubscription = new EventSubscription()
                 {
                     Destination = new WebHookEventSubscriptionDestination()
                     {
                         EndpointUrl = AzureFunctionEndpointUrl
                     },
+                    ExpirationTimeUtc = expDate,
                     Filter = new EventSubscriptionFilter()
                     {
                         IncludedEventTypes = new List<string>() { "All" },
                         IsSubjectCaseSensitive = true,
                         SubjectBeginsWith = "TestPrefix",
-                        SubjectEndsWith = "TestSuffix"
+                        SubjectEndsWith = "TestSuffix",
+                        AdvancedFilters = advFilters
                     },
                     Labels = new List<string>()
                     {
@@ -104,6 +116,11 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Equal("Succeeded", eventSubscriptionResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal("TestPrefix", eventSubscriptionResponse.Filter.SubjectBeginsWith, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal("TestSuffix", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
+                Assert.NotNull(eventSubscriptionResponse.Filter.AdvancedFilters);
+                Assert.Equal(5, eventSubscriptionResponse.Filter.AdvancedFilters.Count);
+
+                // Commented this out as this will fail in playback offline mode.
+                // Assert.Equal(expDate, eventSubscriptionResponse.ExpirationTimeUtc);
 
                 // Update the event subscription
                 var eventSubscriptionUpdateParameters = new EventSubscriptionUpdateParameters()
@@ -112,6 +129,7 @@ namespace EventGrid.Tests.ScenarioTests
                     {
                         EndpointUrl = AzureFunctionEndpointUrl,
                     },
+                    ExpirationTimeUtc = DateTime.UtcNow.AddMinutes(10),
                     Filter = new EventSubscriptionFilter()
                     {
                         IncludedEventTypes = new List<string>()
@@ -157,18 +175,31 @@ namespace EventGrid.Tests.ScenarioTests
 
                 string scope = $"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2";
 
+                var advFilters = new AdvancedFilter[]
+                {
+                    new StringContainsAdvancedFilter("topic", new[] { "runner" }),
+                    new StringEndsWithAdvancedFilter("data.EventData", new[] { "Info" }),
+                    new NumberInAdvancedFilter("data.key1", new List<double?> {1.0, 2.0, 3.0}),
+                    new BoolEqualsAdvancedFilter("data.key2", true),
+                    new StringContainsAdvancedFilter("dataversion", new[] { "3.0" }),
+                };
+
+                var expDate = DateTime.UtcNow.AddMinutes(2);
+
                 EventSubscription eventSubscription = new EventSubscription()
                 {
                     Destination = new WebHookEventSubscriptionDestination()
                     {
                         EndpointUrl = AzureFunctionEndpointUrl
                     },
+                    ExpirationTimeUtc = expDate,
                     Filter = new EventSubscriptionFilter()
                     {
                         IncludedEventTypes = new List<string>() { "All" },
                         IsSubjectCaseSensitive = false,
                         SubjectBeginsWith = "TestPrefix",
-                        SubjectEndsWith = "TestSuffix"
+                        SubjectEndsWith = "TestSuffix",
+                        AdvancedFilters = advFilters
                     },
                     Labels = new List<string>()
                     {
@@ -193,6 +224,11 @@ namespace EventGrid.Tests.ScenarioTests
                 eventSubscriptionResponse = EventGridManagementClient.EventSubscriptions.Get(scope, eventSubscriptionName);
                 Assert.NotNull(eventSubscriptionResponse);
                 Assert.Equal("Succeeded", eventSubscriptionResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                Assert.NotNull(eventSubscriptionResponse.Filter.AdvancedFilters);
+                Assert.Equal(5, eventSubscriptionResponse.Filter.AdvancedFilters.Count);
+
+                // Commented this out as this will fail in playback offline mode.
+                // Assert.Equal(expDate, eventSubscriptionResponse.ExpirationTimeUtc);
 
                 // List event subscriptions by Azure subscription
                 var eventSubscriptionsList = this.EventGridManagementClient.EventSubscriptions.ListGlobalBySubscriptionAsync().Result;
@@ -224,18 +260,31 @@ namespace EventGrid.Tests.ScenarioTests
 
                 string scope = $"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/{resourceGroup}";
 
+                var advFilters = new AdvancedFilter[]
+                {
+                    new StringContainsAdvancedFilter("topic", new[] { "runner" }),
+                    new StringEndsWithAdvancedFilter("data.EventData", new[] { "Info" }),
+                    new NumberInAdvancedFilter("data.key1", new List<double?> {1.0, 2.0, 3.0}),
+                    new BoolEqualsAdvancedFilter("data.key2", true),
+                    new StringContainsAdvancedFilter("dataversion", new[] { "3.0" }),
+                };
+
+                var expDate = DateTime.UtcNow.AddMinutes(2);
+
                 EventSubscription eventSubscription = new EventSubscription()
                 {
                     Destination = new WebHookEventSubscriptionDestination()
                     {
                         EndpointUrl = AzureFunctionEndpointUrl
                     },
+                    ExpirationTimeUtc = expDate,
                     Filter = new EventSubscriptionFilter()
                     {
                         IncludedEventTypes = new List<string>() { "All" },
                         IsSubjectCaseSensitive = false,
                         SubjectBeginsWith = "TestPrefix",
-                        SubjectEndsWith = "TestSuffix"
+                        SubjectEndsWith = "TestSuffix",
+                        AdvancedFilters = advFilters
                     },
                     Labels = new List<string>()
                     {
@@ -260,6 +309,11 @@ namespace EventGrid.Tests.ScenarioTests
                 eventSubscriptionResponse = EventGridManagementClient.EventSubscriptions.Get(scope, eventSubscriptionName);
                 Assert.NotNull(eventSubscriptionResponse);
                 Assert.Equal("Succeeded", eventSubscriptionResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                Assert.NotNull(eventSubscriptionResponse.Filter.AdvancedFilters);
+                Assert.Equal(5, eventSubscriptionResponse.Filter.AdvancedFilters.Count);
+
+                // Commented this out as this will fail in playback offline mode.
+                // Assert.Equal(expDate, eventSubscriptionResponse.ExpirationTimeUtc);
 
                 // List the event subscriptions by resource group
                 var eventSubscriptionsList = this.EventGridManagementClient.EventSubscriptions.ListGlobalByResourceGroup(resourceGroup);
@@ -314,6 +368,16 @@ namespace EventGrid.Tests.ScenarioTests
                 // Create an event subscription to this topic
                 var eventSubscriptionName = TestUtilities.GenerateName(EventGridManagementHelper.EventSubscriptionPrefix);
                 string scope = $"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/{resourceGroup}/providers/Microsoft.EventGrid/topics/{topicName}";
+                var advFilters = new AdvancedFilter[]
+                {
+                    new StringContainsAdvancedFilter("topic", new[] { "runner" }),
+                    new StringEndsWithAdvancedFilter("data.EventData", new[] { "Info" }),
+                    new NumberInAdvancedFilter("data.key1", new List<double?> {1.0, 2.0, 3.0}),
+                    new BoolEqualsAdvancedFilter("data.key2", true),
+                    new StringContainsAdvancedFilter("dataversion", new[] { "3.0" }),
+                };
+
+                var expDate = DateTime.UtcNow.AddMinutes(2);
 
                 EventSubscription eventSubscription = new EventSubscription()
                 {
@@ -321,6 +385,7 @@ namespace EventGrid.Tests.ScenarioTests
                     {
                         EndpointUrl = AzureFunctionEndpointUrl
                     },
+                    ExpirationTimeUtc = expDate,
                     Filter = new EventSubscriptionFilter()
                     {
                         IncludedEventTypes = new List<string>() { "All" },
@@ -365,6 +430,9 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Equal("TestPrefix", eventSubscriptionResponse.Filter.SubjectBeginsWith, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal("TestSuffix", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(EventDeliverySchema.CloudEventV01Schema, eventSubscriptionResponse.EventDeliverySchema, StringComparer.CurrentCultureIgnoreCase);
+
+                // Commented this out as this will fail in playback offline mode.
+                // Assert.Equal(expDate, eventSubscriptionResponse.ExpirationTimeUtc);
 
                 // Delete the event subscription
                 EventGridManagementClient.EventSubscriptions.DeleteAsync(scope, eventSubscriptionName).Wait();

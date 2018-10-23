@@ -12,12 +12,15 @@ namespace Microsoft.Azure.Management.EventGrid.Models
 {
 
     /// <summary>
-    /// Defines values for OperationOrigin.
+    /// Defines values for DomainProvisioningState.
     /// </summary>
-    public static class OperationOrigin
+    public static class DomainProvisioningState
     {
-        public const string User = "User";
-        public const string System = "System";
-        public const string UserAndSystem = "UserAndSystem";
+        public const string Creating = "Creating";
+        public const string Updating = "Updating";
+        public const string Deleting = "Deleting";
+        public const string Succeeded = "Succeeded";
+        public const string Canceled = "Canceled";
+        public const string Failed = "Failed";
     }
 }
