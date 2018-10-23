@@ -4,6 +4,8 @@
 		<LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
 		<LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
 		<LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
+		<BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
+		<SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
 		<LibraryNugetPackageFolder>$(LibraryRoot)\restoredPackages</LibraryNugetPackageFolder>
 		<LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
 		<AuthenticationSolution>src\Authentication\Authentication.sln</AuthenticationSolution>
@@ -23,6 +25,12 @@
     <OnPremiseBuild Condition=" Exists($(OnPremiseBuildTasks)) ">true</OnPremiseBuild>
     <OnPremiseBuild Condition=" ! Exists($(OnPremiseBuildTasks)) ">false</OnPremiseBuild>
   </PropertyGroup>
+	<PropertyGroup>
+		<NetSdkBuildTargetsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)\targets</NetSdkBuildTargetsDir>
+		<NetSdkBuildTargetsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildTargetsDir)' == '' ">$(SdkBuildToolsDir)\targets</NetSdkBuildTargetsDir>		
+		<NetSdkBuildToolsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)</NetSdkBuildToolsDir>
+		<NetSdkBuildToolsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildToolsDir)' == '' ">$(SdkBuildToolsDir)</NetSdkBuildToolsDir>
+	</PropertyGroup>
 	
 	<PropertyGroup>
 		<BuildInParallel>true</BuildInParallel>
