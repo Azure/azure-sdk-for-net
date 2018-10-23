@@ -333,16 +333,402 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
 
         // Media Services events
         [Fact]
-        public void ConsumeMediaServicesJobStateChangedEvent()
+        public void ConsumeMediaMediaJobStateChangeEvent()
         {
-            string requestContent = "[   {    \"topic\": \"/subscriptions/{subscription id}/resourceGroups/amsResourceGroup/providers/Microsoft.Media/mediaservices/amsaccount\",    \"subject\": \"transforms/VideoAnalyzerTransform/jobs/{job id}\",    \"eventType\": \"Microsoft.Media.JobStateChange\",    \"eventTime\": \"2018-04-20T21:26:13.8978772\",    \"id\": \"<id>\",    \"data\": {      \"previousState\": \"Processing\",      \"state\": \"Finished\"    },    \"dataVersion\": \"1.0\",    \"metadataVersion\": \"1\"  }]";
-
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-2ac2fe75-6557-4de5-ab25-5713b74a6901\",  \"eventType\": \"Microsoft.Media.JobStateChange\",  \"eventTime\": \"2018-10-12T15:14:20.2412317\",  \"id\": \"341520d0-dac0-4930-97dd-3085538c624f\",  \"data\": {    \"previousState\": \"Scheduled\",    \"state\": \"Processing\",    \"correlationData\": {}  },  \"dataVersion\": \"2.0\",  \"metadataVersion\": \"1\"}]";
             var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
 
             Assert.NotNull(events);
             Assert.True(events[0].Data is MediaJobStateChangeEventData);
             MediaJobStateChangeEventData eventData = (MediaJobStateChangeEventData)events[0].Data;
-            Assert.Equal(JobState.Finished, eventData.State);
+            Assert.Equal(MediaJobState.Scheduled, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Processing, eventData.State);
+        }
+
+        [Fact]
+        public void ConsumeMediaJobOutputStateChangeEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-2ac2fe75-6557-4de5-ab25-5713b74a6901\",  \"eventType\": \"Microsoft.Media.JobOutputStateChange\",  \"eventTime\": \"2018-10-12T15:14:17.8962704\",  \"id\": \"8d0305c0-28c0-4cc9-b613-776e4dd31e9a\",  \"data\": {    \"previousState\": \"Scheduled\",    \"output\": {      \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",      \"assetName\": \"output-2ac2fe75-6557-4de5-ab25-5713b74a6901\",      \"error\": null,      \"label\": \"VideoAnalyzerPreset_0\",      \"progress\": 0,      \"state\": \"Processing\"    },    \"jobCorrelationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobOutputStateChangeEventData);
+            MediaJobOutputStateChangeEventData eventData = (MediaJobOutputStateChangeEventData)events[0].Data;
+            Assert.Equal(MediaJobState.Scheduled, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Processing, eventData.Output.State);
+            Assert.True(eventData.Output is MediaJobOutputAsset);
+            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)eventData.Output;
+            Assert.Equal("output-2ac2fe75-6557-4de5-ab25-5713b74a6901", outputAsset.AssetName);
+        }
+
+        [Fact]
+        public void ConsumeMediaJobScheduledEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-2ac2fe75-6557-4de5-ab25-5713b74a6901\",  \"eventType\": \"Microsoft.Media.JobScheduled\",  \"eventTime\": \"2018-10-12T15:14:11.3028183\",  \"id\": \"9b17dbf0-355d-4fb0-9a73-e76b150858c8\",  \"data\": {    \"previousState\": \"Queued\",    \"state\": \"Scheduled\",    \"correlationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobScheduledEventData);
+            MediaJobScheduledEventData eventData = (MediaJobScheduledEventData)events[0].Data;
+            Assert.Equal(MediaJobState.Queued, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Scheduled, eventData.State);
+        }
+
+        [Fact]
+        public void ConsumeMediaJobProcessingEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-2ac2fe75-6557-4de5-ab25-5713b74a6901\",  \"eventType\": \"Microsoft.Media.JobProcessing\",  \"eventTime\": \"2018-10-12T15:14:20.2412317\",  \"id\": \"72162c44-c7f4-437a-9592-48b83cec2d18\",  \"data\": {    \"previousState\": \"Scheduled\",    \"state\": \"Processing\",    \"correlationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobProcessingEventData);
+            MediaJobProcessingEventData eventData = (MediaJobProcessingEventData)events[0].Data;
+            Assert.Equal(MediaJobState.Scheduled, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Processing, eventData.State);
+        }
+
+        [Fact]
+        public void ConsumeMediaJobCancelingEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-7a8215f9-0f8d-48a6-82ed-1ead772bc221\",  \"eventType\": \"Microsoft.Media.JobCanceling\",  \"eventTime\": \"2018-10-12T15:41:50.5513295\",  \"id\": \"1f9a488b-abe3-4fca-80b8-aae59bf7f123\",  \"data\": {    \"previousState\": \"Processing\",    \"state\": \"Canceling\",    \"correlationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobCancelingEventData);
+            MediaJobCancelingEventData eventData = (MediaJobCancelingEventData)events[0].Data;
+            Assert.Equal(MediaJobState.Processing, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Canceling, eventData.State);
+        }
+
+        [Fact]
+        public void ConsumeMediaJobFinishedEvent()
+        {
+            string requestContent = "[{ \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-298338bb-f8d1-4d0f-9fde-544e0ac4d983\",  \"eventType\": \"Microsoft.Media.JobFinished\",  \"eventTime\": \"2018-10-01T20:58:26.7886175\",  \"id\": \"83f8464d-be94-48e5-b67b-46c6199fe28e\",  \"data\": {    \"outputs\": [      {        \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",        \"assetName\": \"output-298338bb-f8d1-4d0f-9fde-544e0ac4d983\",        \"error\": null,        \"label\": \"VideoAnalyzerPreset_0\",        \"progress\": 100,        \"state\": \"Finished\"      }    ],    \"previousState\": \"Processing\",    \"state\": \"Finished\",    \"correlationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\" }]";
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobFinishedEventData);
+            MediaJobFinishedEventData eventData = (MediaJobFinishedEventData)events[0].Data;
+            Assert.Equal(MediaJobState.Processing, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Finished, eventData.State);
+            Assert.Equal(1, eventData.Outputs.Count);
+            Assert.True(eventData.Outputs[0] is MediaJobOutputAsset);
+            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)eventData.Outputs[0];
+
+            Assert.Equal(MediaJobState.Finished, outputAsset.State);
+            Assert.Null(outputAsset.Error);
+            Assert.Equal(100, outputAsset.Progress);            
+            Assert.Equal("output-298338bb-f8d1-4d0f-9fde-544e0ac4d983", outputAsset.AssetName);
+        }
+
+        [Fact]
+        public void ConsumeMediaJobCanceledEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-7a8215f9-0f8d-48a6-82ed-1ead772bc221\",  \"eventType\": \"Microsoft.Media.JobCanceled\",  \"eventTime\": \"2018-10-12T15:42:05.6519929\",  \"id\": \"3fef7871-f916-4980-8a45-e79a2675808b\",  \"data\": {    \"outputs\": [      {        \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",        \"assetName\": \"output-7a8215f9-0f8d-48a6-82ed-1ead772bc221\",        \"error\": null,        \"label\": \"VideoAnalyzerPreset_0\",        \"progress\": 83,        \"state\": \"Canceled\"      }    ],    \"previousState\": \"Canceling\",    \"state\": \"Canceled\",    \"correlationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobCanceledEventData);
+            MediaJobCanceledEventData eventData = (MediaJobCanceledEventData)events[0].Data;
+            Assert.Equal(MediaJobState.Canceling, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Canceled, eventData.State);
+            Assert.Equal(1, eventData.Outputs.Count);
+            Assert.True(eventData.Outputs[0] is MediaJobOutputAsset);
+
+            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)eventData.Outputs[0];
+
+            Assert.Equal(MediaJobState.Canceled, outputAsset.State);
+            Assert.Null(outputAsset.Error);
+            Assert.NotEqual(100, outputAsset.Progress);
+            Assert.Equal("output-7a8215f9-0f8d-48a6-82ed-1ead772bc221", outputAsset.AssetName);
+        }
+
+        [Fact]
+        public void ConsumeMediaJobErroredEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-2ac2fe75-6557-4de5-ab25-5713b74a6901\",  \"eventType\": \"Microsoft.Media.JobErrored\",  \"eventTime\": \"2018-10-12T15:29:20.9954767\",  \"id\": \"2749e9cf-4095-4723-9bc5-df8e15289135\",  \"data\": {    \"outputs\": [      {        \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",        \"assetName\": \"output-2ac2fe75-6557-4de5-ab25-5713b74a6901\",        \"error\": {          \"category\": \"Service\",          \"code\": \"ServiceError\",          \"details\": [            {              \"code\": \"Internal\",              \"message\": \"Internal error in initializing the task for processing\"            }          ],          \"message\": \"Fatal service error, please contact support.\",          \"retry\": \"DoNotRetry\"        },        \"label\": \"VideoAnalyzerPreset_0\",        \"progress\": 83,        \"state\": \"Error\"      }    ],    \"previousState\": \"Processing\",    \"state\": \"Error\",    \"correlationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobErroredEventData);
+            MediaJobErroredEventData eventData = (MediaJobErroredEventData)events[0].Data;
+            Assert.Equal(MediaJobState.Processing, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Error, eventData.State);
+            Assert.Equal(1, eventData.Outputs.Count);
+            Assert.True(eventData.Outputs[0] is MediaJobOutputAsset);
+
+            Assert.Equal(MediaJobState.Error, eventData.Outputs[0].State);
+            Assert.NotNull(eventData.Outputs[0].Error);
+            Assert.Equal(MediaJobErrorCategory.Service, eventData.Outputs[0].Error.Category);
+            Assert.Equal(MediaJobErrorCode.ServiceError, eventData.Outputs[0].Error.Code);
+        }
+
+        [Fact]
+        public void ConsumeMediaJobOutputCanceledEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-7a8215f9-0f8d-48a6-82ed-1ead772bc221\",  \"eventType\": \"Microsoft.Media.JobOutputCanceled\",  \"eventTime\": \"2018-10-12T15:42:04.949555\",  \"id\": \"9297cda2-4a50-4622-a679-c3785d27d512\",  \"data\": {    \"previousState\": \"Canceling\",    \"output\": {      \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",      \"assetName\": \"output-7a8215f9-0f8d-48a6-82ed-1ead772bc221\",      \"error\": null,      \"label\": \"VideoAnalyzerPreset_0\",      \"progress\": 83,      \"state\": \"Canceled\"    },    \"jobCorrelationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobOutputCanceledEventData);
+            MediaJobOutputCanceledEventData eventData = (MediaJobOutputCanceledEventData)events[0].Data;
+            Assert.Equal(MediaJobState.Canceling, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Canceled, eventData.Output.State);
+            Assert.True(eventData.Output is MediaJobOutputAsset);
+        }
+
+        [Fact]
+        public void ConsumeMediaJobOutputCancelingEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-7a8215f9-0f8d-48a6-82ed-1ead772bc221\",  \"eventType\": \"Microsoft.Media.JobOutputCanceling\",  \"eventTime\": \"2018-10-12T15:42:04.949555\",  \"id\": \"9297cda2-4a50-4622-a679-c3785d27d512\",  \"data\": {    \"previousState\": \"Processing\",    \"output\": {      \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",      \"assetName\": \"output-7a8215f9-0f8d-48a6-82ed-1ead772bc221\",      \"error\": null,      \"label\": \"VideoAnalyzerPreset_0\",      \"progress\": 83,      \"state\": \"Canceling\"    },    \"jobCorrelationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobOutputCancelingEventData);
+            MediaJobOutputCancelingEventData eventData = (MediaJobOutputCancelingEventData)events[0].Data;
+            Assert.Equal(MediaJobState.Processing, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Canceling, eventData.Output.State);
+            Assert.True(eventData.Output is MediaJobOutputAsset);
+        }
+
+        [Fact]
+        public void ConsumeMediaJobOutputErroredEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-2ac2fe75-6557-4de5-ab25-5713b74a6901\",  \"eventType\": \"Microsoft.Media.JobOutputErrored\",  \"eventTime\": \"2018-10-12T15:29:20.2621252\",  \"id\": \"bc9e6342-f081-49c2-a579-92f506a622c2\",  \"data\": {    \"previousState\": \"Processing\",    \"output\": {      \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",      \"assetName\": \"output-2ac2fe75-6557-4de5-ab25-5713b74a6901\",      \"error\": {        \"category\": \"Service\",        \"code\": \"ServiceError\",        \"details\": [          {            \"code\": \"Internal\",            \"message\": \"Internal error in initializing the task for processing\"          }        ],        \"message\": \"Fatal service error, please contact support.\",        \"retry\": \"DoNotRetry\"      },      \"label\": \"VideoAnalyzerPreset_0\",      \"progress\": 83,      \"state\": \"Error\"    },    \"jobCorrelationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobOutputErroredEventData);
+            MediaJobOutputErroredEventData eventData = (MediaJobOutputErroredEventData)events[0].Data;
+            Assert.Equal(MediaJobState.Processing, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Error, eventData.Output.State);
+            Assert.True(eventData.Output is MediaJobOutputAsset);
+            Assert.NotNull(eventData.Output.Error);
+            Assert.Equal(MediaJobErrorCategory.Service, eventData.Output.Error.Category);
+            Assert.Equal(MediaJobErrorCode.ServiceError, eventData.Output.Error.Code);
+        }
+
+        [Fact]
+        public void ConsumeMediaJobOutputFinishedEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-2ac2fe75-6557-4de5-ab25-5713b74a6901\",  \"eventType\": \"Microsoft.Media.JobOutputFinished\",  \"eventTime\": \"2018-10-12T15:29:20.2621252\",  \"id\": \"bc9e6342-f081-49c2-a579-92f506a622c2\",  \"data\": {    \"previousState\": \"Processing\",    \"output\": {      \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",      \"assetName\": \"output-2ac2fe75-6557-4de5-ab25-5713b74a6901\",            \"label\": \"VideoAnalyzerPreset_0\",      \"progress\": 100,      \"state\": \"Finished\"    },    \"jobCorrelationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobOutputFinishedEventData);
+            MediaJobOutputFinishedEventData eventData = (MediaJobOutputFinishedEventData)events[0].Data;
+            Assert.Equal(MediaJobState.Processing, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Finished, eventData.Output.State);
+            Assert.True(eventData.Output is MediaJobOutputAsset);
+            Assert.Equal(100, eventData.Output.Progress);
+
+            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)eventData.Output;
+            Assert.Equal("output-2ac2fe75-6557-4de5-ab25-5713b74a6901", outputAsset.AssetName);
+        }
+
+        [Fact]
+        public void ConsumeMediaJobOutputProcessingEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-2ac2fe75-6557-4de5-ab25-5713b74a6901\",  \"eventType\": \"Microsoft.Media.JobOutputProcessing\",  \"eventTime\": \"2018-10-12T15:14:17.8962704\",  \"id\": \"d48eeb0b-2bfa-4265-a2f8-624654c3781c\",  \"data\": {    \"previousState\": \"Scheduled\",    \"output\": {      \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",      \"assetName\": \"output-2ac2fe75-6557-4de5-ab25-5713b74a6901\",      \"error\": null,      \"label\": \"VideoAnalyzerPreset_0\",      \"progress\": 0,      \"state\": \"Processing\"    },    \"jobCorrelationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobOutputProcessingEventData);
+            MediaJobOutputProcessingEventData eventData = (MediaJobOutputProcessingEventData)events[0].Data;
+            Assert.Equal(MediaJobState.Scheduled, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Processing, eventData.Output.State);
+            Assert.True(eventData.Output is MediaJobOutputAsset);
+        }
+
+        [Fact]
+        public void ConsumeMediaJobOutputScheduledEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-2ac2fe75-6557-4de5-ab25-5713b74a6901\",  \"eventType\": \"Microsoft.Media.JobOutputScheduled\",  \"eventTime\": \"2018-10-12T15:14:11.2244618\",  \"id\": \"635ca6ea-5306-4590-b2e1-22f172759336\",  \"data\": {    \"previousState\": \"Queued\",    \"output\": {      \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",      \"assetName\": \"output-2ac2fe75-6557-4de5-ab25-5713b74a6901\",      \"error\": null,      \"label\": \"VideoAnalyzerPreset_0\",      \"progress\": 0,      \"state\": \"Scheduled\"    },    \"jobCorrelationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobOutputScheduledEventData);
+            MediaJobOutputScheduledEventData eventData = (MediaJobOutputScheduledEventData)events[0].Data;
+            Assert.Equal(MediaJobState.Queued, eventData.PreviousState);
+            Assert.Equal(MediaJobState.Scheduled, eventData.Output.State);
+            Assert.True(eventData.Output is MediaJobOutputAsset);
+        }
+
+        [Fact]
+        public void ConsumeMediaLiveEventEncoderConnectedEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"liveEvent/liveevent-ec9d26a8\",  \"eventType\": \"Microsoft.Media.LiveEventEncoderConnected\",  \"eventTime\": \"2018-10-12T15:52:04.2013501\",  \"id\": \"3d1f5b26-c466-47e7-927b-900985e0c5d5\",  \"data\": {    \"ingestUrl\": \"rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59\",    \"streamId\": \"Mystream1\",    \"encoderIp\": \"<ip address>\",    \"encoderPort\": \"3557\"  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaLiveEventEncoderConnectedEventData);
+            MediaLiveEventEncoderConnectedEventData eventData = (MediaLiveEventEncoderConnectedEventData)events[0].Data;
+            Assert.Equal("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", eventData.IngestUrl);
+            Assert.Equal("Mystream1", eventData.StreamId);
+            Assert.Equal("<ip address>", eventData.EncoderIp);
+            Assert.Equal("3557", eventData.EncoderPort);
+        }
+ 
+
+        [Fact]
+        public void ConsumeMediaLiveEventConnectionRejectedEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"liveEvent/liveevent-ec9d26a8\",  \"eventType\": \"Microsoft.Media.LiveEventConnectionRejected\",  \"eventTime\": \"2018-10-12T15:52:04.2013501\",  \"id\": \"3d1f5b26-c466-47e7-927b-900985e0c5d5\",  \"data\": {    \"ingestUrl\": \"rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59\",    \"streamId\": \"Mystream1\",    \"encoderIp\": \"<ip address>\",    \"encoderPort\": \"3557\",    \"resultCode\": \"MPE_INGEST_CODEC_NOT_SUPPORTED\"   },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaLiveEventConnectionRejectedEventData);
+            MediaLiveEventConnectionRejectedEventData eventData = (MediaLiveEventConnectionRejectedEventData)events[0].Data;
+        }
+
+        [Fact]
+        public void ConsumeMediaLiveEventEncoderDisconnectedEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"liveEvent/liveevent-ec9d26a8\",  \"eventType\": \"Microsoft.Media.LiveEventEncoderDisconnected\",  \"eventTime\": \"2018-10-12T15:52:19.8982128\",  \"id\": \"e4b55140-42d2-4c24-b08e-9aa12f1587fc\",  \"data\": {    \"ingestUrl\": \"rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59\",    \"streamId\": \"Mystream1\",    \"encoderIp\": \"<ip address>\",    \"encoderPort\": \"3557\",    \"resultCode\": \"MPE_CLIENT_TERMINATED_SESSION\"  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaLiveEventEncoderDisconnectedEventData);
+            MediaLiveEventEncoderDisconnectedEventData eventData = (MediaLiveEventEncoderDisconnectedEventData)events[0].Data;
+            Assert.Equal("MPE_CLIENT_TERMINATED_SESSION", eventData.ResultCode);
+
+            Assert.Equal("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", eventData.IngestUrl);
+            Assert.Equal("Mystream1", eventData.StreamId);
+            Assert.Equal("<ip address>", eventData.EncoderIp);
+            Assert.Equal("3557", eventData.EncoderPort);
+        }
+
+        [Fact]
+        public void ConsumeMediaLiveEventIncomingStreamReceivedEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"liveEvent/liveevent-ec9d26a8\",  \"eventType\": \"Microsoft.Media.LiveEventIncomingStreamReceived\",  \"eventTime\": \"2018-10-12T15:52:16.5726463Z\",  \"id\": \"eb688fa1-5a19-4703-8aeb-6a65a09790da\",  \"data\": {    \"ingestUrl\": \"rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59\",    \"trackType\": \"audio\",    \"trackName\": \"audio_160000\",    \"bitrate\": 160000,    \"encoderIp\": \"<ip address>\",    \"encoderPort\": \"3557\",    \"timestamp\": \"66\",    \"duration\": \"1950\",    \"timescale\": \"1000\"  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaLiveEventIncomingStreamReceivedEventData);
+            MediaLiveEventIncomingStreamReceivedEventData eventData = (MediaLiveEventIncomingStreamReceivedEventData)events[0].Data;
+
+            Assert.Equal("rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59", eventData.IngestUrl);
+            Assert.Equal("<ip address>", eventData.EncoderIp);
+            Assert.Equal("3557", eventData.EncoderPort);
+            Assert.Equal("audio", eventData.TrackType);
+            Assert.Equal("audio_160000", eventData.TrackName);
+            Assert.Equal(160000, eventData.Bitrate);
+            Assert.Equal("66", eventData.Timestamp);
+            Assert.Equal("1950", eventData.Duration);
+            Assert.Equal("1000", eventData.Timescale);
+        }
+        
+
+        [Fact]
+        public void ConsumeMediaLiveEventIncomingStreamsOutOfSyncEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"liveEvent/liveevent-ec9d26a8\",  \"eventType\": \"Microsoft.Media.LiveEventIncomingStreamsOutOfSync\",  \"eventTime\": \"2018-10-12T15:52:37.3710102\",  \"id\": \"d84727e2-d9c0-4a21-a66b-8d23f06b3e06\",  \"data\": {    \"minLastTimestamp\": \"10999\",    \"typeOfStreamWithMinLastTimestamp\": \"video\",    \"maxLastTimestamp\": \"100999\",    \"typeOfStreamWithMaxLastTimestamp\": \"audio\",    \"timescaleOfMinLastTimestamp\": \"1000\",  \"timescaleOfMaxLastTimestamp\": \"1000\"    },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaLiveEventIncomingStreamsOutOfSyncEventData);
+            MediaLiveEventIncomingStreamsOutOfSyncEventData eventData = (MediaLiveEventIncomingStreamsOutOfSyncEventData)events[0].Data;
+            Assert.Equal("10999", eventData.MinLastTimestamp);
+            Assert.Equal("video", eventData.TypeOfStreamWithMinLastTimestamp);
+            Assert.Equal("100999", eventData.MaxLastTimestamp);
+            Assert.Equal("audio", eventData.TypeOfStreamWithMaxLastTimestamp);
+            Assert.Equal("1000", eventData.TimescaleOfMinLastTimestamp);
+            Assert.Equal("1000", eventData.TimescaleOfMaxLastTimestamp);
+        }
+
+        [Fact]
+        public void ConsumeMediaLiveEventIncomingVideoStreamsOutOfSyncEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"liveEvent/liveevent-ec9d26a8\",  \"eventType\": \"Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync\",  \"eventTime\": \"2018-10-12T15:52:37.3710102\",  \"id\": \"d84727e2-d9c0-4a21-a66b-8d23f06b3e06\",  \"data\": {    \"firstTimestamp\": \"10999\",    \"firstDuration\": \"2000\",    \"secondTimestamp\": \"100999\",    \"secondDuration\": \"2000\",    \"timescale\": \"1000\",  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaLiveEventIncomingVideoStreamsOutOfSyncEventData);
+            MediaLiveEventIncomingVideoStreamsOutOfSyncEventData eventData = (MediaLiveEventIncomingVideoStreamsOutOfSyncEventData)events[0].Data;
+            Assert.Equal("10999", eventData.FirstTimestamp);
+            Assert.Equal("2000", eventData.FirstDuration);
+            Assert.Equal("100999", eventData.SecondTimestamp);
+            Assert.Equal("2000", eventData.SecondDuration);
+            Assert.Equal("1000", eventData.Timescale);
+        }
+
+        [Fact]
+        public void ConsumeMediaLiveEventIncomingChunkDroppedEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"liveEvent/liveevent-ec9d26a8\",  \"eventType\": \"Microsoft.Media.LiveEventIncomingChunkDropped\",  \"eventTime\": \"2018-10-12T15:52:37.3710102\",  \"id\": \"d84727e2-d9c0-4a21-a66b-8d23f06b3e06\",  \"data\": {    \"timestamp\": \"8999\",    \"trackType\": \"video\",    \"trackName\": \"video1\",    \"bitrate\": 2500000,    \"timescale\": \"1000\",    \"resultCode\": \"FragmentDrop_OverlapTimestamp\",  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaLiveEventIncomingDataChunkDroppedEventData);
+            MediaLiveEventIncomingDataChunkDroppedEventData eventData = (MediaLiveEventIncomingDataChunkDroppedEventData)events[0].Data;
+            Assert.Equal("8999", eventData.Timestamp);
+            Assert.Equal("video", eventData.TrackType);
+            Assert.Equal("video1", eventData.TrackName);
+            Assert.Equal(2500000, eventData.Bitrate);
+            Assert.Equal("1000", eventData.Timescale);
+            Assert.Equal("FragmentDrop_OverlapTimestamp", eventData.ResultCode);
+        }
+
+        [Fact]
+        public void ConsumeMediaLiveEventIngestHeartbeatEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"liveEvent/liveevent-ec9d26a8\",  \"eventType\": \"Microsoft.Media.LiveEventIngestHeartbeat\",  \"eventTime\": \"2018-10-12T15:52:37.3710102\",  \"id\": \"d84727e2-d9c0-4a21-a66b-8d23f06b3e06\",  \"data\": {    \"trackType\": \"video\",    \"trackName\": \"video\",    \"bitrate\": 2500000,    \"incomingBitrate\": 500726,    \"lastTimestamp\": \"11999\",    \"timescale\": \"1000\",    \"overlapCount\": 0,    \"discontinuityCount\": 0,    \"nonincreasingCount\": 0,    \"unexpectedBitrate\": true,    \"state\": \"Running\",    \"healthy\": false  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaLiveEventIngestHeartbeatEventData);
+            MediaLiveEventIngestHeartbeatEventData eventData = (MediaLiveEventIngestHeartbeatEventData)events[0].Data;
+            Assert.Equal("video", eventData.TrackType);
+            Assert.Equal("video", eventData.TrackName);
+            Assert.Equal(2500000, eventData.Bitrate);
+            Assert.Equal(500726, eventData.IncomingBitrate);
+            Assert.Equal("11999", eventData.LastTimestamp);
+            Assert.Equal("1000", eventData.Timescale);
+            Assert.Equal(0, eventData.OverlapCount);
+            Assert.Equal(0, eventData.DiscontinuityCount);
+            Assert.Equal(0, eventData.NonincreasingCount);
+            Assert.True(eventData.UnexpectedBitrate);
+            Assert.Equal("Running", eventData.State);
+            Assert.False(eventData.Healthy);
+        }
+
+        [Fact]
+        public void ConsumeMediaLiveEventTrackDiscontinuityDetectedEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"liveEvent/liveevent-ec9d26a8\",  \"eventType\": \"Microsoft.Media.LiveEventTrackDiscontinuityDetected\",  \"eventTime\": \"2018-10-12T15:52:37.3710102\",  \"id\": \"d84727e2-d9c0-4a21-a66b-8d23f06b3e06\",  \"data\": {    \"trackType\": \"video\",    \"trackName\": \"video\",    \"bitrate\": 2500000,    \"previousTimestamp\": \"10999\",    \"newTimestamp\": \"14999\",    \"timescale\": \"1000\",    \"discontinuityGap\": 4000,  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaLiveEventTrackDiscontinuityDetectedEventData);
+            MediaLiveEventTrackDiscontinuityDetectedEventData eventData = (MediaLiveEventTrackDiscontinuityDetectedEventData)events[0].Data;
+            Assert.Equal("video", eventData.TrackType);
+            Assert.Equal("video", eventData.TrackName);
+            Assert.Equal(2500000, eventData.Bitrate);
+            Assert.Equal("10999", eventData.PreviousTimestamp);
+            Assert.Equal("14999", eventData.NewTimestamp);
+            Assert.Equal("1000", eventData.Timescale);
+            Assert.Equal("4000", eventData.DiscontinuityGap);
         }
 
         // Resource Manager (Azure Subscription/Resource Group) events
