@@ -33,13 +33,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         /// <param name="scope">List of Subscription or Resource Group ARM
         /// Ids.</param>
-        /// <param name="location">List of locations to scope the query
+        /// <param name="locations">List of locations to scope the query
         /// to.</param>
         /// <param name="tagSettings">Tag settings for the VM.</param>
-        public AzureQueryProperties(IList<string> scope = default(IList<string>), IList<string> location = default(IList<string>), TagSettingsProperties tagSettings = default(TagSettingsProperties))
+        public AzureQueryProperties(IList<string> scope = default(IList<string>), IList<string> locations = default(IList<string>), TagSettingsProperties tagSettings = default(TagSettingsProperties))
         {
             Scope = scope;
-            Location = location;
+            Locations = locations;
             TagSettings = tagSettings;
             CustomInit();
         }
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Gets or sets list of locations to scope the query to.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public IList<string> Location { get; set; }
+        [JsonProperty(PropertyName = "locations")]
+        public IList<string> Locations { get; set; }
 
         /// <summary>
         /// Gets or sets tag settings for the VM.
