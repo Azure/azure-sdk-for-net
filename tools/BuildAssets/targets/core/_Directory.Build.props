@@ -17,9 +17,10 @@
     <NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
     <NuGetKey Condition=" '$(NuGetKey)' == '' ">1234</NuGetKey>
     <BuildInParallel>true</BuildInParallel>
-	  <SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
+	<SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
     <NugetPackageName/>
     <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
+	<CommonTags>SHA256Signed</CommonTags>
   </PropertyGroup>
   <PropertyGroup>
     <CIToolsPath>$(OnPremiseBuildTasks)</CIToolsPath>
