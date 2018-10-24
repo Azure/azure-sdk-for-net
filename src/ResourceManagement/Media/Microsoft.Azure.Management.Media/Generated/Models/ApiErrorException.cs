@@ -5,14 +5,14 @@ namespace Microsoft.Azure.Management.Media.Models
     using System;
     using System.Net.Http;
     using System.Runtime.Serialization;
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE && !DNXCORE50 && !NETSTANDARD
     using System.Security.Permissions;
 #endif
 
     /// <summary>
     /// Exception thrown for an invalid response with ApiError information.
     /// </summary>
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE && !DNXCORE50 && !NETSTANDARD
     [Serializable]
 #endif
     public class ApiErrorException : RestException
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Media.Models
         {
         }
 
-#if !PORTABLE && !DNXCORE50
+#if !PORTABLE && !DNXCORE50 && !NETSTANDARD
         /// <summary>
         /// Initializes a new instance of the ApiErrorException class.
         /// </summary>
