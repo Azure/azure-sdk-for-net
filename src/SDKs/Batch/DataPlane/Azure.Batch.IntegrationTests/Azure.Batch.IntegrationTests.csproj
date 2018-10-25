@@ -1,5 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!--<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />-->
+﻿<!--
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
@@ -34,11 +34,6 @@
     </Content>
   </ItemGroup>
 
-  <!--<PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <DefineConstants>netcoreapp11</DefineConstants>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>-->
   <ItemGroup>
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
@@ -47,7 +42,6 @@
     <PackageReference Include="WindowsAzure.Storage" Version="8.1.1" />
   </ItemGroup>
   <ItemGroup>
-    <!-- This is needed for discovering tests in test explorer -->
     <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />	
   </ItemGroup>
   
@@ -61,7 +55,6 @@
     <TargetFrameworks>net452</TargetFrameworks>
   </PropertyGroup>
 
-  <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
@@ -81,3 +74,4 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
 </Project>
+-->
