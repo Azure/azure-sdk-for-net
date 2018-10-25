@@ -34,10 +34,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Batch", "Azure.Batch\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Batch.Unit.Tests", "Azure.Batch.Unit.Tests\Azure.Batch.Unit.Tests.csproj", "{C4EB3C8B-7C0B-4035-8871-A244131D82FB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Batch.IntegrationTests", "Azure.Batch.IntegrationTests\Azure.Batch.IntegrationTests.csproj", "{3776D1F9-0F7A-4004-A9D6-D14848F9F848}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Batch.ProtocolTests", "Azure.Batch.ProtocolTests\Azure.Batch.ProtocolTests.csproj", "{4A5C58B2-182A-4C11-8A5D-877506B4E3C9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestCommon", "TestCommon", "{55F088CA-E1CD-4D3B-8872-4FADF9A74E42}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "TestCommon\Common\Common.csproj", "{88035DD5-0B79-4C04-B13A-62CC49A0BC6A}"
@@ -138,30 +134,6 @@ Global
 		{C4EB3C8B-7C0B-4035-8871-A244131D82FB}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
 		{C4EB3C8B-7C0B-4035-8871-A244131D82FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4EB3C8B-7C0B-4035-8871-A244131D82FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3776D1F9-0F7A-4004-A9D6-D14848F9F848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3776D1F9-0F7A-4004-A9D6-D14848F9F848}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3776D1F9-0F7A-4004-A9D6-D14848F9F848}.Net45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3776D1F9-0F7A-4004-A9D6-D14848F9F848}.Net45-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3776D1F9-0F7A-4004-A9D6-D14848F9F848}.Net45-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3776D1F9-0F7A-4004-A9D6-D14848F9F848}.Net45-Release|Any CPU.Build.0 = Release|Any CPU
-		{3776D1F9-0F7A-4004-A9D6-D14848F9F848}.Portable-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3776D1F9-0F7A-4004-A9D6-D14848F9F848}.Portable-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3776D1F9-0F7A-4004-A9D6-D14848F9F848}.Portable-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3776D1F9-0F7A-4004-A9D6-D14848F9F848}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
-		{3776D1F9-0F7A-4004-A9D6-D14848F9F848}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3776D1F9-0F7A-4004-A9D6-D14848F9F848}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A5C58B2-182A-4C11-8A5D-877506B4E3C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A5C58B2-182A-4C11-8A5D-877506B4E3C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A5C58B2-182A-4C11-8A5D-877506B4E3C9}.Net45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A5C58B2-182A-4C11-8A5D-877506B4E3C9}.Net45-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A5C58B2-182A-4C11-8A5D-877506B4E3C9}.Net45-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A5C58B2-182A-4C11-8A5D-877506B4E3C9}.Net45-Release|Any CPU.Build.0 = Release|Any CPU
-		{4A5C58B2-182A-4C11-8A5D-877506B4E3C9}.Portable-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A5C58B2-182A-4C11-8A5D-877506B4E3C9}.Portable-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A5C58B2-182A-4C11-8A5D-877506B4E3C9}.Portable-Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A5C58B2-182A-4C11-8A5D-877506B4E3C9}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
-		{4A5C58B2-182A-4C11-8A5D-877506B4E3C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A5C58B2-182A-4C11-8A5D-877506B4E3C9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{88035DD5-0B79-4C04-B13A-62CC49A0BC6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88035DD5-0B79-4C04-B13A-62CC49A0BC6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88035DD5-0B79-4C04-B13A-62CC49A0BC6A}.Net45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
