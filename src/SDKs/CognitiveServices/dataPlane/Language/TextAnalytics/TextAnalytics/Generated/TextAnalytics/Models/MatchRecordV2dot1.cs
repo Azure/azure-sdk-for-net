@@ -13,25 +13,25 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class MatchRecord
+    public partial class MatchRecordV2dot1
     {
         /// <summary>
-        /// Initializes a new instance of the MatchRecord class.
+        /// Initializes a new instance of the MatchRecordV2dot1 class.
         /// </summary>
-        public MatchRecord()
+        public MatchRecordV2dot1()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MatchRecord class.
+        /// Initializes a new instance of the MatchRecordV2dot1 class.
         /// </summary>
         /// <param name="text">Entity text as appears in the request.</param>
         /// <param name="offset">Start position (in Unicode characters) for the
         /// entity match text.</param>
         /// <param name="length">Length (in Unicode characters) for the entity
         /// match text.</param>
-        public MatchRecord(string text = default(string), int? offset = default(int?), int? length = default(int?))
+        public MatchRecordV2dot1(string text = default(string), int? offset = default(int?), int? length = default(int?))
         {
             Text = text;
             Offset = offset;
