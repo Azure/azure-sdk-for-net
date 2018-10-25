@@ -15,18 +15,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class EntityRecord
+    public partial class EntityRecordV2dot1
     {
         /// <summary>
-        /// Initializes a new instance of the EntityRecord class.
+        /// Initializes a new instance of the EntityRecordV2dot1 class.
         /// </summary>
-        public EntityRecord()
+        public EntityRecordV2dot1()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EntityRecord class.
+        /// Initializes a new instance of the EntityRecordV2dot1 class.
         /// </summary>
         /// <param name="name">Entity formal name.</param>
         /// <param name="matches">List of instances this entity appears in the
@@ -40,7 +40,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         /// <param name="bingId">Bing unique identifier of the recognized
         /// entity. Use in conjunction with the Bing Entity Search API to fetch
         /// additional relevant information.</param>
-        public EntityRecord(string name = default(string), IList<MatchRecord> matches = default(IList<MatchRecord>), string wikipediaLanguage = default(string), string wikipediaId = default(string), string wikipediaUrl = default(string), string bingId = default(string))
+        /// <param name="type">Entity type from Named Entity Recognition
+        /// model</param>
+        /// <param name="subType">Entity sub type from Named Entity Recognition
+        /// model</param>
+        public EntityRecordV2dot1(string name = default(string), IList<MatchRecordV2dot1> matches = default(IList<MatchRecordV2dot1>), string wikipediaLanguage = default(string), string wikipediaId = default(string), string wikipediaUrl = default(string), string bingId = default(string), string type = default(string), string subType = default(string))
         {
             Name = name;
             Matches = matches;
@@ -48,6 +52,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
             WikipediaId = wikipediaId;
             WikipediaUrl = wikipediaUrl;
             BingId = bingId;
+            Type = type;
+            SubType = subType;
             CustomInit();
         }
 
@@ -63,10 +69,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets list of instances this entity appears in the text.
+        /// Gets or sets list of instances this entity appears in the text.
         /// </summary>
         [JsonProperty(PropertyName = "matches")]
-        public IList<MatchRecord> Matches { get; private set; }
+        public IList<MatchRecordV2dot1> Matches { get; set; }
 
         /// <summary>
         /// Gets or sets wikipedia language for which the WikipediaId and
@@ -94,6 +100,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "bingId")]
         public string BingId { get; set; }
+
+        /// <summary>
+        /// Gets or sets entity type from Named Entity Recognition model
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets entity sub type from Named Entity Recognition model
+        /// </summary>
+        [JsonProperty(PropertyName = "subType")]
+        public string SubType { get; set; }
 
     }
 }
