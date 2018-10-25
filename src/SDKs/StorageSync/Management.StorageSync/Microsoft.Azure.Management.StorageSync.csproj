@@ -6,16 +6,14 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.StorageSync</PackageId>
         <Description>Provides management capabilities for Azure Storage Sync.</Description>
-        <Version>2.0.0</Version>
+        <Version>2.8.0-preview</Version>
         <AssemblyName>Microsoft.Azure.Management.StorageSync</AssemblyName>    
         <PackageTags>Microsoft Azure StorageSync;StorageSync;Azure File Sync;AFS;Microsoft.StorageSync;Storage Sync Service</PackageTags>
         <PackageReleaseNotes>
         <![CDATA[
             This version uses 2018-07-01 StorageSync API specification which introduced the next version for Azure File Storage Sync.
-                1. Certificate Rollover
-                2. Proxy Resource
-                3. Remove Location and Tags from Proxy Resources
-                4. Cloud Tiering days support.
+                1. Certificate Rollover bug fix
+                2. Enable the client without a need of BaseUri initialization.
       ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

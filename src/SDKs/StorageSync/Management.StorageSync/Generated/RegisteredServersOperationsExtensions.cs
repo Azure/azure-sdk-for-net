@@ -222,12 +222,12 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='serverId'>
             /// Server Id
             /// </param>
-            /// <param name='certificateData'>
+            /// <param name='serverCertificate'>
             /// Certificate Data
             /// </param>
-            public static RegisteredServersTriggerRolloverHeaders TriggerRollover(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, string certificateData = default(string))
+            public static RegisteredServersTriggerRolloverHeaders TriggerRollover(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, string serverCertificate = default(string))
             {
-                return operations.TriggerRolloverAsync(resourceGroupName, storageSyncServiceName, serverId, certificateData).GetAwaiter().GetResult();
+                return operations.TriggerRolloverAsync(resourceGroupName, storageSyncServiceName, serverId, serverCertificate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -245,15 +245,15 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='serverId'>
             /// Server Id
             /// </param>
-            /// <param name='certificateData'>
+            /// <param name='serverCertificate'>
             /// Certificate Data
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegisteredServersTriggerRolloverHeaders> TriggerRolloverAsync(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, string certificateData = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegisteredServersTriggerRolloverHeaders> TriggerRolloverAsync(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, string serverCertificate = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TriggerRolloverWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, serverId, certificateData, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TriggerRolloverWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, serverId, serverCertificate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -372,12 +372,12 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='serverId'>
             /// Server Id
             /// </param>
-            /// <param name='certificateData'>
+            /// <param name='serverCertificate'>
             /// Certificate Data
             /// </param>
-            public static RegisteredServersTriggerRolloverHeaders BeginTriggerRollover(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, string certificateData = default(string))
+            public static RegisteredServersTriggerRolloverHeaders BeginTriggerRollover(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, string serverCertificate = default(string))
             {
-                return operations.BeginTriggerRolloverAsync(resourceGroupName, storageSyncServiceName, serverId, certificateData).GetAwaiter().GetResult();
+                return operations.BeginTriggerRolloverAsync(resourceGroupName, storageSyncServiceName, serverId, serverCertificate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -395,15 +395,15 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='serverId'>
             /// Server Id
             /// </param>
-            /// <param name='certificateData'>
+            /// <param name='serverCertificate'>
             /// Certificate Data
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegisteredServersTriggerRolloverHeaders> BeginTriggerRolloverAsync(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, string certificateData = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegisteredServersTriggerRolloverHeaders> BeginTriggerRolloverAsync(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, string serverCertificate = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginTriggerRolloverWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, serverId, certificateData, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginTriggerRolloverWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, serverId, serverCertificate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
