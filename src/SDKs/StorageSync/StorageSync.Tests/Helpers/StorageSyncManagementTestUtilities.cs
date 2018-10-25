@@ -224,6 +224,11 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
             };
         }
 
+        internal static string GetSecondaryCertificate()
+        {
+            return "MIIDEDCCAfigAwIBAgIQUB7fWz9pbodGHZwk+bVTRjANBgkqhkiG9w0BAQ0FADAwMS4wLAYDVQQDEyVhbmt1c2hiLXZtMDIubnRkZXYuY29ycC5taWNyb3NvZnQuY29tMB4XDTE4MDczMDIyNDc0NVoXDTE5MDczMTIyNDc0NVowMDEuMCwGA1UEAxMlYW5rdXNoYi12bTAyLm50ZGV2LmNvcnAubWljcm9zb2Z0LmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALssKhJeisUWQGU1as0mZm7PO81SQPUnK2uE0wTaXpJYlsEn+J9GrSKGYnwUVsdHsvku8AWzvVTeOM3lg7Nmn9NdPsJP1BnzBXqIXWMOpzHrew4nPqS8KEz3/+Wqm5feQK5bpFS6MHUIgn1dXgf7Sal16yMNmzcDvtVCEIoV3eLsxbRx0MLZVa1Z9tCY3kuCIcTcrMNO4mB6NAvZ2Hh5U9Cxu8e9GaF5yzJ7nOVgiKxua4uo73eejuEEGmWq28OO2qZ2YVW0sQRySOVbuhu3gUpB2EbljnL3pCgRAJhui8oy0VlH4m5aoVK/AjOOYtWduaFoJP7LCtizREfhDMdT/SUCAwEAAaMmMCQwIgYDVR0lAQH/BBgwFgYIKwYBBQUHAwIGCisGAQQBgjcKAwwwDQYJKoZIhvcNAQENBQADggEBALR6fPRt1y4etxX1H65kn3iUOLfTa4kg2Lj+GbqjjkVJXQ9uiVL0qL6Usc1GMepUTqD0yuOfHH9sHJZdEs6N08CLpOjCAXqnelabGJ7vSEba1NxASXRGIdsgj7gpeXgH0G8+KRRRkHwp4+Ro0Gb0mXIwlbVxiMZ3zRUXzJxvITX9/fAfeQBvDhc0NpGKHBgINZFbImIzIsoDQId259n1RMBBgLRsuf17KROXQmPmHXJMfadmVC0CZgcpKr2r6n6aWYi1gUb6kliZi6Ikr4GoePUJz1w36xVhJw6mE1Oj/wZ1kPF/J092L48XqDYVZYD8zdBO+vGR52655Fn/niv3zcM=";
+        }
+
         public static CloudEndpointCreateParameters GetDefaultCloudEndpointParameters()
         {
             return new CloudEndpointCreateParameters
