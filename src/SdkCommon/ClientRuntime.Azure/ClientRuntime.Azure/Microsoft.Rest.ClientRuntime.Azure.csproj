@@ -10,6 +10,7 @@
     <PackageReleaseNotes>
       <![CDATA[
         Fixing CloudException and it's associated properties to be serialized appropriately when updating newtonsoft to higher version >=10.x
+		Signing with SHA256
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
