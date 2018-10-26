@@ -6,14 +6,10 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Dns</PackageId>
 		<Description>Provides management capabilities for Azure Dns.</Description>
-		<Version>3.0.0</Version>
+		<Version>3.0.1</Version>
 		<AssemblyName>Microsoft.Azure.Management.Dns</AssemblyName>    
 		<PackageTags>Microsoft Azure Dns;Dns;</PackageTags>
-		<PackageReleaseNotes>
-			<![CDATA[
-        1) Support for api version 2018-05-01 containing ALIAS records
-      ]]>
-		</PackageReleaseNotes>    
+		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>    
 	</PropertyGroup>
 
 	<PropertyGroup>
