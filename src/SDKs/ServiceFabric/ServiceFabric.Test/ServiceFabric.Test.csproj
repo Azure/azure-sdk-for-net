@@ -4,10 +4,8 @@
     <PackageId>ServiceFabric.Test</PackageId>
     <Description>ServiceFabric Tests Class Library</Description>
     <AssemblyName>ServiceFabric.Test</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>    
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   
   <ItemGroup>
