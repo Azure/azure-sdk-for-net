@@ -2,11 +2,11 @@
 	<UsingTask TaskName="GetBuildTools" AssemblyFile="taskBinaries\Microsoft.Azure.Build.BootstrapTasks.dll" />
 	
   <Target Name="GetLatestBuildTools">
-	<Message Text="Updating tools ...."/>
-	<GetBuildTools LocalBranchRootDir="$(LibraryRoot)" RemoteRootDir="$(RemoteRootDir)" DebugTrace="$(DebugTrace)"/>
+	  <GetBuildTools LocalBranchRootDir="$(LibraryRoot)" RemoteRootDir="$(RemoteRootDir)" UseLatest="$(UseLatest)" DebugTrace="$(DebugTrace)" WhatIf="$(WhatIf)" OverrideLocal="$(OverrideLocal)" />
   </Target>
   
   <Target Name="Init" DependsOnTargets="GetLatestBuildTools">
-	<Message Importance="high" Text="Build tools update complete. Please execute specific target to complete you build process (e.g. msbuild build.proj /t:RunTests /p:Scope=SDKs\Compute)"/>
+	  <Message Importance="high" Text="Build tools update complete." />
+    <Message Importance="high" Text="Please execute specific target to complete you build process (e.g. msbuild build.proj /t:RunTests /p:Scope=SDKs\Compute)"/>
   </Target>
 </Project>
