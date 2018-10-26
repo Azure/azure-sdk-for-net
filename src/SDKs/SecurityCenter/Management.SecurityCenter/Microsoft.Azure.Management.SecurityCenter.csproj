@@ -6,14 +6,10 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.SecurityCenter</PackageId>
     <Description>Provides developers with libraries for the updated Azure Security Center platform under Azure Resource manager to view and manage security posture in and outside Azure.</Description>
-    <Version>0.9.0-preview</Version>
+    <Version>0.10.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.SecurityCenter</AssemblyName>
     <PackageTags>management;security center;security;</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-        This is a public preview release of the Azure Security Center SDK.
-      ]]>
-    </PackageReleaseNotes>
+    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
