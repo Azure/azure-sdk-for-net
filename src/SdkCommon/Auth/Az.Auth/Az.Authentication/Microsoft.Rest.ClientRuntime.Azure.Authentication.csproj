@@ -5,13 +5,13 @@
     <Description>Provides ADAL based authentication for Azure management client libraries</Description>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure.Authentication</AssemblyName>
     <AssemblyTitle>Authentication for Azure Management Clients</AssemblyTitle>
-    <Version>2.3.4</Version>    
+    <Version>2.3.5</Version>    
     <PackageTags>Microsoft AutoRest ClientRuntime Authentication $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
 	<PackageReleaseNotes>
-		<![CDATA[
-			1) Bring back DeviceAuth to .NET Core and .NET 461 that was mistakenly left out.
-		]]>
-	</PackageReleaseNotes>
+      <![CDATA[
+        1) Upgrading version of Newtonsoft Json to 10.0.3
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;net461;netstandard1.4</TargetFrameworks>
@@ -38,7 +38,7 @@
     
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0, 4.0.0)" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2, 6.0.0)" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
