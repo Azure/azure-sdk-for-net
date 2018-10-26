@@ -5,9 +5,9 @@
     <Description>Provides management capabilities for Azure Batch service accounts.</Description>
     <AssemblyTitle>Microsoft Azure Batch Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Batch</AssemblyName>
-    <VersionPrefix>4.2.0</VersionPrefix>
+    <VersionPrefix>4.2.1</VersionPrefix>
     <PackageTags>Microsoft Azure batch management</PackageTags>
-    <PackageReleaseNotes>For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/vs17Dev/src/SDKs/Batch/Management/changelog.md</PackageReleaseNotes>
+    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>

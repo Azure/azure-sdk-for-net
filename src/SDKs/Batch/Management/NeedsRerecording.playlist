@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="Batch.Tests.ScenarioTests.AccountTests.BatchAccountCanCreateWithBYOSEnabled" /><Add Test="Microsoft.Azure.Batch.Tests.InMemoryAccountTests.AccountDeleteValidateMessage" /></Playlist>
