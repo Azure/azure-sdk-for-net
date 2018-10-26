@@ -3,12 +3,14 @@
 
 using System.Reflection;
 using System.Resources;
+using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Monitor Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure Monitor operations.")]
 
-[assembly: AssemblyVersion("0.21.0.0")]
-[assembly: AssemblyFileVersion("0.21.0.0")]
+[assembly: AssemblyTitle("Microsoft Azure Management Partner Management Library")]
+[assembly: AssemblyDescription("Provides management functionality for Azure Management Partner Resources.")]
+
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.1.1.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]

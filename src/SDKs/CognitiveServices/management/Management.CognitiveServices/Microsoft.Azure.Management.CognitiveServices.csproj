@@ -6,15 +6,10 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.CognitiveServices</PackageId>
 		<Description>Microsoft Azure Management Cognitive Services Library</Description>
-		<Version>4.1.0</Version>
+		<Version>4.1.1</Version>
 		<AssemblyName>Microsoft.Azure.Management.CognitiveServices</AssemblyName>
 		<PackageTags>Cognitive Services management;Cognitive Services;</PackageTags>
-		<PackageReleaseNotes>
-<![CDATA[
-1. Add ResourceSkusOperations;
-1. Add filter to GetUsages operation;
-]]>
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

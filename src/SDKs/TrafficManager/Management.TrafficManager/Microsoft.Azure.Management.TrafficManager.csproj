@@ -7,14 +7,9 @@
 		<PackageId>Microsoft.Azure.Management.TrafficManager</PackageId>
 		<Description>Microsoft Azure Management TrafficManager Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.TrafficManager</AssemblyName>
-		<Version>2.5.2</Version>
+		<Version>2.5.3</Version>
 		<PackageTags>Microsoft Azure TrafficManager management;TrafficManager;TrafficManager management;</PackageTags>
-        <PackageReleaseNotes>
-            <![CDATA[
-                This is the Azure Traffic Manager SDK for API version 2018-04-01.
-                Do not omit resource id, type and name in API requests.
-            ]]>
-        </PackageReleaseNotes>
+        <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

@@ -7,10 +7,10 @@
 		<PackageId>Microsoft.Azure.Management.FrontDoor</PackageId>
 		<Description>Provides management capabilities for Front Door services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.FrontDoor</AssemblyName>
-		<Version>0.9.0-preview</Version>
+		<Version>0.10.0-preview</Version>
 		<PackageTags>Microsoft Azure Front Door management;FrontDoor;Front Door management;</PackageTags>    
 		<PackageReleaseNotes>
-			SDK for Azure FrontDoor Management service
+			Taking dependency on 10.0.3 version of Newtonsoft nuget package.
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
