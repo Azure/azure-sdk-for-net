@@ -1,0 +1,31 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <UtilDependsOn>
+      innerUtilities;
+    </UtilDependsOn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <innerUtilitiesDependsOn>
+      UtilHelp;
+	    IPTTarget;
+    </innerUtilitiesDependsOn>
+  </PropertyGroup>
+
+  <Target Name="innerUtilities" DependsOnTargets="$(innerUtilitiesDependsOn)" >
+    <Message Text="UtilName = $(UtilName)" Condition=" '$(DebugTrace)' == 'true' " />
+    <Message Text="Exiting Utils" />
+  </Target>
+
+  <Target Name="IPTTarget" Condition=" '$(UtilName)' == 'InstallProjectTemplates' ">
+    <Message Text="Installing User Project Templates......"/>
+    <InstallProjectTemplates
+      ToolsDirPath="$(LibraryToolsFolder)"
+      DebugTrace="$(DebugTrace)" />
+    <Message Text="Done installing Project Templates. Please re-open Visual Studio and search for "/>
+  </Target>
+
+  <Target Name="UtilHelp" Condition=" '$(UtilName)' == '' ">
+    <Message Text="Please provide the UtilityName that you would like to invoke"/>
+    <Message Text="Usage: msbuild build.proj /t:Utils /p:UtilName=InstallProjectTemplates"/>    
+  </Target>
+</Project>
