@@ -15,13 +15,13 @@ namespace EventHub.Tests.ScenarioTests
     public partial class ScenarioTests
     {
         [Fact]
-        public void NamespaceCreateGetUpdateDelete()
+        public void NamespaceKafkaCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 InitializeClients(context);
 
-                var location = this.ResourceManagementClient.GetLocationFromProvider();
+                var location = "West US"; // Kafka is enabled in few regions and West US is one the region so hardcodded, will remove the KAfka is available in all regions. 
 
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
                 if (string.IsNullOrWhiteSpace(resourceGroup))
@@ -51,11 +51,13 @@ namespace EventHub.Tests.ScenarioTests
                             {"tag2", "value2"}
                         },
                         IsAutoInflateEnabled = true,
-                        MaximumThroughputUnits = 10
+                        MaximumThroughputUnits = 10,
+                        KafkaEnabled = true
                     });
 
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
+                Assert.True(createNamespaceResponse.KafkaEnabled, "KafkaEnabled is false");
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
