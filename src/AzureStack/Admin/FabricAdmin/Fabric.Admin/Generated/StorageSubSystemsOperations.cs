@@ -24,12 +24,12 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
     using System.Threading.Tasks;
 
     /// <summary>
-    /// EdgeGatewaysOperations operations.
+    /// StorageSubSystemsOperations operations.
     /// </summary>
-    internal partial class EdgeGatewaysOperations : IServiceOperations<FabricAdminClient>, IEdgeGatewaysOperations
+    internal partial class StorageSubSystemsOperations : IServiceOperations<FabricAdminClient>, IStorageSubSystemsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the EdgeGatewaysOperations class.
+        /// Initializes a new instance of the StorageSubSystemsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -37,7 +37,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal EdgeGatewaysOperations(FabricAdminClient client)
+        internal StorageSubSystemsOperations(FabricAdminClient client)
         {
             if (client == null)
             {
@@ -52,7 +52,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         public FabricAdminClient Client { get; private set; }
 
         /// <summary>
-        /// Returns the requested edge gateway.
+        /// Return the requested storage subsystem.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
@@ -60,8 +60,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='location'>
         /// Location of the resource.
         /// </param>
-        /// <param name='edgeGateway'>
-        /// Name of the edge gateway.
+        /// <param name='scaleUnit'>
+        /// Name of the scale units.
+        /// </param>
+        /// <param name='storageSubSystem'>
+        /// Name of the storage system.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -84,7 +87,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<EdgeGateway>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string edgeGateway, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageSubSystem>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, string storageSubSystem, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -98,11 +101,15 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            if (edgeGateway == null)
+            if (scaleUnit == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "edgeGateway");
+                throw new ValidationException(ValidationRules.CannotBeNull, "scaleUnit");
             }
-            string apiVersion = "2016-05-01";
+            if (storageSubSystem == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageSubSystem");
+            }
+            string apiVersion = "2018-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -112,18 +119,20 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
-                tracingParameters.Add("edgeGateway", edgeGateway);
+                tracingParameters.Add("scaleUnit", scaleUnit);
+                tracingParameters.Add("storageSubSystem", storageSubSystem);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/edgeGateways/{edgeGateway}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits/{scaleUnit}/storageSubSystems/{storageSubSystem}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
-            _url = _url.Replace("{edgeGateway}", System.Uri.EscapeDataString(edgeGateway));
+            _url = _url.Replace("{scaleUnit}", System.Uri.EscapeDataString(scaleUnit));
+            _url = _url.Replace("{storageSubSystem}", System.Uri.EscapeDataString(storageSubSystem));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -222,7 +231,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<EdgeGateway>();
+            var _result = new AzureOperationResponse<StorageSubSystem>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -235,7 +244,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EdgeGateway>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<StorageSubSystem>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -255,13 +264,16 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         }
 
         /// <summary>
-        /// Returns the list of all edge gateways at a certain location.
+        /// Returns a list of all storage subsystems for a location.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
         /// </param>
         /// <param name='location'>
         /// Location of the resource.
+        /// </param>
+        /// <param name='scaleUnit'>
+        /// Name of the scale units.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -287,7 +299,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<EdgeGateway>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, ODataQuery<EdgeGateway> odataQuery = default(ODataQuery<EdgeGateway>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<StorageSubSystem>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, ODataQuery<StorageSubSystem> odataQuery = default(ODataQuery<StorageSubSystem>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -301,7 +313,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            string apiVersion = "2016-05-01";
+            if (scaleUnit == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "scaleUnit");
+            }
+            string apiVersion = "2018-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -312,16 +328,18 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
+                tracingParameters.Add("scaleUnit", scaleUnit);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/edgeGateways").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits/{scaleUnit}/storageSubSystems").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
+            _url = _url.Replace("{scaleUnit}", System.Uri.EscapeDataString(scaleUnit));
             List<string> _queryParameters = new List<string>();
             if (odataQuery != null)
             {
@@ -428,7 +446,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<EdgeGateway>>();
+            var _result = new AzureOperationResponse<IPage<StorageSubSystem>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -441,7 +459,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<EdgeGateway>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<StorageSubSystem>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -461,7 +479,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         }
 
         /// <summary>
-        /// Returns the list of all edge gateways at a certain location.
+        /// Returns a list of all storage subsystems for a location.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -487,7 +505,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<EdgeGateway>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<StorageSubSystem>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -601,7 +619,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<EdgeGateway>>();
+            var _result = new AzureOperationResponse<IPage<StorageSubSystem>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -614,7 +632,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<EdgeGateway>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<StorageSubSystem>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

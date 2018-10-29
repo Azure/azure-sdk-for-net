@@ -20,12 +20,12 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
     using System.Threading.Tasks;
 
     /// <summary>
-    /// VolumesOperations operations.
+    /// DrivesOperations operations.
     /// </summary>
-    public partial interface IVolumesOperations
+    public partial interface IDrivesOperations
     {
         /// <summary>
-        /// Return the requested a storage volume.
+        /// Return the requested a storage drive.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
@@ -39,8 +39,8 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='storageSubSystem'>
         /// Name of the storage system.
         /// </param>
-        /// <param name='volume'>
-        /// Name of the storage volume.
+        /// <param name='drive'>
+        /// Name of the storage drive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -57,9 +57,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Volume>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, string storageSubSystem, string volume, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Drive>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, string storageSubSystem, string drive, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a list of all storage volumes at a location.
+        /// Returns a list of all storage drives at a location.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
@@ -91,9 +91,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Volume>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, string storageSubSystem, ODataQuery<Volume> odataQuery = default(ODataQuery<Volume>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Drive>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, string storageSubSystem, ODataQuery<Drive> odataQuery = default(ODataQuery<Drive>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a list of all storage volumes at a location.
+        /// Returns a list of all storage drives at a location.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -113,6 +113,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Volume>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Drive>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
