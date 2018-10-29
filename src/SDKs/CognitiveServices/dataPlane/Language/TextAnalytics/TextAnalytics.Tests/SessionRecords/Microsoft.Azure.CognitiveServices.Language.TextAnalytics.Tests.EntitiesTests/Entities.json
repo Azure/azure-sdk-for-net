@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/text/analytics/v2.0/entities",
-      "EncodedRequestUri": "L3RleHQvYW5hbHl0aWNzL3YyLjAvZW50aXRpZXM=",
+      "RequestUri": "/text/analytics/v2.1-preview/entities",
+      "EncodedRequestUri": "L3RleHQvYW5hbHl0aWNzL3YyLjEtcHJldmlldy9lbnRpdGllcw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"documents\": [\r\n    {\r\n      \"language\": \"en\",\r\n      \"id\": \"id\",\r\n      \"text\": \"Microsoft released Windows 10\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {

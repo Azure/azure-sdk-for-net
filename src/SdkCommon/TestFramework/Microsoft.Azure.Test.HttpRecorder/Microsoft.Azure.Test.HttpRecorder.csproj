@@ -2,14 +2,14 @@
   <PropertyGroup>
     <Description>Microsoft.Azure.Test.HttpRecorder</Description>
     <AssemblyTitle>HttpRecorder Library for recording Clinet/Server communication in Azure</AssemblyTitle>
-    <Version>1.13.0</Version>
+    <Version>1.13.1</Version>
     <AssemblyName>Microsoft.Azure.Test.HttpRecorder</AssemblyName>
     <PackageId>Microsoft.Azure.Test.HttpRecorder</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime HttpRecorder REST;$(CommonNugetPackageTags)</PackageTags>
     <DefaultItemExcludes>$(DefaultItemExcludes);HttpRecorder.csproj</DefaultItemExcludes>
     <PackageReleaseNotes>
       <![CDATA[
-      1) Adding ability to detect content-type during playback
+        1) Upgrading version of Newtonsoft Json to 10.0.3
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
@@ -28,11 +28,11 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
   
 </Project>
