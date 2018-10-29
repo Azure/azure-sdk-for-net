@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.EventHub
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ClustersOperations operations.
+    /// ConsumerGroupsOperations operations.
     /// </summary>
-    internal partial class ClustersOperations : IServiceOperations<EventHub2018PreviewManagementClient>, IClustersOperations
+    internal partial class ConsumerGroupsOperations : IServiceOperations<EventHubManagementClient>, IConsumerGroupsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ClustersOperations class.
+        /// Initializes a new instance of the ConsumerGroupsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ClustersOperations(EventHub2018PreviewManagementClient client)
+        internal ConsumerGroupsOperations(EventHubManagementClient client)
         {
             if (client == null)
             {
@@ -46,454 +46,28 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Gets a reference to the EventHub2018PreviewManagementClient
+        /// Gets a reference to the EventHubManagementClient
         /// </summary>
-        public EventHub2018PreviewManagementClient Client { get; private set; }
+        public EventHubManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the available Event Hubs Clusters within an ARM resource group.
+        /// Creates or updates an Event Hubs consumer group as a nested resource within
+        /// a Namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the resource group within the azure subscription.
         /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
+        /// <param name='namespaceName'>
+        /// The Namespace name
         /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
+        /// <param name='eventHubName'>
+        /// The Event Hub name
         /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<Cluster>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 90)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
-                }
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroup", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<Cluster>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Cluster>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Gets the resource description of the specified Event Hubs Cluster.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the Event Hubs Cluster.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<Cluster>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 90)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
-                }
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-            }
-            if (clusterName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
-            }
-            if (clusterName != null)
-            {
-                if (clusterName.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "clusterName", 50);
-                }
-                if (clusterName.Length < 6)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "clusterName", 6);
-                }
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
-            List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<Cluster>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Cluster>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Modifies mutable properties on the Event Hubs Cluster. This operation is
-        /// idempotent.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the Event Hubs Cluster.
+        /// <param name='consumerGroupName'>
+        /// The consumer group name
         /// </param>
         /// <param name='parameters'>
-        /// The properties of the Event Hubs Cluster which should be updated.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<Cluster>> PatchWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send Request
-            AzureOperationResponse<Cluster> _response = await BeginPatchWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Modifies mutable properties on the Event Hubs Cluster. This operation is
-        /// idempotent.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the Event Hubs Cluster.
-        /// </param>
-        /// <param name='parameters'>
-        /// The properties of the Event Hubs Cluster which should be updated.
+        /// Parameters supplied to create or update a consumer group resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -516,12 +90,8 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Cluster>> BeginPatchWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConsumerGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -537,29 +107,59 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            if (clusterName == null)
+            if (namespaceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
             }
-            if (clusterName != null)
+            if (namespaceName != null)
             {
-                if (clusterName.Length > 50)
+                if (namespaceName.Length > 50)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "clusterName", 50);
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
                 }
-                if (clusterName.Length < 6)
+                if (namespaceName.Length < 6)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "clusterName", 6);
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
                 }
             }
-            if (Client.ApiVersion == null)
+            if (eventHubName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
+            }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
+            }
+            if (consumerGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "consumerGroupName");
+            }
+            if (consumerGroupName != null)
+            {
+                if (consumerGroupName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "consumerGroupName", 50);
+                }
+                if (consumerGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "consumerGroupName", 1);
+                }
             }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -568,17 +168,21 @@ namespace Microsoft.Azure.Management.EventHub
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("clusterName", clusterName);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("eventHubName", eventHubName);
+                tracingParameters.Add("consumerGroupName", consumerGroupName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginPatch", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
+            _url = _url.Replace("{namespaceName}", System.Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{eventHubName}", System.Uri.EscapeDataString(eventHubName));
+            _url = _url.Replace("{consumerGroupName}", System.Uri.EscapeDataString(consumerGroupName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -591,7 +195,7 @@ namespace Microsoft.Azure.Management.EventHub
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.Method = new HttpMethod("PUT");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -648,7 +252,7 @@ namespace Microsoft.Azure.Management.EventHub
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -678,7 +282,7 @@ namespace Microsoft.Azure.Management.EventHub
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Cluster>();
+            var _result = new AzureOperationResponse<ConsumerGroup>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -691,25 +295,7 @@ namespace Microsoft.Azure.Management.EventHub
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Cluster>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 201)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Cluster>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ConsumerGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -729,7 +315,751 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Lists the available Event Hubs Clusters within an ARM resource group.
+        /// Deletes a consumer group from the specified Event Hub and resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The Namespace name
+        /// </param>
+        /// <param name='eventHubName'>
+        /// The Event Hub name
+        /// </param>
+        /// <param name='consumerGroupName'>
+        /// The consumer group name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
+            if (namespaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
+            }
+            if (eventHubName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
+            }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
+            }
+            if (consumerGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "consumerGroupName");
+            }
+            if (consumerGroupName != null)
+            {
+                if (consumerGroupName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "consumerGroupName", 50);
+                }
+                if (consumerGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "consumerGroupName", 1);
+                }
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("eventHubName", eventHubName);
+                tracingParameters.Add("consumerGroupName", consumerGroupName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{namespaceName}", System.Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{eventHubName}", System.Uri.EscapeDataString(eventHubName));
+            _url = _url.Replace("{consumerGroupName}", System.Uri.EscapeDataString(consumerGroupName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Gets a description for the specified consumer group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The Namespace name
+        /// </param>
+        /// <param name='eventHubName'>
+        /// The Event Hub name
+        /// </param>
+        /// <param name='consumerGroupName'>
+        /// The consumer group name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<ConsumerGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
+            if (namespaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
+            }
+            if (eventHubName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
+            }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
+            }
+            if (consumerGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "consumerGroupName");
+            }
+            if (consumerGroupName != null)
+            {
+                if (consumerGroupName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "consumerGroupName", 50);
+                }
+                if (consumerGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "consumerGroupName", 1);
+                }
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("eventHubName", eventHubName);
+                tracingParameters.Add("consumerGroupName", consumerGroupName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{namespaceName}", System.Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{eventHubName}", System.Uri.EscapeDataString(eventHubName));
+            _url = _url.Replace("{consumerGroupName}", System.Uri.EscapeDataString(consumerGroupName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<ConsumerGroup>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ConsumerGroup>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Gets all the consumer groups in a Namespace. An empty feed is returned if
+        /// no consumer group exists in the Namespace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The Namespace name
+        /// </param>
+        /// <param name='eventHubName'>
+        /// The Event Hub name
+        /// </param>
+        /// <param name='skip'>
+        /// Skip is only used if a previous operation returned a partial result. If a
+        /// previous response contains a nextLink element, the value of the nextLink
+        /// element will include a skip parameter that specifies a starting point to
+        /// use for subsequent calls.
+        /// </param>
+        /// <param name='top'>
+        /// May be used to limit the number of results to the most recent N
+        /// usageDetails.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<ConsumerGroup>>> ListByEventHubWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, int? skip = default(int?), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
+            if (namespaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
+            }
+            if (eventHubName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
+            }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (skip > 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "skip", 1000);
+            }
+            if (skip < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+            }
+            if (top > 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 1000);
+            }
+            if (top < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("eventHubName", eventHubName);
+                tracingParameters.Add("skip", skip);
+                tracingParameters.Add("top", top);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByEventHub", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{namespaceName}", System.Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{eventHubName}", System.Uri.EscapeDataString(eventHubName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (skip != null)
+            {
+                _queryParameters.Add(string.Format("$skip={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(skip, Client.SerializationSettings).Trim('"'))));
+            }
+            if (top != null)
+            {
+                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<ConsumerGroup>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ConsumerGroup>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Gets all the consumer groups in a Namespace. An empty feed is returned if
+        /// no consumer group exists in the Namespace.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -755,7 +1085,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Cluster>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ConsumerGroup>>> ListByEventHubNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -770,7 +1100,7 @@ namespace Microsoft.Azure.Management.EventHub
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroupNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByEventHubNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -864,7 +1194,7 @@ namespace Microsoft.Azure.Management.EventHub
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Cluster>>();
+            var _result = new AzureOperationResponse<IPage<ConsumerGroup>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -877,7 +1207,7 @@ namespace Microsoft.Azure.Management.EventHub
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Cluster>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ConsumerGroup>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

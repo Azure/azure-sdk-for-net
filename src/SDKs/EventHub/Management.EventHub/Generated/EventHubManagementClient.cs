@@ -22,10 +22,9 @@ namespace Microsoft.Azure.Management.EventHub
     using System.Net.Http;
 
     /// <summary>
-    /// Azure Event Hubs client for managing Event Hubs Cluster, IPFilter Rules
-    /// and VirtualNetworkRules resources.
+    /// Azure Event Hubs client
     /// </summary>
-    public partial class EventHub2018PreviewManagementClient : ServiceClient<EventHub2018PreviewManagementClient>, IEventHub2018PreviewManagementClient, IAzureClient
+    public partial class EventHubManagementClient : ServiceClient<EventHubManagementClient>, IEventHubManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -55,7 +54,7 @@ namespace Microsoft.Azure.Management.EventHub
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client API version.
+        /// Client API Version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -83,46 +82,56 @@ namespace Microsoft.Azure.Management.EventHub
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IClustersOperations.
-        /// </summary>
-        public virtual IClustersOperations Clusters { get; private set; }
-
-        /// <summary>
-        /// Gets the IConfigurationOperations.
-        /// </summary>
-        public virtual IConfigurationOperations Configuration { get; private set; }
-
-        /// <summary>
         /// Gets the INamespacesOperations.
         /// </summary>
         public virtual INamespacesOperations Namespaces { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the EventHub2018PreviewManagementClient class.
+        /// Gets the IDisasterRecoveryConfigsOperations.
+        /// </summary>
+        public virtual IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; private set; }
+
+        /// <summary>
+        /// Gets the IEventHubsOperations.
+        /// </summary>
+        public virtual IEventHubsOperations EventHubs { get; private set; }
+
+        /// <summary>
+        /// Gets the IConsumerGroupsOperations.
+        /// </summary>
+        public virtual IConsumerGroupsOperations ConsumerGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the IRegionsOperations.
+        /// </summary>
+        public virtual IRegionsOperations Regions { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the EventHubManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling EventHub2018PreviewManagementClient.Dispose(). False: will not dispose provided httpClient</param>
-        protected EventHub2018PreviewManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        /// True: will dispose the provided httpClient on calling EventHubManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected EventHubManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventHub2018PreviewManagementClient class.
+        /// Initializes a new instance of the EventHubManagementClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected EventHub2018PreviewManagementClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected EventHubManagementClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventHub2018PreviewManagementClient class.
+        /// Initializes a new instance of the EventHubManagementClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -130,13 +139,13 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected EventHub2018PreviewManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected EventHubManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventHub2018PreviewManagementClient class.
+        /// Initializes a new instance of the EventHubManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -147,7 +156,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected EventHub2018PreviewManagementClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected EventHubManagementClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -157,7 +166,7 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventHub2018PreviewManagementClient class.
+        /// Initializes a new instance of the EventHubManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -171,7 +180,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected EventHub2018PreviewManagementClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected EventHubManagementClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -181,7 +190,7 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventHub2018PreviewManagementClient class.
+        /// Initializes a new instance of the EventHubManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -192,7 +201,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public EventHub2018PreviewManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public EventHubManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -206,7 +215,7 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventHub2018PreviewManagementClient class.
+        /// Initializes a new instance of the EventHubManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -215,11 +224,11 @@ namespace Microsoft.Azure.Management.EventHub
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling EventHub2018PreviewManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// True: will dispose the provided httpClient on calling EventHubManagementClient.Dispose(). False: will not dispose provided httpClient</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public EventHub2018PreviewManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        public EventHubManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -233,7 +242,7 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventHub2018PreviewManagementClient class.
+        /// Initializes a new instance of the EventHubManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -247,7 +256,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public EventHub2018PreviewManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public EventHubManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -261,7 +270,7 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventHub2018PreviewManagementClient class.
+        /// Initializes a new instance of the EventHubManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -275,7 +284,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public EventHub2018PreviewManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public EventHubManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -294,7 +303,7 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventHub2018PreviewManagementClient class.
+        /// Initializes a new instance of the EventHubManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -311,7 +320,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public EventHub2018PreviewManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public EventHubManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -339,11 +348,13 @@ namespace Microsoft.Azure.Management.EventHub
         private void Initialize()
         {
             Operations = new Operations(this);
-            Clusters = new ClustersOperations(this);
-            Configuration = new ConfigurationOperations(this);
             Namespaces = new NamespacesOperations(this);
+            DisasterRecoveryConfigs = new DisasterRecoveryConfigsOperations(this);
+            EventHubs = new EventHubsOperations(this);
+            ConsumerGroups = new ConsumerGroupsOperations(this);
+            Regions = new RegionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-01-01-preview";
+            ApiVersion = "2017-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
