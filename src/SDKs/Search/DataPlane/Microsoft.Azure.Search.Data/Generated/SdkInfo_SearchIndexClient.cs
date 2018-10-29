@@ -23,5 +23,16 @@ namespace Microsoft.Azure.Search
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/mhko/azure-rest-api-specs/blob/swag/specification/search/data-plane/Microsoft.Azure.Search.Data/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\swag\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "mhko";
+      public static readonly String GithubBranchName = "swag";
+      public static readonly String GithubCommidId = "a8d065fd620489b840ee242c31518ffa70a0dcbf";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

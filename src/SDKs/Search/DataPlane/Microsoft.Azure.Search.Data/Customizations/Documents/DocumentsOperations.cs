@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Search
             if (useGet)
             {
                 var parameters = ParseQueryParameters(continuationToken.NextLink);
-                string searchText = parameters.ContainsKey("search") ? parameters["search"].First() : null;
+                string searchText = parameters.ContainsKey(searchParameter) ? parameters[searchParameter].First() : null;
 
                 SearchParameters searchParameters = SearchParameters.FromDictionary(parameters);
 
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Search
             if (useGet)
             {
                 var parameters = ParseQueryParameters(continuationToken.NextLink);
-                string searchText = parameters.ContainsKey("search") ? parameters["search"].First() : null;
+                string searchText = parameters.ContainsKey(searchParameter) ? parameters[searchParameter].First() : null;
                 SearchParameters searchParameters = SearchParameters.FromDictionary(parameters);
 
                 response = await this.Client.DocumentsProxy.SearchGetWithHttpMessagesAsync(
