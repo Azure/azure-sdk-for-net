@@ -10,37 +10,38 @@
 
 namespace Microsoft.Azure.Management.EventHub.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Definition of Resource
+    /// Single item in a List or Get AuthorizationRule operation
     /// </summary>
-    public partial class TrackedResource : Resource
+    [Rest.Serialization.JsonTransformation]
+    public partial class AuthorizationRule : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the TrackedResource class.
+        /// Initializes a new instance of the AuthorizationRule class.
         /// </summary>
-        public TrackedResource()
+        public AuthorizationRule()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TrackedResource class.
+        /// Initializes a new instance of the AuthorizationRule class.
         /// </summary>
+        /// <param name="rights">The rights associated with the rule.</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
-        /// <param name="tags">Resource tags</param>
-        public TrackedResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public AuthorizationRule(IList<string> rights, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
-            Location = location;
-            Tags = tags;
+            Rights = rights;
             CustomInit();
         }
 
@@ -50,16 +51,23 @@ namespace Microsoft.Azure.Management.EventHub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource location
+        /// Gets or sets the rights associated with the rule.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        [JsonProperty(PropertyName = "properties.rights")]
+        public IList<string> Rights { get; set; }
 
         /// <summary>
-        /// Gets or sets resource tags
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Rights == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Rights");
+            }
+        }
     }
 }

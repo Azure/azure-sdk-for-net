@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
 {
 
     /// <summary>
-    /// Defines values for IPAction.
+    /// Defines values for AccessRights.
     /// </summary>
-    public static class IPAction
+    public static class AccessRights
     {
-        public const string Accept = "Accept";
-        public const string Reject = "Reject";
+        public const string Manage = "Manage";
+        public const string Send = "Send";
+        public const string Listen = "Listen";
     }
 }

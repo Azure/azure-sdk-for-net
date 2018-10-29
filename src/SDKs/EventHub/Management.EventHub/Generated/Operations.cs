@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.EventHub
     /// <summary>
     /// Operations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<EventHub2018PreviewManagementClient>, IOperations
+    internal partial class Operations : IServiceOperations<EventHubManagementClient>, IOperations
     {
         /// <summary>
         /// Initializes a new instance of the Operations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(EventHub2018PreviewManagementClient client)
+        internal Operations(EventHubManagementClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Gets a reference to the EventHub2018PreviewManagementClient
+        /// Gets a reference to the EventHubManagementClient
         /// </summary>
-        public EventHub2018PreviewManagementClient Client { get; private set; }
+        public EventHubManagementClient Client { get; private set; }
 
         /// <summary>
         /// Lists all of the available Event Hub REST API operations.
