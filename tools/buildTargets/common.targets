@@ -165,7 +165,7 @@
     </MSBuild>         
   </Target>
   
-  <Target Name="Test">
+  <Target Name="Test" Condition=" '$(SkipTests)' != 'true' ">
     <Message Text="Executing Tests......"/>
     
       
