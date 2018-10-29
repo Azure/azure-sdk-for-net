@@ -1,8 +1,13 @@
 
+
 # Microsoft Azure SDK for .NET
  ----------
 The Microsoft Azure SDK for .NET allows you to build applications
 that take advantage of scalable cloud computing resources.
+
+### Download Packages
+
+For a full list of packages available for download in this repository, please see our [list of .NET SDK packages](https://github.com/Azure/azure-sdk-for-net/tree/psSdkJson6/Documentation/sdk-for-net-packages.md).
 
 ### Target Frameworks:
 
@@ -12,7 +17,7 @@ that take advantage of scalable cloud computing resources.
 ### Prerequisites:
   Install VS 2017 (Professional or higher) + VS2017 Update 1
   (https://www.visualstudio.com/).
-  To know more about VS 2017 and it's project system (https://docs.microsoft.com/en-us/visualstudio/#pivot=workloads&panel=windows)
+  To know more about VS 2017 and its project system (https://docs.microsoft.com/en-us/visualstudio/#pivot=workloads&panel=windows)
 
 ### Directory Restructure
 Directory structure has been simplified and consolidated in fewer directories
@@ -24,24 +29,32 @@ src\SDKs\Compute
 
 ### To build:
 =======
+#### If you have recently cloned the repo or did a pull from upstream or did git clean -xdf you need to the following before you do anything else in order to build your projects
+
+ 1. Open **elevated** VS 2017 command prompt
+ 2. Navigate to repository root directory
+ 3. Skip verification for the following dlls
+    - Sn -Vr tools\bootstrapTools\taskBinaries\Microsoft.Azure.Build.BootstrapTasks.dll
+    - Sn -Vr tools\SdkBuildTools\tasks\net46\Microsoft.Azure.Sdk.Build.Tasks.dll
+ 4. Execute MsBuild.exe build.proj (this will pull all the build related tools needed to build the repo)
+ 5. Follow below steps to start building your repo/project
+
 #### If you are building from VS, add a nuget feed source that points to < root >\tools\LocalNugetFeed directory
-#### Full Build
+ 1. Open any solution, eg "SDKs\Compute\Compute.sln"
+ 2. Build solution from VS
+ 
+#### Full Build from command line
 
  1. Open VS 2017 command prompt
  2. Navigate to repository root directory
  3. Invoke **msbuild** build.proj /t:Build
- will Build and create nuget Package
- Local Published nugets can be found under < root >\PublishedNugets
-##### *Build* without any scope will build all SDK's and create nuget packages.
+ will Build
+ ##### *Build* without any scope will build all SDK's and create nuget packages.
 
-#### Build one nuget package
+#### Create single nuget package
 In order to build one package and run it's test
-
-> msbuild build.proj /t:Build /p:scope=SDKs\Compute /p:NugetPackageName=Microsoft.Azure.Management.Compute
-
-#### Build Using Visual Studio:
- 1. Open any solution, eg "SDKs\Compute\Compute.sln"
- 2. Build solution
+`msbuild build.proj /t:CreateNugetPackage /p:scope=SDKs\Compute`
+Nuget package will be created in root directory under \binaries\packages
  
 ### To run the tests:
 Using Visual Studio:
@@ -72,9 +85,9 @@ In "SDKs\< RPName >", you will find projects for services that have already been
     - The file 'generate.cmd', used to generate library code for the given service, can also be found in this project
   - Services also contain a project for their tests
 
-### Branches: vs17Dev vs. master
+### Branches: psSdkJson6 vs. master
 
-The **vs17Dev** branch contains the code generated from AutoRest tool.
+The **psSdkJson6** branch contains the code generated from AutoRest tool.
 
 The **master** branch contains the code generated from Hydra/Hyak.
   - Hydra/Hyak is Azure's legacy code generation technology.
@@ -90,21 +103,43 @@ The **master** branch contains the code generated from Hydra/Hyak.
  see the [AutoRest repository](https://github.com/Azure/autorest)
  5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others. 
  6. **MANDATORY**: Add or update tests for the newly generated code.
- 7. Once added to the Azure SDK for .NET, build your local package using command "msbuild build.proj /t:build;package /p:scope=YourService" 
- (Note, 'YourService' comes from the sub folder under <sdk-repo-root>\src, for example: "ResourceManagement\Compute")
- 8. If you're using **master** branch, bump up the package version in YourService.nuget.proj. If you're using **AutoRest** branch, change the package version in the project.json file, as well as in the AssemblyInfo.cs file.
- 9. Use this local Package for your Powershell development
- 10. Create 2 Pull Requests and send an email to [azsdkcode@microsoft.com](mailto:azsdkcode@microsoft.com)
-    - A Pull Request of your spec changes against **master** branch of the [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
-    - A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
+ 7. Once added to the Azure SDK for .NET, build your local package using command
+ e.g.
+ `msbuild build.proj /t:CreateNugetPackage /p:scope=SDKs\Compute`
+ 8. If you're using **master** branch, bump up the package version in YourService.nuget.proj. If you're using **psSdkJson6** branch, change the package version in the .csproj file, as well as in the AssemblyInfo.cs file.
+ 9.  A Pull request of your Azure SDK for .NET changes against **psSdkJson6** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
  11. Both the pull requests will be reviewed and merged by the Azure SDK team
+
+### New Resource Provider
+1. If you have never created an SDK for your service before, you will need the following things to get your SDK in the repo
+2. Follow the standard process described above.
+3. Directory names helps in using basic heuristics in finding projects as well it's associated test projects during CI process.
+4. Create a new directory (name of your service e.g. Compute, Storage etc)
+5. If you have a data plane as well as management plane follow the following directory structure.
+ - `SDKs\<RPName>\management\Management.<RPName>\Microsoft.Azure.Management.<RPName>.csproj`
+ - `SDKs\<RPName\management\<RPName>.Tests\Management.<RPName>.Tests.csproj`
+ - `SDKs\<RPName>\dataplane\Microsoft.Azure.<RPName>\Microsoft.Azure.<RPName>.csproj`
+ - `SDKs\<RPName\dataplane\Microsoft.Azure.<RPName>.Tests\Microsoft.Azure.<RPName>.Tests.csproj`
+6. If you only have management plane SDK then have the following directory structure
+ - `SDKs\<RPName>\Management.<RPName>\Microsoft.Azure.Management.<RPName>.csproj`
+ - `SDKs\<RPName\<RPName>.Tests\Management.<RPName>.Tests.csproj`
+7. Copy .csproj from any other .csproj and update the following information in the new .csproj
+ - PackageId
+ - Description
+ - AssemblyTitle
+ - AssemblyName
+ - Version
+ - PackageTags
+ - PackageReleaseNotes (this is important because this information is displayed on www.nuget.org when your nuget package is published
+8. Copy existing generate.ps1 file from another dirctory and update the `ResourceProvider` name that is applicable to your SDK. Resource provider refers to the relative path of your REST spec directory in Azure-Rest-Api-Specs repository
+During SDK generation, this path helps to locate the REST API spec from the `https://github.com/Azure/azure-rest-api-specs`
 
 ### Code Review Process
 
 Before a pull request will be considered by the Azure SDK team, the following requirements must be met:
 
 - Prior to issuing the pull request:
-  - All code must have completed any necessary legal signoff for being publically viewable (Patent review, JSR review, etc.)
+  - All code must have completed any necessary legal signoff for being publicly viewable (Patent review, JSR review, etc.)
   - The changes cannot break any existing functional/unit tests that are part of the central repository.
     - This includes all tests, even those not associated with the given feature area.
   - Code submitted must have basic unit test coverage, and have all the unit tests pass. Testing is the full responsibility of the service team
@@ -119,14 +154,16 @@ Before a pull request will be considered by the Azure SDK team, the following re
   - Identity of QA responsible for feature testing (can be conducted post-merging of the pull request).
   - Short description of the payload of pull request.
 - After the pull request is submitted:
-  - Send an email to the Azure SDK Code Review (azsdkcode@microsoft.com) alias.
+  - Our SLA is 48 hours. When your PR is submitted someone on our team will be auto assigned the PR for review. No need to email us
+  - MS internal folks, please reach out to us via our slack channel or
+  - Send an email to the Azure DevEx .Net team (azdevxdotnet@microsoft.com) alias.
     - Include all interested parties from your team as well.
     - In the message, make sure to acknowledge that the legal signoff process is complete.
 
 Once all of the above steps are met, the following process will be followed:
 
 - A member of the Azure SDK team will review the pull request on GitHub.
-- If the pull request meets the respository's requirements, the individual will aproove the pull request, merging the code into the dev branch of the source repository.
+- If the pull request meets the repository's requirements, the individual will approve the pull request, merging the code into the dev branch of the source repository.
   - The owner will then respond to the email sent as part of the pull request, informing the group of the completion of the request.
 - If the request does not meet any of the requirements, the pull request will not be merged, and the necessary fixes for acceptance will be communicated back to the partner team.
 

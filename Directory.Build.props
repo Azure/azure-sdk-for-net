@@ -1,54 +1,16 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="dirs.proj" />  
 	<PropertyGroup>
 		<LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
-		<LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
 		<LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
-		<LibraryNugetPackageFolder>$(LibraryRoot)\restoredPackages</LibraryNugetPackageFolder>
-		<LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
-		<AuthenticationSolution>src\Authentication\Authentication.sln</AuthenticationSolution>
-		<ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
-		<BinariesFolder>$(LibraryRoot)binaries</BinariesFolder>
-		<BuiltPackageOutputDir>$(BinariesFolder)\packages</BuiltPackageOutputDir>
-		<DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
-		<CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
-		<Scope Condition=" '$(Scope)' == '' ">All</Scope>
-		<NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
-    <NuGetKey Condition=" '$(NuGetKey)' == '' ">1234</NuGetKey>
-    <NugetPackageName/>
-    <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
-    <DefaultPathTokenToIgnore>$(IgnorePathTokens) Microsoft.Azure.KeyVault.Samples Gallery Intune FileConventions FileStaging ConfigureAwaitAnalyzer ObjectModelCodeGeneration Azure.Batch.IntegrationTests Azure.Batch.ProtocolTests IntegrationTestCommon Search</DefaultPathTokenToIgnore>
-    <!--Microsoft.Azure.KeyVault.Samples 
-    ClientRuntime.Azure.TestFramework
-    Condition=" '$(IgnorePathTokens)' == '' "
-ClientRuntime.Azure.TestFramework Microsoft.Azure.Test.HttpRecorder
-    -->
+		<BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
+		<SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
 	</PropertyGroup>
-  <PropertyGroup>
-    <CIToolsPath>$(OnPremiseBuildTasks)</CIToolsPath>
-    <OnPremiseBuild Condition=" Exists($(OnPremiseBuildTasks)) ">true</OnPremiseBuild>
-    <OnPremiseBuild Condition=" ! Exists($(OnPremiseBuildTasks)) ">false</OnPremiseBuild>
-  </PropertyGroup>
-	
 	<PropertyGroup>
-		<BuildInParallel>true</BuildInParallel>
+		<NetSdkBuildTargetsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)\targets</NetSdkBuildTargetsDir>
+		<NetSdkBuildTargetsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildTargetsDir)' == '' ">$(SdkBuildToolsDir)\targets</NetSdkBuildTargetsDir>		
+		<NetSdkBuildToolsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)</NetSdkBuildToolsDir>
+		<NetSdkBuildToolsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildToolsDir)' == '' ">$(SdkBuildToolsDir)</NetSdkBuildToolsDir>
 	</PropertyGroup>
-
-	<ItemGroup Condition="'$(PublishTestProjects)' == 'false' Or '$(PublishTestProjects)' == ''">
-		<LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />
-		<LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Exclude="$(LibrarySourceFolder)\KeyVault\Microsoft.Azure.KeyVault.Samples\Microsoft.Azure.KeyVault.Samples.sln" Condition=" '$(Scope)' == 'all'  " />
-		<LibraryFxTargetList Include="$(FxTargetList)" />
-		<AutoRestLibraryFxTargetList Include="portable;net45" />
-		<ClientRuntimeProjects Include="$(LibrarySourceFolder)\ClientRuntime\**\*.xproj"/>
-		<ClientRuntimeTests Include="$(LibrarySourceFolder)\ClientRuntime\*.Tests\*.xproj"/>
-		<ClientRuntimeRootDir Include="%(ClientRuntimeProjects.RootDir)"/>
-	</ItemGroup>
-
-  <PropertyGroup Label="Well Known Properties">
-    <ClientRuntimeRootDir>$(LibraryRoot)src\UpgradeVS17\SdkCommon\ClientRuntime</ClientRuntimeRootDir>
-    <SdkCommonRootDir>$(LibraryRoot)src\UpgradeVS17\SdkCommon\ClientRuntime</SdkCommonRootDir>
-  </PropertyGroup>
- 
-	<Import Project="tools\buildTargets\common.Build.props"/>
-	<Import Project="tools\buildTargets\common.NugetPackage.props" />	
+  
+	<Import Project="$(NetSdkBuildTargetsDir)\core\_Directory.Build.props" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_Directory.Build.props') "/>
 </Project>
