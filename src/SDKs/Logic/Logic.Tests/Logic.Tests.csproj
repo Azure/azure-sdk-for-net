@@ -3,11 +3,10 @@
   <PropertyGroup>
     <PackageId>Logic.Tests</PackageId>
     <Description>Logic.Tests Class Library</Description>
-    <DelaySign>true</DelaySign>
     <AssemblyName>Logic.Tests</AssemblyName>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <PackageTags />
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>  
@@ -26,213 +25,17 @@
     <None Update="TestData\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    
-    <!--<None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountAgreementScenarioTests\CreateAndDeleteIntegrationAccountAgreement.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountAgreementScenarioTests\CreateAndGetIntegrationAccountAgreement.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountAgreementScenarioTests\CreateAndUpdateIntegrationAccountAgreement.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountAgreementScenarioTests\CreateIntegrationAccountAgreementUsingFile.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountAgreementScenarioTests\CreateIntegrationAccountAgreementWithEnvelopeOverride.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountAgreementScenarioTests\DeleteIntegrationAccountAgreementOnAccountDeletion.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountAgreementScenarioTests\ListIntegrationAccountAgreements.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountCertificateScenarioTests\CreateAndDeleteIntegrationAccountCertificate.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountCertificateScenarioTests\CreateAndGetIntegrationAccountCertificate.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountCertificateScenarioTests\CreateAndUpdateIntegrationAccountCertificate.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountCertificateScenarioTests\CreateIntegrationAccountCertificateWithPrivateKey.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountCertificateScenarioTests\CreateIntegrationAccountCertificateWithPublicKey.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountCertificateScenarioTests\DeleteIntegrationAccountCertificateOnAccountDeletion.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountCertificateScenarioTests\ListIntegrationAccountCertificates.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountMapScenarioTests\CreateAndDeleteIntegrationAccountMap.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountMapScenarioTests\CreateAndGetIntegrationAccountMap.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountMapScenarioTests\CreateAndUpdateIntegrationAccountMap.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountMapScenarioTests\DeleteIntegrationAccountMapOnAccountDeletion.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountMapScenarioTests\ListIntegrationAccountMaps.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountPartnerScenarioTests\CreateAndDeleteIntegrationAccountPartner.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountPartnerScenarioTests\CreateAndGetIntegrationAccountPartner.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountPartnerScenarioTests\CreateAndUpdateIntegrationAccountPartner.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountPartnerScenarioTests\DeleteIntegrationAccountPartnerOnAccountDeletion.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountPartnerScenarioTests\ListIntegrationAccountPartners.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountScenarioTests\CreateAndDeleteIntegrationAccount.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountScenarioTests\CreateAndGetIntegrationAccountByName.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountScenarioTests\CreateAndUpdateIntegrationAccount.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountScenarioTests\ListIntegrationAccountByResourceGroup.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountScenarioTests\ListIntegrationAccountBySubscription.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountScenarioTests\ListIntegrationAccountCallbackUrl.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountScenarioTests\UpdateIntegrationAccount.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountSchemaScenarioTests\CreateAndDeleteIntegrationAccountSchema.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountSchemaScenarioTests\CreateAndGetIntegrationAccountSchema.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountSchemaScenarioTests\CreateAndUpdateIntegrationAccountSchema.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountSchemaScenarioTests\DeleteIntegrationAccountSchemaOnAccountDeletion.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountSchemaScenarioTests\ListIntegrationAccountSchemas.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountSessionScenarioTests\CreateAndDeleteIntegrationAccountSession.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountSessionScenarioTests\CreateAndGetIntegrationAccountSession.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountSessionScenarioTests\CreateAndUpdateIntegrationAccountSession.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountSessionScenarioTests\CreateIntegrationAccountSessionUsingFile.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountSessionScenarioTests\DeleteIntegrationAccountSessionOnAccountDeletion.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.IntegrationAccountSessionScenarioTests\ListIntegrationAccountSessions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.ProviderOperationsTests\GetProviderOperations.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\CreateAndDeleteWorkflow.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\CreateAndEnableDisableWorkflow.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\DeleteAllWorkflows.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\ListWorkflow.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\UpdateWorkflow.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\ValidateWorkflow.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.WorkflowTriggerHistoriesScenarioTests\GetHistory.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.WorkflowTriggerHistoriesScenarioTests\ListHistory.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.WorkflowTriggersScenarioTests\GetAndListTriggers.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.WorkflowTriggersScenarioTests\ListNoTrigger.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.WorkflowTriggersScenarioTests\RunTrigger.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Test.Azure.Management.Logic.WorkflowVersionsScenarioTests\CreateAndGetWorkflowVersion.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\IntegrationAccountAgreementResponseContent.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\IntegrationAccountAS2AgreementContent.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\IntegrationAccountCallbackUrlResponseContent.json">
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestData\IntegrationAccountAssemblyContent.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="TestData\IntegrationAccountCertificate.cer">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\IntegrationAccountCertificateResponseContent.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\IntegrationAccountEDIFACTAgreementContent.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\IntegrationAccountMapResponseContent.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\IntegrationAccountPartnerResponseContent.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\IntegrationAccountResponseContent.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\IntegrationAccountSchemaResponseContent.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\IntegrationAccountSessionResponseContent.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\IntegrationAccountX12AgreementContent.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="TestData\OrderFile.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\SampleXsltMap.xsl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>-->
   </ItemGroup>
 </Project>
