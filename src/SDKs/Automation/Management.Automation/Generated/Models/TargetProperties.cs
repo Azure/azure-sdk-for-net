@@ -11,29 +11,31 @@
 namespace Microsoft.Azure.Management.Automation.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for Publish operation.
+    /// Group specific to the update configuration.
     /// </summary>
-    public partial class RunbookDraftPublishHeaders
+    public partial class TargetProperties
     {
         /// <summary>
-        /// Initializes a new instance of the RunbookDraftPublishHeaders class.
+        /// Initializes a new instance of the TargetProperties class.
         /// </summary>
-        public RunbookDraftPublishHeaders()
+        public TargetProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RunbookDraftPublishHeaders class.
+        /// Initializes a new instance of the TargetProperties class.
         /// </summary>
-        /// <param name="location">URL to query for status of the
-        /// operation.</param>
-        public RunbookDraftPublishHeaders(string location = default(string))
+        /// <param name="azureQueries">List of Azure queries in the software
+        /// update configuration.</param>
+        public TargetProperties(IList<AzureQueryProperties> azureQueries = default(IList<AzureQueryProperties>))
         {
-            Location = location;
+            AzureQueries = azureQueries;
             CustomInit();
         }
 
@@ -43,10 +45,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets URL to query for status of the operation.
+        /// Gets or sets list of Azure queries in the software update
+        /// configuration.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        [JsonProperty(PropertyName = "azureQueries")]
+        public IList<AzureQueryProperties> AzureQueries { get; set; }
 
     }
 }
