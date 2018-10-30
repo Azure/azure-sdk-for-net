@@ -1,0 +1,648 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWExOWYyMzMtNzlhZS00YjdlLTg1NWQtMDRiZmNhYzhiZjA0L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e23cbd00-db71-4187-9722-0251d16ed653"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 29 Oct 2018 09:57:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvPy1w/7VkQS7ZQySSl3oX+nxACZdgsuIh99PRtPuT6CDFY9yj9KnK7ypHALHe3cCEOYmZWqQm+cXfUGAguGlu8YJuXEKcRn1/nhVFag9bMxxcWrM1SLtkm6vAZMHVW1T8UoKqtVnB09R/1l40BgNG"
+        ],
+        "x-ms-correlation-request-id": [
+          "b94945be-f1e3-4fdf-8859-13d324fb6c99"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14350"
+        ],
+        "x-ms-request-id": [
+          "b94945be-f1e3-4fdf-8859-13d324fb6c99"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20181029T095722Z:b94945be-f1e3-4fdf-8859-13d324fb6c99"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "263"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local\",\r\n      \"name\": \"local\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {}\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWExOWYyMzMtNzlhZS00YjdlLTg1NWQtMDRiZmNhYzhiZjA0L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvc2NhbGVVbml0cz9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e1bd1099-1312-4214-afff-9985eddf185a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 29 Oct 2018 09:57:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvUh+Sy+WKKe59HTGtCPB3rbQiw10zINuIYB38ZlJGMLn87K6wIwwfErqaixL/+MVhNiNZVUz01wL3jclayhBUmMD4pum09MyKm+yyC8BFlpYbvwwa5BwaJA/WfH+sw02yzc2xei4BkrqIc5Qflw6h"
+        ],
+        "x-ms-correlation-request-id": [
+          "9fe40dfe-c06d-491f-9800-dd86191d1154"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14349"
+        ],
+        "x-ms-request-id": [
+          "9fe40dfe-c06d-491f-9800-dd86191d1154"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20181029T095722Z:9fe40dfe-c06d-491f-9800-dd86191d1154"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "620"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster\",\r\n      \"name\": \"local/s-cluster\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"scaleUnitType\": \"HyperConverged\",\r\n        \"logicalFaultDomain\": 0,\r\n        \"nodes\": [\r\n          \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnitNodes/WSE-H9-2\"\r\n        ],\r\n        \"state\": \"Running\",\r\n        \"totalCapacity\": {\r\n          \"memoryGB\": 127.956055,\r\n          \"cores\": 24\r\n        },\r\n        \"isMultiNode\": false\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWExOWYyMzMtNzlhZS00YjdlLTg1NWQtMDRiZmNhYzhiZjA0L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvc2NhbGVVbml0cy9zLWNsdXN0ZXIvc3RvcmFnZVN1YlN5c3RlbXM/YXBpLXZlcnNpb249MjAxOC0xMC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "dc027de4-6fba-423f-a5ce-d067b2884bff"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 29 Oct 2018 09:57:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvJAlFI8lSjrtwR7vepkkyGFSPMf0lJmk31Kyewr14mO02UMyAA29/eNCX6qbayIiRqobuG40aCuzMmDbeFnhzdTT2eQlNDtdzQPJ/2FJzfu0wiS4W6gBZoJZTk5zqfmRx0UTbLFSdJHsmxcMS70Xi"
+        ],
+        "x-ms-correlation-request-id": [
+          "e718044e-b2ba-4d51-bf77-d84f8713fdf7"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14348"
+        ],
+        "x-ms-request-id": [
+          "e718044e-b2ba-4d51-bf77-d84f8713fdf7"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20181029T095723Z:e718044e-b2ba-4d51-bf77-d84f8713fdf7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "515"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local\",\r\n      \"name\": \"local/s-cluster/s-cluster.azurestack.local\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"totalCapacityGB\": 3011,\r\n        \"remainingCapacityGB\": 2675,\r\n        \"healthStatus\": \"Healthy\",\r\n        \"operationalStatus\": \"OK\",\r\n        \"rebalanceStatus\": \"\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWExOWYyMzMtNzlhZS00YjdlLTg1NWQtMDRiZmNhYzhiZjA0L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvc2NhbGVVbml0cy9zLWNsdXN0ZXIvc3RvcmFnZVN1YlN5c3RlbXMvcy1jbHVzdGVyLmF6dXJlc3RhY2subG9jYWwvZHJpdmVzP2FwaS12ZXJzaW9uPTIwMTgtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f25a3327-0d93-43a7-af68-5bd9cd5b2d96"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 29 Oct 2018 09:57:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvasHFSYJntqg2DM2WqDiMmLPwWxLUseq0VBMs1Qgwg0flVEVTUPJwpa52TA/lEZ14fQu/+VJiNR+0Z+UMGcW0xdI94RVBoHql24q+PYCCuFfECljUWORK+FScZ+faL/l1fV7myjOIVQUnI3dO/OyT"
+        ],
+        "x-ms-correlation-request-id": [
+          "b3b89c00-5b4c-4193-ad81-1280f9510292"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14347"
+        ],
+        "x-ms-request-id": [
+          "b3b89c00-5b4c-4193-ad81-1280f9510292"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20181029T095723Z:b3b89c00-5b4c-4193-ad81-1280f9510292"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "4973"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/17e7660d-36a7-39a4-9215-8912a6099329\",\r\n      \"name\": \"local/s-cluster/s-cluster.azurestack.local/17e7660d-36a7-39a4-9215-8912a6099329\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems/drives\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"storageNode\": \"local/WSE-H9-2\",\r\n        \"serialNumber\": \"007a1f8e05dd97022100b751f4a0a38c\",\r\n        \"healthStatus\": \"Healthy\",\r\n        \"operationalStatus\": \"OK\",\r\n        \"usage\": \"Auto-Select\",\r\n        \"canPool\": false,\r\n        \"cannotPoolReason\": \"In a Pool\",\r\n        \"physicalLocation\": \"Integrated : Adapter 0 : Port 1 : Target 2 : LUN 0\",\r\n        \"model\": \"PERC H710\",\r\n        \"mediaType\": \"HDD\",\r\n        \"capacityGB\": 558,\r\n        \"description\": \"\",\r\n        \"action\": \"\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/32e17f2a-7982-acb5-617e-15c72e6d50e6\",\r\n      \"name\": \"local/s-cluster/s-cluster.azurestack.local/32e17f2a-7982-acb5-617e-15c72e6d50e6\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems/drives\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"storageNode\": \"local/WSE-H9-2\",\r\n        \"serialNumber\": \"004b70e0092598022100b751f4a0a38c\",\r\n        \"healthStatus\": \"Healthy\",\r\n        \"operationalStatus\": \"OK\",\r\n        \"usage\": \"Auto-Select\",\r\n        \"canPool\": false,\r\n        \"cannotPoolReason\": \"In a Pool\",\r\n        \"physicalLocation\": \"Integrated : Adapter 0 : Port 1 : Target 6 : LUN 0\",\r\n        \"model\": \"PERC H710\",\r\n        \"mediaType\": \"HDD\",\r\n        \"capacityGB\": 558,\r\n        \"description\": \"\",\r\n        \"action\": \"\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/7655049b-26ad-177b-cd33-e27c4b5116bd\",\r\n      \"name\": \"local/s-cluster/s-cluster.azurestack.local/7655049b-26ad-177b-cd33-e27c4b5116bd\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems/drives\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"storageNode\": \"local/WSE-H9-2\",\r\n        \"serialNumber\": \"0005e3ae06f097022100b751f4a0a38c\",\r\n        \"healthStatus\": \"Healthy\",\r\n        \"operationalStatus\": \"OK\",\r\n        \"usage\": \"Auto-Select\",\r\n        \"canPool\": false,\r\n        \"cannotPoolReason\": \"In a Pool\",\r\n        \"physicalLocation\": \"Integrated : Adapter 0 : Port 1 : Target 3 : LUN 0\",\r\n        \"model\": \"PERC H710\",\r\n        \"mediaType\": \"HDD\",\r\n        \"capacityGB\": 558,\r\n        \"description\": \"\",\r\n        \"action\": \"\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/92abda1a-8a17-7015-ca12-a263d4156560\",\r\n      \"name\": \"local/s-cluster/s-cluster.azurestack.local/92abda1a-8a17-7015-ca12-a263d4156560\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems/drives\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"storageNode\": \"local/WSE-H9-2\",\r\n        \"serialNumber\": \"0069605d091d98022100b751f4a0a38c\",\r\n        \"healthStatus\": \"Healthy\",\r\n        \"operationalStatus\": \"OK\",\r\n        \"usage\": \"Auto-Select\",\r\n        \"canPool\": false,\r\n        \"cannotPoolReason\": \"In a Pool\",\r\n        \"physicalLocation\": \"Integrated : Adapter 0 : Port 1 : Target 5 : LUN 0\",\r\n        \"model\": \"PERC H710\",\r\n        \"mediaType\": \"HDD\",\r\n        \"capacityGB\": 558,\r\n        \"description\": \"\",\r\n        \"action\": \"\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/a654528c-60bb-18e1-457c-51b7cdb7e14a\",\r\n      \"name\": \"local/s-cluster/s-cluster.azurestack.local/a654528c-60bb-18e1-457c-51b7cdb7e14a\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems/drives\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"storageNode\": \"local/WSE-H9-2\",\r\n        \"serialNumber\": \"00eb090104c397022100b751f4a0a38c\",\r\n        \"healthStatus\": \"Healthy\",\r\n        \"operationalStatus\": \"OK\",\r\n        \"usage\": \"Auto-Select\",\r\n        \"canPool\": false,\r\n        \"cannotPoolReason\": \"In a Pool\",\r\n        \"physicalLocation\": \"Integrated : Adapter 0 : Port 1 : Target 1 : LUN 0\",\r\n        \"model\": \"PERC H710\",\r\n        \"mediaType\": \"HDD\",\r\n        \"capacityGB\": 558,\r\n        \"description\": \"\",\r\n        \"action\": \"\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/f9e93461-284c-9c7e-9dce-c9f395349cb0\",\r\n      \"name\": \"local/s-cluster/s-cluster.azurestack.local/f9e93461-284c-9c7e-9dce-c9f395349cb0\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems/drives\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"storageNode\": \"local/WSE-H9-2\",\r\n        \"serialNumber\": \"00582db6081298022100b751f4a0a38c\",\r\n        \"healthStatus\": \"Healthy\",\r\n        \"operationalStatus\": \"OK\",\r\n        \"usage\": \"Auto-Select\",\r\n        \"canPool\": false,\r\n        \"cannotPoolReason\": \"In a Pool\",\r\n        \"physicalLocation\": \"Integrated : Adapter 0 : Port 1 : Target 4 : LUN 0\",\r\n        \"model\": \"PERC H710\",\r\n        \"mediaType\": \"HDD\",\r\n        \"capacityGB\": 558,\r\n        \"description\": \"\",\r\n        \"action\": \"\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/17e7660d-36a7-39a4-9215-8912a6099329?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWExOWYyMzMtNzlhZS00YjdlLTg1NWQtMDRiZmNhYzhiZjA0L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvc2NhbGVVbml0cy9zLWNsdXN0ZXIvc3RvcmFnZVN1YlN5c3RlbXMvcy1jbHVzdGVyLmF6dXJlc3RhY2subG9jYWwvZHJpdmVzLzE3ZTc2NjBkLTM2YTctMzlhNC05MjE1LTg5MTJhNjA5OTMyOT9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "565d9c10-172e-480e-9244-76daa48d5cdf"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 29 Oct 2018 09:57:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvT3Y5cQYJFWDYFI+YuLterqKAv6aN5aIoLq6Hf0cj02e2jc+z+9Bbezu4rAtKaLlDUfmcQHut/1WFlEShA9PJw71+hvvct8DeKOtJpDxtSAL3zwSjrrvo3Q49QcAdmfTWkdFPtKctCM+DWOFZNLVu"
+        ],
+        "x-ms-correlation-request-id": [
+          "569e404e-fb02-41b6-b9c7-06675d537c08"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14346"
+        ],
+        "x-ms-request-id": [
+          "569e404e-fb02-41b6-b9c7-06675d537c08"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20181029T095723Z:569e404e-fb02-41b6-b9c7-06675d537c08"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "826"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/17e7660d-36a7-39a4-9215-8912a6099329\",\r\n  \"name\": \"local/s-cluster/s-cluster.azurestack.local/17e7660d-36a7-39a4-9215-8912a6099329\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems/drives\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"storageNode\": \"local/WSE-H9-2\",\r\n    \"serialNumber\": \"007a1f8e05dd97022100b751f4a0a38c\",\r\n    \"healthStatus\": \"Healthy\",\r\n    \"operationalStatus\": \"OK\",\r\n    \"usage\": \"Auto-Select\",\r\n    \"canPool\": false,\r\n    \"cannotPoolReason\": \"In a Pool\",\r\n    \"physicalLocation\": \"Integrated : Adapter 0 : Port 1 : Target 2 : LUN 0\",\r\n    \"model\": \"PERC H710\",\r\n    \"mediaType\": \"HDD\",\r\n    \"capacityGB\": 558,\r\n    \"description\": \"\",\r\n    \"action\": \"\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/32e17f2a-7982-acb5-617e-15c72e6d50e6?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWExOWYyMzMtNzlhZS00YjdlLTg1NWQtMDRiZmNhYzhiZjA0L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvc2NhbGVVbml0cy9zLWNsdXN0ZXIvc3RvcmFnZVN1YlN5c3RlbXMvcy1jbHVzdGVyLmF6dXJlc3RhY2subG9jYWwvZHJpdmVzLzMyZTE3ZjJhLTc5ODItYWNiNS02MTdlLTE1YzcyZTZkNTBlNj9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9b2b6a1c-efd6-4c9c-9576-89c1c8c83823"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 29 Oct 2018 09:57:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvuZfUigt562uvjbXD63P4d3BhFickHS4L8Qj7adgC3zdj8G6CTydaKap9qPY1oPQ5fz83MIuAb70z+beYptpL7YXYaDnhIMpaWazcrVIhxmIsMTHd7Bmvi27/XvuXrEzk85z8QHIfadEdzAv8Wapb"
+        ],
+        "x-ms-correlation-request-id": [
+          "f0ba61a4-bcc3-4b9b-bfd8-29931cc7e61d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14345"
+        ],
+        "x-ms-request-id": [
+          "f0ba61a4-bcc3-4b9b-bfd8-29931cc7e61d"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20181029T095723Z:f0ba61a4-bcc3-4b9b-bfd8-29931cc7e61d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "826"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/32e17f2a-7982-acb5-617e-15c72e6d50e6\",\r\n  \"name\": \"local/s-cluster/s-cluster.azurestack.local/32e17f2a-7982-acb5-617e-15c72e6d50e6\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems/drives\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"storageNode\": \"local/WSE-H9-2\",\r\n    \"serialNumber\": \"004b70e0092598022100b751f4a0a38c\",\r\n    \"healthStatus\": \"Healthy\",\r\n    \"operationalStatus\": \"OK\",\r\n    \"usage\": \"Auto-Select\",\r\n    \"canPool\": false,\r\n    \"cannotPoolReason\": \"In a Pool\",\r\n    \"physicalLocation\": \"Integrated : Adapter 0 : Port 1 : Target 6 : LUN 0\",\r\n    \"model\": \"PERC H710\",\r\n    \"mediaType\": \"HDD\",\r\n    \"capacityGB\": 558,\r\n    \"description\": \"\",\r\n    \"action\": \"\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/7655049b-26ad-177b-cd33-e27c4b5116bd?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWExOWYyMzMtNzlhZS00YjdlLTg1NWQtMDRiZmNhYzhiZjA0L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvc2NhbGVVbml0cy9zLWNsdXN0ZXIvc3RvcmFnZVN1YlN5c3RlbXMvcy1jbHVzdGVyLmF6dXJlc3RhY2subG9jYWwvZHJpdmVzLzc2NTUwNDliLTI2YWQtMTc3Yi1jZDMzLWUyN2M0YjUxMTZiZD9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b9ce4303-7148-461c-ad20-84acaf25032d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 29 Oct 2018 09:57:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvbVMJEy0MZ9D56Gr1NXOKsMeIGvUkh/ZNIvNWNT22Ebr3zhv9InDGSqk5vZ3DNDo0fp77hp4c1qEH7OdpRMUBsju2p28u505QpVAE3b+fyr9cUWbhyQysK5tS/WH2dTtKGdmrC0x7hgKx0n8xnTKO"
+        ],
+        "x-ms-correlation-request-id": [
+          "019971a1-b645-4fa4-bb0a-3d6b6ae45e24"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14344"
+        ],
+        "x-ms-request-id": [
+          "019971a1-b645-4fa4-bb0a-3d6b6ae45e24"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20181029T095723Z:019971a1-b645-4fa4-bb0a-3d6b6ae45e24"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "826"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/7655049b-26ad-177b-cd33-e27c4b5116bd\",\r\n  \"name\": \"local/s-cluster/s-cluster.azurestack.local/7655049b-26ad-177b-cd33-e27c4b5116bd\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems/drives\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"storageNode\": \"local/WSE-H9-2\",\r\n    \"serialNumber\": \"0005e3ae06f097022100b751f4a0a38c\",\r\n    \"healthStatus\": \"Healthy\",\r\n    \"operationalStatus\": \"OK\",\r\n    \"usage\": \"Auto-Select\",\r\n    \"canPool\": false,\r\n    \"cannotPoolReason\": \"In a Pool\",\r\n    \"physicalLocation\": \"Integrated : Adapter 0 : Port 1 : Target 3 : LUN 0\",\r\n    \"model\": \"PERC H710\",\r\n    \"mediaType\": \"HDD\",\r\n    \"capacityGB\": 558,\r\n    \"description\": \"\",\r\n    \"action\": \"\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/92abda1a-8a17-7015-ca12-a263d4156560?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWExOWYyMzMtNzlhZS00YjdlLTg1NWQtMDRiZmNhYzhiZjA0L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvc2NhbGVVbml0cy9zLWNsdXN0ZXIvc3RvcmFnZVN1YlN5c3RlbXMvcy1jbHVzdGVyLmF6dXJlc3RhY2subG9jYWwvZHJpdmVzLzkyYWJkYTFhLThhMTctNzAxNS1jYTEyLWEyNjNkNDE1NjU2MD9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cd4dad94-9bcf-4238-a331-1585d5f6faa9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 29 Oct 2018 09:57:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvmPte2KOu3pSa20toFsilBR0jlIS3aYJxrh8dnCv8gllh2xCkvjTeo0oOyEtL5PfKlgt/gxlM0WcmU8MD94Cu+x/d6rTjrMQOmEXZiUKJ3kcx1KIjchgL922chIpKMevQ3ug2BgeqRxR9++fLrq2n"
+        ],
+        "x-ms-correlation-request-id": [
+          "ea645aeb-6fdf-4f9c-acc3-e3a695bd1e87"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14343"
+        ],
+        "x-ms-request-id": [
+          "ea645aeb-6fdf-4f9c-acc3-e3a695bd1e87"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20181029T095724Z:ea645aeb-6fdf-4f9c-acc3-e3a695bd1e87"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "826"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/92abda1a-8a17-7015-ca12-a263d4156560\",\r\n  \"name\": \"local/s-cluster/s-cluster.azurestack.local/92abda1a-8a17-7015-ca12-a263d4156560\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems/drives\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"storageNode\": \"local/WSE-H9-2\",\r\n    \"serialNumber\": \"0069605d091d98022100b751f4a0a38c\",\r\n    \"healthStatus\": \"Healthy\",\r\n    \"operationalStatus\": \"OK\",\r\n    \"usage\": \"Auto-Select\",\r\n    \"canPool\": false,\r\n    \"cannotPoolReason\": \"In a Pool\",\r\n    \"physicalLocation\": \"Integrated : Adapter 0 : Port 1 : Target 5 : LUN 0\",\r\n    \"model\": \"PERC H710\",\r\n    \"mediaType\": \"HDD\",\r\n    \"capacityGB\": 558,\r\n    \"description\": \"\",\r\n    \"action\": \"\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/a654528c-60bb-18e1-457c-51b7cdb7e14a?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWExOWYyMzMtNzlhZS00YjdlLTg1NWQtMDRiZmNhYzhiZjA0L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvc2NhbGVVbml0cy9zLWNsdXN0ZXIvc3RvcmFnZVN1YlN5c3RlbXMvcy1jbHVzdGVyLmF6dXJlc3RhY2subG9jYWwvZHJpdmVzL2E2NTQ1MjhjLTYwYmItMThlMS00NTdjLTUxYjdjZGI3ZTE0YT9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5a008e27-fdff-4b09-a5f1-0e55a4c6c4cb"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 29 Oct 2018 09:57:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvKcvP3U+Nam8krB5d2aUwVxcMtb4XH5GtbsbNiuzP6iQlbZlzqTbcjtuSDlpAs2HLTm3C89DYz6roin8s+M1UGiZxbtUOPVQzIfkp/ws8QBu6Q0+dGIdNREEw5Mx+DNqWFGsilT5/glsclrg/1ljO"
+        ],
+        "x-ms-correlation-request-id": [
+          "978f2225-7a56-4aed-ae30-dc42f0db5577"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14342"
+        ],
+        "x-ms-request-id": [
+          "978f2225-7a56-4aed-ae30-dc42f0db5577"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20181029T095724Z:978f2225-7a56-4aed-ae30-dc42f0db5577"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "826"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/a654528c-60bb-18e1-457c-51b7cdb7e14a\",\r\n  \"name\": \"local/s-cluster/s-cluster.azurestack.local/a654528c-60bb-18e1-457c-51b7cdb7e14a\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems/drives\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"storageNode\": \"local/WSE-H9-2\",\r\n    \"serialNumber\": \"00eb090104c397022100b751f4a0a38c\",\r\n    \"healthStatus\": \"Healthy\",\r\n    \"operationalStatus\": \"OK\",\r\n    \"usage\": \"Auto-Select\",\r\n    \"canPool\": false,\r\n    \"cannotPoolReason\": \"In a Pool\",\r\n    \"physicalLocation\": \"Integrated : Adapter 0 : Port 1 : Target 1 : LUN 0\",\r\n    \"model\": \"PERC H710\",\r\n    \"mediaType\": \"HDD\",\r\n    \"capacityGB\": 558,\r\n    \"description\": \"\",\r\n    \"action\": \"\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/f9e93461-284c-9c7e-9dce-c9f395349cb0?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWExOWYyMzMtNzlhZS00YjdlLTg1NWQtMDRiZmNhYzhiZjA0L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvc2NhbGVVbml0cy9zLWNsdXN0ZXIvc3RvcmFnZVN1YlN5c3RlbXMvcy1jbHVzdGVyLmF6dXJlc3RhY2subG9jYWwvZHJpdmVzL2Y5ZTkzNDYxLTI4NGMtOWM3ZS05ZGNlLWM5ZjM5NTM0OWNiMD9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "842fd87d-f5f8-4830-9056-7f48da870e92"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 29 Oct 2018 09:57:24 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvrhlsMsPthzMuC+PjOWLHTylncPCgQ6gG1VWVIP8vNY+2cixC+4VCbbasVpsP9B4lnqIOtcx9jg04ggN4oY4pGcJIcfitg/ZPUEEU+QwNQA8qVGtqx8emlrRI4/MYGKxgn8jUZSHD4/TBQ+01u5V3"
+        ],
+        "x-ms-correlation-request-id": [
+          "50532138-e6d2-41b4-a489-7c4e65349fb6"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14341"
+        ],
+        "x-ms-request-id": [
+          "50532138-e6d2-41b4-a489-7c4e65349fb6"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20181029T095724Z:50532138-e6d2-41b4-a489-7c4e65349fb6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "826"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local/drives/f9e93461-284c-9c7e-9dce-c9f395349cb0\",\r\n  \"name\": \"local/s-cluster/s-cluster.azurestack.local/f9e93461-284c-9c7e-9dce-c9f395349cb0\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems/drives\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"storageNode\": \"local/WSE-H9-2\",\r\n    \"serialNumber\": \"00582db6081298022100b751f4a0a38c\",\r\n    \"healthStatus\": \"Healthy\",\r\n    \"operationalStatus\": \"OK\",\r\n    \"usage\": \"Auto-Select\",\r\n    \"canPool\": false,\r\n    \"cannotPoolReason\": \"In a Pool\",\r\n    \"physicalLocation\": \"Integrated : Adapter 0 : Port 1 : Target 4 : LUN 0\",\r\n    \"model\": \"PERC H710\",\r\n    \"mediaType\": \"HDD\",\r\n    \"capacityGB\": 558,\r\n    \"description\": \"\",\r\n    \"action\": \"\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "5a19f233-79ae-4b7e-855d-04bfcac8bf04"
+  }
+}
