@@ -33,7 +33,7 @@ namespace IotCentral.Tests.ScenarioTests
                         testEnv = TestEnvironmentFactory.GetTestEnvironment();
                         resourcesClient = IotCentralTestUtilities.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         iotCentralClient = IotCentralTestUtilities.GetIotCentralClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                        
+
                         if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION")))
                         {
                             location = IotCentralTestUtilities.DefaultLocation;
@@ -49,7 +49,7 @@ namespace IotCentral.Tests.ScenarioTests
             }
         }
 
-        protected App CreateIotCentral(ResourceGroup resourceGroup, string location, string appName)
+        protected App CreateIotCentral(ResourceGroup resourceGroup, string location, string appResourceName, string appSubdomain)
         {
             var app = new App()
             {
@@ -58,31 +58,31 @@ namespace IotCentral.Tests.ScenarioTests
                 {
                     Name = "S1"
                 },
-                Subdomain = appName,
-                DisplayName = appName
+                Subdomain = appSubdomain,
+                DisplayName = appResourceName
             };
 
             return this.iotCentralClient.Apps.CreateOrUpdate(
                 resourceGroup.Name,
-                appName,
+                appResourceName,
                 app);
         }
 
-        protected App UpdateIotCentral(ResourceGroup resourceGroup, App app, string appName)
+        protected App UpdateIotCentral(ResourceGroup resourceGroup, AppPatch app, string appResourceName)
         {
-            return this.iotCentralClient.Apps.CreateOrUpdate(
+            return this.iotCentralClient.Apps.Update(
                 resourceGroup.Name,
-                appName,
+                appResourceName,
                 app);
         }
 
         protected ResourceGroup CreateResourceGroup(string resourceGroupName)
         {
-            return this.resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
-                new ResourceGroup
-                {
-                    Location = IotCentralTestUtilities.DefaultLocation
-                });
+                return this.resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = IotCentralTestUtilities.DefaultLocation
+                    });
         }
 
         protected void DeleteResourceGroup(string resourceGroupName)
