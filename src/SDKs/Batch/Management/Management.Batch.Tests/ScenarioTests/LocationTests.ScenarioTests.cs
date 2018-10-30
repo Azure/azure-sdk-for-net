@@ -15,7 +15,7 @@ namespace Batch.Tests.ScenarioTests
 {
     public class LocationTests : BatchScenarioTestBase
     {
-        [Fact]
+        [Fact(Skip = "Subscription did not have permission to service, test needs rerecording.")]
         public async Task GetLocationQuotasAsync()
         {
             using (MockContext context = StartMockContextAndInitializeClients(this.GetType().FullName))
