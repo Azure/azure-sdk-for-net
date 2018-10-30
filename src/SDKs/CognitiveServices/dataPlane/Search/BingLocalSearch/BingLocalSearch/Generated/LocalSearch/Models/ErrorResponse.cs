@@ -34,12 +34,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.LocalSearch.Models
         /// <param name="readLink">The URL that returns this resource.</param>
         /// <param name="webSearchUrl">The URL to Bing's search result for this
         /// item.</param>
-        public ErrorResponse(IList<Error> errors, string id = default(string), string readLink = default(string), string webSearchUrl = default(string), IList<Action> potentialAction = default(IList<Action>), IList<Action> immediateAction = default(IList<Action>), string preferredClickthroughUrl = default(string), string adaptiveCard = default(string), string error = default(string), string errorDescription = default(string))
+        public ErrorResponse(IList<Error> errors, string id = default(string), string readLink = default(string), string webSearchUrl = default(string), IList<Action> potentialAction = default(IList<Action>), IList<Action> immediateAction = default(IList<Action>), string preferredClickthroughUrl = default(string), string adaptiveCard = default(string))
             : base(id, readLink, webSearchUrl, potentialAction, immediateAction, preferredClickthroughUrl, adaptiveCard)
         {
             Errors = errors;
-            Error = error;
-            ErrorDescription = errorDescription;
             CustomInit();
         }
 
@@ -54,16 +52,6 @@ namespace Microsoft.Azure.CognitiveServices.Search.LocalSearch.Models
         /// </summary>
         [JsonProperty(PropertyName = "errors")]
         public IList<Error> Errors { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public string Error { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "error_description")]
-        public string ErrorDescription { get; private set; }
 
         /// <summary>
         /// Validate the object.
