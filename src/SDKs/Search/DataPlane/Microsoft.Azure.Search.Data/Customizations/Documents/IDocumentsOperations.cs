@@ -34,6 +34,26 @@ namespace Microsoft.Azure.Search
             CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Queries the number of documents in the Azure Search index.
+        /// </summary>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<AutocompleteResult>> AutocompleteWithHttpMessagesAsync(
+            string searchText,
+            string suggesterName,
+            AutocompleteParameters autocompleteParameters = null,
+            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = default(CancellationToken));
+        
+        /// <summary>
         /// Retrieves the next page of search results from the Azure Search index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
         /// </summary>
