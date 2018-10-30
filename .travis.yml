@@ -1,14 +1,18 @@
 matrix:
   include:
-    #- language: csharp
-    #  stage: Mono ClientRuntime build
-    #  mono: latest
-    #  sudo: required
-    #  dist: trusty
-    #  script:
-    #    - mono --version
-    #    - ./getBuildTools.sh
-    #    - msbuild build.proj /t:RunTests /p:Scope=SdkCommon
+    - language: csharp
+      stage: Mono ClientRuntime build
+      mono: latest
+      sudo: required
+      dist: trusty
+      script:
+        - mono --version
+        - ./getBuildTools.sh
+        - nuget restore src/SdkCommon/ClientRuntime.sln -NoCache -OutputDirectory restoredPackages -Source https://api.nuget.org/v3/index.json
+        - msbuild build.proj /t:build /p:Scope=SdkCommon/ClientRuntime
+        - mono restoredPackages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe src/SdkCommon/ClientRuntime/Tests/ClientRuntime.FullDesktop.Tests/bin/Debug/net452/ClientRuntime.FullDesktop.Tests.dll
+        - msbuild build.proj /t:build /p:Scope=SdkCommon/ClientRuntime.Azure
+        - mono restoredPackages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe src/SdkCommon/ClientRuntime.Azure/Tests/CR.Azure.FullDesktop.Tests/bin/Debug/net452/CR.Azure.FullDesktop.Tests.dll
     - language: csharp
       stage: NetCore build for SDK repo
       mono: none
@@ -43,6 +47,3 @@ matrix:
         - ls -al
         - ls -al TestResults
         - cat TestResults/*.log
-      #notifications:  
-      #  slack:
-      #    secure: d0PFVLcyqcMxNtmZ8JaEpIBzXbUbZCgKs8QtBB5qEIXDnxflSR3AhczlILNhTBKtMEBlwVzsz65yP09XcmvB6xpAfJbHqSRzk2frKa5viPcAD8Wr/NYamt9/UiTCsnql8MqzjVy0tLdMscXKRmsUey4YF570zl0b7gAbq7XTqxM=
