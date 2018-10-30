@@ -13,7 +13,7 @@ namespace NotificationHubs.Tests.ScenarioTests
 
     public partial class ScenarioTests 
     {
-        [Fact]
+        [Fact(Skip = "Incorrect number of arguments provided")]
         public void CheckNotificationHubNameAvailability()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

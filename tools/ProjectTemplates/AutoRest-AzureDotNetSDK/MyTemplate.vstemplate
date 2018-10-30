@@ -2,31 +2,24 @@
   <TemplateData>
     <Name>AutoRest-AzureDotNetSDK</Name>
     <Description>AutoRest generated project template for Azure .NET SDK</Description>
-    <ProjectType>DNX</ProjectType>
+    <ProjectType>CSharp</ProjectType>
     <ProjectSubType>
     </ProjectSubType>
     <SortOrder>1000</SortOrder>
     <CreateNewFolder>true</CreateNewFolder>
-	<CreateInPlace>true</CreateInPlace>
-    <DefaultName>AutoRest-AzureDotNetSDK</DefaultName>
-	<CreateInPlace>true</CreateInPlace>
+    <DefaultName>Microsoft.Azure.*</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
     <Icon>__TemplateIcon.ico</Icon>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="AutoRest-AzureDotNetSDK.xproj" File="AutoRest-AzureDotNetSDK.xproj" ReplaceParameters="true">
-      <Folder Name="Properties" TargetFolderName="Properties">
-        <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
-      </Folder>
-      <Folder Name="Generated" TargetFolderName="Generated">
-        <Folder Name="Models" TargetFolderName="Models" />
-      </Folder>
-      <ProjectItem ReplaceParameters="false" TargetFileName="MSSharedLibKey.snk">MSSharedLibKey.snk</ProjectItem>
-      <ProjectItem ReplaceParameters="true" TargetFileName="project.json">project.json</ProjectItem>
-      <ProjectItem ReplaceParameters="true" TargetFileName="project.lock.json">project.lock.json</ProjectItem>
-	  <ProjectItem ReplaceParameters="true" TargetFileName="Readme.txt" OpenInEditor="true">Readme.txt</ProjectItem>
+    <!-- <Project TargetFileName="AutoRest-AzureDotNetSDK.csproj" File="AutoRest-AzureDotNetSDK.csproj" ReplaceParameters="true"> -->
+	<Project File="AutoRest-AzureDotNetSDK.csproj" ReplaceParameters="true">
+		<Folder Name="Properties" TargetFolderName="Properties">
+			<ProjectItem ReplaceParameters="true" TargetFileName="Properties\AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+		</Folder>
+		<ProjectItem ReplaceParameters="true" TargetFileName="Class1.cs" OpenInEditor="true">Class1.cs</ProjectItem>
     </Project>
   </TemplateContent>
 </VSTemplate>
