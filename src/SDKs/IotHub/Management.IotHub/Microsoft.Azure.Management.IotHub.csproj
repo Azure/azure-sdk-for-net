@@ -8,13 +8,9 @@
 		<Description>Provides management capabilities for Microsoft Azure IotHub.</Description>
 		<AssemblyTitle>Microsoft Azure IotHub Management</AssemblyTitle>
 		<AssemblyName>Microsoft.Azure.Management.IotHub</AssemblyName>
-		<Version>2.1.0</Version>
+		<Version>2.1.1</Version>
 		<PackageTags>Microsoft Azure IotHub;IotHub management;IotHub;</PackageTags>
-		<PackageReleaseNotes>
-			<![CDATA[
-        Added missing Api of routing for IotHub.
-      ]]>
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

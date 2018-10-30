@@ -27,6 +27,26 @@ namespace Microsoft.Rest
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. 
+        /// Sets default retry policy base on Exponential Backoff.
+        /// </summary>
+        public RetryDelegatingHandler() : base()
+        {
+            Init();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. Sets 
+        /// the default retry policy base on Exponential Backoff.
+        /// </summary>
+        /// <param name="innerHandler">Inner http handler.</param>
+        public RetryDelegatingHandler(DelegatingHandler innerHandler)
+            : base(innerHandler)
+        {
+            Init();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. 
         /// </summary>
         /// <param name="retryPolicy">Retry policy to use.</param>
         /// <param name="innerHandler">Inner http handler.</param>
@@ -39,23 +59,9 @@ namespace Microsoft.Rest
             }
 
             RetryPolicy = retryPolicy;
-        }
+        }        
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. 
-        /// Sets default retry policy base on Exponential Backoff.
-        /// </summary>
-        public RetryDelegatingHandler()
-            : this(null) { }
-        
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. Sets 
-        /// the default retry policy base on Exponential Backoff.
-        /// </summary>
-        /// <param name="innerHandler">Inner http handler.</param>
-        public RetryDelegatingHandler(DelegatingHandler innerHandler)
-            : base(innerHandler)
+        private void Init()
         {
             _retryPolicyRetryingEventSubscribed = false;
 

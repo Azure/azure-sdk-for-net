@@ -4,12 +4,12 @@
     <Description>Infrastructure for error handling, tracing, and HttpClient pipeline configuration. Required by client libraries generated using AutoRest.</Description>
     <AssemblyName>Microsoft.Rest.ClientRuntime</AssemblyName>
     <AssemblyTitle>Client Runtime Library for Microsoft AutoRest Generated Clients</AssemblyTitle>
-    <Version>2.3.15</Version>
+    <Version>2.3.17</Version>
     <PackageId>Microsoft.Rest.ClientRuntime</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        1) Fix for DelegatingHandler chaining in the Service Client chaining pipeline. 
+        1) Upgrading version of Newtonsoft Json to 10.0.3
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
@@ -18,7 +18,7 @@
   </PropertyGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">

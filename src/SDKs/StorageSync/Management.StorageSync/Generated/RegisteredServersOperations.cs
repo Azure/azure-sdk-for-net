@@ -590,7 +590,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <param name='serverId'>
         /// Server Id
         /// </param>
-        /// <param name='certificateData'>
+        /// <param name='serverCertificate'>
         /// Certificate Data
         /// </param>
         /// <param name='customHeaders'>
@@ -599,10 +599,10 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationHeaderResponse<RegisteredServersTriggerRolloverHeaders>> TriggerRolloverWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string serverId, string certificateData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<RegisteredServersTriggerRolloverHeaders>> TriggerRolloverWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string serverId, string serverCertificate = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationHeaderResponse<RegisteredServersTriggerRolloverHeaders> _response = await BeginTriggerRolloverWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, serverId, certificateData, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationHeaderResponse<RegisteredServersTriggerRolloverHeaders> _response = await BeginTriggerRolloverWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, serverId, serverCertificate, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1095,7 +1095,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <param name='serverId'>
         /// Server Id
         /// </param>
-        /// <param name='certificateData'>
+        /// <param name='serverCertificate'>
         /// Certificate Data
         /// </param>
         /// <param name='customHeaders'>
@@ -1116,7 +1116,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<RegisteredServersTriggerRolloverHeaders>> BeginTriggerRolloverWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string serverId, string certificateData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<RegisteredServersTriggerRolloverHeaders>> BeginTriggerRolloverWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string serverId, string serverCertificate = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1168,9 +1168,9 @@ namespace Microsoft.Azure.Management.StorageSync
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverId");
             }
             TriggerRolloverRequest parameters = new TriggerRolloverRequest();
-            if (certificateData != null)
+            if (serverCertificate != null)
             {
-                parameters.CertificateData = certificateData;
+                parameters.ServerCertificate = serverCertificate;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

@@ -13,11 +13,12 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 			This is a public preview release of the Azure Authorization SDK. Included with this release is support for retrieving Deny Assignments.
+			This is a public preview release of the Azure Authorization SDK. Included with this release is the addition of principal type to Role Assignments. 
 			]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+      <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->
