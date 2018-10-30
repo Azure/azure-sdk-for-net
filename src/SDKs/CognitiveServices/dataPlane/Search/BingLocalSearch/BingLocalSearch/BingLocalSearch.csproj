@@ -1,93 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E9CFAA11-ADCB-4CE6-8478-ECC4753E7E8F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BingLocalSearch</RootNamespace>
-    <AssemblyName>BingLocalSearch</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.2.3.17\lib\net452\Microsoft.Rest.ClientRuntime.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Net" />
-    <Reference Include="System.Net.Http.WebRequest" />
-    <Reference Include="System.Runtime" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Customizations\ApiKeyServiceClientCredentials.cs" />
-    <Compile Include="Generated\LocalSearch\ILocal.cs" />
-    <Compile Include="Generated\LocalSearch\ILocalSearchClient.cs" />
-    <Compile Include="Generated\LocalSearch\Local.cs" />
-    <Compile Include="Generated\LocalSearch\LocalExtensions.cs" />
-    <Compile Include="Generated\LocalSearch\LocalSearchClient.cs" />
-    <Compile Include="Generated\LocalSearch\Models\Action.cs" />
-    <Compile Include="Generated\LocalSearch\Models\Answer.cs" />
-    <Compile Include="Generated\LocalSearch\Models\CreativeWork.cs" />
-    <Compile Include="Generated\LocalSearch\Models\EntitiesEntityPresentationInfo.cs" />
-    <Compile Include="Generated\LocalSearch\Models\EntityScenario.cs" />
-    <Compile Include="Generated\LocalSearch\Models\EntityType.cs" />
-    <Compile Include="Generated\LocalSearch\Models\Error.cs" />
-    <Compile Include="Generated\LocalSearch\Models\ErrorCode.cs" />
-    <Compile Include="Generated\LocalSearch\Models\ErrorResponse.cs" />
-    <Compile Include="Generated\LocalSearch\Models\ErrorResponseException.cs" />
-    <Compile Include="Generated\LocalSearch\Models\ErrorSubCode.cs" />
-    <Compile Include="Generated\LocalSearch\Models\GeoCoordinates.cs" />
-    <Compile Include="Generated\LocalSearch\Models\Identifiable.cs" />
-    <Compile Include="Generated\LocalSearch\Models\Intangible.cs" />
-    <Compile Include="Generated\LocalSearch\Models\Place.cs" />
-    <Compile Include="Generated\LocalSearch\Models\Places.cs" />
-    <Compile Include="Generated\LocalSearch\Models\PostalAddress.cs" />
-    <Compile Include="Generated\LocalSearch\Models\QueryContext.cs" />
-    <Compile Include="Generated\LocalSearch\Models\Response.cs" />
-    <Compile Include="Generated\LocalSearch\Models\ResponseBase.cs" />
-    <Compile Include="Generated\LocalSearch\Models\ResponseFormat.cs" />
-    <Compile Include="Generated\LocalSearch\Models\SafeSearch.cs" />
-    <Compile Include="Generated\LocalSearch\Models\SearchAction.cs" />
-    <Compile Include="Generated\LocalSearch\Models\SearchResponse.cs" />
-    <Compile Include="Generated\LocalSearch\Models\SearchResultsAnswer.cs" />
-    <Compile Include="Generated\LocalSearch\Models\StructuredValue.cs" />
-    <Compile Include="Generated\LocalSearch\Models\Thing.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.CognitiveServices.Search.LocalSearch</PackageId>
+		<Description>Provides ability to search for businesses</Description>
+		<Version>0.9.0-preview</Version>
+		<AssemblyName>Microsoft.Azure.CognitiveServices.BingLocalSearch</AssemblyName>    
+		<PackageTags>CognitiveServices;Bing;BingLocalSearch;LocalSearch;Local Search</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
+                >> put release notes here
+      ]]>
+		</PackageReleaseNotes>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<ItemGroup>
+	  <None Remove="generate.cmd" />
+	  <None Remove="packages.config" />
+	</ItemGroup>
+	<!-- Please do not move/edit code above this line -->
 </Project>

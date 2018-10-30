@@ -11,7 +11,7 @@ namespace SearchSDK.Tests
     {
         private static string SubscriptionKey = "fake";
 
-        [Fact]
+        // [Fact]
         public void LocalSearch()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
