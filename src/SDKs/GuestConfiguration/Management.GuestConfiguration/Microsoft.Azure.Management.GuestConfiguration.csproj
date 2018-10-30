@@ -6,11 +6,11 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.GuestConfiguration</PackageId>
     <Description>Provides Microsoft Azure Guest Configuration management operations including the ability to create, update and get guest configuration assignments, compliance statuses, guest configuration assignment reports.</Description>
-    <Version>0.9.0-preview</Version>
+    <Version>0.10.0-preview</Version>
     <AssemblyTitle>Microsoft Azure Guest Configuration Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.GuestConfiguration</AssemblyName>
     <PackageTags>GuestConfiguration; Guest Configuration; GuestConfiguration policy; GuestConfigurationPolicy</PackageTags>
-    <PackageReleaseNotes>First release of SDK for Microsoft Azure GuestConfiguration service.</PackageReleaseNotes>
+    <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-dataplane-changelog. Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
