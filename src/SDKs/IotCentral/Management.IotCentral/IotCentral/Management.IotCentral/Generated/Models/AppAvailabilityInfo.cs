@@ -15,27 +15,26 @@ namespace Microsoft.Azure.Management.IotCentral.Models
 
     /// <summary>
     /// The properties indicating whether a given IoT Central application name
-    /// is available.
+    /// or subdomain is available.
     /// </summary>
-    public partial class AppNameAvailabilityInfo
+    public partial class AppAvailabilityInfo
     {
         /// <summary>
-        /// Initializes a new instance of the AppNameAvailabilityInfo class.
+        /// Initializes a new instance of the AppAvailabilityInfo class.
         /// </summary>
-        public AppNameAvailabilityInfo()
+        public AppAvailabilityInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AppNameAvailabilityInfo class.
+        /// Initializes a new instance of the AppAvailabilityInfo class.
         /// </summary>
         /// <param name="nameAvailable">The value which indicates whether the
         /// provided name is available.</param>
-        /// <param name="reason">The reason for unavailability. Possible values
-        /// include: 'Invalid', 'AlreadyExists'</param>
+        /// <param name="reason">The reason for unavailability.</param>
         /// <param name="message">The detailed reason message.</param>
-        public AppNameAvailabilityInfo(bool? nameAvailable = default(bool?), AppNameUnavailabilityReason? reason = default(AppNameUnavailabilityReason?), string message = default(string))
+        public AppAvailabilityInfo(bool? nameAvailable = default(bool?), string reason = default(string), string message = default(string))
         {
             NameAvailable = nameAvailable;
             Reason = reason;
@@ -56,17 +55,16 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         public bool? NameAvailable { get; private set; }
 
         /// <summary>
-        /// Gets the reason for unavailability. Possible values include:
-        /// 'Invalid', 'AlreadyExists'
+        /// Gets the reason for unavailability.
         /// </summary>
         [JsonProperty(PropertyName = "reason")]
-        public AppNameUnavailabilityReason? Reason { get; private set; }
+        public string Reason { get; private set; }
 
         /// <summary>
-        /// Gets or sets the detailed reason message.
+        /// Gets the detailed reason message.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
     }
 }

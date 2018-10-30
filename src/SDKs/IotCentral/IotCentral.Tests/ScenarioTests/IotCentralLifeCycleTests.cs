@@ -27,31 +27,32 @@ namespace IotCentral.Tests.ScenarioTests
                 // Create Resource Group
                 var resourceGroup = CreateResourceGroup(IotCentralTestUtilities.DefaultResourceGroupName);
 
-                // Check if App Exists and Delete
-                DeleteAppIfExists(IotCentralTestUtilities.DefaultResourceGroupName, IotCentralTestUtilities.DefaultIotCentralName);
-
                 // Create App
-                var app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, IotCentralTestUtilities.DefaultIotCentralName);
+                var app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, IotCentralTestUtilities.DefaultResourceName, IotCentralTestUtilities.DefaultSubdomain);
+
+                // Validate resourceName and subdomain are taken
+                this.CheckAppNameAndSubdomainTaken(app.Name, app.Subdomain);
 
                 Assert.NotNull(app);
                 Assert.Equal(AppSku.S1, app.Sku.Name);
-                Assert.Equal(IotCentralTestUtilities.DefaultIotCentralName, app.Name);
+                Assert.Equal(IotCentralTestUtilities.DefaultResourceName, app.Name);
+                Assert.Equal(IotCentralTestUtilities.DefaultSubdomain, app.Subdomain);
 
                 // Add and Get Tags
                 IDictionary<string, string> tags = new Dictionary<string, string>
-                {
-                    { "key1", "value1" },
-                    { "key2", "value2" }
-                };
+                 {
+                     { "key1", "value1" },
+                     { "key2", "value2" }
+                 };
 
                 var appPatch = new AppPatch()
                 {
                     Tags = tags,
-                    DisplayName = IotCentralTestUtilities.DefaultIotCentralName,
-                    Subdomain = IotCentralTestUtilities.DefaultIotCentralName
+                    DisplayName = IotCentralTestUtilities.DefaultResourceName,
+                    Subdomain = IotCentralTestUtilities.DefaultSubdomain
                 };
 
-                app = this.iotCentralClient.Apps.Update(IotCentralTestUtilities.DefaultResourceGroupName, IotCentralTestUtilities.DefaultIotCentralName, appPatch);
+                app = this.iotCentralClient.Apps.Update(IotCentralTestUtilities.DefaultResourceGroupName, IotCentralTestUtilities.DefaultResourceName, appPatch);
 
                 Assert.NotNull(app);
                 Assert.True(app.Tags.Count().Equals(2));
@@ -86,43 +87,53 @@ namespace IotCentral.Tests.ScenarioTests
                 // Create Resource Group
                 var resourceGroup = CreateResourceGroup(IotCentralTestUtilities.DefaultUpdateResourceGroupName);
 
-                // Check if App Exists and Delete
-                DeleteAppIfExists(IotCentralTestUtilities.DefaultUpdateResourceGroupName, IotCentralTestUtilities.DefaultUpdateIotCentralName);
-
                 // Create App
-                var app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, IotCentralTestUtilities.DefaultUpdateIotCentralName);
+                var app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, IotCentralTestUtilities.DefaultUpdateResourceName, IotCentralTestUtilities.DefaultUpdateSubdomain);
+
+                // Validate resourceName and subdomain are taken
+                this.CheckAppNameAndSubdomainTaken(app.Name, app.Subdomain);
 
                 // Update App
                 var newSubDomain = "test-updated-sub-domain";
                 var newDisplayName = "test-updated-display-name";
+                // Add and Get Tags
+                IDictionary<string, string> tags = new Dictionary<string, string>
+                {
+                    { "key1", "value1" },
+                    { "key2", "value2" }
+                };
 
-                app.Subdomain = newSubDomain;
-                app.DisplayName = newDisplayName;
-                app = UpdateIotCentral(resourceGroup, app, IotCentralTestUtilities.DefaultUpdateIotCentralName);
+                AppPatch appPatch = new AppPatch()
+                {
+                    Tags = tags,
+                    DisplayName = newDisplayName,
+                    Subdomain = newSubDomain
+                };
+
+                app = UpdateIotCentral(resourceGroup, appPatch, IotCentralTestUtilities.DefaultUpdateResourceName);
 
                 // List apps
                 app = iotCentralClient.Apps.ListByResourceGroup(IotCentralTestUtilities.DefaultUpdateResourceGroupName)
-                    .FirstOrDefault(e => e.Name.Equals(IotCentralTestUtilities.DefaultUpdateIotCentralName, StringComparison.OrdinalIgnoreCase));
+                    .FirstOrDefault(e => e.Name.Equals(IotCentralTestUtilities.DefaultUpdateResourceName, StringComparison.OrdinalIgnoreCase));
 
                 Assert.NotNull(app);
                 Assert.Equal(newDisplayName, app.DisplayName);
-                Assert.Equal(newSubDomain, app.Subdomain);
+                Assert.True(app.Tags.Count().Equals(2));
+                Assert.Equal("value2", app.Tags["key2"]);
             }
         }
 
-        private void DeleteAppIfExists(string resourceGroupName, string name)
+        private void CheckAppNameAndSubdomainTaken(string resourceName, string subdomain)
         {
-            var info = iotCentralClient.Apps.CheckNameAvailability(name);
-            if (info.NameAvailable != true)
-            {
-                iotCentralClient.Apps.Delete(
-                    resourceGroupName,
-                    name);
+            OperationInputs resourceNameInputs = new OperationInputs(resourceName, "IoTApps");
+            OperationInputs subdomainInputs = new OperationInputs(subdomain, "IoTApps");
 
-                info = iotCentralClient.Apps.CheckNameAvailability(name);
-            }
+            // check if names are available
+            var resourceNameResult = iotCentralClient.Apps.CheckNameAvailability(resourceNameInputs);
+            var subdomainResult = iotCentralClient.Apps.CheckSubdomainAvailability(subdomainInputs);
 
-            Assert.True(info.NameAvailable, "App already exists. Unable to remove it.");
+            Assert.False(resourceNameResult.NameAvailable);
+            Assert.False(subdomainResult.NameAvailable);
         }
     }
 }
