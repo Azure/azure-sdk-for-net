@@ -59,7 +59,7 @@ namespace Fabric.Tests
 
 
         [Fact]
-        public void TestListVolumes()
+        public void TestListDrives()
         {
             RunTest((client) => {
                 OverStorageSubSystems(client, (fabricLocationName, scaleUnitName, storageSubSystemName) => {
