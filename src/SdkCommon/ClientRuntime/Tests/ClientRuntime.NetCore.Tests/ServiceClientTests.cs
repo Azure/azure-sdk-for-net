@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Rest.ClientRuntime.Tests.CustomClients;
-using Microsoft.Rest.ClientRuntime.Tests.Fakes;
+using ClientRuntime.Tests.Common.Fakes;
 using Microsoft.Rest.TransientFaultHandling;
 using System;
 using System.Diagnostics;

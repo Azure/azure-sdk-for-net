@@ -541,10 +541,11 @@ namespace Microsoft.Rest
         /// <returns></returns>
         private string CleanUserAgentInfoEntry(string infoEntry)
         {
-            Regex pattern = new Regex("[©:;=~`!@#$%^&*(),<>?{} ]");
-            Regex spChrPattern = new Regex("\\\\r\\\\n?|\\\\r|\\\\n|\\\\");
-            infoEntry = pattern.Replace(infoEntry, "");
+            //Regex pattern = new Regex("[©:;=~`!@#$%^&*(),<>?{} ]");
+            Regex spChrPattern = new Regex("\\\\r\\\\n?|\\\\r|\\\\n|\\\\|\\/");
+            Regex onlyAlphaNum = new Regex("[^0-9a-zA-Z]+");
             infoEntry = spChrPattern.Replace(infoEntry, "");
+            infoEntry = onlyAlphaNum.Replace(infoEntry, ".");            
 
             return infoEntry;
         }
