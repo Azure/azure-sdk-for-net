@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="filter">The OData $filter expression to apply to the
         /// suggestions query.</param>
         /// <param name="fuzzy">A value indicating whether to use fuzzy
-        /// matching for the suggestion query. Default is false. when set to
+        /// matching for the suggestion query. Default is false. When set to
         /// true, the query will find suggestions even if there's a substituted
         /// or missing character in the search text. While this provides a
         /// better experience in some scenarios it comes at a performance cost
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether to use fuzzy matching for
-        /// the suggestion query. Default is false. when set to true, the query
+        /// the suggestion query. Default is false. When set to true, the query
         /// will find suggestions even if there's a substituted or missing
         /// character in the search text. While this provides a better
         /// experience in some scenarios it comes at a performance cost as

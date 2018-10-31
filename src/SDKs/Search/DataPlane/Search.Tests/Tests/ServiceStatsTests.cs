@@ -29,7 +29,9 @@ namespace Microsoft.Azure.Search.Tests
                     },
                     Limits = new ServiceLimits
                     {
-                        MaxFieldsPerIndex = 1000
+                        MaxFieldsPerIndex = 1000,
+                        MaxFieldNestingDepthPerIndex = 10,
+                        MaxComplexCollectionFieldsPerIndex = 100
                     }
                 };
 

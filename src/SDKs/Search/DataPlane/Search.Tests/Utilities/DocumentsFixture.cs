@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 {
                     HotelId = "2",
                     BaseRate = 79.99,
-                    Description = "Cheapest hotel in town",
-                    DescriptionFr = "Hôtel le moins cher en ville",
+                    Description = "Cheapest hotel in town. Infact, a motel.",
+                    DescriptionFr = "Hôtel le moins cher en ville. Infact, un motel.",
                     HotelName = "Roach Motel",
                     Category = "Budget",
                     Tags = new[] { "motel", "budget" },
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 {
                     HotelId = "3",
                     BaseRate = 129.99,
-                    Description = "Most popular hotel in town",
+                    Description = "Very popular hotel in town",
                     DescriptionFr = "Hôtel le plus populaire en ville",
                     HotelName = "EconoStay",
                     Category = "Budget",
@@ -100,8 +100,23 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 {
                     HotelId = "6",
                     BaseRate = 279.99,
-                    Description = "Surprisingly expensive",
+                    Description = "Surprisingly expensive. Model suites have an ocean-view.",
                     LastRenovationDate = null
+                },
+                new Hotel()
+                {
+                    HotelId = "7",
+                    BaseRate = 279.99,
+                    Description = "Modern architecture, very polite staff and very clean. Also very affordable.",
+                    DescriptionFr = "Architecture moderne, personnel poli et très propre. Aussi très abordable.",
+                    HotelName = "Modern Stay"
+                },
+                new Hotel()
+                {
+                    HotelId = "8",
+                    BaseRate = 79.99,
+                    Description = "Has some road noise and is next to the very police station. Bathrooms had morel coverings.",
+                    DescriptionFr = "Il y a du bruit de la route et se trouve à côté de la station de police. Les salles de bain avaient des revêtements de morilles."
                 }
             };
 
