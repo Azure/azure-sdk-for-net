@@ -23,10 +23,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     {
             /// <summary>
             /// Provides the status of the asynchronous operations like backup, restore.
-            /// The status can be in progress, completed or failed. You can refer to the
-            /// Operation Status enum for all the possible states of an operation. Some
-            /// operations create jobs. This method returns the list of jobs associated
-            /// with operation.
+            /// The status can be in progress, completed
+            /// or failed. You can refer to the Operation Status enum for all the possible
+            /// states of an operation. Some operations
+            /// create jobs. This method returns the list of jobs associated with
+            /// operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -52,10 +53,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
             /// <summary>
             /// Provides the status of the asynchronous operations like backup, restore.
-            /// The status can be in progress, completed or failed. You can refer to the
-            /// Operation Status enum for all the possible states of an operation. Some
-            /// operations create jobs. This method returns the list of jobs associated
-            /// with operation.
+            /// The status can be in progress, completed
+            /// or failed. You can refer to the Operation Status enum for all the possible
+            /// states of an operation. Some operations
+            /// create jobs. This method returns the list of jobs associated with
+            /// operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -53,19 +53,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="subnetId">Subnet ID, is the subnet ID associated with
         /// the to be restored VM. For Classic VMs it would be
         /// {VnetID}/Subnet/{SubnetName} and, for the Azure Resource Manager
-        /// VMs it would be ARM resource ID used to represent the
-        /// subnet.</param>
+        /// VMs it would be ARM resource ID used to represent
+        /// the subnet.</param>
         /// <param name="targetDomainNameId">Fully qualified ARM ID of the
         /// domain name to be associated to the VM being restored. This applies
-        /// only to Classic Virtual Machines.</param>
+        /// only to Classic
+        /// Virtual Machines.</param>
         /// <param name="region">Region in which the virtual machine is
         /// restored.</param>
         /// <param name="affinityGroup">Affinity group associated to VM to be
         /// restored. Used only for Classic Compute Virtual Machines.</param>
         /// <param name="createNewCloudService">Should a new cloud service be
         /// created while restoring the VM. If this is false, VM will be
-        /// restored to the same cloud service as it was at the time of
-        /// backup.</param>
+        /// restored to the same
+        /// cloud service as it was at the time of backup.</param>
         /// <param name="originalStorageAccountOption">Original Storage Account
         /// Option</param>
         /// <param name="encryptionDetails">Details needed if the VM was
@@ -151,7 +152,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Gets or sets subnet ID, is the subnet ID associated with the to be
         /// restored VM. For Classic VMs it would be
         /// {VnetID}/Subnet/{SubnetName} and, for the Azure Resource Manager
-        /// VMs it would be ARM resource ID used to represent the subnet.
+        /// VMs it would be ARM resource ID used to represent
+        /// the subnet.
         /// </summary>
         [JsonProperty(PropertyName = "subnetId")]
         public string SubnetId { get; set; }
@@ -179,8 +181,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets or sets should a new cloud service be created while restoring
-        /// the VM. If this is false, VM will be restored to the same cloud
-        /// service as it was at the time of backup.
+        /// the VM. If this is false, VM will be restored to the same
+        /// cloud service as it was at the time of backup.
         /// </summary>
         [JsonProperty(PropertyName = "createNewCloudService")]
         public bool? CreateNewCloudService { get; set; }

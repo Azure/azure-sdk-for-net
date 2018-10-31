@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.HDInsight
     public partial interface IConfigurationsOperations
     {
         /// <summary>
-        /// Configures the HTTP settings on the specified cluster.
+        /// Configures the configuration on the specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateHTTPSettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The configuration object for the specified cluster.
         /// </summary>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// </exception>
         Task<AzureOperationResponse<IDictionary<string, string>>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Configures the HTTP settings on the specified cluster.
+        /// Configures the configuration on the specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -106,6 +106,6 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginUpdateHTTPSettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

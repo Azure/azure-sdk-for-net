@@ -46,17 +46,17 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets serial number of the assigned disk.
+        /// Gets serial number of the assigned disk.
         /// </summary>
         [JsonProperty(PropertyName = "diskSerialNumber")]
-        public string DiskSerialNumber { get; set; }
+        public string DiskSerialNumber { get; private set; }
 
         /// <summary>
-        /// Gets or sets bit Locker key of the disk which can be used to unlock
-        /// the disk to copy data.
+        /// Gets bit Locker key of the disk which can be used to unlock the
+        /// disk to copy data.
         /// </summary>
         [JsonProperty(PropertyName = "bitLockerKey")]
-        public string BitLockerKey { get; set; }
+        public string BitLockerKey { get; private set; }
 
     }
 }

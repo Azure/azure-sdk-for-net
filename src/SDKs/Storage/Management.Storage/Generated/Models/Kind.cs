@@ -26,7 +26,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         [EnumMember(Value = "StorageV2")]
         StorageV2,
         [EnumMember(Value = "BlobStorage")]
-        BlobStorage
+        BlobStorage,
+        [EnumMember(Value = "FileStorage")]
+        FileStorage,
+        [EnumMember(Value = "BlockBlobStorage")]
+        BlockBlobStorage
     }
     internal static class KindEnumExtension
     {
@@ -45,6 +49,10 @@ namespace Microsoft.Azure.Management.Storage.Models
                     return "StorageV2";
                 case Kind.BlobStorage:
                     return "BlobStorage";
+                case Kind.FileStorage:
+                    return "FileStorage";
+                case Kind.BlockBlobStorage:
+                    return "BlockBlobStorage";
             }
             return null;
         }
@@ -59,6 +67,10 @@ namespace Microsoft.Azure.Management.Storage.Models
                     return Kind.StorageV2;
                 case "BlobStorage":
                     return Kind.BlobStorage;
+                case "FileStorage":
+                    return Kind.FileStorage;
+                case "BlockBlobStorage":
+                    return Kind.BlockBlobStorage;
             }
             return null;
         }

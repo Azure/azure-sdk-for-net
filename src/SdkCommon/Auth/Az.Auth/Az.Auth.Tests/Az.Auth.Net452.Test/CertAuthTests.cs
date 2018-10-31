@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Az.Auth.Net452.Test
 {
-    public class CertAuthTests : AuthFullDesktopTestBase
+    public class CertAuthTests : AuthNet452TestBase
     {
         public CertAuthTests()
         {

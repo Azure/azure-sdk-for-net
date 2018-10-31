@@ -3,17 +3,14 @@
   <PropertyGroup>
     <PackageId>Automation.Tests</PackageId>
     <AssemblyName>Automation.Tests</AssemblyName>
-    <VersionPrefix>3.0.1-preview</VersionPrefix>
+    <Version>1.0.0</Version>
     <Description>Test Project for Automation tests</Description>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Network" Version="[14.0.0-preview,16.0)" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="System.Threading" Version="4.3.0" />
     <ProjectReference Include="..\Management.Automation\Microsoft.Azure.Management.Automation.csproj" />
   </ItemGroup>

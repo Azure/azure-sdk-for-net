@@ -11,122 +11,93 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for Rotation.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(RotationConverter))]
-    public struct Rotation : System.IEquatable<Rotation>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum Rotation
     {
-        private Rotation(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
         /// <summary>
         /// Automatically detect and rotate as needed.
         /// </summary>
-        public static readonly Rotation Auto = "Auto";
-
+        [EnumMember(Value = "Auto")]
+        Auto,
         /// <summary>
         /// Do not rotate the video.  If the output format supports it, any
         /// metadata about rotation is kept intact.
         /// </summary>
-        public static readonly Rotation None = "None";
-
+        [EnumMember(Value = "None")]
+        None,
         /// <summary>
         /// Do not rotate the video but remove any metadata about the rotation.
         /// </summary>
-        public static readonly Rotation Rotate0 = "Rotate0";
-
+        [EnumMember(Value = "Rotate0")]
+        Rotate0,
         /// <summary>
         /// Rotate 90 degrees clockwise.
         /// </summary>
-        public static readonly Rotation Rotate90 = "Rotate90";
-
+        [EnumMember(Value = "Rotate90")]
+        Rotate90,
         /// <summary>
         /// Rotate 180 degrees clockwise.
         /// </summary>
-        public static readonly Rotation Rotate180 = "Rotate180";
-
+        [EnumMember(Value = "Rotate180")]
+        Rotate180,
         /// <summary>
         /// Rotate 270 degrees clockwise.
         /// </summary>
-        public static readonly Rotation Rotate270 = "Rotate270";
-
-
-        /// <summary>
-        /// Underlying value of enum Rotation
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for Rotation
-        /// </summary>
-        public override string ToString()
+        [EnumMember(Value = "Rotate270")]
+        Rotate270
+    }
+    internal static class RotationEnumExtension
+    {
+        internal static string ToSerializedValue(this Rotation? value)
         {
-            return UnderlyingValue.ToString();
+            return value == null ? null : ((Rotation)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Compares enums of type Rotation
-        /// </summary>
-        public bool Equals(Rotation e)
+        internal static string ToSerializedValue(this Rotation value)
         {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
+            switch( value )
+            {
+                case Rotation.Auto:
+                    return "Auto";
+                case Rotation.None:
+                    return "None";
+                case Rotation.Rotate0:
+                    return "Rotate0";
+                case Rotation.Rotate90:
+                    return "Rotate90";
+                case Rotation.Rotate180:
+                    return "Rotate180";
+                case Rotation.Rotate270:
+                    return "Rotate270";
+            }
+            return null;
         }
 
-        /// <summary>
-        /// Implicit operator to convert string to Rotation
-        /// </summary>
-        public static implicit operator Rotation(string value)
+        internal static Rotation? ParseRotation(this string value)
         {
-            return new Rotation(value);
+            switch( value )
+            {
+                case "Auto":
+                    return Rotation.Auto;
+                case "None":
+                    return Rotation.None;
+                case "Rotate0":
+                    return Rotation.Rotate0;
+                case "Rotate90":
+                    return Rotation.Rotate90;
+                case "Rotate180":
+                    return Rotation.Rotate180;
+                case "Rotate270":
+                    return Rotation.Rotate270;
+            }
+            return null;
         }
-
-        /// <summary>
-        /// Implicit operator to convert Rotation to string
-        /// </summary>
-        public static implicit operator string(Rotation e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum Rotation
-        /// </summary>
-        public static bool operator == (Rotation e1, Rotation e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum Rotation
-        /// </summary>
-        public static bool operator != (Rotation e1, Rotation e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for Rotation
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is Rotation && Equals((Rotation)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode Rotation
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
     }
 }

@@ -43,7 +43,7 @@ namespace Billing.Tests.ScenarioTests
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var billingPeriods = billingMgmtClient.BillingPeriods.List(RangeFilter, null, 1);
                 Assert.NotNull(billingPeriods);
-                Assert.Equal(1, billingPeriods.Count());
+                Assert.Single(billingPeriods);
                 var billingPeriod = billingPeriods.First();
                 Assert.True(billingPeriod.BillingPeriodStartDate.Value <= billingPeriod.BillingPeriodEndDate.Value);
                 Assert.NotNull(billingPeriod.Name);

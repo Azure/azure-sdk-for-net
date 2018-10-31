@@ -10,8 +10,8 @@
           "DEMO_KEY"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
+          "FxVersion/4.6.00001.0",
+          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.0.0.0"
         ],
         "prefer": [
           "response-v1=true"
@@ -20,25 +20,18 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "97b8e343-ed55-4aaa-ab51-d72dbd3b05e4"
+          "87631651-173e-4b23-b107-c948be48b8bf"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-01-11T06:29:16.53Z\",\r\n    \"end\": \"2018-01-11T18:29:16.53Z\",\r\n    \"interval\": \"PT1H\",\r\n    \"segments\": [\r\n      {\r\n        \"start\": \"2018-01-11T06:29:16.53Z\",\r\n        \"end\": \"2018-01-11T07:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 351.69\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-01-11T07:00:00Z\",\r\n        \"end\": \"2018-01-11T08:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 342.35\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-01-11T08:00:00Z\",\r\n        \"end\": \"2018-01-11T09:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 317.05\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-01-11T09:00:00Z\",\r\n        \"end\": \"2018-01-11T10:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 357.96\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-01-11T10:00:00Z\",\r\n        \"end\": \"2018-01-11T11:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 367.1\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-01-11T11:00:00Z\",\r\n        \"end\": \"2018-01-11T12:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 340.15\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-01-11T12:00:00Z\",\r\n        \"end\": \"2018-01-11T13:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 407.54\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-01-11T13:00:00Z\",\r\n        \"end\": \"2018-01-11T14:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 445.68\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-01-11T14:00:00Z\",\r\n        \"end\": \"2018-01-11T15:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 432.96\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-01-11T15:00:00Z\",\r\n        \"end\": \"2018-01-11T16:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 376.07\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-01-11T16:00:00Z\",\r\n        \"end\": \"2018-01-11T17:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 406.16\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-01-11T17:00:00Z\",\r\n        \"end\": \"2018-01-11T18:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 402.97\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-01-11T18:00:00Z\",\r\n        \"end\": \"2018-01-11T18:29:16.53Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 392.95\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
         "Connection": [
           "keep-alive"
         ],
         "Date": [
-          "Thu, 11 Jan 2018 18:29:16 GMT"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
+          "Mon, 24 Sep 2018 21:36:22 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-green.5e47c7fd-f6b7-11e7-92a5-70b3d5800005"
+          "1.1 draft-ai-blue.143676dd-bfa6-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"
@@ -54,12 +47,19 @@
           "*"
         ],
         "Access-Control-Expose-Headers": [
-          "Retry-After,Age,WWW-Authenticate"
+          "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "1464"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-09-24T09:36:22.129Z\",\r\n    \"end\": \"2018-09-24T21:36:22.129Z\",\r\n    \"interval\": \"PT1H\",\r\n    \"segments\": [\r\n      {\r\n        \"start\": \"2018-09-24T09:36:22.129Z\",\r\n        \"end\": \"2018-09-24T10:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 105.6\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-09-24T10:00:00Z\",\r\n        \"end\": \"2018-09-24T11:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 69.62\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-09-24T11:00:00Z\",\r\n        \"end\": \"2018-09-24T12:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 70.79\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-09-24T12:00:00Z\",\r\n        \"end\": \"2018-09-24T13:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 107.68\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-09-24T13:00:00Z\",\r\n        \"end\": \"2018-09-24T14:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 89.26\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-09-24T14:00:00Z\",\r\n        \"end\": \"2018-09-24T15:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 80.35\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-09-24T15:00:00Z\",\r\n        \"end\": \"2018-09-24T16:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 74.51\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-09-24T16:00:00Z\",\r\n        \"end\": \"2018-09-24T17:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 77.08\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-09-24T17:00:00Z\",\r\n        \"end\": \"2018-09-24T18:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 68.23\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-09-24T18:00:00Z\",\r\n        \"end\": \"2018-09-24T19:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 120.05\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-09-24T19:00:00Z\",\r\n        \"end\": \"2018-09-24T20:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 81.61\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-09-24T20:00:00Z\",\r\n        \"end\": \"2018-09-24T21:00:00Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 72.63\r\n        }\r\n      },\r\n      {\r\n        \"start\": \"2018-09-24T21:00:00Z\",\r\n        \"end\": \"2018-09-24T21:36:22.129Z\",\r\n        \"requests/duration\": {\r\n          \"avg\": 69.79\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

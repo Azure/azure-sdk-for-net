@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.EventGrid.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,10 +40,13 @@ namespace Microsoft.Azure.EventGrid.Models
         /// <param name="state">The new state of the Job. Possible values
         /// include: 'Canceled', 'Canceling', 'Error', 'Finished',
         /// 'Processing', 'Queued', 'Scheduled'</param>
-        public MediaJobStateChangeEventData(JobState previousState = default(JobState), JobState state = default(JobState))
+        /// <param name="correlationData">Gets the Job correlation
+        /// data.</param>
+        public MediaJobStateChangeEventData(MediaJobState previousState = default(MediaJobState), MediaJobState state = default(MediaJobState), IDictionary<string, string> correlationData = default(IDictionary<string, string>))
         {
             PreviousState = previousState;
             State = state;
+            CorrelationData = correlationData;
             CustomInit();
         }
 
@@ -56,7 +61,7 @@ namespace Microsoft.Azure.EventGrid.Models
         /// 'Queued', 'Scheduled'
         /// </summary>
         [JsonProperty(PropertyName = "previousState")]
-        public JobState PreviousState { get; private set; }
+        public MediaJobState PreviousState { get; private set; }
 
         /// <summary>
         /// Gets the new state of the Job. Possible values include: 'Canceled',
@@ -64,7 +69,13 @@ namespace Microsoft.Azure.EventGrid.Models
         /// 'Scheduled'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
-        public JobState State { get; private set; }
+        public MediaJobState State { get; private set; }
+
+        /// <summary>
+        /// Gets the Job correlation data.
+        /// </summary>
+        [JsonProperty(PropertyName = "correlationData")]
+        public IDictionary<string, string> CorrelationData { get; set; }
 
     }
 }

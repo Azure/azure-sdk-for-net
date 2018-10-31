@@ -44,7 +44,11 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// backup share user name and password credentials</param>
         /// <param name="backupStorageAccountErrors">Errors associated with the
         /// storage account provided.</param>
-        public ValidateMigrationInputSqlServerSqlMITaskOutput(string id = default(string), string name = default(string), IList<ReportableException> restoreDatabaseNameErrors = default(IList<ReportableException>), IList<ReportableException> backupFolderErrors = default(IList<ReportableException>), IList<ReportableException> backupShareCredentialsErrors = default(IList<ReportableException>), IList<ReportableException> backupStorageAccountErrors = default(IList<ReportableException>))
+        /// <param name="existingBackupErrors">Errors associated with existing
+        /// backup files.</param>
+        /// <param name="databaseBackupInfo">Information about backup files
+        /// when existing backup mode is used.</param>
+        public ValidateMigrationInputSqlServerSqlMITaskOutput(string id = default(string), string name = default(string), IList<ReportableException> restoreDatabaseNameErrors = default(IList<ReportableException>), IList<ReportableException> backupFolderErrors = default(IList<ReportableException>), IList<ReportableException> backupShareCredentialsErrors = default(IList<ReportableException>), IList<ReportableException> backupStorageAccountErrors = default(IList<ReportableException>), IList<ReportableException> existingBackupErrors = default(IList<ReportableException>), DatabaseBackupInfo databaseBackupInfo = default(DatabaseBackupInfo))
         {
             Id = id;
             Name = name;
@@ -52,6 +56,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             BackupFolderErrors = backupFolderErrors;
             BackupShareCredentialsErrors = backupShareCredentialsErrors;
             BackupStorageAccountErrors = backupStorageAccountErrors;
+            ExistingBackupErrors = existingBackupErrors;
+            DatabaseBackupInfo = databaseBackupInfo;
             CustomInit();
         }
 
@@ -96,6 +102,19 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "backupStorageAccountErrors")]
         public IList<ReportableException> BackupStorageAccountErrors { get; private set; }
+
+        /// <summary>
+        /// Gets errors associated with existing backup files.
+        /// </summary>
+        [JsonProperty(PropertyName = "existingBackupErrors")]
+        public IList<ReportableException> ExistingBackupErrors { get; private set; }
+
+        /// <summary>
+        /// Gets or sets information about backup files when existing backup
+        /// mode is used.
+        /// </summary>
+        [JsonProperty(PropertyName = "databaseBackupInfo")]
+        public DatabaseBackupInfo DatabaseBackupInfo { get; set; }
 
     }
 }

@@ -178,6 +178,54 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
+            /// Gets a database's short term retention policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            public static IPage<BackupShortTermRetentionPolicy> ListByDatabase(this IBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                return operations.ListByDatabaseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a database's short term retention policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<BackupShortTermRetentionPolicy>> ListByDatabaseAsync(this IBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Updates a database's short term retention policy.
             /// </summary>
             /// <param name='operations'>
@@ -280,6 +328,40 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<BackupShortTermRetentionPolicy> BeginUpdateAsync(this IBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a database's short term retention policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<BackupShortTermRetentionPolicy> ListByDatabaseNext(this IBackupShortTermRetentionPoliciesOperations operations, string nextPageLink)
+            {
+                return operations.ListByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a database's short term retention policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<BackupShortTermRetentionPolicy>> ListByDatabaseNextAsync(this IBackupShortTermRetentionPoliciesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

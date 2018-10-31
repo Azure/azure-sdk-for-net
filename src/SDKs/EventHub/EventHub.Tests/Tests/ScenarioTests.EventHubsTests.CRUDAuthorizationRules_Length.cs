@@ -97,7 +97,7 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.True(createEventhubAuthorizationRuleResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Rights)
                 {
-                    Assert.True(createEventhubAuthorizationRuleResponse.Rights.Any(r => r == right));
+                    Assert.Contains(createEventhubAuthorizationRuleResponse.Rights, r => r == right);
                 }
 
                 // Get created Eventhub AuthorizationRules
@@ -106,14 +106,14 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.True(getEventhubAuthorizationRulesResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Rights)
                 {
-                    Assert.True(getEventhubAuthorizationRulesResponse.Rights.Any(r => r == right));
+                    Assert.Contains(getEventhubAuthorizationRulesResponse.Rights, r => r == right);
                 }
 
                 // Get all Eventhub AuthorizationRules
                 var getAllNamespaceAuthorizationRulesResponse = EventHubManagementClient.EventHubs.ListAuthorizationRules(resourceGroup, namespaceName, eventhubName);
                 Assert.NotNull(getAllNamespaceAuthorizationRulesResponse);
-                Assert.Equal(getAllNamespaceAuthorizationRulesResponse.Count(), 1);
-                Assert.True(getAllNamespaceAuthorizationRulesResponse.Any(ns => ns.Name == authorizationRuleName));
+                Assert.True(getAllNamespaceAuthorizationRulesResponse.Count() == 1);
+                Assert.Contains(getAllNamespaceAuthorizationRulesResponse, ns => ns.Name == authorizationRuleName);
 
                 // Update Eventhub authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", EventHubManagementHelper.GenerateRandomKey());
@@ -128,7 +128,7 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.True(updateEventhubAuthorizationRuleResponse.Rights.Count == updateEventhubAuthorizationRuleParameter.Rights.Count);
                 foreach (var right in updateEventhubAuthorizationRuleParameter.Rights)
                 {
-                    Assert.True(updateEventhubAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
+                    Assert.Contains(updateEventhubAuthorizationRuleResponse.Rights, r => r.Equals(right));
                 }
 
                 // Get the updated Eventhub AuthorizationRule
@@ -139,7 +139,7 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.True(getEventhubAuthorizationRuleResponse.Rights.Count == updateEventhubAuthorizationRuleParameter.Rights.Count);
                 foreach (var right in updateEventhubAuthorizationRuleParameter.Rights)
                 {
-                    Assert.True(getEventhubAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
+                    Assert.Contains(getEventhubAuthorizationRuleResponse.Rights, r => r.Equals(right));
                 }
 
                 // Get the connectionString to the Eventhub for a Authorization rule created

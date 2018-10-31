@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -33,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Read'</param>
         /// <param name="durationInSeconds">Time duration in seconds until the
         /// SAS access expires.</param>
-        public GrantAccessData(AccessLevel access, int durationInSeconds)
+        public GrantAccessData(string access, int durationInSeconds)
         {
             Access = access;
             DurationInSeconds = durationInSeconds;
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets possible values include: 'None', 'Read'
         /// </summary>
         [JsonProperty(PropertyName = "access")]
-        public AccessLevel Access { get; set; }
+        public string Access { get; set; }
 
         /// <summary>
         /// Gets or sets time duration in seconds until the SAS access expires.
@@ -60,11 +61,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Access == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Access");
+            }
         }
     }
 }

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -84,22 +83,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "fileMode")]
         public string FileMode { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (BlobSource == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "BlobSource");
-            }
-            if (FilePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "FilePath");
-            }
-        }
     }
 }

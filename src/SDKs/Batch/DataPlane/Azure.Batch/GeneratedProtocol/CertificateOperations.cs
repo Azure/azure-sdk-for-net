@@ -84,10 +84,6 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificate");
             }
-            if (certificate != null)
-            {
-                certificate.Validate();
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");

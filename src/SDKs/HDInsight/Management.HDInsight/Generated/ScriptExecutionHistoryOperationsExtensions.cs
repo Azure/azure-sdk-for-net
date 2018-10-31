@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
-            public static IPage<RuntimeScriptActionDetail> List(this IScriptExecutionHistoryOperations operations, string resourceGroupName, string clusterName)
+            public static IPage<RuntimeScriptActionDetail> ListByCluster(this IScriptExecutionHistoryOperations operations, string resourceGroupName, string clusterName)
             {
-                return operations.ListAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                return operations.ListByClusterAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RuntimeScriptActionDetail>> ListAsync(this IScriptExecutionHistoryOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RuntimeScriptActionDetail>> ListByClusterAsync(this IScriptExecutionHistoryOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByClusterWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -113,9 +113,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RuntimeScriptActionDetail> ListNext(this IScriptExecutionHistoryOperations operations, string nextPageLink)
+            public static IPage<RuntimeScriptActionDetail> ListByClusterNext(this IScriptExecutionHistoryOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByClusterNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,9 +130,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RuntimeScriptActionDetail>> ListNextAsync(this IScriptExecutionHistoryOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RuntimeScriptActionDetail>> ListByClusterNextAsync(this IScriptExecutionHistoryOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByClusterNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

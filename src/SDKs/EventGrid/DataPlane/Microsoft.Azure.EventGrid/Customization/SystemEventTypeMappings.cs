@@ -25,6 +25,8 @@ namespace Microsoft.Azure.EventGrid
             // IoTHub Device events
             { EventTypes.IoTHubDeviceCreatedEvent, typeof(IotHubDeviceCreatedEventData) },
             { EventTypes.IoTHubDeviceDeletedEvent, typeof(IotHubDeviceDeletedEventData) },
+            { EventTypes.IoTHubDeviceConnectedEvent, typeof(IotHubDeviceConnectedEventData) },
+            { EventTypes.IoTHubDeviceDisconnectedEvent, typeof(IotHubDeviceDisconnectedEventData) },
 
             // EventGrid events
             { EventTypes.EventGridSubscriptionValidationEvent, typeof(SubscriptionValidationEventData) },
@@ -35,6 +37,28 @@ namespace Microsoft.Azure.EventGrid
 
             // Media Services events
             { EventTypes.MediaJobStateChangeEvent, typeof(MediaJobStateChangeEventData) },
+            { EventTypes.MediaJobOutputStateChangeEvent, typeof(MediaJobOutputStateChangeEventData) },
+            { EventTypes.MediaJobScheduledEvent, typeof(MediaJobScheduledEventData) },
+            { EventTypes.MediaJobProcessingEvent, typeof(MediaJobProcessingEventData) },
+            { EventTypes.MediaJobCancelingEvent, typeof(MediaJobCancelingEventData) },
+            { EventTypes.MediaJobFinishedEvent, typeof(MediaJobFinishedEventData) },
+            { EventTypes.MediaJobCanceledEvent, typeof(MediaJobCanceledEventData) },
+            { EventTypes.MediaJobErroredEvent, typeof(MediaJobErroredEventData) },
+            { EventTypes.MediaJobOutputCanceledEvent, typeof(MediaJobOutputCanceledEventData) },
+            { EventTypes.MediaJobOutputCancelingEvent, typeof(MediaJobOutputCancelingEventData) },
+            { EventTypes.MediaJobOutputErroredEvent, typeof(MediaJobOutputErroredEventData) },
+            { EventTypes.MediaJobOutputFinishedEvent, typeof(MediaJobOutputFinishedEventData) },
+            { EventTypes.MediaJobOutputProcessingEvent, typeof(MediaJobOutputProcessingEventData) },
+            { EventTypes.MediaJobOutputScheduledEvent, typeof(MediaJobOutputScheduledEventData) },
+            { EventTypes.MediaLiveEventEncoderConnectedEvent, typeof(MediaLiveEventEncoderConnectedEventData) },
+            { EventTypes.MediaLiveEventConnectionRejectedEvent, typeof(MediaLiveEventConnectionRejectedEventData) },
+            { EventTypes.MediaLiveEventEncoderDisconnectedEvent, typeof(MediaLiveEventEncoderDisconnectedEventData) },
+            { EventTypes.MediaLiveEventIncomingStreamReceivedEvent, typeof(MediaLiveEventIncomingStreamReceivedEventData) },
+            { EventTypes.MediaLiveEventIncomingStreamsOutOfSyncEvent, typeof(MediaLiveEventIncomingStreamsOutOfSyncEventData) },
+            { EventTypes.MediaLiveEventIncomingVideoStreamsOutOfSyncEvent, typeof(MediaLiveEventIncomingVideoStreamsOutOfSyncEventData) },
+            { EventTypes.MediaLiveEventIncomingChunkDroppedEvent, typeof(MediaLiveEventIncomingDataChunkDroppedEventData) },
+            { EventTypes.MediaLiveEventIngestHeartbeatEvent, typeof(MediaLiveEventIngestHeartbeatEventData) },
+            { EventTypes.MediaLiveEventTrackDiscontinuityDetectedEvent, typeof(MediaLiveEventTrackDiscontinuityDetectedEventData) },
 
             // Resource Manager (Azure Subscription/Resource Group) events
             { EventTypes.ResourceWriteSuccessEvent, typeof(ResourceWriteSuccessData) },
@@ -43,6 +67,9 @@ namespace Microsoft.Azure.EventGrid
             { EventTypes.ResourceDeleteSuccessEvent, typeof(ResourceDeleteSuccessData) },
             { EventTypes.ResourceDeleteFailureEvent, typeof(ResourceDeleteFailureData) },
             { EventTypes.ResourceDeleteCancelEvent, typeof(ResourceDeleteCancelData) },
+            { EventTypes.ResourceActionSuccessEvent, typeof(ResourceActionSuccessData) },
+            { EventTypes.ResourceActionFailureEvent, typeof(ResourceActionFailureData) },
+            { EventTypes.ResourceActionCancelEvent, typeof(ResourceActionCancelData) },
 
             // ServiceBus events
             { EventTypes.ServiceBusActiveMessagesAvailableWithNoListenersEvent, typeof(ServiceBusActiveMessagesAvailableWithNoListenersEventData) },

@@ -7,32 +7,22 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "647c6af1-b4bc-4678-9dcf-61c06d391bd7"
+          "b74a3f26-3601-499f-ade1-002028676385"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.8.0.0"
+          "FxVersion/4.6.26614.01",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ProviderNotFound\",\r\n    \"message\": \"Provider 'InvalidProvider' not found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "87"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Sat, 10 Mar 2018 00:22:48 GMT"
+          "Mon, 22 Oct 2018 21:31:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -44,7 +34,7 @@
           "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
         ],
         "x-ms-request-id": [
-          "860504f1-1dc1-4078-840d-77fee2c70776"
+          "e8daa499-7c19-417b-af52-cecceed6913a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -52,19 +42,26 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14999"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "85135bd6-e157-4d12-a640-b9691f03f5cd"
+          "c2bdc894-8f58-465c-9cd6-7130d5991745"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180310T002249Z:85135bd6-e157-4d12-a640-b9691f03f5cd"
+          "WESTUS2:20181022T213110Z:c2bdc894-8f58-465c-9cd6-7130d5991745"
+        ],
+        "Content-Length": [
+          "87"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ProviderNotFound\",\r\n    \"message\": \"Provider 'InvalidProvider' not found.\"\r\n  }\r\n}",
       "StatusCode": 404
     }
   ],

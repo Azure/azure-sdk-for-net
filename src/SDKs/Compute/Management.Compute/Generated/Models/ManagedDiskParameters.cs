@@ -31,10 +31,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="storageAccountType">Specifies the storage account type
-        /// for the managed disk. Possible values are: Standard_LRS,
-        /// Premium_LRS, and StandardSSD_LRS. Possible values include:
-        /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS'</param>
-        public ManagedDiskParameters(string id = default(string), StorageAccountTypes? storageAccountType = default(StorageAccountTypes?))
+        /// for the managed disk. NOTE: UltraSSD_LRS can only be used with data
+        /// disks, it cannot be used with OS Disk. Possible values include:
+        /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS',
+        /// 'UltraSSD_LRS'</param>
+        public ManagedDiskParameters(string id = default(string), string storageAccountType = default(string))
             : base(id)
         {
             StorageAccountType = storageAccountType;
@@ -48,12 +49,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the storage account type for the managed
-        /// disk. Possible values are: Standard_LRS, Premium_LRS, and
-        /// StandardSSD_LRS. Possible values include: 'Standard_LRS',
-        /// 'Premium_LRS', 'StandardSSD_LRS'
+        /// disk. NOTE: UltraSSD_LRS can only be used with data disks, it
+        /// cannot be used with OS Disk. Possible values include:
+        /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS', 'UltraSSD_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountType")]
-        public StorageAccountTypes? StorageAccountType { get; set; }
+        public string StorageAccountType { get; set; }
 
     }
 }

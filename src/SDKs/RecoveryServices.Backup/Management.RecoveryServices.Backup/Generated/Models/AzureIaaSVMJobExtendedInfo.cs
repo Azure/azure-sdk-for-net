@@ -37,14 +37,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="internalPropertyBag">Job internal properties.</param>
         /// <param name="progressPercentage">Indicates progress of the job.
         /// Null if it has not started or completed.</param>
+        /// <param name="estimatedRemainingDuration">Time remaining for
+        /// execution of this job.</param>
         /// <param name="dynamicErrorMessage">Non localized error message on
         /// job execution.</param>
-        public AzureIaaSVMJobExtendedInfo(IList<AzureIaaSVMJobTaskDetails> tasksList = default(IList<AzureIaaSVMJobTaskDetails>), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), IDictionary<string, string> internalPropertyBag = default(IDictionary<string, string>), double? progressPercentage = default(double?), string dynamicErrorMessage = default(string))
+        public AzureIaaSVMJobExtendedInfo(IList<AzureIaaSVMJobTaskDetails> tasksList = default(IList<AzureIaaSVMJobTaskDetails>), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), IDictionary<string, string> internalPropertyBag = default(IDictionary<string, string>), double? progressPercentage = default(double?), string estimatedRemainingDuration = default(string), string dynamicErrorMessage = default(string))
         {
             TasksList = tasksList;
             PropertyBag = propertyBag;
             InternalPropertyBag = internalPropertyBag;
             ProgressPercentage = progressPercentage;
+            EstimatedRemainingDuration = estimatedRemainingDuration;
             DynamicErrorMessage = dynamicErrorMessage;
             CustomInit();
         }
@@ -78,6 +81,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "progressPercentage")]
         public double? ProgressPercentage { get; set; }
+
+        /// <summary>
+        /// Gets or sets time remaining for execution of this job.
+        /// </summary>
+        [JsonProperty(PropertyName = "estimatedRemainingDuration")]
+        public string EstimatedRemainingDuration { get; set; }
 
         /// <summary>
         /// Gets or sets non localized error message on job execution.

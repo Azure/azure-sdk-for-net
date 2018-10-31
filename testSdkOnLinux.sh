@@ -24,11 +24,9 @@ restoreBuildCR() {
 
     echo "Running ClientRuntime Tests $netcore20"
     #dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore20
-    dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore20
+    dotnet test src/SdkCommon/ClientRuntime/Tests/ClientRuntime.NetCore.Tests/ClientRuntime.NetCore.Tests.csproj -f $netcore20
     dotnet test src/SdkCommon/ClientRuntime.Azure/Tests/CR.Azure.NetCore.Tests/CR.Azure.NetCore.Tests.csproj -f $netcore20
     #dotnet test src/SdkCommon/Auth/Az.Auth/Az.Auth.Tests//ClientRuntime.Azure.Tests/Microsoft.Rest.ClientRuntime.Azure.Tests.csproj -f $netcore20
-    
-
 }
 
 restoreBuildAzStack() {
@@ -165,7 +163,7 @@ skip_Rps() {
     #printf "checking......$1\n"
     if [[ ("$1" =~ "Authorization")  || ( "$1" =~ "Gallery" ) || ("$1" =~ "Automation") || ( "$1" =~ "Intune" ) || ( "$1" =~ "DataLake.Store" ) 
                 || ( "$1" =~ "Monitor" ) || ( "$1" =~ "RedisCache" ) || ( "$1" =~ "Search" ) || ( "$1" =~ "KeyVault.Tests" ) 
-                || ( "$1" =~ "DeviceProvisioningServices") || ("$1" =~ "ServerManagement")
+                || ( "$1" =~ "DeviceProvisioningServices") || ("$1" =~ "ServerManagement") || ( "$1" =~ "BotService")
                 || ("$1" =~ "Batch") || ("$1" =~ "KeyVault")
                 || ( "$1" =~ "KeyVault.TestFramework") || ( "$1" =~ "Subscription.FullDesktop.Tests") ]]; then                
         retVal=true
@@ -173,54 +171,7 @@ skip_Rps() {
     echo $retVal
 }
 
-getBuildTools() {
-    copyFromRootDir="https://raw.githubusercontent.com/shahabhijeet/azure-sdk-for-net/addTfm"
-    printf "Updating Build tools .....\n"
-    
-    if [ ! -d ./tools/SdkBuildTools ]; then
-        mkdir ./tools/SdkBuildTools
-    fi
-    if [ ! -d ./tools/SdkBuildTools/targets ]; then
-        mkdir ./tools/SdkBuildTools/targets
-    fi
-
-    if [ ! -d ./tools/SdkBuildTools/targets/core ]; then
-        mkdir ./tools/SdkBuildTools/targets/core
-    fi
-
-    if [ ! -d ./tools/SdkBuildTools/tasks ]; then
-        mkdir ./tools/SdkBuildTools/tasks
-    fi
-
-    if [ ! -d ./tools/SdkBuildTools/tasks/net46 ]; then
-        mkdir ./tools/SdkBuildTools/tasks/net46
-    fi
-
-    curl -s $copyFromRootDir/tools/BuildAssets/targets/additional.targets > ./tools/SdkBuildTools/targets/additional.targets
-    curl -s $copyFromRootDir/tools/BuildAssets/targets/common.Build.props > ./tools/SdkBuildTools/targets/common.Build.props
-    curl -s $copyFromRootDir/tools/BuildAssets/targets/common.NugetPackage.props > ./tools/SdkBuildTools/targets/common.NugetPackage.props
-    curl -s $copyFromRootDir/tools/BuildAssets/targets/common.targets > ./tools/SdkBuildTools/targets/common.targets
-    curl -s $copyFromRootDir/tools/BuildAssets/targets/signing.targets > ./tools/SdkBuildTools/targets/signing.targets
-	curl -s $copyFromRootDir/tools/BuildAssets/targets/ideCmd.targets > ./tools/SdkBuildTools/targets/ideCmd.targets
-    curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_AzSdk.props > ./tools/SdkBuildTools/targets/core/_AzSdk.props
-    curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_build.proj > ./tools/SdkBuildTools/targets/core/_build.proj
-    curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_Directory.Build.props > ./tools/SdkBuildTools/targets/core/_Directory.Build.props
-    curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_Directory.Build.targets > ./tools/SdkBuildTools/targets/core/_Directory.Build.targets
-    curl -s $copyFromRootDir/tools/BuildAssets/targets/core/_test.props > ./tools/SdkBuildTools/targets/core/_test.props
-    curl -s $copyFromRootDir/tools/BuildAssets/tasks/common.tasks > ./tools/SdkBuildTools/tasks/common.tasks
-    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.dll
-    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Build.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Build.dll
-    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Build.Framework.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Build.Framework.dll
-    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Build.Tasks.Core.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Build.Tasks.Core.dll
-    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Build.Utilities.Core.dll > ./tools/SdkBuildTools/tasks/net46Microsoft.Build.Utilities.Core.dll
-    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Collections.Immutable.dll > ./tools/SdkBuildTools/tasks/net46/System.Collections.Immutable.dll
-    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Reflection.Metadata.dll > ./tools/SdkBuildTools/tasks/net46/System.Reflection.Metadata.dll
-    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Runtime.InteropServices.RuntimeInformation.dll > ./tools/SdkBuildTools/tasks/net46/System.Runtime.InteropServices.RuntimeInformation.dll
-    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Threading.Thread.dll > ./tools/SdkBuildTools/tasks/net46/System.Threading.Thread.dll
-    
-}
-
-getBuildTools
+./getBuildTools.sh
 restoreBuildCR
 restoreBuildRepo
 restoreBuildCog

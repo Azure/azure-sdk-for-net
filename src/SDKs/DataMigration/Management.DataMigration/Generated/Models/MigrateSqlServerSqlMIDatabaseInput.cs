@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,11 +40,14 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// destination</param>
         /// <param name="backupFileShare">Backup file share information for
         /// backing up this database.</param>
-        public MigrateSqlServerSqlMIDatabaseInput(string name, string restoreDatabaseName, FileShare backupFileShare = default(FileShare))
+        /// <param name="backupFilePaths">The list of backup files to be used
+        /// in case of existing backups.</param>
+        public MigrateSqlServerSqlMIDatabaseInput(string name, string restoreDatabaseName, FileShare backupFileShare = default(FileShare), IList<string> backupFilePaths = default(IList<string>))
         {
             Name = name;
             RestoreDatabaseName = restoreDatabaseName;
             BackupFileShare = backupFileShare;
+            BackupFilePaths = backupFilePaths;
             CustomInit();
         }
 
@@ -69,6 +74,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "backupFileShare")]
         public FileShare BackupFileShare { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of backup files to be used in case of
+        /// existing backups.
+        /// </summary>
+        [JsonProperty(PropertyName = "backupFilePaths")]
+        public IList<string> BackupFilePaths { get; set; }
 
         /// <summary>
         /// Validate the object.

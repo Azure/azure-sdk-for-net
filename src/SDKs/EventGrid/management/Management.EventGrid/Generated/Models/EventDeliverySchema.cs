@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     public static class EventDeliverySchema
     {
         public const string EventGridSchema = "EventGridSchema";
-        public const string InputEventSchema = "InputEventSchema";
         public const string CloudEventV01Schema = "CloudEventV01Schema";
+        public const string CustomInputSchema = "CustomInputSchema";
     }
 }

@@ -1,17 +1,14 @@
-﻿Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/policyinsights/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\Git\bulentelmaci\azure-sdk-for-net\tools\..\src\SDKs\
-2018-05-23 20:56:54 UTC
-1) azure-rest-api-specs repository information
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/policyinsights/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\code\azure-sdk-for-net\src\SDKs
+2018-10-03 23:31:59 UTC
+Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      0d97bd1e397779473c8863fdf3ca66a6b075f9c2
-
-2) AutoRest information
+Commit:      64266364a9517d82448d09622b70ff753a9fbaa9
+AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\bulente\AppData\Roaming\npm  +-- autorest@2.0.4262   `-- oad@0.1.7    `-- autorest@1.9.1
-
-
-Latest installed version:    
-.\tools\generate.ps1 was invoked by generate.ps1
-
-
+Bootstrapper version:    autorest@2.0.4283

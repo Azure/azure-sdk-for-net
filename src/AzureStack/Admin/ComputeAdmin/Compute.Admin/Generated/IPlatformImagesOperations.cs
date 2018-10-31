@@ -52,7 +52,8 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// Returns the requested platform image.
         /// </summary>
         /// <remarks>
-        /// Returns the requested platform image.
+        /// Returns the specific platform image matching publisher, offer, skus
+        /// and version.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -89,7 +90,8 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// Creates a platform image.
         /// </summary>
         /// <remarks>
-        /// Creates a new platform image.
+        /// Creates a new platform image with given publisher, offer, skus and
+        /// version.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.
@@ -126,7 +128,8 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// </exception>
         Task<AzureOperationResponse<PlatformImage>> CreateWithHttpMessagesAsync(string location, string publisher, string offer, string sku, string version, PlatformImageParameters newImage, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a platform image
+        /// Deletes a platform image matching publisher, offer, skus and
+        /// version
         /// </summary>
         /// <remarks>
         /// Delete a platform image
@@ -163,7 +166,8 @@ namespace Microsoft.AzureStack.Management.Compute.Admin
         /// Creates a platform image.
         /// </summary>
         /// <remarks>
-        /// Creates a new platform image.
+        /// Creates a new platform image with given publisher, offer, skus and
+        /// version.
         /// </remarks>
         /// <param name='location'>
         /// Location of the resource.

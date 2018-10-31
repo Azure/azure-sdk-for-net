@@ -201,6 +201,7 @@ namespace Compute.Tests
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
             bool createWithPublicIpAddress = false,
             bool createWithManagedDisks = false,
+            bool hasDiffDisks = false,
             bool createWithHealthProbe = false,
             Subnet subnet = null,
             IList<string> zones = null,
@@ -217,6 +218,7 @@ namespace Compute.Tests
                                                                                      vmScaleSetCustomizer,
                                                                                      createWithPublicIpAddress,
                                                                                      createWithManagedDisks,
+                                                                                     hasDiffDisks,
                                                                                      createWithHealthProbe,
                                                                                      subnet,
                                                                                      zones,
@@ -292,6 +294,7 @@ namespace Compute.Tests
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
             bool createWithPublicIpAddress = false,
             bool createWithManagedDisks = false,
+            bool hasDiffDisks = false,
             bool createWithHealthProbe = false,
             Subnet subnet = null,
             IList<string> zones = null,
@@ -323,6 +326,15 @@ namespace Compute.Tests
             if (vmScaleSetCustomizer != null)
             {
                 vmScaleSetCustomizer(inputVMScaleSet);
+            }
+
+            if (hasDiffDisks)
+            {
+                VirtualMachineScaleSetOSDisk osDisk = new VirtualMachineScaleSetOSDisk();
+                osDisk.Caching = CachingTypes.ReadOnly;
+                osDisk.CreateOption = DiskCreateOptionTypes.FromImage;
+                osDisk.DiffDiskSettings = new DiffDiskSettings { Option = DiffDiskOptions.Local };
+                inputVMScaleSet.VirtualMachineProfile.StorageProfile.OsDisk = osDisk;
             }
 
             inputVMScaleSet.VirtualMachineProfile.ExtensionProfile = extensionProfile;
@@ -399,6 +411,11 @@ namespace Compute.Tests
                         Assert.NotNull(osDiskOut.Caching);
                     }
 
+                    if(osDisk.DiffDiskSettings != null)
+                    {
+                        Assert.True(osDisk.DiffDiskSettings.Option == osDiskOut.DiffDiskSettings.Option);
+                    }
+
                     Assert.NotNull(osDiskOut.ManagedDisk);
                     if (osDisk.ManagedDisk != null && osDisk.ManagedDisk.StorageAccountType != null)
                     {
@@ -457,10 +474,13 @@ namespace Compute.Tests
                 }
             }
 
-            if(vmScaleSet.UpgradePolicy.AutoOSUpgradePolicy!=null)
+            if (vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy != null)
             {
-                Assert.True(vmScaleSetOut.UpgradePolicy.AutoOSUpgradePolicy.DisableAutoRollback == 
-                    vmScaleSet.UpgradePolicy.AutoOSUpgradePolicy.DisableAutoRollback);
+                bool expectedDisableAutomaticRollbackValue = vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback ?? false;
+                Assert.True(vmScaleSetOut.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback == expectedDisableAutomaticRollbackValue);
+                
+                bool expectedEnableAutomaticOSUpgradeValue = vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy.EnableAutomaticOSUpgrade ?? false;
+                Assert.True(vmScaleSetOut.UpgradePolicy.AutomaticOSUpgradePolicy.EnableAutomaticOSUpgrade == expectedEnableAutomaticOSUpgradeValue);
             }
 
             if (vmScaleSet.VirtualMachineProfile.OsProfile.Secrets != null &&

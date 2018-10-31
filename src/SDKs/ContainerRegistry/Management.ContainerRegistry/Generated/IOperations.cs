@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     using System.Collections;
     using System.Collections.Generic;
     using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// Operations operations.
@@ -42,7 +41,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<OperationDefinition>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<IPage<OperationDefinition>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the available Azure Container Registry REST API
         /// operations.
@@ -65,6 +64,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<OperationDefinition>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<IPage<OperationDefinition>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

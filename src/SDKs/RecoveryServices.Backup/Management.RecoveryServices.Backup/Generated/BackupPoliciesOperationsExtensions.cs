@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     {
             /// <summary>
             /// Lists of backup policies associated with Recovery Services Vault. API
-            /// provides pagination parameters to fetch scoped results.
+            /// provides pagination parameters to fetch
+            /// scoped results.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -46,7 +47,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
             /// <summary>
             /// Lists of backup policies associated with Recovery Services Vault. API
-            /// provides pagination parameters to fetch scoped results.
+            /// provides pagination parameters to fetch
+            /// scoped results.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -74,7 +76,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
             /// <summary>
             /// Lists of backup policies associated with Recovery Services Vault. API
-            /// provides pagination parameters to fetch scoped results.
+            /// provides pagination parameters to fetch
+            /// scoped results.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -89,7 +92,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
             /// <summary>
             /// Lists of backup policies associated with Recovery Services Vault. API
-            /// provides pagination parameters to fetch scoped results.
+            /// provides pagination parameters to fetch
+            /// scoped results.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

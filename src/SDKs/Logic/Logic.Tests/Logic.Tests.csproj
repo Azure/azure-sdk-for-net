@@ -3,12 +3,11 @@
   <PropertyGroup>
     <PackageId>Logic.Tests</PackageId>
     <Description>Logic.Tests Class Library</Description>
-    <DelaySign>true</DelaySign>
     <AssemblyName>Logic.Tests</AssemblyName>
+    <PackageTags />
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Version>1.0.0</Version>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
 
   <ItemGroup>  
     <!--<PackageReference Include="Microsoft.Azure.Management.Logic" Version="3.0.0" />-->    
@@ -24,6 +23,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="TestData\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestData\IntegrationAccountAssemblyContent.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\IntegrationAccountCertificate.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\OrderFile.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

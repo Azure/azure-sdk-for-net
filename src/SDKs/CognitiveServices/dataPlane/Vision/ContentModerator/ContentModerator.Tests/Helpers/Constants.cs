@@ -556,7 +556,7 @@ namespace ContentModeratorTests
 			{
 				ContentModeratorClient client = new ContentModeratorClient(new ApiKeyServiceClientCredentials(ReviewAPISubscriptionKey));
                 
-                client.BaseUrl = "southeastasia.api.cognitive.microsoft.com";
+                client.Endpoint = "https://southeastasia.api.cognitive.microsoft.com";
                
                 return client;
 
@@ -572,8 +572,8 @@ namespace ContentModeratorTests
             try
             {
                 ContentModeratorClient client = new ContentModeratorClient(new ApiKeyServiceClientCredentials(ReviewAPISubscriptionKey),handlers: handler);
-                
-                client.BaseUrl = "southeastasia.api.cognitive.microsoft.com";
+
+                client.Endpoint = "https://southeastasia.api.cognitive.microsoft.com";
                 return client;
 
             }
@@ -822,7 +822,7 @@ namespace ContentModeratorTests
 			try
 			{
 				ContentModeratorClient client = new ContentModeratorClient(new ApiKeyServiceClientCredentials(ContentModeratorSubscriptionKey));
-                client.BaseUrl = AzureRegionBaseUrl.Southeastasiaapicognitivemicrosoftcom; 
+                client.Endpoint = "https://southeastasia.api.cognitive.microsoft.com";
                 return client;
 
 			}
@@ -838,7 +838,7 @@ namespace ContentModeratorTests
             try
             {
                 ContentModeratorClient client = new ContentModeratorClient(new ApiKeyServiceClientCredentials(ContentModeratorSubscriptionKey),handlers: handler);
-                client.BaseUrl = "southeastasia.api.cognitive.microsoft.com";
+                client.Endpoint = "https://southeastasia.api.cognitive.microsoft.com";
                 return client;
 
             }
@@ -872,10 +872,10 @@ namespace ContentModeratorTests
 				Random r = new Random();
 				string num = r.Next(0,1000).ToString();
 				b.Name = $"BVT{c.GetDescription()}List" + num;
-				b.Description = $"BVT{c.GetDescription()}List" + num; 
-				b.Metadata = new BodyMetadata();
-				b.Metadata.KeyOne = $"BVT{c.GetDescription()}ListKeyNote1" + num; 
-				b.Metadata.KeyTwo = $"BVT{c.GetDescription()}ListKeyNote2" + num; 
+				b.Description = $"BVT{c.GetDescription()}List" + num;
+                b.Metadata = new Dictionary<string, string>();
+                b.Metadata["Key One"] = $"BVT{c.GetDescription()}ListKeyNote1" + num; 
+				b.Metadata["Key Two"] = $"BVT{c.GetDescription()}ListKeyNote2" + num; 
 				return b; 
 			}
 			catch (Exception e)
@@ -901,7 +901,7 @@ namespace ContentModeratorTests
             Utilities u = new Utilities();
 			try
 			{
-				string tc = "Is this a crap email abcdef@abcd.com, phone: 6657789887, IP: 255.255.255.255, 1 Microsoft Way, Redmond, WA 98052 <HTML>HTML tags</HTML>";
+				//string tc = "Is this a crap email abcdef@abcd.com, phone: 6657789887, IP: 255.255.255.255, 1 Microsoft Way, Redmond, WA 98052 <HTML>HTML tags</HTML>";
 				
 				
 				TestBase.wait(2);

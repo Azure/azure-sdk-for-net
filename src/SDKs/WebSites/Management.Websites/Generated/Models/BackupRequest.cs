@@ -34,29 +34,26 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the BackupRequest class.
         /// </summary>
+        /// <param name="storageAccountUrl">SAS URL to the container.</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="backupRequestName">Name of the backup.</param>
+        /// <param name="backupName">Name of the backup.</param>
         /// <param name="enabled">True if the backup schedule is enabled (must
         /// be included in that case), false if the backup schedule should be
         /// disabled.</param>
-        /// <param name="storageAccountUrl">SAS URL to the container.</param>
         /// <param name="backupSchedule">Schedule for the backup if it is
         /// executed periodically.</param>
         /// <param name="databases">Databases included in the backup.</param>
-        /// <param name="backupRequestType">Type of the backup. Possible values
-        /// include: 'Default', 'Clone', 'Relocation', 'Snapshot'</param>
-        public BackupRequest(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string backupRequestName = default(string), bool? enabled = default(bool?), string storageAccountUrl = default(string), BackupSchedule backupSchedule = default(BackupSchedule), IList<DatabaseBackupSetting> databases = default(IList<DatabaseBackupSetting>), BackupRestoreOperationType? backupRequestType = default(BackupRestoreOperationType?))
+        public BackupRequest(string storageAccountUrl, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string backupName = default(string), bool? enabled = default(bool?), BackupSchedule backupSchedule = default(BackupSchedule), IList<DatabaseBackupSetting> databases = default(IList<DatabaseBackupSetting>))
             : base(id, name, kind, type)
         {
-            BackupRequestName = backupRequestName;
+            BackupName = backupName;
             Enabled = enabled;
             StorageAccountUrl = storageAccountUrl;
             BackupSchedule = backupSchedule;
             Databases = databases;
-            BackupRequestType = backupRequestType;
             CustomInit();
         }
 
@@ -68,8 +65,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets name of the backup.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string BackupRequestName { get; set; }
+        [JsonProperty(PropertyName = "properties.backupName")]
+        public string BackupName { get; set; }
 
         /// <summary>
         /// Gets or sets true if the backup schedule is enabled (must be
@@ -99,13 +96,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public IList<DatabaseBackupSetting> Databases { get; set; }
 
         /// <summary>
-        /// Gets or sets type of the backup. Possible values include:
-        /// 'Default', 'Clone', 'Relocation', 'Snapshot'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.type")]
-        public BackupRestoreOperationType? BackupRequestType { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -113,6 +103,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (StorageAccountUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StorageAccountUrl");
+            }
             if (BackupSchedule != null)
             {
                 BackupSchedule.Validate();

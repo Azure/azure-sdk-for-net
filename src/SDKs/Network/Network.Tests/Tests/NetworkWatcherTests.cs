@@ -66,13 +66,13 @@ namespace Network.Tests.Tests
                 Assert.Equal("Succeeded", getNetworkWatcherByName.ProvisioningState);
 
                 //Verify the number of Network Watchers in the resource group (should be 1)
-                Assert.Equal(getNetworkWatchersByResourceGroup.Count(), 1);
+                Assert.Single(getNetworkWatchersByResourceGroup);
 
                 //Verify the number of Network Watchers in the subscription
-                Assert.Equal(getNetworkWatchersBySubscription.Count(), 2);
+                Assert.Equal(2, getNetworkWatchersBySubscription.Count());
 
                 //Verify the number of Network Watchers in the subscription after deleting one which was created in the test
-                Assert.Equal(getNetworkWatcherBySubscriptionAfterDeleting.Count(), 1);
+                Assert.Single(getNetworkWatcherBySubscriptionAfterDeleting);
             }
         }
     }

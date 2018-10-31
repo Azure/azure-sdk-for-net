@@ -925,7 +925,6 @@
                         var counts = await unboundJob.GetTaskCountsAsync().ConfigureAwait(false);
 
                         Assert.Equal(2, counts.Active);
-                        Assert.Equal(TaskCountValidationStatus.Validated, counts.ValidationStatus);
                     }
                     finally
                     {

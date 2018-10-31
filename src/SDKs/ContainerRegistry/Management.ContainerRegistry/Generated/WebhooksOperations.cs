@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     using System.Net;
     using System.Net.Http;
     using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// WebhooksOperations operations.
@@ -83,12 +82,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Webhook>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<Webhook>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -135,6 +130,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "webhookName", "^[a-zA-Z0-9]*$");
                 }
             }
+            string apiVersion = "2017-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -142,6 +138,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
                 tracingParameters.Add("webhookName", webhookName);
@@ -156,9 +153,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
             _url = _url.Replace("{webhookName}", System.Uri.EscapeDataString(webhookName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -306,7 +303,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Webhook>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, WebhookCreateParameters webhookCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<Webhook>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, WebhookCreateParameters webhookCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<Webhook> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, registryName, webhookName, webhookCreateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -331,7 +328,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, registryName, webhookName, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -359,7 +356,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Webhook>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, WebhookUpdateParameters webhookUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<Webhook>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, WebhookUpdateParameters webhookUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<Webhook> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, registryName, webhookName, webhookUpdateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -396,12 +393,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Webhook>>> ListWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<Webhook>>> ListWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -429,6 +422,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
+            string apiVersion = "2017-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -436,6 +430,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -448,9 +443,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -610,12 +605,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<EventInfo>> PingWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<EventInfo>> PingWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -662,6 +653,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "webhookName", "^[a-zA-Z0-9]*$");
                 }
             }
+            string apiVersion = "2017-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -669,6 +661,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
                 tracingParameters.Add("webhookName", webhookName);
@@ -683,9 +676,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
             _url = _url.Replace("{webhookName}", System.Uri.EscapeDataString(webhookName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -845,12 +838,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CallbackConfig>> GetCallbackConfigWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<CallbackConfig>> GetCallbackConfigWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -897,6 +886,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "webhookName", "^[a-zA-Z0-9]*$");
                 }
             }
+            string apiVersion = "2017-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -904,6 +894,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
                 tracingParameters.Add("webhookName", webhookName);
@@ -918,9 +909,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
             _url = _url.Replace("{webhookName}", System.Uri.EscapeDataString(webhookName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1080,12 +1071,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<EventModel>>> ListEventsWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<EventModel>>> ListEventsWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1132,6 +1119,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "webhookName", "^[a-zA-Z0-9]*$");
                 }
             }
+            string apiVersion = "2017-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1139,6 +1127,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
                 tracingParameters.Add("webhookName", webhookName);
@@ -1153,9 +1142,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
             _url = _url.Replace("{webhookName}", System.Uri.EscapeDataString(webhookName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1318,12 +1307,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Webhook>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, WebhookCreateParameters webhookCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<Webhook>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, WebhookCreateParameters webhookCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1378,6 +1363,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 webhookCreateParameters.Validate();
             }
+            string apiVersion = "2017-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1385,6 +1371,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
                 tracingParameters.Add("webhookName", webhookName);
@@ -1400,9 +1387,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
             _url = _url.Replace("{webhookName}", System.Uri.EscapeDataString(webhookName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1583,12 +1570,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1635,6 +1618,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "webhookName", "^[a-zA-Z0-9]*$");
                 }
             }
+            string apiVersion = "2017-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1642,6 +1626,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
                 tracingParameters.Add("webhookName", webhookName);
@@ -1656,9 +1641,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
             _url = _url.Replace("{webhookName}", System.Uri.EscapeDataString(webhookName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1803,12 +1788,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Webhook>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, WebhookUpdateParameters webhookUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<Webhook>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, WebhookUpdateParameters webhookUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1859,6 +1840,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "webhookUpdateParameters");
             }
+            string apiVersion = "2017-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1866,6 +1848,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
                 tracingParameters.Add("webhookName", webhookName);
@@ -1881,9 +1864,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
             _url = _url.Replace("{webhookName}", System.Uri.EscapeDataString(webhookName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2061,7 +2044,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Webhook>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<Webhook>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2234,7 +2217,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<EventModel>>> ListEventsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<EventModel>>> ListEventsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Microsoft.Azure.ApplicationInsights.Models
+namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {
     /// <summary>
     /// An intervaled and segmented metric result.

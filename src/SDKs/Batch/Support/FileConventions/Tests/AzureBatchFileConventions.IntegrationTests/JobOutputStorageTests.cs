@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
         [Fact]
         public async Task IfARetryPolicyIsSpecifiedInTheContainerUrlConstructor_ThenItIsUsed()
         {
-            using (var batchClient = await BatchClient.OpenAsync(new FakeBatchServiceClient()))
+            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
             {
                 var job = batchClient.JobOperations.CreateJob(_jobId, null);
                 var container = job.GetOutputStorageContainerUrl(StorageAccount, TimeSpan.FromMinutes(2));

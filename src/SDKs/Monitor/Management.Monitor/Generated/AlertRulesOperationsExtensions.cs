@@ -228,5 +228,33 @@ namespace Microsoft.Azure.Management.Monitor
                 }
             }
 
+            /// <summary>
+            /// List the alert rules within a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IEnumerable<AlertRuleResource> ListBySubscription(this IAlertRulesOperations operations)
+            {
+                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the alert rules within a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<AlertRuleResource>> ListBySubscriptionAsync(this IAlertRulesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

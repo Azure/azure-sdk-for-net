@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -35,7 +36,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// commence, this must be in local time of pick up area.</param>
         /// <param name="shipmentLocation">Shipment Location in the pickup
         /// place. Eg.front desk</param>
-        public ShipmentPickUpRequest(System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string shipmentLocation = default(string))
+        public ShipmentPickUpRequest(System.DateTime startTime, System.DateTime endTime, string shipmentLocation)
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -53,14 +54,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// this must be in local time of pick up area.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
-        public System.DateTime? StartTime { get; set; }
+        public System.DateTime StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets maximum date before which the pick up should commence,
         /// this must be in local time of pick up area.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
-        public System.DateTime? EndTime { get; set; }
+        public System.DateTime EndTime { get; set; }
 
         /// <summary>
         /// Gets or sets shipment Location in the pickup place. Eg.front desk
@@ -68,5 +69,18 @@ namespace Microsoft.Azure.Management.DataBox.Models
         [JsonProperty(PropertyName = "shipmentLocation")]
         public string ShipmentLocation { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ShipmentLocation == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ShipmentLocation");
+            }
+        }
     }
 }

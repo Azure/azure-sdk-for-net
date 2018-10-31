@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Management.HDInsight", "Management.HDInsight\Management.HDInsight.csproj", "{029A7435-2569-4AA1-B9E6-0438C8D7A0C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Management.HDInsight", "Management.HDInsight\Management.HDInsight.csproj", "{029A7435-2569-4AA1-B9E6-0438C8D7A0C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Management.HDInsight.Tests", "Management.HDInsight.Tests\Management.HDInsight.Tests.csproj", "{18309FE3-6E0D-4F4A-A4D7-371E16E76125}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HDInsight.Tests", "Management.HDInsight.Tests\HDInsight.Tests.csproj", "{18309FE3-6E0D-4F4A-A4D7-371E16E76125}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6BD5568-522A-4216-848D-B37A89095DCD}
 	EndGlobalSection
 EndGlobal

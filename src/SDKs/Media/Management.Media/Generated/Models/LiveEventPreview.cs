@@ -34,15 +34,20 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="endpoints">The endpoints for preview.</param>
         /// <param name="accessControl">The access control for LiveEvent
         /// preview.</param>
-        /// <param name="previewLocator">The preview locator Guid.</param>
+        /// <param name="previewLocator">The identifier of the preview locator
+        /// in Guid format.  Specifying this at creation time allows the caller
+        /// to know the preview locator url before the event is created.  If
+        /// omitted, the service will generate a random identifier.  This value
+        /// cannot be updated once the live event is created.</param>
         /// <param name="streamingPolicyName">The name of streaming policy used
-        /// for LiveEvent preview</param>
+        /// for the LiveEvent preview.  This value is specified at creation
+        /// time and cannot be updated.</param>
         /// <param name="alternativeMediaId">An Alternative Media Identifier
-        /// associated with the preview url.  This identifier can be used to
-        /// distinguish the preview of different live events for authorization
-        /// purposes in the CustomLicenseAcquisitionUrlTemplate or the
-        /// CustomKeyAcquisitionUrlTemplate of the StreamingPolicy specified in
-        /// the StreamingPolicyName field.</param>
+        /// associated with the StreamingLocator created for the preview.  This
+        /// value is specified at creation time and cannot be updated.  The
+        /// identifier can be used in the CustomLicenseAcquisitionUrlTemplate
+        /// or the CustomKeyAcquisitionUrlTemplate of the StreamingPolicy
+        /// specified in the StreamingPolicyName field.</param>
         public LiveEventPreview(IList<LiveEventEndpoint> endpoints = default(IList<LiveEventEndpoint>), LiveEventPreviewAccessControl accessControl = default(LiveEventPreviewAccessControl), string previewLocator = default(string), string streamingPolicyName = default(string), string alternativeMediaId = default(string))
         {
             Endpoints = endpoints;
@@ -71,23 +76,28 @@ namespace Microsoft.Azure.Management.Media.Models
         public LiveEventPreviewAccessControl AccessControl { get; set; }
 
         /// <summary>
-        /// Gets or sets the preview locator Guid.
+        /// Gets or sets the identifier of the preview locator in Guid format.
+        /// Specifying this at creation time allows the caller to know the
+        /// preview locator url before the event is created.  If omitted, the
+        /// service will generate a random identifier.  This value cannot be
+        /// updated once the live event is created.
         /// </summary>
         [JsonProperty(PropertyName = "previewLocator")]
         public string PreviewLocator { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of streaming policy used for LiveEvent
-        /// preview
+        /// Gets or sets the name of streaming policy used for the LiveEvent
+        /// preview.  This value is specified at creation time and cannot be
+        /// updated.
         /// </summary>
         [JsonProperty(PropertyName = "streamingPolicyName")]
         public string StreamingPolicyName { get; set; }
 
         /// <summary>
         /// Gets or sets an Alternative Media Identifier associated with the
-        /// preview url.  This identifier can be used to distinguish the
-        /// preview of different live events for authorization purposes in the
-        /// CustomLicenseAcquisitionUrlTemplate or the
+        /// StreamingLocator created for the preview.  This value is specified
+        /// at creation time and cannot be updated.  The identifier can be used
+        /// in the CustomLicenseAcquisitionUrlTemplate or the
         /// CustomKeyAcquisitionUrlTemplate of the StreamingPolicy specified in
         /// the StreamingPolicyName field.
         /// </summary>

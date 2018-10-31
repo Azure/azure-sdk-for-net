@@ -54,7 +54,7 @@ namespace CustomerInsights.Tests.Tests
                     response.Type,
                     StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(response.Name, HubName + "/" + assignmentName, StringComparer.OrdinalIgnoreCase);
-                Assert.Equal(response.Role, RoleTypes.Admin);
+                Assert.Equal(RoleTypes.Admin, response.Role);
                 Assert.Equal(response.AssignmentName, assignmentName, StringComparer.OrdinalIgnoreCase);
                 Assert.True(response.Principals.Count == 2);
 
@@ -65,7 +65,7 @@ namespace CustomerInsights.Tests.Tests
                     getRbacResource.Type,
                     StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(getRbacResource.Name, HubName + "/" + assignmentName, StringComparer.OrdinalIgnoreCase);
-                Assert.Equal(getRbacResource.Role, RoleTypes.Admin);
+                Assert.Equal(RoleTypes.Admin, getRbacResource.Role);
                 Assert.True(getRbacResource.Principals.Count == 2);
                 Assert.Equal(getRbacResource.AssignmentName, assignmentName, StringComparer.OrdinalIgnoreCase);
 
@@ -81,7 +81,7 @@ namespace CustomerInsights.Tests.Tests
                     updateRbacresponse.Type,
                     StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(updateRbacresponse.Name, HubName + "/" + assignmentName, StringComparer.OrdinalIgnoreCase);
-                Assert.Equal(updateRbacresponse.Role, RoleTypes.Admin);
+                Assert.Equal(RoleTypes.Admin, updateRbacresponse.Role);
                 Assert.Equal(updateRbacresponse.AssignmentName, assignmentName, StringComparer.OrdinalIgnoreCase);
                 Assert.True(updateRbacresponse.Principals.Count == 1);
                 var getUpdateRbacResource1 = aciClient.RoleAssignments.Get(ResourceGroupName, HubName, assignmentName);
@@ -94,7 +94,7 @@ namespace CustomerInsights.Tests.Tests
                     getUpdateRbacResource1.Name,
                     HubName + "/" + assignmentName,
                     StringComparer.OrdinalIgnoreCase);
-                Assert.Equal(getUpdateRbacResource1.Role, RoleTypes.Admin);
+                Assert.Equal(RoleTypes.Admin, getUpdateRbacResource1.Role);
                 Assert.Equal(getUpdateRbacResource1.AssignmentName, assignmentName, StringComparer.OrdinalIgnoreCase);
                 Assert.True(getUpdateRbacResource1.Principals.Count == 1);
 
@@ -111,9 +111,8 @@ namespace CustomerInsights.Tests.Tests
                 catch (Exception exception)
                 {
                     Assert.Equal(
-                        ((CloudException)exception).Response.ReasonPhrase,
                         "Bad Request",
-                        StringComparer.OrdinalIgnoreCase);
+                        ((CloudException)exception).Response.ReasonPhrase, StringComparer.OrdinalIgnoreCase);
                 }
 
                 var deleteRbacResource =

@@ -12,219 +12,254 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// Scenario tests for the integration accounts partner.
-    /// </summary>
     [Collection("IntegrationAccountPartnerScenarioTests")]
     public class IntegrationAccountPartnerScenarioTests : ScenarioTestsBase
     {
-        /// <summary>
-        /// Tests the create and delete operations of the integration account partner.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndDeleteIntegrationAccountPartner()
+        [Fact]
+        public void IntegrationAccountPartners_Create_OK()
         {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountPartnerName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
-                var client = this.GetIntegrationAccountClient(context);
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                var partner = client.Partners.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountPartnerName,
-                    CreateIntegrationAccountPartnerInstance(integrationAccountPartnerName, integrationAccountName));
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-                Assert.Equal(partner.Name, integrationAccountPartnerName);
+                var partnerName = TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
+                var partner = this.CreateIntegrationAccountPartner(partnerName);
+                var createdPartner = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    partnerName,
+                    partner);
 
-                client.Partners.Delete(Constants.DefaultResourceGroup, integrationAccountName,
-                    integrationAccountPartnerName);
+                this.ValidatePartner(partner, createdPartner);
+
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
         }
 
-        /// <summary>
-        /// Tests the delete operations of the integration account partner on integration account deletion.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void DeleteIntegrationAccountPartnerOnAccountDeletion()
+        [Fact]
+        public void IntegrationAccountPartners_Get_OK()
         {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountPartnerName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
-                var client = this.GetIntegrationAccountClient(context);
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                var partner = client.Partners.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountPartnerName,
-                    CreateIntegrationAccountPartnerInstance(integrationAccountPartnerName, integrationAccountName));
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-                Assert.Equal(partner.Name, integrationAccountPartnerName);
+                var partnerName = TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
+                var partner = this.CreateIntegrationAccountPartner(partnerName);
+                var createdPartner = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    partnerName,
+                    partner);
+
+                var retrievedPartner = client.IntegrationAccountPartners.Get(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    partnerName);
+
+                this.ValidatePartner(partner, retrievedPartner);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-                Assert.Throws<CloudException>(
-                    () =>
-                        client.Partners.Get(Constants.DefaultResourceGroup, integrationAccountName,
-                            integrationAccountPartnerName));
             }
         }
 
-        /// <summary>
-        /// Tests the create and update operations of the integration account partner.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndUpdateIntegrationAccountPartner()
+        [Fact]
+        public void IntegrationAccountPartners_List_OK()
         {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountPartnerName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
-
-                var client = this.GetIntegrationAccountClient(context);
-                client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                client.Partners.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountPartnerName,
-                    CreateIntegrationAccountPartnerInstance(integrationAccountPartnerName, integrationAccountName));
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-                var identities = new List<BusinessIdentity>
-                {
-                    new BusinessIdentity() {Qualifier = "XX", Value = "DD"},
-                    new BusinessIdentity() {Qualifier = "XX", Value = "DD"}
-                };
-
-                var updatedPartner = client.Partners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var partnerName1 = TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
+                var partner1 = this.CreateIntegrationAccountPartner(partnerName1);
+                var createdPartner = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
-                    integrationAccountPartnerName, new IntegrationAccountPartner
+                    partnerName1,
+                    partner1);
+
+                var partnerName2 = TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
+                var partner2 = this.CreateIntegrationAccountPartner(partnerName2);
+                var createdPartner2 = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    partnerName2,
+                    partner2);
+
+                var partnerName3 = TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
+                var partner3 = this.CreateIntegrationAccountPartner(partnerName3);
+                var createdPartner3 = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    partnerName3,
+                    partner3);
+
+                var partners = client.IntegrationAccountPartners.List(Constants.DefaultResourceGroup, integrationAccountName);
+
+                Assert.Equal(3, partners.Count());
+                this.ValidatePartner(partner1, partners.Single(x => x.Name == partner1.Name));
+                this.ValidatePartner(partner2, partners.Single(x => x.Name == partner2.Name));
+                this.ValidatePartner(partner3, partners.Single(x => x.Name == partner3.Name));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountPartners_Update_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var partnerName = TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
+                var partner = this.CreateIntegrationAccountPartner(partnerName);
+                var createdPartner = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    partnerName,
+                    partner);
+
+                var newPartner = this.CreateIntegrationAccountPartner(partnerName);
+                var updatedPartner = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    partnerName,
+                    newPartner);
+
+                this.ValidatePartner(newPartner, updatedPartner);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountPartners_Delete_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var partnerName = TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
+                var partner = this.CreateIntegrationAccountPartner(partnerName);
+                var createdPartner = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    partnerName,
+                    partner);
+
+                client.IntegrationAccountPartners.Delete(Constants.DefaultResourceGroup, integrationAccountName, partnerName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountPartners.Get(Constants.DefaultResourceGroup, integrationAccountName, partnerName));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountPartners_DeleteWhenDeleteIntegrationAccount_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var partnerName = TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
+                var partner = this.CreateIntegrationAccountPartner(partnerName);
+                var createdPartner = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    partnerName,
+                    partner);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountPartners.Get(Constants.DefaultResourceGroup, integrationAccountName, partnerName));
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountPartners_ListContentCallbackUrl_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var partnerName = TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
+                var partner = this.CreateIntegrationAccountPartner(partnerName);
+                var createdPartner = client.IntegrationAccountPartners.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    partnerName,
+                    partner);
+
+                var contentCallbackUrl = client.IntegrationAccountPartners.ListContentCallbackUrl(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    partnerName,
+                    new GetCallbackUrlParameters
                     {
-                        Location = Constants.DefaultLocation,
-                        Metadata = "updated",
-                        PartnerType = PartnerType.B2B,
-                        Content = new PartnerContent
-                        {
-                            B2b = new B2BPartnerContent
-                            {
-                                BusinessIdentities = identities
-                            }
-                        }
+                        KeyType = "Primary"
                     });
 
-                Assert.Equal(updatedPartner.Name, integrationAccountPartnerName);
+                Assert.Equal("GET", contentCallbackUrl.Method);
+                Assert.Contains(partnerName, contentCallbackUrl.Value);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-            }
-        }
-
-        /// <summary>
-        /// Tests the create and get operations of the integration account partner.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndGetIntegrationAccountPartner()
-        {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountPartnerName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
-                var client = this.GetIntegrationAccountClient(context);
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                var partner = client.Partners.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountPartnerName,
-                    CreateIntegrationAccountPartnerInstance(integrationAccountPartnerName, integrationAccountName));
-
-
-                Assert.NotNull(partner);
-                Assert.Equal(partner.Name, integrationAccountPartnerName);
-
-                var getPartner = client.Partners.Get(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    integrationAccountPartnerName);
-
-                Assert.Equal(partner.Name, getPartner.Name);
-
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-            }
-        }
-
-        /// <summary>
-        /// Tests the create and list operations of the integration account partner.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void ListIntegrationAccountPartners()
-        {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountPartnerName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountPartnerPrefix);
-                var client = this.GetIntegrationAccountClient(context);
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-
-                var createdSchema = client.Partners.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountPartnerName,
-                    CreateIntegrationAccountPartnerInstance(integrationAccountPartnerName, integrationAccountName));
-
-                var partners = client.Partners.ListByIntegrationAccounts(Constants.DefaultResourceGroup,
-                    integrationAccountName);
-
-                Assert.True(partners.Any());
-
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-
             }
         }
 
         #region Private
 
-        /// <summary>
-        /// Creates an Integration account partner
-        /// </summary>
-        /// <param name="integrationAccountPartnerName">Name of the partner</param>
-        /// <param name="integrationAccountName">Name of the integration account</param>        
-        /// <returns>Schema instance</returns>
-        private IntegrationAccountPartner CreateIntegrationAccountPartnerInstance(string integrationAccountPartnerName,
-            string integrationAccountName)
+        private void ValidatePartner(IntegrationAccountPartner expected, IntegrationAccountPartner actual)
         {
-            IDictionary<string, string> tags = new Dictionary<string, string>();
-            tags.Add("integrationAccountPartnerName", integrationAccountPartnerName);
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.PartnerType, actual.PartnerType);
+            Assert.Equal(expected.Content.B2b.BusinessIdentities.Count(), actual.Content.B2b.BusinessIdentities.Count());
+            Assert.Equal(expected.Content.B2b.BusinessIdentities.First().Qualifier, actual.Content.B2b.BusinessIdentities.First().Qualifier);
+            Assert.Equal(expected.Content.B2b.BusinessIdentities.First().Value, actual.Content.B2b.BusinessIdentities.First().Value);
+            Assert.NotNull(actual.CreatedTime);
+            Assert.NotNull(actual.ChangedTime);
+        }
 
-            var identities = new List<BusinessIdentity>
-            {
-                new BusinessIdentity() {Qualifier = "AA", Value = "ZZ"}
-            };
-
-            var partner = new IntegrationAccountPartner
-            {
-                Location = Constants.DefaultLocation,
-                Tags = tags,
-                PartnerType = PartnerType.B2B,
-                Metadata = integrationAccountPartnerName,
-                Content = new PartnerContent
+        private IntegrationAccountPartner CreateIntegrationAccountPartner(string partnerName)
+        {
+            return new IntegrationAccountPartner(PartnerType.B2B,
+                new PartnerContent
                 {
                     B2b = new B2BPartnerContent
                     {
-                        BusinessIdentities = identities
+                        BusinessIdentities = new List<BusinessIdentity>
+                        {
+                            new BusinessIdentity
+                            {
+                                Qualifier = "AA",
+                                Value = "ZZ"
+                            }
+                        }
                     }
-                }
-            };
-
-            return partner;
+                },
+                name: partnerName,
+                location: Constants.DefaultLocation);
         }
 
         #endregion Private

@@ -161,6 +161,43 @@ namespace Microsoft.Azure.Management.Media
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string transformName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Update Job
+        /// </summary>
+        /// <remarks>
+        /// Updates a Job.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the Azure subscription.
+        /// </param>
+        /// <param name='accountName'>
+        /// The Media Services account name.
+        /// </param>
+        /// <param name='transformName'>
+        /// The Transform name.
+        /// </param>
+        /// <param name='jobName'>
+        /// The Job name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The request parameters
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ApiErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Job>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string transformName, string jobName, Job parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Cancel Job
         /// </summary>
         /// <remarks>

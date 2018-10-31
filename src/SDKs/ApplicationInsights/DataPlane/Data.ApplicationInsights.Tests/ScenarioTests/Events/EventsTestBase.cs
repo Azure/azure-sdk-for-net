@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Azure.ApplicationInsights.Models;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -7,7 +7,7 @@ namespace Data.ApplicationInsights.Tests.Events
 {
     public class EventsTestBase : DataPlaneTestBase
     {
-        protected EventType? GetEventType(EventsResultData evnt)
+        protected string GetEventType(EventsResultData evnt)
         {
             if (evnt is EventsTraceResult) return EventType.Traces;
             else if (evnt is EventsCustomEventResult) return EventType.CustomEvents;
@@ -23,7 +23,7 @@ namespace Data.ApplicationInsights.Tests.Events
             return null;
         }
 
-        protected void AssertEvent(EventsResultData evnt, EventType expectedType)
+        protected void AssertEvent(EventsResultData evnt, string expectedType)
         {
             Assert.NotNull(evnt);
             Assert.True(!string.IsNullOrEmpty(evnt.Id));
@@ -147,8 +147,6 @@ namespace Data.ApplicationInsights.Tests.Events
             var browserTiming = evnt as EventsBrowserTimingResult;
 
             Assert.NotNull(browserTiming.BrowserTiming);
-            Assert.False(string.IsNullOrWhiteSpace(browserTiming.BrowserTiming.UrlPath));
-            Assert.False(string.IsNullOrWhiteSpace(browserTiming.BrowserTiming.UrlHost));
             Assert.False(string.IsNullOrWhiteSpace(browserTiming.BrowserTiming.Name));
             Assert.False(string.IsNullOrWhiteSpace(browserTiming.BrowserTiming.Url));
             Assert.True(browserTiming.BrowserTiming.TotalDuration >= 0);
@@ -157,9 +155,6 @@ namespace Data.ApplicationInsights.Tests.Events
             Assert.True(browserTiming.BrowserTiming.SendDuration >= 0);
             Assert.True(browserTiming.BrowserTiming.ReceiveDuration >= 0);
             Assert.True(browserTiming.BrowserTiming.ProcessingDuration >= 0);
-
-            Assert.NotNull(browserTiming.ClientPerformance);
-            Assert.False(string.IsNullOrWhiteSpace(browserTiming.ClientPerformance.Name));
         }
 
         protected void VerifyRequest(EventsResultData evnt)
@@ -239,7 +234,7 @@ namespace Data.ApplicationInsights.Tests.Events
             Assert.False(string.IsNullOrWhiteSpace(customEvent.PerformanceCounter.Name));
             Assert.False(string.IsNullOrWhiteSpace(customEvent.PerformanceCounter.Category));
             Assert.False(string.IsNullOrWhiteSpace(customEvent.PerformanceCounter.Counter));
-            Assert.False(string.IsNullOrWhiteSpace(customEvent.PerformanceCounter.Instance));
+            Assert.NotNull(customEvent.PerformanceCounter.Instance);
             // InstanceName can be null
         }
 

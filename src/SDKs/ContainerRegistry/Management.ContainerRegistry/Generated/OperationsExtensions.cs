@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     using Microsoft.Rest.Azure;
     using Models;
     using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// Extension methods for Operations.
@@ -41,7 +40,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<OperationDefinition>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<IPage<OperationDefinition>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -75,7 +74,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<OperationDefinition>> ListNextAsync(this IOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<IPage<OperationDefinition>> ListNextAsync(this IOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

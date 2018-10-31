@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// Identifier.
+    /// A domain specific resource identifier.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Identifier : ProxyOnlyResource

@@ -31,7 +31,6 @@ namespace Microsoft.Azure.Batch
             this.Failed = protocolObject.Failed;
             this.Running = protocolObject.Running;
             this.Succeeded = protocolObject.Succeeded;
-            this.ValidationStatus = UtilitiesInternal.MapEnum<Models.TaskCountValidationStatus, Common.TaskCountValidationStatus>(protocolObject.ValidationStatus);
         }
 
         #endregion Constructors
@@ -63,16 +62,6 @@ namespace Microsoft.Azure.Batch
         /// is 'success'.
         /// </summary>
         public int Succeeded { get; }
-
-        /// <summary>
-        /// Gets whether the task counts have been validated. If the <see cref="ValidationStatus" /> is unvalidated, then 
-        /// the Batch service has not been able to check state counts against the task states as reported in the List Tasks 
-        /// API.
-        /// </summary>
-        /// <remarks>
-        /// The <see cref="ValidationStatus" /> may be unvalidated if the job contains more than 200,000 tasks.
-        /// </remarks>
-        public Common.TaskCountValidationStatus ValidationStatus { get; }
 
         #endregion // TaskCounts
 

@@ -38,7 +38,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="recommendation">Recommended action for user</param>
         /// <param name="containerName">Specifies the product specific
         /// container name. E.g. iaasvmcontainer;iaasvmcontainer;rgname;vmname.
-        /// This is required for portal</param>
+        /// This is required
+        /// for portal</param>
         /// <param name="protectedItemName">Specifies the product specific ds
         /// name. E.g. vm;iaasvmcontainer;rgname;vmname. This is required for
         /// portal</param>
@@ -85,8 +86,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets or sets specifies the product specific container name. E.g.
-        /// iaasvmcontainer;iaasvmcontainer;rgname;vmname. This is required for
-        /// portal
+        /// iaasvmcontainer;iaasvmcontainer;rgname;vmname. This is required
+        /// for portal
         /// </summary>
         [JsonProperty(PropertyName = "containerName")]
         public string ContainerName { get; set; }

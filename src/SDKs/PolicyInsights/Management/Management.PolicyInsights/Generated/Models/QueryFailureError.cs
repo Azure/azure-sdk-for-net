@@ -45,17 +45,17 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets service specific error code which serves as the
-        /// substatus for the HTTP error code.
+        /// Gets service specific error code which serves as the substatus for
+        /// the HTTP error code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        public string Code { get; private set; }
 
         /// <summary>
-        /// Gets or sets description of the error.
+        /// Gets description of the error.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
     }
 }

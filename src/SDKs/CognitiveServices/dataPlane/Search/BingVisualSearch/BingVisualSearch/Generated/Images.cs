@@ -185,6 +185,46 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// should include this header and the X-MSEdge-ClientIP header, but at a
         /// minimum, you should include this header.
         /// </param>
+        /// <param name='market'>
+        /// The market where the results come from. Typically, mkt is the country where
+        /// the user is making the request from. However, it could be a different
+        /// country if the user is not located in a country where Bing delivers
+        /// results. The market must be in the form &lt;language code&gt;-&lt;country
+        /// code&gt;. For example, en-US. The string is case insensitive. For a list of
+        /// possible market values, see [Market
+        /// Codes](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-visual-search/supported-countries-markets).
+        /// NOTE: If known, you are encouraged to always specify the market. Specifying
+        /// the market helps Bing route the request and return an appropriate and
+        /// optimal response. If you specify a market that is not listed in [Market
+        /// Codes](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-visual-search/supported-countries-markets),
+        /// Bing uses a best fit market code based on an internal mapping that is
+        /// subject to change.
+        /// </param>
+        /// <param name='safeSearch'>
+        /// Filter the image results in actions with type 'VisualSearch' for adult
+        /// content. The following are the possible filter values. Off: May return
+        /// images with adult content. Moderate: Do not return images with adult
+        /// content. Strict: Do not return images with adult content. The default is
+        /// Moderate. If the request comes from a market that Bing's adult policy
+        /// requires that safeSearch is set to Strict, Bing ignores the safeSearch
+        /// value and uses Strict. If you use the site: filter in the knowledge
+        /// request, there is the chance that the response may contain adult content
+        /// regardless of what the safeSearch query parameter is set to. Use site: only
+        /// if you are aware of the content on the site and your scenario supports the
+        /// possibility of adult content. Possible values include: 'Off', 'Moderate',
+        /// 'Strict'
+        /// </param>
+        /// <param name='setLang'>
+        /// The language to use for user interface strings. Specify the language using
+        /// the ISO 639-1 2-letter language code. For example, the language code for
+        /// English is EN. The default is EN (English). Although optional, you should
+        /// always specify the language. Typically, you set setLang to the same
+        /// language specified by mkt unless the user wants the user interface strings
+        /// displayed in a different language. A user interface string is a string
+        /// that's used as a label in a user interface. There are few user interface
+        /// strings in the JSON response objects. Also, any links to Bing.com
+        /// properties in the response objects apply the specified language.
+        /// </param>
         /// <param name='knowledgeRequest'>
         /// The form data is a JSON object that identifies the image using an insights
         /// token or URL to the image. The object may also include an optional crop
@@ -195,7 +235,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// include an insights token or URL).
         /// </param>
         /// <param name='image'>
-        /// The form data is an image binary. The Content-Disposition header's filename
+        /// The form data is an image binary. The Content-Disposition header's name
         /// parameter must be set to "image". You must specify an image binary if you
         /// do not use knowledgeRequest form data to specify the image; you may not use
         /// both forms to specify an image. You may specify knowledgeRequest form data
@@ -218,7 +258,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImageKnowledge>> VisualSearchMethodWithHttpMessagesAsync(string acceptLanguage = default(string), string contentType = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string knowledgeRequest = default(string), Stream image = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImageKnowledge>> VisualSearchMethodWithHttpMessagesAsync(string acceptLanguage = default(string), string contentType = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string market = default(string), string safeSearch = default(string), string setLang = default(string), string knowledgeRequest = default(string), Stream image = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             string xBingApisSDK = "true";
             // Tracing
@@ -235,6 +275,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
                 tracingParameters.Add("clientId", clientId);
                 tracingParameters.Add("clientIp", clientIp);
                 tracingParameters.Add("location", location);
+                tracingParameters.Add("market", market);
+                tracingParameters.Add("safeSearch", safeSearch);
+                tracingParameters.Add("setLang", setLang);
                 tracingParameters.Add("knowledgeRequest", knowledgeRequest);
                 tracingParameters.Add("image", image);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -243,6 +286,23 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "images/visualsearch").ToString();
+            List<string> _queryParameters = new List<string>();
+            if (market != null)
+            {
+                _queryParameters.Add(string.Format("mkt={0}", System.Uri.EscapeDataString(market)));
+            }
+            if (safeSearch != null)
+            {
+                _queryParameters.Add(string.Format("safeSearch={0}", System.Uri.EscapeDataString(safeSearch)));
+            }
+            if (setLang != null)
+            {
+                _queryParameters.Add(string.Format("setLang={0}", System.Uri.EscapeDataString(setLang)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -323,14 +383,22 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
             {
                 StreamContent _image = new StreamContent(image);
                 _image.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                FileStream _imageAsFileStream = image as FileStream;
-                if (_imageAsFileStream != null)
+                ContentDispositionHeaderValue _contentDispositionHeaderValue = new ContentDispositionHeaderValue("form-data");
+                _contentDispositionHeaderValue.Name = "image";
+                // get filename from stream if it's a file otherwise, just use  'unknown'
+                var _fileStream = image as FileStream;
+                var _fileName = (_fileStream != null ? _fileStream.Name : null) ?? "unknown";
+                if(System.Linq.Enumerable.Any(_fileName, c => c > 127) )
                 {
-                    ContentDispositionHeaderValue _contentDispositionHeaderValue = new ContentDispositionHeaderValue("form-data");
-                    _contentDispositionHeaderValue.Name = "image";
-                    _contentDispositionHeaderValue.FileName = "image";
-                    _image.Headers.ContentDisposition = _contentDispositionHeaderValue;
+                    // non ASCII chars detected, need UTF encoding:
+                    _contentDispositionHeaderValue.FileNameStar = _fileName;
                 }
+                else
+                {
+                    // ASCII only
+                    _contentDispositionHeaderValue.FileName = _fileName;
+                }
+                _image.Headers.ContentDisposition = _contentDispositionHeaderValue;
                 _multiPartContent.Add(_image, "image");
             }
             _httpRequest.Content = _multiPartContent;

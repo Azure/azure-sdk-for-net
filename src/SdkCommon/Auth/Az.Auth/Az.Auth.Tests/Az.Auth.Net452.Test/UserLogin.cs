@@ -11,13 +11,50 @@ namespace Az.Auth.Net452.Test
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Reflection;
+    using System.Linq;
+    using System.Collections.Generic;
+    using System.IO;
 
-    public class UserLogin: AuthFullDesktopTestBase
+    public class UserLogin: AuthNet452TestBase
     {  
         public UserLogin() : base()
         {
 
         }
+
+        [Fact]
+        public void VerifyUserTokenProviderApi()
+        {
+            Type userProviderType = null;
+            Type appProviderType = null;
+
+            Assembly asm = Assembly.LoadFrom(GetProductAssemblyPath());
+            var tknProviderTypes = asm.GetTypes().Where<Type>((t) => t.Name.Equals("UserTokenProvider", StringComparison.OrdinalIgnoreCase));
+            var appTknProviderTypes = asm.GetTypes().Where<Type>((t) => t.Name.Equals("ApplicationTokenProvider", StringComparison.OrdinalIgnoreCase));
+
+
+            if (tknProviderTypes.Any<Type>())
+            {
+                userProviderType = tknProviderTypes.First<Type>();
+            }
+
+            if (appTknProviderTypes.Any<Type>())
+            {
+                appProviderType = appTknProviderTypes.First<Type>();
+            }
+
+            var userLoginApis = userProviderType.GetMethods().Where<MethodInfo>((mi) => mi.Name.Contains("Login"));
+            var deviceAuthApis = userProviderType.GetMethods().Where<MethodInfo>((mi) => mi.Name.Contains("LoginByDeviceCodeAsync"));
+            var interactiveLoginApis = userProviderType.GetMethods().Where<MethodInfo>((mi) => mi.Name.Contains("LoginWithPromptAsync"));
+            var appLoginApis = appProviderType.GetMethods().Where<MethodInfo>((mi) => mi.Name.Contains("Login"));
+
+            Assert.Equal(19, userLoginApis.Count<MethodInfo>());
+            Assert.Equal(15, interactiveLoginApis.Count<MethodInfo>());
+            Assert.Equal(0, deviceAuthApis.Count<MethodInfo>());
+            Assert.Equal(20, appLoginApis.Count<MethodInfo>());
+        }
+
 
         [Theory(Skip = "Interactive tests")]
         [InlineData("AADTenant=<tenantId>;" +
@@ -37,7 +74,9 @@ namespace Az.Auth.Net452.Test
         {
             LiteralCnnString = cnnStr;
             ServiceClientCredentials svcClientCred = null;
-            svcClientCred = UserTokenProvider.LoginWithPromptAsync( this.TenantId, GetADClientSettings(), ActiveDirectoryServiceSettings.AzureGermany, () => { return TaskScheduler.FromCurrentSynchronizationContext(); }).GetAwaiter().GetResult();
+            svcClientCred = UserTokenProvider.LoginWithPromptAsync( this.TenantId, GetADClientSettings(), 
+                ActiveDirectoryServiceSettings.AzureGermany, 
+                () => { return TaskScheduler.FromCurrentSynchronizationContext(); }).GetAwaiter().GetResult();
             Assert.NotNull(svcClientCred);
         }
 
@@ -77,6 +116,19 @@ namespace Az.Auth.Net452.Test
             };
 
             return adClient;
+        }
+
+        private string GetProductAssemblyPath()
+        {
+            string prodAsmName = "Microsoft.Rest.ClientRuntime.Azure.Authentication.dll";
+            string asmPath = Path.Combine(this.TestOutputDir, prodAsmName);
+
+            if (File.Exists(asmPath))
+            {
+                return asmPath;
+            }
+            else
+                return string.Empty;
         }
     }
 }

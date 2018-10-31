@@ -274,7 +274,10 @@ namespace Storage.Tests.Helpers
             Assert.Equal(account.Location, account.PrimaryLocation);
 
             Assert.NotNull(account.PrimaryEndpoints);
-            Assert.NotNull(account.PrimaryEndpoints.Blob);
+            if (account.Kind != Kind.FileStorage)
+            {
+                Assert.NotNull(account.PrimaryEndpoints.Blob);
+            }
 
             if (account.Kind == Kind.Storage || account.Kind == Kind.StorageV2)
             {

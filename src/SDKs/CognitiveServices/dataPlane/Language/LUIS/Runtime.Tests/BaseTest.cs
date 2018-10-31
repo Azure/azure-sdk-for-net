@@ -20,7 +20,9 @@ namespace LUIS.Runtime.Tests
 
         private ILUISRuntimeClient GetClient(DelegatingHandler handler, string subscriptionKey = subscriptionKey)
         {
-            return new LUISRuntimeClient(new ApiKeyServiceClientCredentials(subscriptionKey), handlers: handler);
+            var client = new LUISRuntimeClient(new ApiKeyServiceClientCredentials(subscriptionKey), handlers: handler);
+            client.Endpoint = "https://westus.api.cognitive.microsoft.com";
+            return client;
         }
 
         protected async void UseClientFor(Func<ILUISRuntimeClient, Task> doTest, string className = null, [CallerMemberName] string methodName = "")
