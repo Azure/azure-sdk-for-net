@@ -49,9 +49,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="createdDate">The application create date time.</param>
         /// <param name="marketplaceIdentifier">The marketplace
         /// identifier.</param>
-        /// <param name="additionalProperties">The additional properties for
-        /// application.</param>
-        public ApplicationProperties(ComputeProfile computeProfile = default(ComputeProfile), IList<RuntimeScriptAction> installScriptActions = default(IList<RuntimeScriptAction>), IList<RuntimeScriptAction> uninstallScriptActions = default(IList<RuntimeScriptAction>), IList<ApplicationGetHttpsEndpoint> httpsEndpoints = default(IList<ApplicationGetHttpsEndpoint>), IList<ApplicationGetEndpoint> sshEndpoints = default(IList<ApplicationGetEndpoint>), string provisioningState = default(string), string applicationType = default(string), string applicationState = default(string), IList<Errors> errors = default(IList<Errors>), string createdDate = default(string), string marketplaceIdentifier = default(string), string additionalProperties = default(string))
+        public ApplicationProperties(ComputeProfile computeProfile = default(ComputeProfile), IList<RuntimeScriptAction> installScriptActions = default(IList<RuntimeScriptAction>), IList<RuntimeScriptAction> uninstallScriptActions = default(IList<RuntimeScriptAction>), IList<ApplicationGetHttpsEndpoint> httpsEndpoints = default(IList<ApplicationGetHttpsEndpoint>), IList<ApplicationGetEndpoint> sshEndpoints = default(IList<ApplicationGetEndpoint>), string provisioningState = default(string), string applicationType = default(string), string applicationState = default(string), IList<Errors> errors = default(IList<Errors>), string createdDate = default(string), string marketplaceIdentifier = default(string))
         {
             ComputeProfile = computeProfile;
             InstallScriptActions = installScriptActions;
@@ -64,7 +62,6 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             Errors = errors;
             CreatedDate = createdDate;
             MarketplaceIdentifier = marketplaceIdentifier;
-            AdditionalProperties = additionalProperties;
             CustomInit();
         }
 
@@ -138,12 +135,6 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "marketplaceIdentifier")]
         public string MarketplaceIdentifier { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the additional properties for application.
-        /// </summary>
-        [JsonProperty(PropertyName = "additionalProperties")]
-        public string AdditionalProperties { get; set; }
 
     }
 }
