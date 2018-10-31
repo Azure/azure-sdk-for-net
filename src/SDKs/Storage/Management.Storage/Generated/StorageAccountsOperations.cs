@@ -607,7 +607,7 @@ namespace Microsoft.Azure.Management.Storage
             }
             if (expand != null)
             {
-                _queryParameters.Add(string.Format("expand={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expand, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expand, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
