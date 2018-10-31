@@ -80,5 +80,19 @@ namespace Fabric.Tests
                 });
             });
         }
+
+        [Fact]
+        public void TestGetInvaildStorageSubSystem()
+        {
+            RunTest((client) => {
+                var fabricLocationName = GetLocation(client);
+                var scaleUnitsName = GetScaleUnit(client, fabricLocationName);
+                var invaildStorageSubSystemName = "invaildstoragesubsystemname";
+                var retrieved = client.StorageSubSystems.GetWithHttpMessagesAsync(ResourceGroupName, fabricLocationName, scaleUnitsName, invaildStorageSubSystemName).GetAwaiter().GetResult();
+                var httpResponseMsg = retrieved.Response;
+                Assert.Equal(System.Net.HttpStatusCode.NotFound, httpResponseMsg.StatusCode);
+                Assert.Null(retrieved.Body);
+            });
+        }
     }
 }

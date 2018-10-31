@@ -98,5 +98,20 @@ namespace Fabric.Tests
                 });
             });
         }
+
+        [Fact]
+        public void TestGetInvaildDrive()
+        {
+            RunTest((client) => {
+                var fabricLocationName = GetLocation(client);
+                var scaleUnitName = GetScaleUnit(client, fabricLocationName);
+                var storageSubSystemName = GetStorageSubSystem(client, fabricLocationName, scaleUnitName);
+                var invaildDriveName = "invailddrivename";
+                var retrieved = client.Drives.GetWithHttpMessagesAsync(ResourceGroupName, fabricLocationName, scaleUnitName, storageSubSystemName, invaildDriveName).GetAwaiter().GetResult();
+                var httpResponseMsg = retrieved.Response;
+                Assert.Equal(System.Net.HttpStatusCode.NotFound, httpResponseMsg.StatusCode);
+                Assert.Null(retrieved.Body);
+            });
+        }
     }
 }

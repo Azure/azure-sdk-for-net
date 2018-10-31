@@ -83,5 +83,20 @@ namespace Fabric.Tests
                 });
             });
         }
+
+        [Fact]
+        public void TestGetInvaildVolume()
+        {
+            RunTest((client) => {
+                var fabricLocationName = GetLocation(client);
+                var scaleUnitName = GetScaleUnit(client, fabricLocationName);
+                var storageSubSystemName = GetStorageSubSystem(client, fabricLocationName, scaleUnitName);
+                var invaildVolumeName = "invaildvolumename";
+                var retrieved = client.Volumes.GetWithHttpMessagesAsync(ResourceGroupName, fabricLocationName, scaleUnitName, storageSubSystemName, invaildVolumeName).GetAwaiter().GetResult();
+                var httpResponseMsg = retrieved.Response;
+                Assert.Equal(System.Net.HttpStatusCode.NotFound, httpResponseMsg.StatusCode);
+                Assert.Null(retrieved.Body);
+            });
+        }
     }
 }
