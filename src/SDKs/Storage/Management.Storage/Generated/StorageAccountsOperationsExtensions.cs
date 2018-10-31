@@ -177,9 +177,13 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            public static StorageAccount GetProperties(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
+            /// <param name='expand'>
+            /// Get the expend Storage account properties, e.g. geoReplicationStats.
+            /// Possible values include: 'geoReplicationStats'
+            /// </param>
+            public static StorageAccount GetProperties(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountExpand? expand = default(StorageAccountExpand?))
             {
-                return operations.GetPropertiesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+                return operations.GetPropertiesAsync(resourceGroupName, accountName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -199,12 +203,16 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
+            /// <param name='expand'>
+            /// Get the expend Storage account properties, e.g. geoReplicationStats.
+            /// Possible values include: 'geoReplicationStats'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageAccount> GetPropertiesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageAccount> GetPropertiesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountExpand? expand = default(StorageAccountExpand?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPropertiesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPropertiesWithHttpMessagesAsync(resourceGroupName, accountName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -601,52 +609,6 @@ namespace Microsoft.Azure.Management.Storage
             public static async Task FailoverAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.FailoverWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Retrieve last sync time for his or her RA-GRS and GRS accounts.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the storage account within the specified resource group.
-            /// Storage account names must be between 3 and 24 characters in length and use
-            /// numbers and lower-case letters only.
-            /// </param>
-            public static GetLastSyncTimeResult GetLastSyncTime(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
-            {
-                return operations.GetLastSyncTimeAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieve last sync time for his or her RA-GRS and GRS accounts.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the storage account within the specified resource group.
-            /// Storage account names must be between 3 and 24 characters in length and use
-            /// numbers and lower-case letters only.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<GetLastSyncTimeResult> GetLastSyncTimeAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetLastSyncTimeWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
             /// <summary>

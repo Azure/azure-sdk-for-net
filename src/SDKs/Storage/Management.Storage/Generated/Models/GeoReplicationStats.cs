@@ -14,20 +14,20 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// The response from the get last synctime operation.
+    /// The last sync time for a RA-GRS and GRS accounts.
     /// </summary>
-    public partial class GetLastSyncTimeResult
+    public partial class GeoReplicationStats
     {
         /// <summary>
-        /// Initializes a new instance of the GetLastSyncTimeResult class.
+        /// Initializes a new instance of the GeoReplicationStats class.
         /// </summary>
-        public GetLastSyncTimeResult()
+        public GeoReplicationStats()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GetLastSyncTimeResult class.
+        /// Initializes a new instance of the GeoReplicationStats class.
         /// </summary>
         /// <param name="status">The status of the secondary location of the
         /// Storage Account. Live: Indicates that the secondary location is
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// The value may be account’s creation time if LastSyncTime is not
         /// available. This can happen if the replication status is bootstrap
         /// or unavailable. </param>
-        public GetLastSyncTimeResult(string status = default(string), System.DateTime? lastSyncTime = default(System.DateTime?))
+        public GeoReplicationStats(string status = default(string), System.DateTime? lastSyncTime = default(System.DateTime?))
         {
             Status = status;
             LastSyncTime = lastSyncTime;

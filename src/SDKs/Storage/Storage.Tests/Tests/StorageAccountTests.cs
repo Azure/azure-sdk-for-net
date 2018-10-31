@@ -1866,11 +1866,6 @@ namespace Storage.Tests
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
-                //Get Last Sync Time
-                GetLastSyncTimeResult getLSTResult = storageMgmtClient.StorageAccounts.GetLastSyncTime(rgname, accountName);
-                Assert.NotNull(getLSTResult.Status);
-                Assert.NotNull(getLSTResult.LastSyncTime);
-
                 // Validate
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 Assert.Equal(SkuName.StandardRAGRS, account.Sku.Name);
@@ -1884,6 +1879,39 @@ namespace Storage.Tests
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
                 Assert.Equal(location, account.PrimaryLocation);
+            }
+        }
+
+        [Fact]
+        public void GetStorageAccountLastSyncTime()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardRAGRS },
+                    Kind = Kind.StorageV2,
+                    Location = "eastus2euap"
+                };
+                StorageAccount account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                Assert.Equal(SkuName.StandardRAGRS, account.Sku.Name);
+                Assert.Null(account.GeoReplicationStats);
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.Null(account.GeoReplicationStats);
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName, StorageAccountExpand.GeoReplicationStats);
+                Assert.NotNull(account.GeoReplicationStats);
+                Assert.NotNull(account.GeoReplicationStats.Status);
+                Assert.NotNull(account.GeoReplicationStats.LastSyncTime);
             }
         }
     }

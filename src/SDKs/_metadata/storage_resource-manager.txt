@@ -1,9 +1,9 @@
-2018-10-09 07:51:31 UTC
+2018-10-31 06:43:27 UTC
 
 1) azure-rest-api-specs repository information
 GitHub user: blueww
 Branch:      failover2
-Commit:      4bbbc1b13c0d205e7bd1890ec8023f3e54b6b397
+Commit:      03439487d5f16b3008830a81088f23a392215028
 
 2) AutoRest information
 Requested version: latest

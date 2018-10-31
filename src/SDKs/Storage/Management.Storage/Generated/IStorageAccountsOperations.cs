@@ -121,6 +121,10 @@ namespace Microsoft.Azure.Management.Storage
         /// group. Storage account names must be between 3 and 24 characters in
         /// length and use numbers and lower-case letters only.
         /// </param>
+        /// <param name='expand'>
+        /// Get the expend Storage account properties, e.g.
+        /// geoReplicationStats. Possible values include: 'geoReplicationStats'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -136,7 +140,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<StorageAccount>> GetPropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageAccount>> GetPropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, StorageAccountExpand? expand = default(StorageAccountExpand?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The update operation can be used to update the SKU, encryption,
         /// access tier, or tags for a storage account. It can also be used to
@@ -376,34 +380,6 @@ namespace Microsoft.Azure.Management.Storage
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> FailoverWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Retrieve last sync time for his or her RA-GRS and GRS accounts.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the storage account within the specified resource
-        /// group. Storage account names must be between 3 and 24 characters in
-        /// length and use numbers and lower-case letters only.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<GetLastSyncTimeResult>> GetLastSyncTimeWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Asynchronously creates a new storage account with the specified
         /// parameters. If an account is already created and a subsequent
