@@ -171,7 +171,7 @@ skip_Rps() {
     echo $retVal
 }
 
-./getBuildTools.sh
+./tools/linuxScripts/getBuildTools.sh
 restoreBuildCR
 restoreBuildRepo
 restoreBuildCog

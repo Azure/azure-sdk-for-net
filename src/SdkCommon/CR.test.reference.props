@@ -2,5 +2,6 @@
 	<Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.17, 3.0.0)" />
+		<PackageReference Include="xunit.runner.console" Version="2.3.1" /> 
 	</ItemGroup>
 </Project>
