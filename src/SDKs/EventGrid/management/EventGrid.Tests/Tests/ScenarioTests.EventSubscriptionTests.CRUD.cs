@@ -13,7 +13,7 @@ namespace EventGrid.Tests.ScenarioTests
 {
     public partial class ScenarioTests
     {
-        const string AzureFunctionEndpointUrl = "https://eventgridrunnerfunction.azurewebsites.net/api/HttpTriggerCSharp1?code=<Hidden>";
+        const string AzureFunctionEndpointUrl = "https://eventgridrunnerfunction.azurewebsites.net/api/HttpTriggerCSharp1?code=<HIDDEN>";
 
         [Fact]
         public void EventSubscriptionCreateGetUpdateDelete()
