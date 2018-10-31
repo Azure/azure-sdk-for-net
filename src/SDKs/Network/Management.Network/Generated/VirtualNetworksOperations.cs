@@ -688,14 +688,14 @@ namespace Microsoft.Azure.Management.Network
         /// <summary>
         /// Checks whether a private IP address is available for use.
         /// </summary>
+        /// <param name='ipAddress'>
+        /// The private IP address to be verified.
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network.
-        /// </param>
-        /// <param name='ipAddress'>
-        /// The private IP address to be verified.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -718,8 +718,12 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPAddressAvailabilityResult>> CheckIPAddressAvailabilityWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string ipAddress = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPAddressAvailabilityResult>> CheckIPAddressAvailabilityWithHttpMessagesAsync(string ipAddress, string resourceGroupName, string virtualNetworkName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (ipAddress == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ipAddress");
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");

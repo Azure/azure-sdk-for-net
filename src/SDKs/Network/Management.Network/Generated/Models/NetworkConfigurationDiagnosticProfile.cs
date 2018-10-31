@@ -17,18 +17,20 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Parameters to compare with network configuration.
     /// </summary>
-    public partial class TrafficQuery
+    public partial class NetworkConfigurationDiagnosticProfile
     {
         /// <summary>
-        /// Initializes a new instance of the TrafficQuery class.
+        /// Initializes a new instance of the
+        /// NetworkConfigurationDiagnosticProfile class.
         /// </summary>
-        public TrafficQuery()
+        public NetworkConfigurationDiagnosticProfile()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TrafficQuery class.
+        /// Initializes a new instance of the
+        /// NetworkConfigurationDiagnosticProfile class.
         /// </summary>
         /// <param name="direction">The direction of the traffic. Accepted
         /// values are 'Inbound' and 'Outbound'. Possible values include:
@@ -42,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="destinationPort">Traffice destination port. Accepted
         /// values are '*', port (for example, 3389) and port range (for
         /// example, 80-100).</param>
-        public TrafficQuery(string direction, string protocol, string source, string destination, string destinationPort)
+        public NetworkConfigurationDiagnosticProfile(string direction, string protocol, string source, string destination, string destinationPort)
         {
             Direction = direction;
             Protocol = protocol;

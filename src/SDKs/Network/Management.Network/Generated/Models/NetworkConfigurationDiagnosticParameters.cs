@@ -38,11 +38,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// perform network configuration diagnostic. Valid options are VM,
         /// NetworkInterface, VMSS/NetworkInterface and Application
         /// Gateway.</param>
-        /// <param name="queries">List of traffic queries.</param>
-        public NetworkConfigurationDiagnosticParameters(string targetResourceId, IList<TrafficQuery> queries)
+        /// <param name="profiles">List of network configuration diagnostic
+        /// profiles.</param>
+        /// <param name="verbosityLevel">Verbosity level. Accepted values are
+        /// 'Normal', 'Minimum', 'Full'. Possible values include: 'Normal',
+        /// 'Minimum', 'Full'</param>
+        public NetworkConfigurationDiagnosticParameters(string targetResourceId, IList<NetworkConfigurationDiagnosticProfile> profiles, string verbosityLevel = default(string))
         {
             TargetResourceId = targetResourceId;
-            Queries = queries;
+            VerbosityLevel = verbosityLevel;
+            Profiles = profiles;
             CustomInit();
         }
 
@@ -60,10 +65,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public string TargetResourceId { get; set; }
 
         /// <summary>
-        /// Gets or sets list of traffic queries.
+        /// Gets or sets verbosity level. Accepted values are 'Normal',
+        /// 'Minimum', 'Full'. Possible values include: 'Normal', 'Minimum',
+        /// 'Full'
         /// </summary>
-        [JsonProperty(PropertyName = "queries")]
-        public IList<TrafficQuery> Queries { get; set; }
+        [JsonProperty(PropertyName = "verbosityLevel")]
+        public string VerbosityLevel { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of network configuration diagnostic profiles.
+        /// </summary>
+        [JsonProperty(PropertyName = "profiles")]
+        public IList<NetworkConfigurationDiagnosticProfile> Profiles { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -77,13 +90,13 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "TargetResourceId");
             }
-            if (Queries == null)
+            if (Profiles == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Queries");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Profiles");
             }
-            if (Queries != null)
+            if (Profiles != null)
             {
-                foreach (var element in Queries)
+                foreach (var element in Profiles)
                 {
                     if (element != null)
                     {
