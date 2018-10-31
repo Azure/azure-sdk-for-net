@@ -1,13 +1,13 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.props'))" />
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.16, 4.0.0)" /> 
-		<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.14, 3.0.0)" />
+		<PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.18, 4.0.0)" /> 
+		<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.17, 3.0.0)" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">    
 		<PackageReference Include="System.Net.Http" Version="4.3.0"/>
-		<PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">

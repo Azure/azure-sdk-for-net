@@ -7,14 +7,9 @@
     <PackageId>Microsoft.Azure.Management.PolicyInsights</PackageId>
     <Description>Provides policy insights operations for Microsoft Azure.</Description>
     <AssemblyName>Microsoft.Azure.Management.PolicyInsights</AssemblyName>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <PackageTags>Azure;Policy;PolicyInsights;PolicyEvent;PolicyState;Compliance;</PackageTags>
-    <PackageReleaseNotes>
-         <![CDATA[ 
-          Added support for querying resources that have been added/modified by policy.
-          Added support for triggering policy remediations for deployIfNotExists policies.
-         ]]>
-    </PackageReleaseNotes>
+    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

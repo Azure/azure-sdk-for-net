@@ -32,9 +32,12 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// </summary>
         /// <param name="name">The name of the IoT Central application instance
         /// to check.</param>
-        public OperationInputs(string name)
+        /// <param name="type">The type of the IoT Central resource to
+        /// query.</param>
+        public OperationInputs(string name, string type = default(string))
         {
             Name = name;
+            Type = type;
             CustomInit();
         }
 
@@ -51,6 +54,12 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the type of the IoT Central resource to query.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -61,6 +70,13 @@ namespace Microsoft.Azure.Management.IotCentral.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Name != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(Name, "^[a-z0-9-]{1,63}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "Name", "^[a-z0-9-]{1,63}$");
+                }
             }
         }
     }

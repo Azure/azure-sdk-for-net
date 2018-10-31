@@ -166,6 +166,46 @@ namespace Authorization.Tests
             }
         }
 
+        [Fact]
+        public void RoleAssignmentIdNotFoundTests()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var principalId = Guid.NewGuid();
+
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+                var roleDefinition = client.RoleDefinitions.List(scope, null).ElementAt(1);
+                var newRoleAssignment = new RoleAssignmentCreateParameters()
+                {
+                    RoleDefinitionId = roleDefinition.Id,
+                    PrincipalId = principalId.ToString(),
+                    PrincipalType = "ServicePrincipal",
+                    CanDelegate = false
+                };
+
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestByIdNew");
+
+                var createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
+                Assert.NotNull(createResult);
+
+                var deleteResult = client.RoleAssignments.Delete(scope, assignmentName.ToString());
+                Assert.NotNull(deleteResult);
+                Assert.Equal(deleteResult.Id, createResult.Id);
+
+                var allRoleAssignments = client.RoleAssignments.List(null);
+                var createdAssignment = allRoleAssignments.FirstOrDefault(
+                                            a => a.Name == assignmentName.ToString());
+
+                Assert.Null(createdAssignment);
+            }
+        }
+
         //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
         [Fact]
         public void RoleAssignmentsListGetTests()
@@ -618,7 +658,7 @@ namespace Authorization.Tests
                             Assert.NotNull(permission.Actions);
                             Assert.NotNull(permission.NotActions);
                             Assert.False(permission.Actions.Count() == 0 &&
-                            permission.NotActions.Count() == 0);
+                            permission.DataActions.Count() == 0);
                         }
                     }
                 }
