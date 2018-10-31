@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for ExpressRouteCircuitSkuTier.
+    /// Defines values for ApplicationGatewayCustomErrorStatusCode.
     /// </summary>
-    public static class ExpressRouteCircuitSkuTier
+    public static class ApplicationGatewayCustomErrorStatusCode
     {
-        public const string Standard = "Standard";
-        public const string Premium = "Premium";
-        public const string Basic = "Basic";
+        public const string HttpStatus403 = "HttpStatus403";
+        public const string HttpStatus502 = "HttpStatus502";
     }
 }

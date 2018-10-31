@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for ExpressRouteCircuitSkuTier.
+    /// Defines values for VerbosityLevel.
     /// </summary>
-    public static class ExpressRouteCircuitSkuTier
+    public static class VerbosityLevel
     {
-        public const string Standard = "Standard";
-        public const string Premium = "Premium";
-        public const string Basic = "Basic";
+        public const string Normal = "Normal";
+        public const string Minimum = "Minimum";
+        public const string Full = "Full";
     }
 }

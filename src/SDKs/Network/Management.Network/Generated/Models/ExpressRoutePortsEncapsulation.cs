@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for ExpressRouteCircuitSkuTier.
+    /// Defines values for ExpressRoutePortsEncapsulation.
     /// </summary>
-    public static class ExpressRouteCircuitSkuTier
+    public static class ExpressRoutePortsEncapsulation
     {
-        public const string Standard = "Standard";
-        public const string Premium = "Premium";
-        public const string Basic = "Basic";
+        public const string Dot1Q = "Dot1Q";
+        public const string QinQ = "QinQ";
     }
 }
