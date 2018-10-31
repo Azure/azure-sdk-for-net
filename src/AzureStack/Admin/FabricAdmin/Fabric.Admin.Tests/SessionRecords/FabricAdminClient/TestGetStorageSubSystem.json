@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4abc32ad-46c6-4627-a9ae-885c9e2f14ab"
+          "8b69fa6d-ed51-4d53-924c-24a805d58c47"
         ],
         "accept-language": [
           "en-US"
@@ -22,7 +22,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 29 Oct 2018 09:57:26 GMT"
+          "Wed, 31 Oct 2018 09:32:30 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -31,19 +31,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvJW+RqCjEUE0S2gu6UKJW2/UUisWPEBwGHn7hPoG7KST42NZnYWHcJHs3lnq12sL4URrfa6JorwO8NzSB96Wwcwj6/6EGhftI5b9+mPWTMbD5TGJxbM+bNguG0g4Y5lhdNOpmbXW6J1h3m8WqYKlt"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv7+sZgLiLeSklevIanVgro7oWU88OhdCJQZC7JmbFCId+0WzfrlOAxL9SdFCxQ89Du032gwK/ZwGn0q3god/gGbaer+zOFAbUakKPDpsOPGOPKd/bo3Kgw70VS9tY3GExrf2D2gsJZxT0xAiMHpk3"
         ],
         "x-ms-correlation-request-id": [
-          "d657a72d-e37b-4a8c-805e-350a4ca24e3c"
+          "f184bd74-f06b-4f75-b77c-ba1459372dc8"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14324"
+          "13809"
         ],
         "x-ms-request-id": [
-          "d657a72d-e37b-4a8c-805e-350a4ca24e3c"
+          "f184bd74-f06b-4f75-b77c-ba1459372dc8"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20181029T095727Z:d657a72d-e37b-4a8c-805e-350a4ca24e3c"
+          "LOCAL:20181031T093230Z:f184bd74-f06b-4f75-b77c-ba1459372dc8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -71,7 +71,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c5970f47-f2f4-4b83-a1d0-37156b3f5038"
+          "f6ff1cd2-5fc3-4550-912a-e833a942cd51"
         ],
         "accept-language": [
           "en-US"
@@ -86,7 +86,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 29 Oct 2018 09:57:26 GMT"
+          "Wed, 31 Oct 2018 09:32:30 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -95,19 +95,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvDRXUVH79n7ctWseBi5slJTgebqaWSEOSZwubaP9a0iPPK2EXJ2s+NNluiS1y8M6GVBJze4nhKPsOwp0ZtYu1fq3ynhF/EIDJjy0B6IKdIQlkBuXF/2WI4umpVDxqS6xdcAPhPwGsQDxwswv8VjC9"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvGtsz8WH05zKX2UXHMAXGaKirDGCO+ZKJI/TrW7CYMQGLN0EHCIlk2o4BCPJT71uXmlafJxTqkzr5SPyaYVIaLAhP4nJ8Zr0K1iGXuT+NopKrF7vjDkAMuYrSe1N5lGt71YC22XPBId2D+r1RuRDU"
         ],
         "x-ms-correlation-request-id": [
-          "e08fc1ff-497e-4fdc-b905-a5b6f2b8ff3b"
+          "a65ebad6-9088-4e74-abe1-d2df7cb252dc"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14323"
+          "13808"
         ],
         "x-ms-request-id": [
-          "e08fc1ff-497e-4fdc-b905-a5b6f2b8ff3b"
+          "a65ebad6-9088-4e74-abe1-d2df7cb252dc"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20181029T095727Z:e08fc1ff-497e-4fdc-b905-a5b6f2b8ff3b"
+          "LOCAL:20181031T093230Z:a65ebad6-9088-4e74-abe1-d2df7cb252dc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -135,7 +135,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "213f03e6-2ba4-4c89-a7e9-7e01460f24f7"
+          "689d6f6c-0193-47a1-9a0e-2ee12ce69ce3"
         ],
         "accept-language": [
           "en-US"
@@ -150,7 +150,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 29 Oct 2018 09:57:27 GMT"
+          "Wed, 31 Oct 2018 09:32:30 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -159,19 +159,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvl4vknBsNJ4baJ20TG9RTKzb2+tBUs7W2UTJX6emuEFdFFNYAnTeaVmokWdzcUCiWW24r6KIAvAT20L5u81oMY0B8AHAFgC9bWIU1plNG1poblAExaBoOoHrNfHRsdiycS+JWKJD4mBCzNsFCGjTh"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvcb+qc89oxCSbdo2DWzUcfq1TeNPElS+lPApJ25t0hmHgsZP8cWw/nSGwsV72ekHBwyskkTz9x5ycLGlnNvay27V1HowX9mDoh5zHB5F6itBwTws/mmmsZkxP4qsTLnbTD3S5kdjkUHb2XCzQK93s"
         ],
         "x-ms-correlation-request-id": [
-          "91019f2e-8cad-4801-8089-49e64ae398b1"
+          "3d320f11-c731-4540-8768-3dd51fcfaf21"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14322"
+          "13807"
         ],
         "x-ms-request-id": [
-          "91019f2e-8cad-4801-8089-49e64ae398b1"
+          "3d320f11-c731-4540-8768-3dd51fcfaf21"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20181029T095727Z:91019f2e-8cad-4801-8089-49e64ae398b1"
+          "LOCAL:20181031T093230Z:3d320f11-c731-4540-8768-3dd51fcfaf21"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -189,7 +189,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local\",\r\n      \"name\": \"local/s-cluster/s-cluster.azurestack.local\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"totalCapacityGB\": 3011,\r\n        \"remainingCapacityGB\": 2675,\r\n        \"healthStatus\": \"Healthy\",\r\n        \"operationalStatus\": \"OK\",\r\n        \"rebalanceStatus\": \"\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local\",\r\n      \"name\": \"local/s-cluster/s-cluster.azurestack.local\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"totalCapacityGB\": 3011,\r\n        \"remainingCapacityGB\": 2632,\r\n        \"healthStatus\": \"Healthy\",\r\n        \"operationalStatus\": \"OK\",\r\n        \"rebalanceStatus\": \"\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -199,7 +199,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0bda5ac4-024a-445c-b5cd-c0e35ceb072e"
+          "51ed626e-d926-4f42-a4ec-7cb073de1a28"
         ],
         "accept-language": [
           "en-US"
@@ -214,7 +214,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 29 Oct 2018 09:57:27 GMT"
+          "Wed, 31 Oct 2018 09:32:31 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -223,19 +223,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvSgVbzaxlPM6YddOSC3BQfWZT8wkEPjKgpfGVZ6egb6jLvoozRkHdYCaxb0ff2owtHzVYWmH62e+WsMfue3iMq65j8HCMKwhhQPk9uzVk8aT45GV2y0q59n5w9doUAu94kIik/zGYa9OwsSQWit4j"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvOxMb3lUMDD/J0Xp3J+kJRQuM1vAOCwm7cjjlN/P+oM7BZuAqvZggXvK3qsa2z7xpm6woVjXYvdCkvg1BmD/4+iVXua/qIDXhSE9m00ZZGONf10m4Nob6jyBawQDukP8OpuV+UaAGmFthVFCMN0s/"
         ],
         "x-ms-correlation-request-id": [
-          "f5b80331-80a7-4527-be18-aa7ee1637f7d"
+          "53202039-ecd3-4237-adf8-5e4c3cccb670"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14321"
+          "13806"
         ],
         "x-ms-request-id": [
-          "f5b80331-80a7-4527-be18-aa7ee1637f7d"
+          "53202039-ecd3-4237-adf8-5e4c3cccb670"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20181029T095727Z:f5b80331-80a7-4527-be18-aa7ee1637f7d"
+          "LOCAL:20181031T093231Z:53202039-ecd3-4237-adf8-5e4c3cccb670"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -253,7 +253,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local\",\r\n  \"name\": \"local/s-cluster/s-cluster.azurestack.local\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"totalCapacityGB\": 3011,\r\n    \"remainingCapacityGB\": 2675,\r\n    \"healthStatus\": \"Healthy\",\r\n    \"operationalStatus\": \"OK\",\r\n    \"rebalanceStatus\": \"\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnits/s-cluster/storageSubSystems/s-cluster.azurestack.local\",\r\n  \"name\": \"local/s-cluster/s-cluster.azurestack.local\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/scaleUnits/storageSubSystems\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"totalCapacityGB\": 3011,\r\n    \"remainingCapacityGB\": 2632,\r\n    \"healthStatus\": \"Healthy\",\r\n    \"operationalStatus\": \"OK\",\r\n    \"rebalanceStatus\": \"\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
