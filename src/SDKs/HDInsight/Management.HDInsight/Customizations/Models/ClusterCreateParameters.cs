@@ -178,7 +178,10 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         public Dictionary<string, string> Tags { get; private set; }
 
-        public ClusterIdentity ClusterIdentity { get; private set; }
+        /// <summary>
+        /// Gets or sets the managed identity of the cluster.
+        /// </summary>
+        public ClusterIdentity ClusterIdentity { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
