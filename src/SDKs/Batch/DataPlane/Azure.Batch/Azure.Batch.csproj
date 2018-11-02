@@ -28,7 +28,7 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-dataplane-changelog.</PackageReleaseNotes>
+    <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-dataplane-changelog</PackageReleaseNotes>
     <Authors>Microsoft</Authors>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <PackageProjectUrl>http://aka.ms/batch</PackageProjectUrl>
