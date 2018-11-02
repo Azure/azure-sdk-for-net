@@ -1,7 +1,7 @@
 # Microsoft.Azure.Batch release notes
 
 ## Changes in 9.0.1
-Taking dependency on 10.0.3 version of Newtonsoft nuget package.
+- Updating Newtonsoft.Json to 10.0.3
 
 ## Changes in 9.0.0
 ### Features
