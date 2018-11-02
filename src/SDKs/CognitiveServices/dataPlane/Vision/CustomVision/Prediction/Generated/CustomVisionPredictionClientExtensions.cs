@@ -19,9 +19,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for PredictionEndpoint.
+    /// Extension methods for CustomVisionPredictionClient.
     /// </summary>
-    public static partial class PredictionEndpointExtensions
+    public static partial class CustomVisionPredictionClientExtensions
     {
             /// <summary>
             /// Predict an image url and saves the result
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='application'>
             /// Optional. Specifies the name of application using the endpoint
             /// </param>
-            public static ImagePrediction PredictImageUrl(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string))
+            public static ImagePrediction PredictImageUrl(this ICustomVisionPredictionClient operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string))
             {
                 return operations.PredictImageUrlAsync(projectId, imageUrl, iterationId, application).GetAwaiter().GetResult();
             }
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePrediction> PredictImageUrlAsync(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> PredictImageUrlAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PredictImageUrlWithHttpMessagesAsync(projectId, imageUrl, iterationId, application, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<ImagePrediction> PredictImageUrlWithHttpMessages(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<ImagePrediction> PredictImageUrlWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.PredictImageUrlWithHttpMessagesAsync(projectId, imageUrl, iterationId, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='application'>
             /// Optional. Specifies the name of application using the endpoint
             /// </param>
-            public static ImagePrediction PredictImage(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string))
+            public static ImagePrediction PredictImage(this ICustomVisionPredictionClient operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string))
             {
                 return operations.PredictImageAsync(projectId, imageData, iterationId, application).GetAwaiter().GetResult();
             }
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePrediction> PredictImageAsync(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> PredictImageAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PredictImageWithHttpMessagesAsync(projectId, imageData, iterationId, application, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<ImagePrediction> PredictImageWithHttpMessages(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<ImagePrediction> PredictImageWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.PredictImageWithHttpMessagesAsync(projectId, imageData, iterationId, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='application'>
             /// Optional. Specifies the name of application using the endpoint
             /// </param>
-            public static ImagePrediction PredictImageUrlWithNoStore(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string))
+            public static ImagePrediction PredictImageUrlWithNoStore(this ICustomVisionPredictionClient operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string))
             {
                 return operations.PredictImageUrlWithNoStoreAsync(projectId, imageUrl, iterationId, application).GetAwaiter().GetResult();
             }
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePrediction> PredictImageUrlWithNoStoreAsync(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> PredictImageUrlWithNoStoreAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PredictImageUrlWithNoStoreWithHttpMessagesAsync(projectId, imageUrl, iterationId, application, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<ImagePrediction> PredictImageUrlWithNoStoreWithHttpMessages(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<ImagePrediction> PredictImageUrlWithNoStoreWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.PredictImageUrlWithNoStoreWithHttpMessagesAsync(projectId, imageUrl, iterationId, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='application'>
             /// Optional. Specifies the name of application using the endpoint
             /// </param>
-            public static ImagePrediction PredictImageWithNoStore(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string))
+            public static ImagePrediction PredictImageWithNoStore(this ICustomVisionPredictionClient operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string))
             {
                 return operations.PredictImageWithNoStoreAsync(projectId, imageData, iterationId, application).GetAwaiter().GetResult();
             }
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePrediction> PredictImageWithNoStoreAsync(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> PredictImageWithNoStoreAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PredictImageWithNoStoreWithHttpMessagesAsync(projectId, imageData, iterationId, application, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -342,7 +342,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<ImagePrediction> PredictImageWithNoStoreWithHttpMessages(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<ImagePrediction> PredictImageWithNoStoreWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.PredictImageWithNoStoreWithHttpMessagesAsync(projectId, imageData, iterationId, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }

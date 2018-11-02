@@ -12,13 +12,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
 
     /// <summary>
-    /// Defines values for ExportPlatform.
+    /// Defines values for TagType.
     /// </summary>
-    public static class ExportPlatform
+    public static class TagType
     {
-        public const string CoreML = "CoreML";
-        public const string TensorFlow = "TensorFlow";
-        public const string DockerFile = "DockerFile";
-        public const string ONNX = "ONNX";
+        public const string Regular = "Regular";
+        public const string Negative = "Negative";
     }
 }

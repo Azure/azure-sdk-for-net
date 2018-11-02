@@ -12,9 +12,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
 
     /// <summary>
-    /// Defines values for ImageUploadStatus.
+    /// Defines values for ImageCreateStatus.
     /// </summary>
-    public static class ImageUploadStatus
+    public static class ImageCreateStatus
     {
         public const string OK = "OK";
         public const string OKDuplicate = "OKDuplicate";
@@ -26,5 +26,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public const string ErrorTagLimitExceed = "ErrorTagLimitExceed";
         public const string ErrorRegionLimitExceed = "ErrorRegionLimitExceed";
         public const string ErrorUnknown = "ErrorUnknown";
+        public const string ErrorNegativeAndRegularTagOnSameImage = "ErrorNegativeAndRegularTagOnSameImage";
     }
 }

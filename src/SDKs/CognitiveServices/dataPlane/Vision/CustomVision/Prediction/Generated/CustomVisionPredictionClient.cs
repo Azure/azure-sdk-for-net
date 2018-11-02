@@ -23,12 +23,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
     using System.Threading;
     using System.Threading.Tasks;
 
-    public partial class PredictionEndpoint : ServiceClient<PredictionEndpoint>, IPredictionEndpoint
+    public partial class CustomVisionPredictionClient : ServiceClient<CustomVisionPredictionClient>, ICustomVisionPredictionClient
     {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        public System.Uri BaseUri { get; set; }
+        internal string BaseUri {get; set;}
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -45,18 +45,36 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         public string ApiKey { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the PredictionEndpoint class.
+        /// Supported Cognitive Services endpoints
         /// </summary>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
+        public string Endpoint { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the CustomVisionPredictionClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
         /// </param>
-        public PredictionEndpoint(params DelegatingHandler[] handlers) : base(handlers)
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling CustomVisionPredictionClient.Dispose(). False: will not dispose provided httpClient</param>
+        public CustomVisionPredictionClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PredictionEndpoint class.
+        /// Initializes a new instance of the CustomVisionPredictionClient class.
+        /// </summary>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        public CustomVisionPredictionClient(params DelegatingHandler[] handlers) : base(handlers)
+        {
+            Initialize();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CustomVisionPredictionClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -64,54 +82,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public PredictionEndpoint(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        public CustomVisionPredictionClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the PredictionEndpoint class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public PredictionEndpoint(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            BaseUri = baseUri;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the PredictionEndpoint class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public PredictionEndpoint(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            BaseUri = baseUri;
         }
 
         /// <summary>
@@ -123,7 +96,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// </summary>
         private void Initialize()
         {
-            BaseUri = new System.Uri("https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction");
+            BaseUri = "{Endpoint}/customvision/v2.0/Prediction";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -191,6 +164,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// </return>
         public async Task<HttpOperationResponse<ImagePrediction>> PredictImageUrlWithHttpMessagesAsync(System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (imageUrl == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "imageUrl");
@@ -214,8 +191,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 ServiceClientTracing.Enter(_invocationId, this, "PredictImageUrl", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{projectId}/url").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{projectId}/url";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -369,6 +347,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// </return>
         public async Task<HttpOperationResponse<ImagePrediction>> PredictImageWithHttpMessagesAsync(System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (imageData == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "imageData");
@@ -392,8 +374,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 ServiceClientTracing.Enter(_invocationId, this, "PredictImage", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{projectId}/image").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{projectId}/image";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -443,14 +426,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             {
                 StreamContent _imageData = new StreamContent(imageData);
                 _imageData.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                FileStream _imageDataAsFileStream = imageData as FileStream;
-                if (_imageDataAsFileStream != null)
+                ContentDispositionHeaderValue _contentDispositionHeaderValue = new ContentDispositionHeaderValue("form-data");
+                _contentDispositionHeaderValue.Name = "imageData";
+                // get filename from stream if it's a file otherwise, just use  'unknown'
+                var _fileStream = imageData as FileStream;
+                var _fileName = (_fileStream != null ? _fileStream.Name : null) ?? "unknown";
+                if(System.Linq.Enumerable.Any(_fileName, c => c > 127) )
                 {
-                    ContentDispositionHeaderValue _contentDispositionHeaderValue = new ContentDispositionHeaderValue("form-data");
-                    _contentDispositionHeaderValue.Name = "imageData";
-                    _contentDispositionHeaderValue.FileName = _imageDataAsFileStream.Name;
-                    _imageData.Headers.ContentDisposition = _contentDispositionHeaderValue;
+                    // non ASCII chars detected, need UTF encoding:
+                    _contentDispositionHeaderValue.FileNameStar = _fileName;
                 }
+                else
+                {
+                    // ASCII only
+                    _contentDispositionHeaderValue.FileName = _fileName;
+                }
+                _imageData.Headers.ContentDisposition = _contentDispositionHeaderValue;
                 _multiPartContent.Add(_imageData, "imageData");
             }
             _httpRequest.Content = _multiPartContent;
@@ -559,6 +550,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// </return>
         public async Task<HttpOperationResponse<ImagePrediction>> PredictImageUrlWithNoStoreWithHttpMessagesAsync(System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (imageUrl == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "imageUrl");
@@ -582,8 +577,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 ServiceClientTracing.Enter(_invocationId, this, "PredictImageUrlWithNoStore", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{projectId}/url/nostore").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{projectId}/url/nostore";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -737,6 +733,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// </return>
         public async Task<HttpOperationResponse<ImagePrediction>> PredictImageWithNoStoreWithHttpMessagesAsync(System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (imageData == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "imageData");
@@ -760,8 +760,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 ServiceClientTracing.Enter(_invocationId, this, "PredictImageWithNoStore", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{projectId}/image/nostore").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{projectId}/image/nostore";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -811,14 +812,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             {
                 StreamContent _imageData = new StreamContent(imageData);
                 _imageData.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                FileStream _imageDataAsFileStream = imageData as FileStream;
-                if (_imageDataAsFileStream != null)
+                ContentDispositionHeaderValue _contentDispositionHeaderValue = new ContentDispositionHeaderValue("form-data");
+                _contentDispositionHeaderValue.Name = "imageData";
+                // get filename from stream if it's a file otherwise, just use  'unknown'
+                var _fileStream = imageData as FileStream;
+                var _fileName = (_fileStream != null ? _fileStream.Name : null) ?? "unknown";
+                if(System.Linq.Enumerable.Any(_fileName, c => c > 127) )
                 {
-                    ContentDispositionHeaderValue _contentDispositionHeaderValue = new ContentDispositionHeaderValue("form-data");
-                    _contentDispositionHeaderValue.Name = "imageData";
-                    _contentDispositionHeaderValue.FileName = _imageDataAsFileStream.Name;
-                    _imageData.Headers.ContentDisposition = _contentDispositionHeaderValue;
+                    // non ASCII chars detected, need UTF encoding:
+                    _contentDispositionHeaderValue.FileNameStar = _fileName;
                 }
+                else
+                {
+                    // ASCII only
+                    _contentDispositionHeaderValue.FileName = _fileName;
+                }
+                _imageData.Headers.ContentDisposition = _contentDispositionHeaderValue;
                 _multiPartContent.Add(_imageData, "imageData");
             }
             _httpRequest.Content = _multiPartContent;

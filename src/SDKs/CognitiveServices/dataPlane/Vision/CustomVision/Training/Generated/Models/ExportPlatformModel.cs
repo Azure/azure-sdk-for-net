@@ -12,11 +12,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
 
     /// <summary>
-    /// Defines values for ExportFlavor.
+    /// Defines values for ExportPlatformModel.
     /// </summary>
-    public static class ExportFlavor
+    public static class ExportPlatformModel
     {
-        public const string Linux = "Linux";
-        public const string Windows = "Windows";
+        public const string CoreML = "CoreML";
+        public const string TensorFlow = "TensorFlow";
+        public const string DockerFile = "DockerFile";
+        public const string ONNX = "ONNX";
     }
 }

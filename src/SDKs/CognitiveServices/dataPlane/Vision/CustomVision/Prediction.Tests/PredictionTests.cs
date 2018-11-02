@@ -16,7 +16,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "PredictImage", RecorderMode);
 
-                IPredictionEndpoint client = GetPredictionClientClient();
+                ICustomVisionPredictionClient client = GetPredictionClientClient();
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "test_image.jpg"), FileMode.Open))
                 {
                     ImagePrediction results = client.PredictImageAsync(ProjectId, stream).Result;
@@ -32,7 +32,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "PredictImageNoStore", RecorderMode);
 
-                IPredictionEndpoint client = GetPredictionClientClient();
+                ICustomVisionPredictionClient client = GetPredictionClientClient();
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "test_image.jpg"), FileMode.Open))
                 {
                     ImagePrediction results = client.PredictImageWithNoStoreAsync(ProjectId, stream).Result;
@@ -49,7 +49,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "PredictImageUrl", RecorderMode);
 
-                IPredictionEndpoint client = GetPredictionClientClient();
+                ICustomVisionPredictionClient client = GetPredictionClientClient();
                 ImageUrl url = new ImageUrl(testImageUrl);
 
                 ImagePrediction results = client.PredictImageUrlAsync(ProjectId, url).Result;
@@ -65,7 +65,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "PredictImageUrlNoStore", RecorderMode);
 
-                IPredictionEndpoint client = GetPredictionClientClient();
+                ICustomVisionPredictionClient client = GetPredictionClientClient();
                 ImageUrl url = new ImageUrl(testImageUrl);
 
                 ImagePrediction results = client.PredictImageUrlWithNoStoreAsync(ProjectId, url).Result;
@@ -78,10 +78,10 @@
             Assert.Equal(ProjectId, results.Project);
             Assert.NotEqual(Guid.Empty, results.Iteration);
             Assert.Equal(2, results.Predictions.Count);
-            Assert.Equal("hemlock", results.Predictions[0].TagName);
+            Assert.Equal("Tag1", results.Predictions[0].TagName);
             Assert.InRange(results.Predictions[0].Probability, 0.9, 1);
             Assert.NotEqual(Guid.Empty, results.Predictions[0].TagId);
-            Assert.Equal("cherry", results.Predictions[1].TagName);
+            Assert.Equal("Tag2", results.Predictions[1].TagName);
             Assert.InRange(results.Predictions[1].Probability, 0, 0.1);
             Assert.NotEqual(Guid.Empty, results.Predictions[1].TagId);
         }
