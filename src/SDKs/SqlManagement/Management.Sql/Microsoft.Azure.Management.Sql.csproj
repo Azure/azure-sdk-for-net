@@ -7,16 +7,9 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>1.20.1-preview</Version>
+		<Version>1.20.2-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
-		<PackageReleaseNotes>
-			<![CDATA[
-New features:
-- Added support for Managed Instance keys and encryption protectors.
-- Added support for DatabaseVulnerabilityAssessment.StorageAccountAccessKey, which causes DatabaseVulnerabilityAssessment.StorageContainerSasKey to no longer be a required property.
-- Added support for Managed Instance DnsZone, DnsZonePartner and Collation properties
-      ]]>
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
