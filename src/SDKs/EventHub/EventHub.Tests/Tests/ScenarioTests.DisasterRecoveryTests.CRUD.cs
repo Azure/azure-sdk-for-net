@@ -96,7 +96,7 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.True(createNamespaceAuthorizationRuleResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Rights)
                 {
-                    Assert.True(createNamespaceAuthorizationRuleResponse.Rights.Any(r => r == right));
+                    Assert.Contains(createNamespaceAuthorizationRuleResponse.Rights, r => r == right);
                 }
 
                 // Get created namespace AuthorizationRules
@@ -105,7 +105,7 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Rights)
                 {
-                    Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Any(r => r == right));
+                    Assert.Contains(getNamespaceAuthorizationRulesResponse.Rights, r => r == right);
                 }
 
                 var getNamespaceAuthorizationRulesListKeysResponse = EventHubManagementClient.Namespaces.ListKeys(resourceGroup, namespaceName, authorizationRuleName);
@@ -140,11 +140,11 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.True(disasterRecoveryGetResponse.PendingReplicationOperationsCount >= 0);
                 else
                     Assert.False(disasterRecoveryGetResponse.PendingReplicationOperationsCount.HasValue);
-                Assert.Equal(disasterRecoveryGetResponse.Role, RoleDisasterRecovery.Primary);
+                Assert.Equal(RoleDisasterRecovery.Primary, disasterRecoveryGetResponse.Role);
 
                 //// Get the created DisasterRecovery config - Secondary
                 var disasterRecoveryGetResponse_Sec = EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName2, disasterRecoveryName);
-                Assert.Equal(disasterRecoveryGetResponse_Sec.Role, RoleDisasterRecovery.Secondary);
+                Assert.Equal(RoleDisasterRecovery.Secondary, disasterRecoveryGetResponse_Sec.Role);
 
                 //Get authorization rule thorugh Alias 
 

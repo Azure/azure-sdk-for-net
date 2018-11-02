@@ -1,14 +1,14 @@
 ﻿Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/signalr/resource-manager/readme.md --csharp --csharp-sdks-folder=C:\azure-sdk-for-net\tools\..\src\SDKs\ --version=latest --reflect-api-versions
-2018-05-03 17:51:57 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/signalr/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\Code\azure-sdk-for-net\tools\..\src\SDKs\
+2018-09-06 03:37:28 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      0a68675c56fceef8b5069a3026286539356feadb
+Commit:      c0c706d70aee360958be4ae9dee85bff7c5da2db
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\sergey\AppData\Roaming\npm  `-- autorest@2.0.4262
+Bootstrapper version:    C:\Users\menxiao\AppData\Roaming\npm  `-- autorest@2.0.4283
 
 
 Latest installed version:    

@@ -36,15 +36,20 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="sku">The Sku.</param>
         /// <param name="enabled">The sku is enabled or not.</param>
+        /// <param name="destinationToServiceLocationMap">The map of
+        /// destination location to service location.</param>
         /// <param name="capacity">Capacity of the Sku.</param>
         /// <param name="costs">Cost of the Sku.</param>
         /// <param name="apiVersions">Api versions that support this
         /// Sku.</param>
-        /// <param name="destinationToServiceLocationMap">The map of
-        /// destination location to service location.</param>
-        /// <param name="disabledReason">Reason why the Sku is
+        /// <param name="disabledReason">Reason why the Sku is disabled.
+        /// Possible values include: 'None', 'Country', 'Region', 'Feature',
+        /// 'OfferType'</param>
+        /// <param name="disabledReasonMessage">Message for why the Sku is
         /// disabled.</param>
-        public SkuInformation(Sku sku, bool enabled, SkuCapacity capacity, IList<SkuCost> costs, IList<string> apiVersions, IList<DestinationToServiceLocationMap> destinationToServiceLocationMap = default(IList<DestinationToServiceLocationMap>), string disabledReason = default(string))
+        /// <param name="requiredFeature">Required feature to access the
+        /// sku.</param>
+        public SkuInformation(Sku sku = default(Sku), bool? enabled = default(bool?), IList<DestinationToServiceLocationMap> destinationToServiceLocationMap = default(IList<DestinationToServiceLocationMap>), SkuCapacity capacity = default(SkuCapacity), IList<SkuCost> costs = default(IList<SkuCost>), IList<string> apiVersions = default(IList<string>), SkuDisabledReason? disabledReason = default(SkuDisabledReason?), string disabledReasonMessage = default(string), string requiredFeature = default(string))
         {
             Sku = sku;
             Enabled = enabled;
@@ -53,6 +58,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
             Costs = costs;
             ApiVersions = apiVersions;
             DisabledReason = disabledReason;
+            DisabledReasonMessage = disabledReasonMessage;
+            RequiredFeature = requiredFeature;
             CustomInit();
         }
 
@@ -62,46 +69,59 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Sku.
+        /// Gets the Sku.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; set; }
+        public Sku Sku { get; private set; }
 
         /// <summary>
-        /// Gets or sets the sku is enabled or not.
+        /// Gets the sku is enabled or not.
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
-        public bool Enabled { get; set; }
+        public bool? Enabled { get; private set; }
 
         /// <summary>
-        /// Gets or sets the map of destination location to service location.
+        /// Gets the map of destination location to service location.
         /// </summary>
         [JsonProperty(PropertyName = "properties.destinationToServiceLocationMap")]
-        public IList<DestinationToServiceLocationMap> DestinationToServiceLocationMap { get; set; }
+        public IList<DestinationToServiceLocationMap> DestinationToServiceLocationMap { get; private set; }
 
         /// <summary>
-        /// Gets or sets capacity of the Sku.
+        /// Gets capacity of the Sku.
         /// </summary>
         [JsonProperty(PropertyName = "properties.capacity")]
-        public SkuCapacity Capacity { get; set; }
+        public SkuCapacity Capacity { get; private set; }
 
         /// <summary>
-        /// Gets or sets cost of the Sku.
+        /// Gets cost of the Sku.
         /// </summary>
         [JsonProperty(PropertyName = "properties.costs")]
-        public IList<SkuCost> Costs { get; set; }
+        public IList<SkuCost> Costs { get; private set; }
 
         /// <summary>
-        /// Gets or sets api versions that support this Sku.
+        /// Gets api versions that support this Sku.
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiVersions")]
-        public IList<string> ApiVersions { get; set; }
+        public IList<string> ApiVersions { get; private set; }
 
         /// <summary>
-        /// Gets or sets reason why the Sku is disabled.
+        /// Gets reason why the Sku is disabled. Possible values include:
+        /// 'None', 'Country', 'Region', 'Feature', 'OfferType'
         /// </summary>
         [JsonProperty(PropertyName = "properties.disabledReason")]
-        public string DisabledReason { get; set; }
+        public SkuDisabledReason? DisabledReason { get; private set; }
+
+        /// <summary>
+        /// Gets message for why the Sku is disabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disabledReasonMessage")]
+        public string DisabledReasonMessage { get; private set; }
+
+        /// <summary>
+        /// Gets required feature to access the sku.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.requiredFeature")]
+        public string RequiredFeature { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -111,39 +131,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Sku == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
-            }
-            if (Capacity == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Capacity");
-            }
-            if (Costs == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Costs");
-            }
-            if (ApiVersions == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ApiVersions");
-            }
             if (Sku != null)
             {
                 Sku.Validate();
-            }
-            if (Capacity != null)
-            {
-                Capacity.Validate();
-            }
-            if (Costs != null)
-            {
-                foreach (var element in Costs)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }

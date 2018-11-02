@@ -6,6 +6,7 @@
 using Microsoft.AzureStack.Management.Compute.Admin;
 using Microsoft.AzureStack.Management.Compute.Admin.Models;
 using System.Linq;
+using System.Net;
 using Xunit;
 
 namespace Compute.Tests
@@ -13,13 +14,15 @@ namespace Compute.Tests
     public class QuotaTests : ComputeTestBase
     {
         // Helper
-        private Quota Create(int asc, int cl, int vssc, int vmc) {
+        private Quota Create(int asc, int cl, int vssc, int vmc, int smds, int pmds) {
             var newQuota = new Quota()
             {
                 AvailabilitySetCount = asc,
                 CoresLimit = cl,
                 VmScaleSetCount = vssc,
-                VirtualMachineCount = vmc
+                VirtualMachineCount = vmc,
+                MaxAllocationStandardManagedDisksAndSnapshots =smds,
+                MaxAllocationPremiumManagedDisksAndSnapshots = pmds
             };
             return newQuota;
         }
@@ -32,6 +35,8 @@ namespace Compute.Tests
             Assert.NotNull(quota.CoresLimit);
             Assert.NotNull(quota.VirtualMachineCount);
             Assert.NotNull(quota.VmScaleSetCount);
+            Assert.NotNull(quota.MaxAllocationStandardManagedDisksAndSnapshots);
+            Assert.NotNull(quota.MaxAllocationPremiumManagedDisksAndSnapshots);
         }
 
         private void AssertSame(Quota expected, Quota given, bool resourceToo = true) {
@@ -50,6 +55,8 @@ namespace Compute.Tests
                 Assert.Equal(expected.CoresLimit, given.CoresLimit);
                 Assert.Equal(expected.VirtualMachineCount, given.VirtualMachineCount);
                 Assert.Equal(expected.VmScaleSetCount, given.VmScaleSetCount);
+                Assert.Equal(expected.MaxAllocationStandardManagedDisksAndSnapshots, given.MaxAllocationStandardManagedDisksAndSnapshots);
+                Assert.Equal(expected.MaxAllocationPremiumManagedDisksAndSnapshots, given.MaxAllocationPremiumManagedDisksAndSnapshots);
             }
         }
 
@@ -88,6 +95,8 @@ namespace Compute.Tests
             Assert.Equal(q.CoresLimit, d[1]);
             Assert.Equal(q.VmScaleSetCount, d[2]);
             Assert.Equal(q.VirtualMachineCount, d[3]);
+            Assert.Equal(q.MaxAllocationStandardManagedDisksAndSnapshots, d[4]);
+            Assert.Equal(q.MaxAllocationPremiumManagedDisksAndSnapshots, d[5]);
         }
 
         [Fact]
@@ -95,8 +104,8 @@ namespace Compute.Tests
             RunTest((client) => {
                 var location = "local";
                 var name = "testQuotaCreateUpdateDelete";
-                var data = new int[]{1,1,1,1 };
-                var newQuota = Create(data[0], data[1], data[2], data[3]);
+                var data = new int[]{1,1,1,1,1,1 };
+                var newQuota = Create(data[0], data[1], data[2], data[3], data[4], data[5]);
                 var quota = client.Quotas.CreateOrUpdate(location, name, newQuota);
                 ValidateAgainstData(quota, data);
                 AssertSame(newQuota, quota, false);
@@ -121,8 +130,16 @@ namespace Compute.Tests
                 data[1] += 1;
                 ValidateAgainstData(quota, data);
 
-                client.Quotas.Delete(location, name);
+                quota.MaxAllocationStandardManagedDisksAndSnapshots+= 1;
+                quota = client.Quotas.CreateOrUpdate(location, name, quota);
+                data[4] += 1;
+                ValidateAgainstData(quota, data);
 
+                quota.MaxAllocationPremiumManagedDisksAndSnapshots += 1;
+                quota = client.Quotas.CreateOrUpdate(location, name, quota);
+                data[5] += 1;
+                ValidateAgainstData(quota, data);
+                client.Quotas.Delete(location, name);
             });
         }
 
@@ -134,17 +151,20 @@ namespace Compute.Tests
                 var quotaNamePrefix = "testQuota";
 
                 var data = new System.Collections.Generic.List<int[]>  {
-                    new [] { 0, 0, 0, 0, 0 },
-                    new [] { 0, 1, 0, 0, 1 },
-                    new [] { 0, 0, 1, 0 , 2},
-                    new [] { 0, 0, 0, 1 , 3},
-                    new [] { 100, 100, 100, 100 , 4},
-                    new [] { 1000, 1000, 1000, 1000 , 5}
+                    new [] { 0, 0, 0, 0, 0, 0, 0 },
+                    new [] { 1, 0, 0, 0, 0, 0, 1 },
+                    new [] { 0, 1, 0, 0, 0, 0, 2 },
+                    new [] { 0, 0, 1, 0, 0, 0, 3 },
+                    new [] { 0, 0, 0, 1, 0, 0, 4 },
+                    new [] { 0, 0, 0, 0, 1, 0, 5 },
+                    new [] { 0, 0, 0, 0, 0, 1, 6 },
+                    new [] { 100, 100, 100, 100 ,100, 100,  7 },
+                    new [] { 1000, 1000, 1000, 1000, 1000, 1000, 8 }
                 };
 
                 data.ForEach((d) => {
-                    var name = quotaNamePrefix + d[4];
-                    var newQuota = Create(d[0], d[1], d[2], d[3]);
+                    var name = quotaNamePrefix + d[6];
+                    var newQuota = Create(d[0], d[1], d[2], d[3], d[4], d[5]);
                     var quota = client.Quotas.CreateOrUpdate(location, name, newQuota);
                     ValidateAgainstData(quota, d);
                     var result = client.Quotas.Get(location, name);
@@ -152,16 +172,18 @@ namespace Compute.Tests
                 });
 
                 data.ForEach((d) => {
-                    var name = quotaNamePrefix + d[4];
+                    var name = quotaNamePrefix + d[6];
                     var list = client.Quotas.List(location);
                     Assert.Equal(1, list.Count((q) => q.Name.Equals(name)));
                 });
 
                 data.ForEach((d) => {
-                    var name = quotaNamePrefix + d[4];
+                    var name = quotaNamePrefix + d[6];
                     client.Quotas.Delete(location, name);
-                    var result = client.Quotas.Get(location, name);
-                    Assert.Null(result);
+                    ValidateExpectedReturnCode(
+                        () => client.Quotas.Get(location, name),
+                        HttpStatusCode.NotFound
+                        );
                 });
             });
         }
@@ -173,15 +195,21 @@ namespace Compute.Tests
         public void TestCreateInvalidQuota() {
             RunTest((client) => {
                 var name = "myQuota";
-                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(-1, 1, 1, 1)));
-                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(1, -1, 1, 1)));
-                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(1, 1, -1, 1)));
-                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(1, 1, 1, -1)));
-                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(-1, 0, 0, 0)));
-                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(0, -1, 0, 0)));
-                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(0, 0, -1, 0)));
-                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(0, 0, 0, -1)));
-                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(-1, -1, -1, -1)));
+                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(-1, 1, 1, 1, 1, 1)));
+                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(1, -1, 1, 1, 1, 1)));
+                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(1, 1, -1, 1, 1, 1)));
+                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(1, 1, 1, -1, 1, 1)));
+                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(1, 1, 1, 1, -1, 1)));
+                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(1, 1, 1, 1, 1, -1)));
+
+                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(-1, 0, 0, 0, 0, 0)));
+                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(0, -1, 0, 0, 0, 0)));
+                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(0, 0, -1, 0, 0, 0)));
+                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(0, 0, 0, -1, 0, 0)));
+                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(0, 0, 0, 0, -1, 0)));
+                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(0, 0, 0, 0, 0, -1)));
+
+                Assert.ThrowsAny<System.Exception>(() => client.Quotas.CreateOrUpdate("local", name, Create(-1, -1, -1, -1, -1, -1)));
 
             });
         }
@@ -199,7 +227,11 @@ namespace Compute.Tests
         [Fact]
         public void TestDeleteNonExistingQuota() {
             RunTest((client) => {
-                client.Quotas.Delete("local", "thisdoesnotexistandifitdoesoops");
+                ValidateExpectedReturnCode(
+                    () => client.Quotas.Delete("local", "thisdoesnotexistandifitdoesoops"),
+                    HttpStatusCode.NotFound
+                    );
+                
             });
         }
 
@@ -211,17 +243,20 @@ namespace Compute.Tests
                 var quotaNamePrefix = "testQuota";
 
                 var data = new System.Collections.Generic.List<int[]>  {
-                    new [] { 0, 0, 0, 0, 0 },
-                    new [] { 0, 1, 0, 0, 1 },
-                    new [] { 0, 0, 1, 0 , 2},
-                    new [] { 0, 0, 0, 1 , 3},
-                    new [] { 100, 100, 100, 100 , 4},
-                    new [] { 1000, 1000, 1000, 1000 , 5}
+                    new [] { 0, 0, 0, 0, 0, 0, 0 },
+                    new [] { 1, 0, 0, 0, 0, 0, 1 },
+                    new [] { 0, 1, 0, 0, 0, 0, 2 },
+                    new [] { 0, 0, 1, 0, 0, 0, 3 },
+                    new [] { 0, 0, 0, 1, 0, 0, 4 },
+                    new [] { 0, 0, 0, 0, 1, 0, 5 },
+                    new [] { 0, 0, 0, 0, 0, 1, 6 },
+                    new [] { 100, 100, 100, 100 ,100, 100,  7 },
+                    new [] { 1000, 1000, 1000, 1000, 1000, 1000, 8 }
                 };
 
                 data.ForEach((d) => {
-                    var name = quotaNamePrefix + d[4];
-                    var newQuota = Create(d[0], d[1], d[2], d[3]);
+                    var name = quotaNamePrefix + d[6];
+                    var newQuota = Create(d[0], d[1], d[2], d[3], d[4], d[5]);
                     var quota = client.Quotas.CreateOrUpdate(location, name, newQuota);
                     var result = client.Quotas.Get(location, name);
                     Assert.Null(quota);
@@ -229,7 +264,7 @@ namespace Compute.Tests
                 });
 
                 data.ForEach((d) => {
-                    var name = quotaNamePrefix + d[4];
+                    var name = quotaNamePrefix + d[6];
                     var list = client.Quotas.List(location);
                     Assert.Equal(0, list.Count((q) => q.Name.Equals(name)));
                 });

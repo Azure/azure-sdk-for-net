@@ -159,8 +159,9 @@ namespace Storage.Tests
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Kind = Kind.StorageV2;
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
-                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
 
                 // implement case
                 try
@@ -225,8 +226,9 @@ namespace Storage.Tests
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Kind = Kind.StorageV2;
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
-                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
 
                 // implement case
                 try
@@ -307,8 +309,9 @@ namespace Storage.Tests
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Kind = Kind.StorageV2;
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
-                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
 
                 // implement case
                 try
@@ -352,8 +355,9 @@ namespace Storage.Tests
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Kind = Kind.StorageV2;
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
-                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
 
                 // implement case
                 try
@@ -403,8 +407,9 @@ namespace Storage.Tests
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Kind = Kind.StorageV2;
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
-                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
 
                 // implement case
                 try
@@ -462,8 +467,9 @@ namespace Storage.Tests
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Kind = Kind.StorageV2;
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
-                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
 
                 // implement case
                 try
@@ -515,8 +521,9 @@ namespace Storage.Tests
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Kind = Kind.StorageV2;
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
-                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
 
                 // implement case
                 try

@@ -50,7 +50,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// (number of VM's).</param>
         /// <param name="hostingEnvironment">Name of App Service Environment
         /// where app or App Service plan should be created.</param>
-        public ValidateRequest(string name, string type, string location, string serverFarmId = default(string), string skuName = default(string), bool? needLinuxWorkers = default(bool?), bool? isSpot = default(bool?), int? capacity = default(int?), string hostingEnvironment = default(string))
+        /// <param name="isXenon">&lt;code&gt;true&lt;/code&gt; if App Service
+        /// plan is running as a windows container</param>
+        public ValidateRequest(string name, string type, string location, string serverFarmId = default(string), string skuName = default(string), bool? needLinuxWorkers = default(bool?), bool? isSpot = default(bool?), int? capacity = default(int?), string hostingEnvironment = default(string), bool? isXenon = default(bool?))
         {
             Name = name;
             Type = type;
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             IsSpot = isSpot;
             Capacity = capacity;
             HostingEnvironment = hostingEnvironment;
+            IsXenon = isXenon;
             CustomInit();
         }
 
@@ -130,6 +133,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostingEnvironment")]
         public string HostingEnvironment { get; set; }
+
+        /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if App
+        /// Service plan is running as a windows container
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isXenon")]
+        public bool? IsXenon { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         static ContainerConfiguration()
         {
-            Type = "docker";
+            Type = "dockerCompatible";
         }
 
         /// <summary>

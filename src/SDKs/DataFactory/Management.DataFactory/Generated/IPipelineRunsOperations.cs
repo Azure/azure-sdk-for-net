@@ -92,6 +92,10 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='runId'>
         /// The pipeline run identifier.
         /// </param>
+        /// <param name='isRecursive'>
+        /// If true, cancel all the Child pipelines that are triggered by the
+        /// current pipeline.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -104,6 +108,6 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string factoryName, string runId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string factoryName, string runId, bool? isRecursive = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

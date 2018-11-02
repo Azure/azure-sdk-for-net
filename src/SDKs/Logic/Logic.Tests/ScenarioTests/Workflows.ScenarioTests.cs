@@ -17,309 +17,301 @@ namespace Test.Azure.Management.Logic
     [Collection("WorkflowsScenarioTests")]
     public class WorkflowsScenarioTests : ScenarioTestsBase
     {
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndDeleteWorkflow()
+        [Fact]
+        public void Workflows_Create_OK()
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
-                
-                // Create a workflow
-                client.Workflows.CreateOrUpdate(
-                    resourceGroupName: this.resourceGroupName,
-                    workflowName: workflowName,
-                    workflow: new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        Definition = JToken.Parse(this.definition)                        
-                    });
-
-                // Get the workflow and verify the content
-                var workflow = client.Workflows.Get(this.resourceGroupName, workflowName);
-                Assert.Equal(WorkflowState.Enabled, workflow.State);
-                Assert.Equal(this.location, workflow.Location);
-                Assert.Equal(this.Sku.Name, workflow.Sku.Name);
-                Assert.NotEmpty(workflow.Definition.ToString());
-
-                // Delete the workflow
-                client.Workflows.Delete(this.resourceGroupName, workflowName);
-            }
-        }
-
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndEnableDisableWorkflow()
-        {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
-                
-                // Create a workflow
-                var workflow = client.Workflows.CreateOrUpdate(
-                    this.resourceGroupName,
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
                     workflowName,
-                    new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        State = WorkflowState.Disabled,
-                        Definition = JToken.Parse(this.definition)
-                    });
+                    workflow);
 
-                // Verify the response
-                Assert.Equal(workflowName, workflow.Name);
-                Assert.Equal(WorkflowState.Disabled, workflow.State);
+                this.ValidateWorkflow(workflow, createdWorkflow);
 
-                // Enable the workflow
-                client.Workflows.Enable(this.resourceGroupName, workflowName);
-
-                // Get the workflow and verify it's enabled
-                workflow = client.Workflows.Get(this.resourceGroupName, workflowName);
-                Assert.Equal(WorkflowState.Enabled, workflow.State);
-
-                // Disable the workflow
-                client.Workflows.Disable(this.resourceGroupName, workflowName);
-
-                // Get the workflow and verify it's disabled
-                workflow = client.Workflows.Get(this.resourceGroupName, workflowName);
-                Assert.Equal(WorkflowState.Disabled, workflow.State);
-
-                // Delete the workflow
-                client.Workflows.Delete(this.resourceGroupName, workflowName);
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }
         }
 
         [Fact]
-        public void ListWorkflow()
+        public void Workflows_Get_OK()
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                string workflowName2 = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
-                
-                // Create a workflow
-                var workflow = client.Workflows.CreateOrUpdate(
-                    this.resourceGroupName,
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
                     workflowName,
-                    new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        State = WorkflowState.Disabled,
-                        Definition = JToken.Parse(this.definition)
-                    });
+                    workflow);
 
-                // Verify the response
-                Assert.Equal(workflowName, workflow.Name);
-                Assert.Equal(WorkflowState.Disabled, workflow.State);
+                var retrievedWorkflow = client.Workflows.Get(Constants.DefaultResourceGroup, workflowName);
 
-                // Create another workflow
-                var workflow2 = client.Workflows.CreateOrUpdate(
-                    this.resourceGroupName,
+                this.ValidateWorkflow(workflow, retrievedWorkflow);
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+            }
+        }
+
+        [Fact]
+        public void Workflows_List_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName1 = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow1 = this.CreateWorkflow(workflowName1);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName1,
+                    workflow1);
+
+                var workflowName2 = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow2 = this.CreateWorkflow(workflowName2);
+                workflow2.State = WorkflowState.Disabled;
+                var createdWorkflow2 = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
                     workflowName2,
-                    new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        State = WorkflowState.Disabled,
-                        Definition = JToken.Parse(this.definition)
-                    });
+                    workflow2);
 
-                // List the workflow in resource group
-                var lists = client.Workflows.ListByResourceGroup(this.resourceGroupName, new ODataQuery<WorkflowFilter>(f => f.State == WorkflowState.Disabled) { Top = 1 });
+                var workflowName3 = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow3 = this.CreateWorkflow(workflowName3);
+                workflow3.State = WorkflowState.Disabled;
+                var createdWorkflow3 = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName3,
+                    workflow3);
 
-                Assert.Equal(1, lists.Count());
+                var workflows = client.Workflows.ListByResourceGroup(Constants.DefaultResourceGroup, new ODataQuery<WorkflowFilter>(f => f.State == WorkflowState.Disabled) { Top = 2 });
 
-                // List the workflow in resource group
-                lists = client.Workflows.ListByResourceGroup(this.resourceGroupName);
+                Assert.Equal(2, workflows.Count());
+                this.ValidateWorkflow(workflow2, workflows.Single(x => x.Name == workflow2.Name));
+                this.ValidateWorkflow(workflow3, workflows.Single(x => x.Name == workflow3.Name));
 
-                Assert.True(lists.Count() > 1);
-                workflow = lists.First();
-                Assert.NotNull(workflow.Id);
-                Assert.NotNull(workflow.Name);
-                Assert.NotNull(workflow.Type);
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName1);
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName2);
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName3);
+            }
 
-                lists = client.Workflows.ListBySubscription();
+        }
 
-                Assert.NotEmpty(lists);
-                workflow = lists.First();
-                Assert.NotNull(workflow.Id);
-                Assert.NotNull(workflow.Name);
-                Assert.NotNull(workflow.Type);
-                
-                // Delete the workflow
-                client.Workflows.Delete(this.resourceGroupName, workflowName);
+        [Fact]
+        public void Workflows_Update_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
+
+                var updatesToBeMade = new Workflow
+                {
+                    Tags = new Dictionary<string, string>
+                {
+                    { "abc", "def" }
+                }
+                };
+                var updatedWorkflow = client.Workflows.Update(Constants.DefaultResourceGroup, workflowName, updatesToBeMade);
+
+                Assert.Equal("def", updatedWorkflow.Tags["abc"]);
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }
         }
 
         [Fact]
-        public void ValidateWorkflow()
+        public void Workflows_Delete_OK()
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
-                
-                // Create a workflow
-                client.Workflows.CreateOrUpdate(
-                    resourceGroupName: this.resourceGroupName,
-                    workflowName: workflowName,
-                    workflow: new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        Definition = JToken.Parse(this.simpleTriggerDefinition)
-                    });
-
-                // Validate a workflow
-                client.Workflows.Validate(
-                    this.resourceGroupName,
-                    this.location,
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
                     workflowName,
-                    new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        Definition = JToken.Parse(this.definition)
-                    });
+                    workflow);
 
-                Assert.Throws<CloudException>(() =>
-                {
-                    // Validate an invlaid workflow
-                    client.Workflows.Validate(
-                        this.resourceGroupName,
-                        this.location,
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+                Assert.Throws<CloudException>(() => client.Workflows.Get(Constants.DefaultResourceGroup, workflowName));
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+            }
+        }
+
+        [Fact]
+        public void Workflows_Disable_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
+
+                client.Workflows.Disable(Constants.DefaultResourceGroup, workflowName);
+                var retrievedWorkflow = client.Workflows.Get(Constants.DefaultResourceGroup, workflowName);
+
+                Assert.Equal(WorkflowState.Disabled, retrievedWorkflow.State);
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+            }
+        }
+
+        [Fact]
+        public void Workflows_Enable_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
+
+                client.Workflows.Enable(Constants.DefaultResourceGroup, workflowName);
+                var retrievedWorkflow = client.Workflows.Get(Constants.DefaultResourceGroup, workflowName);
+
+                Assert.Equal(WorkflowState.Enabled, retrievedWorkflow.State);
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+            }
+        }
+
+        [Fact]
+        public void Workflows_Validate_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+
+                client.Workflows.ValidateByLocation(Constants.DefaultResourceGroup,
+                        Constants.DefaultLocation,
                         workflowName,
-                        new Workflow
-                        {
-                            Location = this.location,
-                            Sku = this.Sku,
-                            Definition = "invalid definition"
-                        });
-                });
+                        workflow);
             }
         }
 
         [Fact]
-        public void DeleteAllWorkflows()
+        public void Workflows_Validate_Exception()
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
+            
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                var client = this.GetWorkflowClient(context);
-                
-                var workflows = client.Workflows.ListByResourceGroup(this.resourceGroupName);
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                workflow.Definition = "Invalid Definition";
 
-                foreach (var workflow in workflows)
-                {
-                    client.Workflows.Delete(this.resourceGroupName, workflow.Name);
-                }
-
-                while (!string.IsNullOrEmpty(workflows.NextPageLink))
-                {
-                    workflows = client.Workflows.ListByResourceGroupNext(workflows.NextPageLink);
-
-                    foreach (var workflow in workflows)
-                    {
-                        client.Workflows.Delete(this.resourceGroupName, workflow.Name);
-                    }
-                }
-
-                workflows = client.Workflows.ListByResourceGroup(this.resourceGroupName);
-
-                Assert.Equal(0, workflows.Count());
-            }
-        }
-
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void UpdateWorkflow()
-        {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
-                
-                // Create a workflow
-                var workflow = client.Workflows.CreateOrUpdate(
-                    this.resourceGroupName,
+                Assert.Throws<CloudException>(() => client.Workflows.ValidateByLocation(Constants.DefaultResourceGroup,
+                    Constants.DefaultLocation,
                     workflowName,
-                    new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        Definition = JToken.Parse(this.definition)
-                    });
-
-                // Verify the response
-                Assert.Equal(workflowName, workflow.Name);
-                Assert.Equal(WorkflowState.Enabled, workflow.State);
-                Assert.Equal(null, workflow.Tags);
-
-                // Update the workflow
-                workflow = new Workflow()
-                    {
-                        Tags = new Dictionary<string, string>()
-                    };
-                workflow.Tags.Add("abc", "def");
-                workflow = client.Workflows.Update(this.resourceGroupName, workflowName, workflow);
-
-                Assert.Equal(1, workflow.Tags.Count);
-
+                    workflow));
             }
         }
 
         [Fact]
-        public void RegenerateAccessKey()
+        public void Workflows_RegenerateAccessKey_OK()
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
 
-                // Create a workflow
-                var workflow = client.Workflows.CreateOrUpdate(
-                    resourceGroupName: this.resourceGroupName,
-                    workflowName: workflowName,
-                    workflow: new Workflow
-                    {
-                        Location = this.location,
-                        Definition = JToken.Parse(this.regenerateAccessKeyDefinition)
-                    });
+                client.Workflows.RegenerateAccessKey(Constants.DefaultResourceGroup, workflowName, new RegenerateActionParameter(KeyType.Primary));
+                var retrievedWorkflow = client.Workflows.Get(Constants.DefaultResourceGroup, workflowName);
 
-                // Run the trigger
-                client.Workflows.RegenerateAccessKey(this.resourceGroupName, workflowName, new RegenerateActionParameter(KeyType.Primary));
+                Assert.NotEqual(workflow.AccessEndpoint, retrievedWorkflow.AccessEndpoint);
 
-                // Delete the workflow
-                client.Workflows.Delete(this.resourceGroupName, workflowName);
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }
         }
 
         [Fact]
-        public void ListSwagger()
+        public void Workflows_ListSwagger_OK()
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
 
-                // Create a workflow
-                var workflow = client.Workflows.CreateOrUpdate(
-                    resourceGroupName: this.resourceGroupName,
-                    workflowName: workflowName,
-                    workflow: new Workflow
-                    {
-                        Location = this.location,
-                        Definition = JToken.Parse(this.listSwaggerDefinition)
-                    });
+                var retrievedSwagger = client.Workflows.ListSwagger(Constants.DefaultResourceGroup, workflowName) as JObject;
 
-                // Run the trigger
-                client.Workflows.ListSwagger(this.resourceGroupName, workflowName);
-
-                // Delete the workflow
-                client.Workflows.Delete(this.resourceGroupName, workflowName);
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }
         }
+
+        [Fact]
+        public void Workflows_GenerateUpgradedDefinition_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                workflow.Definition = this.WorkflowToBeUpgradedDefinition;
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
+
+                var upgradedDefinition = client.Workflows.GenerateUpgradedDefinition(Constants.DefaultResourceGroup,
+                    workflowName,
+                    new GenerateUpgradedDefinitionParameters
+                    {
+                        TargetSchemaVersion = "2016-06-01"
+                    }) as Workflow;
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+            }
+        }
+
+        private void ValidateWorkflow(Workflow expected, Workflow actual)
+        {
+            // Freshly created workflows don't have a state yet
+            if(expected.State != null)
+            {
+                Assert.Equal(expected.State, actual.State);
+            }
+            Assert.Equal(expected.Definition, actual.Definition);
+            Assert.Equal(expected.Tags, actual.Tags);
+            Assert.NotNull(actual.ChangedTime);
+            Assert.NotNull(actual.CreatedTime);
+        }
+
+        private JToken WorkflowToBeUpgradedDefinition => JToken.Parse(@"
+        {
+            '$schema': 'https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2015-08-01-preview/workflowdefinition.json#',
+            'contentVersion': '1.0.0.0',
+            'parameters': {},
+            'triggers': {},
+            'actions': {},
+            'outputs': {}
+        }");
     }
 }

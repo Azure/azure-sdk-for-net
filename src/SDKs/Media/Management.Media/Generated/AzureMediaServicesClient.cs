@@ -54,21 +54,27 @@ namespace Microsoft.Azure.Management.Media
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
+        /// Gets the IAccountFiltersOperations.
+        /// </summary>
+        public virtual IAccountFiltersOperations AccountFilters { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -89,6 +95,11 @@ namespace Microsoft.Azure.Management.Media
         /// Gets the IAssetsOperations.
         /// </summary>
         public virtual IAssetsOperations Assets { get; private set; }
+
+        /// <summary>
+        /// Gets the IAssetFiltersOperations.
+        /// </summary>
+        public virtual IAssetFiltersOperations AssetFilters { get; private set; }
 
         /// <summary>
         /// Gets the IContentKeyPoliciesOperations.
@@ -129,6 +140,19 @@ namespace Microsoft.Azure.Management.Media
         /// Gets the IStreamingEndpointsOperations.
         /// </summary>
         public virtual IStreamingEndpointsOperations StreamingEndpoints { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the AzureMediaServicesClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling AzureMediaServicesClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected AzureMediaServicesClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the AzureMediaServicesClient class.
@@ -213,6 +237,33 @@ namespace Microsoft.Azure.Management.Media
         /// Thrown when a required parameter is null
         /// </exception>
         public AzureMediaServicesClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the AzureMediaServicesClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling AzureMediaServicesClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public AzureMediaServicesClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -331,10 +382,12 @@ namespace Microsoft.Azure.Management.Media
         /// </summary>
         private void Initialize()
         {
+            AccountFilters = new AccountFiltersOperations(this);
             Operations = new Operations(this);
             Mediaservices = new MediaservicesOperations(this);
             Locations = new LocationsOperations(this);
             Assets = new AssetsOperations(this);
+            AssetFilters = new AssetFiltersOperations(this);
             ContentKeyPolicies = new ContentKeyPoliciesOperations(this);
             Transforms = new TransformsOperations(this);
             Jobs = new JobsOperations(this);
@@ -344,7 +397,7 @@ namespace Microsoft.Azure.Management.Media
             LiveOutputs = new LiveOutputsOperations(this);
             StreamingEndpoints = new StreamingEndpointsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-06-01-preview";
+            ApiVersion = "2018-07-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

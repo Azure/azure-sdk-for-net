@@ -70,19 +70,19 @@ namespace Networks.Tests
 
                 // Get List of PublicIPAddress 
                 var getPublicIpAddressListResponse = networkManagementClient.PublicIPAddresses.List(resourceGroupName);
-                Assert.Equal(1, getPublicIpAddressListResponse.Count());
+                Assert.Single(getPublicIpAddressListResponse);
                 ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListResponse.First());
 
                 // Get List of PublicIPAddress in a subscription
                 var getPublicIpAddressListSubscriptionResponse = networkManagementClient.PublicIPAddresses.ListAll();
-                Assert.NotEqual(0, getPublicIpAddressListSubscriptionResponse.Count());
+                Assert.NotEmpty(getPublicIpAddressListSubscriptionResponse);
                 
                 // Delete PublicIPAddress
                 networkManagementClient.PublicIPAddresses.Delete(resourceGroupName, publicIpName);
                 
                 // Get PublicIPAddress
                 getPublicIpAddressListResponse = networkManagementClient.PublicIPAddresses.List(resourceGroupName);
-                Assert.Equal(0, getPublicIpAddressListResponse.Count());
+                Assert.Empty(getPublicIpAddressListResponse);
             }
         }
 
@@ -147,19 +147,19 @@ namespace Networks.Tests
 
                 // Get List of PublicIPAddress 
                 var getPublicIpAddressListResponse = networkManagementClient.PublicIPAddresses.List(resourceGroupName);
-                Assert.Equal(1, getPublicIpAddressListResponse.Count());
+                Assert.Single(getPublicIpAddressListResponse);
                 ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListResponse.First());
 
                 // Get List of PublicIPAddress in a subscription
                 var getPublicIpAddressListSubscriptionResponse = networkManagementClient.PublicIPAddresses.ListAll();
-                Assert.NotEqual(0, getPublicIpAddressListSubscriptionResponse.Count());
+                Assert.NotEmpty(getPublicIpAddressListSubscriptionResponse);
                 
                 // Delete PublicIPAddress
                 networkManagementClient.PublicIPAddresses.Delete(resourceGroupName, publicIpName);
                 
                 // Get PublicIPAddress
                 getPublicIpAddressListResponse = networkManagementClient.PublicIPAddresses.List(resourceGroupName);
-                Assert.Equal(0, getPublicIpAddressListResponse.Count());
+                Assert.Empty(getPublicIpAddressListResponse);
 
             }
         }
@@ -218,19 +218,19 @@ namespace Networks.Tests
 
                 // Get List of PublicIPAddress 
                 var getPublicIpAddressListResponse = networkManagementClient.PublicIPAddresses.List(resourceGroupName);
-                Assert.Equal(1, getPublicIpAddressListResponse.Count());
+                Assert.Single(getPublicIpAddressListResponse);
                 ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListResponse.First());
 
                 // Get List of PublicIPAddress in a subscription
                 var getPublicIpAddressListSubscriptionResponse = networkManagementClient.PublicIPAddresses.ListAll();
-                Assert.NotEqual(0, getPublicIpAddressListSubscriptionResponse.Count());
+                Assert.NotEmpty(getPublicIpAddressListSubscriptionResponse);
 
                 // Delete PublicIPAddress
                 networkManagementClient.PublicIPAddresses.Delete(resourceGroupName, ipv6PublicIpName);
 
                 // Get PublicIPAddress
                 getPublicIpAddressListResponse = networkManagementClient.PublicIPAddresses.List(resourceGroupName);
-                Assert.Equal(0, getPublicIpAddressListResponse.Count());
+                Assert.Empty(getPublicIpAddressListResponse);
 
                 // Also check IPv4 PublicIP
                 // Create the parameter for PUT PublicIPAddress

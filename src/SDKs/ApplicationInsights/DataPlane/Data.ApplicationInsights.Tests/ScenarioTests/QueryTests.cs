@@ -1,5 +1,5 @@
-using Microsoft.Azure.ApplicationInsights;
-using Microsoft.Azure.ApplicationInsights.Models;
+using Microsoft.Azure.ApplicationInsights.Query;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
@@ -14,14 +14,14 @@ namespace Data.ApplicationInsights.Tests
 
         private const int TakeCount = 25;
         private readonly string SimpleQuery = $"union * | take {TakeCount}";
-        private readonly TimeSpan PastHourTimespan = new TimeSpan(1, 0, 0);
+        private readonly string PastHourTimespan = "PT1H";
 
         [Fact]
         public async Task CanExecuteSimplePostQuery_DemoWorkspace()
         {
             using (var ctx = MockContext.Start(GetType().FullName))
             {
-                await ExecuteAndVerify(async (client) => await client.QueryWithHttpMessagesAsync(SimpleQuery), ctx: ctx);
+                await ExecuteAndVerify(async (client) => await client.Query.ExecuteWithHttpMessagesAsync(DefaultAppId, SimpleQuery), ctx: ctx);
             }
         }
 
@@ -30,7 +30,7 @@ namespace Data.ApplicationInsights.Tests
         {
             using (var ctx = MockContext.Start(GetType().FullName))
             {
-                await ExecuteAndVerify(async (client) => await client.QueryWithHttpMessagesAsync(SimpleQuery, PastHourTimespan), ctx: ctx);
+                await ExecuteAndVerify(async (client) => await client.Query.ExecuteWithHttpMessagesAsync(DefaultAppId, SimpleQuery, PastHourTimespan), ctx: ctx);
             }
         }
 
@@ -44,7 +44,7 @@ namespace Data.ApplicationInsights.Tests
 
                 try
                 {
-                    await client.QueryWithHttpMessagesAsync(badQuery, PastHourTimespan);
+                    await client.Query.ExecuteWithHttpMessagesAsync(DefaultAppId, badQuery, PastHourTimespan);
                     Assert.True(false, "An exception should have been thrown.");
                 }
                 catch (ErrorResponseException e)
@@ -72,7 +72,7 @@ namespace Data.ApplicationInsights.Tests
 
                 try
                 {
-                    var result = await client.QueryWithHttpMessagesAsync(longQuery, customHeaders: new Dictionary<string, List<string>> { { "Cache-Control", new List<string> { "no-cache" } } });
+                    var result = await client.Query.ExecuteWithHttpMessagesAsync(DefaultAppId, longQuery, customHeaders: new Dictionary<string, List<string>> { { "Cache-Control", new List<string> { "no-cache" } } });
                     Assert.True(false, "An exception should have been thrown.");
                 }
                 catch (ErrorResponseException e)
@@ -93,8 +93,6 @@ namespace Data.ApplicationInsights.Tests
             var client = GetClient(ctx, appId, apiKey);
             client.Preferences.IncludeStatistics = true;
             client.Preferences.IncludeRender = true;
-
-            client.AppId = appId;
 
             var response = await runQuery.Invoke(client);
 

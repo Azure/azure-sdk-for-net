@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Test
         }
 
         /// Get a default resource location for a given resource type
+        /// <summary>
         /// </summary>
         /// <param name="client">The resource management client</param>
         /// <param name="resourceType">The type of resource to create</param>

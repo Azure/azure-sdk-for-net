@@ -72,22 +72,20 @@ namespace CustomerInsights.Tests.Tests
                 Assert.Equal(relationshipName, relationship.RelationshipName);
                 Assert.Equal(relationship.Name, HubName + "/" + relationshipName, StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    relationship.Type,
                     "Microsoft.CustomerInsights/hubs/relationships",
-                    StringComparer.OrdinalIgnoreCase);
+                    relationship.Type, StringComparer.OrdinalIgnoreCase);
 
                 relationship = aciClient.Relationships.Get(ResourceGroupName, HubName, relationshipName);
                 Assert.Equal(relationshipName, relationship.RelationshipName);
                 Assert.Equal(relationship.Name, HubName + "/" + relationshipName, StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    relationship.Type,
                     "Microsoft.CustomerInsights/hubs/relationships",
-                    StringComparer.OrdinalIgnoreCase);
+                    relationship.Type, StringComparer.OrdinalIgnoreCase);
 
                 var relationships = aciClient.Relationships.ListByHub(ResourceGroupName, HubName);
 
                 Assert.True(relationships.Any());
-                Assert.True(relationships.ToList().Any(item => relationshipName == item.RelationshipName));
+                Assert.Contains(relationships.ToList(), item => relationshipName == item.RelationshipName);
 
                 var deleteRelationshipResult =
                     aciClient.Relationships.DeleteWithHttpMessagesAsync(ResourceGroupName, HubName, relationshipName)

@@ -1,11 +1,14 @@
-2018-05-22 18:06:27 UTC
-
-1) azure-rest-api-specs repository information
-GitHub user: Azure
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/eventgrid/data-plane/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\github\azure-sdk-for-net-qb\src\SDKs
+2018-10-23 13:09:57 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
 Branch:      master
-Commit:      7a6afb0f255ea0cdbcb100b9f17ff670fda64c54
-
-2) AutoRest information
+Commit:      15095b486206899c2ec77d2abddbaee9480021e3
+AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\kalyanaj\AppData\Roaming\npm `-- autorest@2.0.4262  
-Latest installed version:    
+Bootstrapper version:    autorest@2.0.4283

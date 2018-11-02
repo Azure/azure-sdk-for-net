@@ -5,7 +5,7 @@
 
 using Microsoft.AzureStack.Management.Compute.Admin;
 using Microsoft.AzureStack.Management.Compute.Admin.Models;
-using System;
+using System.Net;
 using System.Linq;
 using Xunit;
 
@@ -118,8 +118,10 @@ namespace Compute.Tests
 
                 // Delete
                 client.PlatformImages.Delete(Location, Publisher, Offer, Sku, Version);
-                result = client.PlatformImages.Get(Location, Publisher, Offer, Sku, Version);
-                Assert.Null(result);
+                ValidateExpectedReturnCode(
+                    () => client.PlatformImages.Get(Location, Publisher, Offer, Sku, Version),
+                    HttpStatusCode.NotFound
+                    );
             });
         }
 
@@ -152,8 +154,10 @@ namespace Compute.Tests
 
                 // Delete
                 client.PlatformImages.Delete(Location, Publisher, Offer, Sku, Version);
-                result = client.PlatformImages.Get(Location, Publisher, Offer, Sku, Version);
-                Assert.Null(result);
+                ValidateExpectedReturnCode(
+                    () => client.PlatformImages.Get(Location, Publisher, Offer, Sku, Version),
+                    HttpStatusCode.NotFound
+                    );
             });
         }
     }

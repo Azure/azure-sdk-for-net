@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
+        /// <param name="virtualNetworkTaps">The reference to Virtual Network
+        /// Taps.</param>
         /// <param name="applicationGatewayBackendAddressPools">The reference
         /// of ApplicationGatewayBackendAddressPool resource.</param>
         /// <param name="loadBalancerBackendAddressPools">The reference of
@@ -68,9 +70,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkInterfaceIPConfiguration(string id = default(string), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), bool? primary = default(bool?), PublicIPAddress publicIPAddress = default(PublicIPAddress), IList<ApplicationSecurityGroup> applicationSecurityGroups = default(IList<ApplicationSecurityGroup>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public NetworkInterfaceIPConfiguration(string id = default(string), IList<VirtualNetworkTap> virtualNetworkTaps = default(IList<VirtualNetworkTap>), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), bool? primary = default(bool?), PublicIPAddress publicIPAddress = default(PublicIPAddress), IList<ApplicationSecurityGroup> applicationSecurityGroups = default(IList<ApplicationSecurityGroup>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
+            VirtualNetworkTaps = virtualNetworkTaps;
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
             LoadBalancerInboundNatRules = loadBalancerInboundNatRules;
@@ -91,6 +94,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the reference to Virtual Network Taps.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualNetworkTaps")]
+        public IList<VirtualNetworkTap> VirtualNetworkTaps { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of ApplicationGatewayBackendAddressPool

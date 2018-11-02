@@ -24,36 +24,6 @@ namespace Microsoft.Azure.Management.Storage
     public static partial class UsagesOperationsExtensions
     {
             /// <summary>
-            /// Gets the current usage count and the limit for the resources under the
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IEnumerable<Usage> List(this IUsagesOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the current usage count and the limit for the resources under the
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IEnumerable<Usage>> ListAsync(this IUsagesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets the current usage count and the limit for the resources of the
             /// location under the subscription.
             /// </summary>

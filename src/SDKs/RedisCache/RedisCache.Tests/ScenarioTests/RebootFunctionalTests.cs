@@ -41,7 +41,7 @@ namespace AzureRedisCache.Tests
                 RedisResource response = _client.Redis.Get(resourceGroupName, redisCacheName);
                 Assert.Contains(redisCacheName, response.Id);
                 Assert.Equal(redisCacheName, response.Name);
-                Assert.True("succeeded".Equals(response.ProvisioningState, StringComparison.OrdinalIgnoreCase));
+                Assert.Equal("succeeded", response.ProvisioningState, ignoreCase: true);
                 Assert.Equal(SkuName.Premium, response.Sku.Name);
                 Assert.Equal(SkuFamily.P, response.Sku.Family);
 

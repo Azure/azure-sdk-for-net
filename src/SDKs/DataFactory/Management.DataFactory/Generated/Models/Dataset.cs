@@ -44,7 +44,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for dataset.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Dataset.</param>
-        public Dataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>))
+        /// <param name="folder">The folder that this Dataset is in. If not
+        /// specified, Dataset will appear at the root level.</param>
+        public Dataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder))
         {
             AdditionalProperties = additionalProperties;
             Description = description;
@@ -52,6 +54,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             LinkedServiceName = linkedServiceName;
             Parameters = parameters;
             Annotations = annotations;
+            Folder = folder;
             CustomInit();
         }
 
@@ -99,6 +102,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "annotations")]
         public IList<object> Annotations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the folder that this Dataset is in. If not specified,
+        /// Dataset will appear at the root level.
+        /// </summary>
+        [JsonProperty(PropertyName = "folder")]
+        public DatasetFolder Folder { get; set; }
 
         /// <summary>
         /// Validate the object.

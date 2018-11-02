@@ -63,28 +63,23 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             await UpdateResourceFromPollingUri(customHeaders, cancellationToken);
 
             #region Error response returned while polling on AsyncOperationHeader
-            string errorMessage = string.Empty;
-            string errorCode = string.Empty;
-
             if (AsyncOperationResponseBody?.Error != null)
             {
+                this.Error = AsyncOperationResponseBody?.Error;
+                
+                // We do this to surface service error message as CloudException message.
+                // this allows the message to be surfaced to Exception.Message, rather than user trying to discover the real message
+                // from Exception.Body.Message (Body is CloudError)
                 if (AsyncOperationResponseBody?.Error?.Message == null)
                 {
-                    errorMessage = string.Format(CultureInfo.InvariantCulture, Resources.LongRunningOperationFailed, AsyncOperationResponseBody.Status);
+                    this.Error.Message = string.Format(CultureInfo.InvariantCulture, Resources.LongRunningOperationFailed, AsyncOperationResponseBody.Status);
                 }
                 else
                 {
-                    errorMessage = string.Format(CultureInfo.InvariantCulture, Resources.LROOperationFailedAdditionalInfo, AsyncOperationResponseBody.Status, AsyncOperationResponseBody.Error?.Message);
-                    errorCode = AsyncOperationResponseBody.Error.Code;
+                    this.Error.Message = string.Format(CultureInfo.InvariantCulture, Resources.LROOperationFailedAdditionalInfo, AsyncOperationResponseBody.Status, AsyncOperationResponseBody.Error?.Message);
                 }
 
-                this.Error = new CloudError()
-                {
-                    Code = errorCode,
-                    Message = errorMessage
-                };
-
-                this.CloudException = new CloudException(errorMessage)
+                this.CloudException = new CloudException(this.Error.Message)
                 {
                     Body = AsyncOperationResponseBody?.Error,
                     Request = new HttpRequestMessageWrapper(this.Request, null),

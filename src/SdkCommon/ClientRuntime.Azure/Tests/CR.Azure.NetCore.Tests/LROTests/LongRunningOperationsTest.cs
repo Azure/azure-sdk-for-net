@@ -8,7 +8,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     using System.Net;
     using System.Net.Http;
     using CR.Azure.NetCore.Tests.Redis;
-    using CR.Azure.NetCore.Tests.Redis.Models;
+    //using CR.Azure.NetCore.Tests.Redis.Models;
     using CR.Azure.NetCore.Tests.Fakes;
     using Xunit;
     using Microsoft.Rest.Azure;
@@ -18,6 +18,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     using LROMultipleHeaders = CR.Azure.NetCore.Tests.LROOperationMultipleHeaderResponses;
     using Xunit.Abstractions;
     using CR.Azure.NetCore.Tests;
+    using CR.Azure.NetCore.Tests.TestClients.RedisClient;
+    using CR.Azure.NetCore.Tests.TestClients.Models;
 
     /// <summary>
     /// 
@@ -833,7 +835,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Avoid running during CI. Manually run to verify")]
         public void TestCreateWithRetryAfterDefaultMax()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -67,10 +66,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the elevation level of the user account.
         /// </summary>
         /// <remarks>
-        /// nonAdmin - The auto user is a standard user without elevated
-        /// access. admin - The auto user is a user with elevated access and
-        /// operates with full Administrator permissions. The default value is
-        /// nonAdmin. Possible values include: 'nonAdmin', 'admin'
+        /// The default value is nonAdmin. Possible values include: 'nonAdmin',
+        /// 'admin'
         /// </remarks>
         [JsonProperty(PropertyName = "elevationLevel")]
         public ElevationLevel? ElevationLevel { get; set; }
@@ -86,22 +83,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonProperty(PropertyName = "linuxUserConfiguration")]
         public LinuxUserConfiguration LinuxUserConfiguration { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Password == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Password");
-            }
-        }
     }
 }

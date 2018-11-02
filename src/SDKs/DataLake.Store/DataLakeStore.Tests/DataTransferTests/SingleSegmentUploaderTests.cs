@@ -246,7 +246,7 @@ namespace DataLakeStore.Tests
             TestRetryBlock(5);
         }
 
-        public void TestRetryBlock(int failCount)
+        internal void TestRetryBlock(int failCount)
         {
             bool expectSuccess = failCount < SingleSegmentUploader.MaxBufferUploadAttemptCount;
 

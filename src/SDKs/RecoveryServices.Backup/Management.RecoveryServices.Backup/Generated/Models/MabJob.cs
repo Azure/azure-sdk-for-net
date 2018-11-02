@@ -52,9 +52,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'IaasVMServiceContainer', 'DPMContainer',
         /// 'AzureBackupServerContainer', 'MABContainer', 'Cluster',
         /// 'AzureSqlContainer', 'Windows', 'VCenter', 'VMAppContainer',
-        /// 'SQLAGWorkLoadContainer', 'StorageContainer', 'GenericContainer',
-        /// 'SqlCluster', 'ExchangeDAG', 'SharepointFarm', 'HyperVCluster',
-        /// 'WindowsClient'</param>
+        /// 'SQLAGWorkLoadContainer', 'StorageContainer',
+        /// 'GenericContainer'</param>
         /// <param name="workloadType">Workload type of backup item. Possible
         /// values include: 'Invalid', 'VM', 'FileFolder', 'AzureSqlDb',
         /// 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM', 'SystemState',
@@ -106,8 +105,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DPMContainer', 'AzureBackupServerContainer', 'MABContainer',
         /// 'Cluster', 'AzureSqlContainer', 'Windows', 'VCenter',
         /// 'VMAppContainer', 'SQLAGWorkLoadContainer', 'StorageContainer',
-        /// 'GenericContainer', 'SqlCluster', 'ExchangeDAG', 'SharepointFarm',
-        /// 'HyperVCluster', 'WindowsClient'
+        /// 'GenericContainer'
         /// </summary>
         [JsonProperty(PropertyName = "mabServerType")]
         public string MabServerType { get; set; }

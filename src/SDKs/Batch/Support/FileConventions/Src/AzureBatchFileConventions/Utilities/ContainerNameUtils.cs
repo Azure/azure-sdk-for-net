@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
 #endif
         private static readonly int MaxJobIdLengthInMungedContainerName = 15;  // must be <= 63 - "job-".Length - 1 (hyphen before hash) - length of hash string (40 for SHA1)
         private static readonly char[] ForbiddenLeadingTrailingContainerNameChars = new[] { '-' };
-        private static readonly Regex UnderscoresAndMultipleDashes = new Regex("[_-]+");
+        private static readonly Regex InvalidContainerCharacters = new Regex("[:_-]+");
         private const string ContainerPrefix = "job-";
         private static readonly int MaxUsableJobIdLength = 63 - ContainerPrefix.Length;
 
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
             var hash = hasher().ComputeHash(Encoding.UTF8.GetBytes(str));
             var hashText = ToHex(hash);
 
-            var safeStr = MakeDashSafe(str);
+            var safeStr = MakeSafe(str);
 
             safeStr = safeStr.Trim(ForbiddenLeadingTrailingContainerNameChars);
 
@@ -93,9 +93,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
             return safeStr + "-" + hashText;
         }
 
-        private static string MakeDashSafe(string rawString)
+        private static string MakeSafe(string rawString)
         {
-            return UnderscoresAndMultipleDashes.Replace(rawString, "-");
+            return InvalidContainerCharacters.Replace(rawString, "-");
         }
 
         private static string ToHex(byte[] bytes)

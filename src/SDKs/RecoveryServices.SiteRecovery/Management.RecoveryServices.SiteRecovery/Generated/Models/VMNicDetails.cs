@@ -44,7 +44,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="selectionType">Selection type for failover.</param>
         /// <param name="recoveryNicIpAddressType">IP allocation type for
         /// recovery VM.</param>
-        public VMNicDetails(string nicId = default(string), string replicaNicId = default(string), string sourceNicArmId = default(string), string vMSubnetName = default(string), string vMNetworkName = default(string), string recoveryVMNetworkId = default(string), string recoveryVMSubnetName = default(string), string ipAddressType = default(string), string primaryNicStaticIPAddress = default(string), string replicaNicStaticIPAddress = default(string), string selectionType = default(string), string recoveryNicIpAddressType = default(string))
+        /// <param name="enableAcceleratedNetworkingOnRecovery">A value
+        /// indicating whether the NIC has accerated networking
+        /// enabled.</param>
+        public VMNicDetails(string nicId = default(string), string replicaNicId = default(string), string sourceNicArmId = default(string), string vMSubnetName = default(string), string vMNetworkName = default(string), string recoveryVMNetworkId = default(string), string recoveryVMSubnetName = default(string), string ipAddressType = default(string), string primaryNicStaticIPAddress = default(string), string replicaNicStaticIPAddress = default(string), string selectionType = default(string), string recoveryNicIpAddressType = default(string), bool? enableAcceleratedNetworkingOnRecovery = default(bool?))
         {
             NicId = nicId;
             ReplicaNicId = replicaNicId;
@@ -58,6 +61,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             ReplicaNicStaticIPAddress = replicaNicStaticIPAddress;
             SelectionType = selectionType;
             RecoveryNicIpAddressType = recoveryNicIpAddressType;
+            EnableAcceleratedNetworkingOnRecovery = enableAcceleratedNetworkingOnRecovery;
             CustomInit();
         }
 
@@ -137,6 +141,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryNicIpAddressType")]
         public string RecoveryNicIpAddressType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the NIC has accerated
+        /// networking enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableAcceleratedNetworkingOnRecovery")]
+        public bool? EnableAcceleratedNetworkingOnRecovery { get; set; }
 
     }
 }

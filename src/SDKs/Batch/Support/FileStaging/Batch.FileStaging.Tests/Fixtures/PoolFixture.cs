@@ -38,7 +38,7 @@ namespace Batch.FileStaging.Tests.Fixtures
         protected PoolFixture(string poolId)
         {
             this.PoolId = poolId;
-            this.client = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
+            this.client = TestUtilities.OpenBatchClientFromEnvironment();
         }
 
         public void Dispose()

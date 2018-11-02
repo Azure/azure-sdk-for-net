@@ -47,10 +47,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value
         /// cannot be larger than 1023 GB</param>
         /// <param name="storageAccountType">Specifies the storage account type
-        /// for the managed disk. Possible values are: Standard_LRS,
-        /// Premium_LRS, and StandardSSD_LRS. Possible values include:
-        /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS'</param>
-        public ImageDataDisk(int lun, SubResource snapshot = default(SubResource), SubResource managedDisk = default(SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), StorageAccountTypes? storageAccountType = default(StorageAccountTypes?))
+        /// for the managed disk. NOTE: UltraSSD_LRS can only be used with data
+        /// disks, it cannot be used with OS Disk. Possible values include:
+        /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS',
+        /// 'UltraSSD_LRS'</param>
+        public ImageDataDisk(int lun, SubResource snapshot = default(SubResource), SubResource managedDisk = default(SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), string storageAccountType = default(string))
         {
             Lun = lun;
             Snapshot = snapshot;
@@ -117,12 +118,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the storage account type for the managed
-        /// disk. Possible values are: Standard_LRS, Premium_LRS, and
-        /// StandardSSD_LRS. Possible values include: 'Standard_LRS',
-        /// 'Premium_LRS', 'StandardSSD_LRS'
+        /// disk. NOTE: UltraSSD_LRS can only be used with data disks, it
+        /// cannot be used with OS Disk. Possible values include:
+        /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS', 'UltraSSD_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountType")]
-        public StorageAccountTypes? StorageAccountType { get; set; }
+        public string StorageAccountType { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -24,6 +24,42 @@ namespace Microsoft.Azure.Management.Compute
     public static partial class VirtualMachinesOperationsExtensions
     {
             /// <summary>
+            /// Gets all the virtual machines under the specified subscription for the
+            /// specified location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location for which virtual machines under the subscription are queried.
+            /// </param>
+            public static IPage<VirtualMachine> ListByLocation(this IVirtualMachinesOperations operations, string location)
+            {
+                return operations.ListByLocationAsync(location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the virtual machines under the specified subscription for the
+            /// specified location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location for which virtual machines under the subscription are queried.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<VirtualMachine>> ListByLocationAsync(this IVirtualMachinesOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByLocationWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Captures the VM by copying virtual hard disks of the VM and outputs a
             /// template that can be used to create similar VMs.
             /// </summary>
@@ -1233,6 +1269,42 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task<RunCommandResult> BeginRunCommandAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, RunCommandInput parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginRunCommandWithHttpMessagesAsync(resourceGroupName, vmName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all the virtual machines under the specified subscription for the
+            /// specified location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<VirtualMachine> ListByLocationNext(this IVirtualMachinesOperations operations, string nextPageLink)
+            {
+                return operations.ListByLocationNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the virtual machines under the specified subscription for the
+            /// specified location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<VirtualMachine>> ListByLocationNextAsync(this IVirtualMachinesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByLocationNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

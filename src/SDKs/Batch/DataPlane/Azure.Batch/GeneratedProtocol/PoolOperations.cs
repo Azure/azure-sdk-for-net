@@ -617,10 +617,6 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "pool");
             }
-            if (pool != null)
-            {
-                pool.Validate();
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -3728,10 +3724,6 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolUpdatePropertiesParameter");
             }
-            if (poolUpdatePropertiesParameter != null)
-            {
-                poolUpdatePropertiesParameter.Validate();
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -4292,10 +4284,6 @@ namespace Microsoft.Azure.Batch.Protocol
             if (nodeRemoveParameter == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nodeRemoveParameter");
-            }
-            if (nodeRemoveParameter != null)
-            {
-                nodeRemoveParameter.Validate();
             }
             if (Client.ApiVersion == null)
             {

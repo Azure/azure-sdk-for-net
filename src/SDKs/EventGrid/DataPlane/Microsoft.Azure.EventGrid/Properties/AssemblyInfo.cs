@@ -6,10 +6,10 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("Microsoft Azure EventGrid Library")]
-[assembly: AssemblyDescription("Provides developers with a library to publish events to Azure EventGrid.")]
+[assembly: AssemblyDescription("Provides developers with a library to publish events to Azure EventGrid and to consume events delivered by EventGrid.")]
 
-[assembly: AssemblyVersion("1.1.0.0")]
-[assembly: AssemblyFileVersion("1.4.0.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

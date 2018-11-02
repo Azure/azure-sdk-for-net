@@ -104,14 +104,14 @@ namespace Networks.Tests
 
                 // Get all Vnets in a subscription
                 var getAllVnetInSubscription = networkManagementClient.VirtualNetworks.ListAll();
-                Assert.NotEqual(0, getAllVnetInSubscription.Count());
+                Assert.NotEmpty(getAllVnetInSubscription);
 
                 // Delete Vnet
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
                 
                 // Get all Vnets
                 getAllVnets = networkManagementClient.VirtualNetworks.List(resourceGroupName);
-                Assert.Equal(0, getAllVnets.Count());
+                Assert.Empty(getAllVnets);
             }
         }
 
@@ -330,30 +330,30 @@ namespace Networks.Tests
                 // Get Peering
                 var getPeer = networkManagementClient.VirtualNetworkPeerings.Get(resourceGroupName, vnet1Name, "peer1");
                 Assert.Equal("peer1", getPeer.Name);
-                Assert.Equal(true, getPeer.AllowForwardedTraffic);
-                Assert.Equal(true, getPeer.AllowVirtualNetworkAccess);
-                Assert.Equal(false, getPeer.AllowGatewayTransit);
+                Assert.True(getPeer.AllowForwardedTraffic);
+                Assert.True(getPeer.AllowVirtualNetworkAccess);
+                Assert.False(getPeer.AllowGatewayTransit);
                 Assert.NotNull(getPeer.RemoteVirtualNetwork);
                 Assert.Equal(putVnet2.Id, getPeer.RemoteVirtualNetwork.Id);
 
                 // List Peering
                 var listPeer = networkManagementClient.VirtualNetworkPeerings.List(resourceGroupName, vnet1Name).ToList();
-                Assert.Equal(1, listPeer.Count);
+                Assert.Single(listPeer);
                 Assert.Equal("peer1", listPeer[0].Name);
-                Assert.Equal(true, listPeer[0].AllowForwardedTraffic);
-                Assert.Equal(true, listPeer[0].AllowVirtualNetworkAccess);
-                Assert.Equal(false, listPeer[0].AllowGatewayTransit);
+                Assert.True(listPeer[0].AllowForwardedTraffic);
+                Assert.True(listPeer[0].AllowVirtualNetworkAccess);
+                Assert.False(listPeer[0].AllowGatewayTransit);
                 Assert.NotNull(listPeer[0].RemoteVirtualNetwork);
                 Assert.Equal(putVnet2.Id, listPeer[0].RemoteVirtualNetwork.Id);
 
                 // Get peering from GET vnet
                 var peeringVnet = networkManagementClient.VirtualNetworks.Get(resourceGroupName, vnet1Name);
                 Assert.Equal(vnet1Name, peeringVnet.Name);
-                Assert.Equal(1, peeringVnet.VirtualNetworkPeerings.Count());
+                Assert.Single(peeringVnet.VirtualNetworkPeerings);
                 Assert.Equal("peer1", peeringVnet.VirtualNetworkPeerings[0].Name);
-                Assert.Equal(true, peeringVnet.VirtualNetworkPeerings[0].AllowForwardedTraffic);
-                Assert.Equal(true, peeringVnet.VirtualNetworkPeerings[0].AllowVirtualNetworkAccess);
-                Assert.Equal(false, peeringVnet.VirtualNetworkPeerings[0].AllowGatewayTransit);
+                Assert.True(peeringVnet.VirtualNetworkPeerings[0].AllowForwardedTraffic);
+                Assert.True(peeringVnet.VirtualNetworkPeerings[0].AllowVirtualNetworkAccess);
+                Assert.False(peeringVnet.VirtualNetworkPeerings[0].AllowGatewayTransit);
                 Assert.NotNull(peeringVnet.VirtualNetworkPeerings[0].RemoteVirtualNetwork);
                 Assert.Equal(putVnet2.Id, peeringVnet.VirtualNetworkPeerings[0].RemoteVirtualNetwork.Id);
 
@@ -361,11 +361,11 @@ namespace Networks.Tests
                 networkManagementClient.VirtualNetworkPeerings.Delete(resourceGroupName, vnet1Name, "peer1");
 
                 listPeer = networkManagementClient.VirtualNetworkPeerings.List(resourceGroupName, vnet1Name).ToList();
-                Assert.Equal(0, listPeer.Count);
+                Assert.Empty(listPeer);
 
                 peeringVnet = networkManagementClient.VirtualNetworks.Get(resourceGroupName, vnet1Name);
                 Assert.Equal(vnet1Name, peeringVnet.Name);
-                Assert.Equal(0, peeringVnet.VirtualNetworkPeerings.Count());
+                Assert.Empty(peeringVnet.VirtualNetworkPeerings);
 
                 // Delete Vnets
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnet1Name);

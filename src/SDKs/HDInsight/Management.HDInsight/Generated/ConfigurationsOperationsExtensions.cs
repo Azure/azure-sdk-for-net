@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.HDInsight
     public static partial class ConfigurationsOperationsExtensions
     {
             /// <summary>
-            /// Configures the HTTP settings on the specified cluster.
+            /// Configures the configuration on the specified cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -41,13 +41,13 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='parameters'>
             /// The cluster configurations.
             /// </param>
-            public static void UpdateHTTPSettings(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters)
+            public static void Update(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters)
             {
-                operations.UpdateHTTPSettingsAsync(resourceGroupName, clusterName, configurationName, parameters).GetAwaiter().GetResult();
+                operations.UpdateAsync(resourceGroupName, clusterName, configurationName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Configures the HTTP settings on the specified cluster.
+            /// Configures the configuration on the specified cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -67,9 +67,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateHTTPSettingsAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateHTTPSettingsWithHttpMessagesAsync(resourceGroupName, clusterName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             /// <summary>
-            /// Configures the HTTP settings on the specified cluster.
+            /// Configures the configuration on the specified cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -136,13 +136,13 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='parameters'>
             /// The cluster configurations.
             /// </param>
-            public static void BeginUpdateHTTPSettings(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters)
+            public static void BeginUpdate(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters)
             {
-                operations.BeginUpdateHTTPSettingsAsync(resourceGroupName, clusterName, configurationName, parameters).GetAwaiter().GetResult();
+                operations.BeginUpdateAsync(resourceGroupName, clusterName, configurationName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Configures the HTTP settings on the specified cluster.
+            /// Configures the configuration on the specified cluster.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -162,9 +162,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginUpdateHTTPSettingsAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginUpdateAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginUpdateHTTPSettingsWithHttpMessagesAsync(resourceGroupName, clusterName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

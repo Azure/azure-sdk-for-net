@@ -56,7 +56,12 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "JobVersions", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "Jobs", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "LongTermRetentionBackups", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedDatabaseVulnerabilityAssessmentRuleBaselines", "2017-10-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedDatabaseVulnerabilityAssessmentScans", "2017-10-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedDatabaseVulnerabilityAssessments", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabases", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedInstanceEncryptionProtectors", "2017-10-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedInstanceKeys", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceTdeCertificates", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstances", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "Operations", "2015-05-01-preview"),
@@ -89,5 +94,16 @@ namespace Microsoft.Azure.Management.Sql
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Vs\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "057f369f689d1476fe70b05a4b4ab4fd3e3d542a";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

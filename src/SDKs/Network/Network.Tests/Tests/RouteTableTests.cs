@@ -66,7 +66,7 @@ namespace Network.Tests.Tests
                 // List RouteTable
                 var listRouteTableResponse = networkManagementClient.RouteTables.List(resourceGroupName);
 
-                Assert.Equal(1, listRouteTableResponse.Count());
+                Assert.Single(listRouteTableResponse);
                 Assert.Equal(getRouteTableResponse.Name, listRouteTableResponse.First().Name);
                 Assert.Equal(getRouteTableResponse.Id, listRouteTableResponse.First().Id);
 
@@ -76,7 +76,7 @@ namespace Network.Tests.Tests
                 // Verify delete
                 listRouteTableResponse = networkManagementClient.RouteTables.List(resourceGroupName);
 
-                Assert.Equal(0, listRouteTableResponse.Count());
+                Assert.Empty(listRouteTableResponse);
             }
         }
 
@@ -186,7 +186,7 @@ namespace Network.Tests.Tests
                 // Verify delete
                 var listRouteTableResponse = networkManagementClient.RouteTables.List(resourceGroupName);
 
-                Assert.Equal(0, listRouteTableResponse.Count());
+                Assert.Empty(listRouteTableResponse);
             }
         }
 

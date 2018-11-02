@@ -62,6 +62,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the TextAnalyticsClient class.
         /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling TextAnalyticsClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected TextAnalyticsClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the TextAnalyticsClient class.
+        /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
@@ -115,6 +128,33 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
         /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling TextAnalyticsClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public TextAnalyticsClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the TextAnalyticsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
         /// </param>
@@ -146,7 +186,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// </summary>
         private void Initialize()
         {
-            BaseUri = "{Endpoint}/text/analytics/v2.0";
+            BaseUri = "{Endpoint}/text/analytics/v2.1-preview";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -672,9 +712,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// The API returns a list of recognized entities in a given document.
         /// </summary>
         /// <remarks>
-        /// To get even more information on each recognized entity we recommend using
-        /// the Bing Entity Search API by querying for the recognized entities names.
-        /// See the &lt;a
+        /// The API returns a list of recognized entities in a given document. To get
+        /// even more information on each recognized entity we recommend using the Bing
+        /// Entity Search API by querying for the recognized entities names. See the
+        /// &lt;a
+        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/text-analytics-supported-languages"&gt;Supported
+        /// languages in Text Analytics API&lt;/a&gt; for the list of enabled
+        /// languages.The API returns a list of known entities and general named
+        /// entities ("Person", "Location", "Organization" etc) in a given document.
+        /// Known entities are returned with Wikipedia Id and Wikipedia link, and also
+        /// Bing Id which can be used in Bing Entity Search API. General named entities
+        /// are returned with entity types. If a general named entity is also a known
+        /// entity, then all information regarding it (Wikipedia Id, Bing Id, entity
+        /// type etc) will be returned. See the &lt;a
+        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-entity-linking#supported-types-for-named-entity-recognition"&gt;Supported
+        /// Entity Types in Text Analytics API&lt;/a&gt; for the list of supported
+        /// Entity Types. See the &lt;a
         /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/text-analytics-supported-languages"&gt;Supported
         /// languages in Text Analytics API&lt;/a&gt; for the list of enabled
         /// languages.
@@ -703,7 +756,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<EntitiesBatchResult>> EntitiesWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<EntitiesBatchResultV2dot1>> EntitiesWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -806,7 +859,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<EntitiesBatchResult>();
+            var _result = new HttpOperationResponse<EntitiesBatchResultV2dot1>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -815,7 +868,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<EntitiesBatchResult>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<EntitiesBatchResultV2dot1>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

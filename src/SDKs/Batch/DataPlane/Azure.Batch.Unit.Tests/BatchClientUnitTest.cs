@@ -111,7 +111,7 @@ namespace Azure.Batch.Unit.Tests
             BatchClient batchCli = ClientUnitTestCommon.CreateDummyClient();
 
             // close client and test
-            batchCli.Close();
+            batchCli.Dispose();
 
             TestBatchClientIsClosed(batchCli);
         }

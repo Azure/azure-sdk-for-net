@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="identifier">identifier of the key</param>
         /// <param name="base64Key">authentication key</param>
-        /// <param name="expiration">The exact time the authentication
+        /// <param name="expiration">The expiration time of the authentication
         /// key.</param>
         public AkamaiSignatureHeaderAuthenticationKey(string identifier = default(string), string base64Key = default(string), System.DateTime? expiration = default(System.DateTime?))
         {
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Media.Models
         public string Base64Key { get; set; }
 
         /// <summary>
-        /// Gets or sets the exact time the authentication key.
+        /// Gets or sets the expiration time of the authentication key.
         /// </summary>
         [JsonProperty(PropertyName = "expiration")]
         public System.DateTime? Expiration { get; set; }

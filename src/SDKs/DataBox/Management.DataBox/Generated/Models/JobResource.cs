@@ -40,15 +40,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// changed once it is created, but if an identical region is specified
         /// on update the request will succeed.</param>
         /// <param name="sku">The sku type.</param>
-        /// <param name="destinationAccountDetails">Destination account
-        /// details.</param>
         /// <param name="tags">The list of key value pairs that describe the
         /// resource. These tags can be used in viewing and grouping this
         /// resource (across resource groups).</param>
-        /// <param name="deviceType">Type of the device to be used for the job.
-        /// Possible values include: 'Pod', 'Disk', 'Cabinet'</param>
         /// <param name="isCancellable">Describes whether the job is
         /// cancellable or not.</param>
+        /// <param name="isDeletable">Describes whether the job is deletable or
+        /// not.</param>
         /// <param name="isShippingAddressEditable">Describes whether the
         /// shipping address is editable or not.</param>
         /// <param name="status">Name of the stage which is in progress.
@@ -60,28 +58,21 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="startTime">Time at which the job was started in UTC
         /// ISO 8601 format.</param>
         /// <param name="error">Top level error for the job.</param>
-        /// <param name="deliveryPackage">Delivery package shipping
-        /// details.</param>
-        /// <param name="returnPackage">Return package shipping
-        /// details.</param>
         /// <param name="details">Details of a job run. This field will only be
         /// sent for expand details filter.</param>
         /// <param name="cancellationReason">Reason for cancellation.</param>
         /// <param name="name">Name of the object.</param>
         /// <param name="id">Id of the object.</param>
         /// <param name="type">Type of the object.</param>
-        public JobResource(string location, Sku sku, IList<DestinationAccountDetails> destinationAccountDetails, IDictionary<string, string> tags = default(IDictionary<string, string>), DeviceType? deviceType = default(DeviceType?), bool? isCancellable = default(bool?), bool? isShippingAddressEditable = default(bool?), StageName? status = default(StageName?), System.DateTime? startTime = default(System.DateTime?), Error error = default(Error), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), JobDetails details = default(JobDetails), string cancellationReason = default(string), string name = default(string), string id = default(string), string type = default(string))
+        public JobResource(string location, Sku sku, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? isCancellable = default(bool?), bool? isDeletable = default(bool?), bool? isShippingAddressEditable = default(bool?), StageName? status = default(StageName?), System.DateTime? startTime = default(System.DateTime?), Error error = default(Error), JobDetails details = default(JobDetails), string cancellationReason = default(string), string name = default(string), string id = default(string), string type = default(string))
             : base(location, sku, tags)
         {
-            DeviceType = deviceType;
             IsCancellable = isCancellable;
+            IsDeletable = isDeletable;
             IsShippingAddressEditable = isShippingAddressEditable;
             Status = status;
             StartTime = startTime;
             Error = error;
-            DeliveryPackage = deliveryPackage;
-            ReturnPackage = returnPackage;
-            DestinationAccountDetails = destinationAccountDetails;
             Details = details;
             CancellationReason = cancellationReason;
             Name = name;
@@ -96,66 +87,45 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of the device to be used for the job. Possible
-        /// values include: 'Pod', 'Disk', 'Cabinet'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.deviceType")]
-        public DeviceType? DeviceType { get; set; }
-
-        /// <summary>
-        /// Gets or sets describes whether the job is cancellable or not.
+        /// Gets describes whether the job is cancellable or not.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isCancellable")]
-        public bool? IsCancellable { get; set; }
+        public bool? IsCancellable { get; private set; }
 
         /// <summary>
-        /// Gets or sets describes whether the shipping address is editable or
-        /// not.
+        /// Gets describes whether the job is deletable or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isDeletable")]
+        public bool? IsDeletable { get; private set; }
+
+        /// <summary>
+        /// Gets describes whether the shipping address is editable or not.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isShippingAddressEditable")]
-        public bool? IsShippingAddressEditable { get; set; }
+        public bool? IsShippingAddressEditable { get; private set; }
 
         /// <summary>
-        /// Gets or sets name of the stage which is in progress. Possible
-        /// values include: 'DeviceOrdered', 'DevicePrepared', 'Dispatched',
+        /// Gets name of the stage which is in progress. Possible values
+        /// include: 'DeviceOrdered', 'DevicePrepared', 'Dispatched',
         /// 'Delivered', 'PickedUp', 'AtAzureDC', 'DataCopy', 'Completed',
         /// 'CompletedWithErrors', 'Cancelled',
         /// 'Failed_IssueReportedAtCustomer', 'Failed_IssueDetectedAtAzureDC',
         /// 'Aborted'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public StageName? Status { get; set; }
+        public StageName? Status { get; private set; }
 
         /// <summary>
-        /// Gets or sets time at which the job was started in UTC ISO 8601
-        /// format.
+        /// Gets time at which the job was started in UTC ISO 8601 format.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startTime")]
-        public System.DateTime? StartTime { get; set; }
+        public System.DateTime? StartTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets top level error for the job.
+        /// Gets top level error for the job.
         /// </summary>
         [JsonProperty(PropertyName = "properties.error")]
-        public Error Error { get; set; }
-
-        /// <summary>
-        /// Gets or sets delivery package shipping details.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.deliveryPackage")]
-        public PackageShippingDetails DeliveryPackage { get; set; }
-
-        /// <summary>
-        /// Gets or sets return package shipping details.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.returnPackage")]
-        public PackageShippingDetails ReturnPackage { get; set; }
-
-        /// <summary>
-        /// Gets or sets destination account details.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.destinationAccountDetails")]
-        public IList<DestinationAccountDetails> DestinationAccountDetails { get; set; }
+        public Error Error { get; private set; }
 
         /// <summary>
         /// Gets or sets details of a job run. This field will only be sent for
@@ -165,10 +135,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public JobDetails Details { get; set; }
 
         /// <summary>
-        /// Gets or sets reason for cancellation.
+        /// Gets reason for cancellation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.cancellationReason")]
-        public string CancellationReason { get; set; }
+        public string CancellationReason { get; private set; }
 
         /// <summary>
         /// Gets name of the object.
@@ -197,24 +167,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public override void Validate()
         {
             base.Validate();
-            if (DestinationAccountDetails == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DestinationAccountDetails");
-            }
-            if (Error != null)
-            {
-                Error.Validate();
-            }
-            if (DestinationAccountDetails != null)
-            {
-                foreach (var element in DestinationAccountDetails)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
             if (Details != null)
             {
                 Details.Validate();

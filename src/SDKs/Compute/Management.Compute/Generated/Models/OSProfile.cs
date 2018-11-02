@@ -91,7 +91,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).</param>
         /// <param name="secrets">Specifies set of certificates that should be
         /// installed onto the virtual machine.</param>
-        public OSProfile(string computerName = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>))
+        /// <param name="allowExtensionOperations">Specifies whether extension
+        /// operations should be allowed on the virtual machine.
+        /// &lt;br&gt;&lt;br&gt;This may only be set to False when no
+        /// extensions are present on the virtual machine.</param>
+        public OSProfile(string computerName = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>), bool? allowExtensionOperations = default(bool?))
         {
             ComputerName = computerName;
             AdminUsername = adminUsername;
@@ -100,6 +104,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             WindowsConfiguration = windowsConfiguration;
             LinuxConfiguration = linuxConfiguration;
             Secrets = secrets;
+            AllowExtensionOperations = allowExtensionOperations;
             CustomInit();
         }
 
@@ -208,6 +213,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "secrets")]
         public IList<VaultSecretGroup> Secrets { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether extension operations should be
+        /// allowed on the virtual machine.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;This may only be set to False
+        /// when no extensions are present on the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "allowExtensionOperations")]
+        public bool? AllowExtensionOperations { get; set; }
 
     }
 }

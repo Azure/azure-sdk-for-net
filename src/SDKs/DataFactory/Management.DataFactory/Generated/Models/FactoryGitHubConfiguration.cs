@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Factory's GitHub repo information.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("FactoryGithubConfiguration")]
     public partial class FactoryGitHubConfiguration : FactoryRepoConfiguration
     {
         /// <summary>
@@ -35,7 +34,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="collaborationBranch">Collaboration branch.</param>
         /// <param name="rootFolder">Root folder.</param>
         /// <param name="lastCommitId">Last commit id.</param>
-        /// <param name="hostName">GitHub repo host name.</param>
+        /// <param name="hostName">GitHub Enterprise host name. For example:
+        /// https://github.mydomain.com</param>
         public FactoryGitHubConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId = default(string), string hostName = default(string))
             : base(accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId)
         {
@@ -49,10 +49,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets gitHub repo host name.
+        /// Gets or sets gitHub Enterprise host name. For example:
+        /// https://github.mydomain.com
         /// </summary>
         [JsonProperty(PropertyName = "hostName")]
-        public string HostName { get; private set; }
+        public string HostName { get; set; }
 
         /// <summary>
         /// Validate the object.

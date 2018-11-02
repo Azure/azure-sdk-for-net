@@ -14,8 +14,9 @@ using Microsoft.Rest;
 using Microsoft.Rest.Serialization;
 using Newtonsoft.Json;
 using Microsoft.Rest.Azure;
-using CR.Azure.NetCore.Tests.Redis.Models;
+//using CR.Azure.NetCore.Tests.Redis.Models;
 
+/*
 namespace CR.Azure.NetCore.Tests.Redis.Models
 {
     public partial class RedisCreateOrUpdateParameters
@@ -298,9 +299,11 @@ namespace CR.Azure.NetCore.Tests.Redis.Models
         }
     }
 }
+*/
 
 namespace CR.Azure.NetCore.Tests.Redis
 {
+    /*
     public static partial class RedisManagementClientExtensions
     {
     }
@@ -562,6 +565,7 @@ namespace CR.Azure.NetCore.Tests.Redis
         }    
     }
 
+    
     public static partial class RedisOperationsExtensions
     {
         /// <summary>
@@ -1074,6 +1078,7 @@ namespace CR.Azure.NetCore.Tests.Redis
         }
     }
 
+    
     public partial interface IRedisOperations
     {
         /// <summary>
@@ -2397,4 +2402,5 @@ namespace CR.Azure.NetCore.Tests.Redis
             return result;
         }
     }
+    */
 }

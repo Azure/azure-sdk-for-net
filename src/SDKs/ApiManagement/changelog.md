@@ -1,5 +1,10 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 4.0.4-preview
+
+- Added ApiRevisionDescription and ApiVersionDescription to ApiContract
+- Fixed bug in ApiManagementService contract. The CertificateInformation has a setter for Update scenarios.
+
 ### Changes in 4.0.3-preview
 
 - Fixed contract for Error in OperationResultContract

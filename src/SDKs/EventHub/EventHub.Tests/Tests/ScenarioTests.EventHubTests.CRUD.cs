@@ -70,7 +70,7 @@ namespace EventHub.Tests.ScenarioTests
                             Name = "EventHubArchive.AzureBlockBlob",
                             BlobContainer = "container",
                             ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
-                            StorageAccountResourceId = "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Storage-SouthCentralUS/providers/Microsoft.ClassicStorage/storageAccounts/arjunteststorage"
+                            StorageAccountResourceId = "/subscriptions/"+ResourceManagementClient.SubscriptionId.ToString()+"/resourcegroups/v-ajnavtest/providers/Microsoft.Storage/storageAccounts/testingsdkeventhub"
                         }
                     }
                 });
@@ -81,7 +81,7 @@ namespace EventHub.Tests.ScenarioTests
                 // Get the created EventHub
                 var getEventResponse = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
                 Assert.NotNull(getEventResponse);
-                Assert.Equal(getEventResponse.Status, EntityStatus.Active);
+                Assert.Equal(EntityStatus.Active, getEventResponse.Status);
 
                 // Get all Event Hubs for a given NameSpace
                 var getListEventHubResponse = EventHubManagementClient.EventHubs.ListByNamespace(resourceGroup, namespaceName);
@@ -103,8 +103,8 @@ namespace EventHub.Tests.ScenarioTests
                 // Get the updated EventHub and verify the properties
                 getEventResponse = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
                 Assert.NotNull(getEventResponse);
-                Assert.Equal(getEventResponse.Status, EntityStatus.Active);
-                Assert.Equal(getEventResponse.MessageRetentionInDays, 6);
+                Assert.Equal(EntityStatus.Active, getEventResponse.Status);
+                Assert.Equal(6, getEventResponse.MessageRetentionInDays);
 
                 // Delete the Evnet Hub
                 EventHubManagementClient.EventHubs.Delete(resourceGroup, namespaceName, eventhubName);

@@ -919,7 +919,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedFaces/{persistedFaceId}";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedfaces/{persistedFaceId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(persistedFaceId, Client.SerializationSettings).Trim('"')));
@@ -1101,7 +1101,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedFaces";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedfaces";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             List<string> _queryParameters = new List<string>();
@@ -1314,7 +1314,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedFaces";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedfaces";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             List<string> _queryParameters = new List<string>();

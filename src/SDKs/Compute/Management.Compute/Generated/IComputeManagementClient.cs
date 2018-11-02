@@ -48,19 +48,20 @@ namespace Microsoft.Azure.Management.Compute
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running
-        /// Operations. Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default
+        /// value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated
-        /// and included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When
+        /// set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
@@ -96,6 +97,11 @@ namespace Microsoft.Azure.Management.Compute
         IUsageOperations Usage { get; }
 
         /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
+        IVirtualMachinesOperations VirtualMachines { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachineSizesOperations.
         /// </summary>
         IVirtualMachineSizesOperations VirtualMachineSizes { get; }
@@ -104,11 +110,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IImagesOperations.
         /// </summary>
         IImagesOperations Images { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachinesOperations.
-        /// </summary>
-        IVirtualMachinesOperations VirtualMachines { get; }
 
         /// <summary>
         /// Gets the IVirtualMachineScaleSetsOperations.
@@ -154,6 +155,21 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the ISnapshotsOperations.
         /// </summary>
         ISnapshotsOperations Snapshots { get; }
+
+        /// <summary>
+        /// Gets the IGalleriesOperations.
+        /// </summary>
+        IGalleriesOperations Galleries { get; }
+
+        /// <summary>
+        /// Gets the IGalleryImagesOperations.
+        /// </summary>
+        IGalleryImagesOperations GalleryImages { get; }
+
+        /// <summary>
+        /// Gets the IGalleryImageVersionsOperations.
+        /// </summary>
+        IGalleryImageVersionsOperations GalleryImageVersions { get; }
 
         /// <summary>
         /// Gets the IContainerServicesOperations.

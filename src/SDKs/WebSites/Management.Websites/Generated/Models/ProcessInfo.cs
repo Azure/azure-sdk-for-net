@@ -38,10 +38,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="processInfoId">ARM Identifier for deployment.</param>
-        /// <param name="processInfoName">Deployment name.</param>
+        /// <param name="identifier">ARM Identifier for deployment.</param>
+        /// <param name="deploymentName">Deployment name.</param>
         /// <param name="href">HRef URI.</param>
-        /// <param name="miniDump">Minidump URI.</param>
+        /// <param name="minidump">Minidump URI.</param>
         /// <param name="isProfileRunning">Is profile running?</param>
         /// <param name="isIisProfileRunning">Is the IIS Profile
         /// running?</param>
@@ -59,33 +59,31 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="moduleCount">Module count.</param>
         /// <param name="threadCount">Thread count.</param>
         /// <param name="startTime">Start time.</param>
-        /// <param name="totalProcessorTime">Total CPU time.</param>
-        /// <param name="userProcessorTime">User CPU time.</param>
-        /// <param name="privilegedProcessorTime">Privileged CPU time.</param>
-        /// <param name="workingSet64">Working set.</param>
-        /// <param name="peakWorkingSet64">Peak working set.</param>
-        /// <param name="privateMemorySize64">Private memory size.</param>
-        /// <param name="virtualMemorySize64">Virtual memory size.</param>
-        /// <param name="peakVirtualMemorySize64">Peak virtual memory
-        /// usage.</param>
-        /// <param name="pagedSystemMemorySize64">Paged system memory.</param>
-        /// <param name="nonpagedSystemMemorySize64">Non-paged system
-        /// memory.</param>
-        /// <param name="pagedMemorySize64">Paged memory.</param>
-        /// <param name="peakPagedMemorySize64">Peak paged memory.</param>
+        /// <param name="totalCpuTime">Total CPU time.</param>
+        /// <param name="userCpuTime">User CPU time.</param>
+        /// <param name="privilegedCpuTime">Privileged CPU time.</param>
+        /// <param name="workingSet">Working set.</param>
+        /// <param name="peakWorkingSet">Peak working set.</param>
+        /// <param name="privateMemory">Private memory size.</param>
+        /// <param name="virtualMemory">Virtual memory size.</param>
+        /// <param name="peakVirtualMemory">Peak virtual memory usage.</param>
+        /// <param name="pagedSystemMemory">Paged system memory.</param>
+        /// <param name="nonPagedSystemMemory">Non-paged system memory.</param>
+        /// <param name="pagedMemory">Paged memory.</param>
+        /// <param name="peakPagedMemory">Peak paged memory.</param>
         /// <param name="timeStamp">Time stamp.</param>
         /// <param name="environmentVariables">List of environment
         /// variables.</param>
         /// <param name="isScmSite">Is this the SCM site?</param>
-        /// <param name="isWebJob">Is this a Web Job?</param>
+        /// <param name="isWebjob">Is this a Web Job?</param>
         /// <param name="description">Description of process.</param>
-        public ProcessInfo(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? processInfoId = default(int?), string processInfoName = default(string), string href = default(string), string miniDump = default(string), bool? isProfileRunning = default(bool?), bool? isIisProfileRunning = default(bool?), double? iisProfileTimeoutInSeconds = default(double?), string parent = default(string), IList<string> children = default(IList<string>), IList<ProcessThreadInfo> threads = default(IList<ProcessThreadInfo>), IList<string> openFileHandles = default(IList<string>), IList<ProcessModuleInfo> modules = default(IList<ProcessModuleInfo>), string fileName = default(string), string commandLine = default(string), string userName = default(string), int? handleCount = default(int?), int? moduleCount = default(int?), int? threadCount = default(int?), System.DateTime? startTime = default(System.DateTime?), string totalProcessorTime = default(string), string userProcessorTime = default(string), string privilegedProcessorTime = default(string), long? workingSet64 = default(long?), long? peakWorkingSet64 = default(long?), long? privateMemorySize64 = default(long?), long? virtualMemorySize64 = default(long?), long? peakVirtualMemorySize64 = default(long?), long? pagedSystemMemorySize64 = default(long?), long? nonpagedSystemMemorySize64 = default(long?), long? pagedMemorySize64 = default(long?), long? peakPagedMemorySize64 = default(long?), System.DateTime? timeStamp = default(System.DateTime?), IDictionary<string, string> environmentVariables = default(IDictionary<string, string>), bool? isScmSite = default(bool?), bool? isWebJob = default(bool?), string description = default(string))
+        public ProcessInfo(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? identifier = default(int?), string deploymentName = default(string), string href = default(string), string minidump = default(string), bool? isProfileRunning = default(bool?), bool? isIisProfileRunning = default(bool?), double? iisProfileTimeoutInSeconds = default(double?), string parent = default(string), IList<string> children = default(IList<string>), IList<ProcessThreadInfo> threads = default(IList<ProcessThreadInfo>), IList<string> openFileHandles = default(IList<string>), IList<ProcessModuleInfo> modules = default(IList<ProcessModuleInfo>), string fileName = default(string), string commandLine = default(string), string userName = default(string), int? handleCount = default(int?), int? moduleCount = default(int?), int? threadCount = default(int?), System.DateTime? startTime = default(System.DateTime?), string totalCpuTime = default(string), string userCpuTime = default(string), string privilegedCpuTime = default(string), long? workingSet = default(long?), long? peakWorkingSet = default(long?), long? privateMemory = default(long?), long? virtualMemory = default(long?), long? peakVirtualMemory = default(long?), long? pagedSystemMemory = default(long?), long? nonPagedSystemMemory = default(long?), long? pagedMemory = default(long?), long? peakPagedMemory = default(long?), System.DateTime? timeStamp = default(System.DateTime?), IDictionary<string, string> environmentVariables = default(IDictionary<string, string>), bool? isScmSite = default(bool?), bool? isWebjob = default(bool?), string description = default(string))
             : base(id, name, kind, type)
         {
-            ProcessInfoId = processInfoId;
-            ProcessInfoName = processInfoName;
+            Identifier = identifier;
+            DeploymentName = deploymentName;
             Href = href;
-            MiniDump = miniDump;
+            Minidump = minidump;
             IsProfileRunning = isProfileRunning;
             IsIisProfileRunning = isIisProfileRunning;
             IisProfileTimeoutInSeconds = iisProfileTimeoutInSeconds;
@@ -101,22 +99,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
             ModuleCount = moduleCount;
             ThreadCount = threadCount;
             StartTime = startTime;
-            TotalProcessorTime = totalProcessorTime;
-            UserProcessorTime = userProcessorTime;
-            PrivilegedProcessorTime = privilegedProcessorTime;
-            WorkingSet64 = workingSet64;
-            PeakWorkingSet64 = peakWorkingSet64;
-            PrivateMemorySize64 = privateMemorySize64;
-            VirtualMemorySize64 = virtualMemorySize64;
-            PeakVirtualMemorySize64 = peakVirtualMemorySize64;
-            PagedSystemMemorySize64 = pagedSystemMemorySize64;
-            NonpagedSystemMemorySize64 = nonpagedSystemMemorySize64;
-            PagedMemorySize64 = pagedMemorySize64;
-            PeakPagedMemorySize64 = peakPagedMemorySize64;
+            TotalCpuTime = totalCpuTime;
+            UserCpuTime = userCpuTime;
+            PrivilegedCpuTime = privilegedCpuTime;
+            WorkingSet = workingSet;
+            PeakWorkingSet = peakWorkingSet;
+            PrivateMemory = privateMemory;
+            VirtualMemory = virtualMemory;
+            PeakVirtualMemory = peakVirtualMemory;
+            PagedSystemMemory = pagedSystemMemory;
+            NonPagedSystemMemory = nonPagedSystemMemory;
+            PagedMemory = pagedMemory;
+            PeakPagedMemory = peakPagedMemory;
             TimeStamp = timeStamp;
             EnvironmentVariables = environmentVariables;
             IsScmSite = isScmSite;
-            IsWebJob = isWebJob;
+            IsWebjob = isWebjob;
             Description = description;
             CustomInit();
         }
@@ -127,16 +125,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets ARM Identifier for deployment.
+        /// Gets ARM Identifier for deployment.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.id")]
-        public int? ProcessInfoId { get; set; }
+        [JsonProperty(PropertyName = "properties.identifier")]
+        public int? Identifier { get; private set; }
 
         /// <summary>
         /// Gets or sets deployment name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string ProcessInfoName { get; set; }
+        [JsonProperty(PropertyName = "properties.deployment_name")]
+        public string DeploymentName { get; set; }
 
         /// <summary>
         /// Gets or sets hRef URI.
@@ -147,25 +145,25 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets minidump URI.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.miniDump")]
-        public string MiniDump { get; set; }
+        [JsonProperty(PropertyName = "properties.minidump")]
+        public string Minidump { get; set; }
 
         /// <summary>
         /// Gets or sets is profile running?
         /// </summary>
-        [JsonProperty(PropertyName = "properties.isProfileRunning")]
+        [JsonProperty(PropertyName = "properties.is_profile_running")]
         public bool? IsProfileRunning { get; set; }
 
         /// <summary>
         /// Gets or sets is the IIS Profile running?
         /// </summary>
-        [JsonProperty(PropertyName = "properties.isIisProfileRunning")]
+        [JsonProperty(PropertyName = "properties.is_iis_profile_running")]
         public bool? IsIisProfileRunning { get; set; }
 
         /// <summary>
         /// Gets or sets IIS Profile timeout (seconds).
         /// </summary>
-        [JsonProperty(PropertyName = "properties.iisProfileTimeoutInSeconds")]
+        [JsonProperty(PropertyName = "properties.iis_profile_timeout_in_seconds")]
         public double? IisProfileTimeoutInSeconds { get; set; }
 
         /// <summary>
@@ -189,7 +187,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets list of open files.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.openFileHandles")]
+        [JsonProperty(PropertyName = "properties.open_file_handles")]
         public IList<string> OpenFileHandles { get; set; }
 
         /// <summary>
@@ -201,140 +199,140 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets file name of this process.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.fileName")]
+        [JsonProperty(PropertyName = "properties.file_name")]
         public string FileName { get; set; }
 
         /// <summary>
         /// Gets or sets command line.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.commandLine")]
+        [JsonProperty(PropertyName = "properties.command_line")]
         public string CommandLine { get; set; }
 
         /// <summary>
         /// Gets or sets user name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.userName")]
+        [JsonProperty(PropertyName = "properties.user_name")]
         public string UserName { get; set; }
 
         /// <summary>
         /// Gets or sets handle count.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.handleCount")]
+        [JsonProperty(PropertyName = "properties.handle_count")]
         public int? HandleCount { get; set; }
 
         /// <summary>
         /// Gets or sets module count.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.moduleCount")]
+        [JsonProperty(PropertyName = "properties.module_count")]
         public int? ModuleCount { get; set; }
 
         /// <summary>
         /// Gets or sets thread count.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.threadCount")]
+        [JsonProperty(PropertyName = "properties.thread_count")]
         public int? ThreadCount { get; set; }
 
         /// <summary>
         /// Gets or sets start time.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.startTime")]
+        [JsonProperty(PropertyName = "properties.start_time")]
         public System.DateTime? StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets total CPU time.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.totalProcessorTime")]
-        public string TotalProcessorTime { get; set; }
+        [JsonProperty(PropertyName = "properties.total_cpu_time")]
+        public string TotalCpuTime { get; set; }
 
         /// <summary>
         /// Gets or sets user CPU time.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.userProcessorTime")]
-        public string UserProcessorTime { get; set; }
+        [JsonProperty(PropertyName = "properties.user_cpu_time")]
+        public string UserCpuTime { get; set; }
 
         /// <summary>
         /// Gets or sets privileged CPU time.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privilegedProcessorTime")]
-        public string PrivilegedProcessorTime { get; set; }
+        [JsonProperty(PropertyName = "properties.privileged_cpu_time")]
+        public string PrivilegedCpuTime { get; set; }
 
         /// <summary>
         /// Gets or sets working set.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.workingSet64")]
-        public long? WorkingSet64 { get; set; }
+        [JsonProperty(PropertyName = "properties.working_set")]
+        public long? WorkingSet { get; set; }
 
         /// <summary>
         /// Gets or sets peak working set.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.peakWorkingSet64")]
-        public long? PeakWorkingSet64 { get; set; }
+        [JsonProperty(PropertyName = "properties.peak_working_set")]
+        public long? PeakWorkingSet { get; set; }
 
         /// <summary>
         /// Gets or sets private memory size.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateMemorySize64")]
-        public long? PrivateMemorySize64 { get; set; }
+        [JsonProperty(PropertyName = "properties.private_memory")]
+        public long? PrivateMemory { get; set; }
 
         /// <summary>
         /// Gets or sets virtual memory size.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.virtualMemorySize64")]
-        public long? VirtualMemorySize64 { get; set; }
+        [JsonProperty(PropertyName = "properties.virtual_memory")]
+        public long? VirtualMemory { get; set; }
 
         /// <summary>
         /// Gets or sets peak virtual memory usage.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.peakVirtualMemorySize64")]
-        public long? PeakVirtualMemorySize64 { get; set; }
+        [JsonProperty(PropertyName = "properties.peak_virtual_memory")]
+        public long? PeakVirtualMemory { get; set; }
 
         /// <summary>
         /// Gets or sets paged system memory.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.pagedSystemMemorySize64")]
-        public long? PagedSystemMemorySize64 { get; set; }
+        [JsonProperty(PropertyName = "properties.paged_system_memory")]
+        public long? PagedSystemMemory { get; set; }
 
         /// <summary>
         /// Gets or sets non-paged system memory.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.nonpagedSystemMemorySize64")]
-        public long? NonpagedSystemMemorySize64 { get; set; }
+        [JsonProperty(PropertyName = "properties.non_paged_system_memory")]
+        public long? NonPagedSystemMemory { get; set; }
 
         /// <summary>
         /// Gets or sets paged memory.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.pagedMemorySize64")]
-        public long? PagedMemorySize64 { get; set; }
+        [JsonProperty(PropertyName = "properties.paged_memory")]
+        public long? PagedMemory { get; set; }
 
         /// <summary>
         /// Gets or sets peak paged memory.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.peakPagedMemorySize64")]
-        public long? PeakPagedMemorySize64 { get; set; }
+        [JsonProperty(PropertyName = "properties.peak_paged_memory")]
+        public long? PeakPagedMemory { get; set; }
 
         /// <summary>
         /// Gets or sets time stamp.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.timeStamp")]
+        [JsonProperty(PropertyName = "properties.time_stamp")]
         public System.DateTime? TimeStamp { get; set; }
 
         /// <summary>
         /// Gets or sets list of environment variables.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.environmentVariables")]
+        [JsonProperty(PropertyName = "properties.environment_variables")]
         public IDictionary<string, string> EnvironmentVariables { get; set; }
 
         /// <summary>
         /// Gets or sets is this the SCM site?
         /// </summary>
-        [JsonProperty(PropertyName = "properties.isScmSite")]
+        [JsonProperty(PropertyName = "properties.is_scm_site")]
         public bool? IsScmSite { get; set; }
 
         /// <summary>
         /// Gets or sets is this a Web Job?
         /// </summary>
-        [JsonProperty(PropertyName = "properties.isWebJob")]
-        public bool? IsWebJob { get; set; }
+        [JsonProperty(PropertyName = "properties.is_webjob")]
+        public bool? IsWebjob { get; set; }
 
         /// <summary>
         /// Gets or sets description of process.

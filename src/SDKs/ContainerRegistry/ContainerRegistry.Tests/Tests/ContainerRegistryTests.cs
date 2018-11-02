@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
+using System.Text;
 using Xunit;
 using Sku = Microsoft.Azure.Management.ContainerRegistry.Models.Sku;
 
@@ -130,7 +130,7 @@ namespace ContainerRegistry.Tests
             var registriesByResourceGroup = registryClient.Registries.ListByResourceGroup(resourceGroup.Name);
             registry = registriesByResourceGroup.First(
                 r => StringComparer.OrdinalIgnoreCase.Equals(r.Name, registry.Name));
-            Assert.Equal(1, registriesByResourceGroup.Count());
+            Assert.Single(registriesByResourceGroup);
             ContainerRegistryTestUtilities.ValidateResourceDefaultTags(registry);
 
             // Get the container registry
@@ -249,7 +249,7 @@ namespace ContainerRegistry.Tests
                 var webhooks = registryClient.Webhooks.List(resourceGroup.Name, registry.Name);
                 webhook = webhooks.First(
                     w => StringComparer.OrdinalIgnoreCase.Equals(w.Name, webhook.Name));
-                Assert.Equal(1, webhooks.Count());
+                Assert.Single(webhooks);
                 ContainerRegistryTestUtilities.ValidateResourceDefaultTags(webhook);
 
                 // Get the webhook
@@ -356,6 +356,136 @@ namespace ContainerRegistry.Tests
 
                 // Delete the replication again
                 registryClient.Replications.Delete(resourceGroup.Name, registry.Name, replication.Name);
+
+                // Delete the container registry
+                registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
+            }
+        }
+
+        [Fact]
+        public void ContainerRegistryTaskTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+                var nonDefaultLocation = ContainerRegistryTestUtilities.GetNonDefaultRegistryLocation(resourceClient, resourceGroup.Location);
+
+                // Create container registry
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, nonDefaultLocation);
+
+                // Crete task
+                var task = registryClient.Tasks.Create(
+                    resourceGroup.Name,
+                    registry.Name,
+                    TestUtilities.GenerateName("acrtask"),
+                    new Task(
+                        location: registry.Location,
+                        platform: new PlatformProperties { Architecture = Architecture.Amd64, Os = OS.Linux },
+                        step: new DockerBuildStep(
+                            dockerFilePath: "Dockerfile",
+                            baseImageDependencies: null,
+                            contextPath: "https://github.com/azure/acr-builder.git",
+                            imageNames: new List<string> { "image:{{.Run.ID}}", "image:latest" },
+                            isPushEnabled: true,
+                            noCache: true,
+                            arguments: null),
+                        agentConfiguration: new AgentProperties(cpu: 2),
+                        status: "Enabled",
+                        timeout: 600,
+                        trigger: new TriggerProperties(
+                            sourceTriggers: null, 
+                            baseImageTrigger: new BaseImageTrigger(BaseImageTriggerType.Runtime, "defaultBaseimageTriggerName", TriggerStatus.Enabled))
+                        ));
+
+                Assert.NotNull(task);
+
+                // List task
+                var taskList = registryClient.Tasks.List(resourceGroup.Name, registry.Name);
+                Assert.Single(taskList);
+
+                // Update task
+                task = registryClient.Tasks.Update(resourceGroup.Name, registry.Name, task.Name, new TaskUpdateParameters(
+                        timeout: 900
+                    ));
+
+                Assert.Equal(900, task.Timeout);
+
+                // Schedule a run from task
+                var run1 = registryClient.Registries.ScheduleRun(resourceGroup.Name, registry.Name,
+                    new TaskRunRequest(
+                        task.Name,
+                        values: new List<SetValue> { new SetValue("key1", "value1"), new SetValue("key2", "value2", isSecret: true) }));
+
+                Assert.Equal("ca1", run1.RunId);
+
+                // Cancel the run
+                registryClient.Runs.Cancel(resourceGroup.Name, registry.Name, run1.RunId);
+
+                // Schedule a docker build run
+                var run2 = registryClient.Registries.ScheduleRun(resourceGroup.Name, registry.Name,
+                    new DockerBuildRequest(
+                        dockerFilePath: "Dockerfile",
+                        platform: new PlatformProperties { Architecture = Architecture.Amd64, Os = OS.Linux },
+                        isArchiveEnabled: false,
+                        imageNames: new List<string> { "testimage1:tag1", "testimage2:tag2" },
+                        isPushEnabled: false,
+                        noCache: true,
+                        arguments: new List<Argument> { new Argument("param1", "value1", isSecret: true) },
+                        timeout: 600, 
+                        agentConfiguration: new AgentProperties(cpu: 2),
+                        sourceLocation: "https://github.com/azure/acr-builder.git"));
+
+                Assert.Equal("ca2", run2.RunId);
+
+                // Schedule a file based task run
+                var run3 = registryClient.Registries.ScheduleRun(resourceGroup.Name, registry.Name,
+                    new FileTaskRunRequest(
+                        taskFilePath: "acb.yaml",
+                        platform: new PlatformProperties { Architecture = Architecture.Amd64, Os = OS.Linux },
+                        isArchiveEnabled: false,
+                        valuesFilePath: null,
+                        values: new List<SetValue> { new SetValue("key1", "value1"), new SetValue("key2", "value2", isSecret: true) },
+                        timeout: 600,
+                        agentConfiguration: new AgentProperties(cpu: 2),
+                        sourceLocation: "https://github.com/azure/acr-builder.git"));
+
+                Assert.Equal("ca3", run3.RunId);
+
+                // Schedule an encoded task run
+                string taskString =
+@"
+steps:
+  -build: . -t acb:linux-{{.Run.ID}}";
+                string valuesString =
+@"
+key1: value1
+key2: value2
+";
+                var run4 = registryClient.Registries.ScheduleRun(resourceGroup.Name, registry.Name,
+                    new EncodedTaskRunRequest(
+                        encodedTaskContent: Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)),
+                        platform: new PlatformProperties { Architecture = Architecture.Amd64, Os = OS.Linux },
+                        isArchiveEnabled: false,
+                        encodedValuesContent: Convert.ToBase64String(Encoding.UTF8.GetBytes(valuesString)),
+                        values: null,
+                        timeout: 600,
+                        agentConfiguration: new AgentProperties(cpu: 2),
+                        sourceLocation: "https://github.com/azure/acr-builder.git"));
+
+                Assert.Equal("ca4", run4.RunId);
+
+                // List runs
+                var runList = registryClient.Runs.List(resourceGroup.Name, registry.Name);
+                Assert.Equal(4, runList.Count());
+
+                // Delete the task
+                registryClient.Tasks.Delete(resourceGroup.Name, registry.Name, task.Name);
 
                 // Delete the container registry
                 registryClient.Registries.Delete(resourceGroup.Name, registry.Name);

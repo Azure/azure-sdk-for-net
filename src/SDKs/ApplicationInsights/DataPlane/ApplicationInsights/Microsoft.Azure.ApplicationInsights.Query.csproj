@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code below this line -->
+  
+  <PropertyGroup>
+    <Description>Microsoft Azure Application Insights Data Library</Description>
+    <Version>0.9.0-preview</Version>
+    <AssemblyName>Microsoft.Azure.ApplicationInsights.Query</AssemblyName>
+    <PackageId>Microsoft.Azure.ApplicationInsights.Query</PackageId>
+    <PackageTags>ApplicationInsights;</PackageTags>
+    <PackageReleaseNotes>This is a preview release of the Application Insights Data SDK.</PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <RootNamespace>Microsoft.Azure.ApplicationInsights.Query</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>

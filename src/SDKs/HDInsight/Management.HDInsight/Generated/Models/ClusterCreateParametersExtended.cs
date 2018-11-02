@@ -36,11 +36,14 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="location">The location of the cluster.</param>
         /// <param name="tags">The resource tags.</param>
         /// <param name="properties">The cluster create parameters.</param>
-        public ClusterCreateParametersExtended(string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ClusterCreateProperties properties = default(ClusterCreateProperties))
+        /// <param name="identity">The identity of the cluster, if
+        /// configured.</param>
+        public ClusterCreateParametersExtended(string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ClusterCreateProperties properties = default(ClusterCreateProperties), ClusterIdentity identity = default(ClusterIdentity))
         {
             Location = location;
             Tags = tags;
             Properties = properties;
+            Identity = identity;
             CustomInit();
         }
 
@@ -66,6 +69,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public ClusterCreateProperties Properties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the cluster, if configured.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ClusterIdentity Identity { get; set; }
 
     }
 }

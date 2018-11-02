@@ -17,6 +17,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     public static class ProjectSourcePlatform
     {
         public const string SQL = "SQL";
+        public const string MySQL = "MySQL";
+        public const string PostgreSql = "PostgreSql";
         public const string Unknown = "Unknown";
     }
 }

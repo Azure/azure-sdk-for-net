@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.HDInsight
         public HDInsightManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Configures the HTTP settings on the specified cluster.
+        /// Configures the configuration on the specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -71,10 +71,10 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> UpdateHTTPSettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginUpdateHTTPSettingsWithHttpMessagesAsync(resourceGroupName, clusterName, configurationName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, configurationName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.HDInsight
         }
 
         /// <summary>
-        /// Configures the HTTP settings on the specified cluster.
+        /// Configures the configuration on the specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginUpdateHTTPSettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -349,7 +349,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 tracingParameters.Add("configurationName", configurationName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdateHTTPSettings", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;

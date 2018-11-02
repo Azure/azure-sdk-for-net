@@ -76,9 +76,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
-            public static IPage<RuntimeScriptActionDetail> ListPersistedScripts(this IScriptActionsOperations operations, string resourceGroupName, string clusterName)
+            public static IPage<RuntimeScriptActionDetail> ListByCluster(this IScriptActionsOperations operations, string resourceGroupName, string clusterName)
             {
-                return operations.ListPersistedScriptsAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                return operations.ListByClusterAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -96,9 +96,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RuntimeScriptActionDetail>> ListPersistedScriptsAsync(this IScriptActionsOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RuntimeScriptActionDetail>> ListByClusterAsync(this IScriptActionsOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListPersistedScriptsWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByClusterWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -159,9 +159,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RuntimeScriptActionDetail> ListPersistedScriptsNext(this IScriptActionsOperations operations, string nextPageLink)
+            public static IPage<RuntimeScriptActionDetail> ListByClusterNext(this IScriptActionsOperations operations, string nextPageLink)
             {
-                return operations.ListPersistedScriptsNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByClusterNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -176,9 +176,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RuntimeScriptActionDetail>> ListPersistedScriptsNextAsync(this IScriptActionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RuntimeScriptActionDetail>> ListByClusterNextAsync(this IScriptActionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListPersistedScriptsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByClusterNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 }
 
                 //verify the application has been deleted.
-                Assert.Throws(typeof(GraphErrorException), () => { GetApplicationByObjectId(context, application.ObjectId); });
+                Assert.Throws<GraphErrorException>(() => { GetApplicationByObjectId(context, application.ObjectId); });
             }
         }
 
@@ -83,10 +83,10 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
 
                     // Get App credentials - should be 0
                     var keyCreds = GetAppKeyCredential(context, appObjectId);
-                    Assert.Equal(0, keyCreds.Count);
+                    Assert.Empty(keyCreds);
 
                     var passwordCreds = GetAppPasswordCredential(context, appObjectId);
-                    Assert.Equal(0, passwordCreds.Count);
+                    Assert.Empty(passwordCreds);
 
                     // Add a password credential
                     string keyId = "a687d7e2-7c5f-4411-afae-e78ae43a9395";
@@ -100,14 +100,26 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
 
                     // Get app credentials
                     keyCreds = GetAppKeyCredential(context, appObjectId);
-                    Assert.Equal(1, keyCreds.Count);
-                    Assert.True(keyCreds.Any(c => c.KeyId == keyCredential.KeyId));
+                    Assert.Single(keyCreds);
+                    Assert.Contains(keyCreds, c => c.KeyId == keyCredential.KeyId);
 
                     passwordCreds = GetAppPasswordCredential(context, appObjectId);
-                    Assert.Equal(1, passwordCreds.Count);
-                    Assert.True(passwordCreds.Any(c => c.KeyId == passwordCredential1.KeyId));
+                    Assert.Single(passwordCreds);
+                    Assert.Contains(passwordCreds, c => c.KeyId == passwordCredential1.KeyId);
 
-                    // Append a new passwordCredential to exisitng credentials
+                    // Append a new keyCredential to existing credentials
+                    keyId = "0faf955a-f6db-4742-bbb2-9e9a811f04f2";
+                    var keyCredential2 = CreateKeyCredential(keyId);
+                    keyCreds.Add(keyCredential2);
+                    UpdateAppKeyCredential(context, appObjectId, keyCreds);
+
+                    //Get
+                    var fetchedkeyCreds2 = GetAppKeyCredential(context, appObjectId);
+                    Assert.Equal(2, fetchedkeyCreds2.Count);
+                    Assert.Contains(fetchedkeyCreds2, c => c.KeyId == keyCredential2.KeyId);
+                    Assert.Contains(fetchedkeyCreds2, c => c.KeyId == keyCredential.KeyId);
+
+                    // Append a new passwordCredential to existing credentials
                     keyId = "71986590-87c7-45c2-b85e-f5ef022e821f";
                     var passwordCredential2 = CreatePasswordCredential(keyId);
                     passwordCreds.Add(passwordCredential2);
@@ -116,10 +128,10 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                     //Get
                     var fetchedpasswordCreds2 = GetAppPasswordCredential(context, appObjectId);
                     Assert.Equal(2, fetchedpasswordCreds2.Count);
-                    Assert.True(fetchedpasswordCreds2.Any(c => c.KeyId == passwordCredential2.KeyId));
-                    Assert.True(fetchedpasswordCreds2.Any(c => c.KeyId == passwordCredential1.KeyId));
+                    Assert.Contains(fetchedpasswordCreds2, c => c.KeyId == passwordCredential2.KeyId);
+                    Assert.Contains(fetchedpasswordCreds2, c => c.KeyId == passwordCredential1.KeyId);
 
-                    // Add 2 new password credentils -- older should be removed
+                    // Add 2 new password credentials -- older should be removed
                     keyId = "7880f3aa-66ee-4e63-a427-3a89d316b039";
                     var passwordCredential3 = CreatePasswordCredential(keyId);
                     keyId = "18a32ca3-536f-462f-b3b4-eec49e505e96";
@@ -129,22 +141,22 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                     //Get
                     var fetchedpasswordCreds3 = GetAppPasswordCredential(context, appObjectId);
                     Assert.Equal(2, fetchedpasswordCreds3.Count);
-                    Assert.True(fetchedpasswordCreds3.Any(c => c.KeyId == passwordCredential3.KeyId));
-                    Assert.True(fetchedpasswordCreds3.Any(c => c.KeyId == passwordCredential4.KeyId));
+                    Assert.Contains(fetchedpasswordCreds3, c => c.KeyId == passwordCredential3.KeyId);
+                    Assert.Contains(fetchedpasswordCreds3, c => c.KeyId == passwordCredential4.KeyId);
 
                     // Remove key credentials
                     UpdateAppKeyCredential(context, appObjectId, new List<KeyCredential>());
 
                     // Get app credentials
                     var deletedkeyCreds = GetAppKeyCredential(context, appObjectId);
-                    Assert.Equal(0, deletedkeyCreds.Count);
+                    Assert.Empty(deletedkeyCreds);
 
                     // Remove password credentials
                     UpdateAppPasswordCredential(context, appObjectId, new List<PasswordCredential>());
 
                     // Get app credentials
                     var deletedPasswordCreds = GetAppPasswordCredential(context, appObjectId);
-                    Assert.Equal(0, deletedPasswordCreds.Count);
+                    Assert.Empty(deletedPasswordCreds);
                 }
                 finally
                 {
@@ -174,10 +186,10 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
 
                     // Get Sp credentials - should be 0
                     var keyCreds = GetSpKeyCredential(context, spObjectId);
-                    Assert.Equal(0, keyCreds.Count);
+                    Assert.Empty(keyCreds);
 
                     var passwordCreds = GetSpPasswordCredential(context, spObjectId);
-                    Assert.Equal(0, passwordCreds.Count);
+                    Assert.Empty(passwordCreds);
 
                     // Add a password credential
                     string keyId = "dbf1c168-ebe9-4b93-8b14-83462734c164";
@@ -191,12 +203,12 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
 
                     // Get sp credentials
                     keyCreds = GetSpKeyCredential(context, spObjectId);
-                    Assert.Equal(1, keyCreds.Count);
-                    Assert.True(keyCreds.Any(c => c.KeyId == keyCredential.KeyId));
+                    Assert.Single(keyCreds);
+                    Assert.Contains(keyCreds, c => c.KeyId == keyCredential.KeyId);
 
                     passwordCreds = GetSpPasswordCredential(context, spObjectId);
-                    Assert.Equal(1, passwordCreds.Count);
-                    Assert.True(passwordCreds.Any(c => c.KeyId == passwordCredential1.KeyId));
+                    Assert.Single(passwordCreds);
+                    Assert.Contains(passwordCreds, c => c.KeyId == passwordCredential1.KeyId);
 
                     // Append a new passwordCredential to exisitng credentials
                     keyId = "debcca8c-4fa0-4b40-8d21-853a3213f328";
@@ -207,8 +219,8 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                     //Get
                     var fetchedpasswordCreds2 = GetSpPasswordCredential(context, spObjectId);
                     Assert.Equal(2, fetchedpasswordCreds2.Count);
-                    Assert.True(fetchedpasswordCreds2.Any(c => c.KeyId == passwordCredential2.KeyId));
-                    Assert.True(fetchedpasswordCreds2.Any(c => c.KeyId == passwordCredential1.KeyId));
+                    Assert.Contains(fetchedpasswordCreds2, c => c.KeyId == passwordCredential2.KeyId);
+                    Assert.Contains(fetchedpasswordCreds2, c => c.KeyId == passwordCredential1.KeyId);
 
                     // Add 2 new password credentils -- older should be removed
                     keyId = "19b89f7a-b2fd-444e-bed6-41d66df7eba5";
@@ -220,22 +232,22 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                     //Get
                     var fetchedpasswordCreds3 = GetSpPasswordCredential(context, spObjectId);
                     Assert.Equal(2, fetchedpasswordCreds3.Count);
-                    Assert.True(fetchedpasswordCreds3.Any(c => c.KeyId == passwordCredential3.KeyId));
-                    Assert.True(fetchedpasswordCreds3.Any(c => c.KeyId == passwordCredential4.KeyId));
+                    Assert.Contains(fetchedpasswordCreds3, c => c.KeyId == passwordCredential3.KeyId);
+                    Assert.Contains(fetchedpasswordCreds3, c => c.KeyId == passwordCredential4.KeyId);
 
                     // Remove key credentials
                     UpdateSpKeyCredential(context, spObjectId, new List<KeyCredential>());
 
                     // Get sp credentials
                     var deletedkeyCreds = GetSpKeyCredential(context, spObjectId);
-                    Assert.Equal(0, deletedkeyCreds.Count);
+                    Assert.Empty(deletedkeyCreds);
 
                     // Remove password credentials
                     UpdateSpPasswordCredential(context, spObjectId, new List<PasswordCredential>());
 
                     // Get sp credentials
                     var deletedPasswordCreds = GetSpPasswordCredential(context, spObjectId);
-                    Assert.Equal(0, deletedPasswordCreds.Count);
+                    Assert.Empty(deletedPasswordCreds);
                 }
                 finally
                 {
@@ -265,20 +277,20 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 var newKeyCredential = CreateKeyCredential();
 
                 // Get App credentials - should fail
-                Assert.Throws(typeof(GraphErrorException), () => GetAppKeyCredential(context, randomObjectId));
-                Assert.Throws(typeof(GraphErrorException), () => GetAppPasswordCredential(context, randomObjectId));
+                Assert.Throws<GraphErrorException>(() => GetAppKeyCredential(context, randomObjectId));
+                Assert.Throws<GraphErrorException>(() => GetAppPasswordCredential(context, randomObjectId));
 
                 // Add credentials on a random app - should fail
-                Assert.Throws(typeof(GraphErrorException), () => UpdateAppKeyCredential(context, randomObjectId, newKeyCredential));
-                Assert.Throws(typeof(GraphErrorException), () => UpdateAppPasswordCredential(context, randomObjectId, newPasswordCredential));
+                Assert.Throws<GraphErrorException>(() => UpdateAppKeyCredential(context, randomObjectId, newKeyCredential));
+                Assert.Throws<GraphErrorException>(() => UpdateAppPasswordCredential(context, randomObjectId, newPasswordCredential));
 
                 // Get Sp credentials - should fail
-                Assert.Throws(typeof(GraphErrorException), () => GetSpKeyCredential(context, randomObjectId));
-                Assert.Throws(typeof(GraphErrorException), () => GetAppPasswordCredential(context, randomObjectId));
+                Assert.Throws<GraphErrorException>(() => GetSpKeyCredential(context, randomObjectId));
+                Assert.Throws<GraphErrorException>(() => GetAppPasswordCredential(context, randomObjectId));
 
                 // Add credentials on a random app - should fail
-                Assert.Throws(typeof(GraphErrorException), () => UpdateSpKeyCredential(context, randomObjectId, newKeyCredential));
-                Assert.Throws(typeof(GraphErrorException), () => UpdateSpPasswordCredential(context, randomObjectId, newPasswordCredential));
+                Assert.Throws<GraphErrorException>(() => UpdateSpKeyCredential(context, randomObjectId, newKeyCredential));
+                Assert.Throws<GraphErrorException>(() => UpdateSpPasswordCredential(context, randomObjectId, newPasswordCredential));
             }
         }
 
@@ -303,7 +315,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 }
 
                 //verify the user has been deleted.
-                Assert.Throws(typeof(GraphErrorException), () => { SearchServicePrincipal(context, sp.ObjectId); });
+                Assert.Throws<GraphErrorException>(() => { SearchServicePrincipal(context, sp.ObjectId); });
             }
         }
 

@@ -230,7 +230,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// </remarks>
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
-        ///
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

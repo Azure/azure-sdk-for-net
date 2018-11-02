@@ -465,6 +465,77 @@
             TestTimeout);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task AddTasksFailIfPoisonTaskTooLarge()
+        {
+            const string testName = "AddTasksFailIfPoisonTaskTooLarge";
+            List<ResourceFile> resourceFiles = new List<ResourceFile>();
+            ResourceFile resourceFile;
+            // If this test fails try increasing the size of the Task in case maximum size increase
+            for (int i = 0; i < 10000; i++)
+            {
+                resourceFile = new ResourceFile("https://mystorageaccount.blob.core.windows.net/files/resourceFile" + i, "resourceFile" + i);
+                resourceFiles.Add(resourceFile);
+            }
+            await SynchronizationContextHelper.RunTestAsync(async () =>
+            {
+                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
+                {
+                    var exception = await TestUtilities.AssertThrowsAsync<ParallelOperationsException>(
+                        async () => await this.AddTasksSimpleTestAsync(batchCli, testName, 1, resourceFiles:resourceFiles).ConfigureAwait(false)).ConfigureAwait(false);
+                    var innerException = exception.InnerException;
+                    Assert.IsType<BatchException>(innerException);
+                    Assert.Equal(((BatchException) innerException).RequestInformation.BatchError.Code, BatchErrorCodeStrings.RequestBodyTooLarge);
+                }
+            },
+            TestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        public async Task AddTasksRequestEntityTooLarge_ReduceChunkSize()
+        {
+            const string testName = "AddTasksRequestEntityTooLarge_ReduceChunkSize";
+            List<ResourceFile> resourceFiles = new List<ResourceFile>();
+            ResourceFile resourceFile;
+            int countChunksOf100 = 0;
+            int numTasks = 176;
+            int degreesOfParallelism = 2;
+            BatchClientBehavior customBehavior = new Protocol.RequestInterceptor(request =>
+            {
+                var typedRequest = request as Protocol.BatchRequests.TaskAddCollectionBatchRequest;
+                if (typedRequest != null)
+                {
+                    if(typedRequest.Parameters.Count > 50)
+                    {
+                        Interlocked.Increment(ref countChunksOf100);
+                    }
+                }
+            });
+
+            // If this test fails try increasing the size of the Task in case maximum size increase
+            for (int i = 0; i < 100; i++)
+            {
+                resourceFile = new ResourceFile("https://mystorageaccount.blob.core.windows.net/files/resourceFile" + i, "resourceFile" + i);
+                resourceFiles.Add(resourceFile);
+            }
+            await SynchronizationContextHelper.RunTestAsync(async () =>
+            {
+                using (BatchClient batchCli = await TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment(), addDefaultRetryPolicy: false))
+                {
+                    batchCli.JobOperations.CustomBehaviors.Add(customBehavior);
+                    BatchClientParallelOptions parallelOptions = new BatchClientParallelOptions()
+                    {
+                        MaxDegreeOfParallelism = degreesOfParallelism
+                    };
+                    await AddTasksSimpleTestAsync(batchCli, testName, numTasks, parallelOptions, resourceFiles: resourceFiles).ConfigureAwait(false);
+                }
+            },
+            TestTimeout);
+            Assert.True(countChunksOf100 <= Math.Min(Math.Ceiling(numTasks/100.0), degreesOfParallelism));
+        }
+
         /// <summary>
         /// Ensures that the two lists of tasks contain CloudTasks with the same Ids
         /// </summary>
@@ -521,7 +592,8 @@
             IEnumerable<string> localFilesToStage = null,
             ConcurrentBag<ConcurrentDictionary<Type, IFileStagingArtifact>> fileStagingArtifacts = null,
             TimeSpan? timeout = null,
-            bool useJobOperations = true)
+            bool useJobOperations = true,
+            List<ResourceFile> resourceFiles = null)
         {
             JobOperations jobOperations = batchCli.JobOperations;
 
@@ -552,6 +624,8 @@
                 {
                     CloudTask myTask = new CloudTask(taskName, "cmd /c echo hello world");
                     CloudTask duplicateReadableTask = new CloudTask(taskName, "cmd /c echo hello world");
+                    myTask.ResourceFiles = resourceFiles;
+                    duplicateReadableTask.ResourceFiles = resourceFiles;
 
                     if (localFilesToStage != null && storageCredentials != null)
                     {

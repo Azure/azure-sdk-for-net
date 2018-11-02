@@ -418,7 +418,7 @@ namespace DataLakeAnalytics.Tests
 
                 // Validate compute policies are set on creation.
                 Assert.True(responseGet.ComputePolicies.Count == 1);
-                Assert.True(responseGet.ComputePolicies.ToList()[0].Name.Equals(userPolicyName));
+                Assert.Equal(responseGet.ComputePolicies.ToList()[0].Name, userPolicyName);
 
                 // Validate compute policy CRUD
                 // Add another account

@@ -1,5 +1,12 @@
 ## Microsoft.Azure.Management.Reservations release notes
 
+### Changes in 1.9.0-preview
+
+**Notes**
+
+* Add CosmosDb type in ReservedResourceType enum.
+* Add name property in PatchProperties.
+
 ### Changes in 1.1.0-preview
 
 **Notes**

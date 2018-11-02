@@ -46,6 +46,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// name to database id</param>
         /// <param name="databaseSummary">Summary of database results in the
         /// migration</param>
+        /// <param name="migrationValidationResult">Migration Validation
+        /// Results</param>
         /// <param name="migrationReportResult">Migration Report Result,
         /// provides unique url for downloading your migration report.</param>
         /// <param name="sourceServerVersion">Source server version</param>
@@ -56,7 +58,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// version</param>
         /// <param name="exceptionsAndWarnings">Migration exceptions and
         /// warnings.</param>
-        public MigrateSqlServerSqlDbTaskOutputMigrationLevel(string id = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), long? durationInSeconds = default(long?), string status = default(string), string statusMessage = default(string), string message = default(string), IDictionary<string, string> databases = default(IDictionary<string, string>), IDictionary<string, DatabaseSummaryResult> databaseSummary = default(IDictionary<string, DatabaseSummaryResult>), MigrationReportResult migrationReportResult = default(MigrationReportResult), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), string targetServerVersion = default(string), string targetServerBrandVersion = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
+        public MigrateSqlServerSqlDbTaskOutputMigrationLevel(string id = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), long? durationInSeconds = default(long?), string status = default(string), string statusMessage = default(string), string message = default(string), IDictionary<string, string> databases = default(IDictionary<string, string>), IDictionary<string, DatabaseSummaryResult> databaseSummary = default(IDictionary<string, DatabaseSummaryResult>), MigrationValidationResult migrationValidationResult = default(MigrationValidationResult), MigrationReportResult migrationReportResult = default(MigrationReportResult), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), string targetServerVersion = default(string), string targetServerBrandVersion = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
             : base(id)
         {
             StartedOn = startedOn;
@@ -67,6 +69,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             Message = message;
             Databases = databases;
             DatabaseSummary = databaseSummary;
+            MigrationValidationResult = migrationValidationResult;
             MigrationReportResult = migrationReportResult;
             SourceServerVersion = sourceServerVersion;
             SourceServerBrandVersion = sourceServerBrandVersion;
@@ -131,6 +134,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "databaseSummary")]
         public IDictionary<string, DatabaseSummaryResult> DatabaseSummary { get; private set; }
+
+        /// <summary>
+        /// Gets or sets migration Validation Results
+        /// </summary>
+        [JsonProperty(PropertyName = "migrationValidationResult")]
+        public MigrationValidationResult MigrationValidationResult { get; set; }
 
         /// <summary>
         /// Gets or sets migration Report Result, provides unique url for
