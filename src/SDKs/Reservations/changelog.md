@@ -1,6 +1,6 @@
 ## Microsoft.Azure.Management.Reservations release notes
 
-### Changes in 1.10.0-preview
+### Changes in 1.9.2-preview
 
 **Notes**
 
