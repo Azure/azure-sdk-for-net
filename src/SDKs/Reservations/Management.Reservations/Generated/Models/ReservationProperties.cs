@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// Initializes a new instance of the ReservationProperties class.
         /// </summary>
         /// <param name="reservedResourceType">Possible values include:
-        /// 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb'</param>
+        /// 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb',
+        /// 'RedHat'</param>
         /// <param name="instanceFlexibility">Possible values include: 'On',
         /// 'Off', 'NotSupported'</param>
         /// <param name="displayName">Friendly name for user to easily identify
@@ -76,7 +77,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
 
         /// <summary>
         /// Gets or sets possible values include: 'VirtualMachines',
-        /// 'SqlDatabases', 'SuseLinux', 'CosmosDb'
+        /// 'SqlDatabases', 'SuseLinux', 'CosmosDb', 'RedHat'
         /// </summary>
         [JsonProperty(PropertyName = "reservedResourceType")]
         public string ReservedResourceType { get; set; }

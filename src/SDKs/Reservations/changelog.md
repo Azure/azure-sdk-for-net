@@ -1,5 +1,11 @@
 ## Microsoft.Azure.Management.Reservations release notes
 
+### Changes in 1.10.0-preview
+
+**Notes**
+
+* Add RedHat type in ReservedResourceType enum.
+
 ### Changes in 1.9.0-preview
 
 **Notes**
