@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.Rest.ClientRuntime.Tests.Fakes;
+using ClientRuntime.Tests.Common.Fakes;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 

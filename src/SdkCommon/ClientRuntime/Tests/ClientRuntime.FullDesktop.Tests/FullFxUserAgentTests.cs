@@ -9,8 +9,7 @@ namespace ClientRuntime.FullDesktop.Tests
     using System.Net.Http;
     using System.Net.Http.Headers;
     using Xunit;
-
-    public class FullFxServiceClientTests
+    public class FullFxUserAgentTests
     {
         [Fact]
         public void VerifyDifferentUserAgentStrings()
@@ -26,11 +25,12 @@ namespace ClientRuntime.FullDesktop.Tests
                 { "p7", @"Linux4\r\ngeneric" },
                 { "p8", @"Linux4\rgeneric" },
                 { "p9", @"Linux4\ngeneric" },
-                { "p10", @"Linux4\generic" }
+                { "p10", @"Linux4\generic" },
+                {"p11", @"Darwin17.7.0DarwinKernelVersion17.7.0ThuJun21225314PDT2018rootxnu-4570.71.21/RELEASE_X86_64" }
             };
 
             FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
-            foreach(KeyValuePair<string, string> kv in spChars)
+            foreach (KeyValuePair<string, string> kv in spChars)
             {
                 fakeClient.SetUserAgent(kv.Key, kv.Value);
             }
@@ -61,16 +61,21 @@ namespace ClientRuntime.FullDesktop.Tests
             string spChars = "*()!@#$%^&";
             string sampleVersion = "1.*.0.*";
 
+            string concatProdName = string.Concat(sampleProd, spChars);
+            string cleanedProdName = string.Concat(sampleProd, ".");
+
             FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
-            fakeClient.SetUserAgent(string.Concat(sampleProd, spChars));
+            fakeClient.SetUserAgent(concatProdName);
             HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
-            var retrievedProdInfo = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(sampleProd)).FirstOrDefault<ProductInfoHeaderValue>();
-            Assert.Equal(retrievedProdInfo?.Product?.Name, sampleProd);
+            Assert.Equal(5, userAgentValueCollection.Count);
+
+            var retrievedProdInfo = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(cleanedProdName)).FirstOrDefault<ProductInfoHeaderValue>();
+            Assert.Equal(retrievedProdInfo?.Product?.Name, cleanedProdName);
 
             fakeClient.SetUserAgent(newSampleProd, sampleVersion);
             HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentVersion = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
             var retrievedVersion = userAgentVersion.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(newSampleProd)).FirstOrDefault<ProductInfoHeaderValue>();
-            Assert.Equal(retrievedVersion?.Product?.Version, "1..0.");
+            Assert.Equal(retrievedVersion?.Product?.Version, "1.0.");
         }
 
         [Fact]

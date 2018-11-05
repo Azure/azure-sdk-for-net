@@ -4,7 +4,7 @@
 namespace CR.Azure.NetCore.Tests.MemoryTest
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.ClientRuntime.Tests.Fakes;
+    using ClientRuntime.Tests.Common.Fakes;
     using System.Linq;
     using Xunit;
 
