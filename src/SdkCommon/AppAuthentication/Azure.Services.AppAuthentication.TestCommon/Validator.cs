@@ -115,9 +115,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
 
             if (expiresOn != default(DateTimeOffset))
             {
-                DateTimeOffset expiration = GetTokenExpiration(token);
+                DateTimeOffset tokenExpiration = GetTokenExpiration(token);
 
-                var delta = expiration.UtcDateTime - expiresOn.UtcDateTime;
+                var delta = tokenExpiration.UtcDateTime - expiresOn.UtcDateTime;
 
                 // the expirations can differ a fraction of a second for integration/E2E tests
                 Assert.True(delta < TimeSpan.FromSeconds(1));

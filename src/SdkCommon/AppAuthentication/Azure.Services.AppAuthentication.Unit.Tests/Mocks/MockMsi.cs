@@ -87,10 +87,18 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     break;
 
                 case MsiTestType.MsiAppServicesSuccess:
+                    responseMessage = new HttpResponseMessage
+                    {
+                        Content = new StringContent(TokenHelper.GetMsiAppServicesTokenResponse(),
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+
                 case MsiTestType.MsiAzureVmSuccess:
                     responseMessage = new HttpResponseMessage
                     {
-                        Content = new StringContent(TokenHelper.GetMsiTokenResponse(),
+                        Content = new StringContent(TokenHelper.GetMsiAzureVmTokenResponse(),
                             Encoding.UTF8,
                             Constants.JsonContentType)
                     };

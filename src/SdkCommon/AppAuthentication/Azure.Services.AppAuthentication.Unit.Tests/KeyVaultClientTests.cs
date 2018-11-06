@@ -109,10 +109,13 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public async Task InvalidKeyVaultSecretType()
         {
+            MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Success);
+            AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
+
             // use a secret identifier, but return secret bundle for password/secret and not certificate
             MockKeyVault mockKeyVault = new MockKeyVault(TestType.PasswordSecretIdentifierSuccess);
             HttpClient httpClient = new HttpClient(mockKeyVault);
-            KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient);
+            KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient, azureCliAccessTokenProvider);
 
             var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultSecretIdentifier)));
             Assert.Contains(KeyVaultClient.SecretBundleInvalidContentTypeError, exception.Message);
@@ -121,9 +124,12 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public async Task SecretNotFoundTest()
         {
+            MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Success);
+            AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
+
             MockKeyVault mockKeyVault = new MockKeyVault(TestType.SecretNotFound);
             HttpClient httpClient = new HttpClient(mockKeyVault);
-            KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient);
+            KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient, azureCliAccessTokenProvider);
 
             var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultSecretIdentifier)));
             Assert.Contains(KeyVaultClient.KeyVaultResponseError, exception.Message);

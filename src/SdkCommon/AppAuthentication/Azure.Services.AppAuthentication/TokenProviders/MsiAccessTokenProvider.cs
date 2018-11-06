@@ -91,7 +91,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
                         PrincipalUsed.TenantId = token.TenantId;
                     }
 
-                    return AppAuthenticationResult.Create(tokenResponse, TokenResponse.DateFormat.Unix);
+                    TokenResponse.DateFormat expectedDateFormat = isAppServicesMsiAvailable
+                        ? TokenResponse.DateFormat.DateTimeString
+                        : TokenResponse.DateFormat.Unix;
+
+                    return AppAuthenticationResult.Create(tokenResponse, expectedDateFormat);
                 }
 
                 string exceptionText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);

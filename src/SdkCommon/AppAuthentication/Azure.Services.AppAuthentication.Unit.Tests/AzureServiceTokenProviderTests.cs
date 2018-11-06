@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
 
             // Mock MSI is being asked to act like MSI was able to get token. 
-            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAzureVmSuccess);
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 

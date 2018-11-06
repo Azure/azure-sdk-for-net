@@ -37,12 +37,12 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateSuccess);
 
             // Create ClientCertificateAzureServiceTokenProvider instance
-            ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId, 
+            ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
                 cert.Thumbprint, CertificateIdentifierType.Thumbprint, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
 
             // Get the token. This will test that ClientCertificateAzureServiceTokenProvider could fetch the cert from CurrentUser store based on thumbprint in the connection string. 
             var authResult = await provider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
-            
+
             // Delete the cert, since testing is done. 
             CertUtil.DeleteCertificate(cert.Thumbprint);
 
@@ -240,13 +240,16 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             X509Certificate2 cert = new X509Certificate2(Convert.FromBase64String(Constants.TestCert), string.Empty);
 
-            // MockAuthenticationContext is being asked to act like client cert auth suceeded. 
-            MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateSuccess);
+            MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Success);
+            AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
 
-            // Create KeyVaultCLient with MockKeyVault to mock successful calls to KeyVault
+            // Create KeyVaultClient with MockKeyVault to mock successful calls to KeyVault
             MockKeyVault mockKeyVault = new MockKeyVault(MockKeyVault.KeyVaultClientTestType.CertificateSecretIdentifierSuccess);
             HttpClient httpClient = new HttpClient(mockKeyVault);
-            KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient);
+            KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient, azureCliAccessTokenProvider);
+
+            // MockAuthenticationContext is being asked to act like client cert auth suceeded. 
+            MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateSuccess);
 
             // Create ClientCertificateAzureServiceTokenProvider instance with a subject name
             ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
