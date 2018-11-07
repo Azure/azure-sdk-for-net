@@ -328,6 +328,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedBackupShortTermRetentionPoliciesOperations.
+        /// </summary>
+        public virtual IManagedBackupShortTermRetentionPoliciesOperations ManagedBackupShortTermRetentionPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IManagedDatabasesOperations.
         /// </summary>
         public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
@@ -709,6 +714,7 @@ namespace Microsoft.Azure.Management.Sql
             JobVersions = new JobVersionsOperations(this);
             LongTermRetentionBackups = new LongTermRetentionBackupsOperations(this);
             BackupLongTermRetentionPolicies = new BackupLongTermRetentionPoliciesOperations(this);
+            ManagedBackupShortTermRetentionPolicies = new ManagedBackupShortTermRetentionPoliciesOperations(this);
             ManagedDatabases = new ManagedDatabasesOperations(this);
             ServerAutomaticTuning = new ServerAutomaticTuningOperations(this);
             ServerDnsAliases = new ServerDnsAliasesOperations(this);
