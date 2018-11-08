@@ -56,6 +56,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "JobVersions", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "Jobs", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "LongTermRetentionBackups", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedBackupShortTermRetentionPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseVulnerabilityAssessmentRuleBaselines", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseVulnerabilityAssessmentScans", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseVulnerabilityAssessments", "2017-10-01-preview"),
@@ -108,4 +109,3 @@ namespace Microsoft.Azure.Management.Sql
       // END: Code Generation Metadata Section
   }
 }
-
