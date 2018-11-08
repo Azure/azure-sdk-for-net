@@ -12,7 +12,7 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Updated referenced version of Newtonsoft.Json to 10.0.3
+- Added Vulnerability Assessment operations on Server and Managed Instance
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
