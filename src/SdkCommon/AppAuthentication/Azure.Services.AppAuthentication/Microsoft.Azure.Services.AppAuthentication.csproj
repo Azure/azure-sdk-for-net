@@ -22,13 +22,8 @@
         <Content Include="build\*.targets" PackagePath="build\" />
     </ItemGroup>
     <PropertyGroup>
-        <TargetFrameworks>netstandard1.4;net452;net472</TargetFrameworks>
+        <TargetFrameworks>netstandard1.4;net452</TargetFrameworks>
     </PropertyGroup>
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net472'">
-		<DefineConstants>net472;FullNetFx</DefineConstants>		
-		<OutputPath>bin\$(Configuration)\</OutputPath>
-		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-	</PropertyGroup>
     <ItemGroup>
 		<Reference Include="System.Net.Http" />
         <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.19.4" />
