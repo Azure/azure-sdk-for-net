@@ -74,6 +74,7 @@ Below are the packages maintained in this repository.
 
 | Azure Common Library               | Package Name                                        | NuGet Download |
 | ---------------------------------- | --------------------------------------------------- | -------------- |
+| AppAuthentication                  | `Microsoft.Azure.Services.AppAuthentication`        | [![ClientRuntime](https://img.shields.io/nuget/vpre/Microsoft.Azure.Services.AppAuthentication.svg)](https://www.nuget.org/packages/Microsoft.Azure.Services.AppAuthentication) |
 | ClientRuntime                      | `Microsoft.Rest.ClientRuntime`                      | [![ClientRuntime](https://img.shields.io/nuget/vpre/Microsoft.Rest.ClientRuntime.svg)](https://www.nuget.org/packages/Microsoft.Rest.ClientRuntime) |
 | ClientRuntime.Azure                | `Microsoft.Rest.ClientRuntime.Azure`                | [![ClientRuntime.Azure](https://img.shields.io/nuget/vpre/Microsoft.Rest.ClientRuntime.Azure.svg)](https://www.nuget.org/packages/Microsoft.Rest.ClientRuntime.Azure) |
 | ClientRuntime.Azure.Authentication | `Microsoft.Rest.ClientRuntime.Azure.Authentication` | [![ClientRuntime.Azure.Authentication](https://img.shields.io/nuget/vpre/Microsoft.Rest.ClientRuntime.Azure.Authentication.svg)](https://www.nuget.org/packages/Microsoft.Rest.ClientRuntime.Azure.Authentication) |
