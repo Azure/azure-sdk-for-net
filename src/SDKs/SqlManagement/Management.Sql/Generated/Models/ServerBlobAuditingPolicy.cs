@@ -109,12 +109,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// REFERENCES
         ///
         /// The general form for defining an action to be audited is:
-        /// &lt;action&gt; ON &lt;object&gt; BY &lt;principal&gt;
+        /// {action} ON {object} BY {principal}
         ///
         /// Note that &lt;object&gt; in the above format can refer to an object
         /// like a table, view, or stored procedure, or an entire database or
-        /// schema. For the latter cases, the forms DATABASE::&lt;db_name&gt;
-        /// and SCHEMA::&lt;schema_name&gt; are used, respectively.
+        /// schema. For the latter cases, the forms DATABASE::{db_name} and
+        /// SCHEMA::{schema_name} are used, respectively.
         ///
         /// For example:
         /// SELECT on dbo.myTable by public
@@ -137,10 +137,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'SQLSecurityAuditEvents' diagnostic logs category on the database
         /// should be also created.
         /// Note that for server level audit you should use the 'master'
-        /// database as &lt;databaseName&gt;.
+        /// database as {databaseName}.
+        ///
         /// Diagnostic Settings URI format:
         /// PUT
-        /// https://management.azure.com/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroup&gt;/providers/Microsoft.Sql/servers/&lt;serverName&gt;/databases/&lt;databaseName&gt;/providers/microsoft.insights/diagnosticSettings/&lt;settingsName&gt;?api-version=2017-05-01-preview
+        /// https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
         ///
         /// For more information, see [Diagnostic Settings REST
         /// API](https://go.microsoft.com/fwlink/?linkid=2033207)
@@ -257,14 +258,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// REFERENCES
         ///
         /// The general form for defining an action to be audited is:
-        /// &amp;lt;action&amp;gt; ON &amp;lt;object&amp;gt; BY
-        /// &amp;lt;principal&amp;gt;
+        /// {action} ON {object} BY {principal}
         ///
         /// Note that &amp;lt;object&amp;gt; in the above format can refer to
         /// an object like a table, view, or stored procedure, or an entire
         /// database or schema. For the latter cases, the forms
-        /// DATABASE::&amp;lt;db_name&amp;gt; and
-        /// SCHEMA::&amp;lt;schema_name&amp;gt; are used, respectively.
+        /// DATABASE::{db_name} and SCHEMA::{schema_name} are used,
+        /// respectively.
         ///
         /// For example:
         /// SELECT on dbo.myTable by public
@@ -300,10 +300,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'SQLSecurityAuditEvents' diagnostic logs category on the database
         /// should be also created.
         /// Note that for server level audit you should use the 'master'
-        /// database as &amp;lt;databaseName&amp;gt;.
+        /// database as {databaseName}.
+        ///
         /// Diagnostic Settings URI format:
         /// PUT
-        /// https://management.azure.com/subscriptions/&amp;lt;subscriptionId&amp;gt;/resourceGroups/&amp;lt;resourceGroup&amp;gt;/providers/Microsoft.Sql/servers/&amp;lt;serverName&amp;gt;/databases/&amp;lt;databaseName&amp;gt;/providers/microsoft.insights/diagnosticSettings/&amp;lt;settingsName&amp;gt;?api-version=2017-05-01-preview
+        /// https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
         ///
         /// For more information, see [Diagnostic Settings REST
         /// API](https://go.microsoft.com/fwlink/?linkid=2033207)
