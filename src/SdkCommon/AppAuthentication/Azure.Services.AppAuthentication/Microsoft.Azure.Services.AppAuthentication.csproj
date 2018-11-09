@@ -2,15 +2,19 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Services.AppAuthentication</PackageId>
         <Description>Enables a service to authenticate to Azure services using the developer's Azure Active Directory/ Microsoft account during development, and authenticate as itself (using OAuth 2.0 Client Credentials flow) when deployed to Azure.</Description>
-        <Version>1.0.3</Version>
+        <Version>1.2.0-preview</Version>
         <AssemblyName>Microsoft.Azure.Services.AppAuthentication</AssemblyName>
         <PackageTags>Azure Authentication AppAuthentication</PackageTags>
 	<PackageReleaseNotes>
 		<![CDATA[
 			Documentation can be found at https://go.microsoft.com/fwlink/p/?linkid=862452.
 			
-			MsiAccessTokenProvider updated to use IDMS endpoint for authentication
-			Bug fix: Serializable tag was missing on AzureServicesTokenProviderException
+			Adding new .NET 4.7.2 targeted package
+			Adding new method GetAuthResultAsync to AzureServiceTokenProvider
+			Adding new class SqlAzureAppAuthProvider that implements new SqlAuthenticationProvider (only in .NET 4.7.2 targeted package)
+			Adding support for user-assigned managed identities
+			Adding support for simplified Azure AD certificate roll-over (subject name and issuer authentication)
+			Adding new connection string option to specify Key Vault secret identifier for service principal certificate credential
 		]]>
 	</PackageReleaseNotes>
     </PropertyGroup>
@@ -18,13 +22,11 @@
         <Content Include="build\*.targets" PackagePath="build\" />
     </ItemGroup>
     <PropertyGroup>
-        <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+        <TargetFrameworks>netstandard1.4;net452</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.14.2" />
-    </ItemGroup>
-    <ItemGroup>
-        <Reference Include="System.Net.Http" />
+		<Reference Include="System.Net.Http" />
+        <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.19.4" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
         <PackageReference Include="System.Diagnostics.Process">

@@ -7,20 +7,19 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.5.0-preview</Version>
+		<Version>19.6.1-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-      - Added AddressPrefixes on Subnet properties
-      - Included required properties for outbound rule 
-      - Azure Firewall FQDN Tag added as a top level resource
-      - Swagger Coverage/Completeness- for operation CheckNameAvailability
-      - Azure Firewall NAT Rule Collection 
-      - Added support for interface endpoints
-      - Added linkedResourceType and hostedWorkloads to nic 
-      - Added App Gateway Trusted root certificate changes 
-      - Added ExpressRoute gateway resource
-      - Added support for delegations on a subnet      
+        - Added operations for ExpressRouteLinks, ExpressRoutePorts, ExpressRoutePortsLocations and LoadBalancerOutboundRules
+        - Added support for ApplicationGatewayCustomError and ApplicationGatewayFirewallExclusion
+        - Added support for parameters "MaxRequestBodySizeInKb" and "FileUploadLimitInMb" for ApplicationGatewayWebApplicationFirewallConfiguration
+        - Added support for "ICMP" value of AzureFirewallNetworkRuleProtocol
+        - Added support for parameter "AppliedTo" for EvaluatedNetworkSecurityGroup
+        - Added support for parameters "BandwidthInGbps" and "Stag" for ExpressRouteCircuit
+        - Added support for "Basic" value of ExpressRouteCircuitSkuTier
+        - Added support for parameter "VerbosityLevel" for NetworkConfigurationDiagnostic
+        - Renamed NetworkConfigurationDiagnostic's parameter "Queries" to "Profiles"
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

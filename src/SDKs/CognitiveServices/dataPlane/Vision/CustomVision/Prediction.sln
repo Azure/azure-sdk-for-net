@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{6558086F-5F69-4793-B2C5-7300B2510100}") = "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction", "Prediction\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.csproj", "{338BB7D5-245A-4508-BA7D-71B37A254367}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction", "Prediction\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.csproj", "{338BB7D5-245A-4508-BA7D-71B37A254367}"
 EndProject
-Project("{6558086F-5F69-4793-B2C5-7300B2510100}") = "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests", "Prediction.Tests\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests.csproj", "{F47DEF2A-CD64-4CB6-A074-6931B31FA253}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests", "Prediction.Tests\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests.csproj", "{F47DEF2A-CD64-4CB6-A074-6931B31FA253}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB470CF6-E81B-4A70-A510-E9511B14DBE6}
 	EndGlobalSection
 EndGlobal

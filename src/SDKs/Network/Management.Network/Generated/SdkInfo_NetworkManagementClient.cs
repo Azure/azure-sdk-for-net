@@ -41,6 +41,9 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "ExpressRouteCrossConnectionPeerings", "2018-08-01"),
                 new Tuple<string, string, string>("Network", "ExpressRouteCrossConnections", "2018-08-01"),
                 new Tuple<string, string, string>("Network", "ExpressRouteGateways", "2018-08-01"),
+                new Tuple<string, string, string>("Network", "ExpressRouteLinks", "2018-08-01"),
+                new Tuple<string, string, string>("Network", "ExpressRoutePorts", "2018-08-01"),
+                new Tuple<string, string, string>("Network", "ExpressRoutePortsLocations", "2018-08-01"),
                 new Tuple<string, string, string>("Network", "ExpressRouteServiceProviders", "2018-08-01"),
                 new Tuple<string, string, string>("Network", "HubVirtualNetworkConnections", "2018-08-01"),
                 new Tuple<string, string, string>("Network", "InboundNatRules", "2018-08-01"),
@@ -49,6 +52,7 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "LoadBalancerFrontendIPConfigurations", "2018-08-01"),
                 new Tuple<string, string, string>("Network", "LoadBalancerLoadBalancingRules", "2018-08-01"),
                 new Tuple<string, string, string>("Network", "LoadBalancerNetworkInterfaces", "2018-08-01"),
+                new Tuple<string, string, string>("Network", "LoadBalancerOutboundRules", "2018-08-01"),
                 new Tuple<string, string, string>("Network", "LoadBalancerProbes", "2018-08-01"),
                 new Tuple<string, string, string>("Network", "LoadBalancers", "2018-08-01"),
                 new Tuple<string, string, string>("Network", "LocalNetworkGateways", "2018-08-01"),
@@ -93,10 +97,10 @@ namespace Microsoft.Azure.Management.Network
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/network/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Repos\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/network/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\Projects\\azure-sdk-for-net\\src\\SDKs";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "4d1b5ac80425123cd271697fe46df2a0233ac3e6";
+      public static readonly String GithubCommidId = "47a559db83871c015645104065f8bc18ba62f898";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

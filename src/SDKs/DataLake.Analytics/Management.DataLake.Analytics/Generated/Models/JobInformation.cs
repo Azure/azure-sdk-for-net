@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// state, refer to Result and ErrorMessage for details. Possible
         /// values include: 'Accepted', 'Compiling', 'Ended', 'New', 'Queued',
         /// 'Running', 'Scheduling', 'Starting', 'Paused',
-        /// 'WaitingForCapacity'</param>
+        /// 'WaitingForCapacity', 'Yielded', 'Finalizing'</param>
         /// <param name="result">The result of job execution or the current
         /// result of the running job. Possible values include: 'None',
         /// 'Succeeded', 'Cancelled', 'Failed'</param>

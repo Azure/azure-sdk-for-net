@@ -10,6 +10,7 @@ using Xunit;
 using System.Linq;
 using System;
 using Microsoft.Rest.Azure;
+using System.Diagnostics;
 
 namespace Microsoft.Azure.Management.StorageSync.Tests
 {
@@ -87,6 +88,46 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
         }
 
         [Fact]
+        public void RegisteredServerTriggerRolloverTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                IResourceManagementClient resourcesClient = StorageSyncManagementTestUtilities.GetResourceManagementClient(context, handler);
+                IStorageSyncManagementClient storageSyncManagementClient = StorageSyncManagementTestUtilities.GetStorageSyncManagementClient(context, handler);
+
+                // Create ResourceGroup
+                string resourceGroupName = StorageSyncManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create RegisteredServer Name
+                string storageSyncServiceName = TestUtilities.GenerateName("sss-rscert");
+                Guid serverGuid = TestUtilities.GenerateGuid();
+
+                var storageSyncServiceParameters = StorageSyncManagementTestUtilities.GetDefaultStorageSyncServiceParameters();
+                var registeredServerParameters = StorageSyncManagementTestUtilities.GetDefaultRegisteredServerParameters(serverGuid);
+
+                StorageSyncService storageSyncServiceResource = storageSyncManagementClient.StorageSyncServices.Create(resourceGroupName, storageSyncServiceName, storageSyncServiceParameters);
+                Assert.NotNull(storageSyncServiceResource);
+                StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(storageSyncServiceResource, true);
+
+                RegisteredServer registeredServerResource = storageSyncManagementClient.RegisteredServers.Create(resourceGroupName, storageSyncServiceResource.Name, serverGuid.ToString(), registeredServerParameters);
+                Assert.NotNull(registeredServerResource);
+                StorageSyncManagementTestUtilities.VerifyRegisteredServerProperties(registeredServerResource, true);
+
+                registeredServerResource = storageSyncManagementClient.RegisteredServers.Get(resourceGroupName, storageSyncServiceResource.Name, serverGuid.ToString());
+                StorageSyncManagementTestUtilities.VerifyRegisteredServerProperties(registeredServerResource, true);
+
+                string serverCertificate = StorageSyncManagementTestUtilities.GetSecondaryCertificate();
+                storageSyncManagementClient.RegisteredServers.TriggerRollover(resourceGroupName, storageSyncServiceResource.Name, serverGuid.ToString(), serverCertificate);
+
+                storageSyncManagementClient.RegisteredServers.Delete(resourceGroupName, storageSyncServiceResource.Name, serverGuid.ToString());
+                storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
+            }
+        }
+
+        [Fact]
         public void RegisteredServerListTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -124,7 +165,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
             }
         }
 
-        [Fact(Skip ="Asserts needs to be fixed")]
+        [Fact]
         public void RegisteredServerDeleteTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -139,7 +180,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
 
                 // Create RegisteredServer Name
                 string storageSyncServiceName = TestUtilities.GenerateName("sss-rscreate");
-                 Guid serverGuid = TestUtilities.GenerateGuid();
+                Guid serverGuid = TestUtilities.GenerateGuid();
 
                 var storageSyncServiceParameters = StorageSyncManagementTestUtilities.GetDefaultStorageSyncServiceParameters();
                 var registeredServerParameters = StorageSyncManagementTestUtilities.GetDefaultRegisteredServerParameters(serverGuid);
@@ -151,17 +192,8 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 Assert.NotNull(storageSyncServiceResource);
                 StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(storageSyncServiceResource, true);
 
-                // TODO : Prepare a QFE to return 204
-                try
-                {
-                    // Delete RegisteredServer when it does not exists
-                    storageSyncManagementClient.RegisteredServers.Delete(resourceGroupName, storageSyncServiceResource.Name, serverGuid.ToString());
-                }
-                catch (CloudException e)
-                {
-                    Assert.Equal("MgmtNotFound", e.Body.Code);
-                    Assert.Equal($"Server '{serverGuid}' does not exist.", e.Body.Message);
-                }
+                // Delete RegisteredServer when it does not exists
+                storageSyncManagementClient.RegisteredServers.Delete(resourceGroupName, storageSyncServiceResource.Name, serverGuid.ToString());
 
                 RegisteredServer registeredServerResource = storageSyncManagementClient.RegisteredServers.Create(resourceGroupName, storageSyncServiceResource.Name, serverGuid.ToString(), registeredServerParameters);
                 Assert.NotNull(registeredServerResource);

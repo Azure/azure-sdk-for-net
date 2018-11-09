@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents settings associated with a project
+    /// Represents settings associated with a project.
     /// </summary>
     public partial class ProjectSettings
     {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// Initializes a new instance of the ProjectSettings class.
         /// </summary>
         /// <param name="domainId">Gets or sets the id of the Domain to use
-        /// with this project</param>
+        /// with this project.</param>
         /// <param name="classificationType">Gets or sets the classification
         /// type of the project. Possible values include: 'Multiclass',
         /// 'Multilabel'</param>
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the id of the Domain to use with this project
+        /// Gets or sets the id of the Domain to use with this project.
         /// </summary>
         [JsonProperty(PropertyName = "domainId")]
         public System.Guid DomainId { get; set; }

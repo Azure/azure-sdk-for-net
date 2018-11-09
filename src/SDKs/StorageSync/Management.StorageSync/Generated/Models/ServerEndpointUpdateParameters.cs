@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.StorageSync.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,17 +34,17 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// Initializes a new instance of the ServerEndpointUpdateParameters
         /// class.
         /// </summary>
-        /// <param name="tags">The user-specified tags associated with the
-        /// server endpoint.</param>
         /// <param name="cloudTiering">Cloud Tiering. Possible values include:
         /// 'on', 'off'</param>
         /// <param name="volumeFreeSpacePercent">Level of free space to be
         /// maintained by Cloud Tiering if it is enabled.</param>
-        public ServerEndpointUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?))
+        /// <param name="tierFilesOlderThanDays">Tier files older than
+        /// days.</param>
+        public ServerEndpointUpdateParameters(string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?))
         {
-            Tags = tags;
             CloudTiering = cloudTiering;
             VolumeFreeSpacePercent = volumeFreeSpacePercent;
+            TierFilesOlderThanDays = tierFilesOlderThanDays;
             CustomInit();
         }
 
@@ -54,13 +52,6 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the user-specified tags associated with the server
-        /// endpoint.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets cloud Tiering. Possible values include: 'on', 'off'
@@ -74,6 +65,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.volumeFreeSpacePercent")]
         public int? VolumeFreeSpacePercent { get; set; }
+
+        /// <summary>
+        /// Gets or sets tier files older than days.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tierFilesOlderThanDays")]
+        public int? TierFilesOlderThanDays { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -90,6 +87,14 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             if (VolumeFreeSpacePercent < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "VolumeFreeSpacePercent", 0);
+            }
+            if (TierFilesOlderThanDays > 2147483647)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "TierFilesOlderThanDays", 2147483647);
+            }
+            if (TierFilesOlderThanDays < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "TierFilesOlderThanDays", 0);
             }
         }
     }

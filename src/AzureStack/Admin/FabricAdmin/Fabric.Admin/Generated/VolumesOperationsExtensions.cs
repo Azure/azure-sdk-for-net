@@ -34,18 +34,18 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='location'>
             /// Location of the resource.
             /// </param>
+            /// <param name='scaleUnit'>
+            /// Name of the scale units.
+            /// </param>
             /// <param name='storageSubSystem'>
             /// Name of the storage system.
-            /// </param>
-            /// <param name='storagePool'>
-            /// Storage pool name.
             /// </param>
             /// <param name='volume'>
             /// Name of the storage volume.
             /// </param>
-            public static Volume Get(this IVolumesOperations operations, string resourceGroupName, string location, string storageSubSystem, string storagePool, string volume)
+            public static Volume Get(this IVolumesOperations operations, string resourceGroupName, string location, string scaleUnit, string storageSubSystem, string volume)
             {
-                return operations.GetAsync(resourceGroupName, location, storageSubSystem, storagePool, volume).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, location, scaleUnit, storageSubSystem, volume).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -60,11 +60,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='location'>
             /// Location of the resource.
             /// </param>
+            /// <param name='scaleUnit'>
+            /// Name of the scale units.
+            /// </param>
             /// <param name='storageSubSystem'>
             /// Name of the storage system.
-            /// </param>
-            /// <param name='storagePool'>
-            /// Storage pool name.
             /// </param>
             /// <param name='volume'>
             /// Name of the storage volume.
@@ -72,9 +72,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Volume> GetAsync(this IVolumesOperations operations, string resourceGroupName, string location, string storageSubSystem, string storagePool, string volume, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Volume> GetAsync(this IVolumesOperations operations, string resourceGroupName, string location, string scaleUnit, string storageSubSystem, string volume, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, location, storageSubSystem, storagePool, volume, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, location, scaleUnit, storageSubSystem, volume, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -92,18 +92,18 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='location'>
             /// Location of the resource.
             /// </param>
+            /// <param name='scaleUnit'>
+            /// Name of the scale units.
+            /// </param>
             /// <param name='storageSubSystem'>
             /// Name of the storage system.
-            /// </param>
-            /// <param name='storagePool'>
-            /// Storage pool name.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<Volume> List(this IVolumesOperations operations, string resourceGroupName, string location, string storageSubSystem, string storagePool, ODataQuery<Volume> odataQuery = default(ODataQuery<Volume>))
+            public static IPage<Volume> List(this IVolumesOperations operations, string resourceGroupName, string location, string scaleUnit, string storageSubSystem, ODataQuery<Volume> odataQuery = default(ODataQuery<Volume>))
             {
-                return operations.ListAsync(resourceGroupName, location, storageSubSystem, storagePool, odataQuery).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, location, scaleUnit, storageSubSystem, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -118,11 +118,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='location'>
             /// Location of the resource.
             /// </param>
+            /// <param name='scaleUnit'>
+            /// Name of the scale units.
+            /// </param>
             /// <param name='storageSubSystem'>
             /// Name of the storage system.
-            /// </param>
-            /// <param name='storagePool'>
-            /// Storage pool name.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -130,9 +130,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Volume>> ListAsync(this IVolumesOperations operations, string resourceGroupName, string location, string storageSubSystem, string storagePool, ODataQuery<Volume> odataQuery = default(ODataQuery<Volume>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Volume>> ListAsync(this IVolumesOperations operations, string resourceGroupName, string location, string scaleUnit, string storageSubSystem, ODataQuery<Volume> odataQuery = default(ODataQuery<Volume>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, location, storageSubSystem, storagePool, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, location, scaleUnit, storageSubSystem, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

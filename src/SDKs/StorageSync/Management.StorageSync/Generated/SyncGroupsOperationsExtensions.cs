@@ -78,12 +78,12 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='syncGroupName'>
             /// Name of Sync Group resource.
             /// </param>
-            /// <param name='parameters'>
-            /// Sync Group Body
+            /// <param name='properties'>
+            /// The parameters used to create the sync group
             /// </param>
-            public static SyncGroup Create(this ISyncGroupsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, SyncGroupCreateParameters parameters)
+            public static SyncGroup Create(this ISyncGroupsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, object properties = default(object))
             {
-                return operations.CreateAsync(resourceGroupName, storageSyncServiceName, syncGroupName, parameters).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, storageSyncServiceName, syncGroupName, properties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -101,15 +101,15 @@ namespace Microsoft.Azure.Management.StorageSync
             /// <param name='syncGroupName'>
             /// Name of Sync Group resource.
             /// </param>
-            /// <param name='parameters'>
-            /// Sync Group Body
+            /// <param name='properties'>
+            /// The parameters used to create the sync group
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SyncGroup> CreateAsync(this ISyncGroupsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, SyncGroupCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SyncGroup> CreateAsync(this ISyncGroupsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, object properties = default(object), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, properties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

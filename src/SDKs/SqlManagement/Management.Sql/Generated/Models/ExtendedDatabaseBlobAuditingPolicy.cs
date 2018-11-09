@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// ExtendedDatabaseBlobAuditingPolicy class.
         /// </summary>
         /// <param name="state">Specifies the state of the policy. If state is
-        /// Enabled, storageEndpoint and storageAccountAccessKey are required.
-        /// Possible values include: 'Enabled', 'Disabled'</param>
+        /// Enabled, storageEndpoint or isAzureMonitorTargetEnabled are
+        /// required. Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -48,10 +48,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// (e.g. https://MyAccount.blob.core.windows.net). If state is
         /// Enabled, storageEndpoint is required.</param>
         /// <param name="storageAccountAccessKey">Specifies the identifier key
-        /// of the auditing storage account. If state is Enabled,
-        /// storageAccountAccessKey is required.</param>
+        /// of the auditing storage account. If state is Enabled and
+        /// storageEndpoint is specified, storageAccountAccessKey is
+        /// required.</param>
         /// <param name="retentionDays">Specifies the number of days to keep in
-        /// the audit logs.</param>
+        /// the audit logs in the storage account.</param>
         /// <param name="auditActionsAndGroups">Specifies the Actions-Groups
         /// and Actions to audit.
         ///
@@ -131,7 +132,26 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="isStorageSecondaryKeyInUse">Specifies whether
         /// storageAccountAccessKey value is the storage's secondary
         /// key.</param>
-        public ExtendedDatabaseBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), string predicateExpression = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?))
+        /// <param name="isAzureMonitorTargetEnabled">Specifies whether audit
+        /// events are sent to Azure Monitor.
+        /// In order to send the events to Azure Monitor, specify 'State' as
+        /// 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
+        ///
+        /// When using REST API to configure auditing, Diagnostic Settings with
+        /// 'SQLSecurityAuditEvents' diagnostic logs category on the database
+        /// should be also created.
+        /// Note that for server level audit you should use the 'master'
+        /// database as &lt;databaseName&gt;.
+        /// Diagnostic Settings URI format:
+        /// PUT
+        /// https://management.azure.com/subscriptions/&lt;subscriptionId&gt;/resourceGroups/&lt;resourceGroup&gt;/providers/Microsoft.Sql/servers/&lt;serverName&gt;/databases/&lt;databaseName&gt;/providers/microsoft.insights/diagnosticSettings/&lt;settingsName&gt;?api-version=2017-05-01-preview
+        ///
+        /// For more information, see [Diagnostic Settings REST
+        /// API](https://go.microsoft.com/fwlink/?linkid=2033207)
+        /// or [Diagnostic Settings
+        /// PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
+        /// </param>
+        public ExtendedDatabaseBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), string predicateExpression = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?), bool? isAzureMonitorTargetEnabled = default(bool?))
             : base(id, name, type)
         {
             PredicateExpression = predicateExpression;
@@ -142,6 +162,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             AuditActionsAndGroups = auditActionsAndGroups;
             StorageAccountSubscriptionId = storageAccountSubscriptionId;
             IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUse;
+            IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
             CustomInit();
         }
 
@@ -159,8 +180,8 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets specifies the state of the policy. If state is
-        /// Enabled, storageEndpoint and storageAccountAccessKey are required.
-        /// Possible values include: 'Enabled', 'Disabled'
+        /// Enabled, storageEndpoint or isAzureMonitorTargetEnabled are
+        /// required. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
         public BlobAuditingPolicyState State { get; set; }
@@ -175,14 +196,15 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets specifies the identifier key of the auditing storage
-        /// account. If state is Enabled, storageAccountAccessKey is required.
+        /// account. If state is Enabled and storageEndpoint is specified,
+        /// storageAccountAccessKey is required.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountAccessKey")]
         public string StorageAccountAccessKey { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the number of days to keep in the audit
-        /// logs.
+        /// Gets or sets specifies the number of days to keep in the audit logs
+        /// in the storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.retentionDays")]
         public int? RetentionDays { get; set; }
@@ -279,6 +301,30 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isStorageSecondaryKeyInUse")]
         public bool? IsStorageSecondaryKeyInUse { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether audit events are sent to Azure
+        /// Monitor.
+        /// In order to send the events to Azure Monitor, specify 'State' as
+        /// 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
+        ///
+        /// When using REST API to configure auditing, Diagnostic Settings with
+        /// 'SQLSecurityAuditEvents' diagnostic logs category on the database
+        /// should be also created.
+        /// Note that for server level audit you should use the 'master'
+        /// database as &amp;lt;databaseName&amp;gt;.
+        /// Diagnostic Settings URI format:
+        /// PUT
+        /// https://management.azure.com/subscriptions/&amp;lt;subscriptionId&amp;gt;/resourceGroups/&amp;lt;resourceGroup&amp;gt;/providers/Microsoft.Sql/servers/&amp;lt;serverName&amp;gt;/databases/&amp;lt;databaseName&amp;gt;/providers/microsoft.insights/diagnosticSettings/&amp;lt;settingsName&amp;gt;?api-version=2017-05-01-preview
+        ///
+        /// For more information, see [Diagnostic Settings REST
+        /// API](https://go.microsoft.com/fwlink/?linkid=2033207)
+        /// or [Diagnostic Settings
+        /// PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
+        ///
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isAzureMonitorTargetEnabled")]
+        public bool? IsAzureMonitorTargetEnabled { get; set; }
 
         /// <summary>
         /// Validate the object.

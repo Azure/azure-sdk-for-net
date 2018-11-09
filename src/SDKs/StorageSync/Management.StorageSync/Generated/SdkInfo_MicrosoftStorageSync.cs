@@ -19,13 +19,13 @@ namespace Microsoft.Azure.Management.StorageSync
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("StorageSync", "CloudEndpoints", "2018-04-02"),
-                new Tuple<string, string, string>("StorageSync", "Operations", "2018-04-02"),
-                new Tuple<string, string, string>("StorageSync", "RegisteredServers", "2018-04-02"),
-                new Tuple<string, string, string>("StorageSync", "ServerEndpoints", "2018-04-02"),
-                new Tuple<string, string, string>("StorageSync", "StorageSyncServices", "2018-04-02"),
-                new Tuple<string, string, string>("StorageSync", "SyncGroups", "2018-04-02"),
-                new Tuple<string, string, string>("StorageSync", "Workflows", "2018-04-02"),
+                new Tuple<string, string, string>("StorageSync", "CloudEndpoints", "2018-07-01"),
+                new Tuple<string, string, string>("StorageSync", "Operations", "2018-07-01"),
+                new Tuple<string, string, string>("StorageSync", "RegisteredServers", "2018-07-01"),
+                new Tuple<string, string, string>("StorageSync", "ServerEndpoints", "2018-07-01"),
+                new Tuple<string, string, string>("StorageSync", "StorageSyncServices", "2018-07-01"),
+                new Tuple<string, string, string>("StorageSync", "SyncGroups", "2018-07-01"),
+                new Tuple<string, string, string>("StorageSync", "Workflows", "2018-07-01"),
               }.AsEnumerable();
           }
       }
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.StorageSync
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/storagesync/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=H:\\csharpsdk\\azure-sdk-for-net\\src\\SDKs";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "03757d26912ec4e36205e2792a24f73bd3707786";
+      public static readonly String GithubCommidId = "ec1de75b7b9cbadaee7f5401241ba84930581551";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

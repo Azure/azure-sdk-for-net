@@ -133,6 +133,34 @@ namespace Microsoft.Azure.Management.StorageSync
         /// </exception>
         Task<AzureOperationHeaderResponse<RegisteredServersDeleteHeaders>> DeleteWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string serverId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Triggers Server certificate rollover.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='storageSyncServiceName'>
+        /// Name of Storage Sync Service resource.
+        /// </param>
+        /// <param name='serverId'>
+        /// Server Id
+        /// </param>
+        /// <param name='serverCertificate'>
+        /// Certificate Data
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="StorageSyncErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<RegisteredServersTriggerRolloverHeaders>> TriggerRolloverWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string serverId, string serverCertificate = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Add a new registered server.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -188,5 +216,33 @@ namespace Microsoft.Azure.Management.StorageSync
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationHeaderResponse<RegisteredServersDeleteHeaders>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string serverId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Triggers Server certificate rollover.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='storageSyncServiceName'>
+        /// Name of Storage Sync Service resource.
+        /// </param>
+        /// <param name='serverId'>
+        /// Server Id
+        /// </param>
+        /// <param name='serverCertificate'>
+        /// Certificate Data
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="StorageSyncErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<RegisteredServersTriggerRolloverHeaders>> BeginTriggerRolloverWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string serverId, string serverCertificate = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

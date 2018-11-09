@@ -1,46 +1,48 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v2.0/Prediction/1896e6d9-5090-4733-882f-4f14632fec37/url",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1ByZWRpY3Rpb24vMTg5NmU2ZDktNTA5MC00NzMzLTg4MmYtNGYxNDYzMmZlYzM3L3VybA==",
+      "RequestUri": "/customvision/v2.0/Prediction/32cb8dd6-19f8-4f08-afef-360b2e46274e/url",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1ByZWRpY3Rpb24vMzJjYjhkZDYtMTlmOC00ZjA4LWFmZWYtMzYwYjJlNDYyNzRlL3VybA==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg\"\r\n}",
       "RequestHeaders": {
+        "Prediction-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2671.0",
+          "OSName/WindowsServer2016Datacenter",
+          "OSVersion/6.3.14393",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.CustomVisionPredictionClient/0.11.0.0"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
           "133"
-        ],
-        "Prediction-Key": [
-          ""
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.PredictionEndpoint/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"4a4d4e88-caaa-4e08-a7e8-c6071b9632f6\",\r\n  \"project\": \"1896e6d9-5090-4733-882f-4f14632fec37\",\r\n  \"iteration\": \"aaeb5238-fabd-4102-ae30-0455b03c593e\",\r\n  \"created\": \"2018-04-26T18:29:52.7637813Z\",\r\n  \"predictions\": [\r\n    {\r\n      \"probability\": 0.9999821,\r\n      \"tagId\": \"5bd06679-eb62-47f7-a76f-c9b33f505afa\",\r\n      \"tagName\": \"hemlock\"\r\n    },\r\n    {\r\n      \"probability\": 3.03306615E-06,\r\n      \"tagId\": \"24cbd7bc-f2cf-49ad-9c8f-63e3d03c3511\",\r\n      \"tagName\": \"cherry\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "392"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Date": [
-          "Thu, 26 Apr 2018 18:29:52 GMT"
-        ],
         "apim-request-id": [
-          "a06eaf76-2573-426d-8c0e-7c66e77a35d3"
+          "8d4d75d3-87a8-4de5-9e42-3a69907e84f3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
         "x-content-type-options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 18 Oct 2018 16:52:36 GMT"
+        ],
+        "Content-Length": [
+          "385"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"8d4d75d3-87a8-4de5-9e42-3a69907e84f3\",\r\n  \"project\": \"32cb8dd6-19f8-4f08-afef-360b2e46274e\",\r\n  \"iteration\": \"b5ff0c11-30a5-4e31-9107-5b48f2f529e1\",\r\n  \"created\": \"2018-10-18T16:52:36.015874Z\",\r\n  \"predictions\": [\r\n    {\r\n      \"probability\": 0.9998657,\r\n      \"tagId\": \"f588f9dc-7f24-4162-aa05-c30880e565c9\",\r\n      \"tagName\": \"Tag1\"\r\n    },\r\n    {\r\n      \"probability\": 6.8023005E-06,\r\n      \"tagId\": \"a292cc5a-e839-4115-aaf3-090294d6dbfa\",\r\n      \"tagName\": \"Tag2\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

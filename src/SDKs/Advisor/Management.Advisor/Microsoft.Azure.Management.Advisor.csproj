@@ -6,7 +6,7 @@
     <PropertyGroup>
         <Description>Microsoft Azure Advisor Library</Description>
         <AssemblyName>Microsoft.Azure.Management.Advisor</AssemblyName>
-        <Version>0.9.0-preview</Version>
+        <Version>0.9.5-preview</Version>
         <PackageId>Microsoft.Azure.Management.Advisor</PackageId>
         <PackageTags>Management.Advisor;Advisor;recommendations;</PackageTags>
         <PackageReleaseNotes>
