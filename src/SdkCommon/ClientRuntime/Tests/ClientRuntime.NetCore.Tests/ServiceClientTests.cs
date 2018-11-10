@@ -11,6 +11,9 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Xunit;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Microsoft.Rest.ClientRuntime.Tests
 {
@@ -293,42 +296,222 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             }
         }
 
-//#if FullNetFx
-//        [Fact]
-//        public void VerifyOsInfoInUserAgent()
-//        {
-//            string osInfoProductName = "OSName";
 
-//            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
-//            HttpResponseMessage response = fakeClient.DoStuffSync();
-//            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
+        #region Multiple Clients
+        [Fact]
+        public void MultipleClients()
+        {
+            List<Task> multiTask = new List<Task>();
+            List<FakeServiceClient> fsclientList = new List<FakeServiceClient>();
+            ManualResetEvent resetEvent = new ManualResetEvent(false);
+            for (int i = 0; i <= 5; i++)
+            {
+                multiTask.Add(Task.Run(async () =>
+                {
+                    return await CreateClient("Hello", "World", resetEvent);
+                }).ContinueWith((fc) =>
+                {
+                    fsclientList.Add(fc.Result);
+                }));
+            }
 
-//            var osProduct = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(osInfoProductName)).FirstOrDefault<ProductInfoHeaderValue>();
+            resetEvent.Set();
+            Task.WaitAll(multiTask.ToArray());
 
-//            Assert.NotEmpty(osProduct.Product.Name);
-//            Assert.NotEmpty(osProduct.Product.Version);
-//        }
+            foreach (FakeServiceClient fsc in fsclientList)
+            {
+                Assert.Equal(5, fsc.UserAgent.Count);
+            }
+        }
 
-//        [Fact]
-//        public void AddingSpCharsInUserAgent()
-//        {
-//            string sampleProd = "SampleProdName";
-//            string newSampleProd = "NewSampleProdName";
-//            string spChars = "*()!@#$%^&";
-//            string sampleVersion = "1.*.0.*";
+        [Fact]
+        public void MultipleClientWithSameHttpClient()
+        {
+            List<Task> multiTask = new List<Task>();
+            List<FakeServiceClient> fsclientList = new List<FakeServiceClient>();
+            HttpClient hc = new HttpClient();
+            ManualResetEvent resetEvent = new ManualResetEvent(false);
+            for (int i = 0; i <= 50; i++)
+            {
+                //Debug.WriteLine((i % 2).ToString());
 
-//            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
-//            fakeClient.SetUserAgent(string.Concat(sampleProd, spChars));
-//            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
-//            var retrievedProdInfo = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(sampleProd)).FirstOrDefault<ProductInfoHeaderValue>();
-//            Assert.Equal(retrievedProdInfo?.Product?.Name, sampleProd);
+                multiTask.Add(Task.Run(async () =>
+                {
+                    return await CreateAndUpdateClient(hc, "Hello", "World", resetEvent);
+                }).ContinueWith((fc) =>
+                {
+                    fsclientList.Add(fc.Result);
+                }));
+            }
 
-//            fakeClient.SetUserAgent(newSampleProd, sampleVersion);
-//            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentVersion = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
-//            var retrievedVersion = userAgentVersion.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(newSampleProd)).FirstOrDefault<ProductInfoHeaderValue>();
-//            Assert.Equal(retrievedVersion?.Product?.Version, sampleVersion);
-//        }
+            resetEvent.Set();
+            Task.WaitAll(multiTask.ToArray());
 
-//#endif
+            int count = 0;
+            foreach (FakeServiceClient fsc in fsclientList)
+            {
+                Assert.Equal(5, fsc.UserAgent.Count);
+            }
+        }
+
+        [Fact(Skip = "Fix test")]
+        public void MultipleClientInParallel()
+        {
+            List<Task> multiTask = new List<Task>();
+            List<Func<Task<FakeServiceClient>>> svcClientCreateFuncList = new List<Func<Task<FakeServiceClient>>>();
+            List<FakeServiceClient> fsclientList = new List<FakeServiceClient>();
+            HttpClient hc = new HttpClient();
+            ManualResetEvent resetEvent = new ManualResetEvent(false);
+            object lkObj = new object();
+            for (int i = 0; i <= 50; i++)
+            {
+                Func<Task<FakeServiceClient>> CreateFakeSvcClientFunc = new Func<Task<FakeServiceClient>>(() => CreateClient("Hello", "World", resetEvent));
+                svcClientCreateFuncList.Add(CreateFakeSvcClientFunc);
+            }
+
+            ParallelLoopResult plr = Parallel.ForEach<Func<Task<FakeServiceClient>>>(svcClientCreateFuncList,
+                (funcItem) =>
+                {
+                    //resetEvent.Set();
+                    funcItem.Invoke()
+                    .ContinueWith((fc) =>
+                    {
+                        lock (lkObj)
+                        {
+                            fsclientList.Add(fc.Result);
+                        }
+                    });
+                });
+
+            for(int i=0; i<=3; i++)
+            {
+                if (!plr.IsCompleted)
+                    Thread.Sleep(TimeSpan.FromSeconds(5));
+                else
+                    break;
+            }
+
+            int count = 0;
+            foreach (FakeServiceClient fsc in fsclientList)
+            {
+                Assert.Equal(5, fsc.UserAgent.Count);
+            }
+        }
+
+
+        [Fact(Skip = "Fix test")]
+        public void MultipleClientInParallelSameHttpClient()
+        {
+            List<Task> multiTask = new List<Task>();
+            List<Func<Task<FakeServiceClient>>> svcClientCreateFuncList = new List<Func<Task<FakeServiceClient>>>();
+            List<FakeServiceClient> fsclientList = new List<FakeServiceClient>();
+            HttpClient hc = new HttpClient();
+            ManualResetEvent resetEvent = new ManualResetEvent(false);
+
+            for (int i = 0; i <= 50; i++)
+            {
+                Func<Task<FakeServiceClient>> CreateFakeSvcClientFunc = new Func<Task<FakeServiceClient>>(() => CreateClient(hc, "Hello", "World", resetEvent));
+                svcClientCreateFuncList.Add(CreateFakeSvcClientFunc);
+            }
+
+            Parallel.ForEach<Func<Task<FakeServiceClient>>>(svcClientCreateFuncList,
+                (funcItem) =>
+                {
+                    //resetEvent.Set();
+                    funcItem.Invoke()
+                    .ContinueWith((fc) => fsclientList.Add(fc.Result));
+                });
+
+            int count = 0;
+            foreach (FakeServiceClient fsc in fsclientList)
+            {
+                Assert.Equal(5, fsc.UserAgent.Count);
+            }
+        }
+
+
+
+        private async Task<FakeServiceClient> CreateAndUpdateClient(HttpClient hc, string userAgentProdName, string userAgentProdVersion, ManualResetEvent resetEvent)
+        {
+            return await CreateClient(hc, userAgentProdName, userAgentProdVersion, resetEvent);
+        }
+
+
+        private async Task<FakeServiceClient> CreateClient(string userAgentProdName, string userAgentProdVersion, ManualResetEvent resetEvent)
+        {
+            //resetEvent.WaitOne();
+            return await Task.Run<FakeServiceClient>(() =>
+            {
+                FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
+                fakeClient.SetUserAgent(userAgentProdName, userAgentProdVersion);
+                return fakeClient;
+            });
+        }
+
+        private async Task<FakeServiceClient> CreateClient(HttpClient hc, string userAgentProdName, string userAgentProdVersion, ManualResetEvent resetEvent)
+        {
+//            resetEvent.WaitOne();
+            return await Task.Run<FakeServiceClient>(() =>
+            {
+                FakeServiceClient fakeClient = new FakeServiceClient(hc);
+                fakeClient.SetUserAgent(userAgentProdName, userAgentProdVersion);
+                return fakeClient;
+            });
+        }
+
+
+        #endregion
+
+
+        
+            //    .ContinueWith<FakeServiceClient>((fs) =>
+            //{
+            //    //FakeServiceClient updateFS = fs.Result;
+            //    //if (Convert.ToInt32(clientNumber) % 2 == 0)
+            //    //{
+            //    //    updateFS.SetUserAgent(string.Format("Client#{0}",clientNumber.ToString()), "somever");
+            //    //}
+
+            //    return updateFS;
+            //});
+
+
+        //#if FullNetFx
+        //        [Fact]
+        //        public void VerifyOsInfoInUserAgent()
+        //        {
+        //            string osInfoProductName = "OSName";
+
+        //            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
+        //            HttpResponseMessage response = fakeClient.DoStuffSync();
+        //            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
+
+        //            var osProduct = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(osInfoProductName)).FirstOrDefault<ProductInfoHeaderValue>();
+
+        //            Assert.NotEmpty(osProduct.Product.Name);
+        //            Assert.NotEmpty(osProduct.Product.Version);
+        //        }
+
+        //        [Fact]
+        //        public void AddingSpCharsInUserAgent()
+        //        {
+        //            string sampleProd = "SampleProdName";
+        //            string newSampleProd = "NewSampleProdName";
+        //            string spChars = "*()!@#$%^&";
+        //            string sampleVersion = "1.*.0.*";
+
+        //            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
+        //            fakeClient.SetUserAgent(string.Concat(sampleProd, spChars));
+        //            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
+        //            var retrievedProdInfo = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(sampleProd)).FirstOrDefault<ProductInfoHeaderValue>();
+        //            Assert.Equal(retrievedProdInfo?.Product?.Name, sampleProd);
+
+        //            fakeClient.SetUserAgent(newSampleProd, sampleVersion);
+        //            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentVersion = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
+        //            var retrievedVersion = userAgentVersion.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(newSampleProd)).FirstOrDefault<ProductInfoHeaderValue>();
+        //            Assert.Equal(retrievedVersion?.Product?.Version, sampleVersion);
+        //        }
+
+        //#endif
     }
 }
