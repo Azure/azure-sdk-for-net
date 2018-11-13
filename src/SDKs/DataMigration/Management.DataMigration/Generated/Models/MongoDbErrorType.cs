@@ -12,14 +12,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
 {
 
     /// <summary>
-    /// Defines values for ProjectSourcePlatform.
+    /// Defines values for MongoDbErrorType.
     /// </summary>
-    public static class ProjectSourcePlatform
+    public static class MongoDbErrorType
     {
-        public const string SQL = "SQL";
-        public const string MySQL = "MySQL";
-        public const string PostgreSql = "PostgreSql";
-        public const string MongoDb = "MongoDb";
-        public const string Unknown = "Unknown";
+        public const string Error = "Error";
+        public const string ValidationError = "ValidationError";
+        public const string Warning = "Warning";
     }
 }

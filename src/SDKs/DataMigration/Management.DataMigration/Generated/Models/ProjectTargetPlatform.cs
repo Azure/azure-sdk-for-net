@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public const string SQLMI = "SQLMI";
         public const string AzureDbForMySql = "AzureDbForMySql";
         public const string AzureDbForPostgreSql = "AzureDbForPostgreSql";
+        public const string MongoDb = "MongoDb";
         public const string Unknown = "Unknown";
     }
 }

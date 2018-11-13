@@ -12,14 +12,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
 {
 
     /// <summary>
-    /// Defines values for ProjectSourcePlatform.
+    /// Defines values for MongoDbClusterType.
     /// </summary>
-    public static class ProjectSourcePlatform
+    public static class MongoDbClusterType
     {
-        public const string SQL = "SQL";
-        public const string MySQL = "MySQL";
-        public const string PostgreSql = "PostgreSql";
+        public const string BlobContainer = "BlobContainer";
+        public const string CosmosDb = "CosmosDb";
         public const string MongoDb = "MongoDb";
-        public const string Unknown = "Unknown";
     }
 }
