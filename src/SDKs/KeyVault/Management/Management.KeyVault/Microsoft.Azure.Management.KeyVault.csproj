@@ -10,7 +10,11 @@
 		<AssemblyName>Microsoft.Azure.Management.KeyVault</AssemblyName>
 		<Version>2.4.3</Version>
 		<PackageTags>Microsoft Azure key vault management;Key Vault;</PackageTags>
-		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+		<PackageReleaseNotes>      
+			<![CDATA[
+				Republishing to sign package with correct hash.
+			]]>
+    	</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

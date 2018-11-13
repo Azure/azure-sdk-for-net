@@ -7,9 +7,9 @@
     <AssemblyName>Microsoft.Azure.KeyVault.Core</AssemblyName>
     <VersionPrefix>3.0.1</VersionPrefix>
     <PackageTags>Microsoft Azure Key Vault Core</PackageTags>
-    <PackageReleaseNotes>
+    <PackageReleaseNotes>      
       <![CDATA[
-        Moving version to 3.0 to align all Azure Key Vault SDK packages.
+        Republishing to sign package with correct hash.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

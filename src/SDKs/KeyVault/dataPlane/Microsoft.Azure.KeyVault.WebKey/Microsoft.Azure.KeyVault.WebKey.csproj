@@ -7,7 +7,11 @@
     <AssemblyName>Microsoft.Azure.KeyVault.WebKey</AssemblyName>
     <VersionPrefix>3.0.2</VersionPrefix>
     <PackageTags>Microsoft Azure Key Vault WebKey</PackageTags>
-    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+    <PackageReleaseNotes>      
+      <![CDATA[
+        Republishing to sign package with correct hash.
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
