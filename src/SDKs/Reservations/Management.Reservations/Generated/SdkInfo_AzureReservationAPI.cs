@@ -36,5 +36,5 @@ namespace Microsoft.Azure.Management.Reservations
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section  
-	  }
+  }
 }
