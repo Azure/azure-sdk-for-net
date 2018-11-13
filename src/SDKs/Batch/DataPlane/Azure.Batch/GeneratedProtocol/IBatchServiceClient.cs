@@ -23,7 +23,6 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -44,6 +43,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Client API Version.
         /// </summary>
         string ApiVersion { get; }
+
+        /// <summary>
+        /// The base URL for all Azure Batch service requests.
+        /// </summary>
+        string BatchUrl { get; set; }
 
         /// <summary>
         /// The preferred language for the response.

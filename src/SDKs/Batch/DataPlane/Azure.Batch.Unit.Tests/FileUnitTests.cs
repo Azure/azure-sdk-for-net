@@ -58,7 +58,7 @@ namespace Azure.Batch.Unit.Tests
             responseMessage.Content.Headers.ContentLength = StreamUnitTests.StreamLengthInBytes;
             ReplayDelegatingHandler handler = new ReplayDelegatingHandler(responseMessage);
 
-            return BatchClient.Open(new Protocol.BatchServiceClient(new TokenCredentials("xyz"), handler));
+            return BatchClient.Open(new Protocol.BatchServiceClient(new TokenCredentials("xyz"), handler) { BatchUrl = @"https://foo.microsoft.test" });
         }
 
         private class ReplayDelegatingHandler : DelegatingHandler

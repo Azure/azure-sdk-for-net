@@ -44,7 +44,7 @@ namespace Azure.Batch.Unit.Tests
                 return new HttpResponseMessage(HttpStatusCode.Accepted);
             });
 
-            using (var restClient = new BatchServiceClient(tokenCredentials, fakeHttpClientHandler))
+            using (var restClient = new BatchServiceClient(tokenCredentials, fakeHttpClientHandler) { BatchUrl = @"https://foo.microsoft.test" })
             {
                 using (var client = BatchClient.Open(restClient))
                 {
@@ -67,7 +67,9 @@ namespace Azure.Batch.Unit.Tests
                 return Task.FromResult("foo");
             }));
 
-            using (var restClient = new BatchServiceClient(tokenCredentials, new FakeHttpClientHandler(req => new HttpResponseMessage(HttpStatusCode.Accepted))))
+            using (var restClient = new BatchServiceClient(
+                tokenCredentials,
+                new FakeHttpClientHandler(req => new HttpResponseMessage(HttpStatusCode.Accepted))) { BatchUrl = @"https://foo.microsoft.test" })
             {
                 var client = BatchClient.Open(restClient);
 
@@ -91,7 +93,7 @@ namespace Azure.Batch.Unit.Tests
                 return new HttpResponseMessage(HttpStatusCode.Accepted);
             });
 
-            using (var restClient = new BatchServiceClient(tokenCredentials, fakeHttpClientHandler))
+            using (var restClient = new BatchServiceClient(tokenCredentials, fakeHttpClientHandler) { BatchUrl = @"https://foo.microsoft.test" })
             {
                 using (var client = BatchClient.Open(restClient))
                 {

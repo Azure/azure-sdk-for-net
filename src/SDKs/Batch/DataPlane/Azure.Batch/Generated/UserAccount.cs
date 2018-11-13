@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<LinuxUserConfiguration> LinuxUserConfigurationProperty;
             public readonly PropertyAccessor<string> NameProperty;
             public readonly PropertyAccessor<string> PasswordProperty;
+            public readonly PropertyAccessor<WindowsUserConfiguration> WindowsUserConfigurationProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
@@ -36,6 +37,7 @@ namespace Microsoft.Azure.Batch
                 this.LinuxUserConfigurationProperty = this.CreatePropertyAccessor<LinuxUserConfiguration>(nameof(LinuxUserConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.NameProperty = this.CreatePropertyAccessor<string>(nameof(Name), BindingAccess.Read | BindingAccess.Write);
                 this.PasswordProperty = this.CreatePropertyAccessor<string>(nameof(Password), BindingAccess.Read | BindingAccess.Write);
+                this.WindowsUserConfigurationProperty = this.CreatePropertyAccessor<WindowsUserConfiguration>(nameof(WindowsUserConfiguration), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.UserAccount protocolObject) : base(BindingState.Bound)
@@ -56,6 +58,10 @@ namespace Microsoft.Azure.Batch
                     protocolObject.Password,
                     nameof(Password),
                     BindingAccess.Read);
+                this.WindowsUserConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.WindowsUserConfiguration, o => new WindowsUserConfiguration(o).Freeze()),
+                    nameof(WindowsUserConfiguration),
+                    BindingAccess.Read);
             }
         }
 
@@ -70,17 +76,20 @@ namespace Microsoft.Azure.Batch
         /// <param name='password'>The password for the user account.</param>
         /// <param name='elevationLevel'>The elevation level of the user account.</param>
         /// <param name='linuxUserConfiguration'>Additional properties used to create a user account on a Linux node.</param>
+        /// <param name='windowsUserConfiguration'>The Windows-specific user configuration for the user account.</param>
         public UserAccount(
             string name,
             string password,
             Common.ElevationLevel? elevationLevel = default(Common.ElevationLevel?),
-            LinuxUserConfiguration linuxUserConfiguration = default(LinuxUserConfiguration))
+            LinuxUserConfiguration linuxUserConfiguration = default(LinuxUserConfiguration),
+            WindowsUserConfiguration windowsUserConfiguration = default(WindowsUserConfiguration))
         {
             this.propertyContainer = new PropertyContainer();
             this.Name = name;
             this.Password = password;
             this.ElevationLevel = elevationLevel;
             this.LinuxUserConfiguration = linuxUserConfiguration;
+            this.WindowsUserConfiguration = windowsUserConfiguration;
         }
 
         internal UserAccount(Models.UserAccount protocolObject)
@@ -135,6 +144,19 @@ namespace Microsoft.Azure.Batch
             set { this.propertyContainer.PasswordProperty.Value = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the Windows-specific user configuration for the user account.
+        /// </summary>
+        /// <remarks>
+        /// This property can only be specified if the user is on a Windows pool. If not specified and on a Windows pool, 
+        /// the user is created with the default options.
+        /// </remarks>
+        public WindowsUserConfiguration WindowsUserConfiguration
+        {
+            get { return this.propertyContainer.WindowsUserConfigurationProperty.Value; }
+            set { this.propertyContainer.WindowsUserConfigurationProperty.Value = value; }
+        }
+
         #endregion // UserAccount
 
         #region IPropertyMetadata
@@ -165,6 +187,7 @@ namespace Microsoft.Azure.Batch
                 LinuxUserConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.LinuxUserConfiguration, (o) => o.GetTransportObject()),
                 Name = this.Name,
                 Password = this.Password,
+                WindowsUserConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.WindowsUserConfiguration, (o) => o.GetTransportObject()),
             };
 
             return result;

@@ -536,10 +536,10 @@ namespace BatchClientIntegrationTests
 
                             foreach (ResourceFile resourceFile in poolStartTask.ResourceFiles)
                             {
-                                ResourceFile matchingResourceFile = computeNode.StartTask.ResourceFiles.FirstOrDefault(item => item.BlobSource == resourceFile.BlobSource);
+                                ResourceFile matchingResourceFile = computeNode.StartTask.ResourceFiles.FirstOrDefault(item => item.HttpUrl == resourceFile.HttpUrl);
 
                                 Assert.NotNull(matchingResourceFile);
-                                Assert.Equal(resourceFile.BlobSource, matchingResourceFile.BlobSource);
+                                Assert.Equal(resourceFile.HttpUrl, matchingResourceFile.HttpUrl);
                                 Assert.Equal(resourceFile.FilePath, matchingResourceFile.FilePath);
                             }
                         }
@@ -559,7 +559,7 @@ namespace BatchClientIntegrationTests
                         TestUtilities.AssertThrows<InvalidOperationException>(() => { computeNode.StartTask.ResourceFiles = new List<ResourceFile>(); });
                         if (computeNode.StartTask.ResourceFiles != null)
                         {
-                            TestUtilities.AssertThrows<InvalidOperationException>(() => { computeNode.StartTask.ResourceFiles.Add(new ResourceFile("test", "test")); });
+                            TestUtilities.AssertThrows<InvalidOperationException>(() => { computeNode.StartTask.ResourceFiles.Add(ResourceFile.FromUrl("test", "test")); });
                         }
                     }
                 }
