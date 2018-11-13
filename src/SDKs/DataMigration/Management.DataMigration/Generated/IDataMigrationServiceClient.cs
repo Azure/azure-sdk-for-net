@@ -94,5 +94,10 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         IOperations Operations { get; }
 
+        /// <summary>
+        /// Gets the IFilesOperations.
+        /// </summary>
+        IFilesOperations Files { get; }
+
     }
 }
