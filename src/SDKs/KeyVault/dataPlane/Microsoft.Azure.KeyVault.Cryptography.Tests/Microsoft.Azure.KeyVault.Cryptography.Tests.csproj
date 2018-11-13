@@ -5,7 +5,7 @@
     <Description>Microsoft Azure Key Vault Cryptography tests</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Cryptography tests</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.KeyVault.Cryptography.Tests</AssemblyName>
-    <VersionPrefix>3.0.0-alpha</VersionPrefix>    
+    <VersionPrefix>3.0.1</VersionPrefix>    
   </PropertyGroup>
   <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
