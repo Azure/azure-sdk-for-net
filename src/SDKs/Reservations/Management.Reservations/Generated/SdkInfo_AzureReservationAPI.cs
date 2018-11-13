@@ -35,5 +35,6 @@ namespace Microsoft.Azure.Management.Reservations
       public static readonly String GithubCommidId = "1f3cc4eada45a048c8287981f1e04d9850abf5a6";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section  }
+      // END: Code Generation Metadata Section  
+	  }
 }
