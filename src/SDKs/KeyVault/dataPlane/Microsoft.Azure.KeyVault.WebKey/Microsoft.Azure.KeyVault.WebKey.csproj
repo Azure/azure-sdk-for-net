@@ -5,9 +5,13 @@
     <Description>Microsoft Azure Key Vault WebKey Class Library</Description>
     <AssemblyTitle>Microsoft Azure Key Vault WebKey</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.KeyVault.WebKey</AssemblyName>
-    <VersionPrefix>3.0.1</VersionPrefix>
+    <Version>3.0.2</Version>
     <PackageTags>Microsoft Azure Key Vault WebKey</PackageTags>
-    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+    <PackageReleaseNotes>      
+      <![CDATA[
+        Republishing to sign package with correct hash.
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -3,13 +3,9 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.KeyVault.Tests</PackageId>
     <Description>Microsoft.Azure.KeyVault.Tests Class Library</Description>
-    <VersionPrefix>3.0.0-alpha</VersionPrefix>
+    <Version>1.0.0</Version>
     <AssemblyName>Microsoft.Azure.KeyVault.Tests</AssemblyName>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
-  
   <ItemGroup>  
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
