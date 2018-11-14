@@ -178,8 +178,9 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='expand'>
-            /// Get the expend Storage account properties, e.g. geoReplicationStats.
-            /// Possible values include: 'geoReplicationStats'
+            /// May be used to expand the properties within account's properties. By
+            /// default, data is not included when fecthing properties. Currently we only
+            /// support geoReplicationStats. Possible values include: 'geoReplicationStats'
             /// </param>
             public static StorageAccount GetProperties(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountExpand? expand = default(StorageAccountExpand?))
             {
@@ -204,8 +205,9 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='expand'>
-            /// Get the expend Storage account properties, e.g. geoReplicationStats.
-            /// Possible values include: 'geoReplicationStats'
+            /// May be used to expand the properties within account's properties. By
+            /// default, data is not included when fecthing properties. Currently we only
+            /// support geoReplicationStats. Possible values include: 'geoReplicationStats'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

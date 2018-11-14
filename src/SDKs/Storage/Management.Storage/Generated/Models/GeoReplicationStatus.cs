@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for ReplicationStatus.
+    /// Defines values for GeoReplicationStatus.
     /// </summary>
-    public static class ReplicationStatus
+    public static class GeoReplicationStatus
     {
         public const string Live = "Live";
         public const string Bootstrap = "Bootstrap";

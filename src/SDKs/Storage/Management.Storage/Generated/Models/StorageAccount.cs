@@ -96,8 +96,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// sets to true.</param>
         /// <param name="failoverInProgress">If the failover is in progress,
         /// the value will be true, otherwise, it will be null.</param>
-        /// <param name="geoReplicationStats">The last sync time for a RA-GRS
-        /// and GRS accounts.</param>
+        /// <param name="geoReplicationStats">Geo Replication Stats</param>
         public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Kind? kind = default(Kind?), Identity identity = default(Identity), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableAzureFilesAadIntegration = default(bool?), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), bool? failoverInProgress = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats))
             : base(location, id, name, type, tags)
         {
@@ -276,7 +275,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         public bool? FailoverInProgress { get; private set; }
 
         /// <summary>
-        /// Gets the last sync time for a RA-GRS and GRS accounts.
+        /// Gets geo Replication Stats
         /// </summary>
         [JsonProperty(PropertyName = "properties.geoReplicationStats")]
         public GeoReplicationStats GeoReplicationStats { get; private set; }
