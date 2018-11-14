@@ -8,35 +8,40 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Media.Models
+namespace Microsoft.Azure.Management.Kusto.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// An operation.
-    /// </summary>
-    public partial class Operation
+    public partial class AzureSku
     {
         /// <summary>
-        /// Initializes a new instance of the Operation class.
+        /// Initializes a new instance of the AzureSku class.
         /// </summary>
-        public Operation()
+        public AzureSku()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Operation class.
+        /// Initializes a new instance of the AzureSku class.
         /// </summary>
-        /// <param name="name">The operation name.</param>
-        /// <param name="display">The operation display name.</param>
-        public Operation(string name, OperationDisplay display = default(OperationDisplay))
+        /// <param name="name">SKU name. Possible values include: 'KC8',
+        /// 'KC16', 'KS8', 'KS16', 'D13_v2', 'D14_v2', 'L8', 'L16'</param>
+        /// <param name="capacity">SKU capacity.</param>
+        public AzureSku(string name, int? capacity = default(int?))
         {
             Name = name;
-            Display = display;
+            Capacity = capacity;
             CustomInit();
+        }
+        /// <summary>
+        /// Static constructor for AzureSku class.
+        /// </summary>
+        static AzureSku()
+        {
+            Tier = "Standard";
         }
 
         /// <summary>
@@ -45,16 +50,23 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the operation name.
+        /// Gets or sets SKU name. Possible values include: 'KC8', 'KC16',
+        /// 'KS8', 'KS16', 'D13_v2', 'D14_v2', 'L8', 'L16'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the operation display name.
+        /// Gets or sets SKU capacity.
         /// </summary>
-        [JsonProperty(PropertyName = "display")]
-        public OperationDisplay Display { get; set; }
+        [JsonProperty(PropertyName = "capacity")]
+        public int? Capacity { get; set; }
+
+        /// <summary>
+        /// SKU tier.
+        /// </summary>
+        [JsonProperty(PropertyName = "tier")]
+        public static string Tier { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -8,33 +8,29 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Media.Models
+namespace Microsoft.Azure.Management.Kusto.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// The IP access control.
-    /// </summary>
-    public partial class IPAccessControl
+    public partial class DatabaseStatistics
     {
         /// <summary>
-        /// Initializes a new instance of the IPAccessControl class.
+        /// Initializes a new instance of the DatabaseStatistics class.
         /// </summary>
-        public IPAccessControl()
+        public DatabaseStatistics()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IPAccessControl class.
+        /// Initializes a new instance of the DatabaseStatistics class.
         /// </summary>
-        /// <param name="allow">The IP allow list.</param>
-        public IPAccessControl(IList<IPRange> allow = default(IList<IPRange>))
+        /// <param name="size">The database size - the total size of compressed
+        /// data and index in bytes.</param>
+        public DatabaseStatistics(double? size = default(double?))
         {
-            Allow = allow;
+            Size = size;
             CustomInit();
         }
 
@@ -44,10 +40,11 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the IP allow list.
+        /// Gets or sets the database size - the total size of compressed data
+        /// and index in bytes.
         /// </summary>
-        [JsonProperty(PropertyName = "allow")]
-        public IList<IPRange> Allow { get; set; }
+        [JsonProperty(PropertyName = "size")]
+        public double? Size { get; set; }
 
     }
 }

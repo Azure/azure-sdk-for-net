@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Kusto
         public KustoManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists available operations for the Microsoft.Kusto provider
+        /// Lists available operations for the Microsoft.Kusto provider.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Kusto
         }
 
         /// <summary>
-        /// Lists available operations for the Microsoft.Kusto provider
+        /// Lists available operations for the Microsoft.Kusto provider.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

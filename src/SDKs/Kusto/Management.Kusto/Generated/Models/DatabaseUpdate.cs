@@ -40,16 +40,23 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="location">Resource location</param>
+        /// <param name="location">Resource location.</param>
+        /// <param name="etag">An ETag of the resource updated.</param>
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed'</param>
-        public DatabaseUpdate(int softDeletePeriodInDays, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string))
+        /// <param name="hotCachePeriodInDays">The number of days of data that
+        /// should be kept in cache for fast queries.</param>
+        /// <param name="statistics">The statistics of the database.</param>
+        public DatabaseUpdate(int softDeletePeriodInDays, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string etag = default(string), string provisioningState = default(string), int? hotCachePeriodInDays = default(int?), DatabaseStatistics statistics = default(DatabaseStatistics))
             : base(id, name, type)
         {
             Location = location;
+            Etag = etag;
             ProvisioningState = provisioningState;
             SoftDeletePeriodInDays = softDeletePeriodInDays;
+            HotCachePeriodInDays = hotCachePeriodInDays;
+            Statistics = statistics;
             CustomInit();
         }
 
@@ -59,10 +66,16 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource location
+        /// Gets or sets resource location.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets an ETag of the resource updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets the provisioned state of the resource. Possible values
@@ -77,6 +90,19 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.softDeletePeriodInDays")]
         public int SoftDeletePeriodInDays { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of days of data that should be kept in
+        /// cache for fast queries.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hotCachePeriodInDays")]
+        public int? HotCachePeriodInDays { get; set; }
+
+        /// <summary>
+        /// Gets or sets the statistics of the database.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.statistics")]
+        public DatabaseStatistics Statistics { get; set; }
 
         /// <summary>
         /// Validate the object.

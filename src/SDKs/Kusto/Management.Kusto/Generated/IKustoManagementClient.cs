@@ -16,6 +16,10 @@ namespace Microsoft.Azure.Management.Kusto
     using Newtonsoft.Json;
 
     /// <summary>
+    /// The Azure Kusto management API provides a RESTful set of web services
+    /// that interact with Azure Kusto services to manage your clusters and
+    /// databases. The API enables you to create, update, and delete clusters
+    /// and databases.
     /// </summary>
     public partial interface IKustoManagementClient : System.IDisposable
     {
@@ -47,7 +51,7 @@ namespace Microsoft.Azure.Management.Kusto
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// Client API Version.
         /// </summary>
         string ApiVersion { get; }
 
@@ -79,6 +83,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// Gets the IDatabasesOperations.
         /// </summary>
         IDatabasesOperations Databases { get; }
+
+        /// <summary>
+        /// Gets the IEventHubConnectionsOperations.
+        /// </summary>
+        IEventHubConnectionsOperations EventHubConnections { get; }
 
         /// <summary>
         /// Gets the IOperations.

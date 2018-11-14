@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Kusto
     public partial interface IOperations
     {
         /// <summary>
-        /// Lists available operations for the Microsoft.Kusto provider
+        /// Lists available operations for the Microsoft.Kusto provider.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// </exception>
         Task<AzureOperationResponse<IPage<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists available operations for the Microsoft.Kusto provider
+        /// Lists available operations for the Microsoft.Kusto provider.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

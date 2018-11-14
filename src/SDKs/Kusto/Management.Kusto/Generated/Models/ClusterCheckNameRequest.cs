@@ -8,29 +8,37 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Media.Models
+namespace Microsoft.Azure.Management.Kusto.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class Location
+    public partial class ClusterCheckNameRequest
     {
         /// <summary>
-        /// Initializes a new instance of the Location class.
+        /// Initializes a new instance of the ClusterCheckNameRequest class.
         /// </summary>
-        public Location()
+        public ClusterCheckNameRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Location class.
+        /// Initializes a new instance of the ClusterCheckNameRequest class.
         /// </summary>
-        public Location(string name)
+        /// <param name="name">Cluster name.</param>
+        public ClusterCheckNameRequest(string name)
         {
             Name = name;
             CustomInit();
+        }
+        /// <summary>
+        /// Static constructor for ClusterCheckNameRequest class.
+        /// </summary>
+        static ClusterCheckNameRequest()
+        {
+            Type = "Microsoft.Kusto/clusters";
         }
 
         /// <summary>
@@ -39,9 +47,16 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets cluster name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// The type of resource, Microsoft.Kusto/clusters.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public static string Type { get; private set; }
 
         /// <summary>
         /// Validate the object.
