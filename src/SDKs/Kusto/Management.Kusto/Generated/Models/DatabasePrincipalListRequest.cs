@@ -8,31 +8,35 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Media.Models
+namespace Microsoft.Azure.Management.Kusto.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The API error.
+    /// The list Kusto database principals operation request.
     /// </summary>
-    public partial class ApiError
+    public partial class DatabasePrincipalListRequest
     {
         /// <summary>
-        /// Initializes a new instance of the ApiError class.
+        /// Initializes a new instance of the DatabasePrincipalListRequest
+        /// class.
         /// </summary>
-        public ApiError()
+        public DatabasePrincipalListRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApiError class.
+        /// Initializes a new instance of the DatabasePrincipalListRequest
+        /// class.
         /// </summary>
-        /// <param name="error">ApiError</param>
-        public ApiError(ODataError error = default(ODataError))
+        /// <param name="value">The list of Kusto database principals.</param>
+        public DatabasePrincipalListRequest(IList<DatabasePrincipal> value = default(IList<DatabasePrincipal>))
         {
-            Error = error;
+            Value = value;
             CustomInit();
         }
 
@@ -42,13 +46,10 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets apiError
+        /// Gets or sets the list of Kusto database principals.
         /// </summary>
-        /// <remarks>
-        /// The error properties.
-        /// </remarks>
-        [JsonProperty(PropertyName = "error")]
-        public ODataError Error { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<DatabasePrincipal> Value { get; set; }
 
     }
 }

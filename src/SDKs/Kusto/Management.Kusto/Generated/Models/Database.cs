@@ -45,16 +45,21 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="etag">An etag of the resource created</param>
+        /// <param name="etag">An ETag of the resource created.</param>
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed'</param>
-        public Database(string location, int softDeletePeriodInDays, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string provisioningState = default(string))
+        /// <param name="hotCachePeriodInDays">The number of days of data that
+        /// should be kept in cache for fast queries.</param>
+        /// <param name="statistics">The statistics of the database.</param>
+        public Database(string location, int softDeletePeriodInDays, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string provisioningState = default(string), int? hotCachePeriodInDays = default(int?), DatabaseStatistics statistics = default(DatabaseStatistics))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
             ProvisioningState = provisioningState;
             SoftDeletePeriodInDays = softDeletePeriodInDays;
+            HotCachePeriodInDays = hotCachePeriodInDays;
+            Statistics = statistics;
             CustomInit();
         }
 
@@ -64,7 +69,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets an etag of the resource created
+        /// Gets an ETag of the resource created.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
@@ -82,6 +87,19 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.softDeletePeriodInDays")]
         public int SoftDeletePeriodInDays { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of days of data that should be kept in
+        /// cache for fast queries.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hotCachePeriodInDays")]
+        public int? HotCachePeriodInDays { get; set; }
+
+        /// <summary>
+        /// Gets or sets the statistics of the database.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.statistics")]
+        public DatabaseStatistics Statistics { get; set; }
 
         /// <summary>
         /// Validate the object.

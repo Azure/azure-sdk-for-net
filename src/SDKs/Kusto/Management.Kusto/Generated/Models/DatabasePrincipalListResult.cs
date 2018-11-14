@@ -8,31 +8,35 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Media.Models
+namespace Microsoft.Azure.Management.Kusto.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The input to the sync storage keys request.
+    /// The list Kusto database principals operation response.
     /// </summary>
-    public partial class SyncStorageKeysInput
+    public partial class DatabasePrincipalListResult
     {
         /// <summary>
-        /// Initializes a new instance of the SyncStorageKeysInput class.
+        /// Initializes a new instance of the DatabasePrincipalListResult
+        /// class.
         /// </summary>
-        public SyncStorageKeysInput()
+        public DatabasePrincipalListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SyncStorageKeysInput class.
+        /// Initializes a new instance of the DatabasePrincipalListResult
+        /// class.
         /// </summary>
-        /// <param name="id">The ID of the storage account resource.</param>
-        public SyncStorageKeysInput(string id = default(string))
+        /// <param name="value">The list of Kusto database principals.</param>
+        public DatabasePrincipalListResult(IList<DatabasePrincipal> value = default(IList<DatabasePrincipal>))
         {
-            Id = id;
+            Value = value;
             CustomInit();
         }
 
@@ -42,10 +46,10 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the storage account resource.
+        /// Gets or sets the list of Kusto database principals.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<DatabasePrincipal> Value { get; set; }
 
     }
 }

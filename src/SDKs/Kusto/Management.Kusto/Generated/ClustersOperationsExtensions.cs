@@ -193,6 +193,80 @@ namespace Microsoft.Azure.Management.Kusto
             }
 
             /// <summary>
+            /// Stops a Kusto cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            public static void Stop(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            {
+                operations.StopAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stops a Kusto cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task StopAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.StopWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Starts a Kusto cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            public static void Start(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            {
+                operations.StartAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Starts a Kusto cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task StartAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.StartWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Lists all Kusto clusters within a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -249,6 +323,114 @@ namespace Microsoft.Azure.Management.Kusto
             public static async Task<IEnumerable<Cluster>> ListAsync(this IClustersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists eligible SKUs for Kusto resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IEnumerable<AzureSku> ListSkus(this IClustersOperations operations)
+            {
+                return operations.ListSkusAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists eligible SKUs for Kusto resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<AzureSku>> ListSkusAsync(this IClustersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSkusWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Checks that the cluster name is valid and is not already in use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Azure location.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            public static CheckNameResult CheckNameAvailability(this IClustersOperations operations, string location, ClusterCheckNameRequest clusterName)
+            {
+                return operations.CheckNameAvailabilityAsync(location, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks that the cluster name is valid and is not already in use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Azure location.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameResult> CheckNameAvailabilityAsync(this IClustersOperations operations, string location, ClusterCheckNameRequest clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(location, clusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns the SKUs available for the provided resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            public static IEnumerable<AzureResourceSku> ListSkusByResource(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            {
+                return operations.ListSkusByResourceAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns the SKUs available for the provided resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<AzureResourceSku>> ListSkusByResourceAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSkusByResourceWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -381,6 +563,80 @@ namespace Microsoft.Azure.Management.Kusto
             public static async Task BeginDeleteAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Stops a Kusto cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            public static void BeginStop(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            {
+                operations.BeginStopAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stops a Kusto cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginStopAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginStopWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Starts a Kusto cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            public static void BeginStart(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            {
+                operations.BeginStartAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Starts a Kusto cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginStartAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }
