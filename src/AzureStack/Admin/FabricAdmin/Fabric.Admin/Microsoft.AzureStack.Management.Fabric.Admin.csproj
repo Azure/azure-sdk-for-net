@@ -13,6 +13,7 @@
         <PackageReleaseNotes>
             <![CDATA[
                 Support new resource StorageSubSystem, Drive and Volume with API version 2018-10-01.
+                Please note that the features are supported by Azure Stack 1811+.
             ]]>
         </PackageReleaseNotes>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
