@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Gets or sets the operation name.
         /// </summary>
         /// <remarks>
-        /// This is of the format {provider}/{resource}/{operation}
+        /// This is of the format {provider}/{resource}/{operation}.
         /// </remarks>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Kusto
     public static partial class OperationsExtensions
     {
             /// <summary>
-            /// Lists available operations for the Microsoft.Kusto provider
+            /// Lists available operations for the Microsoft.Kusto provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Kusto
             }
 
             /// <summary>
-            /// Lists available operations for the Microsoft.Kusto provider
+            /// Lists available operations for the Microsoft.Kusto provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Kusto
             }
 
             /// <summary>
-            /// Lists available operations for the Microsoft.Kusto provider
+            /// Lists available operations for the Microsoft.Kusto provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Kusto
             }
 
             /// <summary>
-            /// Lists available operations for the Microsoft.Kusto provider
+            /// Lists available operations for the Microsoft.Kusto provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

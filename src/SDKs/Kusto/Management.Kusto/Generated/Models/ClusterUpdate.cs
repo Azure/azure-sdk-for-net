@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,15 +40,33 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="location">Resource location</param>
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="location">Resource location.</param>
+        /// <param name="etag">An ETag of the resource updated.</param>
+        /// <param name="sku">The SKU of the cluster.</param>
+        /// <param name="state">The state of the resource. Possible values
+        /// include: 'Creating', 'Unavailable', 'Running', 'Deleting',
+        /// 'Deleted', 'Stopping', 'Stopped', 'Starting'</param>
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed'</param>
-        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string))
+        /// <param name="uri">The cluster URI.</param>
+        /// <param name="dataIngestionUri">The cluster data ingestion
+        /// URI.</param>
+        /// <param name="trustedExternalTenants">The cluster's external
+        /// tenants.</param>
+        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string etag = default(string), AzureSku sku = default(AzureSku), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>))
             : base(id, name, type)
         {
+            Tags = tags;
             Location = location;
+            Etag = etag;
+            Sku = sku;
+            State = state;
             ProvisioningState = provisioningState;
+            Uri = uri;
+            DataIngestionUri = dataIngestionUri;
+            TrustedExternalTenants = trustedExternalTenants;
             CustomInit();
         }
 
@@ -56,10 +76,36 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource location
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource location.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets an ETag of the resource updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the SKU of the cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public AzureSku Sku { get; set; }
+
+        /// <summary>
+        /// Gets the state of the resource. Possible values include:
+        /// 'Creating', 'Unavailable', 'Running', 'Deleting', 'Deleted',
+        /// 'Stopping', 'Stopped', 'Starting'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.state")]
+        public string State { get; private set; }
 
         /// <summary>
         /// Gets the provisioned state of the resource. Possible values
@@ -68,5 +114,36 @@ namespace Microsoft.Azure.Management.Kusto.Models
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
+        /// <summary>
+        /// Gets the cluster URI.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uri")]
+        public string Uri { get; private set; }
+
+        /// <summary>
+        /// Gets the cluster data ingestion URI.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataIngestionUri")]
+        public string DataIngestionUri { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the cluster's external tenants.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.trustedExternalTenants")]
+        public IList<TrustedExternalTenant> TrustedExternalTenants { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Sku != null)
+            {
+                Sku.Validate();
+            }
+        }
     }
 }

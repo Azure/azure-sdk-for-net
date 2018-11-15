@@ -24,6 +24,52 @@ namespace Microsoft.Azure.Management.Kusto
     public static partial class DatabasesOperationsExtensions
     {
             /// <summary>
+            /// Checks that the database name is valid and is not already in use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            public static CheckNameResult CheckNameAvailability(this IDatabasesOperations operations, string resourceGroupName, string clusterName, DatabaseCheckNameRequest databaseName)
+            {
+                return operations.CheckNameAvailabilityAsync(resourceGroupName, clusterName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks that the database name is valid and is not already in use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameResult> CheckNameAvailabilityAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, DatabaseCheckNameRequest databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Returns the list of databases of the given Kusto cluster.
             /// </summary>
             /// <param name='operations'>
@@ -254,6 +300,158 @@ namespace Microsoft.Azure.Management.Kusto
             public static async Task DeleteAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Returns a list of database principals of the given Kusto cluster and
+            /// database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database in the Kusto cluster.
+            /// </param>
+            public static IEnumerable<DatabasePrincipal> ListPrincipals(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName)
+            {
+                return operations.ListPrincipalsAsync(resourceGroupName, clusterName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns a list of database principals of the given Kusto cluster and
+            /// database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database in the Kusto cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<DatabasePrincipal>> ListPrincipalsAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPrincipalsWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Add Database principals permissions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database in the Kusto cluster.
+            /// </param>
+            /// <param name='databasePrincipalsToAdd'>
+            /// List of database principals to add.
+            /// </param>
+            public static DatabasePrincipalListResult AddPrincipals(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, DatabasePrincipalListRequest databasePrincipalsToAdd)
+            {
+                return operations.AddPrincipalsAsync(resourceGroupName, clusterName, databaseName, databasePrincipalsToAdd).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add Database principals permissions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database in the Kusto cluster.
+            /// </param>
+            /// <param name='databasePrincipalsToAdd'>
+            /// List of database principals to add.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DatabasePrincipalListResult> AddPrincipalsAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, DatabasePrincipalListRequest databasePrincipalsToAdd, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AddPrincipalsWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, databasePrincipalsToAdd, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Remove Database principals permissions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database in the Kusto cluster.
+            /// </param>
+            /// <param name='databasePrincipalsToRemove'>
+            /// List of database principals to remove.
+            /// </param>
+            public static DatabasePrincipalListResult RemovePrincipals(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, DatabasePrincipalListRequest databasePrincipalsToRemove)
+            {
+                return operations.RemovePrincipalsAsync(resourceGroupName, clusterName, databaseName, databasePrincipalsToRemove).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Remove Database principals permissions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database in the Kusto cluster.
+            /// </param>
+            /// <param name='databasePrincipalsToRemove'>
+            /// List of database principals to remove.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DatabasePrincipalListResult> RemovePrincipalsAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, DatabasePrincipalListRequest databasePrincipalsToRemove, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RemovePrincipalsWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, databasePrincipalsToRemove, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

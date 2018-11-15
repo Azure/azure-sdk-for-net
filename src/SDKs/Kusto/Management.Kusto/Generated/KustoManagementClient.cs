@@ -21,6 +21,12 @@ namespace Microsoft.Azure.Management.Kusto
     using System.Net;
     using System.Net.Http;
 
+    /// <summary>
+    /// The Azure Kusto management API provides a RESTful set of web services
+    /// that interact with Azure Kusto services to manage your clusters and
+    /// databases. The API enables you to create, update, and delete clusters
+    /// and databases.
+    /// </summary>
     public partial class KustoManagementClient : ServiceClient<KustoManagementClient>, IKustoManagementClient, IAzureClient
     {
         /// <summary>
@@ -51,7 +57,7 @@ namespace Microsoft.Azure.Management.Kusto
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// Client API Version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -84,9 +90,27 @@ namespace Microsoft.Azure.Management.Kusto
         public virtual IDatabasesOperations Databases { get; private set; }
 
         /// <summary>
+        /// Gets the IEventHubConnectionsOperations.
+        /// </summary>
+        public virtual IEventHubConnectionsOperations EventHubConnections { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the KustoManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling KustoManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected KustoManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the KustoManagementClient class.
@@ -171,6 +195,33 @@ namespace Microsoft.Azure.Management.Kusto
         /// Thrown when a required parameter is null
         /// </exception>
         public KustoManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the KustoManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling KustoManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public KustoManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -291,9 +342,10 @@ namespace Microsoft.Azure.Management.Kusto
         {
             Clusters = new ClustersOperations(this);
             Databases = new DatabasesOperations(this);
+            EventHubConnections = new EventHubConnectionsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-09-07-privatepreview";
+            ApiVersion = "2018-09-07-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

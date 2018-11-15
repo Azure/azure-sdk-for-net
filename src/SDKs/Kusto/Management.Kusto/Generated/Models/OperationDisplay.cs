@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="resource">The resource type on which the operation is
         /// performed.</param>
         /// <param name="description">The friendly name of the
-        /// operation</param>
+        /// operation.</param>
         public OperationDisplay(string provider = default(string), string operation = default(string), string resource = default(string), string description = default(string))
         {
             Provider = provider;
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string Resource { get; set; }
 
         /// <summary>
-        /// Gets or sets the friendly name of the operation
+        /// Gets or sets the friendly name of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
