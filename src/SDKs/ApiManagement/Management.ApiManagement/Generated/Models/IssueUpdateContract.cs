@@ -16,38 +16,33 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Issue Contract details.
+    /// Issue update Parameters.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class IssueContract : Resource
+    public partial class IssueUpdateContract
     {
         /// <summary>
-        /// Initializes a new instance of the IssueContract class.
+        /// Initializes a new instance of the IssueUpdateContract class.
         /// </summary>
-        public IssueContract()
+        public IssueUpdateContract()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IssueContract class.
+        /// Initializes a new instance of the IssueUpdateContract class.
         /// </summary>
-        /// <param name="title">The issue title.</param>
-        /// <param name="description">Text describing the issue.</param>
-        /// <param name="userId">A resource identifier for the user created the
-        /// issue.</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
         /// <param name="createdDate">Date and time when the issue was
         /// created.</param>
         /// <param name="state">Status of the issue. Possible values include:
         /// 'proposed', 'open', 'removed', 'resolved', 'closed'</param>
         /// <param name="apiId">A resource identifier for the API the issue was
         /// created for.</param>
-        public IssueContract(string title, string description, string userId, string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdDate = default(System.DateTime?), string state = default(string), string apiId = default(string))
-            : base(id, name, type)
+        /// <param name="title">The issue title.</param>
+        /// <param name="description">Text describing the issue.</param>
+        /// <param name="userId">A resource identifier for the user created the
+        /// issue.</param>
+        public IssueUpdateContract(System.DateTime? createdDate = default(System.DateTime?), string state = default(string), string apiId = default(string), string title = default(string), string description = default(string), string userId = default(string))
         {
             CreatedDate = createdDate;
             State = state;
@@ -101,26 +96,5 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "properties.userId")]
         public string UserId { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Title == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Title");
-            }
-            if (Description == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Description");
-            }
-            if (UserId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "UserId");
-            }
-        }
     }
 }
