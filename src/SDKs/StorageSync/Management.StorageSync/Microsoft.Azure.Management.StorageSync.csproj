@@ -6,16 +6,14 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.StorageSync</PackageId>
         <Description>Provides management capabilities for Azure Storage Sync.</Description>
-        <Version>1.0.0</Version>
+        <Version>2.8.0-preview</Version>
         <AssemblyName>Microsoft.Azure.Management.StorageSync</AssemblyName>    
-        <PackageTags>Microsoft Azure StorageSync;StorageSync;</PackageTags>
+        <PackageTags>Microsoft Azure StorageSync;StorageSync;Azure File Sync;AFS;Microsoft.StorageSync;Storage Sync Service</PackageTags>
         <PackageReleaseNotes>
         <![CDATA[
-            This version uses 2018-04-02 StorageSync API specification which introduced the first GA version for Azure File Storage Sync.
-                1. Ability to create and delete Storage Sync Service
-                2. Ability to register and unregister sync server.
-                3. Ability to create SyncGroup for a given Storage Sync Service.
-                4. Ability to create Cloud Endpoint and ServerEndpoint
+            This version uses 2018-07-01 StorageSync API specification which introduced the next version for Azure File Storage Sync.
+                1. Certificate Rollover bug fix
+                2. Enable the client without a need of BaseUri initialization.
       ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

@@ -31,6 +31,28 @@ namespace Microsoft.Azure.EventGrid
 
         // Media Services events
         public const string MediaJobStateChangeEvent = "Microsoft.Media.JobStateChange";
+        public const string MediaJobOutputStateChangeEvent = "Microsoft.Media.JobOutputStateChange";
+        public const string MediaJobScheduledEvent = "Microsoft.Media.JobScheduled";
+        public const string MediaJobProcessingEvent = "Microsoft.Media.JobProcessing";
+        public const string MediaJobCancelingEvent = "Microsoft.Media.JobCanceling";
+        public const string MediaJobFinishedEvent = "Microsoft.Media.JobFinished";
+        public const string MediaJobCanceledEvent = "Microsoft.Media.JobCanceled";
+        public const string MediaJobErroredEvent = "Microsoft.Media.JobErrored";
+        public const string MediaJobOutputCanceledEvent = "Microsoft.Media.JobOutputCanceled";
+        public const string MediaJobOutputCancelingEvent = "Microsoft.Media.JobOutputCanceling";
+        public const string MediaJobOutputErroredEvent = "Microsoft.Media.JobOutputErrored";
+        public const string MediaJobOutputFinishedEvent = "Microsoft.Media.JobOutputFinished";
+        public const string MediaJobOutputProcessingEvent = "Microsoft.Media.JobOutputProcessing";
+        public const string MediaJobOutputScheduledEvent = "Microsoft.Media.JobOutputScheduled";
+        public const string MediaLiveEventEncoderConnectedEvent = "Microsoft.Media.LiveEventEncoderConnected";
+        public const string MediaLiveEventConnectionRejectedEvent = "Microsoft.Media.LiveEventConnectionRejected";
+        public const string MediaLiveEventEncoderDisconnectedEvent = "Microsoft.Media.LiveEventEncoderDisconnected";
+        public const string MediaLiveEventIncomingStreamReceivedEvent = "Microsoft.Media.LiveEventIncomingStreamReceived";
+        public const string MediaLiveEventIncomingStreamsOutOfSyncEvent = "Microsoft.Media.LiveEventIncomingStreamsOutOfSync";
+        public const string MediaLiveEventIncomingVideoStreamsOutOfSyncEvent = "Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync";
+        public const string MediaLiveEventIncomingChunkDroppedEvent = "Microsoft.Media.LiveEventIncomingChunkDropped";
+        public const string MediaLiveEventIngestHeartbeatEvent = "Microsoft.Media.LiveEventIngestHeartbeat";
+        public const string MediaLiveEventTrackDiscontinuityDetectedEvent = "Microsoft.Media.LiveEventTrackDiscontinuityDetected";
 
         // Resource Manager (Azure Subscription/Resource Group) events
         public const string ResourceWriteSuccessEvent = "Microsoft.Resources.ResourceWriteSuccess";

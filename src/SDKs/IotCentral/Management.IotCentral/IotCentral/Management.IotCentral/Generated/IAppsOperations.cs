@@ -179,8 +179,9 @@ namespace Microsoft.Azure.Management.IotCentral
         /// <summary>
         /// Check if an IoT Central application name is available.
         /// </summary>
-        /// <param name='name'>
-        /// The name of the IoT Central application instance to check.
+        /// <param name='operationInputs'>
+        /// Set the name parameter in the OperationInputs structure to the name
+        /// of the IoT Central application to check.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -197,7 +198,30 @@ namespace Microsoft.Azure.Management.IotCentral
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AppNameAvailabilityInfo>> CheckNameAvailabilityWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AppAvailabilityInfo>> CheckNameAvailabilityWithHttpMessagesAsync(OperationInputs operationInputs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Check if an IoT Central application subdomain is available.
+        /// </summary>
+        /// <param name='operationInputs'>
+        /// Set the name parameter in the OperationInputs structure to the
+        /// subdomain of the IoT Central application to check.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AppAvailabilityInfo>> CheckSubdomainAvailabilityWithHttpMessagesAsync(OperationInputs operationInputs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update the metadata of an IoT Central application. The
         /// usual pattern to modify a property is to retrieve the IoT Central

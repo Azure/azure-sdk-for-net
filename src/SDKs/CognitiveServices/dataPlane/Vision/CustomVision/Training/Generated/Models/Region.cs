@@ -26,6 +26,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Region class.
         /// </summary>
+        /// <param name="tagId">Id of the tag associated with this
+        /// region.</param>
         public Region(System.Guid tagId = default(System.Guid), double left = default(double), double top = default(double), double width = default(double), double height = default(double))
         {
             TagId = tagId;
@@ -42,6 +44,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets id of the tag associated with this region.
         /// </summary>
         [JsonProperty(PropertyName = "tagId")]
         public System.Guid TagId { get; set; }

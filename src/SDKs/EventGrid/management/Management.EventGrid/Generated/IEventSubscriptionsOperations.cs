@@ -482,6 +482,38 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListByResourceWithHttpMessagesAsync(string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// List all event subscriptions for a specific domain topic
+        /// </summary>
+        /// <remarks>
+        /// List all event subscriptions that have been created for a specific
+        /// domain topic
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
+        /// <param name='domainName'>
+        /// Name of the top level domain
+        /// </param>
+        /// <param name='topicName'>
+        /// Name of the domain topic
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListByDomainTopicWithHttpMessagesAsync(string resourceGroupName, string domainName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or update an event subscription
         /// </summary>
         /// <remarks>

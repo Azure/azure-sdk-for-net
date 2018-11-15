@@ -44,7 +44,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// KeyVaultClient keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
         /// </code>
         /// </example>
-        public TokenCallback KeyVaultTokenCallback => GetAccessTokenAsyncImpl;
+        public TokenCallback KeyVaultTokenCallback => async (authority, resource, scope) => 
+        {   
+            var authResult = await GetAuthResultAsyncImpl(authority, resource, scope).ConfigureAwait(false);
+            return authResult.AccessToken;
+        };
 
         /// <summary>
         /// The principal used to acquire token. This will be of type "User" for local development scenarios, and "App" when client credentials flow is used. 
@@ -123,19 +127,19 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="resource"></param>
         /// <param name="scope"></param>
         /// <returns></returns>
-        private async Task<string> GetAccessTokenAsyncImpl(string authority, string resource, string scope)
+        private async Task<AppAuthenticationResult> GetAuthResultAsyncImpl(string authority, string resource, string scope)
         {
-            // Check if the token is present in cache, for the given connection string, authority, and resource
+            // Check if the auth result is present in cache, for the given connection string, authority, and resource
             // This is an in-memory global cache, that will be used across instances of this class. 
             string cacheKey = $"ConnectionString:{_connectionString};Authority:{authority};Resource:{resource}";
 
-            Tuple<AccessToken, Principal> tokenResult = AccessTokenCache.Get(cacheKey);
+            Tuple<AppAuthenticationResult, Principal> cachedAuthResult = AppAuthResultCache.Get(cacheKey);
 
-            if (tokenResult != null)
+            if (cachedAuthResult != null)
             {
-                _principalUsed = tokenResult.Item2;
+                _principalUsed = cachedAuthResult.Item2;
 
-                return tokenResult.Item1.ToString();
+                return cachedAuthResult.Item1;
             }
 
             // If not in cache, lock. One of multiple threads that reach here will be allowed to get the token.
@@ -147,17 +151,17 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             try
             {
-                // Check again if the token is in the cache now, the first thread may have got it.
-                tokenResult = AccessTokenCache.Get(cacheKey);
+                // Check again if the auth result is in the cache now, the first thread may have gotten it.
+                cachedAuthResult = AppAuthResultCache.Get(cacheKey);
 
-                if (tokenResult != null)
+                if (cachedAuthResult != null)
                 {
-                    _principalUsed = tokenResult.Item2;
+                    _principalUsed = cachedAuthResult.Item2;
 
-                    return tokenResult.Item1.ToString();
+                    return cachedAuthResult.Item1;
                 }
 
-                // If the token was not in cache, try to get it
+                // If the auth result was not in cache, try to get it
                 List<NonInteractiveAzureServiceTokenProviderBase> tokenProviders = GetTokenProviders();
                 
                 // Try to get the token using the selected providers
@@ -165,8 +169,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 {
                     try
                     {
-                        // Get the token, add to the cache, and return the token.
-                        string token = await tokenProvider.GetTokenAsync(authority, resource,
+                        // Get the auth result, add to the cache, and return the auth result.
+                        var authResult = await tokenProvider.GetAuthResultAsync(authority, resource,
                                 string.Empty)
                             .ConfigureAwait(false);
 
@@ -176,10 +180,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                         _principalUsed = tokenProvider.PrincipalUsed;
 
-                        AccessTokenCache.AddOrUpdate(cacheKey,
-                            new Tuple<AccessToken, Principal>(AccessToken.Parse(token), tokenProvider.PrincipalUsed));
+                        AppAuthResultCache.AddOrUpdate(cacheKey,
+                            new Tuple<AppAuthenticationResult, Principal>(authResult, tokenProvider.PrincipalUsed));
 
-                        return token;
+                        return authResult;
                     }
                     catch (AzureServiceTokenProviderException exp)
                     {
@@ -238,6 +242,27 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
         public async Task<string> GetAccessTokenAsync(string resource, string tenantId = default(string))
         {
+            var authResult = await GetAuthenticationResultAsync(resource, tenantId).ConfigureAwait(false);
+
+            return authResult.AccessToken;
+        }
+
+        /// <summary>
+        /// Gets an authentication result which contains an access token to access the given Azure resource. 
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// var azureServiceTokenProvider = new AzureServiceTokenProvider();
+        /// var authResult = await azureServiceTokenProvider.GetAuthResultAsync("https://management.azure.com/").ConfigureAwait(false);
+        /// </code>
+        /// </example>
+        /// <param name="resource">Resource to access. e.g. https://management.azure.com/.</param>
+        /// <param name="tenantId">If not specified, default tenant is used. Managed Service Identity REST protocols do not accept tenantId, so this can only be used with certificate and client secret based authentication.</param>
+        /// <returns>Access token</returns>
+        /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
+        /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
+        public async Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId = default(string))
+        {
             if (string.IsNullOrWhiteSpace(resource))
             {
                 throw new ArgumentNullException(nameof(resource));
@@ -245,7 +270,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             string authority = string.IsNullOrEmpty(tenantId) ? string.Empty : $"{_azureAdInstance}{tenantId}";
 
-            return await GetAccessTokenAsyncImpl(authority, resource, string.Empty).ConfigureAwait(false);
+            return await GetAuthResultAsyncImpl(authority, resource, string.Empty).ConfigureAwait(false);
         }
     }
 }

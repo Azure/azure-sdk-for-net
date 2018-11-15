@@ -17,7 +17,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "Entities");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
-                EntitiesBatchResult result = await client.EntitiesAsync(
+                EntitiesBatchResultV2dot1 result = await client.EntitiesAsync(
                     new MultiLanguageBatchInput(
                         new List<MultiLanguageInput>()
                         {

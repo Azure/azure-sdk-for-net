@@ -33,17 +33,14 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// Initializes a new instance of the ApplicationGetHttpsEndpoint
         /// class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="accessModes">The list of access modes for the
         /// application.</param>
         /// <param name="location">The location of the endpoint.</param>
         /// <param name="destinationPort">The destination port to connect
         /// to.</param>
         /// <param name="publicPort">The public port to connect to.</param>
-        public ApplicationGetHttpsEndpoint(IDictionary<string, string> additionalProperties = default(IDictionary<string, string>), IList<string> accessModes = default(IList<string>), string location = default(string), int? destinationPort = default(int?), int? publicPort = default(int?))
+        public ApplicationGetHttpsEndpoint(IList<string> accessModes = default(IList<string>), string location = default(string), int? destinationPort = default(int?), int? publicPort = default(int?))
         {
-            AdditionalProperties = additionalProperties;
             AccessModes = accessModes;
             Location = location;
             DestinationPort = destinationPort;
@@ -55,13 +52,6 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
-        /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, string> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the list of access modes for the application.

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.StorageSync
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -21,6 +23,46 @@ namespace Microsoft.Azure.Management.StorageSync
     /// </summary>
     public static partial class WorkflowsOperationsExtensions
     {
+            /// <summary>
+            /// Get a Workflow List
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='storageSyncServiceName'>
+            /// Name of Storage Sync Service resource.
+            /// </param>
+            public static IEnumerable<Workflow> ListByStorageSyncService(this IWorkflowsOperations operations, string resourceGroupName, string storageSyncServiceName)
+            {
+                return operations.ListByStorageSyncServiceAsync(resourceGroupName, storageSyncServiceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a Workflow List
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='storageSyncServiceName'>
+            /// Name of Storage Sync Service resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<Workflow>> ListByStorageSyncServiceAsync(this IWorkflowsOperations operations, string resourceGroupName, string storageSyncServiceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByStorageSyncServiceWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
             /// <summary>
             /// Get Workflows resource
             /// </summary>

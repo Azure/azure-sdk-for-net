@@ -44,16 +44,18 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="type">Resource type</param>
         /// <param name="provisioningState">Provisioning state for the software
         /// update configuration, which only appears in the response.</param>
-        /// <param name="error">detailes of provisioning error</param>
-        /// <param name="creationTime">Creation time of theresource, which only
-        /// appears in the response.</param>
-        /// <param name="createdBy">createdBy property, which only appears in
+        /// <param name="error">Details of provisioning error</param>
+        /// <param name="creationTime">Creation time of the resource, which
+        /// only appears in the response.</param>
+        /// <param name="createdBy">CreatedBy property, which only appears in
         /// the response.</param>
         /// <param name="lastModifiedTime">Last time resource was modified,
         /// which only appears in the response.</param>
-        /// <param name="lastModifiedBy">lastModifiedBy property, which only
+        /// <param name="lastModifiedBy">LastModifiedBy property, which only
         /// appears in the response.</param>
-        public SoftwareUpdateConfiguration(UpdateConfiguration updateConfiguration, ScheduleProperties scheduleInfo, string name = default(string), string id = default(string), string type = default(string), string provisioningState = default(string), ErrorResponse error = default(ErrorResponse), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string))
+        /// <param name="tasks">Tasks information for the Software update
+        /// configuration.</param>
+        public SoftwareUpdateConfiguration(UpdateConfiguration updateConfiguration, ScheduleProperties scheduleInfo, string name = default(string), string id = default(string), string type = default(string), string provisioningState = default(string), ErrorResponse error = default(ErrorResponse), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string), SoftwareUpdateConfigurationTasks tasks = default(SoftwareUpdateConfigurationTasks))
         {
             Name = name;
             Id = id;
@@ -66,6 +68,7 @@ namespace Microsoft.Azure.Management.Automation.Models
             CreatedBy = createdBy;
             LastModifiedTime = lastModifiedTime;
             LastModifiedBy = lastModifiedBy;
+            Tasks = tasks;
             CustomInit();
         }
 
@@ -114,13 +117,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets detailes of provisioning error
+        /// Gets or sets details of provisioning error
         /// </summary>
         [JsonProperty(PropertyName = "properties.error")]
         public ErrorResponse Error { get; set; }
 
         /// <summary>
-        /// Gets creation time of theresource, which only appears in the
+        /// Gets creation time of the resource, which only appears in the
         /// response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
@@ -144,6 +147,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedBy")]
         public string LastModifiedBy { get; private set; }
+
+        /// <summary>
+        /// Gets or sets tasks information for the Software update
+        /// configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tasks")]
+        public SoftwareUpdateConfigurationTasks Tasks { get; set; }
 
         /// <summary>
         /// Validate the object.

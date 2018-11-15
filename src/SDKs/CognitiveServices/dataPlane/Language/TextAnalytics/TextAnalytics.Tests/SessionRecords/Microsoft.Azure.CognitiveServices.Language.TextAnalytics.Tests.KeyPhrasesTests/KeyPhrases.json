@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/text/analytics/v2.0/keyPhrases",
-      "EncodedRequestUri": "L3RleHQvYW5hbHl0aWNzL3YyLjAva2V5UGhyYXNlcw==",
+      "RequestUri": "/text/analytics/v2.1-preview/keyPhrases",
+      "EncodedRequestUri": "L3RleHQvYW5hbHl0aWNzL3YyLjEtcHJldmlldy9rZXlQaHJhc2Vz",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"documents\": [\r\n    {\r\n      \"language\": \"en\",\r\n      \"id\": \"id\",\r\n      \"text\": \"I love my team mates\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {

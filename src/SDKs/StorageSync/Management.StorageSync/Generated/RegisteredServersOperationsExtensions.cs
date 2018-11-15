@@ -208,6 +208,58 @@ namespace Microsoft.Azure.Management.StorageSync
             }
 
             /// <summary>
+            /// Triggers Server certificate rollover.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='storageSyncServiceName'>
+            /// Name of Storage Sync Service resource.
+            /// </param>
+            /// <param name='serverId'>
+            /// Server Id
+            /// </param>
+            /// <param name='serverCertificate'>
+            /// Certificate Data
+            /// </param>
+            public static RegisteredServersTriggerRolloverHeaders TriggerRollover(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, string serverCertificate = default(string))
+            {
+                return operations.TriggerRolloverAsync(resourceGroupName, storageSyncServiceName, serverId, serverCertificate).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Triggers Server certificate rollover.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='storageSyncServiceName'>
+            /// Name of Storage Sync Service resource.
+            /// </param>
+            /// <param name='serverId'>
+            /// Server Id
+            /// </param>
+            /// <param name='serverCertificate'>
+            /// Certificate Data
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RegisteredServersTriggerRolloverHeaders> TriggerRolloverAsync(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, string serverCertificate = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.TriggerRolloverWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, serverId, serverCertificate, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
             /// Add a new registered server.
             /// </summary>
             /// <param name='operations'>
@@ -300,6 +352,58 @@ namespace Microsoft.Azure.Management.StorageSync
             public static async Task<RegisteredServersDeleteHeaders> BeginDeleteAsync(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, serverId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Triggers Server certificate rollover.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='storageSyncServiceName'>
+            /// Name of Storage Sync Service resource.
+            /// </param>
+            /// <param name='serverId'>
+            /// Server Id
+            /// </param>
+            /// <param name='serverCertificate'>
+            /// Certificate Data
+            /// </param>
+            public static RegisteredServersTriggerRolloverHeaders BeginTriggerRollover(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, string serverCertificate = default(string))
+            {
+                return operations.BeginTriggerRolloverAsync(resourceGroupName, storageSyncServiceName, serverId, serverCertificate).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Triggers Server certificate rollover.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='storageSyncServiceName'>
+            /// Name of Storage Sync Service resource.
+            /// </param>
+            /// <param name='serverId'>
+            /// Server Id
+            /// </param>
+            /// <param name='serverCertificate'>
+            /// Certificate Data
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RegisteredServersTriggerRolloverHeaders> BeginTriggerRolloverAsync(this IRegisteredServersOperations operations, string resourceGroupName, string storageSyncServiceName, string serverId, string serverCertificate = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginTriggerRolloverWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, serverId, serverCertificate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }

@@ -12,9 +12,6 @@ namespace Microsoft.Rest
     using Microsoft.Rest.TransientFaultHandling;
     using System.Text.RegularExpressions;
     using Microsoft.Rest.Utilities;
-#if FullNetFx
-    using Microsoft.Win32;
-#endif
 
     /// <summary>
     /// ServiceClient is the abstraction for accessing REST operations and their payload data types..
@@ -23,18 +20,24 @@ namespace Microsoft.Rest
     public abstract class ServiceClient<T> : IDisposable
         where T : ServiceClient<T>
     {
-        /// <summary>
-        /// ProductName string to be used to set Framework Version in UserAgent
-        /// </summary>
+        #region CONST
         private const string FXVERSION = "FxVersion";
         private const string OSNAME = "OSName";
         private const string OSVERSION = "OSVersion";
+        #endregion
 
+        #region Fields
         /// <summary>
         /// List of default UserAgent info that will be added to HttpClient instance
         /// </summary>
         private List<ProductInfoHeaderValue> _defaultUserAgentInfoList;
 
+        private PlatformInfo _platformInfo;
+
+        private string _osName;
+
+        private string _osVersion;
+        
         /// <summary>
         /// Indicates whether the ServiceClient has been disposed. 
         /// </summary>
@@ -49,90 +52,81 @@ namespace Microsoft.Rest
         /// Field used for ClientVersion property
         /// </summary>
         private string _clientVersion;
-        
+
         /// <summary>
         /// Field used for Framework Version property
         /// </summary>
         private string _fxVersion;
 
-        #region Full Net Fx specific code
-#if FullNetFx
-        /// <summary>
-        /// Indicates OS Name
-        /// </summary>
-        private string _osName;
+        #endregion
 
         /// <summary>
-        /// Indicates OS Version
+        /// Determines if underlying OS is Windows
         /// </summary>
-        private string _osVersion;
+        private bool IsOsWindows
+        {
+            get
+            {
+                return PlatformInfo.OsInfo.IsOsWindows;
+            }
+        }
 
         /// <summary>
-        /// Gets Os Information, OSName - OS Major.Minor.Build version
+        /// Provides platform specific information
+        /// </summary>
+        private PlatformInfo PlatformInfo
+        {
+            get
+            {
+                if(_platformInfo == null)
+                {
+                    _platformInfo = new PlatformInfo();
+                }
+
+                return _platformInfo;
+            }
+        }
+
+        //#region Full Net Fx specific code
+//#if FullNetFx
+
+        /// <summary>
+        /// Gets underlying OS Name
         /// e.g. Windows 10 Enterprise - 6.3.14393
         /// </summary>
         private string OsName
         {
             get
-            {  
-                if(string.IsNullOrEmpty(_osName))
+            {
+                if(string.IsNullOrWhiteSpace(_osName))
                 {
-                    _osName = ReadHKLMRegistry(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName");
+                    _osName = PlatformInfo.OsInfo.OsName;
                     _osName = CleanUserAgentInfoEntry(_osName);
                 }
 
                 return _osName;
             }
         }
-        
+
         /// <summary>
-        /// Gets Os Major.Minor.Build version
+        /// Gets underlying OS version
         /// e.g. 6.3.14393
         /// </summary>
         private string OsVersion
         {
             get
             {
-                if (string.IsNullOrEmpty(_osVersion))
-                {   
-                    string osMajorMinorVersion = ReadHKLMRegistry(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentVersion");
-                    string osBuildNumber = ReadHKLMRegistry(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild");
-                    _osVersion = string.Format("{0}.{1}", osMajorMinorVersion, osBuildNumber);
+                if(string.IsNullOrWhiteSpace(_osVersion))
+                {
+                    _osVersion = PlatformInfo.OsInfo.OsVersion;
                     _osVersion = CleanUserAgentInfoEntry(_osVersion);
                 }
 
                 return _osVersion;
             }
         }
-
-        /// <summary>
-        /// Reads HKLM registry key from the provided path/key combination
-        /// </summary>
-        /// <param name="path">Path to HKLM key</param>
-        /// <param name="key">HKLM key name</param>
-        /// <returns>Value for provided HKLM key</returns>
-        private string ReadHKLMRegistry(string path, string key)
-        {
-            switch (Environment.OSVersion.Platform)
-            {
-                case PlatformID.Unix:
-                case PlatformID.MacOSX:
-                case PlatformID.Xbox:
-                    return string.Empty;
-            }
-
-            try
-            {
-                using (RegistryKey rk = Registry.LocalMachine.OpenSubKey(path))
-                {
-                    if (rk == null) return "";
-                    return (string)rk.GetValue(key);
-                }
-            }
-            catch { return ""; }
-        }
-#endif
-        #endregion
+//#endif
+        //#endregion
 
         /// <summary>
         /// List of default info that gets added to DefaultHeaders.UserAgent of HttpClient
@@ -141,17 +135,48 @@ namespace Microsoft.Rest
         {
             get
             {
+                if (_defaultUserAgentInfoList == null)
+                {
+                    _defaultUserAgentInfoList = new List<ProductInfoHeaderValue>();
+                }
+
+                UpdateDefaultUserAgentList(FXVERSION, FrameworkVersion);
+                UpdateDefaultUserAgentList(OSNAME, OsName);
+                UpdateDefaultUserAgentList(OSVERSION, OsVersion);
+
+                return _defaultUserAgentInfoList;
+            }
+        }
+
+        /// <summary>
+        /// Updates the Default User Agent list with HeaderName and HeaderValue
+        /// </summary>
+        /// <param name="headerName">HeaderName</param>
+        /// <param name="headerValue">HeaderValue</param>
+        private void UpdateDefaultUserAgentList(string headerName, string headerValue)
+        {
+            ProductInfoHeaderValue piInfoHv = null;
+            if (!string.IsNullOrWhiteSpace(headerName))
+            {
+                if (!string.IsNullOrWhiteSpace(headerValue))
+                {
+                    piInfoHv = new ProductInfoHeaderValue(headerName, headerValue);
+                }
+            }
+
+            if(piInfoHv != null)
+            {
                 if(_defaultUserAgentInfoList == null)
                 {
                     _defaultUserAgentInfoList = new List<ProductInfoHeaderValue>();
-                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(FXVERSION, FrameworkVersion));
-#if FullNetFx
-                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSNAME, OsName));
-                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
-#endif
                 }
 
-                return _defaultUserAgentInfoList;
+                var filterHeaderName = _defaultUserAgentInfoList.Where<ProductInfoHeaderValue>((pi) => pi.Product.Name.Equals(headerName, StringComparison.OrdinalIgnoreCase));
+
+                if(!filterHeaderName.Any<ProductInfoHeaderValue>())
+                {
+                    _defaultUserAgentInfoList.Add(piInfoHv);
+                }
             }
         }
 
@@ -222,12 +247,12 @@ namespace Microsoft.Rest
             {
                 if (string.IsNullOrEmpty(_fxVersion))
                 {
-                    Assembly assembly = typeof(Object).GetTypeInfo().Assembly;                    
+                    Assembly assembly = typeof(Object).GetTypeInfo().Assembly;
                     AssemblyFileVersionAttribute fvAttribute =
                                 assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute)) as AssemblyFileVersionAttribute;
                     _fxVersion = fvAttribute?.Version;
                 }
-        
+
                 return _fxVersion;
             }
         }
@@ -253,8 +278,7 @@ namespace Microsoft.Rest
             Justification = "The created objects should be disposed on caller's side")]
         protected ServiceClient()
             : this(serviceHttpClient: null, rootHandler: CreateRootHandler(), disposeHttpClient: true, delHandlers: null) { }
-            //: this(CreateRootHandler())
-        
+
         /// <summary>
         /// Initializes a new instance of the ServiceClient class.
         /// </summary>
@@ -264,7 +288,7 @@ namespace Microsoft.Rest
             "Microsoft.Reliability",
             "CA2000:Dispose objects before losing scope",
             Justification = "The created objects should be disposed on caller's side")]
-        protected ServiceClient(HttpClient httpClient, bool disposeHttpClient = true) : 
+        protected ServiceClient(HttpClient httpClient, bool disposeHttpClient = true) :
             this(serviceHttpClient: httpClient, rootHandler: null, disposeHttpClient: disposeHttpClient, delHandlers: null) { }
 
         /// <summary>
@@ -277,7 +301,6 @@ namespace Microsoft.Rest
             Justification = "The created objects should be disposed on caller's side")]
         protected ServiceClient(params DelegatingHandler[] handlers)
             : this(serviceHttpClient: null, rootHandler: CreateRootHandler(), disposeHttpClient: true, delHandlers: handlers) { }
-            //: this(CreateRootHandler(), handlers) { }
 
         /// <summary>
         /// Initializes ServiceClient using base HttpClientHandler and list of handlers.
@@ -391,17 +414,17 @@ namespace Microsoft.Rest
                 _disposed = true;
 
                 // Dispose the client
-                if(_disposeHttpClient)
+                if (_disposeHttpClient)
                 {
                     HttpClient.Dispose();
                     HttpClient = null;
                 }
-                
+
                 FirstMessageHandler = null;
                 HttpClientHandler = null;
             }
         }
-        
+
 
         /// <summary>
         /// Initializes HttpClient using HttpClientHandler.
@@ -502,7 +525,8 @@ namespace Microsoft.Rest
             if (!_disposed && HttpClient != null && !string.IsNullOrWhiteSpace(version))
             {
                 string cleanedProductName = CleanUserAgentInfoEntry(productName);
-                AddUserAgentEntry(new ProductInfoHeaderValue(cleanedProductName, version));
+                string cleanedProductVersion = CleanUserAgentInfoEntry(version);
+                AddUserAgentEntry(new ProductInfoHeaderValue(cleanedProductName, cleanedProductVersion));
                 return true;
             }
 
@@ -517,8 +541,11 @@ namespace Microsoft.Rest
         /// <returns></returns>
         private string CleanUserAgentInfoEntry(string infoEntry)
         {
-            Regex pattern = new Regex("[~`!@#$%^&*(),<>?{} ]");            
-            infoEntry = pattern.Replace(infoEntry, "");
+            //Regex pattern = new Regex("[©:;=~`!@#$%^&*(),<>?{} ]");
+            Regex spChrPattern = new Regex("\\\\r\\\\n?|\\\\r|\\\\n|\\\\|\\/");
+            Regex onlyAlphaNum = new Regex("[^0-9a-zA-Z]+");
+            infoEntry = spChrPattern.Replace(infoEntry, "");
+            infoEntry = onlyAlphaNum.Replace(infoEntry, ".");            
 
             return infoEntry;
         }
@@ -540,9 +567,9 @@ namespace Microsoft.Rest
         private void MergeUserAgentInfo(List<ProductInfoHeaderValue> defaultUserAgentInfoList)
         {
             // If you want to log ProductName in userAgent, it has to be without spaces
-            foreach(ProductInfoHeaderValue piHv in defaultUserAgentInfoList)
+            foreach (ProductInfoHeaderValue piHv in defaultUserAgentInfoList)
             {
-                if(!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase)) 
+                if (!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase))
                     && !string.IsNullOrWhiteSpace(piHv.Product.Version))
                 {
                     HttpClient.DefaultRequestHeaders.UserAgent.Add(piHv);

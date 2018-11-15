@@ -789,6 +789,60 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
+            /// List all event subscriptions for a specific domain topic
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions that have been created for a specific domain
+            /// topic
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='domainName'>
+            /// Name of the top level domain
+            /// </param>
+            /// <param name='topicName'>
+            /// Name of the domain topic
+            /// </param>
+            public static IEnumerable<EventSubscription> ListByDomainTopic(this IEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string topicName)
+            {
+                return operations.ListByDomainTopicAsync(resourceGroupName, domainName, topicName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all event subscriptions for a specific domain topic
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions that have been created for a specific domain
+            /// topic
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='domainName'>
+            /// Name of the top level domain
+            /// </param>
+            /// <param name='topicName'>
+            /// Name of the domain topic
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<EventSubscription>> ListByDomainTopicAsync(this IEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDomainTopicWithHttpMessagesAsync(resourceGroupName, domainName, topicName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update an event subscription
             /// </summary>
             /// <remarks>

@@ -28,6 +28,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the ImageCreateSummary class.
         /// </summary>
+        /// <param name="isBatchSuccessful">True if all of the images in the
+        /// batch were created successfully, otherwise false.</param>
+        /// <param name="images">List of the image creation results.</param>
         public ImageCreateSummary(bool isBatchSuccessful = default(bool), IList<ImageCreateResult> images = default(IList<ImageCreateResult>))
         {
             IsBatchSuccessful = isBatchSuccessful;
@@ -41,11 +44,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets true if all of the images in the batch were created
+        /// successfully, otherwise false.
         /// </summary>
         [JsonProperty(PropertyName = "isBatchSuccessful")]
         public bool IsBatchSuccessful { get; private set; }
 
         /// <summary>
+        /// Gets list of the image creation results.
         /// </summary>
         [JsonProperty(PropertyName = "images")]
         public IList<ImageCreateResult> Images { get; private set; }

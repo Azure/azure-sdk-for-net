@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
     /// https://docs.microsoft.com/en-us/azure/app-service/app-service-managed-service-identity
     /// https://docs.microsoft.com/en-us/azure/active-directory/msi-overview
     /// </summary>
-    class MockMsi : HttpMessageHandler
+    internal class MockMsi : HttpMessageHandler
     {
         // HitCount is used to test if the cache is hit as expected.
         public int HitCount;
@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MsiAppServicesSuccess,
             MsiAppServicesFailure,
             MsiAzureVmSuccess,
+            MsiUserAssignedIdentityAzureVmSuccess,
             MsiAppJsonParseFailure,
             MsiMissingToken,
             MsiAppServicesIncorrectRequest
@@ -63,6 +64,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                             Constants.JsonContentType)
                     };
                     break;
+
                 case MsiTestType.MsiAppServicesFailure:
                     throw new HttpRequestException();
 
@@ -83,11 +85,29 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                             Constants.JsonContentType)
                     };
                     break;
+
                 case MsiTestType.MsiAppServicesSuccess:
+                    responseMessage = new HttpResponseMessage
+                    {
+                        Content = new StringContent(TokenHelper.GetMsiAppServicesTokenResponse(),
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+
                 case MsiTestType.MsiAzureVmSuccess:
                     responseMessage = new HttpResponseMessage
                     {
-                        Content = new StringContent(TokenHelper.GetMsiTokenResponse(),
+                        Content = new StringContent(TokenHelper.GetMsiAzureVmTokenResponse(),
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+
+                case MsiTestType.MsiUserAssignedIdentityAzureVmSuccess:
+                    responseMessage = new HttpResponseMessage
+                    {
+                        Content = new StringContent(TokenHelper.GetManagedIdentityTokenResponse(),
                             Encoding.UTF8,
                             Constants.JsonContentType)
                     };

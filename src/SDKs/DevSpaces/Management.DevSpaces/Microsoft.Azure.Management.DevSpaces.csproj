@@ -6,14 +6,10 @@
     <PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DevSpaces</PackageId>
 		<Description>Provides management operations support for Azure Dev Spaces.</Description>
-		<Version>0.9.0-preview</Version>
+		<Version>0.10.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.DevSpaces</AssemblyName>
 		<PackageTags>Microsoft Azure Dev Spaces;Dev Spaces;</PackageTags>
-        <PackageReleaseNotes>
-            <![CDATA[
-                This is a private preview release of Azure Dev Spaces SDK. 
-            ]]>
-    </PackageReleaseNotes>
+        <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
     </PropertyGroup>
     
     <PropertyGroup>

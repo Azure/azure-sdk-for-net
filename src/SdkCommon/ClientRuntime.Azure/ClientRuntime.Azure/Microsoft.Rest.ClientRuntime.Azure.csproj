@@ -4,12 +4,12 @@
     <PackageId>Microsoft.Rest.ClientRuntime.Azure</PackageId>
     <Description>Provides common error handling, tracing, and HTTP/REST-based pipeline manipulation.</Description>
     <AssemblyTitle>Client Runtime for Microsoft Azure Libraries</AssemblyTitle>
-    <Version>3.3.16</Version>
+    <Version>3.3.18</Version>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure</AssemblyName>
     <PackageTags>Microsoft Azure AutoRest ClientRuntime REST  $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Honoring Retry-After timeout sent from service side.
+        1) Upgrading version of Newtonsoft Json to 10.0.3
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

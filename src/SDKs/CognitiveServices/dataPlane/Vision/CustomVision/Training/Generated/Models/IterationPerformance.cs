@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents the detailed performance data for a trained iteration
+    /// Represents the detailed performance data for a trained iteration.
     /// </summary>
     public partial class IterationPerformance
     {
@@ -32,15 +32,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// Initializes a new instance of the IterationPerformance class.
         /// </summary>
         /// <param name="perTagPerformance">Gets the per-tag performance
-        /// details for this iteration</param>
-        /// <param name="precision">Gets the precision</param>
+        /// details for this iteration.</param>
+        /// <param name="precision">Gets the precision.</param>
         /// <param name="precisionStdDeviation">Gets the standard deviation for
-        /// the precision</param>
-        /// <param name="recall">Gets the recall</param>
+        /// the precision.</param>
+        /// <param name="recall">Gets the recall.</param>
         /// <param name="recallStdDeviation">Gets the standard deviation for
-        /// the recall</param>
+        /// the recall.</param>
         /// <param name="averagePrecision">Gets the average precision when
-        /// applicable</param>
+        /// applicable.</param>
         public IterationPerformance(IList<TagPerformance> perTagPerformance = default(IList<TagPerformance>), double precision = default(double), double precisionStdDeviation = default(double), double recall = default(double), double recallStdDeviation = default(double), double? averagePrecision = default(double?))
         {
             PerTagPerformance = perTagPerformance;
@@ -58,37 +58,37 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the per-tag performance details for this iteration
+        /// Gets the per-tag performance details for this iteration.
         /// </summary>
         [JsonProperty(PropertyName = "perTagPerformance")]
         public IList<TagPerformance> PerTagPerformance { get; private set; }
 
         /// <summary>
-        /// Gets the precision
+        /// Gets the precision.
         /// </summary>
         [JsonProperty(PropertyName = "precision")]
         public double Precision { get; private set; }
 
         /// <summary>
-        /// Gets the standard deviation for the precision
+        /// Gets the standard deviation for the precision.
         /// </summary>
         [JsonProperty(PropertyName = "precisionStdDeviation")]
         public double PrecisionStdDeviation { get; private set; }
 
         /// <summary>
-        /// Gets the recall
+        /// Gets the recall.
         /// </summary>
         [JsonProperty(PropertyName = "recall")]
         public double Recall { get; private set; }
 
         /// <summary>
-        /// Gets the standard deviation for the recall
+        /// Gets the standard deviation for the recall.
         /// </summary>
         [JsonProperty(PropertyName = "recallStdDeviation")]
         public double RecallStdDeviation { get; private set; }
 
         /// <summary>
-        /// Gets the average precision when applicable
+        /// Gets the average precision when applicable.
         /// </summary>
         [JsonProperty(PropertyName = "averagePrecision")]
         public double? AveragePrecision { get; private set; }

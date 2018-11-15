@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using System.Linq;
 
     /// <summary>
-    /// Definition of an Azure resource.
+    /// Definition of Resource
     /// </summary>
     public partial class TrackedResource : Resource
     {

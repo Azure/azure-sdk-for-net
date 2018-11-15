@@ -323,6 +323,11 @@ namespace Microsoft.Azure.Management.Sql
         IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; }
 
         /// <summary>
+        /// Gets the IManagedBackupShortTermRetentionPoliciesOperations.
+        /// </summary>
+        IManagedBackupShortTermRetentionPoliciesOperations ManagedBackupShortTermRetentionPolicies { get; }
+
+        /// <summary>
         /// Gets the IManagedDatabasesOperations.
         /// </summary>
         IManagedDatabasesOperations ManagedDatabases { get; }
