@@ -29,7 +29,6 @@ namespace Kusto.Tests.ScenarioTests
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new KustoTestBase(context);
-                //var client = context.GetServiceClient<KustoManagementClient>();
 
                 try
                 {
@@ -121,7 +120,7 @@ namespace Kusto.Tests.ScenarioTests
         }
 
         [Fact]
-        public void KustoEventHubConnectionCreateUpdateDelete()
+        public void KustoEventHubConnectionTests()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
