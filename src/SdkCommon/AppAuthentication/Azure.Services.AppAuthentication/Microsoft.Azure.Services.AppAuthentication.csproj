@@ -24,7 +24,7 @@
     </PropertyGroup>
     <ItemGroup>
 		<Reference Include="System.Net.Http" />
-        <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.3.0" />
+        <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.19.4" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
         <PackageReference Include="System.Diagnostics.Process">
