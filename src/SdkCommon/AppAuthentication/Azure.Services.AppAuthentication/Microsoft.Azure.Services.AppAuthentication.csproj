@@ -9,9 +9,7 @@
 		<![CDATA[
 			Documentation can be found at https://go.microsoft.com/fwlink/p/?linkid=862452.
 			
-			Adding new .NET 4.7.2 targeted package
 			Adding new method GetAuthResultAsync to AzureServiceTokenProvider
-			Adding new class SqlAzureAppAuthProvider that implements new SqlAuthenticationProvider (only in .NET 4.7.2 targeted package)
 			Adding support for user-assigned managed identities
 			Adding support for simplified Azure AD certificate roll-over (subject name and issuer authentication)
 			Adding new connection string option to specify Key Vault secret identifier for service principal certificate credential
