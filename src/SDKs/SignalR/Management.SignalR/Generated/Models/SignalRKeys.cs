@@ -31,10 +31,16 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         /// <param name="primaryKey">The primary access key.</param>
         /// <param name="secondaryKey">The secondary access key.</param>
-        public SignalRKeys(string primaryKey = default(string), string secondaryKey = default(string))
+        /// <param name="primaryConnectionString">SignalR connection string
+        /// constructed via the primaryKey</param>
+        /// <param name="secondaryConnectionString">SignalR connection string
+        /// constructed via the secondaryKey</param>
+        public SignalRKeys(string primaryKey = default(string), string secondaryKey = default(string), string primaryConnectionString = default(string), string secondaryConnectionString = default(string))
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
+            PrimaryConnectionString = primaryConnectionString;
+            SecondaryConnectionString = secondaryConnectionString;
             CustomInit();
         }
 
@@ -54,6 +60,20 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "secondaryKey")]
         public string SecondaryKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets signalR connection string constructed via the
+        /// primaryKey
+        /// </summary>
+        [JsonProperty(PropertyName = "primaryConnectionString")]
+        public string PrimaryConnectionString { get; set; }
+
+        /// <summary>
+        /// Gets or sets signalR connection string constructed via the
+        /// secondaryKey
+        /// </summary>
+        [JsonProperty(PropertyName = "secondaryConnectionString")]
+        public string SecondaryConnectionString { get; set; }
 
     }
 }

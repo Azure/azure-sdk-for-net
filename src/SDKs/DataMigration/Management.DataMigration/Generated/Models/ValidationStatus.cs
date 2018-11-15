@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public const string InProgress = "InProgress";
         public const string Completed = "Completed";
         public const string CompletedWithIssues = "CompletedWithIssues";
-        public const string Failed = "Failed";
         public const string Stopped = "Stopped";
+        public const string Failed = "Failed";
     }
 }

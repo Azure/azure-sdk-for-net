@@ -102,10 +102,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ipPool");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2016-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -116,6 +113,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("ipPool", ipPool);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -127,9 +125,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{ipPool}", System.Uri.EscapeDataString(ipPool));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -277,10 +275,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ProvisioningState>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string location, string ipPool, IpPool pool, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IpPool>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string location, string ipPool, IpPool pool, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<ProvisioningState> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, location, ipPool, pool, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<IpPool> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, location, ipPool, pool, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -331,10 +329,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2016-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -345,6 +340,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -363,9 +359,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                     _queryParameters.Add(_odataFilter);
                 }
             }
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -528,7 +524,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ProvisioningState>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string location, string ipPool, IpPool pool, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IpPool>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string location, string ipPool, IpPool pool, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -546,14 +542,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ipPool");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (pool == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "pool");
             }
+            string apiVersion = "2016-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -564,6 +557,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("ipPool", ipPool);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("pool", pool);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
@@ -576,9 +570,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{ipPool}", System.Uri.EscapeDataString(ipPool));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -679,7 +673,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ProvisioningState>();
+            var _result = new AzureOperationResponse<IpPool>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -692,7 +686,25 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ProvisioningState>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IpPool>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 202)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IpPool>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

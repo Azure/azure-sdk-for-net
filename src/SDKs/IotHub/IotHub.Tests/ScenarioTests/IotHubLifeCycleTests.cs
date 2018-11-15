@@ -43,7 +43,7 @@ namespace IotHub.Tests.ScenarioTests
                         IotHubTestUtilities.DefaultIotHubName);
 
                     iotHubNameAvailabilityInfo = this.iotHubClient.IotHubResource.CheckNameAvailability(operationInputs);
-                    Assert.Equal(true, iotHubNameAvailabilityInfo.NameAvailable);
+                    Assert.True(iotHubNameAvailabilityInfo.NameAvailable);
                 }
 
                 //CreateEH and AuthRule
@@ -74,7 +74,7 @@ namespace IotHub.Tests.ScenarioTests
 
                 var endpointHealth = this.iotHubClient.IotHubResource.GetEndpointHealth(IotHubTestUtilities.DefaultResourceGroupName, IotHubTestUtilities.DefaultIotHubName);
                 Assert.Equal(4, endpointHealth.Count());
-                Assert.True(endpointHealth.Any(q => q.EndpointId.Equals("events", StringComparison.OrdinalIgnoreCase)));
+                Assert.Contains(endpointHealth, q => q.EndpointId.Equals("events", StringComparison.OrdinalIgnoreCase));
 
                 TestAllRoutesInput testAllRoutesInput = new TestAllRoutesInput(RoutingSource.DeviceMessages, new RoutingMessage());
                 TestAllRoutesResult testAllRoutesResult = this.iotHubClient.IotHubResource.TestAllRoutes(testAllRoutesInput, IotHubTestUtilities.DefaultIotHubName, IotHubTestUtilities.DefaultResourceGroupName);
@@ -90,13 +90,13 @@ namespace IotHub.Tests.ScenarioTests
                     IotHubTestUtilities.DefaultIotHubName);
 
                 Assert.True(quotaMetrics.Count() > 0);
-                Assert.True(quotaMetrics.Any(q => q.Name.Equals("TotalMessages", StringComparison.OrdinalIgnoreCase) &&
+                Assert.Contains(quotaMetrics, q => q.Name.Equals("TotalMessages", StringComparison.OrdinalIgnoreCase) &&
                                                   q.CurrentValue == 0 &&
-                                                  q.MaxValue == 400000));
+                                                  q.MaxValue == 400000);
 
-                Assert.True(quotaMetrics.Any(q => q.Name.Equals("TotalDeviceCount", StringComparison.OrdinalIgnoreCase) &&
+                Assert.Contains(quotaMetrics, q => q.Name.Equals("TotalDeviceCount", StringComparison.OrdinalIgnoreCase) &&
                                                   q.CurrentValue == 0 &&
-                                                  q.MaxValue == 500000));
+                                                  q.MaxValue == 500000);
 
                 // Get all Iot Hubs in a resource group
                 var iotHubs = this.iotHubClient.IotHubResource.ListByResourceGroup(IotHubTestUtilities.DefaultResourceGroupName);
@@ -124,7 +124,7 @@ namespace IotHub.Tests.ScenarioTests
                     IotHubTestUtilities.DefaultResourceGroupName,
                     IotHubTestUtilities.DefaultIotHubName);
                 Assert.True(keys.Count() > 0);
-                Assert.True(keys.Any(k => k.KeyName.Equals("iothubowner", StringComparison.OrdinalIgnoreCase)));
+                Assert.Contains(keys, k => k.KeyName.Equals("iothubowner", StringComparison.OrdinalIgnoreCase));
 
                 // Get specific IotHub Key
                 var key = this.iotHubClient.IotHubResource.GetKeysForKeyName(
@@ -139,7 +139,7 @@ namespace IotHub.Tests.ScenarioTests
                     IotHubTestUtilities.DefaultIotHubName,
                     IotHubTestUtilities.EventsEndpointName);
                 Assert.True(ehConsumerGroups.Count() > 0);
-                Assert.True(ehConsumerGroups.Any(e => e.Name.Equals("$Default", StringComparison.OrdinalIgnoreCase)));
+                Assert.Contains(ehConsumerGroups, e => e.Name.Equals("$Default", StringComparison.OrdinalIgnoreCase));
 
                 // Add EH consumer group
                 var ehConsumerGroup = this.iotHubClient.IotHubResource.CreateEventHubConsumerGroup(
@@ -170,13 +170,13 @@ namespace IotHub.Tests.ScenarioTests
                 // Get all of the available IoT Hub REST API operations
                 var operationList = this.iotHubClient.Operations.List();
                 Assert.True(operationList.Count() > 0);
-                Assert.True(operationList.Any(e => e.Name.Equals("Microsoft.Devices/iotHubs/Read", StringComparison.OrdinalIgnoreCase)));
+                Assert.Contains(operationList, e => e.Name.Equals("Microsoft.Devices/iotHubs/Read", StringComparison.OrdinalIgnoreCase));
 
                 // Get IoT Hub REST API read operation
                 var hubReadOperation = operationList.Where(e => e.Name.Equals("Microsoft.Devices/iotHubs/Read", StringComparison.OrdinalIgnoreCase));
                 Assert.True(hubReadOperation.Count().Equals(1));
-                Assert.True(hubReadOperation.First().Display.Provider.Equals("Microsoft Devices", StringComparison.OrdinalIgnoreCase));
-                Assert.True(hubReadOperation.First().Display.Operation.Equals("Get IotHub(s)", StringComparison.OrdinalIgnoreCase));
+                Assert.Equal("Microsoft Devices", hubReadOperation.First().Display.Provider, ignoreCase: true);
+                Assert.Equal("Get IotHub(s)", hubReadOperation.First().Display.Operation, ignoreCase: true);
             }
         }
 
@@ -205,7 +205,7 @@ namespace IotHub.Tests.ScenarioTests
                         IotHubTestUtilities.DefaultUpdateIotHubName);
 
                     iotHubNameAvailabilityInfo = this.iotHubClient.IotHubResource.CheckNameAvailability(operationInputs);
-                    Assert.Equal(true, iotHubNameAvailabilityInfo.NameAvailable);
+                    Assert.True(iotHubNameAvailabilityInfo.NameAvailable);
                 }
 
                 var iotHub = this.CreateIotHub(resourceGroup, IotHubTestUtilities.DefaultLocation, IotHubTestUtilities.DefaultUpdateIotHubName, null);
@@ -230,11 +230,11 @@ namespace IotHub.Tests.ScenarioTests
 
                 Assert.NotNull(retIotHub);
                 Assert.Equal(IotHubTestUtilities.DefaultUpdateIotHubName, retIotHub.Name);
-                Assert.Equal(retIotHub.Properties.Routing.Routes.Count, 4);
-                Assert.Equal(retIotHub.Properties.Routing.Endpoints.EventHubs.Count, 1);
-                Assert.Equal(retIotHub.Properties.Routing.Endpoints.ServiceBusTopics.Count, 1);
-                Assert.Equal(retIotHub.Properties.Routing.Endpoints.ServiceBusQueues.Count, 1);
-                Assert.Equal(retIotHub.Properties.Routing.Routes[0].Name, "route1");
+                Assert.Equal(4, retIotHub.Properties.Routing.Routes.Count);
+                Assert.Equal(1, retIotHub.Properties.Routing.Endpoints.EventHubs.Count);
+                Assert.Equal(1, retIotHub.Properties.Routing.Endpoints.ServiceBusTopics.Count);
+                Assert.Equal(1, retIotHub.Properties.Routing.Endpoints.ServiceBusQueues.Count);
+                Assert.Equal("route1", retIotHub.Properties.Routing.Routes[0].Name);
 
                 // Get an Iot Hub
                 var iotHubDesc = this.iotHubClient.IotHubResource.Get(
@@ -254,11 +254,11 @@ namespace IotHub.Tests.ScenarioTests
 
                 Assert.NotNull(retIotHub);
                 Assert.Equal(IotHubTestUtilities.DefaultUpdateIotHubName, retIotHub.Name);
-                Assert.Equal(retIotHub.Properties.Routing.Routes.Count, 4);
-                Assert.Equal(retIotHub.Properties.Routing.Endpoints.EventHubs.Count, 1);
-                Assert.Equal(retIotHub.Properties.Routing.Endpoints.ServiceBusTopics.Count, 1);
-                Assert.Equal(retIotHub.Properties.Routing.Endpoints.ServiceBusQueues.Count, 1);
-                Assert.Equal(retIotHub.Properties.Routing.Routes[0].Name, "route1");
+                Assert.Equal(4, retIotHub.Properties.Routing.Routes.Count);
+                Assert.Equal(1, retIotHub.Properties.Routing.Endpoints.EventHubs.Count);
+                Assert.Equal(1, retIotHub.Properties.Routing.Endpoints.ServiceBusTopics.Count);
+                Assert.Equal(1, retIotHub.Properties.Routing.Endpoints.ServiceBusQueues.Count);
+                Assert.Equal("route1", retIotHub.Properties.Routing.Routes[0].Name);
             }
         }
 
@@ -287,7 +287,7 @@ namespace IotHub.Tests.ScenarioTests
                         IotHubTestUtilities.DefaultCertificateIotHubName);
 
                     iotHubNameAvailabilityInfo = this.iotHubClient.IotHubResource.CheckNameAvailability(operationInputs);
-                    Assert.Equal(true, iotHubNameAvailabilityInfo.NameAvailable);
+                    Assert.True(iotHubNameAvailabilityInfo.NameAvailable);
                 }
 
                 // Create Hub

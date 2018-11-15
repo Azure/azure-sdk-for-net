@@ -25,14 +25,14 @@ namespace SearchSDK.Tests
                 Assert.NotNull(resp);
                 Assert.NotNull(resp.Entities);
                 Assert.NotNull(resp.Entities.Value);
-                Assert.Equal(resp.Entities.Value.Count, 1);
+                Assert.Equal(1, resp.Entities.Value.Count);
 
                 Assert.NotNull(resp.Entities.Value[0].ContractualRules);
 
                 var licenseAttribution = resp.Entities.Value[0].ContractualRules.Where(rule => rule is ContractualRulesLicenseAttribution).FirstOrDefault();
 
                 Assert.NotNull(licenseAttribution);
-                Assert.Equal(licenseAttribution.TargetPropertyName, "description");
+                Assert.Equal("description", licenseAttribution.TargetPropertyName);
 
                 var image = resp.Entities.Value[0].Image;
 
@@ -42,7 +42,7 @@ namespace SearchSDK.Tests
                 var provider = image.Provider.FirstOrDefault();
 
                 Assert.NotNull(provider);
-                Assert.IsType(typeof(Organization), provider);
+                Assert.IsType<Organization>(provider);
             }
         }
     }

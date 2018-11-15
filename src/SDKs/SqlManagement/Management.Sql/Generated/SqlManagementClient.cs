@@ -328,14 +328,14 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedBackupShortTermRetentionPoliciesOperations.
+        /// </summary>
+        public virtual IManagedBackupShortTermRetentionPoliciesOperations ManagedBackupShortTermRetentionPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IManagedDatabasesOperations.
         /// </summary>
         public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
-
-        /// <summary>
-        /// Gets the ISensitivityLabelsOperations.
-        /// </summary>
-        public virtual ISensitivityLabelsOperations SensitivityLabels { get; private set; }
 
         /// <summary>
         /// Gets the IServerAutomaticTuningOperations.
@@ -378,6 +378,21 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IDatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
+        /// </summary>
+        public virtual IManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations ManagedDatabaseVulnerabilityAssessmentRuleBaselines { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        public virtual IManagedDatabaseVulnerabilityAssessmentScansOperations ManagedDatabaseVulnerabilityAssessmentScans { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseVulnerabilityAssessmentsOperations.
+        /// </summary>
+        public virtual IManagedDatabaseVulnerabilityAssessmentsOperations ManagedDatabaseVulnerabilityAssessments { get; private set; }
+
+        /// <summary>
         /// Gets the IInstanceFailoverGroupsOperations.
         /// </summary>
         public virtual IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; private set; }
@@ -396,6 +411,16 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedInstanceTdeCertificatesOperations.
         /// </summary>
         public virtual IManagedInstanceTdeCertificatesOperations ManagedInstanceTdeCertificates { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceKeysOperations.
+        /// </summary>
+        public virtual IManagedInstanceKeysOperations ManagedInstanceKeys { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceEncryptionProtectorsOperations.
+        /// </summary>
+        public virtual IManagedInstanceEncryptionProtectorsOperations ManagedInstanceEncryptionProtectors { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -689,8 +714,8 @@ namespace Microsoft.Azure.Management.Sql
             JobVersions = new JobVersionsOperations(this);
             LongTermRetentionBackups = new LongTermRetentionBackupsOperations(this);
             BackupLongTermRetentionPolicies = new BackupLongTermRetentionPoliciesOperations(this);
+            ManagedBackupShortTermRetentionPolicies = new ManagedBackupShortTermRetentionPoliciesOperations(this);
             ManagedDatabases = new ManagedDatabasesOperations(this);
-            SensitivityLabels = new SensitivityLabelsOperations(this);
             ServerAutomaticTuning = new ServerAutomaticTuningOperations(this);
             ServerDnsAliases = new ServerDnsAliasesOperations(this);
             ServerSecurityAlertPolicies = new ServerSecurityAlertPoliciesOperations(this);
@@ -699,10 +724,15 @@ namespace Microsoft.Azure.Management.Sql
             ElasticPoolOperations = new ElasticPoolOperations(this);
             Capabilities = new CapabilitiesOperations(this);
             DatabaseVulnerabilityAssessmentScans = new DatabaseVulnerabilityAssessmentScansOperations(this);
+            ManagedDatabaseVulnerabilityAssessmentRuleBaselines = new ManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations(this);
+            ManagedDatabaseVulnerabilityAssessmentScans = new ManagedDatabaseVulnerabilityAssessmentScansOperations(this);
+            ManagedDatabaseVulnerabilityAssessments = new ManagedDatabaseVulnerabilityAssessmentsOperations(this);
             InstanceFailoverGroups = new InstanceFailoverGroupsOperations(this);
             BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
             TdeCertificates = new TdeCertificatesOperations(this);
             ManagedInstanceTdeCertificates = new ManagedInstanceTdeCertificatesOperations(this);
+            ManagedInstanceKeys = new ManagedInstanceKeysOperations(this);
+            ManagedInstanceEncryptionProtectors = new ManagedInstanceEncryptionProtectorsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

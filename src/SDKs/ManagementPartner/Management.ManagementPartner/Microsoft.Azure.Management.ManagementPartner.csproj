@@ -7,11 +7,9 @@
     <PackageId>Microsoft.Azure.Management.ManagementPartner</PackageId>
     <Description>Microsoft.Azure.Management.ManagementPartner Library</Description>
     <AssemblyName>Microsoft.Azure.Management.ManagementPartner</AssemblyName>
-    <Version>1.1.0-preview</Version>
+    <Version>1.1.1-preview</Version>
     <PackageTags>ManagementPartner;;;;</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[Add partner name for management partner operations response]]>
-    </PackageReleaseNotes>
+    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

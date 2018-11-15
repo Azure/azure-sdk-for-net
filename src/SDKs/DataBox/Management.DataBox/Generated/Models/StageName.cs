@@ -21,30 +21,70 @@ namespace Microsoft.Azure.Management.DataBox.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum StageName
     {
+        /// <summary>
+        /// An order has been created.
+        /// </summary>
         [EnumMember(Value = "DeviceOrdered")]
         DeviceOrdered,
+        /// <summary>
+        /// A device has been prepared for the order.
+        /// </summary>
         [EnumMember(Value = "DevicePrepared")]
         DevicePrepared,
+        /// <summary>
+        /// Device has been dispatched to the user of the order.
+        /// </summary>
         [EnumMember(Value = "Dispatched")]
         Dispatched,
+        /// <summary>
+        /// Device has been delivered to the user of the order.
+        /// </summary>
         [EnumMember(Value = "Delivered")]
         Delivered,
+        /// <summary>
+        /// Device has been picked up from user and in transit to azure
+        /// datacenter.
+        /// </summary>
         [EnumMember(Value = "PickedUp")]
         PickedUp,
+        /// <summary>
+        /// Device has been received at azure datacenter from the user.
+        /// </summary>
         [EnumMember(Value = "AtAzureDC")]
         AtAzureDC,
+        /// <summary>
+        /// Data copy from the device at azure datacenter.
+        /// </summary>
         [EnumMember(Value = "DataCopy")]
         DataCopy,
+        /// <summary>
+        /// Order has completed.
+        /// </summary>
         [EnumMember(Value = "Completed")]
         Completed,
+        /// <summary>
+        /// Order has completed with errors.
+        /// </summary>
         [EnumMember(Value = "CompletedWithErrors")]
         CompletedWithErrors,
+        /// <summary>
+        /// Order has been cancelled.
+        /// </summary>
         [EnumMember(Value = "Cancelled")]
         Cancelled,
+        /// <summary>
+        /// Order has failed due to issue reported by user.
+        /// </summary>
         [EnumMember(Value = "Failed_IssueReportedAtCustomer")]
         FailedIssueReportedAtCustomer,
+        /// <summary>
+        /// Order has failed due to issue detected at azure datacenter.
+        /// </summary>
         [EnumMember(Value = "Failed_IssueDetectedAtAzureDC")]
         FailedIssueDetectedAtAzureDC,
+        /// <summary>
+        /// Order has been aborted.
+        /// </summary>
         [EnumMember(Value = "Aborted")]
         Aborted
     }

@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             return processStartInfos;
         }
 
-        public override async Task<string> GetTokenAsync(string resource, string authority)
+        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                             PrincipalUsed.TenantId = token.TenantId;
                         }
 
-                        return tokenResponse.AccessToken;
+                        return AppAuthenticationResult.Create(tokenResponse, TokenResponse.DateFormat.DateTimeString);
 
                     }
                     catch (Exception exp)

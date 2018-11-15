@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// NetworkConfigurationDiagnosticResult class.
         /// </summary>
-        public NetworkConfigurationDiagnosticResult(TrafficQuery trafficQuery = default(TrafficQuery), NetworkSecurityGroupResult networkSecurityGroupResult = default(NetworkSecurityGroupResult))
+        public NetworkConfigurationDiagnosticResult(NetworkConfigurationDiagnosticProfile profile = default(NetworkConfigurationDiagnosticProfile), NetworkSecurityGroupResult networkSecurityGroupResult = default(NetworkSecurityGroupResult))
         {
-            TrafficQuery = trafficQuery;
+            Profile = profile;
             NetworkSecurityGroupResult = networkSecurityGroupResult;
             CustomInit();
         }
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "trafficQuery")]
-        public TrafficQuery TrafficQuery { get; set; }
+        [JsonProperty(PropertyName = "profile")]
+        public NetworkConfigurationDiagnosticProfile Profile { get; set; }
 
         /// <summary>
         /// </summary>
@@ -62,9 +62,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (TrafficQuery != null)
+            if (Profile != null)
             {
-                TrafficQuery.Validate();
+                Profile.Validate();
             }
         }
     }

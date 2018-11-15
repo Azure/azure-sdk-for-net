@@ -16,6 +16,7 @@ namespace DataMigration.Tests.ScenarioTests
         protected static string DmsDeploymentName;
         protected static string DmsProjectName;
         protected static string DmsTaskName;
+        protected static string DmsFileName;
 
         public CRUDDMSTestsBase()
         {
@@ -23,6 +24,7 @@ namespace DataMigration.Tests.ScenarioTests
             DmsDeploymentName = "DmsSdkService";
             DmsProjectName = "DmsSdkProject";
             DmsTaskName = "DmsSdkTask";
+            DmsFileName = "DmsSdkFile";
         }
 
         protected Project CreateDMSProject(MockContext context,
@@ -37,7 +39,7 @@ namespace DataMigration.Tests.ScenarioTests
                 dmsInstanceName,
                 dmsProjectName);
         }
-
+        
         protected DataMigrationService CreateDMSInstance(MockContext context,
             DataMigrationServiceClient client,
             ResourceGroup resourceGroup,
@@ -47,7 +49,7 @@ namespace DataMigration.Tests.ScenarioTests
                 type: "Microsoft.DataMigration/services",
                 location: resourceGroup.Location,
                 virtualSubnetId: TestConfiguration.VirtualSubnetId,
-                sku: new ServiceSku("Basic_1vCore")),
+                sku: new ServiceSku("BusinessCritical_4vCores", "Business Critical")),
                     resourceGroup.Name,
                     dmsInstanceName);
         }

@@ -4,8 +4,7 @@
     <Description>Authorization.Tests Class Library</Description>
     <AssemblyName>Authorization.Tests</AssemblyName>
     <PackageId>Authorization.Tests</PackageId>
-  </PropertyGroup>
-  <PropertyGroup>
+    <Version>1.0.0</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 

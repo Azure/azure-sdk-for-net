@@ -18,5 +18,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     {
         public const string Default = "Default";
         public const string MigrationFromSqlServerToAzureDB = "MigrationFromSqlServerToAzureDB";
+        public const string MigrationFromSqlServerToAzureMI = "MigrationFromSqlServerToAzureMI";
+        public const string MigrationFromMySQLToAzureDBForMySQL = "MigrationFromMySQLToAzureDBForMySQL";
     }
 }

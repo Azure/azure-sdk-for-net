@@ -6,15 +6,10 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.MarketplaceOrdering</PackageId>
 		<Description>Provides developers with a library to get and set legal terms for Azure Marketplace Offers. Note: This client library is for MarketplaceOrdering under Azure Resource Manager.</Description>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<AssemblyName>Microsoft.Azure.Management.MarketplaceOrdering</AssemblyName>
 		<PackageTags>Microsoft Azure MarketplaceOrdering Management;</PackageTags>
-		<PackageReleaseNotes>
-			<![CDATA[
-        1) Added Get Api for Agreements for Virtual Machine Offers 
-        2) Added Create Api for Agreements for Virtual Machine Offers to allow users to accept or reject agreement terms
-      ]]>
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

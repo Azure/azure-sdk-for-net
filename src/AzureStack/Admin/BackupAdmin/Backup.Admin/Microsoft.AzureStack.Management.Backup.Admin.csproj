@@ -7,14 +7,15 @@
     <PropertyGroup>
         <PackageId>Microsoft.AzureStack.Management.Backup.Admin</PackageId>
         <Description>Provides developers with libraries for the Backup admin under AzureStack to manage backups.</Description>
-        <VersionPrefix>0.2.0-preview</VersionPrefix>
+        <VersionPrefix>0.3.0-preview</VersionPrefix>
         <AssemblyName>Microsoft.AzureStack.Management.Backup.Admin</AssemblyName>
         <PackageTags>Microsoft Azure Stack;Backup;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
                 Preview release of the Backup administrator SDK.
-                0.2.0-preview breaking change:
-                Return type of BackupLocation.NextBackupTime and BackupLocation.LastBackupTime changed to System.DateTime?.
+                0.3.0-preview breaking change:
+                PUT BackupLocation now accepts encryptionCert instead of encryptionKey as parameter
+                Restore backup operation now requires decryptionCert and decryptionCertPassword as parameter
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

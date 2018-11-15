@@ -22,7 +22,7 @@
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[2.28.3]" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.13.9]" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0]" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2]" />
   </ItemGroup>
   <ItemGroup>

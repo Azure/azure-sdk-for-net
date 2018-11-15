@@ -65,7 +65,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="retryPolicy">Retry policy that will be applied for
         /// failed pipeline runs.</param>
-        public TumblingWindowTrigger(TriggerPipelineReference pipeline, string frequency, int interval, System.DateTime startTime, int maxConcurrency, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), System.DateTime? endTime = default(System.DateTime?), object delay = default(object), RetryPolicy retryPolicy = default(RetryPolicy))
+        /// <param name="dependsOn">Triggers that this trigger depends on. Only
+        /// tumbling window triggers are supported.</param>
+        public TumblingWindowTrigger(TriggerPipelineReference pipeline, string frequency, int interval, System.DateTime startTime, int maxConcurrency, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), System.DateTime? endTime = default(System.DateTime?), object delay = default(object), RetryPolicy retryPolicy = default(RetryPolicy), IList<DependencyReference> dependsOn = default(IList<DependencyReference>))
             : base(additionalProperties, description, runtimeState)
         {
             Pipeline = pipeline;
@@ -76,6 +78,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Delay = delay;
             MaxConcurrency = maxConcurrency;
             RetryPolicy = retryPolicy;
+            DependsOn = dependsOn;
             CustomInit();
         }
 
@@ -144,6 +147,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.retryPolicy")]
         public RetryPolicy RetryPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets triggers that this trigger depends on. Only tumbling
+        /// window triggers are supported.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.dependsOn")]
+        public IList<DependencyReference> DependsOn { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -3,11 +3,9 @@
   <PropertyGroup>
     <PackageId>ApiManagement.Tests</PackageId>
     <Description>ApiManagement.Tests Class Library</Description>
-    <Version>1.0.0-preview</Version>
+    <Version>1.0.0</Version>
     <Authors>Microsoft Corporation</Authors>
-    <AssemblyName>ApiManagementManagement.Tests</AssemblyName>    
-  </PropertyGroup>
-  <PropertyGroup>
+    <AssemblyName>ApiManagementManagement.Tests</AssemblyName>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>

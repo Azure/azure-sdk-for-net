@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading.Tasks;
 
     /// <summary>
-    /// VirtualWANsOperations operations.
+    /// VirtualWansOperations operations.
     /// </summary>
-    internal partial class VirtualWANsOperations : IServiceOperations<NetworkManagementClient>, IVirtualWANsOperations
+    internal partial class VirtualWansOperations : IServiceOperations<NetworkManagementClient>, IVirtualWansOperations
     {
         /// <summary>
-        /// Initializes a new instance of the VirtualWANsOperations class.
+        /// Initializes a new instance of the VirtualWansOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal VirtualWANsOperations(NetworkManagementClient client)
+        internal VirtualWansOperations(NetworkManagementClient client)
         {
             if (client == null)
             {
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-07-01";
+            string apiVersion = "2018-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -349,7 +349,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2018-07-01";
+            string apiVersion = "2018-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -522,7 +522,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-07-01";
+            string apiVersion = "2018-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -715,7 +715,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "wANParameters");
             }
-            string apiVersion = "2018-07-01";
+            string apiVersion = "2018-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -936,7 +936,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "wANParameters");
             }
-            string apiVersion = "2018-07-01";
+            string apiVersion = "2018-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1147,7 +1147,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "virtualWANName");
             }
-            string apiVersion = "2018-07-01";
+            string apiVersion = "2018-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

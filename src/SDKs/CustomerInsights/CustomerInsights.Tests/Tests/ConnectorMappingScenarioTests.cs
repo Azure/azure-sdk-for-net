@@ -121,9 +121,8 @@ namespace CustomerInsights.Tests.Tests
                     HubName + "/" + connectorName + "/" + connectorMappingName,
                     StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    createdMapping.Type,
                     "Microsoft.CustomerInsights/hubs/connectors/mappings",
-                    StringComparer.OrdinalIgnoreCase);
+                    createdMapping.Type, StringComparer.OrdinalIgnoreCase);
 
                 var getMapping = aciClient.ConnectorMappings.Get(
                     ResourceGroupName,
@@ -137,14 +136,12 @@ namespace CustomerInsights.Tests.Tests
                     HubName + "/" + connectorName + "/" + connectorMappingName,
                     StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    getMapping.Type,
                     "Microsoft.CustomerInsights/hubs/connectors/mappings",
-                    StringComparer.OrdinalIgnoreCase);
+                    getMapping.Type, StringComparer.OrdinalIgnoreCase);
 
                 var result = aciClient.ConnectorMappings.ListByConnector(ResourceGroupName, HubName, connectorName);
                 Assert.True(result.ToList().Count >= 1);
-                Assert.True(
-                    result.ToList().Any(mappingReturned => connectorMappingName == mappingReturned.ConnectorMappingName));
+                Assert.Contains(result.ToList(), mappingReturned => connectorMappingName == mappingReturned.ConnectorMappingName);
 
                 var deleteMappingResponse =
                     aciClient.ConnectorMappings.DeleteWithHttpMessagesAsync(

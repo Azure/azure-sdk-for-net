@@ -384,7 +384,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='assetName'>
             /// The Asset name.
             /// </param>
-            public static AssetStorageEncryptionKey GetEncryptionKey(this IAssetsOperations operations, string resourceGroupName, string accountName, string assetName)
+            public static StorageEncryptedAssetDecryptionData GetEncryptionKey(this IAssetsOperations operations, string resourceGroupName, string accountName, string assetName)
             {
                 return operations.GetEncryptionKeyAsync(resourceGroupName, accountName, assetName).GetAwaiter().GetResult();
             }
@@ -411,9 +411,61 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AssetStorageEncryptionKey> GetEncryptionKeyAsync(this IAssetsOperations operations, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageEncryptedAssetDecryptionData> GetEncryptionKeyAsync(this IAssetsOperations operations, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetEncryptionKeyWithHttpMessagesAsync(resourceGroupName, accountName, assetName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List Streaming Locators
+            /// </summary>
+            /// <remarks>
+            /// Lists Streaming Locators which are associated with this asset.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='assetName'>
+            /// The Asset name.
+            /// </param>
+            public static ListStreamingLocatorsResponse ListStreamingLocators(this IAssetsOperations operations, string resourceGroupName, string accountName, string assetName)
+            {
+                return operations.ListStreamingLocatorsAsync(resourceGroupName, accountName, assetName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List Streaming Locators
+            /// </summary>
+            /// <remarks>
+            /// Lists Streaming Locators which are associated with this asset.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='assetName'>
+            /// The Asset name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ListStreamingLocatorsResponse> ListStreamingLocatorsAsync(this IAssetsOperations operations, string resourceGroupName, string accountName, string assetName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListStreamingLocatorsWithHttpMessagesAsync(resourceGroupName, accountName, assetName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

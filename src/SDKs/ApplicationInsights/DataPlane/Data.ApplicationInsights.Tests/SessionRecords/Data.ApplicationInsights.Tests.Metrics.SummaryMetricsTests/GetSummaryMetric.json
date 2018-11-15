@@ -10,8 +10,8 @@
           "DEMO_KEY"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
+          "FxVersion/4.6.00001.0",
+          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.0.0.0"
         ],
         "prefer": [
           "response-v1=true"
@@ -20,25 +20,18 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "003ebbfe-8f0b-428e-a096-f5431cd5ee0a"
+          "f882cfb5-faa7-4d29-8278-c58c57f686e1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-01-11T06:02:37.168Z\",\r\n    \"end\": \"2018-01-11T18:02:37.168Z\",\r\n    \"requests/duration\": {\r\n      \"avg\": 374.22\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "114"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
         "Connection": [
           "keep-alive"
         ],
         "Date": [
-          "Thu, 11 Jan 2018 18:02:37 GMT"
+          "Mon, 24 Sep 2018 21:36:23 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-green.1a7953a2-f6e2-11e7-81e8-70b3d5800002"
+          "1.1 draft-ai-blue.3109e61a-bf93-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"
@@ -54,12 +47,19 @@
           "*"
         ],
         "Access-Control-Expose-Headers": [
-          "Retry-After,Age,WWW-Authenticate"
+          "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "113"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-09-24T09:36:23.38Z\",\r\n    \"end\": \"2018-09-24T21:36:23.38Z\",\r\n    \"requests/duration\": {\r\n      \"avg\": 83.25\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

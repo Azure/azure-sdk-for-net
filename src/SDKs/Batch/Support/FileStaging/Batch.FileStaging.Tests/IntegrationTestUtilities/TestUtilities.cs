@@ -15,24 +15,12 @@
 namespace Batch.FileStaging.Tests.IntegrationTestUtilities
 {
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
     using System.Net;
-    using System.Reflection;
-    using System.Threading;
     using System.Threading.Tasks;
-
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Auth;
     using Microsoft.Azure.Batch.Common;
     using Microsoft.Azure.Batch.FileStaging;
-    using Newtonsoft.Json;
-    using Xunit;
-    using Xunit.Abstractions;
-    using Xunit.Sdk;
-
-    using Constants = Microsoft.Azure.Batch.Constants;
 
     public static class TestUtilities
     {
@@ -46,9 +34,9 @@ namespace Batch.FileStaging.Tests.IntegrationTestUtilities
                 TestCommon.Configuration.BatchAccountKey);
         }
 
-        public static async Task<BatchClient> OpenBatchClientAsync(BatchSharedKeyCredentials sharedKeyCredentials, bool addDefaultRetryPolicy = true)
+        public static BatchClient OpenBatchClient(BatchSharedKeyCredentials sharedKeyCredentials, bool addDefaultRetryPolicy = true)
         {
-            BatchClient client = await BatchClient.OpenAsync(sharedKeyCredentials);
+            BatchClient client = BatchClient.Open(sharedKeyCredentials);
 
             //Force us to get exception if the server returns something we don't expect
             //TODO: To avoid including this test assembly via "InternalsVisibleTo" we resort to some reflection trickery... maybe this property
@@ -66,10 +54,9 @@ namespace Batch.FileStaging.Tests.IntegrationTestUtilities
             return client;
         }
 
-        public static async Task<BatchClient> OpenBatchClientFromEnvironmentAsync()
+        public static BatchClient OpenBatchClientFromEnvironment()
         {
-            BatchClient client = await OpenBatchClientAsync(GetCredentialsFromEnvironment());
-
+            BatchClient client = OpenBatchClient(GetCredentialsFromEnvironment());
             return client;
         }
 

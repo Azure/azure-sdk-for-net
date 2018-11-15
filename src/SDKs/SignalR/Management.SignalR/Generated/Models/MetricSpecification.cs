@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.SignalR.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -49,7 +51,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <param name="category">The name of the metric category that the
         /// metric belongs to. A metric can only belong to a single
         /// category.</param>
-        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), string aggregationType = default(string), string fillGapWithZero = default(string), string category = default(string))
+        /// <param name="dimensions">The dimensions of the metrics.</param>
+        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), string aggregationType = default(string), string fillGapWithZero = default(string), string category = default(string), IList<Dimension> dimensions = default(IList<Dimension>))
         {
             Name = name;
             DisplayName = displayName;
@@ -58,6 +61,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
             AggregationType = aggregationType;
             FillGapWithZero = fillGapWithZero;
             Category = category;
+            Dimensions = dimensions;
             CustomInit();
         }
 
@@ -114,6 +118,12 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "category")]
         public string Category { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dimensions of the metrics.
+        /// </summary>
+        [JsonProperty(PropertyName = "dimensions")]
+        public IList<Dimension> Dimensions { get; set; }
 
     }
 }

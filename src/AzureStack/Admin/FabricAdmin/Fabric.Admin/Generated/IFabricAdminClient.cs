@@ -48,24 +48,20 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client API Version.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running
-        /// Operations. Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default
+        /// value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated
-        /// and included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When
+        /// set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
@@ -126,11 +122,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         IStorageSystemsOperations StorageSystems { get; }
 
         /// <summary>
-        /// Gets the IVolumesOperations.
-        /// </summary>
-        IVolumesOperations Volumes { get; }
-
-        /// <summary>
         /// Gets the ILogicalSubnetsOperations.
         /// </summary>
         ILogicalSubnetsOperations LogicalSubnets { get; }
@@ -154,6 +145,21 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// Gets the ISlbMuxInstancesOperations.
         /// </summary>
         ISlbMuxInstancesOperations SlbMuxInstances { get; }
+
+        /// <summary>
+        /// Gets the IDrivesOperations.
+        /// </summary>
+        IDrivesOperations Drives { get; }
+
+        /// <summary>
+        /// Gets the IStorageSubSystemsOperations.
+        /// </summary>
+        IStorageSubSystemsOperations StorageSubSystems { get; }
+
+        /// <summary>
+        /// Gets the IVolumesOperations.
+        /// </summary>
+        IVolumesOperations Volumes { get; }
 
     }
 }

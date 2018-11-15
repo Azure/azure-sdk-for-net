@@ -283,7 +283,7 @@ namespace Networks.Tests
                     Assert.NotNull(ipconfig.Subnet.Id);
                     Assert.NotNull(ipconfig.Subnet.Name);
                     Assert.NotNull(ipconfig.Subnet.Etag);
-                    Assert.NotEqual(0, ipconfig.Subnet.IpConfigurations.Count());
+                    Assert.NotEmpty(ipconfig.Subnet.IpConfigurations);
                 }
 
                 // Get subnet with expanded ipconfigurations
@@ -317,7 +317,7 @@ namespace Networks.Tests
 
                 // Verify Delete
                 var listLoadBalancer = networkManagementClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(0, listLoadBalancer.Count());
+                Assert.Empty(listLoadBalancer);
 
                 // Delete all NetworkInterfaces
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nic1name);

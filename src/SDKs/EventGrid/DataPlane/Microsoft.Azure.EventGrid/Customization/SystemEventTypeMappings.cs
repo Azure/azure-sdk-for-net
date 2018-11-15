@@ -37,6 +37,28 @@ namespace Microsoft.Azure.EventGrid
 
             // Media Services events
             { EventTypes.MediaJobStateChangeEvent, typeof(MediaJobStateChangeEventData) },
+            { EventTypes.MediaJobOutputStateChangeEvent, typeof(MediaJobOutputStateChangeEventData) },
+            { EventTypes.MediaJobScheduledEvent, typeof(MediaJobScheduledEventData) },
+            { EventTypes.MediaJobProcessingEvent, typeof(MediaJobProcessingEventData) },
+            { EventTypes.MediaJobCancelingEvent, typeof(MediaJobCancelingEventData) },
+            { EventTypes.MediaJobFinishedEvent, typeof(MediaJobFinishedEventData) },
+            { EventTypes.MediaJobCanceledEvent, typeof(MediaJobCanceledEventData) },
+            { EventTypes.MediaJobErroredEvent, typeof(MediaJobErroredEventData) },
+            { EventTypes.MediaJobOutputCanceledEvent, typeof(MediaJobOutputCanceledEventData) },
+            { EventTypes.MediaJobOutputCancelingEvent, typeof(MediaJobOutputCancelingEventData) },
+            { EventTypes.MediaJobOutputErroredEvent, typeof(MediaJobOutputErroredEventData) },
+            { EventTypes.MediaJobOutputFinishedEvent, typeof(MediaJobOutputFinishedEventData) },
+            { EventTypes.MediaJobOutputProcessingEvent, typeof(MediaJobOutputProcessingEventData) },
+            { EventTypes.MediaJobOutputScheduledEvent, typeof(MediaJobOutputScheduledEventData) },
+            { EventTypes.MediaLiveEventEncoderConnectedEvent, typeof(MediaLiveEventEncoderConnectedEventData) },
+            { EventTypes.MediaLiveEventConnectionRejectedEvent, typeof(MediaLiveEventConnectionRejectedEventData) },
+            { EventTypes.MediaLiveEventEncoderDisconnectedEvent, typeof(MediaLiveEventEncoderDisconnectedEventData) },
+            { EventTypes.MediaLiveEventIncomingStreamReceivedEvent, typeof(MediaLiveEventIncomingStreamReceivedEventData) },
+            { EventTypes.MediaLiveEventIncomingStreamsOutOfSyncEvent, typeof(MediaLiveEventIncomingStreamsOutOfSyncEventData) },
+            { EventTypes.MediaLiveEventIncomingVideoStreamsOutOfSyncEvent, typeof(MediaLiveEventIncomingVideoStreamsOutOfSyncEventData) },
+            { EventTypes.MediaLiveEventIncomingChunkDroppedEvent, typeof(MediaLiveEventIncomingDataChunkDroppedEventData) },
+            { EventTypes.MediaLiveEventIngestHeartbeatEvent, typeof(MediaLiveEventIngestHeartbeatEventData) },
+            { EventTypes.MediaLiveEventTrackDiscontinuityDetectedEvent, typeof(MediaLiveEventTrackDiscontinuityDetectedEventData) },
 
             // Resource Manager (Azure Subscription/Resource Group) events
             { EventTypes.ResourceWriteSuccessEvent, typeof(ResourceWriteSuccessData) },

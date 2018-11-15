@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.ApplicationInsights.Models
+namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
@@ -17,7 +17,8 @@ namespace Microsoft.Azure.ApplicationInsights.Models
     using System.Linq;
 
     /// <summary>
-    /// Query request body
+    /// The Analytics query. Learn more about the [Analytics query
+    /// syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/)
     /// </summary>
     public partial class QueryBody
     {
@@ -37,9 +38,9 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// data. This is an ISO8601 time period value.  This timespan is
         /// applied in addition to any that are specified in the query
         /// expression.</param>
-        /// <param name="applications">A list of applications that are included
-        /// in the query.</param>
-        public QueryBody(string query, System.TimeSpan? timespan = default(System.TimeSpan?), IList<string> applications = default(IList<string>))
+        /// <param name="applications">A list of Application IDs for
+        /// cross-application queries.</param>
+        public QueryBody(string query, string timespan = default(string), IList<string> applications = default(IList<string>))
         {
             Query = query;
             Timespan = timespan;
@@ -64,10 +65,11 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// addition to any that are specified in the query expression.
         /// </summary>
         [JsonProperty(PropertyName = "timespan")]
-        public System.TimeSpan? Timespan { get; set; }
+        public string Timespan { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of applications that are included in the query.
+        /// Gets or sets a list of Application IDs for cross-application
+        /// queries.
         /// </summary>
         [JsonProperty(PropertyName = "applications")]
         public IList<string> Applications { get; set; }

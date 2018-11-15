@@ -46,17 +46,17 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets confirmation number for the pick up request.
+        /// Gets confirmation number for the pick up request.
         /// </summary>
         [JsonProperty(PropertyName = "confirmationNumber")]
-        public string ConfirmationNumber { get; set; }
+        public string ConfirmationNumber { get; private set; }
 
         /// <summary>
-        /// Gets or sets time by which shipment should be ready for pick up,
-        /// this is in local time of pick up area.
+        /// Gets time by which shipment should be ready for pick up, this is in
+        /// local time of pick up area.
         /// </summary>
         [JsonProperty(PropertyName = "readyByTime")]
-        public System.DateTime? ReadyByTime { get; set; }
+        public System.DateTime? ReadyByTime { get; private set; }
 
     }
 }

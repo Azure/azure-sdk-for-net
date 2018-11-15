@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
     {
         public const string Free = "Free";
         public const string Basic = "Basic";
+        public const string Standard = "Standard";
         public const string Premium = "Premium";
     }
 }

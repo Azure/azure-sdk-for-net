@@ -11,9 +11,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
     /// </summary>
     interface IAuthenticationContext
     {
-        Task<string> AcquireTokenSilentAsync(string authority, string resource, string clientId);
-        Task<string> AcquireTokenAsync(string authority, string resource, string clientId, UserCredential userCredential);
-        Task<string> AcquireTokenAsync(string authority, string resource, ClientCredential clientCredential);
-        Task<string> AcquireTokenAsync(string authority, string resource, IClientAssertionCertificate clientCertificate);
+        Task<AppAuthenticationResult> AcquireTokenSilentAsync(string authority, string resource, string clientId);
+        Task<AppAuthenticationResult> AcquireTokenAsync(string authority, string resource, string clientId, UserCredential userCredential);
+        Task<AppAuthenticationResult> AcquireTokenAsync(string authority, string resource, ClientCredential clientCredential);
+        Task<AppAuthenticationResult> AcquireTokenAsync(string authority, string resource, IClientAssertionCertificate clientCertificate);
     }
 }

@@ -4,8 +4,7 @@
     <Description>AnalysisServices.Tests Class Library</Description>
     <AssemblyName>AnalysisServices.Tests</AssemblyName>
     <PackageId>AnalysisServices.Tests</PackageId>
-  </PropertyGroup>
-  <PropertyGroup>
+    <Version>1.0.0</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
     /// <summary>
     /// CustomInstance operations.
     /// </summary>
-    public partial class CustomInstance : IServiceOperations<CustomImageSearchAPI>, ICustomInstance
+    public partial class CustomInstance : IServiceOperations<CustomImageSearchClient>, ICustomInstance
     {
         /// <summary>
         /// Initializes a new instance of the CustomInstance class.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public CustomInstance(CustomImageSearchAPI client)
+        public CustomInstance(CustomImageSearchClient client)
         {
             if (client == null)
             {
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         }
 
         /// <summary>
-        /// Gets a reference to the CustomImageSearchAPI
+        /// Gets a reference to the CustomImageSearchClient
         /// </summary>
-        public CustomImageSearchAPI Client { get; private set; }
+        public CustomImageSearchClient Client { get; private set; }
 
         /// <summary>
         /// The Custom Image Search API lets you send an image search query to Bing and
@@ -425,11 +425,11 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Images>> ImageSearchWithHttpMessagesAsync(long customConfig, string query, string acceptLanguage = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string aspect = default(string), string color = default(string), string countryCode = default(string), int? count = default(int?), string freshness = default(string), int? height = default(int?), string id = default(string), string imageContent = default(string), string imageType = default(string), string license = default(string), string market = default(string), long? maxFileSize = default(long?), long? maxHeight = default(long?), long? maxWidth = default(long?), long? minFileSize = default(long?), long? minHeight = default(long?), long? minWidth = default(long?), long? offset = default(long?), string safeSearch = default(string), string size = default(string), string setLang = default(string), int? width = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Images>> ImageSearchWithHttpMessagesAsync(string customConfig, string query, string acceptLanguage = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string aspect = default(string), string color = default(string), string countryCode = default(string), int? count = default(int?), string freshness = default(string), int? height = default(int?), string id = default(string), string imageContent = default(string), string imageType = default(string), string license = default(string), string market = default(string), long? maxFileSize = default(long?), long? maxHeight = default(long?), long? maxWidth = default(long?), long? minFileSize = default(long?), long? minHeight = default(long?), long? minWidth = default(long?), long? offset = default(long?), string safeSearch = default(string), string size = default(string), string setLang = default(string), int? width = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (customConfig < 0)
+            if (customConfig == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "customConfig", 0);
+                throw new ValidationException(ValidationRules.CannotBeNull, "customConfig");
             }
             if (query == null)
             {
@@ -480,7 +480,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "images/search").ToString();
             List<string> _queryParameters = new List<string>();
-            _queryParameters.Add(string.Format("customConfig={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(customConfig, Client.SerializationSettings).Trim('"'))));
+            if (customConfig != null)
+            {
+                _queryParameters.Add(string.Format("customConfig={0}", System.Uri.EscapeDataString(customConfig)));
+            }
             if (aspect != null)
             {
                 _queryParameters.Add(string.Format("aspect={0}", System.Uri.EscapeDataString(aspect)));

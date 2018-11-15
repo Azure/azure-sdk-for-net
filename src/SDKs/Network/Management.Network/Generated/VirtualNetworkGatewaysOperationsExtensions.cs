@@ -317,6 +317,45 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Resets the VPN client shared key of the virtual network gateway in the
+            /// specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            public static void ResetVpnClientSharedKey(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
+            {
+                operations.ResetVpnClientSharedKeyAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Resets the VPN client shared key of the virtual network gateway in the
+            /// specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ResetVpnClientSharedKeyAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ResetVpnClientSharedKeyWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Generates VPN client package for P2S client of the virtual network gateway
             /// in the specified resource group.
             /// </summary>
@@ -959,6 +998,45 @@ namespace Microsoft.Azure.Management.Network
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Resets the VPN client shared key of the virtual network gateway in the
+            /// specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            public static void BeginResetVpnClientSharedKey(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
+            {
+                operations.BeginResetVpnClientSharedKeyAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Resets the VPN client shared key of the virtual network gateway in the
+            /// specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginResetVpnClientSharedKeyAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginResetVpnClientSharedKeyWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

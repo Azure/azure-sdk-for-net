@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     using System.Net;
     using System.Net.Http;
     using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// RegistriesOperations operations.
@@ -70,7 +69,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ImportImageWithHttpMessagesAsync(string resourceGroupName, string registryName, ImportImageParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse> ImportImageWithHttpMessagesAsync(string resourceGroupName, string registryName, ImportImageParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse _response = await BeginImportImageWithHttpMessagesAsync(resourceGroupName, registryName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -106,7 +105,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistryNameStatus>> CheckNameAvailabilityWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<RegistryNameStatus>> CheckNameAvailabilityWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -319,7 +318,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Registry>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<Registry>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -516,7 +515,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Registry>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, Registry registry, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<Registry>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, Registry registry, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<Registry> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, registryName, registry, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -538,7 +537,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, registryName, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -563,7 +562,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Registry>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, RegistryUpdateParameters registryUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<Registry>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, RegistryUpdateParameters registryUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<Registry> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, registryName, registryUpdateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -597,7 +596,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Registry>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<Registry>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -779,7 +778,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Registry>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<Registry>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -961,7 +960,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistryListCredentialsResult>> ListCredentialsWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<RegistryListCredentialsResult>> ListCredentialsWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1175,7 +1174,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistryListCredentialsResult>> RegenerateCredentialWithHttpMessagesAsync(string resourceGroupName, string registryName, PasswordName name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<RegistryListCredentialsResult>> RegenerateCredentialWithHttpMessagesAsync(string resourceGroupName, string registryName, PasswordName name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1393,7 +1392,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistryUsageListResult>> ListUsagesWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<RegistryUsageListResult>> ListUsagesWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1602,7 +1601,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistryPolicies>> ListPoliciesWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<RegistryPolicies>> ListPoliciesWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1802,7 +1801,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<RegistryPolicies>> UpdatePoliciesWithHttpMessagesAsync(string resourceGroupName, string registryName, QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<RegistryPolicies>> UpdatePoliciesWithHttpMessagesAsync(string resourceGroupName, string registryName, QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse<RegistryPolicies> _response = await BeginUpdatePoliciesWithHttpMessagesAsync(resourceGroupName, registryName, quarantinePolicy, trustPolicy, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -1810,7 +1809,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Creates a new build based on the request parameters and add it to the build
+        /// Schedules a new run based on the request parameters and add it to the run
         /// queue.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1819,8 +1818,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='buildRequest'>
-        /// The parameters of a build that needs to queued.
+        /// <param name='runRequest'>
+        /// The parameters of a run that needs to scheduled.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1828,10 +1827,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Build>> QueueBuildWithHttpMessagesAsync(string resourceGroupName, string registryName, QueueBuildRequest buildRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<Run>> ScheduleRunWithHttpMessagesAsync(string resourceGroupName, string registryName, RunRequest runRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<Build> _response = await BeginQueueBuildWithHttpMessagesAsync(resourceGroupName, registryName, buildRequest, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Run> _response = await BeginScheduleRunWithHttpMessagesAsync(resourceGroupName, registryName, runRequest, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1865,7 +1864,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SourceUploadDefinition>> GetBuildSourceUploadUrlWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<SourceUploadDefinition>> GetBuildSourceUploadUrlWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1894,7 +1893,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2018-02-01-preview";
+            string apiVersion = "2018-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1910,7 +1909,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/getBuildSourceUploadUrl").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/listBuildSourceUploadUrl").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
@@ -2076,7 +2075,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginImportImageWithHttpMessagesAsync(string resourceGroupName, string registryName, ImportImageParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse> BeginImportImageWithHttpMessagesAsync(string resourceGroupName, string registryName, ImportImageParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2285,7 +2284,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Registry>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, Registry registry, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<Registry>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, Registry registry, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2524,7 +2523,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2718,7 +2717,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Registry>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, RegistryUpdateParameters registryUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<Registry>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, RegistryUpdateParameters registryUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2962,7 +2961,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistryPolicies>> BeginUpdatePoliciesWithHttpMessagesAsync(string resourceGroupName, string registryName, QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<RegistryPolicies>> BeginUpdatePoliciesWithHttpMessagesAsync(string resourceGroupName, string registryName, QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -3155,7 +3154,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Creates a new build based on the request parameters and add it to the build
+        /// Schedules a new run based on the request parameters and add it to the run
         /// queue.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -3164,8 +3163,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='buildRequest'>
-        /// The parameters of a build that needs to queued.
+        /// <param name='runRequest'>
+        /// The parameters of a run that needs to scheduled.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3188,7 +3187,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Build>> BeginQueueBuildWithHttpMessagesAsync(string resourceGroupName, string registryName, QueueBuildRequest buildRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<Run>> BeginScheduleRunWithHttpMessagesAsync(string resourceGroupName, string registryName, RunRequest runRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -3217,11 +3216,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            if (buildRequest == null)
+            if (runRequest == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "buildRequest");
+                throw new ValidationException(ValidationRules.CannotBeNull, "runRequest");
             }
-            string apiVersion = "2018-02-01-preview";
+            string apiVersion = "2018-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3232,13 +3231,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("buildRequest", buildRequest);
+                tracingParameters.Add("runRequest", runRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginQueueBuild", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginScheduleRun", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/queueBuild").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scheduleRun").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
@@ -3285,9 +3284,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
 
             // Serialize Request
             string _requestContent = null;
-            if(buildRequest != null)
+            if(runRequest != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(buildRequest, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(runRequest, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -3346,7 +3345,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Build>();
+            var _result = new AzureOperationResponse<Run>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -3359,7 +3358,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Build>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Run>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -3405,7 +3404,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Registry>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<Registry>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -3578,7 +3577,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Registry>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<Registry>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {

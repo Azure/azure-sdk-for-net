@@ -86,7 +86,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='pool'>
             /// IP pool object to send.
             /// </param>
-            public static ProvisioningState CreateOrUpdate(this IIpPoolsOperations operations, string resourceGroupName, string location, string ipPool, IpPool pool)
+            public static IpPool CreateOrUpdate(this IIpPoolsOperations operations, string resourceGroupName, string location, string ipPool, IpPool pool)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, location, ipPool, pool).GetAwaiter().GetResult();
             }
@@ -112,7 +112,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> CreateOrUpdateAsync(this IIpPoolsOperations operations, string resourceGroupName, string location, string ipPool, IpPool pool, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IpPool> CreateOrUpdateAsync(this IIpPoolsOperations operations, string resourceGroupName, string location, string ipPool, IpPool pool, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, location, ipPool, pool, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -184,7 +184,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='pool'>
             /// IP pool object to send.
             /// </param>
-            public static ProvisioningState BeginCreateOrUpdate(this IIpPoolsOperations operations, string resourceGroupName, string location, string ipPool, IpPool pool)
+            public static IpPool BeginCreateOrUpdate(this IIpPoolsOperations operations, string resourceGroupName, string location, string ipPool, IpPool pool)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, location, ipPool, pool).GetAwaiter().GetResult();
             }
@@ -210,7 +210,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> BeginCreateOrUpdateAsync(this IIpPoolsOperations operations, string resourceGroupName, string location, string ipPool, IpPool pool, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IpPool> BeginCreateOrUpdateAsync(this IIpPoolsOperations operations, string resourceGroupName, string location, string ipPool, IpPool pool, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, location, ipPool, pool, null, cancellationToken).ConfigureAwait(false))
                 {

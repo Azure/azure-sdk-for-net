@@ -1914,6 +1914,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <param name='accountName'>
         /// The name of Cognitive Services account.
         /// </param>
+        /// <param name='filter'>
+        /// An OData filter expression that describes a subset of usages to return. The
+        /// supported parameter is name.value (name of the metric, can have an or of
+        /// multiple names).
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1935,7 +1940,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<UsagesResult>> GetUsagesWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<UsagesResult>> GetUsagesWithHttpMessagesAsync(string resourceGroupName, string accountName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1977,6 +1982,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetUsages", tracingParameters);
             }
@@ -1991,9 +1997,9 @@ namespace Microsoft.Azure.Management.CognitiveServices
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (Client.Filter != null)
+            if (filter != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(Client.Filter)));
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
             }
             if (_queryParameters.Count > 0)
             {

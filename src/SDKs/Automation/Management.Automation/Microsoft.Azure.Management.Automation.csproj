@@ -6,14 +6,16 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Automation</PackageId>
     <Description>Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.</Description>
-    <Version>3.4.0-preview</Version>
+    <Version>3.8.0-preview</Version>
     <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
     <AssemblyTitle>Microsoft Azure Automation Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
     <PackageTags>Automation;Runbook;</PackageTags>
     <PackageReleaseNotes><![CDATA[
 New features:
-- Bug fixes in Source Control Sync Jobs and Source Control Sync Jobs Streams.
+1. Python 2 package support for azure automation
+2. Dynamic Group support change
+3. Pre-post support change
       ]]>
 	  </PackageReleaseNotes>
   </PropertyGroup>

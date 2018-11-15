@@ -13,7 +13,7 @@ namespace EventHub.Tests.ScenarioTests
     public partial class ScenarioTests 
     {
         private ResourceManagementClient _resourceManagementClient;
-        private EventHub2018PreviewManagementClient _EventHubManagementClient;
+        private EventHubManagementClient _EventHubManagementClient;
         private RecordedDelegatingHandler handler = new RecordedDelegatingHandler();
 
         protected bool m_initialized = false;
@@ -46,7 +46,7 @@ namespace EventHub.Tests.ScenarioTests
             }
         }
 
-        public EventHub2018PreviewManagementClient EventHubManagementClient
+        public EventHubManagementClient EventHubManagementClient
         {
             get
             {               

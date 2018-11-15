@@ -4,15 +4,11 @@
     <PackageId>DataFactory.Tests</PackageId>
     <Description>DataFactory.Tests Class Library</Description>
     <AssemblyName>DataFactory.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
   <ItemGroup>
     <ProjectReference Include="..\Management.DataFactory\Microsoft.Azure.Management.DataFactory.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -46,7 +46,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="domainUserPassword">The domain admin password.</param>
         /// <param name="clusterUsersGroupDNs">Optional. The Distinguished
         /// Names for cluster user groups</param>
-        public SecurityProfile(DirectoryType? directoryType = default(DirectoryType?), string domain = default(string), string organizationalUnitDN = default(string), IList<string> ldapsUrls = default(IList<string>), string domainUsername = default(string), string domainUserPassword = default(string), IList<string> clusterUsersGroupDNs = default(IList<string>))
+        /// <param name="aaddsResourceId">The resource ID of the user's Azure
+        /// Active Directory Domain Service.</param>
+        /// <param name="msiResourceId">User assigned identity that has
+        /// permissions to read and create cluster-related artifacts in the
+        /// user's AADDS.</param>
+        public SecurityProfile(DirectoryType? directoryType = default(DirectoryType?), string domain = default(string), string organizationalUnitDN = default(string), IList<string> ldapsUrls = default(IList<string>), string domainUsername = default(string), string domainUserPassword = default(string), IList<string> clusterUsersGroupDNs = default(IList<string>), string aaddsResourceId = default(string), string msiResourceId = default(string))
         {
             DirectoryType = directoryType;
             Domain = domain;
@@ -55,6 +60,8 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             DomainUsername = domainUsername;
             DomainUserPassword = domainUserPassword;
             ClusterUsersGroupDNs = clusterUsersGroupDNs;
+            AaddsResourceId = aaddsResourceId;
+            MsiResourceId = msiResourceId;
             CustomInit();
         }
 
@@ -109,6 +116,20 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "clusterUsersGroupDNs")]
         public IList<string> ClusterUsersGroupDNs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of the user's Azure Active Directory
+        /// Domain Service.
+        /// </summary>
+        [JsonProperty(PropertyName = "aaddsResourceId")]
+        public string AaddsResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets user assigned identity that has permissions to read
+        /// and create cluster-related artifacts in the user's AADDS.
+        /// </summary>
+        [JsonProperty(PropertyName = "msiResourceId")]
+        public string MsiResourceId { get; set; }
 
     }
 }

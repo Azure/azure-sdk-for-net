@@ -12,9 +12,6 @@ namespace Microsoft.Rest
     using Microsoft.Rest.TransientFaultHandling;
     using System.Text.RegularExpressions;
     using Microsoft.Rest.Utilities;
-#if FullNetFx
-    using Microsoft.Win32;
-#endif
 
     /// <summary>
     /// ServiceClient is the abstraction for accessing REST operations and their payload data types..
@@ -23,18 +20,22 @@ namespace Microsoft.Rest
     public abstract class ServiceClient<T> : IDisposable
         where T : ServiceClient<T>
     {
-        /// <summary>
-        /// ProductName string to be used to set Framework Version in UserAgent
-        /// </summary>
+        #region CONST
         private const string FXVERSION = "FxVersion";
         private const string OSNAME = "OSName";
         private const string OSVERSION = "OSVersion";
+        #endregion
 
+        #region Fields
         /// <summary>
         /// List of default UserAgent info that will be added to HttpClient instance
         /// </summary>
-        private List<ProductInfoHeaderValue> _defaultUserAgentInfoList;
-
+        //private List<ProductInfoHeaderValue> _defaultUserAgentInfoList;
+        private object lockUserAgent;
+        private PlatformInfo _platformInfo;
+        private string _osName;
+        private string _osVersion;
+        
         /// <summary>
         /// Indicates whether the ServiceClient has been disposed. 
         /// </summary>
@@ -49,111 +50,133 @@ namespace Microsoft.Rest
         /// Field used for ClientVersion property
         /// </summary>
         private string _clientVersion;
-        
+
         /// <summary>
         /// Field used for Framework Version property
         /// </summary>
         private string _fxVersion;
 
-        #region Full Net Fx specific code
-#if FullNetFx
-        /// <summary>
-        /// Indicates OS Name
-        /// </summary>
-        private string _osName;
+        #endregion
 
         /// <summary>
-        /// Indicates OS Version
+        /// Determines if underlying OS is Windows
         /// </summary>
-        private string _osVersion;
+        private bool IsOsWindows
+        {
+            get
+            {
+                return PlatformInfo.OsInfo.IsOsWindows;
+            }
+        }
 
         /// <summary>
-        /// Gets Os Information, OSName - OS Major.Minor.Build version
+        /// Provides platform specific information
+        /// </summary>
+        private PlatformInfo PlatformInfo
+        {
+            get
+            {
+                if(_platformInfo == null)
+                {
+                    _platformInfo = new PlatformInfo();
+                }
+
+                return _platformInfo;
+            }
+        }
+
+        //#region Full Net Fx specific code
+//#if FullNetFx
+
+        /// <summary>
+        /// Gets underlying OS Name
         /// e.g. Windows 10 Enterprise - 6.3.14393
         /// </summary>
         private string OsName
         {
             get
-            {  
-                if(string.IsNullOrEmpty(_osName))
+            {
+                if(string.IsNullOrWhiteSpace(_osName))
                 {
-                    _osName = ReadHKLMRegistry(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName");
+                    _osName = PlatformInfo.OsInfo.OsName;
                     _osName = CleanUserAgentInfoEntry(_osName);
                 }
 
                 return _osName;
             }
         }
-        
+
         /// <summary>
-        /// Gets Os Major.Minor.Build version
+        /// Gets underlying OS version
         /// e.g. 6.3.14393
         /// </summary>
         private string OsVersion
         {
             get
             {
-                if (string.IsNullOrEmpty(_osVersion))
-                {   
-                    string osMajorMinorVersion = ReadHKLMRegistry(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentVersion");
-                    string osBuildNumber = ReadHKLMRegistry(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild");
-                    _osVersion = string.Format("{0}.{1}", osMajorMinorVersion, osBuildNumber);
+                if(string.IsNullOrWhiteSpace(_osVersion))
+                {
+                    _osVersion = PlatformInfo.OsInfo.OsVersion;
                     _osVersion = CleanUserAgentInfoEntry(_osVersion);
                 }
 
                 return _osVersion;
             }
         }
-
-        /// <summary>
-        /// Reads HKLM registry key from the provided path/key combination
-        /// </summary>
-        /// <param name="path">Path to HKLM key</param>
-        /// <param name="key">HKLM key name</param>
-        /// <returns>Value for provided HKLM key</returns>
-        private string ReadHKLMRegistry(string path, string key)
-        {
-            switch (Environment.OSVersion.Platform)
-            {
-                case PlatformID.Unix:
-                case PlatformID.MacOSX:
-                case PlatformID.Xbox:
-                    return string.Empty;
-            }
-
-            try
-            {
-                using (RegistryKey rk = Registry.LocalMachine.OpenSubKey(path))
-                {
-                    if (rk == null) return "";
-                    return (string)rk.GetValue(key);
-                }
-            }
-            catch { return ""; }
-        }
-#endif
-        #endregion
+//#endif
+        //#endregion
 
         /// <summary>
         /// List of default info that gets added to DefaultHeaders.UserAgent of HttpClient
         /// </summary>
-        private List<ProductInfoHeaderValue> DefaultUserAgentInfoList
-        {
-            get
-            {
-                if(_defaultUserAgentInfoList == null)
-                {
-                    _defaultUserAgentInfoList = new List<ProductInfoHeaderValue>();
-                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(FXVERSION, FrameworkVersion));
-#if FullNetFx
-                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSNAME, OsName));
-                    _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
-#endif
-                }
+        //private List<ProductInfoHeaderValue> DefaultUserAgentInfoList
+        //{
+        //    get
+        //    {
+        //        if (_defaultUserAgentInfoList == null)
+        //        {
+        //            _defaultUserAgentInfoList = new List<ProductInfoHeaderValue>();
+        //        }
 
-                return _defaultUserAgentInfoList;
-            }
-        }
+        //        UpdateDefaultUserAgentList(FXVERSION, FrameworkVersion);
+        //        UpdateDefaultUserAgentList(OSNAME, OsName);
+        //        UpdateDefaultUserAgentList(OSVERSION, OsVersion);
+
+        //        return _defaultUserAgentInfoList;
+        //    }
+        //}
+
+        ///// <summary>
+        ///// Updates the Default User Agent list with HeaderName and HeaderValue
+        ///// </summary>
+        ///// <param name="headerName">HeaderName</param>
+        ///// <param name="headerValue">HeaderValue</param>
+        //private void UpdateDefaultUserAgentList(string headerName, string headerValue)
+        //{
+        //    ProductInfoHeaderValue piInfoHv = null;
+        //    if (!string.IsNullOrWhiteSpace(headerName))
+        //    {
+        //        if (!string.IsNullOrWhiteSpace(headerValue))
+        //        {
+        //            piInfoHv = new ProductInfoHeaderValue(headerName, headerValue);
+        //        }
+        //    }
+
+        //    if(piInfoHv != null)
+        //    {
+        //        if(_defaultUserAgentInfoList == null)
+        //        {
+        //            _defaultUserAgentInfoList = new List<ProductInfoHeaderValue>();
+        //        }
+
+        //        var filterHeaderName = _defaultUserAgentInfoList.Where<ProductInfoHeaderValue>((pi) => pi.Product.Name.Equals(headerName, StringComparison.OrdinalIgnoreCase));
+
+        //        if(!filterHeaderName.Any<ProductInfoHeaderValue>())
+        //        {
+        //            _defaultUserAgentInfoList.Add(piInfoHv);
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Gets the AssemblyInformationalVersion if available
@@ -222,12 +245,12 @@ namespace Microsoft.Rest
             {
                 if (string.IsNullOrEmpty(_fxVersion))
                 {
-                    Assembly assembly = typeof(Object).GetTypeInfo().Assembly;                    
+                    Assembly assembly = typeof(Object).GetTypeInfo().Assembly;
                     AssemblyFileVersionAttribute fvAttribute =
                                 assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute)) as AssemblyFileVersionAttribute;
                     _fxVersion = fvAttribute?.Version;
                 }
-        
+
                 return _fxVersion;
             }
         }
@@ -244,6 +267,7 @@ namespace Microsoft.Rest
         /// </summary>
         protected HttpClientHandler HttpClientHandler { get; set; }
 
+        #region Constructor
         /// <summary>
         /// Initializes a new instance of the ServiceClient class.
         /// </summary>
@@ -253,8 +277,7 @@ namespace Microsoft.Rest
             Justification = "The created objects should be disposed on caller's side")]
         protected ServiceClient()
             : this(serviceHttpClient: null, rootHandler: CreateRootHandler(), disposeHttpClient: true, delHandlers: null) { }
-            //: this(CreateRootHandler())
-        
+
         /// <summary>
         /// Initializes a new instance of the ServiceClient class.
         /// </summary>
@@ -264,7 +287,7 @@ namespace Microsoft.Rest
             "Microsoft.Reliability",
             "CA2000:Dispose objects before losing scope",
             Justification = "The created objects should be disposed on caller's side")]
-        protected ServiceClient(HttpClient httpClient, bool disposeHttpClient = true) : 
+        protected ServiceClient(HttpClient httpClient, bool disposeHttpClient = true) :
             this(serviceHttpClient: httpClient, rootHandler: null, disposeHttpClient: disposeHttpClient, delHandlers: null) { }
 
         /// <summary>
@@ -277,7 +300,6 @@ namespace Microsoft.Rest
             Justification = "The created objects should be disposed on caller's side")]
         protected ServiceClient(params DelegatingHandler[] handlers)
             : this(serviceHttpClient: null, rootHandler: CreateRootHandler(), disposeHttpClient: true, delHandlers: handlers) { }
-            //: this(CreateRootHandler(), handlers) { }
 
         /// <summary>
         /// Initializes ServiceClient using base HttpClientHandler and list of handlers.
@@ -295,6 +317,90 @@ namespace Microsoft.Rest
             _disposeHttpClient = disposeHttpClient;
             InitializeHttpClient(serviceHttpClient, rootHandler, delHandlers);
         }
+
+        /// <summary>
+        /// Initializes HttpClient using HttpClientHandler.
+        /// </summary>
+        /// <param name="httpClientHandler">Base HttpClientHandler.</param>
+        /// <param name="handlers">List of handlers from top to bottom (outer handler is the first in the list)</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Reliability",
+            "CA2000:Dispose objects before losing scope",
+            Justification = "We let HttpClient instance dispose")]
+        protected void InitializeHttpClient(HttpClientHandler httpClientHandler, params DelegatingHandler[] handlers)
+        {
+            InitializeHttpClient(null, httpClientHandler, handlers);
+        }
+
+        /// <summary>
+        /// Initialize service client with provided HttpClient
+        /// </summary>
+        /// <param name="httpClient">HttpClient</param>
+        /// <param name="httpClientHandler">HttpClientHandler</param>
+        /// <param name="handlers">List of handlers from top to bottom (outer handler is the first in the list)</param>
+        protected void InitializeHttpClient(HttpClient httpClient, HttpClientHandler httpClientHandler, params DelegatingHandler[] handlers)
+        {
+            //Init lock object
+            lockUserAgent = new object();
+
+            if (httpClient == null)
+            {
+                if (httpClientHandler == null)
+                {
+                    httpClientHandler = CreateRootHandler();
+                }
+
+                HttpClientHandler = httpClientHandler;
+
+                DelegatingHandler currentHandler = CreateHttpHandlerPipeline(httpClientHandler, handlers);
+
+                HttpClient = new HttpClient(currentHandler, false);
+                FirstMessageHandler = currentHandler;
+            }
+            else
+            {
+                HttpClient = httpClient;
+            }
+
+            //Set Default info in user agent
+            SetDefaultAgentInfo();
+        }
+
+        /// <summary>
+        /// Creates <see cref="DelegatingHandler"/> pipeline chain that will be used for further communication. The handlers are invoked in a top-down fashion. That is, the first entry is invoked first for 
+        /// an outbound request message but last for an inbound response message. 
+        /// </summary>
+        /// <param name="httpClientHandler">HttpClientHandler</param>
+        /// <param name="handlers">List of handlers from top to bottom (outer handler is the first in the list)</param>
+        /// <returns></returns>
+        protected virtual DelegatingHandler CreateHttpHandlerPipeline(HttpClientHandler httpClientHandler, params DelegatingHandler[] handlers)
+        {
+            // Now, the RetryAfterDelegatingHandler should be the absoulte outermost handler 
+            // because it's extremely lightweight and non-interfering
+            DelegatingHandler currentHandler =
+                new RetryDelegatingHandler(new RetryAfterDelegatingHandler { InnerHandler = httpClientHandler });
+
+            if (handlers != null)
+            {
+                for (int i = handlers.Length - 1; i >= 0; --i)
+                {
+                    DelegatingHandler handler = handlers[i];
+                    // Non-delegating handlers are ignored since we always 
+                    // have RetryDelegatingHandler as the outer-most handler
+                    while (handler.InnerHandler is DelegatingHandler)
+                    {
+                        handler = handler.InnerHandler as DelegatingHandler;
+                    }
+
+                    handler.InnerHandler = currentHandler;
+                    currentHandler = handlers[i];
+                }
+            }
+
+            return currentHandler;
+        }
+
+        #endregion
 
         /// <summary>
         /// Create a new instance of the root handler.
@@ -391,83 +497,19 @@ namespace Microsoft.Rest
                 _disposed = true;
 
                 // Dispose the client
-                if(_disposeHttpClient)
+                if (_disposeHttpClient)
                 {
                     HttpClient.Dispose();
                     HttpClient = null;
                 }
-                
+
+                //TODO: provide overrides that allows to control dispose of innerHandlers
                 FirstMessageHandler = null;
                 HttpClientHandler = null;
             }
         }
-        
 
-        /// <summary>
-        /// Initializes HttpClient using HttpClientHandler.
-        /// </summary>
-        /// <param name="httpClientHandler">Base HttpClientHandler.</param>
-        /// <param name="handlers">List of handlers from top to bottom (outer handler is the first in the list)</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Reliability",
-            "CA2000:Dispose objects before losing scope",
-            Justification = "We let HttpClient instance dispose")]
-        protected void InitializeHttpClient(HttpClientHandler httpClientHandler, params DelegatingHandler[] handlers)
-        {
-            InitializeHttpClient(null, httpClientHandler, handlers);
-        }
 
-        /// <summary>
-        /// Initialize service client with provided HttpClient
-        /// </summary>
-        /// <param name="httpClient">HttpClient</param>
-        /// <param name="httpClientHandler">HttpClientHandler</param>
-        /// <param name="handlers">List of handlers from top to bottom (outer handler is the first in the list)</param>
-        protected void InitializeHttpClient(HttpClient httpClient, HttpClientHandler httpClientHandler, params DelegatingHandler[] handlers)
-        {
-            if (httpClient == null)
-            {
-                if (httpClientHandler == null)
-                {
-                    httpClientHandler = CreateRootHandler();
-                }
-
-                HttpClientHandler = httpClientHandler;
-                // Now, the RetryAfterDelegatingHandler should be the absoulte outermost handler 
-                // because it's extremely lightweight and non-interfering
-                DelegatingHandler currentHandler =
-                    new RetryDelegatingHandler(new RetryAfterDelegatingHandler {InnerHandler = httpClientHandler});
-
-                if (handlers != null)
-                {
-                    for (int i = handlers.Length - 1; i >= 0; --i)
-                    {
-                        DelegatingHandler handler = handlers[i];
-                        // Non-delegating handlers are ignored since we always 
-                        // have RetryDelegatingHandler as the outer-most handler
-                        while (handler.InnerHandler is DelegatingHandler)
-                        {
-                            handler = handler.InnerHandler as DelegatingHandler;
-                        }
-
-                        handler.InnerHandler = currentHandler;
-                        currentHandler = handlers[i];
-                    }
-                }
-
-                HttpClient = new HttpClient(currentHandler, false);
-                FirstMessageHandler = currentHandler;
-            }
-            else
-            {
-                HttpClient = httpClient;
-            }
-
-            MergeUserAgentInfo(DefaultUserAgentInfoList);
-            //DefaultUserAgentInfoList.ForEach((pInfo) => HttpClient.DefaultRequestHeaders.UserAgent.Add(pInfo));
-            SetUserAgent(this.GetType().FullName, ClientVersion);
-        }
-        
         /// <summary>
         /// Sets the product name to be used in the user agent header when making requests
         /// </summary>
@@ -484,14 +526,20 @@ namespace Microsoft.Rest
         /// <param name="version">Version of the product to be used in the user agent</param>
         public bool SetUserAgent(string productName, string version)
         {
-            if (!_disposed && HttpClient != null && !string.IsNullOrWhiteSpace(version))
+            try
             {
-                string cleanedProductName = CleanUserAgentInfoEntry(productName);
-                AddUserAgentEntry(new ProductInfoHeaderValue(cleanedProductName, version));
-                return true;
+                if (!_disposed && HttpClient != null && !string.IsNullOrWhiteSpace(version))
+                {
+                    string cleanedProductName = CleanUserAgentInfoEntry(productName);
+                    string cleanedProductVersion = CleanUserAgentInfoEntry(version);
+                    ProductInfoHeaderValue pInfo = new ProductInfoHeaderValue(cleanedProductName, cleanedProductVersion);
+                    AddUserAgentEntry(pInfo);
+                    return true;
+                }
             }
-
-            // Returns false if the HttpClient was disposed before invoking the method
+            catch (Exception ex) { }
+            
+            // Returns false if the HttpClient was disposed before invoking the method or userAgent string is either malformed or not acceptable by 
             return false;
         }
 
@@ -502,19 +550,35 @@ namespace Microsoft.Rest
         /// <returns></returns>
         private string CleanUserAgentInfoEntry(string infoEntry)
         {
-            Regex pattern = new Regex("[~`!@#$%^&*(),<>?{} ]");            
-            infoEntry = pattern.Replace(infoEntry, "");
+            //Regex pattern = new Regex("[©:;=~`!@#$%^&*(),<>?{} ]");
+
+            Regex spChrPattern = new Regex("\\\\r\\\\n?|\\\\r|\\\\n|\\\\|\\/");
+            Regex onlyAlphaNum = new Regex("[^0-9a-zA-Z]+");
+            infoEntry = spChrPattern.Replace(infoEntry, "");
+            infoEntry = onlyAlphaNum.Replace(infoEntry, ".");
 
             return infoEntry;
         }
 
         private void AddUserAgentEntry(ProductInfoHeaderValue pInfoHeaderValue)
         {
-            if (!HttpClient.DefaultRequestHeaders.UserAgent.Contains<ProductInfoHeaderValue>(pInfoHeaderValue,
-                new ObjectComparer<ProductInfoHeaderValue>((left, right) => left.Product.Name.Equals(right.Product.Name, StringComparison.OrdinalIgnoreCase))))
+            lock (lockUserAgent)
             {
-                HttpClient.DefaultRequestHeaders.UserAgent.Add(pInfoHeaderValue);
+                if (!HttpClient.DefaultRequestHeaders.UserAgent.Contains<ProductInfoHeaderValue>(pInfoHeaderValue,
+                    new ObjectComparer<ProductInfoHeaderValue>((left, right) => left.Product.Name.Equals(right.Product.Name, StringComparison.OrdinalIgnoreCase))))
+                {
+                    HttpClient.DefaultRequestHeaders.UserAgent.Add(pInfoHeaderValue);
+                }
             }
+        }
+
+        private void SetDefaultAgentInfo()
+        {
+            //Set Default user agents
+            SetUserAgent(FXVERSION, FrameworkVersion);
+            SetUserAgent(OSNAME, OsName);
+            SetUserAgent(OSVERSION, OsVersion);
+            SetUserAgent(this.GetType().FullName, ClientVersion);
         }
 
         /// <summary>
@@ -522,17 +586,17 @@ namespace Microsoft.Rest
         /// We do this because, now we accept passed in HttpClient.
         /// So for any reason the passed HttpClient has our default UserAgent info (based on key name), we will not verify and check the values and will honor those values
         /// </summary>
-        private void MergeUserAgentInfo(List<ProductInfoHeaderValue> defaultUserAgentInfoList)
-        {
-            // If you want to log ProductName in userAgent, it has to be without spaces
-            foreach(ProductInfoHeaderValue piHv in defaultUserAgentInfoList)
-            {
-                if(!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase)) 
-                    && !string.IsNullOrWhiteSpace(piHv.Product.Version))
-                {
-                    HttpClient.DefaultRequestHeaders.UserAgent.Add(piHv);
-                }
-            }
-        }
+        //private void MergeUserAgentInfo(List<ProductInfoHeaderValue> defaultUserAgentInfoList)
+        //{
+        //    // If you want to log ProductName in userAgent, it has to be without spaces
+        //    foreach (ProductInfoHeaderValue piHv in defaultUserAgentInfoList)
+        //    {
+        //        if (!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase))
+        //            && !string.IsNullOrWhiteSpace(piHv.Product.Version))
+        //        {
+        //            HttpClient.DefaultRequestHeaders.UserAgent.Add(piHv);
+        //        }
+        //    }
+        //}
     }
 }

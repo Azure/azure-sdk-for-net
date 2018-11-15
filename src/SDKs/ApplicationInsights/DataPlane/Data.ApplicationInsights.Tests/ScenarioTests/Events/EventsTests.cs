@@ -1,5 +1,5 @@
-﻿using Microsoft.Azure.ApplicationInsights;
-using Microsoft.Azure.ApplicationInsights.Models;
+﻿using Microsoft.Azure.ApplicationInsights.Query;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Threading.Tasks;
@@ -10,7 +10,7 @@ namespace Data.ApplicationInsights.Tests.Events
     public class EventsTests : EventsTestBase
     {
         private const int TopCount = 10;
-        private readonly TimeSpan Timespan = new TimeSpan(1, 0, 0, 0);
+        private readonly string Timespan = "P1D";
 
         [Fact]
         public async Task GetAllEvents()
@@ -18,7 +18,7 @@ namespace Data.ApplicationInsights.Tests.Events
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var client = GetClient(ctx);
-                var events = await client.GetEventsAsync(EventType.All, timespan: Timespan, top: TopCount);
+                var events = await client.Events.GetByTypeAsync(DefaultAppId, EventType.All, timespan: Timespan, top: TopCount);
 
                 Assert.NotNull(events);
                 Assert.NotNull(events.Value);
@@ -27,8 +27,8 @@ namespace Data.ApplicationInsights.Tests.Events
                 foreach (var evnt in events.Value)
                 {
                     var eventType = GetEventType(evnt);
-                    if (!eventType.HasValue) continue; // This means there is a new type that we don't support here yet
-                    AssertEvent(evnt, eventType.Value);
+                    if (eventType != null) continue; // This means there is a new type that we don't support here yet
+                    AssertEvent(evnt, eventType);
                 }
             }
         }
@@ -44,12 +44,12 @@ namespace Data.ApplicationInsights.Tests.Events
         [InlineData(EventType.AvailabilityResults)]
         [InlineData(EventType.PerformanceCounters)]
         [InlineData(EventType.CustomMetrics)]
-        public async Task GetEventsByType(EventType eventType)
+        public async Task GetEventsByType(string eventType)
         {
-            using (var ctx = MockContext.Start(GetType().FullName, $"GetEventsByType.{eventType}"))
+            using (var ctx = MockContext.Start(GetType().FullName, $"GetByType.{eventType}"))
             {
                 var client = GetClient(ctx);
-                var traces = await client.GetEventsAsync(eventType, timespan: Timespan, top: TopCount);
+                var traces = await client.Events.GetByTypeAsync(DefaultAppId, eventType, timespan: Timespan, top: TopCount);
 
                 Assert.NotNull(traces);
                 Assert.NotNull(traces.Value);
@@ -59,7 +59,7 @@ namespace Data.ApplicationInsights.Tests.Events
 
                 AssertEvent(evnt, eventType);
 
-                traces = await client.GetEventAsync(eventType, evnt.Id);
+                traces = await client.Events.GetAsync(DefaultAppId, eventType, evnt.Id);
 
                 Assert.NotNull(traces);
                 Assert.NotNull(traces.Value);

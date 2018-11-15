@@ -21,11 +21,6 @@ namespace Test.Azure.Management.Logic
         /// Next page link 
         /// </summary>
         public const string NextPageLink = "http://integrationAccountlistnextlink";
-       
-        /// <summary>
-        /// Test integration account name prefix
-        /// </summary>
-        public const string IntegrationAccountPrefix = "IntegrationAccount";
 
         /// <summary>
         /// Default test subscription
@@ -47,7 +42,35 @@ namespace Test.Azure.Management.Logic
         /// </summary>
         public const string DefaultServicePlan = "ServicePlan";
 
+        /// <summary>
+        /// Default trigger name
+        /// </summary>
+        public const string DefaultTriggerName = "manual";
+
         #region Prefix
+
+        /// <summary>
+        /// Test integration account name prefix
+        /// </summary>
+        public const string IntegrationAccountPrefix = "IntegrationAccount";
+
+        /// <summary>
+        /// Test integration account agreement name prefix
+        /// </summary>
+        public const string IntegrationAccountAgreementPrefix = "IntegrationAccountAgreement";
+
+        /// <summary>
+        /// Test integration account assembly name prefix
+        /// </summary>
+        public const string IntegrationAccountAssemblyPrefix = "IntegrationAccountAssembly";
+
+        /// <summary>
+        /// Test integration account batch configuration name prefix
+        /// </summary>
+        /// <remarks>
+        /// Max limit of 20 characters
+        /// </remarks>
+        public const string IntegrationAccountBatchConfigurationPrefix = "IABatchConfig";
 
         /// <summary>
         /// Test IntegrationAccount schema name prefix
@@ -58,11 +81,6 @@ namespace Test.Azure.Management.Logic
         /// Test integration account partner name prefix
         /// </summary>
         public const string IntegrationAccountPartnerPrefix = "IntegrationAccountPartner";
-
-        /// <summary>
-        /// Test integration account agreement name prefix
-        /// </summary>
-        public const string IntegrationAccountAgreementPrefix = "IntegrationAccountAgreement";
 
         /// <summary>
         /// Test integration account map name prefix
@@ -78,6 +96,11 @@ namespace Test.Azure.Management.Logic
         /// Test integration account session name prefix
         /// </summary>
         public const string IntegrationAccountSessionPrefix = "IntegrationAccountSession";
+
+        /// <summary>
+        /// Test workflow name prefix
+        /// </summary>
+        public const string WorkflowPrefix = "Workflow";
 
         #endregion Prefix
 

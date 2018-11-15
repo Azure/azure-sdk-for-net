@@ -209,8 +209,10 @@ namespace Compute.Tests
             bool createWithPublicIpAddress = false,
             bool waitForCompletion = true,
             bool hasManagedDisks = false,
-            string vmSize = "Standard_A0",
-            string storageAccountType = "Standard_LRS",
+            bool hasDiffDisks = false,
+            string vmSize = VirtualMachineSizeTypes.StandardA0,
+            string osDiskStorageAccountType = "Standard_LRS",
+            string dataDiskStorageAccountType = "Standard_LRS",
             bool? writeAcceleratorEnabled = null,
             IList<string> zones = null)
         {
@@ -241,12 +243,25 @@ namespace Compute.Tests
 
                 string asetId = CreateAvailabilitySet(rgName, asName, hasManagedDisks);
 
-                inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks, vmSize, storageAccountType, writeAcceleratorEnabled);
+                inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks, vmSize, osDiskStorageAccountType, 
+                    dataDiskStorageAccountType, writeAcceleratorEnabled);
+
+                if (hasDiffDisks)
+                {
+                    OSDisk osDisk = inputVM.StorageProfile.OsDisk;
+                    osDisk.Caching = CachingTypes.ReadOnly;
+                    osDisk.DiffDiskSettings = new DiffDiskSettings { Option = DiffDiskOptions.Local };
+                }
 
                 if (zones != null)
                 {
                     inputVM.AvailabilitySet = null;
-                    inputVM.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA1V2;
+                    // If no vmSize is provided and we are using the default value, change the default value for VMs with Zones.                    
+                    if(vmSize == VirtualMachineSizeTypes.StandardA0)
+                    {
+                        vmSize = VirtualMachineSizeTypes.StandardA1V2;
+                    }
+                    inputVM.HardwareProfile.VmSize = vmSize;
                     inputVM.Zones = zones;
                 }
 
@@ -285,7 +300,7 @@ namespace Compute.Tests
 
                 // The intent here is to validate that the GET response is as expected.
                 var getResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
-                ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled, hasUserDefinedAS: zones == null);
+                ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks, hasUserDefinedAS: zones == null);
 
                 return getResponse;
             }
@@ -295,6 +310,23 @@ namespace Compute.Tests
                 m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
                 throw;
             }
+        }
+
+        protected PublicIPPrefix CreatePublicIPPrefix(string rgName, int prefixLength)
+        {
+            string publicIpPrefixName = ComputeManagementTestUtilities.GenerateName("piprefix");
+
+            var publicIpPrefix = new PublicIPPrefix()
+            {
+                Sku = new PublicIPPrefixSku("Standard"),
+                Location = m_location,
+                PrefixLength = prefixLength
+            };
+
+            var putPublicIpPrefixResponse = m_NrpClient.PublicIPPrefixes.CreateOrUpdate(rgName, publicIpPrefixName, publicIpPrefix);
+            var getPublicIpPrefixResponse = m_NrpClient.PublicIPPrefixes.Get(rgName, publicIpPrefixName);
+
+            return getPublicIpPrefixResponse;
         }
 
         protected PublicIPAddress CreatePublicIP(string rgName)
@@ -716,7 +748,7 @@ namespace Compute.Tests
                 PlatformUpdateDomainCount = 5,
                 Sku = new CM.Sku
                 {
-                    Name = hasManagedDisks ? "Aligned" : "Classic"
+                    Name = hasManagedDisks ? AvailabilitySetSkuTypes.Aligned : AvailabilitySetSkuTypes.Classic
                 }
             };
 
@@ -731,7 +763,7 @@ namespace Compute.Tests
         }
 
         protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
-            string vmSize = "Standard_A0", string storageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null)
+            string vmSize = "Standard_A0", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
@@ -769,7 +801,7 @@ namespace Compute.Tests
                         },
                         ManagedDisk = !hasManagedDisks ? null : new ManagedDiskParameters
                         {
-                            StorageAccountType = storageAccountType
+                            StorageAccountType = osDiskStorageAccountType
                         }
                     },
                     DataDisks = !hasManagedDisks ? null : new List<DataDisk>()
@@ -783,7 +815,7 @@ namespace Compute.Tests
                             DiskSizeGB = 30,
                             ManagedDisk = new ManagedDiskParameters()
                             {
-                                StorageAccountType = storageAccountType
+                                StorageAccountType = dataDiskStorageAccountType
                             }
                         }
                     },
@@ -806,13 +838,21 @@ namespace Compute.Tests
                 }
             };
 
+            if(dataDiskStorageAccountType == StorageAccountTypes.UltraSSDLRS)
+            {
+                vm.AdditionalCapabilities = new AdditionalCapabilities
+                {
+                    UltraSSDEnabled = true
+                };
+            }
+
             typeof(Microsoft.Azure.Management.Compute.Models.Resource).GetRuntimeProperty("Name").SetValue(vm, ComputeManagementTestUtilities.GenerateName("vm"));
             typeof(Microsoft.Azure.Management.Compute.Models.Resource).GetRuntimeProperty("Type").SetValue(vm, ComputeManagementTestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
             return vm;
         }
 
         protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId, bool hasManagedDisks = false, bool hasUserDefinedAS = true,
-            bool? writeAcceleratorEnabled = null)
+            bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null)
         {
             Assert.True(vmOut.LicenseType == vm.LicenseType);
 
@@ -858,6 +898,15 @@ namespace Compute.Tests
                         Assert.NotNull(vmOut.StorageProfile.OsDisk.ManagedDisk.Id);
                     }
 
+                    if (hasDiffDisks)
+                    {
+                        Assert.True(vmOut.StorageProfile.OsDisk.DiffDiskSettings.Option == vm.StorageProfile.OsDisk.DiffDiskSettings.Option);
+                    }
+                    else
+                    {
+                        Assert.Null(vm.StorageProfile.OsDisk.DiffDiskSettings);
+                    }
+
                     if (writeAcceleratorEnabled.HasValue)
                     {
                         Assert.Equal(writeAcceleratorEnabled.Value, vmOut.StorageProfile.OsDisk.WriteAcceleratorEnabled);
@@ -881,6 +930,17 @@ namespace Compute.Tests
             if (vm.StorageProfile.DataDisks != null &&
                 vm.StorageProfile.DataDisks.Any())
             {
+                if(vm.StorageProfile.DataDisks.Any(dd => dd.ManagedDisk != null && dd.ManagedDisk.StorageAccountType == StorageAccountTypes.UltraSSDLRS))
+                {
+                    Assert.NotNull(vm.AdditionalCapabilities);
+                    Assert.NotNull(vm.AdditionalCapabilities.UltraSSDEnabled);
+                    Assert.True(vm.AdditionalCapabilities.UltraSSDEnabled.Value);
+                }
+                else
+                {
+                    Assert.Null(vm.AdditionalCapabilities);
+                }
+
                 foreach (var dataDisk in vm.StorageProfile.DataDisks)
                 {
                     var dataDiskOut = vmOut.StorageProfile.DataDisks.FirstOrDefault(d => dataDisk.Lun == d.Lun);
@@ -962,6 +1022,8 @@ namespace Compute.Tests
                 Assert.True(vm.AvailabilitySet.Id.ToLowerInvariant() == vmOut.AvailabilitySet.Id.ToLowerInvariant());
             }
 
+            Assert.Equal(vm.Location, vmOut.Location, StringComparer.OrdinalIgnoreCase);
+
             ValidatePlan(vm.Plan, vmOut.Plan);
             Assert.NotNull(vmOut.VmId);
         }
@@ -1015,15 +1077,15 @@ namespace Compute.Tests
 
             if (expectedComputerName != null)
             {
-                Assert.Equal(expectedComputerName, vmInstanceView.ComputerName);
+                Assert.Equal(expectedComputerName, vmInstanceView.ComputerName, StringComparer.OrdinalIgnoreCase);
             }
             if (expectedOSName != null)
             {
-                Assert.Equal(expectedOSName, vmInstanceView.OsName);
+                Assert.Equal(expectedOSName, vmInstanceView.OsName, StringComparer.OrdinalIgnoreCase);
             }
             if (expectedOSVersion != null)
             {
-                Assert.Equal(expectedOSVersion, vmInstanceView.OsVersion);
+                Assert.Equal(expectedOSVersion, vmInstanceView.OsVersion, StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -1041,6 +1103,22 @@ namespace Compute.Tests
             Assert.Equal(inputPlan.Publisher, outPutPlan.Publisher);
             Assert.Equal(inputPlan.Product, outPutPlan.Product);
             Assert.Equal(inputPlan.PromotionCode, outPutPlan.PromotionCode);
+        }
+
+        protected void ValidateBootDiagnosticsInstanceView(BootDiagnosticsInstanceView bootDiagnosticsInstanceView, bool hasError)
+        {
+            if (hasError)
+            {
+                Assert.Null(bootDiagnosticsInstanceView.ConsoleScreenshotBlobUri);
+                Assert.Null(bootDiagnosticsInstanceView.SerialConsoleLogBlobUri);
+                Assert.NotNull(bootDiagnosticsInstanceView.Status);
+            }
+            else
+            {
+                Assert.NotNull(bootDiagnosticsInstanceView.ConsoleScreenshotBlobUri);
+                Assert.NotNull(bootDiagnosticsInstanceView.SerialConsoleLogBlobUri);
+                Assert.Null(bootDiagnosticsInstanceView.Status);
+            }
         }
     }
 }

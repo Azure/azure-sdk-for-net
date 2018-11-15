@@ -18,8 +18,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private readonly string _azureAdInstance;
         private readonly IAuthenticationContext _authenticationContext;
 
-        internal ClientSecretAccessTokenProvider(string clientId,
-            string clientSecret, string tenantId, string azureAdInstance, IAuthenticationContext authenticationContext)
+        internal ClientSecretAccessTokenProvider(string clientId, string clientSecret,
+            string tenantId, string azureAdInstance, IAuthenticationContext authenticationContext = null)
         {
             if (string.IsNullOrWhiteSpace(clientId))
             {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             _clientSecret = clientSecret;
             _tenantId = tenantId;
             _azureAdInstance = azureAdInstance;
-            _authenticationContext = authenticationContext;
+            _authenticationContext = authenticationContext ?? new AdalAuthenticationContext();
 
             PrincipalUsed = new Principal
             {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             };
         }
 
-        public override async Task<string> GetTokenAsync(string resource, string authority)
+        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
         {
             string errorMessage = string.Empty;
 
@@ -58,14 +58,16 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                 ClientCredential clientCredential = new ClientCredential(_clientId, _clientSecret);
 
-                var result = await _authenticationContext.AcquireTokenAsync(authority, resource, clientCredential).ConfigureAwait(false);
+                var authResult = await _authenticationContext.AcquireTokenAsync(authority, resource, clientCredential).ConfigureAwait(false);
 
-                if (result != null)
+                var accessToken = authResult?.AccessToken;
+
+                if (accessToken != null)
                 {
                     PrincipalUsed.IsAuthenticated = true;
-                    PrincipalUsed.TenantId = AccessToken.Parse(result).TenantId;
+                    PrincipalUsed.TenantId = AccessToken.Parse(accessToken).TenantId;
 
-                    return result;
+                    return authResult;
                 }
             }
             catch (Exception ex)

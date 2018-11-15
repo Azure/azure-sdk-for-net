@@ -70,9 +70,8 @@ namespace CustomerInsights.Tests.Tests
                 Assert.Equal(policyName, resultPolicy.PolicyName);
                 Assert.Equal(resultPolicy.Name, HubName + "/" + policyName, StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    resultPolicy.Type,
                     "Microsoft.CustomerInsights/hubs/AuthorizationPolicies",
-                    StringComparer.OrdinalIgnoreCase);
+                    resultPolicy.Type, StringComparer.OrdinalIgnoreCase);
 
                 TestUtilities.Wait(1000);
 
@@ -80,9 +79,8 @@ namespace CustomerInsights.Tests.Tests
                 Assert.Equal(policyName, getResultPolicy.PolicyName);
                 Assert.Equal(getResultPolicy.Name, HubName + "/" + policyName, StringComparer.OrdinalIgnoreCase);
                 Assert.Equal(
-                    getResultPolicy.Type,
                     "Microsoft.CustomerInsights/hubs/AuthorizationPolicies",
-                    StringComparer.OrdinalIgnoreCase);
+                    getResultPolicy.Type, StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -125,7 +123,7 @@ namespace CustomerInsights.Tests.Tests
                     policyName,
                     this.testPolicy);
                 Assert.Equal(resultPolicy.Name, HubName + "/" + policyName);
-                Assert.Equal(resultPolicy.Type, "Microsoft.CustomerInsights/hubs/AuthorizationPolicies");
+                Assert.Equal("Microsoft.CustomerInsights/hubs/AuthorizationPolicies", resultPolicy.Type);
 
                 var policyWithNewKey = aciClient.AuthorizationPolicies.RegeneratePrimaryKey(
                     ResourceGroupName,
@@ -151,7 +149,7 @@ namespace CustomerInsights.Tests.Tests
                     policyName,
                     this.testPolicy);
                 Assert.Equal(resultPolicy.Name, HubName + "/" + policyName);
-                Assert.Equal(resultPolicy.Type, "Microsoft.CustomerInsights/hubs/AuthorizationPolicies");
+                Assert.Equal("Microsoft.CustomerInsights/hubs/AuthorizationPolicies", resultPolicy.Type);
                 var policyWithNewKey = aciClient.AuthorizationPolicies.RegenerateSecondaryKey(
                     ResourceGroupName,
                     HubName,

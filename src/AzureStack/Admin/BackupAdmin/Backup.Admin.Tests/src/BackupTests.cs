@@ -15,6 +15,7 @@ namespace Backup.Tests
 
         private void ValidateBackups(Backup backup) {
             Assert.NotNull(backup);
+            Assert.NotNull(backup.EncryptionCertThumbprint);
         }
 
         private void AssertSame(Backup expected, Backup found) {
@@ -56,21 +57,25 @@ namespace Backup.Tests
                     {
                         var bName = ExtractName(backup.Name);
                         client.Backups.Get(ResourceGroupName, blName, bName);
-                        return;
                     }
                 });
             });
         }
 
-        [Fact(Skip="BRP not working.")]
+        [Fact]
         public void TestRestoreBackup()
         {
             RunTest((client) =>
             {
                 var backupLocation = "local";
                 var backup = client.BackupLocations.CreateBackup(ResourceGroupName, backupLocation);
+                var restoreOperations = new RestoreOptions
+                {
+                    DecryptionCertBase64 = "decryptionCert",
+                    DecryptionCertPassword = "decryptionCertPassword"
+                };
                 Assert.NotNull(backup);
-                client.Backups.Restore(backupLocation, ResourceGroupName, backup.Name);
+                client.Backups.Restore(backupLocation, ResourceGroupName, ExtractName(backup.Name), restoreOperations);
             });
         }
     }

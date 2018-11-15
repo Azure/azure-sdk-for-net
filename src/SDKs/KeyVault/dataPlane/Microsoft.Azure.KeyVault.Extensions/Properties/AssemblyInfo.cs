@@ -10,7 +10,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Microsoft Azure Key Vault Extensions Class Library")]
 
 [assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyFileVersion("3.0.0.1")]
+[assembly: AssemblyFileVersion("3.0.1.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]

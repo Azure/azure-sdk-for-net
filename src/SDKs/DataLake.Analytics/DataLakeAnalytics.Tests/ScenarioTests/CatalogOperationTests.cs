@@ -54,7 +54,7 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(dbListResponse.Count() >= 1);
 
                     // Look for the db we created
-                    Assert.True(dbListResponse.Any(db => db.Name.Equals(commonData.DatabaseName)));
+                    Assert.Contains(dbListResponse, db => db.Name.Equals(commonData.DatabaseName));
 
                     // Get the specific Database as well
                     var dbGetResponse = 
@@ -77,7 +77,7 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(tableListResponse.ElementAt(0).ColumnList != null && tableListResponse.ElementAt(0).ColumnList.Count() > 0);
 
                     // Look for the table we created
-                    Assert.True(tableListResponse.Any(table => table.Name.Equals(commonData.TableName)));
+                    Assert.Contains(tableListResponse, table => table.Name.Equals(commonData.TableName));
 
                     // Get the table list with only basic info
                     tableListResponse = 
@@ -102,7 +102,7 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(tableListResponse.ElementAt(0).ColumnList != null && tableListResponse.ElementAt(0).ColumnList.Count > 0);
                     
                     // Look for the table we created
-                    Assert.True(tableListResponse.Any(table => table.Name.Equals(commonData.TableName)));
+                    Assert.Contains(tableListResponse, table => table.Name.Equals(commonData.TableName));
                     
                     // Get the table list in the db with only basic info
                     tableListResponse = 
@@ -153,7 +153,7 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(tvfListResponse.Count() >= 1);
 
                     // Look for the tvf we created
-                    Assert.True(tvfListResponse.Any(tvf => tvf.Name.Equals(commonData.TvfName)));
+                    Assert.Contains(tvfListResponse, tvf => tvf.Name.Equals(commonData.TvfName));
 
                     // Get tvf list in the database
                     tvfListResponse = 
@@ -165,7 +165,7 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(tvfListResponse.Count() >= 1);
 
                     // look for the tvf we created
-                    Assert.True(tvfListResponse.Any(tvf => tvf.Name.Equals(commonData.TvfName)));
+                    Assert.Contains(tvfListResponse, tvf => tvf.Name.Equals(commonData.TvfName));
 
                     // Get the specific tvf as well
                     var tvfGetResponse = 
@@ -189,7 +189,7 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(viewListResponse.Count() >= 1);
 
                     // Look for the view we created
-                    Assert.True(viewListResponse.Any(view => view.Name.Equals(commonData.ViewName)));
+                    Assert.Contains(viewListResponse, view => view.Name.Equals(commonData.ViewName));
 
                     // Get the view list from just the database
                     viewListResponse = 
@@ -201,7 +201,7 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(viewListResponse.Count() >= 1);
 
                     // Look for the view we created
-                    Assert.True(viewListResponse.Any(view => view.Name.Equals(commonData.ViewName)));
+                    Assert.Contains(viewListResponse, view => view.Name.Equals(commonData.ViewName));
 
                     // Get the specific view as well
                     var viewGetResponse = 
@@ -225,7 +225,7 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(procListResponse.Count() >= 1);
 
                     // Look for the procedure we created
-                    Assert.True(procListResponse.Any(proc => proc.Name.Equals(commonData.ProcName)));
+                    Assert.Contains(procListResponse, proc => proc.Name.Equals(commonData.ProcName));
 
                     // Get the specific procedure as well
                     var procGetResponse = 
@@ -314,7 +314,7 @@ namespace DataLakeAnalytics.Tests
 
                     Assert.NotNull(typeGetResponse);
                     Assert.NotEmpty(typeGetResponse);
-                    Assert.False(typeGetResponse.Any(type => type.IsComplexType.Value));
+                    Assert.DoesNotContain(typeGetResponse, type => type.IsComplexType.Value);
 
                     // Prepare to grant/revoke ACLs
                     var principalId = TestUtilities.GenerateGuid();
@@ -499,7 +499,7 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(credListResponse.Count() >= 1);
 
                     // Look for the credential we created
-                    Assert.True(credListResponse.Any(cred => cred.Name.Equals(commonData.SecretName)));
+                    Assert.Contains(credListResponse, cred => cred.Name.Equals(commonData.SecretName));
 
                     // Get the specific credential as well
                     var credGetResponse = clientToUse.Catalog.GetCredential(

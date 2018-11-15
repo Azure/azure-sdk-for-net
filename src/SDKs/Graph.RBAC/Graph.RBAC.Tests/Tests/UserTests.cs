@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 User user = CreateUser(context);
                 DeleteUser(context, user.UserPrincipalName);
                 //verify the user has been deleted.
-                Assert.Throws(typeof(GraphErrorException), () => { SearchUser(context, user.UserPrincipalName); });
+                Assert.Throws<GraphErrorException>(() => { SearchUser(context, user.UserPrincipalName); });
             }
         }
     }

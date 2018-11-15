@@ -7,21 +7,16 @@
     <PropertyGroup>
         <PackageId>Microsoft.AzureStack.Management.Fabric.Admin</PackageId>
         <Description>Provides developers with libraries for the fabric admin under AzureStack to manage fabric infrastructure.</Description>
-        <VersionPrefix>0.2.0-preview</VersionPrefix>
+        <Version>1.8.0-preview</Version>
         <AssemblyName>Microsoft.AzureStack.Management.Fabric.Admin</AssemblyName>
-        <PackageTags>Microsoft Azure Stack;Fabric;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
+        <PackageTags>Microsoft Azure Stack;Fabric;REST HTTP client;azurestack;netcore452</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                Preview release of the AzureStack Fabric administrator SDK which allows administrators to view and manage infrastructure components.   
-                1) Stop, Start and Shutdown of scale unit nodes. 
-                2) Drain and Resume of scale unit nodes for FRU related activities. 
-                3) Repair of scale unit nodes 
-                4) Restart of Infrastructure role 
-                5) Stop, Start and Shutdown of Infrastructure role instances 
-                6) Create new IpPools 
-                    Note: Once created an IpPool cannot be removed without a redeployment
+                Support new resource StorageSubSystem, Drive and Volume with API version 2018-10-01.
+                Please note that the features are supported by Azure Stack 1811+.
             ]]>
         </PackageReleaseNotes>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <PropertyGroup>

@@ -11,6 +11,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Defines a visual search API response.
+    /// </summary>
     public partial class ImageKnowledge : Response
     {
         /// <summary>

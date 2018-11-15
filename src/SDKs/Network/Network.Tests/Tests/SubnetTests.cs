@@ -109,7 +109,7 @@ namespace Networks.Tests
                 // Verify that the deletion was successful
                 getSubnetListResponse = networkManagementClient.Subnets.List(resourceGroupName, vnetName);
                 
-                Assert.Equal(1, getSubnetListResponse.Count());
+                Assert.Single(getSubnetListResponse);
                 Assert.Equal(subnet1Name, getSubnetListResponse.ElementAt(0).Name);
 
                 #endregion

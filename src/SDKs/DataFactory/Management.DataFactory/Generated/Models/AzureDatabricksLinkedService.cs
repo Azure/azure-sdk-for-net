@@ -62,15 +62,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// max. Type: string (or Expression with resultType string).</param>
         /// <param name="newClusterNodeType">The node types of new cluster.
         /// Type: string (or Expression with resultType string).</param>
-        /// <param name="newClusterSparkConf">a set of optional, user-specified
+        /// <param name="newClusterSparkConf">A set of optional, user-specified
         /// Spark configuration key-value pairs.</param>
+        /// <param name="newClusterSparkEnvVars">A set of optional,
+        /// user-specified Spark environment variables key-value pairs.</param>
         /// <param name="newClusterCustomTags">Additional tags for cluster
         /// resources.</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureDatabricksLinkedService(object domain, SecretBase accessToken, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object existingClusterId = default(object), object newClusterVersion = default(object), object newClusterNumOfWorker = default(object), object newClusterNodeType = default(object), IDictionary<string, object> newClusterSparkConf = default(IDictionary<string, object>), IDictionary<string, object> newClusterCustomTags = default(IDictionary<string, object>), object encryptedCredential = default(object))
+        public AzureDatabricksLinkedService(object domain, SecretBase accessToken, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object existingClusterId = default(object), object newClusterVersion = default(object), object newClusterNumOfWorker = default(object), object newClusterNodeType = default(object), IDictionary<string, object> newClusterSparkConf = default(IDictionary<string, object>), IDictionary<string, object> newClusterSparkEnvVars = default(IDictionary<string, object>), IDictionary<string, object> newClusterCustomTags = default(IDictionary<string, object>), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Domain = domain;
@@ -80,6 +82,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             NewClusterNumOfWorker = newClusterNumOfWorker;
             NewClusterNodeType = newClusterNodeType;
             NewClusterSparkConf = newClusterSparkConf;
+            NewClusterSparkEnvVars = newClusterSparkEnvVars;
             NewClusterCustomTags = newClusterCustomTags;
             EncryptedCredential = encryptedCredential;
             CustomInit();
@@ -143,6 +146,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.newClusterSparkConf")]
         public IDictionary<string, object> NewClusterSparkConf { get; set; }
+
+        /// <summary>
+        /// Gets or sets a set of optional, user-specified Spark environment
+        /// variables key-value pairs.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.newClusterSparkEnvVars")]
+        public IDictionary<string, object> NewClusterSparkEnvVars { get; set; }
 
         /// <summary>
         /// Gets or sets additional tags for cluster resources.

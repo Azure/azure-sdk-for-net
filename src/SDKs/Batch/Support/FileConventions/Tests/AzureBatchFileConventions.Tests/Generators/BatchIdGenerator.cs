@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests.Generators
             Enumerable.Range((int)'A', 26).Concat(
             Enumerable.Range((int)'a', 26)).Concat(
             Enumerable.Range((int)'0', 10)).Concat(
-            new int[] { '-', '_' })
+            new int[] { '-', '_', ':' })
             .Select(i => (char)i)  // Need to use Select because Cast<char> fails with InvalidCastException
             .ToList().AsReadOnly();
 

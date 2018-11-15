@@ -24,19 +24,19 @@ namespace DataBox.Tests.Tests
             var jobName = TestUtilities.GenerateName("SdkJob");
             ContactDetails contactDetails = GetDefaultContactDetails();
             ShippingAddress shippingAddress = GetDefaultShippingAddress();
-            List<DestinationAccountDetails> destinationAccountList = GetDestinationAccountsList();
             Sku sku = GetDefaultSku();
-            JobDetails jobDetails = new JobDetails
+            JobDetails jobDetails = new DataBoxJobDetails
             {
                 ContactDetails = contactDetails,
                 ShippingAddress = shippingAddress,
+                DestinationAccountDetails = GetDestinationAccountsList(),
+                
             };
 
             var jobResource = new JobResource
             {
                 Sku = sku,
                 Location = TestConstants.DefaultResourceLocation,
-                DestinationAccountDetails = destinationAccountList,
                 Details = jobDetails
             };
 
@@ -48,11 +48,11 @@ namespace DataBox.Tests.Tests
                 });
 
             var job = this.Client.Jobs.Create(resourceGroupName, jobName, jobResource);
-            ValidateJobWithoutDetails(jobName, destinationAccountList, sku, job);
+            ValidateJobWithoutDetails(jobName, sku, job);
             Assert.Equal(StageName.DeviceOrdered, job.Status);
 
             var getJob = this.Client.Jobs.Get(resourceGroupName, jobName, TestConstants.Details);
-            ValidateJobWithoutDetails(jobName, destinationAccountList, sku, getJob);
+            ValidateJobWithoutDetails(jobName, sku, getJob);
             ValidateJobDetails(contactDetails, shippingAddress, getJob);
             Assert.Equal(StageName.DeviceOrdered, job.Status);
 
@@ -70,11 +70,11 @@ namespace DataBox.Tests.Tests
                 Details = Details
             };
             var updateJob = this.Client.Jobs.Update(resourceGroupName, jobName, updateParams);
-            ValidateJobWithoutDetails(jobName, destinationAccountList, sku, updateJob);
+            ValidateJobWithoutDetails(jobName, sku, updateJob);
             Assert.Equal(StageName.DeviceOrdered, updateJob.Status);
 
             getJob = this.Client.Jobs.Get(resourceGroupName, jobName, TestConstants.Details);
-            ValidateJobWithoutDetails(jobName, destinationAccountList, sku, getJob);
+            ValidateJobWithoutDetails(jobName, sku, getJob);
             ValidateJobDetails(contactDetails, shippingAddress, getJob);
             Assert.Equal(StageName.DeviceOrdered, getJob.Status);
 
@@ -84,14 +84,8 @@ namespace DataBox.Tests.Tests
             jobList = this.Client.Jobs.ListByResourceGroup(resourceGroupName);
             Assert.NotNull(jobList);
 
-            var cancelReason = new CancellationReason
-            {
-                Reason = "CancelTest"
-            };
-            this.Client.Jobs.Cancel(resourceGroupName, jobName, cancelReason);
+            this.Client.Jobs.Cancel(resourceGroupName, jobName, "CancelTest");
             getJob = this.Client.Jobs.Get(resourceGroupName, jobName, TestConstants.Details);
-            ValidateJobWithoutDetails(jobName, destinationAccountList, sku, getJob, false);
-            ValidateJobDetails(contactDetails, shippingAddress, getJob);
             Assert.Equal(StageName.Cancelled, getJob.Status);
 
             while (!string.IsNullOrWhiteSpace(getJob.Details.ContactDetails.ContactName))

@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="description">The description of the Live
         /// Output.</param>
-        /// <param name="manifestName">The manifest file name.</param>
+        /// <param name="manifestName">The manifest file name.  If not
+        /// provided, the service will generate one automatically.</param>
         /// <param name="hls">The HLS configuration.</param>
         /// <param name="outputSnapTime">The output snapshot time.</param>
         /// <param name="created">The exact time the Live Output was
@@ -95,7 +96,8 @@ namespace Microsoft.Azure.Management.Media.Models
         public System.TimeSpan ArchiveWindowLength { get; set; }
 
         /// <summary>
-        /// Gets or sets the manifest file name.
+        /// Gets or sets the manifest file name.  If not provided, the service
+        /// will generate one automatically.
         /// </summary>
         [JsonProperty(PropertyName = "properties.manifestName")]
         public string ManifestName { get; set; }

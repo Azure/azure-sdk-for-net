@@ -1,5 +1,8 @@
 # Microsoft.Azure.Batch release notes
 
+## Changes in 9.0.1
+- Updating Newtonsoft.Json to 10.0.3
+
 ## Changes in 9.0.0
 ### Features
 - Added the ability to see what version of the Azure Batch Node Agent is running on each of the VMs in a pool, via the new `NodeAgentInformation` property on `ComputeNode`.

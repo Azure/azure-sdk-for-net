@@ -228,6 +228,8 @@ namespace Microsoft.Azure.EventGrid
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MediaJobOutput>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MediaJobOutput>("@odata.type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }

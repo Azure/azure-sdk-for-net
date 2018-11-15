@@ -11,101 +11,56 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for StorageAccountType.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(StorageAccountTypeConverter))]
-    public struct StorageAccountType : System.IEquatable<StorageAccountType>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum StorageAccountType
     {
-        private StorageAccountType(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
         /// <summary>
         /// The primary storage account for the Media Services account.
         /// </summary>
-        public static readonly StorageAccountType Primary = "Primary";
-
+        [EnumMember(Value = "Primary")]
+        Primary,
         /// <summary>
         /// A secondary storage account for the Media Services account.
         /// </summary>
-        public static readonly StorageAccountType Secondary = "Secondary";
-
-
-        /// <summary>
-        /// Underlying value of enum StorageAccountType
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for StorageAccountType
-        /// </summary>
-        public override string ToString()
+        [EnumMember(Value = "Secondary")]
+        Secondary
+    }
+    internal static class StorageAccountTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this StorageAccountType? value)
         {
-            return UnderlyingValue.ToString();
+            return value == null ? null : ((StorageAccountType)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Compares enums of type StorageAccountType
-        /// </summary>
-        public bool Equals(StorageAccountType e)
+        internal static string ToSerializedValue(this StorageAccountType value)
         {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
+            switch( value )
+            {
+                case StorageAccountType.Primary:
+                    return "Primary";
+                case StorageAccountType.Secondary:
+                    return "Secondary";
+            }
+            return null;
         }
 
-        /// <summary>
-        /// Implicit operator to convert string to StorageAccountType
-        /// </summary>
-        public static implicit operator StorageAccountType(string value)
+        internal static StorageAccountType? ParseStorageAccountType(this string value)
         {
-            return new StorageAccountType(value);
+            switch( value )
+            {
+                case "Primary":
+                    return StorageAccountType.Primary;
+                case "Secondary":
+                    return StorageAccountType.Secondary;
+            }
+            return null;
         }
-
-        /// <summary>
-        /// Implicit operator to convert StorageAccountType to string
-        /// </summary>
-        public static implicit operator string(StorageAccountType e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum StorageAccountType
-        /// </summary>
-        public static bool operator == (StorageAccountType e1, StorageAccountType e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum StorageAccountType
-        /// </summary>
-        public static bool operator != (StorageAccountType e1, StorageAccountType e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for StorageAccountType
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is StorageAccountType && Equals((StorageAccountType)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode StorageAccountType
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
     }
 }

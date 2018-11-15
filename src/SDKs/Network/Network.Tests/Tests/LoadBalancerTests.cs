@@ -192,20 +192,20 @@ namespace Networks.Tests
                 
                 // Verify List LoadBalancer
                 var listLoadBalancer = networkManagementClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(1, listLoadBalancer.Count());
+                Assert.Single(listLoadBalancer);
                 Assert.Equal(lbName, listLoadBalancer.First().Name);
                 Assert.Equal(getLoadBalancer.Etag, listLoadBalancer.First().Etag);
 
                 // Verify List LoadBalancer subscription
                 var listLoadBalancerSubscription = networkManagementClient.LoadBalancers.ListAll();
-                Assert.NotEqual(0, listLoadBalancerSubscription.Count());
+                Assert.NotEmpty(listLoadBalancerSubscription);
                 Assert.Collection(listLoadBalancerSubscription, item => Assert.Equal(lbName, item.Name));
                 Assert.NotNull(listLoadBalancerSubscription.First().Name);
                 Assert.NotNull(listLoadBalancerSubscription.First().Etag);
 
                 // Verify List BackendAddressPools in LoadBalancer
                 var listLoadBalancerBackendAddressPools = networkManagementClient.LoadBalancerBackendAddressPools.List(resourceGroupName, lbName);
-                Assert.Equal(1, listLoadBalancerBackendAddressPools.Count());
+                Assert.Single(listLoadBalancerBackendAddressPools);
                 Assert.Equal(backEndAddressPoolName, listLoadBalancerBackendAddressPools.First().Name);
                 Assert.NotNull(listLoadBalancerBackendAddressPools.First().Etag);
 
@@ -216,7 +216,7 @@ namespace Networks.Tests
 
                 // Verify List FrontendIPConfigurations in LoadBalancer
                 var listLoadBalancerFrontendIPConfigurations = networkManagementClient.LoadBalancerFrontendIPConfigurations.List(resourceGroupName, lbName);
-                Assert.Equal(1, listLoadBalancerFrontendIPConfigurations.Count());
+                Assert.Single(listLoadBalancerFrontendIPConfigurations);
                 Assert.Equal(frontendIpConfigName, listLoadBalancerFrontendIPConfigurations.First().Name);
                 Assert.NotNull(listLoadBalancerFrontendIPConfigurations.First().Etag);
 
@@ -227,7 +227,7 @@ namespace Networks.Tests
 
                 // Verify List LoadBalancingRules in LoadBalancer
                 var listLoadBalancerLoadBalancingRules = networkManagementClient.LoadBalancerLoadBalancingRules.List(resourceGroupName, lbName);
-                Assert.Equal(1, listLoadBalancerLoadBalancingRules.Count());
+                Assert.Single(listLoadBalancerLoadBalancingRules);
                 Assert.Equal(loadBalancingRuleName, listLoadBalancerLoadBalancingRules.First().Name);
                 Assert.NotNull(listLoadBalancerLoadBalancingRules.First().Etag);
 
@@ -238,11 +238,11 @@ namespace Networks.Tests
 
                 // Verify List NetworkInterfaces in LoadBalancer
                 var listLoadBalancerNetworkInterfaces = networkManagementClient.LoadBalancerNetworkInterfaces.List(resourceGroupName, lbName);
-                Assert.Equal(0, listLoadBalancerNetworkInterfaces.Count());
+                Assert.Empty(listLoadBalancerNetworkInterfaces);
 
                 // Verify List Probes in LoadBalancer
                 var listLoadBalancerProbes = networkManagementClient.LoadBalancerProbes.List(resourceGroupName, lbName);
-                Assert.Equal(1, listLoadBalancerProbes.Count());
+                Assert.Single(listLoadBalancerProbes);
                 Assert.Equal(probeName, listLoadBalancerProbes.First().Name);
                 Assert.NotNull(listLoadBalancerProbes.First().Etag);
 
@@ -273,7 +273,7 @@ namespace Networks.Tests
                 Assert.Equal(3391, putInboundNatRule.FrontendPort);
                 Assert.Equal(3389, putInboundNatRule.BackendPort);
                 Assert.Equal(15, putInboundNatRule.IdleTimeoutInMinutes);
-                Assert.Equal(false, putInboundNatRule.EnableFloatingIP);
+                Assert.False(putInboundNatRule.EnableFloatingIP);
 
                 // Verify Get InboundNatRule in LoadBalancer
                 var getInboundNatRule = networkManagementClient.InboundNatRules.Get(resourceGroupName, lbName, inboundNatRule3Name);
@@ -282,7 +282,7 @@ namespace Networks.Tests
                 Assert.Equal(3391, getInboundNatRule.FrontendPort);
                 Assert.Equal(3389, getInboundNatRule.BackendPort);
                 Assert.Equal(15, getInboundNatRule.IdleTimeoutInMinutes);
-                Assert.Equal(false, getInboundNatRule.EnableFloatingIP);
+                Assert.False(getInboundNatRule.EnableFloatingIP);
 
                 // Verify List InboundNatRules in LoadBalancer
                 var listInboundNatRules = networkManagementClient.InboundNatRules.List(resourceGroupName, lbName);
@@ -301,7 +301,7 @@ namespace Networks.Tests
 
                 // Verify Delete
                 listLoadBalancer = networkManagementClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(0, listLoadBalancer.Count());
+                Assert.Empty(listLoadBalancer);
 
                 // Delete all PublicIPAddresses
                 networkManagementClient.PublicIPAddresses.Delete(resourceGroupName, lbPublicIpName);
@@ -467,13 +467,13 @@ namespace Networks.Tests
 
                 // Verify List LoadBalancer
                 var listLoadBalancer = networkManagementClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(1, listLoadBalancer.Count());
+                Assert.Single(listLoadBalancer);
                 Assert.Equal(lbName, listLoadBalancer.First().Name);
                 Assert.Equal(getLoadBalancer.Etag, listLoadBalancer.First().Etag);
 
                 // Verify List LoadBalancer subscription
                 var listLoadBalancerSubscription = networkManagementClient.LoadBalancers.ListAll();
-                Assert.NotEqual(0, listLoadBalancerSubscription.Count());
+                Assert.NotEmpty(listLoadBalancerSubscription);
                 Assert.NotNull(listLoadBalancerSubscription.First().Name);
                 Assert.NotNull(listLoadBalancerSubscription.First().Etag);
 
@@ -482,7 +482,7 @@ namespace Networks.Tests
 
                 // Verify Delete
                 listLoadBalancer = networkManagementClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(0, listLoadBalancer.Count());
+                Assert.Empty(listLoadBalancer);
 
                 // Delete VirtualNetwork
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
@@ -651,13 +651,13 @@ namespace Networks.Tests
 
                 // Verify List LoadBalancer
                 var listLoadBalancer = networkManagementClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(1, listLoadBalancer.Count());
+                Assert.Single(listLoadBalancer);
                 Assert.Equal(lbName, listLoadBalancer.First().Name);
                 Assert.Equal(getLoadBalancer.Etag, listLoadBalancer.First().Etag);
 
                 // Verify List LoadBalancer subscription
                 var listLoadBalancerSubscription = networkManagementClient.LoadBalancers.ListAll();
-                Assert.NotEqual(0, listLoadBalancerSubscription.Count());
+                Assert.NotEmpty(listLoadBalancerSubscription);
                 Assert.NotNull(listLoadBalancerSubscription.First().Name);
                 Assert.NotNull(listLoadBalancerSubscription.First().Etag);
 
@@ -666,7 +666,7 @@ namespace Networks.Tests
 
                 // Verify Delete
                 listLoadBalancer = networkManagementClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(0, listLoadBalancer.Count());
+                Assert.Empty(listLoadBalancer);
 
                 // Delete VirtualNetwork
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
@@ -835,7 +835,7 @@ namespace Networks.Tests
 
                 // Verify List LoadBalancer
                 var listLoadBalancer = networkManagementClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(1, listLoadBalancer.Count());
+                Assert.Single(listLoadBalancer);
                 Assert.Equal(lbName, listLoadBalancer.First().Name);
                 Assert.Equal(getLoadBalancer.Etag, listLoadBalancer.First().Etag);
 
@@ -857,7 +857,7 @@ namespace Networks.Tests
 
                 // Verify Delete
                 listLoadBalancer = networkManagementClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(0, listLoadBalancer.Count());
+                Assert.Empty(listLoadBalancer);
 
                 // Delete VirtualNetwork
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
@@ -914,7 +914,7 @@ namespace Networks.Tests
 
                 // Verify Delete
                 var listLoadBalancer = networkManagementClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(0, listLoadBalancer.Count());
+                Assert.Empty(listLoadBalancer);
             }
         }
 
@@ -1062,7 +1062,7 @@ namespace Networks.Tests
 
                 // Verify Delete
                 var listLoadBalancer = networkManagementClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(0, listLoadBalancer.Count());
+                Assert.Empty(listLoadBalancer);
 
                 // Delete VirtualNetwork
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
@@ -1282,8 +1282,8 @@ namespace Networks.Tests
                 // Verify the associations
                 getLoadBalancer = networkManagementClient.LoadBalancers.Get(resourceGroupName, lbName);
                 Assert.Equal(2, getLoadBalancer.BackendAddressPools.First().BackendIPConfigurations.Count);
-                Assert.True(getLoadBalancer.BackendAddressPools.First().BackendIPConfigurations.Any(ipconfig => string.Equals(ipconfig.Id, nic1.IpConfigurations[0].Id, StringComparison.OrdinalIgnoreCase)));
-                Assert.True(getLoadBalancer.BackendAddressPools.First().BackendIPConfigurations.Any(ipconfig => string.Equals(ipconfig.Id, nic2.IpConfigurations[0].Id, StringComparison.OrdinalIgnoreCase)));
+                Assert.Contains(getLoadBalancer.BackendAddressPools.First().BackendIPConfigurations, ipconfig => string.Equals(ipconfig.Id, nic1.IpConfigurations[0].Id, StringComparison.OrdinalIgnoreCase));
+                Assert.Contains(getLoadBalancer.BackendAddressPools.First().BackendIPConfigurations, ipconfig => string.Equals(ipconfig.Id, nic2.IpConfigurations[0].Id, StringComparison.OrdinalIgnoreCase));
                 Assert.Equal(nic1.IpConfigurations[0].Id, getLoadBalancer.InboundNatRules.First().BackendIPConfiguration.Id);
                 Assert.Equal(nic3.IpConfigurations[0].Id, getLoadBalancer.InboundNatRules[1].BackendIPConfiguration.Id);
 
@@ -1296,7 +1296,7 @@ namespace Networks.Tests
 
                 // Verify Delete
                 var listLoadBalancer = networkManagementClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(0, listLoadBalancer.Count());
+                Assert.Empty(listLoadBalancer);
 
                 // Delete all NetworkInterfaces
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nic1name);
@@ -1429,7 +1429,7 @@ namespace Networks.Tests
 
                 // Verify Delete
                 var listLoadBalancer = networkManagementClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(0, listLoadBalancer.Count());
+                Assert.Empty(listLoadBalancer);
 
                 // Delete all PublicIPAddresses
                 networkManagementClient.PublicIPAddresses.Delete(resourceGroupName, lbPublicIpName);

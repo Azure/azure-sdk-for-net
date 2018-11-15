@@ -1,16 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Microsoft.Rest
 {
+    using System.Globalization;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Http retry handler.
     /// </summary>
@@ -45,7 +44,7 @@ namespace Microsoft.Rest
             CancellationToken cancellationToken)
         {
             do {
-                var response = await base.SendAsync(request, cancellationToken);
+                var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
                 
                 // if they send back a 429
                 if( response.StatusCode == ((HttpStatusCode)429) ) {
