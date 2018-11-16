@@ -417,5 +417,15 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IManagedInstanceEncryptionProtectorsOperations ManagedInstanceEncryptionProtectors { get; }
 
+        /// <summary>
+        /// Gets the IManagedInstanceVulnerabilityAssessmentsOperations.
+        /// </summary>
+        IManagedInstanceVulnerabilityAssessmentsOperations ManagedInstanceVulnerabilityAssessments { get; }
+
+        /// <summary>
+        /// Gets the IServerVulnerabilityAssessmentsOperations.
+        /// </summary>
+        IServerVulnerabilityAssessmentsOperations ServerVulnerabilityAssessments { get; }
+
     }
 }
