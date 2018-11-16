@@ -21,7 +21,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomSearch
     /// <summary>
     /// CustomInstance operations.
     /// </summary>
-    public partial class CustomInstance : IServiceOperations<CustomSearchAPI>, ICustomInstance
+    public partial class CustomInstance : IServiceOperations<CustomSearchClient>, ICustomInstance
     {
         /// <summary>
         /// Initializes a new instance of the CustomInstance class.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomSearch
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public CustomInstance(CustomSearchAPI client)
+        public CustomInstance(CustomSearchClient client)
         {
             if (client == null)
             {
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomSearch
         }
 
         /// <summary>
-        /// Gets a reference to the CustomSearchAPI
+        /// Gets a reference to the CustomSearchClient
         /// </summary>
-        public CustomSearchAPI Client { get; private set; }
+        public CustomSearchClient Client { get; private set; }
 
         /// <summary>
         /// The Custom Search API lets you send a search query to Bing and get back web
@@ -278,6 +278,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomSearch
         /// </return>
         public async Task<HttpOperationResponse<SearchResponse>> SearchWithHttpMessagesAsync(string customConfig, string query, string acceptLanguage = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), int? count = default(int?), string market = "en-us", int? offset = default(int?), string safeSearch = default(string), string setLang = default(string), bool? textDecorations = default(bool?), string textFormat = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (customConfig == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "customConfig");
@@ -314,10 +318,14 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomSearch
                 ServiceClientTracing.Enter(_invocationId, this, "Search", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "search").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "search";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
-            _queryParameters.Add(string.Format("customConfig={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(customConfig, Client.SerializationSettings).Trim('"'))));
+            if (customConfig != null)
+            {
+                _queryParameters.Add(string.Format("customConfig={0}", System.Uri.EscapeDataString(customConfig)));
+            }
             if (countryCode != null)
             {
                 _queryParameters.Add(string.Format("cc={0}", System.Uri.EscapeDataString(countryCode)));
