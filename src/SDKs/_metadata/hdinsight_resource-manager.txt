@@ -1,11 +1,14 @@
-2018-11-17 06:03:24 UTC
-
-1) azure-rest-api-specs repository information
-GitHub user: Azure
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/hdinsight/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\code\AzureSDK\azure-sdk-for-net\src\SDKs
+2018-12-13 07:06:51 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
 Branch:      master
-Commit:      8767b017b00b7af642638c0f553302f5365dbdc1
-
-2) AutoRest information
+Commit:      65689e3494ca837345ee59944c94b8d3f251169f
+AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Program Files\nodejs `-- autorest@2.0.4283  
-Latest installed version:    
+Bootstrapper version:    autorest@2.0.4283
