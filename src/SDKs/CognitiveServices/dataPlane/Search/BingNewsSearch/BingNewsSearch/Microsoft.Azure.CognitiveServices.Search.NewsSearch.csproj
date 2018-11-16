@@ -6,10 +6,16 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Search.NewsSearch</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services News Search API.</Description>
-    <VersionPrefix>1.2.0</VersionPrefix>
+    <Version>2.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Search.NewsSearch</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;NewsSearch API;BingNewsSearch API;REST HTTPclient;NewsSearchSDK;BingNewsSearchSDK;netcore451511</PackageTags>
-    <PackageReleaseNotes>This is a public release of the Cognitive Services News Search SDK. Included with this release is support for News Search API.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+    <![CDATA[
+    Changes in this release:
+    1. Support overriding the default endpoint.
+    2. Change client class name to `NewsSearchClient`.
+    ]]>
+	</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

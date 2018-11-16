@@ -1,11 +1,11 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Microsoft Azure Cognitive Services Entity Search Client Library")]
-[assembly: AssemblyDescription("Provides API functions for consuming the Microsoft Azure Cognitive Services Entity Search API.")]
+[assembly: AssemblyTitle("Microsoft Azure Cognitive Services AutoSuggest Client Library")]
+[assembly: AssemblyDescription("Provides API functions for consuming the Microsoft Azure Cognitive Services AutoSuggest API.")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.0.0")]

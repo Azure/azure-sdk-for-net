@@ -18,7 +18,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "WebSearch");
 
-                IWebSearchAPI client = new WebSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                IWebSearchClient client = new WebSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 var resp = client.Web.SearchAsync(query: "tom cruise").Result;
 
