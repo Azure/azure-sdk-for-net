@@ -30,6 +30,8 @@ namespace Microsoft.Azure.Management.Logic
                 new Tuple<string, string, string>("Logic", "IntegrationAccounts", "2018-07-01-preview"),
                 new Tuple<string, string, string>("Logic", "Operations", "2018-07-01-preview"),
                 new Tuple<string, string, string>("Logic", "WorkflowRunActionRepetitions", "2018-07-01-preview"),
+                new Tuple<string, string, string>("Logic", "WorkflowRunActionRepetitionsRequestHistories", "2018-07-01-preview"),
+                new Tuple<string, string, string>("Logic", "WorkflowRunActionRequestHistories", "2018-07-01-preview"),
                 new Tuple<string, string, string>("Logic", "WorkflowRunActionScopeRepetitions", "2018-07-01-preview"),
                 new Tuple<string, string, string>("Logic", "WorkflowRunActions", "2018-07-01-preview"),
                 new Tuple<string, string, string>("Logic", "WorkflowRunOperations", "2018-07-01-preview"),
