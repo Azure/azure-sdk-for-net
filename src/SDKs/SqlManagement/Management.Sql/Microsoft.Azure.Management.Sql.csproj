@@ -13,6 +13,7 @@
 			<![CDATA[
 New features:
 - Support for short term retention on managed instance
+- Support for custom collation on managed instance
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
