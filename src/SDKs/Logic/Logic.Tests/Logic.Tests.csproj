@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>  
-    <!--<PackageReference Include="Microsoft.Azure.Management.Logic" Version="3.0.0" />-->    
     <ProjectReference Include="..\Management.Logic\Microsoft.Azure.Management.Logic.csproj" />
   </ItemGroup>
 
