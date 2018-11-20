@@ -164,7 +164,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return amqpMessage;
         }
 
-        public static SBMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage)
+        public static SBMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
         {
             if (amqpMessage == null)
             {
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
                 if (amqpMessage.Header.DeliveryCount != null)
                 {
-                    sbMessage.SystemProperties.DeliveryCount = (int)(amqpMessage.Header.DeliveryCount.Value + 1);
+                    sbMessage.SystemProperties.DeliveryCount = isPeeked ? (int)(amqpMessage.Header.DeliveryCount.Value) : (int)(amqpMessage.Header.DeliveryCount.Value + 1);
                 }
             }
 

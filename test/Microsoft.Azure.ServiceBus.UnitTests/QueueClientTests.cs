@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -30,6 +31,52 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await queueClient.CloseAsync();
             }
         }
+
+        [Theory]
+        [MemberData(nameof(TestPermutations))]
+        [DisplayTestMethodName]
+        async Task PeekDeliveryCountTest(string queueName)
+        {
+            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+            try
+            {
+                await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+
+                var message = await TestUtility.PeekMessageAsync(queueClient.InnerReceiver);
+
+                Assert.Equal(0, message.SystemProperties.DeliveryCount);
+            }
+            finally
+            {
+                var messageToDelete = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
+                await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messageToDelete);
+
+                await queueClient.CloseAsync();
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestPermutations))]
+        [DisplayTestMethodName]
+        async Task PeekLockDeliveryCountTest(string queueName)
+        {
+            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+            try
+            {
+                await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+
+                var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
+
+                await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messages);
+
+                Assert.Equal(1, messages.First().SystemProperties.DeliveryCount);
+            }
+            finally
+            {
+                await queueClient.CloseAsync();
+            }
+        }
+
 
         [Theory]
         [MemberData(nameof(TestPermutations))]

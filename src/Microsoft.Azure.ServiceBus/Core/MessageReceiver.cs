@@ -1102,7 +1102,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                     {
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                        message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+                        message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, true);
                         messages.Add(message);
                     }
 
