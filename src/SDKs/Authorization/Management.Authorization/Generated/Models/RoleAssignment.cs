@@ -38,9 +38,14 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <param name="scope">The role assignment scope.</param>
         /// <param name="roleDefinitionId">The role definition ID.</param>
         /// <param name="principalId">The principal ID.</param>
+        /// <param name="principalType">The principal type of the assigned
+        /// principal ID. Possible values include: 'User', 'Group',
+        /// 'ServicePrincipal', 'Unknown', 'DirectoryRoleTemplate',
+        /// 'ForeignGroup', 'Application', 'MSI', 'DirectoryObjectOrGroup',
+        /// 'Everyone'</param>
         /// <param name="canDelegate">The Delegation flag for the
         /// roleassignment</param>
-        public RoleAssignment(string id = default(string), string name = default(string), string type = default(string), string scope = default(string), string roleDefinitionId = default(string), string principalId = default(string), bool? canDelegate = default(bool?))
+        public RoleAssignment(string id = default(string), string name = default(string), string type = default(string), string scope = default(string), string roleDefinitionId = default(string), string principalId = default(string), string principalType = default(string), bool? canDelegate = default(bool?))
         {
             Id = id;
             Name = name;
@@ -48,6 +53,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;
+            PrincipalType = principalType;
             CanDelegate = canDelegate;
             CustomInit();
         }
@@ -92,6 +98,15 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.principalId")]
         public string PrincipalId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the principal type of the assigned principal ID.
+        /// Possible values include: 'User', 'Group', 'ServicePrincipal',
+        /// 'Unknown', 'DirectoryRoleTemplate', 'ForeignGroup', 'Application',
+        /// 'MSI', 'DirectoryObjectOrGroup', 'Everyone'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.principalType")]
+        public string PrincipalType { get; set; }
 
         /// <summary>
         /// Gets or sets the Delegation flag for the roleassignment
