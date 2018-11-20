@@ -5,11 +5,11 @@
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DataMigration</PackageId>
-		<Description>Provides developers with libraries for the Database Migration Service (DMS) under Azure Resource manager to deploy an instance of DMS. Create, Delete, Create project, Start Migration, and more.</Description>
-		<Version>0.5.0-preview</Version>
+		<Description>Provides developers with libraries for the Database Migration Service (DMS) under Azure Resource manager to deploy an instance of DMS. Create, Delete, Read Projects, Files and Tasks and more.</Description>
+		<Version>0.6.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.DataMigration</AssemblyName>
 		<PackageTags>DataMigration;Data Migration;DataMigration_2018-07-15-preview;</PackageTags>
-		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+		<PackageReleaseNotes>Preview release of the Database Migration Service (DMS) SDK to Create, Delete, Read Projects, Files and Database Migration Tasks.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

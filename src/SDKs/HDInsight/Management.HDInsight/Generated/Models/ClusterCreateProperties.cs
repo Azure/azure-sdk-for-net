@@ -38,7 +38,9 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="securityProfile">The security profile.</param>
         /// <param name="computeProfile">The compute profile.</param>
         /// <param name="storageProfile">The storage profile.</param>
-        public ClusterCreateProperties(string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), ClusterDefinition clusterDefinition = default(ClusterDefinition), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), StorageProfile storageProfile = default(StorageProfile))
+        /// <param name="diskEncryptionProperties">The disk encryption
+        /// properties.</param>
+        public ClusterCreateProperties(string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), ClusterDefinition clusterDefinition = default(ClusterDefinition), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), StorageProfile storageProfile = default(StorageProfile), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties))
         {
             ClusterVersion = clusterVersion;
             OsType = osType;
@@ -47,6 +49,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             SecurityProfile = securityProfile;
             ComputeProfile = computeProfile;
             StorageProfile = storageProfile;
+            DiskEncryptionProperties = diskEncryptionProperties;
             CustomInit();
         }
 
@@ -98,6 +101,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "storageProfile")]
         public StorageProfile StorageProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets the disk encryption properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskEncryptionProperties")]
+        public DiskEncryptionProperties DiskEncryptionProperties { get; set; }
 
     }
 }

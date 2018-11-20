@@ -11,6 +11,10 @@ using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication.IntegrationTests.Helpers;
 using Microsoft.Azure.Services.AppAuthentication.IntegrationTests.Models;
 using Microsoft.Azure.Services.AppAuthentication.TestCommon;
+#if net472
+using System.Data;
+using System.Data.SqlClient;
+#endif
 
 namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
 {
@@ -76,11 +80,11 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
             {
                 foreach (var resourceId in resourceIdList)
                 {
-                    string token =
+                    var authResult =
                         await
-                            astp.GetAccessTokenAsync(resourceId);
+                            astp.GetAuthenticationResultAsync(resourceId);
 
-                    Validator.ValidateToken(token, astp.PrincipalUsed, Constants.UserType, _tenantId);
+                    Validator.ValidateToken(authResult.AccessToken, astp.PrincipalUsed, Constants.UserType, _tenantId, expiresOn: authResult.ExpiresOn);
                 }
                 
                 var callback = astp.KeyVaultTokenCallback;
@@ -106,7 +110,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
 #if FullNetFx
         /// <summary>
         /// Test case where token is fetched using Integrated Windows Authentication. 
-        /// Person runnning the test must be using domain joined machine, where domain is federated with Azure AD. 
+        /// Person running the test must be using domain joined machine, where domain is federated with Azure AD. 
         /// </summary>
         /// <returns></returns>
         [Fact]
@@ -117,32 +121,42 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
             for (int i = 0; i < 100; i++)
             {
                 // Get token using active directory integrated authentication
-                string token =
+                var authResult =
                     await
-                        astp.GetAccessTokenAsync(Constants.GraphResourceId);
+                        astp.GetAuthenticationResultAsync(Constants.GraphResourceId);
 
                 // This will not cause IWA. Token for SQL will be used to get token for Graph API (MRRT)
                 AzureServiceTokenProvider astp1 = new AzureServiceTokenProvider(Constants.IntegratedAuthConnectionString);
                 await astp1.GetAccessTokenAsync(Constants.SqlAzureResourceId);
 
-                Validator.ValidateToken(token, astp.PrincipalUsed, Constants.UserType, astp1.PrincipalUsed.TenantId);
+                Validator.ValidateToken(authResult.AccessToken, astp.PrincipalUsed, Constants.UserType, astp1.PrincipalUsed.TenantId, expiresOn: authResult.ExpiresOn);
             }
         }
 #endif
+
+        private enum CertIdentifierType
+        {
+            SubjectName,
+            Thumbprint,
+            KeyVaultCertificateSecretIdentifier
+        }
+
         /// <summary>
         /// One must be logged in using Azure CLI and set AppAuthenticationTestCertUrl to a secret URL for a certificate in Key Vault before running this test.
         /// The test creates a new Azure AD application and service principal, uses the cert as the credential, and then uses the library to authenticate to it, using the cert. 
         /// After the cert, the Azure AD application is deleted. Cert is removed from current user store on the machine. 
         /// </summary>
-        /// <param name="isThumbprint"></param>
+        /// <param name="certIdentifierType"></param>
         /// <returns></returns>
-        private async Task GetTokenUsingServicePrincipalWithCertTestImpl(bool isThumbprint)
+        private async Task GetTokenUsingServicePrincipalWithCertTestImpl(CertIdentifierType certIdentifierType)
         {
+            string testCertUrl = Environment.GetEnvironmentVariable(Constants.TestCertUrlEnv);
+
             // Get a certificate from key vault. 
             // For security, this certificate is not hard coded in the test case, since it gets added as app credential in Azure AD, and may not get removed. 
             AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider(Constants.AzureCliConnectionString);
             KeyVaultHelper keyVaultHelper = new KeyVaultHelper(new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback)));
-            string certAsString = await keyVaultHelper.ExportCertificateAsBlob(Environment.GetEnvironmentVariable(Constants.TestCertUrlEnv)).ConfigureAwait(false);
+            string certAsString = await keyVaultHelper.ExportCertificateAsBlob(testCertUrl).ConfigureAwait(false);
 
             X509Certificate2 cert = new X509Certificate2(Convert.FromBase64String(certAsString), string.Empty);
             
@@ -151,27 +165,42 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
             Application app = await graphHelper.CreateApplicationAsync(cert).ConfigureAwait(false);
 
             // Get token using service principal, this will cache the cert
-            string token = string.Empty;
+            AppAuthenticationResult authResult = null;
             int count = 5;
 
             string thumbprint = cert.Thumbprint?.ToLower();
 
-            // Construct connection string using client id and cert name
-            string thumbprintOrSubjectName = isThumbprint ? $"CertificateThumbprint={thumbprint}" : $"CertificateSubjectName={cert.Subject}";
-            string connectionString = $"RunAs=App;AppId={app.AppId};TenantId={_tenantId};{thumbprintOrSubjectName};CertificateStoreLocation={Constants.CurrentUserStore};";
+            // Construct connection string using client id and cert info
+            string connectionString = null;
+            switch (certIdentifierType)
+            {
+                case CertIdentifierType.SubjectName:
+                case CertIdentifierType.Thumbprint:
+                    string thumbprintOrSubjectName = (certIdentifierType == CertIdentifierType.Thumbprint) ? $"CertificateThumbprint={thumbprint}" : $"CertificateSubjectName={cert.Subject}";
+                    connectionString = $"RunAs=App;AppId={app.AppId};TenantId={_tenantId};{thumbprintOrSubjectName};CertificateStoreLocation={Constants.CurrentUserStore};";
+                    break;
+                case CertIdentifierType.KeyVaultCertificateSecretIdentifier:
+                    connectionString = $"RunAs=App;AppId={app.AppId};TenantId={_tenantId};CertificateKeyVaultCertificateSecretIdentifier={testCertUrl};";
+                    break;
+            }
+            
             AzureServiceTokenProvider astp =
                 new AzureServiceTokenProvider(connectionString);
 
-            // Import the certificate
-            CertUtil.ImportCertificate(cert);
+            if (certIdentifierType == CertIdentifierType.SubjectName ||
+                certIdentifierType == CertIdentifierType.Thumbprint)
+            {
+                // Import the certificate
+                CertUtil.ImportCertificate(cert);
+            }
 
-            while (string.IsNullOrEmpty(token) && count > 0)
+            while (authResult == null && count > 0)
             {
                 try
                 {
                     await astp.GetAccessTokenAsync(Constants.KeyVaultResourceId);
 
-                    token = await astp.GetAccessTokenAsync(Constants.SqlAzureResourceId, _tenantId);
+                    authResult = await astp.GetAuthenticationResultAsync(Constants.SqlAzureResourceId, _tenantId);
                 }
                 catch
                 {
@@ -182,11 +211,15 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
                 }
             }
 
-            // Delete the cert
-            CertUtil.DeleteCertificate(cert.Thumbprint);
+            if (certIdentifierType == CertIdentifierType.SubjectName ||
+               certIdentifierType == CertIdentifierType.Thumbprint)
+            {
+                // Delete the cert
+                CertUtil.DeleteCertificate(cert.Thumbprint);
 
-            var deletedCert = CertUtil.GetCertificate(cert.Thumbprint);
-            Assert.Equal(null, deletedCert);
+                var deletedCert = CertUtil.GetCertificate(cert.Thumbprint);
+                Assert.Null(deletedCert);
+            }
 
             // Get token again using a cert which is deleted, but in the cache
             await astp.GetAccessTokenAsync(Constants.SqlAzureResourceId, _tenantId);
@@ -194,21 +227,28 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
             // Delete the application and service principal
             await graphHelper.DeleteApplicationAsync(app);
 
-            Validator.ValidateToken(token, astp.PrincipalUsed, Constants.AppType, _tenantId, app.AppId, cert.Thumbprint);
+            Validator.ValidateToken(authResult.AccessToken, astp.PrincipalUsed, Constants.AppType, _tenantId,
+                app.AppId, cert.Thumbprint, expiresOn: authResult.ExpiresOn);
         }
 
         [Fact]
         public async Task GetTokenThumbprintTest()
         {
-            await GetTokenUsingServicePrincipalWithCertTestImpl(false);
+            await GetTokenUsingServicePrincipalWithCertTestImpl(CertIdentifierType.Thumbprint);
         }
 
         [Fact]
         public async Task GetTokenSubjectNameTest()
         {
-            await GetTokenUsingServicePrincipalWithCertTestImpl(true);
+            await GetTokenUsingServicePrincipalWithCertTestImpl(CertIdentifierType.SubjectName);
         }
-        
+
+        [Fact]
+        public async Task GetTokenKeyVaultIdentifierTest()
+        {
+            await GetTokenUsingServicePrincipalWithCertTestImpl(CertIdentifierType.KeyVaultCertificateSecretIdentifier);
+        }
+
         [Fact]
         public async Task GetTokenUsingServicePrincipalWithClientSecretTest()
         {
@@ -217,17 +257,17 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
             Application app = await graphHelper.CreateApplicationAsync(secret);
 
             // Get token using service principal
-            string token = string.Empty;
+            AppAuthenticationResult authResult = null;
             int count = 5;
 
             Environment.SetEnvironmentVariable(Constants.ConnectionStringEnvironmentVariableName, $"RunAs=App;TenantId={_tenantId};AppId={app.AppId};AppKey={secret}");
             AzureServiceTokenProvider astp = new AzureServiceTokenProvider();
 
-            while (string.IsNullOrEmpty(token) && count > 0)
+            while (authResult == null && count > 0)
             {
                 try
                 {
-                    token = await astp.GetAccessTokenAsync(Constants.SqlAzureResourceId, _tenantId);
+                    authResult = await astp.GetAuthenticationResultAsync(Constants.SqlAzureResourceId, _tenantId);
 
                     await astp.GetAccessTokenAsync(Constants.KeyVaultResourceId);
 
@@ -247,7 +287,31 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
 
             Environment.SetEnvironmentVariable(Constants.ConnectionStringEnvironmentVariableName, null);
 
-            Validator.ValidateToken(token, astp.PrincipalUsed, Constants.AppType, _tenantId, app.AppId);
+            Validator.ValidateToken(authResult.AccessToken, astp.PrincipalUsed, Constants.AppType, _tenantId, app.AppId, expiresOn: authResult.ExpiresOn);
         }
+
+#if net472
+        /// <summary>
+        /// One must be logged in using Azure CLI and set AppAuthenticationTestSqlDbEndpoint to a SQL Azure database endpoint before running this test.
+        /// The test validates that it can open a connection with the SQL database using SqlAzureAuthProvider, which implements the SqlAuthenticationProvider interface.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task ConnectToSqlDbWithSqlAppAuthProvider()
+        {
+            // register SqlAzureAppAuthProvider and create the connection string
+            SqlAuthenticationProvider.SetProvider(SqlAuthenticationMethod.ActiveDirectoryInteractive, new SqlAppAuthenticationProvider());
+            string connectionString = $"server={Environment.GetEnvironmentVariable(Constants.TestSqlDbEndpoint)};Authentication=Active Directory Interactive;UID=";
+
+            // verify the connection can be successfully opened
+            var sqlConnection = new SqlConnection(connectionString);
+            await sqlConnection.OpenAsync();
+            Assert.Equal(ConnectionState.Open, sqlConnection.State);
+
+            // verify connection can be successfully closed
+            sqlConnection.Close();
+            Assert.Equal(ConnectionState.Closed, sqlConnection.State);
+        }
+#endif
     }
 }

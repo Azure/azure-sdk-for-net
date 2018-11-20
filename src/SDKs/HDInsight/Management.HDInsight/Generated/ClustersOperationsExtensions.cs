@@ -296,6 +296,49 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             /// <summary>
+            /// Rotate disk encryption key of the specified HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for the disk encryption operation.
+            /// </param>
+            public static void RotateDiskEncryptionKey(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterDiskEncryptionParameters parameters)
+            {
+                operations.RotateDiskEncryptionKeyAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Rotate disk encryption key of the specified HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for the disk encryption operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RotateDiskEncryptionKeyAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterDiskEncryptionParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RotateDiskEncryptionKeyWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Executes script actions on the specified HDInsight cluster.
             /// </summary>
             /// <param name='operations'>
@@ -462,6 +505,49 @@ namespace Microsoft.Azure.Management.HDInsight
             public static async Task BeginResizeAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterResizeParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginResizeWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Rotate disk encryption key of the specified HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for the disk encryption operation.
+            /// </param>
+            public static void BeginRotateDiskEncryptionKey(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterDiskEncryptionParameters parameters)
+            {
+                operations.BeginRotateDiskEncryptionKeyAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Rotate disk encryption key of the specified HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters for the disk encryption operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRotateDiskEncryptionKeyAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterDiskEncryptionParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRotateDiskEncryptionKeyWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

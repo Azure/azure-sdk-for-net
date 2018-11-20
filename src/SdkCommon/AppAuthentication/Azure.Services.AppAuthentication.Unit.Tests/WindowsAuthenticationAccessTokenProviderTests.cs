@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             WindowsAuthenticationAzureServiceTokenProvider provider = new WindowsAuthenticationAzureServiceTokenProvider(authenticationContext, Constants.AzureAdInstance);
 
-            var token = await provider.GetTokenAsync(Constants.KeyVaultResourceId, string.Empty).ConfigureAwait(false);
+            var authResult = await provider.GetAuthResultAsync(Constants.KeyVaultResourceId, string.Empty).ConfigureAwait(false);
 
-            Validator.ValidateToken(token, provider.PrincipalUsed, Constants.UserType, Constants.TenantId);
+            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.UserType, Constants.TenantId, expiresOn: authResult.ExpiresOn);
         }
 
         /// <summary>
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             WindowsAuthenticationAzureServiceTokenProvider provider = new WindowsAuthenticationAzureServiceTokenProvider(authenticationContext, Constants.AzureAdInstance);
 
-            var token = await provider.GetTokenAsync(Constants.KeyVaultResourceId, string.Empty).ConfigureAwait(false);
+            var authResult = await provider.GetAuthResultAsync(Constants.KeyVaultResourceId, string.Empty).ConfigureAwait(false);
 
-            Validator.ValidateToken(token, provider.PrincipalUsed, Constants.UserType, Constants.TenantId);
+            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.UserType, Constants.TenantId, expiresOn: authResult.ExpiresOn);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             WindowsAuthenticationAzureServiceTokenProvider provider = new WindowsAuthenticationAzureServiceTokenProvider(authenticationContext, Constants.AzureAdInstance);
             
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => provider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => provider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
             Assert.Contains(Constants.KeyVaultResourceId, exception.Message);
             Assert.Contains(Constants.TenantId, exception.Message);
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             WindowsAuthenticationAzureServiceTokenProvider provider = new WindowsAuthenticationAzureServiceTokenProvider(authenticationContext, Constants.AzureAdInstance);
 
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => provider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => provider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
             Assert.Contains(Constants.KeyVaultResourceId, exception.Message);
             Assert.Contains(Constants.TenantId, exception.Message);

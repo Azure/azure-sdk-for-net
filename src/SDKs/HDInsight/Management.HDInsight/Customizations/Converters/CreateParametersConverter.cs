@@ -41,7 +41,8 @@ namespace Microsoft.Azure.Management.HDInsight
                     },
                     OsType = OSType.Linux,
                     SecurityProfile = clusterCreateParameters.SecurityProfile,
-                    StorageProfile = GetStorageProfile(clusterCreateParameters)
+                    StorageProfile = GetStorageProfile(clusterCreateParameters),
+                    DiskEncryptionProperties = clusterCreateParameters.DiskEncryptionProperties
                 },
                 Identity = clusterCreateParameters.ClusterIdentity
             };

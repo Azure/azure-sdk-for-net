@@ -4,10 +4,14 @@
     <PackageId>Microsoft.Azure.KeyVault</PackageId>
     <Description>Azure Key Vault enables users to store and use cryptographic keys within the Microsoft Azure environment. Azure Key Vault supports multiple key types and algorithms and enables the use of Hardware Security Modules (HSM) for high value customer keys. In addition, Azure Key Vault allows users to securely store secrets in a Key Vault; secrets are limited size octet objects and Azure Key Vault applies no specific semantics to these objects. A Key Vault may contain a mix of keys and secrets at the same time, and access control for the two types of object is independently controlled. Users, subject to appropriate authorization, may: 1) Manage cryptographic keys using Create, Import, Update, Delete and other operations 2) Manage secrets using Get, Set, Delete and other operations 3) Use cryptographic keys with Sign/Verify, WrapKey/UnwrapKey and Encrypt/Decrypt operations. Operations against Key Vaults are authenticated and authorized using Azure Active Directory. Key Vault now supports certificates, a complex type that makes use of existing key and secret infrastructure for certificate operations. KV certificates also support notification and auto-renewal as well as other management features.</Description>
     <AssemblyTitle>Microsoft Azure Key Vault</AssemblyTitle>
-    <VersionPrefix>3.0.1</VersionPrefix>
+    <Version>3.0.2</Version>
     <AssemblyName>Microsoft.Azure.KeyVault</AssemblyName>
     <PackageTags>Microsoft Azure Key Vault;Key Vault;REST HTTP client;azureofficial;windowsazureofficial</PackageTags>
-    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+    <PackageReleaseNotes>      
+      <![CDATA[
+        Republishing to sign package with correct hash.
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

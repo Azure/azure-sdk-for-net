@@ -16,23 +16,28 @@ namespace Microsoft.Azure.Services.AppAuthentication
         // This is for unit testing
         private readonly HttpClient _httpClient;
 
+        // This client ID can be specified in the constructor to specify a specific managed identity to use (e.g. user-assigned identity)
+        private readonly string _managedIdentityClientId;
+
         // HttpClient is intended to be instantiated once and re-used throughout the life of an application. 
         private static readonly HttpClient DefaultHttpClient = new HttpClient();
 
         // Azure Instance Metadata Service (IDMS) endpoint
         private const string AzureVmIdmsEndpoint = "http://169.254.169.254/metadata/identity/oauth2/token";
 
-        internal MsiAccessTokenProvider()
+        internal MsiAccessTokenProvider(string managedIdentityClientId = default(string))
         {
+            _managedIdentityClientId = managedIdentityClientId;
+
             PrincipalUsed = new Principal { Type = "App" };
         }
 
-        internal MsiAccessTokenProvider(HttpClient httpClient) : this()
+        internal MsiAccessTokenProvider(HttpClient httpClient, string managedIdentityClientId = null) : this(managedIdentityClientId)
         {
             _httpClient = httpClient;
         }
 
-        public override async Task<string> GetTokenAsync(string resource, string authority)
+        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
         {
             try
             {
@@ -41,10 +46,15 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 string msiSecret = Environment.GetEnvironmentVariable("MSI_SECRET");
                 var isAppServicesMsiAvailable = !string.IsNullOrWhiteSpace(msiEndpoint) && !string.IsNullOrWhiteSpace(msiSecret);
 
+                // If managed identity is specified, include client_id parameter in request
+                string clientIdParameter = _managedIdentityClientId != default(string)
+                    ? $"&client_id={_managedIdentityClientId}"
+                    : string.Empty;
+
                 // Craft request as per the MSI protocol
                 var requestUrl = isAppServicesMsiAvailable
                     ? $"{msiEndpoint}?resource={resource}&api-version=2017-09-01"
-                    : $"{AzureVmIdmsEndpoint}?resource={resource}&api-version=2018-02-01";
+                    : $"{AzureVmIdmsEndpoint}?resource={resource}{clientIdParameter}&api-version=2018-02-01";
 
                 // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpclient. 
                 HttpClient httpClient = _httpClient ?? DefaultHttpClient;
@@ -81,7 +91,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
                         PrincipalUsed.TenantId = token.TenantId;
                     }
 
-                    return tokenResponse.AccessToken;
+                    TokenResponse.DateFormat expectedDateFormat = isAppServicesMsiAvailable
+                        ? TokenResponse.DateFormat.DateTimeString
+                        : TokenResponse.DateFormat.Unix;
+
+                    return AppAuthenticationResult.Create(tokenResponse, expectedDateFormat);
                 }
 
                 string exceptionText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);

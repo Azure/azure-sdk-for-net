@@ -139,10 +139,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         public int? StorageSizeInGB { get; set; }
 
         /// <summary>
-        /// Gets collation of the managed instance.
+        /// Gets or sets collation of the managed instance.
         /// </summary>
         [JsonProperty(PropertyName = "properties.collation")]
-        public string Collation { get; private set; }
+        public string Collation { get; set; }
 
         /// <summary>
         /// Gets the Dns Zone that the managed instance is in.
