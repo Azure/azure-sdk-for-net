@@ -21,7 +21,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.NewsSearch
     /// <summary>
     /// NewsOperations operations.
     /// </summary>
-    public partial class NewsOperations : IServiceOperations<NewsSearchAPI>, INewsOperations
+    public partial class NewsOperations : IServiceOperations<NewsSearchClient>, INewsOperations
     {
         /// <summary>
         /// Initializes a new instance of the NewsOperations class.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.NewsSearch
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public NewsOperations(NewsSearchAPI client)
+        public NewsOperations(NewsSearchClient client)
         {
             if (client == null)
             {
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.NewsSearch
         }
 
         /// <summary>
-        /// Gets a reference to the NewsSearchAPI
+        /// Gets a reference to the NewsSearchClient
         /// </summary>
-        public NewsSearchAPI Client { get; private set; }
+        public NewsSearchClient Client { get; private set; }
 
         /// <summary>
         /// The News Search API lets you send a search query to Bing and get back a
@@ -336,6 +336,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.NewsSearch
         /// </return>
         public async Task<HttpOperationResponse<News>> SearchWithHttpMessagesAsync(string query, string acceptLanguage = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), int? count = default(int?), string freshness = default(string), string market = default(string), int? offset = default(int?), bool? originalImage = default(bool?), string safeSearch = default(string), string setLang = default(string), string sortBy = default(string), bool? textDecorations = default(bool?), string textFormat = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (query == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "query");
@@ -370,8 +374,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.NewsSearch
                 ServiceClientTracing.Enter(_invocationId, this, "Search", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "news/search").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "news/search";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (countryCode != null)
             {
@@ -744,7 +749,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.NewsSearch
         /// multiple pages to include some overlap in results. If you do not specify
         /// the
         /// [category](https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-news-api-v7-reference#category)
-        /// parameter, Bing ignores this paramter.
+        /// parameter, Bing ignores this parameter.
         /// </param>
         /// <param name='headlineCount'>
         /// The number of headline articles to return in the response. The default is
@@ -780,7 +785,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.NewsSearch
         /// possible for multiple pages to include some overlap in results. If you do
         /// not specify the
         /// [category](https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-news-api-v7-reference#category)
-        /// parameter, Bing ignores this paramter.
+        /// parameter, Bing ignores this parameter.
         /// </param>
         /// <param name='originalImage'>
         /// A Boolean value that determines whether the image's contentUrl contains a
@@ -852,11 +857,21 @@ namespace Microsoft.Azure.CognitiveServices.Search.NewsSearch
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<HttpOperationResponse<News>> CategoryWithHttpMessagesAsync(string acceptLanguage = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), string category = default(string), int? count = default(int?), int? headlineCount = default(int?), string market = default(string), int? offset = default(int?), bool? originalImage = default(bool?), string safeSearch = default(string), string setLang = default(string), bool? textDecorations = default(bool?), string textFormat = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             string xBingApisSDK = "true";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -886,8 +901,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.NewsSearch
                 ServiceClientTracing.Enter(_invocationId, this, "Category", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "news").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "news";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (countryCode != null)
             {
@@ -1344,11 +1360,21 @@ namespace Microsoft.Azure.CognitiveServices.Search.NewsSearch
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<HttpOperationResponse<TrendingTopics>> TrendingWithHttpMessagesAsync(string acceptLanguage = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), int? count = default(int?), string market = default(string), int? offset = default(int?), string safeSearch = default(string), string setLang = default(string), long? since = default(long?), string sortBy = default(string), bool? textDecorations = default(bool?), string textFormat = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             string xBingApisSDK = "true";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1377,8 +1403,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.NewsSearch
                 ServiceClientTracing.Enter(_invocationId, this, "Trending", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "news/trendingtopics").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "news/trendingtopics";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (countryCode != null)
             {

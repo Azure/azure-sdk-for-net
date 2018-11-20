@@ -427,6 +427,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
         /// </return>
         public async Task<HttpOperationResponse<Images>> ImageSearchWithHttpMessagesAsync(string customConfig, string query, string acceptLanguage = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string aspect = default(string), string color = default(string), string countryCode = default(string), int? count = default(int?), string freshness = default(string), int? height = default(int?), string id = default(string), string imageContent = default(string), string imageType = default(string), string license = default(string), string market = default(string), long? maxFileSize = default(long?), long? maxHeight = default(long?), long? maxWidth = default(long?), long? minFileSize = default(long?), long? minHeight = default(long?), long? minWidth = default(long?), long? offset = default(long?), string safeSearch = default(string), string size = default(string), string setLang = default(string), int? width = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (customConfig == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "customConfig");
@@ -477,8 +481,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.CustomImageSearch
                 ServiceClientTracing.Enter(_invocationId, this, "ImageSearch", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "images/search").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "images/search";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (customConfig != null)
             {
