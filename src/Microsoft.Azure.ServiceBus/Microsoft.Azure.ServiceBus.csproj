@@ -5,7 +5,7 @@
     <Version>3.1.1</Version>
     <Authors>Microsoft</Authors>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <AssemblyOriginatorKeyFile>../../build/keyfile.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
@@ -33,6 +33,12 @@
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.4.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="[5.2.2, 6.0.0)" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
   </ItemGroup>
 
   <ItemGroup>
