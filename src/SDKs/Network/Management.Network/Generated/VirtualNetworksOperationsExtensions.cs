@@ -264,18 +264,18 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ipAddress'>
+            /// The private IP address to be verified.
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='virtualNetworkName'>
             /// The name of the virtual network.
             /// </param>
-            /// <param name='ipAddress'>
-            /// The private IP address to be verified.
-            /// </param>
-            public static IPAddressAvailabilityResult CheckIPAddressAvailability(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, string ipAddress)
+            public static IPAddressAvailabilityResult CheckIPAddressAvailability(this IVirtualNetworksOperations operations, string ipAddress, string resourceGroupName, string virtualNetworkName)
             {
-                return operations.CheckIPAddressAvailabilityAsync(resourceGroupName, virtualNetworkName, ipAddress).GetAwaiter().GetResult();
+                return operations.CheckIPAddressAvailabilityAsync(ipAddress, resourceGroupName, virtualNetworkName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -284,21 +284,21 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ipAddress'>
+            /// The private IP address to be verified.
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='virtualNetworkName'>
             /// The name of the virtual network.
             /// </param>
-            /// <param name='ipAddress'>
-            /// The private IP address to be verified.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPAddressAvailabilityResult> CheckIPAddressAvailabilityAsync(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, string ipAddress, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPAddressAvailabilityResult> CheckIPAddressAvailabilityAsync(this IVirtualNetworksOperations operations, string ipAddress, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckIPAddressAvailabilityWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, ipAddress, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckIPAddressAvailabilityWithHttpMessagesAsync(ipAddress, resourceGroupName, virtualNetworkName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

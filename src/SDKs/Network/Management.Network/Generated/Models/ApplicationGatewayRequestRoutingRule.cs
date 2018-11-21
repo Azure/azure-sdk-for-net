@@ -45,6 +45,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// application gateway. </param>
         /// <param name="urlPathMap">URL path map resource of the application
         /// gateway.</param>
+        /// <param name="rewriteRuleSet">Rewrite Rule Set resource in Basic
+        /// rule of the application gateway.</param>
         /// <param name="redirectConfiguration">Redirect configuration resource
         /// of the application gateway.</param>
         /// <param name="provisioningState">Provisioning state of the request
@@ -55,7 +57,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayRequestRoutingRule(string id = default(string), string ruleType = default(string), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), SubResource httpListener = default(SubResource), SubResource urlPathMap = default(SubResource), SubResource redirectConfiguration = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayRequestRoutingRule(string id = default(string), string ruleType = default(string), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), SubResource httpListener = default(SubResource), SubResource urlPathMap = default(SubResource), SubResource rewriteRuleSet = default(SubResource), SubResource redirectConfiguration = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             RuleType = ruleType;
@@ -63,6 +65,7 @@ namespace Microsoft.Azure.Management.Network.Models
             BackendHttpSettings = backendHttpSettings;
             HttpListener = httpListener;
             UrlPathMap = urlPathMap;
+            RewriteRuleSet = rewriteRuleSet;
             RedirectConfiguration = redirectConfiguration;
             ProvisioningState = provisioningState;
             Name = name;
@@ -108,6 +111,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.urlPathMap")]
         public SubResource UrlPathMap { get; set; }
+
+        /// <summary>
+        /// Gets or sets rewrite Rule Set resource in Basic rule of the
+        /// application gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.rewriteRuleSet")]
+        public SubResource RewriteRuleSet { get; set; }
 
         /// <summary>
         /// Gets or sets redirect configuration resource of the application

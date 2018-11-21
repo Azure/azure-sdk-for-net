@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// URL path map path rule.</param>
         /// <param name="redirectConfiguration">Redirect configuration resource
         /// of URL path map path rule.</param>
+        /// <param name="rewriteRuleSet">Rewrite rule set resource of URL path
+        /// map path rule.</param>
         /// <param name="provisioningState">Path rule of URL path map resource.
         /// Possible values are: 'Updating', 'Deleting', and 'Failed'.</param>
         /// <param name="name">Name of the path rule that is unique within an
@@ -49,13 +51,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayPathRule(string id = default(string), IList<string> paths = default(IList<string>), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), SubResource redirectConfiguration = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayPathRule(string id = default(string), IList<string> paths = default(IList<string>), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), SubResource redirectConfiguration = default(SubResource), SubResource rewriteRuleSet = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             Paths = paths;
             BackendAddressPool = backendAddressPool;
             BackendHttpSettings = backendHttpSettings;
             RedirectConfiguration = redirectConfiguration;
+            RewriteRuleSet = rewriteRuleSet;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -94,6 +97,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.redirectConfiguration")]
         public SubResource RedirectConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets rewrite rule set resource of URL path map path rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.rewriteRuleSet")]
+        public SubResource RewriteRuleSet { get; set; }
 
         /// <summary>
         /// Gets or sets path rule of URL path map resource. Possible values
