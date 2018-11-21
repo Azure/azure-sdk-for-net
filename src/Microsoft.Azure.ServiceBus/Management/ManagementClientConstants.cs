@@ -33,7 +33,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public static readonly TimeSpan MinimumLockDuration = TimeSpan.FromSeconds(5);
         public static readonly TimeSpan MaximumLockDuration = TimeSpan.FromMinutes(5);
         public static readonly TimeSpan MinimumAllowedAutoDeleteOnIdle = TimeSpan.FromMinutes(5);
-        public static readonly TimeSpan MaximumDuplicateDetectionHistoryTimeWindow = TimeSpan.FromDays(1);
+        public static readonly TimeSpan MaximumDuplicateDetectionHistoryTimeWindow = TimeSpan.FromDays(7);
         public static readonly TimeSpan MinimumDuplicateDetectionHistoryTimeWindow = TimeSpan.FromSeconds(20);
         public static readonly int MinAllowedMaxDeliveryCount = 1;
         public static readonly int MaxUserMetadataLength = 1024;

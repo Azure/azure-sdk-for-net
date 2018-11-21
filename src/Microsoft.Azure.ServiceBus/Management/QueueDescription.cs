@@ -35,7 +35,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <summary>
         /// Path of the queue relative to the namespace base address.
         /// </summary>
-        /// <remarks>Max length is 260 chars. Cannot start or end with a slash. 
+        /// <remarks>Max length is 260 chars. Cannot start or end with a slash.
         /// Cannot have restricted characters: '@','?','#','*'</remarks>
         public string Path
         {
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// </summary>
         /// <remarks>
         /// If true, the receiver can only recieve messages using <see cref="SessionClient.AcceptMessageSessionAsync()"/>.
-        /// Defaults to false. 
+        /// Defaults to false.
         /// </remarks>
         public bool RequiresSession { get; set; } = false;
 
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <remarks>
         /// This is the default value used when <see cref="Message.TimeToLive"/> is not set on a
         ///  message itself. Messages older than their TimeToLive value will expire and no longer be retained in the message store.
-        ///  Subscribers will be unable to receive expired messages. 
+        ///  Subscribers will be unable to receive expired messages.
         ///  Default value is <see cref="TimeSpan.MaxValue"/>.
         ///  </remarks>
         public TimeSpan DefaultMessageTimeToLive
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// The <see cref="TimeSpan"/> duration of duplicate detection history that is maintained by the service.
         /// </summary>
         /// <remarks>
-        /// The default value is 1 minute. Max value is 1 day and minimum is 20 seconds.
+        /// The default value is 1 minute. Max value is 7 days and minimum is 20 seconds.
         /// </remarks>
         public TimeSpan DuplicateDetectionHistoryTimeWindow
         {
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <summary>
         /// The maximum delivery count of a message before it is dead-lettered.
         /// </summary>
-        /// <remarks>The delivery count is increased when a message is received in <see cref="ReceiveMode.PeekLock"/> mode 
+        /// <remarks>The delivery count is increased when a message is received in <see cref="ReceiveMode.PeekLock"/> mode
         /// and didn't complete the message before the message lock expired.
         /// Default value is 10. Minimum value is 1.</remarks>
         public int MaxDeliveryCount
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <summary>
         /// The path of the recipient entity to which all the messages sent to the queue are forwarded to.
         /// </summary>
-        /// <remarks>If set, user cannot manually receive messages from this queue. The destination entity 
+        /// <remarks>If set, user cannot manually receive messages from this queue. The destination entity
         /// must be an already existing entity.</remarks>
         public string ForwardTo
         {
