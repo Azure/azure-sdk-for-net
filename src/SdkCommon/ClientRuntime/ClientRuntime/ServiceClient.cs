@@ -117,8 +117,9 @@ namespace Microsoft.Rest
                 if(string.IsNullOrWhiteSpace(_osVersion))
                 {
                     _osVersion = PlatformInfo.OsInfo.OsVersion;
-                    _osVersion = CleanUserAgentInfoEntry(_osVersion);
                 }
+
+                _osVersion = CleanUserAgentInfoEntry(_osVersion);
 
                 return _osVersion;
             }
