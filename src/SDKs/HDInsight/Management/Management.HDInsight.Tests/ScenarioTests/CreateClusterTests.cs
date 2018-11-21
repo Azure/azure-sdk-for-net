@@ -139,6 +139,16 @@ namespace Management.HDInsight.Tests
         }
 
         [Fact]
+        public void TestCreateWithDataLakeGen2StorageWithMsi()
+        {
+            string testName = nameof(TestCreateWithDataLakeGen2StorageWithMsi);
+            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersForAdlGen2(testName);
+            parameters.ClusterIdentity = ClusterCreateParametersHelpers.GetClusterIdentity();
+
+            RunCreateClusterTestInNewResourceGroup(GetType().FullName, testName, "hdisdk-adls2-msi", parameters);
+        }
+
+        [Fact]
         public void TestCreateRServerCluster()
         {
             string testName = "TestCreateRServerCluster";
