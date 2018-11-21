@@ -23,6 +23,46 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class UserOperationsExtensions
     {
             /// <summary>
+            /// Returns calling user identity information.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            public static CurrentUserIdentity GetIdentity(this IUserOperations operations, string resourceGroupName, string serviceName)
+            {
+                return operations.GetIdentityAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns calling user identity information.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CurrentUserIdentity> GetIdentityAsync(this IUserOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetIdentityWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists a collection of registered users in the specified service instance.
             /// </summary>
             /// <param name='operations'>
