@@ -8,7 +8,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Management.SecurityCenter\Microsoft.Azure.Management.SecurityCenter.csproj" />
+    <ProjectReference Include="..\Management.Security\Microsoft.Azure.Management.SecurityCenter.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2011
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.SecurityCenter", "Management.SecurityCenter\Microsoft.Azure.Management.SecurityCenter.csproj", "{53CEC855-E510-487A-9C4F-DE99DB0EF552}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.SecurityCenter", "Management.Security\Microsoft.Azure.Management.SecurityCenter.csproj", "{53CEC855-E510-487A-9C4F-DE99DB0EF552}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityCenter.Tests", "SecurityCenter.Tests\SecurityCenter.Tests.csproj", "{97B79E13-9C1E-4979-B0C4-1690879D258F}"
 EndProject
