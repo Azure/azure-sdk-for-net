@@ -96,6 +96,35 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(issueData.Name, newissueId);
                     Assert.Equal(adminUser.Id, issueData.UserId);
 
+                    // update the issue
+                    var updateTitle = TestUtilities.GenerateName("updatedTitle");
+                    var updateDescription = TestUtilities.GenerateName("updateddescription");
+
+                    var issueUpdateContract = new IssueUpdateContract()
+                    {
+                        Description = updateDescription,
+                        Title = updateTitle
+                    };
+
+                    await testBase.client.ApiIssue.UpdateAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        echoApi.Name,
+                        newissueId,
+                        issueUpdateContract);
+
+                    // get the issue
+                    issueData = await testBase.client.ApiIssue.GetAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        echoApi.Name,
+                        newissueId);
+                    Assert.NotNull(issueData);
+                    Assert.Equal(issueData.Name, newissueId);
+                    Assert.Equal(adminUser.Id, issueData.UserId);
+                    Assert.Equal(updateTitle, issueData.Title);
+                    Assert.Equal(updateDescription, issueData.Description);
+
                     // get commments on issue. there should be none initially
                     var emptyCommentList = await testBase.client.ApiIssueComment.ListByServiceAsync(
                         testBase.rgName,
