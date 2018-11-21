@@ -423,6 +423,16 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IManagedInstanceEncryptionProtectorsOperations ManagedInstanceEncryptionProtectors { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedInstanceVulnerabilityAssessmentsOperations.
+        /// </summary>
+        public virtual IManagedInstanceVulnerabilityAssessmentsOperations ManagedInstanceVulnerabilityAssessments { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerVulnerabilityAssessmentsOperations.
+        /// </summary>
+        public virtual IServerVulnerabilityAssessmentsOperations ServerVulnerabilityAssessments { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -693,6 +703,8 @@ namespace Microsoft.Azure.Management.Sql
             ManagedInstanceTdeCertificates = new ManagedInstanceTdeCertificatesOperations(this);
             ManagedInstanceKeys = new ManagedInstanceKeysOperations(this);
             ManagedInstanceEncryptionProtectors = new ManagedInstanceEncryptionProtectorsOperations(this);
+            ManagedInstanceVulnerabilityAssessments = new ManagedInstanceVulnerabilityAssessmentsOperations(this);
+            ServerVulnerabilityAssessments = new ServerVulnerabilityAssessmentsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

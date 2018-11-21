@@ -12,6 +12,7 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
+- Added Vulnerability Assessment operations on Server and Managed Instance
 - Support for short term retention on managed instance
 - Support for custom collation on managed instance
       ]]>
