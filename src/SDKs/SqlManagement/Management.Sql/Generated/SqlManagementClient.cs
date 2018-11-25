@@ -358,6 +358,16 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRestorePointsOperations RestorePoints { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedDatabaseSecurityAlertPoliciesOperations.
+        /// </summary>
+        public virtual IManagedDatabaseSecurityAlertPoliciesOperations ManagedDatabaseSecurityAlertPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedServerSecurityAlertPoliciesOperations.
+        /// </summary>
+        public virtual IManagedServerSecurityAlertPoliciesOperations ManagedServerSecurityAlertPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IDatabaseOperations.
         /// </summary>
         public virtual IDatabaseOperations DatabaseOperations { get; private set; }
@@ -690,6 +700,8 @@ namespace Microsoft.Azure.Management.Sql
             ServerDnsAliases = new ServerDnsAliasesOperations(this);
             ServerSecurityAlertPolicies = new ServerSecurityAlertPoliciesOperations(this);
             RestorePoints = new RestorePointsOperations(this);
+            ManagedDatabaseSecurityAlertPolicies = new ManagedDatabaseSecurityAlertPoliciesOperations(this);
+            ManagedServerSecurityAlertPolicies = new ManagedServerSecurityAlertPoliciesOperations(this);
             DatabaseOperations = new DatabaseOperations(this);
             ElasticPoolOperations = new ElasticPoolOperations(this);
             Capabilities = new CapabilitiesOperations(this);

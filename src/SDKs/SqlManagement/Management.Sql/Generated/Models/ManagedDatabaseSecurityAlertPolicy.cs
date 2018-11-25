@@ -18,21 +18,23 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// A server security alert policy.
+    /// A managed database security alert policy.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ServerSecurityAlertPolicy : ProxyResource
+    public partial class ManagedDatabaseSecurityAlertPolicy : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the ServerSecurityAlertPolicy class.
+        /// Initializes a new instance of the
+        /// ManagedDatabaseSecurityAlertPolicy class.
         /// </summary>
-        public ServerSecurityAlertPolicy()
+        public ManagedDatabaseSecurityAlertPolicy()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServerSecurityAlertPolicy class.
+        /// Initializes a new instance of the
+        /// ManagedDatabaseSecurityAlertPolicy class.
         /// </summary>
         /// <param name="state">Specifies the state of the policy, whether it
         /// is enabled or disabled. Possible values include: 'New', 'Enabled',
@@ -57,7 +59,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// the Threat Detection audit logs.</param>
         /// <param name="creationTime">Specifies the UTC creation time of the
         /// policy.</param>
-        public ServerSecurityAlertPolicy(SecurityAlertPolicyState state, string id = default(string), string name = default(string), string type = default(string), IList<string> disabledAlerts = default(IList<string>), IList<string> emailAddresses = default(IList<string>), bool? emailAccountAdmins = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), System.DateTime? creationTime = default(System.DateTime?))
+        public ManagedDatabaseSecurityAlertPolicy(SecurityAlertPolicyState state, string id = default(string), string name = default(string), string type = default(string), IList<string> disabledAlerts = default(IList<string>), IList<string> emailAddresses = default(IList<string>), bool? emailAccountAdmins = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), System.DateTime? creationTime = default(System.DateTime?))
             : base(id, name, type)
         {
             State = state;
