@@ -115,6 +115,16 @@ namespace Microsoft.Azure.Management.Logic
         public virtual IWorkflowRunActionRepetitionsOperations WorkflowRunActionRepetitions { get; private set; }
 
         /// <summary>
+        /// Gets the IWorkflowRunActionRepetitionsRequestHistoriesOperations.
+        /// </summary>
+        public virtual IWorkflowRunActionRepetitionsRequestHistoriesOperations WorkflowRunActionRepetitionsRequestHistories { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkflowRunActionRequestHistoriesOperations.
+        /// </summary>
+        public virtual IWorkflowRunActionRequestHistoriesOperations WorkflowRunActionRequestHistories { get; private set; }
+
+        /// <summary>
         /// Gets the IWorkflowRunActionScopeRepetitionsOperations.
         /// </summary>
         public virtual IWorkflowRunActionScopeRepetitionsOperations WorkflowRunActionScopeRepetitions { get; private set; }
@@ -423,6 +433,8 @@ namespace Microsoft.Azure.Management.Logic
             WorkflowRuns = new WorkflowRunsOperations(this);
             WorkflowRunActions = new WorkflowRunActionsOperations(this);
             WorkflowRunActionRepetitions = new WorkflowRunActionRepetitionsOperations(this);
+            WorkflowRunActionRepetitionsRequestHistories = new WorkflowRunActionRepetitionsRequestHistoriesOperations(this);
+            WorkflowRunActionRequestHistories = new WorkflowRunActionRequestHistoriesOperations(this);
             WorkflowRunActionScopeRepetitions = new WorkflowRunActionScopeRepetitionsOperations(this);
             WorkflowRunOperations = new WorkflowRunOperations(this);
             IntegrationAccounts = new IntegrationAccountsOperations(this);

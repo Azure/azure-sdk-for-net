@@ -11,32 +11,36 @@
 namespace Microsoft.Azure.Management.Logic.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The resource reference.
+    /// The request history.
     /// </summary>
-    public partial class ResourceReference
+    public partial class RequestHistory : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceReference class.
+        /// Initializes a new instance of the RequestHistory class.
         /// </summary>
-        public ResourceReference()
+        public RequestHistory()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceReference class.
+        /// Initializes a new instance of the RequestHistory class.
         /// </summary>
         /// <param name="id">The resource id.</param>
         /// <param name="name">Gets the resource name.</param>
         /// <param name="type">Gets the resource type.</param>
-        public ResourceReference(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="location">The resource location.</param>
+        /// <param name="tags">The resource tags.</param>
+        /// <param name="properties">The request history properties.</param>
+        public RequestHistory(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), RequestHistoryProperties properties = default(RequestHistoryProperties))
+            : base(id, name, type, location, tags)
         {
-            Id = id;
-            Name = name;
-            Type = type;
+            Properties = properties;
             CustomInit();
         }
 
@@ -46,22 +50,10 @@ namespace Microsoft.Azure.Management.Logic.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource id.
+        /// Gets or sets the request history properties.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets the resource name.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the resource type.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "properties")]
+        public RequestHistoryProperties Properties { get; set; }
 
     }
 }

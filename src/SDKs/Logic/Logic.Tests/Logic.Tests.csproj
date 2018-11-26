@@ -8,9 +8,14 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Version>1.0.0</Version>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="ScenarioTests\WorkflowRunActionRepetitionsRequestHistories.ScenarioTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="InMemoryTests\WorkflowRunActionRepetitionsRequestHistories.InMemoryTests.cs" />
+  </ItemGroup>
 
   <ItemGroup>  
-    <!--<PackageReference Include="Microsoft.Azure.Management.Logic" Version="3.0.0" />-->    
     <ProjectReference Include="..\Management.Logic\Microsoft.Azure.Management.Logic.csproj" />
   </ItemGroup>
 
