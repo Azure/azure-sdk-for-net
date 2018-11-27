@@ -1433,7 +1433,7 @@ namespace Microsoft.Azure.Management.Security
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
             _url = _url.Replace("{alertName}", System.Uri.EscapeDataString(alertName));
-            _url = _url.Replace("{alertUpdateActionType}", System.Uri.EscapeDataString(alertUpdateActionType));
+            _url = _url.Replace("{alertUpdateActionType}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(alertUpdateActionType, Client.SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -1643,7 +1643,7 @@ namespace Microsoft.Azure.Management.Security
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
             _url = _url.Replace("{alertName}", System.Uri.EscapeDataString(alertName));
-            _url = _url.Replace("{alertUpdateActionType}", System.Uri.EscapeDataString(alertUpdateActionType));
+            _url = _url.Replace("{alertUpdateActionType}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(alertUpdateActionType, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
