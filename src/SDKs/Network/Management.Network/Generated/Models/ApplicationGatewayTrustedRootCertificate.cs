@@ -36,8 +36,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="data">Certificate public data.</param>
-        /// <param name="keyvaultSecretId">KeyVault Secret Id for
-        /// certificate.</param>
+        /// <param name="keyVaultSecretId">Secret Id of (base-64 encoded
+        /// unencrypted pfx) 'Secret' or 'Certificate' object stored in
+        /// KeyVault.</param>
         /// <param name="provisioningState">Provisioning state of the trusted
         /// root certificate resource. Possible values are: 'Updating',
         /// 'Deleting', and 'Failed'.</param>
@@ -46,11 +47,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayTrustedRootCertificate(string id = default(string), string data = default(string), string keyvaultSecretId = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayTrustedRootCertificate(string id = default(string), string data = default(string), string keyVaultSecretId = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             Data = data;
-            KeyvaultSecretId = keyvaultSecretId;
+            KeyVaultSecretId = keyVaultSecretId;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -70,10 +71,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Data { get; set; }
 
         /// <summary>
-        /// Gets or sets keyVault Secret Id for certificate.
+        /// Gets or sets secret Id of (base-64 encoded unencrypted pfx)
+        /// 'Secret' or 'Certificate' object stored in KeyVault.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.keyvaultSecretId")]
-        public string KeyvaultSecretId { get; set; }
+        [JsonProperty(PropertyName = "properties.keyVaultSecretId")]
+        public string KeyVaultSecretId { get; set; }
 
         /// <summary>
         /// Gets or sets provisioning state of the trusted root certificate
