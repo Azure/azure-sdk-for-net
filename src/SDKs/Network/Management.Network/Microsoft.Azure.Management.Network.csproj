@@ -11,15 +11,12 @@
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-        - Added operations for ExpressRouteLinks, ExpressRoutePorts, ExpressRoutePortsLocations and LoadBalancerOutboundRules
-        - Added support for ApplicationGatewayCustomError and ApplicationGatewayFirewallExclusion
-        - Added support for parameters "MaxRequestBodySizeInKb" and "FileUploadLimitInMb" for ApplicationGatewayWebApplicationFirewallConfiguration
-        - Added support for "ICMP" value of AzureFirewallNetworkRuleProtocol
-        - Added support for parameter "AppliedTo" for EvaluatedNetworkSecurityGroup
-        - Added support for parameters "BandwidthInGbps" and "Stag" for ExpressRouteCircuit
-        - Added support for "Basic" value of ExpressRouteCircuitSkuTier
-        - Added support for parameter "VerbosityLevel" for NetworkConfigurationDiagnostic
-        - Renamed NetworkConfigurationDiagnostic's parameter "Queries" to "Profiles"
+        - Added new child resource for ApplicationGateway: ApplicationGatewayRewriteRuleSets
+        - Added support for ManagedServiceIdentity in ApplicationGateway
+        - Added support for KeyVault's secret Id in ApplicationGatewaySslCertificates
+        - Added support for FlowLogFormatParameters in FlowLogInformation
+        - Added support for TrafficAnalyticsInterval in TrafficAnalyticsConfiguration
+        - The following properties are made read-only as they were intended to be read-only: AzureFirewall's PrivateIPAddress, NetworkInterface's VirtualMachine
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
