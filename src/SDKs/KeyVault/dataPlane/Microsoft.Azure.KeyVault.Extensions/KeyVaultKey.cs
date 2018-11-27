@@ -17,10 +17,10 @@ namespace Microsoft.Azure.KeyVault
     /// </summary>
     internal class KeyVaultKey : IKey
     {
-        private readonly KeyVaultClient _client;
+        private readonly IKeyVaultClient _client;
         private          IKey           _implementation;
 
-        internal KeyVaultKey( KeyVaultClient client, KeyBundle keyBundle )
+        internal KeyVaultKey( IKeyVaultClient client, KeyBundle keyBundle )
         {
             switch ( keyBundle.Key.Kty )
             {
