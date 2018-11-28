@@ -35,8 +35,10 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// Initializes a new instance of the StorageBlobDeadLetterDestination
         /// class.
         /// </summary>
-        /// <param name="resourceId">The Azure Resource ID of the storage
-        /// account that is the destination of the deadletter events</param>
+        /// <param name="resourceId">The Azure Resource ID of the storage blob
+        /// container that is the destination of the deadletter events. For
+        /// example:
+        /// /subscriptions/{AzureSubscriptionId}/resourceGroups/{ResourceGroupName}/providers/microsoft.Storage/storageAccounts/{StorageAccountName}</param>
         /// <param name="blobContainerName">The name of the Storage blob
         /// container that is the destination of the deadletter events</param>
         public StorageBlobDeadLetterDestination(string resourceId = default(string), string blobContainerName = default(string))
@@ -52,8 +54,9 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Azure Resource ID of the storage account that is
-        /// the destination of the deadletter events
+        /// Gets or sets the Azure Resource ID of the storage blob container
+        /// that is the destination of the deadletter events. For example:
+        /// /subscriptions/{AzureSubscriptionId}/resourceGroups/{ResourceGroupName}/providers/microsoft.Storage/storageAccounts/{StorageAccountName}
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceId")]
         public string ResourceId { get; set; }

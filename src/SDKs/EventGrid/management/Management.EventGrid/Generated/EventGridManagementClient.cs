@@ -77,16 +77,6 @@ namespace Microsoft.Azure.Management.EventGrid
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IDomainsOperations.
-        /// </summary>
-        public virtual IDomainsOperations Domains { get; private set; }
-
-        /// <summary>
-        /// Gets the IDomainTopicsOperations.
-        /// </summary>
-        public virtual IDomainTopicsOperations DomainTopics { get; private set; }
-
-        /// <summary>
         /// Gets the IEventSubscriptionsOperations.
         /// </summary>
         public virtual IEventSubscriptionsOperations EventSubscriptions { get; private set; }
@@ -347,14 +337,12 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </summary>
         private void Initialize()
         {
-            Domains = new DomainsOperations(this);
-            DomainTopics = new DomainTopicsOperations(this);
             EventSubscriptions = new EventSubscriptionsOperations(this);
             Operations = new Operations(this);
             Topics = new TopicsOperations(this);
             TopicTypes = new TopicTypesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-09-15-preview";
+            ApiVersion = "2019-01-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -384,12 +372,8 @@ namespace Microsoft.Azure.Management.EventGrid
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EventSubscriptionDestination>("endpointType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventSubscriptionDestination>("endpointType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AdvancedFilter>("operatorType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AdvancedFilter>("operatorType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeadLetterDestination>("endpointType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeadLetterDestination>("endpointType"));
             CustomInitialize();
