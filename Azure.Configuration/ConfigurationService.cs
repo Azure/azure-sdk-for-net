@@ -3,36 +3,45 @@ using Azure.Core.Net;
 using Azure.Core.Net.Pipeline;
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.Buffers.Text.Encodings;
 
 namespace Azure.Configuration
 {
     public partial class ConfigurationService
     {
-        readonly ServicePipeline _pipeline;
+        internal const string SdkName = "Azure-Configuration";
+        internal const string SdkVersion = "1.0.0";
         readonly Uri _baseUri;
         readonly string _credential;
         readonly byte[] _secret;
 
+        public ServicePipeline Pipeline { get; }
+
         public readonly ConfigurationServiceOptions Options = new ConfigurationServiceOptions("v1.0");
+
+        static ServicePipeline CreateDefaultPipeline()
+        {
+            var pipeline = new ServicePipeline(
+                new HttpClientTransport(),
+                new LoggingPolicy(),
+                new RetryPolicy(),
+                new TelemetryPolicy(SdkName, SdkVersion, null)
+            );
+            return pipeline;
+        }
 
         public ConfigurationService(Uri baseUri, string credential, byte[] secret, ServicePipeline pipeline)
         {
-            _pipeline = pipeline;
+            Pipeline = pipeline;
             _baseUri = baseUri;
             _credential = credential;
             _secret = secret;
         }
 
         public ConfigurationService(Uri baseUri, string credential, byte[] secret)
-           : this(baseUri, credential, secret, new ServicePipeline(new HttpClientTransport(), new LoggingPolicy(), new RetryPolicy()))
+           : this(baseUri, credential, secret, CreateDefaultPipeline())
         { }
 
         public async Task<Response<KeyValue>> SetKeyValueAsync(KeyValue setting, CancellationToken cancellation)
@@ -45,15 +54,14 @@ namespace Azure.Configuration
             ServiceCallContext context = null;
             try
             {
-                context = _pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
-                context.AddHeader(Options.UserAgentHeader);
+                context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
 
                 context.AddHeader("Accept", MediaTypeKeyValueApplication);
                 context.AddHeader(Header.Common.JsonContentType);
 
                 WriteJsonContent(setting, context);
 
-                await _pipeline.ProcessAsync(context).ConfigureAwait(false);
+                await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
                 ServiceResponse response = context.Response;
                 if (!response.TryGetHeader(Header.Constants.ContentLength, out long contentLength))
@@ -87,8 +95,7 @@ namespace Azure.Configuration
 
             ServiceCallContext context = null;
             try {
-                context = _pipeline.CreateContext(cancellation, ServiceMethod.Get, url);
-                context.AddHeader(Options.UserAgentHeader);
+                context = Pipeline.CreateContext(cancellation, ServiceMethod.Get, url);
 
                 context.AddHeader("Accept", MediaTypeKeyValueApplication);
 
@@ -97,7 +104,7 @@ namespace Azure.Configuration
                     context.AddHeader(AcceptDatetimeHeader, dateTime);
                 }
                 
-                await _pipeline.ProcessAsync(context).ConfigureAwait(false);
+                await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
                 ServiceResponse response = context.Response;
                 if (!response.TryGetHeader(Header.Constants.ContentLength, out long contentLength)) {
@@ -123,13 +130,11 @@ namespace Azure.Configuration
         {
             internal Header UserAgentHeader;
             string _applicationId;
-            string _apiVersion;
 
             public ConfigurationServiceOptions(string apiVersion)
             {
-                _apiVersion = apiVersion;
                 _applicationId = default;
-                UserAgentHeader = Header.Common.CreateUserAgent(sdkName: "Azure-Configuration", sdkVersion: "1.0.0", _applicationId);
+                UserAgentHeader = Header.Common.CreateUserAgent(SdkName, SdkVersion, _applicationId);
             }
 
             public string ApplicationId
@@ -138,7 +143,7 @@ namespace Azure.Configuration
                 set {
                     if (string.Equals(_applicationId, value, StringComparison.Ordinal)) return;
                     _applicationId = value;
-                    UserAgentHeader = Header.Common.CreateUserAgent(sdkName: "Azure-CognitiveServices-Face", sdkVersion: "1.0.0", _applicationId);
+                    UserAgentHeader = Header.Common.CreateUserAgent(SdkName, SdkVersion, _applicationId);
                 }
             }
 

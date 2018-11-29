@@ -8,6 +8,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using static System.Buffers.Text.Encodings;
 
 namespace Azure.Configuration.Tests
 {
@@ -32,9 +34,9 @@ namespace Azure.Configuration.Tests
             var transport = new SetKeyValueMockTransport();
             transport.KeyValue = s_testKey;
 
-            var pipeline = new ServicePipeline(transport, new RetryPolicy());
+            var service = new ConfigurationService(uri, credential, secret);
+            service.Pipeline.Transport = transport;
 
-            var service = new ConfigurationService(uri, credential, secret, pipeline);
             Response<KeyValue> added = await service.SetKeyValueAsync(s_testKey, CancellationToken.None);
 
             Assert.AreEqual(s_testKey.Key, added.Result.Key);
@@ -52,9 +54,9 @@ namespace Azure.Configuration.Tests
             var transport = new GetKeyValueMockTransport();
             transport.KeyValue = s_testKey;
 
-            var pipeline = new ServicePipeline(transport, new RetryPolicy());
+            var service = new ConfigurationService(uri, credential, secret);
+            service.Pipeline.Transport = transport;
 
-            var service = new ConfigurationService(uri, credential, secret, pipeline);
             Response<KeyValue> added = await service.GetKeyValueAsync("test", default, CancellationToken.None);
 
             Assert.AreEqual(s_testKey.Key, added.Result.Key);
@@ -64,16 +66,35 @@ namespace Azure.Configuration.Tests
         }
     }
 
-    class SetKeyValueMockTransport : HttpClientTransport
+    abstract class MockHttpClientTransport: HttpClientTransport
+    {
+        protected static void VerifyUserAgentHeader(HttpRequestMessage request)
+        {
+            var expected = Utf8.ToString(Header.Common.CreateUserAgent("Azure-Configuration", "1.0.0").Value);
+
+            Assert.True(request.Headers.Contains("User-Agent"));
+            var userAgentValues = request.Headers.GetValues("User-Agent");
+
+            foreach(var value in userAgentValues)
+            {
+                if (expected.StartsWith(value)) return;
+            }
+            Assert.Fail("could not find User-Agent header value " + expected);
+        }
+    }
+
+    class SetKeyValueMockTransport : MockHttpClientTransport
     {
         public KeyValue KeyValue;
 
         protected override Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage request)
         {
             Assert.AreEqual(HttpMethod.Put, request.Method);
+            VerifyUserAgentHeader(request);
 
             HttpResponseMessage response = new HttpResponseMessage();
-            if (request.RequestUri.AbsolutePath.StartsWith($"/kv/{KeyValue.Key}")) {
+            if (request.RequestUri.AbsolutePath.StartsWith($"/kv/{KeyValue.Key}"))
+            {
                 response.StatusCode = HttpStatusCode.OK;
                 string json = JsonConvert.SerializeObject(KeyValue).ToLowerInvariant();
                 long jsonBytes = Encoding.UTF8.GetByteCount(json);
@@ -85,13 +106,14 @@ namespace Azure.Configuration.Tests
         }
     }
 
-    class GetKeyValueMockTransport : HttpClientTransport
+    class GetKeyValueMockTransport : MockHttpClientTransport
     {
         public KeyValue KeyValue;
 
         protected override Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage request)
         {
             Assert.AreEqual(HttpMethod.Get, request.Method);
+            VerifyUserAgentHeader(request);
 
             HttpResponseMessage response = new HttpResponseMessage();
             if (request.RequestUri.AbsolutePath.StartsWith($"/kv/{KeyValue.Key}")) {
