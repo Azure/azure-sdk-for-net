@@ -13,6 +13,7 @@ namespace Azure.Configuration
     {
         internal const string SdkName = "Azure-Configuration";
         internal const string SdkVersion = "1.0.0";
+
         readonly Uri _baseUri;
         readonly string _credential;
         readonly byte[] _secret;

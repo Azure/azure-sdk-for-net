@@ -8,8 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using static System.Buffers.Text.Encodings;
+using Azure.Configuration.Test;
 
 namespace Azure.Configuration.Tests
 {
@@ -66,43 +65,25 @@ namespace Azure.Configuration.Tests
         }
     }
 
-    abstract class MockHttpClientTransport: HttpClientTransport
-    {
-        protected static void VerifyUserAgentHeader(HttpRequestMessage request)
-        {
-            var expected = Utf8.ToString(Header.Common.CreateUserAgent("Azure-Configuration", "1.0.0").Value);
-
-            Assert.True(request.Headers.Contains("User-Agent"));
-            var userAgentValues = request.Headers.GetValues("User-Agent");
-
-            foreach(var value in userAgentValues)
-            {
-                if (expected.StartsWith(value)) return;
-            }
-            Assert.Fail("could not find User-Agent header value " + expected);
-        }
-    }
-
     class SetKeyValueMockTransport : MockHttpClientTransport
     {
         public KeyValue KeyValue;
 
-        protected override Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage request)
+        public SetKeyValueMockTransport()
         {
-            Assert.AreEqual(HttpMethod.Put, request.Method);
-            VerifyUserAgentHeader(request);
+            _expectedMethod = HttpMethod.Put;
+            _expectedUri = "https://contoso.azconfig.io/kv/test?label=test";
+            _expectedContent = "{\"key\":\"test_now\",\"content_type\":\"text\"}";
+            _responseCode = HttpStatusCode.OK;
+        }
 
-            HttpResponseMessage response = new HttpResponseMessage();
-            if (request.RequestUri.AbsolutePath.StartsWith($"/kv/{KeyValue.Key}"))
-            {
-                response.StatusCode = HttpStatusCode.OK;
-                string json = JsonConvert.SerializeObject(KeyValue).ToLowerInvariant();
-                long jsonBytes = Encoding.UTF8.GetByteCount(json);
-                response.Content = new StringContent(json, Encoding.UTF8, "application/json");
-                response.Content.Headers.Add("Content-Length", jsonBytes.ToString());
-            }
+        protected override void WriteResponseCore(HttpResponseMessage response)
+        {
+            string json = JsonConvert.SerializeObject(KeyValue).ToLowerInvariant();
+            response.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            return Task.FromResult(response);
+            long jsonByteCount = Encoding.UTF8.GetByteCount(json);
+            response.Content.Headers.Add("Content-Length", jsonByteCount.ToString());
         }
     }
 
@@ -110,24 +91,21 @@ namespace Azure.Configuration.Tests
     {
         public KeyValue KeyValue;
 
-        protected override Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage request)
+        public GetKeyValueMockTransport()
         {
-            Assert.AreEqual(HttpMethod.Get, request.Method);
-            VerifyUserAgentHeader(request);
+            _expectedMethod = HttpMethod.Get;
+            _expectedUri = "https://contoso.azconfig.io/kv/test";
+            _expectedContent = null;
+            _responseCode = HttpStatusCode.OK;
+        }
 
-            HttpResponseMessage response = new HttpResponseMessage();
-            if (request.RequestUri.AbsolutePath.StartsWith($"/kv/{KeyValue.Key}")) {
-                response.StatusCode = HttpStatusCode.OK;
-                string json = JsonConvert.SerializeObject(KeyValue).ToLowerInvariant();
-                long jsonBytes = Encoding.UTF8.GetByteCount(json);
-                response.Content = new StringContent(json, Encoding.UTF8, "application/json");
-                response.Content.Headers.Add("Content-Length", jsonBytes.ToString());
-            }
-            else {
-                response.StatusCode = HttpStatusCode.NotFound;
-            }
+        protected override void WriteResponseCore(HttpResponseMessage response)
+        {
+            string json = JsonConvert.SerializeObject(KeyValue).ToLowerInvariant();
+            response.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            return Task.FromResult(response);
+            long jsonByteCount = Encoding.UTF8.GetByteCount(json);
+            response.Content.Headers.Add("Content-Length", jsonByteCount.ToString());
         }
     }
 }
