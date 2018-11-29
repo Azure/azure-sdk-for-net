@@ -31,6 +31,8 @@ namespace Azure.Configuration.Tests
 
             var transport = new SetKeyValueMockTransport();
             transport.KeyValue = s_testKey;
+            transport.Responses.Add(HttpStatusCode.NotFound);
+            transport.Responses.Add(HttpStatusCode.OK);
 
             var service = new ConfigurationService(uri, credential, secret);
             service.Pipeline.Transport = transport;
@@ -51,6 +53,8 @@ namespace Azure.Configuration.Tests
 
             var transport = new GetKeyValueMockTransport();
             transport.KeyValue = s_testKey;
+            transport.Responses.Add(HttpStatusCode.NotFound);
+            transport.Responses.Add(HttpStatusCode.OK);
 
             var service = new ConfigurationService(uri, credential, secret);
             service.Pipeline.Transport = transport;
@@ -67,13 +71,12 @@ namespace Azure.Configuration.Tests
     class SetKeyValueMockTransport : MockHttpClientTransport
     {
         public KeyValue KeyValue;
-
+        
         public SetKeyValueMockTransport()
         {
             _expectedMethod = HttpMethod.Put;
             _expectedUri = "https://contoso.azconfig.io/kv/test?label=test";
             _expectedContent = "{\"key\":\"test_now\",\"content_type\":\"text\"}";
-            _responseCode = HttpStatusCode.OK;
         }
 
         protected override void WriteResponseCore(HttpResponseMessage response)
@@ -95,7 +98,6 @@ namespace Azure.Configuration.Tests
             _expectedMethod = HttpMethod.Get;
             _expectedUri = "https://contoso.azconfig.io/kv/test";
             _expectedContent = null;
-            _responseCode = HttpStatusCode.OK;
         }
 
         protected override void WriteResponseCore(HttpResponseMessage response)

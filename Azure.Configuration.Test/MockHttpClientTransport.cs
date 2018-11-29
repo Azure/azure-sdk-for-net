@@ -2,6 +2,7 @@
 using Azure.Core.Net.Pipeline;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -15,7 +16,9 @@ namespace Azure.Configuration.Test
         protected HttpMethod _expectedMethod;
         protected string _expectedUri;
         protected string _expectedContent;
-        protected HttpStatusCode _responseCode;
+        int _nextResponse;
+
+        public List<Response> Responses = new List<Response>();
 
         protected override Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage request)
         {
@@ -69,7 +72,16 @@ namespace Azure.Configuration.Test
 
         void WriteResponse(HttpResponseMessage response)
         {
-            response.StatusCode = _responseCode;
+            if (_nextResponse >= Responses.Count) _nextResponse = 0;
+            var mockResponse = Responses[_nextResponse++];
+            response.StatusCode = mockResponse.ResponseCode;
+        }
+
+        public class Response
+        {
+            public HttpStatusCode ResponseCode;
+
+            public static implicit operator Response(HttpStatusCode status) => new Response() {  ResponseCode = status };
         }
     }
 }
