@@ -1,5 +1,4 @@
 ﻿using Azure.Core.Net;
-using Azure.Core.Net.Pipeline;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
