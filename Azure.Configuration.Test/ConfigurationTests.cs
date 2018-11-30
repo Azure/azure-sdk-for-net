@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Configuration.Test;
+using Azure.Core.Testing;
 
 namespace Azure.Configuration.Tests
 {
@@ -29,13 +30,15 @@ namespace Azure.Configuration.Tests
             string connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
             ConfigurationService.ParseConnectionString(connectionString, out var uri, out var credential, out var secret);
 
+            var service = new ConfigurationService(uri, credential, secret);
+
             var transport = new SetKeyValueMockTransport();
             transport.KeyValue = s_testKey;
             transport.Responses.Add(HttpStatusCode.NotFound);
             transport.Responses.Add(HttpStatusCode.OK);
-
-            var service = new ConfigurationService(uri, credential, secret);
             service.Pipeline.Transport = transport;
+            var pool = new TestPool<byte>();
+            service.Pipeline.Pool = pool;
 
             Response<KeyValue> added = await service.SetKeyValueAsync(s_testKey, CancellationToken.None);
 
@@ -43,6 +46,9 @@ namespace Azure.Configuration.Tests
             Assert.AreEqual(s_testKey.Label, added.Result.Label);
             Assert.AreEqual(s_testKey.ContentType, added.Result.ContentType);
             Assert.AreEqual(s_testKey.Locked, added.Result.Locked);
+
+            added.Dispose();
+            Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
         [Test]
@@ -51,13 +57,15 @@ namespace Azure.Configuration.Tests
             string connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
             ConfigurationService.ParseConnectionString(connectionString, out var uri, out var credential, out var secret);
 
+            var service = new ConfigurationService(uri, credential, secret);
+
             var transport = new GetKeyValueMockTransport();
             transport.KeyValue = s_testKey;
             transport.Responses.Add(HttpStatusCode.NotFound);
             transport.Responses.Add(HttpStatusCode.OK);
-
-            var service = new ConfigurationService(uri, credential, secret);
             service.Pipeline.Transport = transport;
+            var pool = new TestPool<byte>();
+            service.Pipeline.Pool = pool;
 
             Response<KeyValue> added = await service.GetKeyValueAsync("test", default, CancellationToken.None);
 

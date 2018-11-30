@@ -86,7 +86,7 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<KeyValue>> GetKeyValueAsync(string key, GetKeyValueOptions options, CancellationToken cancellation)
+         public async Task<Response<KeyValue>> GetKeyValueAsync(string key, GetKeyValueOptions options, CancellationToken cancellation)
         {
             if (string.IsNullOrEmpty(key)) {
                 throw new ArgumentNullException(nameof(key));
