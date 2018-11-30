@@ -70,5 +70,9 @@ namespace Azure.Configuration
         /// If set, then key values will be retrieved exactly as they existed at the provided time.
         /// </summary>
         public DateTimeOffset? PreferredDateTime { get; set; }
+
+        public int Index { get; set; }
     }
+
+    public struct KeyValueRange { }
 }

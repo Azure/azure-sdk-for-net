@@ -27,8 +27,10 @@ namespace Azure.Configuration.Test
             VerifyUserAgentHeader(request);
             VerifyRequestCore(request);
             HttpResponseMessage response = new HttpResponseMessage();
-            WriteResponse(response);
-            WriteResponseCore(response);
+            if (WriteResponse(response))
+            {
+                WriteResponseCore(response);
+            }
             return Task.FromResult(response);
         }
 
@@ -38,7 +40,7 @@ namespace Azure.Configuration.Test
         void VerifyRequestLine(HttpRequestMessage request)
         {
             Assert.AreEqual(_expectedMethod, request.Method);
-            Assert.AreEqual(_expectedUri, request.RequestUri.OriginalString);
+            if(_expectedUri != null) Assert.AreEqual(_expectedUri, request.RequestUri.OriginalString);
             Assert.AreEqual(new Version(2, 0), request.Version);
         }
 
@@ -70,11 +72,12 @@ namespace Azure.Configuration.Test
             Assert.Fail("could not find User-Agent header value " + expected);
         }
 
-        void WriteResponse(HttpResponseMessage response)
+        bool WriteResponse(HttpResponseMessage response)
         {
             if (_nextResponse >= Responses.Count) _nextResponse = 0;
             var mockResponse = Responses[_nextResponse++];
             response.StatusCode = mockResponse.ResponseCode;
+            return response.StatusCode == HttpStatusCode.OK;
         }
 
         public class Response

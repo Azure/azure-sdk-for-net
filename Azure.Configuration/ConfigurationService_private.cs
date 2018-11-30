@@ -19,7 +19,6 @@ namespace Azure.Configuration
     public partial class ConfigurationService
     {
         #region String Table
-        const string MediaTypeKeyValueApplication = "application/vnd.microsoft.appconfig.kv+json";
         const string MediaTypeProblemApplication = "application/problem+json";
 
         const string KvRoute = "/kv/";
@@ -33,6 +32,11 @@ namespace Azure.Configuration
         const string AcceptDateTimeFormat = "ddd, dd MMM yyy HH:mm:ss 'GMT'";
         const string AcceptDatetimeHeader = "Accept-Datetime";
         #endregion
+
+        static readonly Header MediaTypeKeyValueApplicationHeader = new Header(
+            Header.Constants.Accept,
+            Encoding.ASCII.GetBytes("application/vnd.microsoft.appconfig.kv+json")
+        );
 
         void WriteJsonContent(KeyValue setting, ServiceCallContext context)
         {

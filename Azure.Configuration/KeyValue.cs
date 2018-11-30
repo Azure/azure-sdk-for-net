@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Azure.Core.Net;
+using System;
 using System.Buffers;
 using System.Buffers.Text;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.JsonLab;
@@ -54,7 +56,44 @@ namespace Azure.Configuration
         public IDictionary<string, string> Tags { get; set; }
     }
 
-    static class KeyValueResultParser
+    public sealed class KeyValueBatch : IEnumerable<KeyValue>
+    {
+        List<KeyValue> _parsed;
+
+        public int NextIndex { get; set; }
+
+        internal static KeyValueBatch Parse(ServiceResponse response)
+        {
+            var batch = new KeyValueBatch();
+            if (TryGetNextAfterValue(ref response, out int next))
+            {
+                batch.NextIndex = next;
+            }
+            ConfigurationServiceParser.TryParse(response.Content, out batch._parsed, out long consumed);
+            return batch;
+        }
+
+        public IEnumerator<KeyValue> GetEnumerator() => _parsed.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => _parsed.GetEnumerator();
+
+        static readonly byte[] s_link = Encoding.ASCII.GetBytes("Link");
+        static readonly byte[] s_after = Encoding.ASCII.GetBytes("?after=");
+        static bool TryGetNextAfterValue(ref ServiceResponse response, out int afterValue)
+        {
+            afterValue = default;
+            ReadOnlySpan<byte> headerValue = default;
+            if (!response.TryGetHeader(s_link, out headerValue)) return false;
+
+            // the headers value is something like this: "</kv?after=10>;rel=\"next\""
+            var afterIndex = headerValue.IndexOf(s_after);
+            if (afterIndex < 0) return false;
+
+            ReadOnlySpan<byte> urlBytes = headerValue.Slice(afterIndex + s_after.Length);
+            return Utf8Parser.TryParse(urlBytes, out afterValue, out _);
+        }
+    }
+
+    static class ConfigurationServiceParser
     {
         static byte[][] s_nameTable;
         static JsonState[] s_valueTable;
@@ -101,9 +140,10 @@ namespace Azure.Configuration
             }
         }
 
-        public static KeyValue Parse(ReadOnlySequence<byte> content)
+        public static bool TryParse(ReadOnlySequence<byte> content, out KeyValue result, out long consumed)
         {
-            var result = new KeyValue();
+            result = new KeyValue();
+            consumed = 0;
             var json = new Utf8JsonReader(content, true);
             JsonState state = JsonState.Other;
             while (json.Read())
@@ -122,7 +162,46 @@ namespace Azure.Configuration
                 }
             }
 
-            return result;
+            consumed = json.Consumed;
+            return true;
+        }
+
+        public static bool TryParse(ReadOnlySequence<byte> content, out List<KeyValue> result, out long consumed)
+        {
+            var debug = Encoding.UTF8.GetString(content.ToArray());
+
+            result = new List<KeyValue>();
+            consumed = 0;
+            var json = new Utf8JsonReader(content, true);
+            JsonState state = JsonState.Other;
+            KeyValue value = default;
+            while (json.Read())
+            {
+                switch (json.TokenType)
+                {
+                    case JsonTokenType.StartObject:
+                        value = new KeyValue();
+                        break;
+                    case JsonTokenType.EndObject:
+                        result.Add(value);
+                        break;
+                    case JsonTokenType.EndArray:
+                        consumed = json.Consumed;
+                        return true;
+                    case JsonTokenType.PropertyName:
+                        state = json.Value.ToJsonState();
+                        break;
+                    case JsonTokenType.Number:
+                    case JsonTokenType.String:
+                    case JsonTokenType.False:
+                    case JsonTokenType.True:
+                        SetValue(ref json, state, ref value);
+                        break;
+                }
+            }
+
+            consumed = json.Consumed;
+            return true;
         }
 
         static JsonState ToJsonState(this ReadOnlySpan<byte> propertyName)
@@ -137,7 +216,7 @@ namespace Azure.Configuration
             return JsonState.Other;
         }
 
-        static KeyValueResultParser()
+        static ConfigurationServiceParser()
         {
             var names = Enum.GetNames(typeof(JsonState));
             s_nameTable = new byte[names.Length][];

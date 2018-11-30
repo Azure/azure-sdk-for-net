@@ -45,7 +45,7 @@ namespace Azure.Configuration
            : this(baseUri, credential, secret, CreateDefaultPipeline())
         { }
 
-        public async Task<Response<KeyValue>> SetKeyValueAsync(KeyValue setting, CancellationToken cancellation)
+        public async Task<Response<KeyValue>> SetAsync(KeyValue setting, CancellationToken cancellation)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -57,7 +57,7 @@ namespace Azure.Configuration
             {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
 
-                context.AddHeader("Accept", MediaTypeKeyValueApplication);
+                context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(Header.Common.JsonContentType);
 
                 WriteJsonContent(setting, context);
@@ -75,7 +75,10 @@ namespace Azure.Configuration
                 Func<ReadOnlySequence<byte>, KeyValue> contentParser = null;
                 if (response.Status == 200)
                 {
-                    contentParser = (ros) => { return KeyValueResultParser.Parse(ros); };
+                    contentParser = (ros) => {
+                        if(ConfigurationServiceParser.TryParse(ros, out KeyValue result, out _)) return result;
+                        throw new Exception("invalid response content");
+                    };
                 }
                 return new Response<KeyValue>(response, contentParser);
             }
@@ -86,7 +89,7 @@ namespace Azure.Configuration
             }
         }
 
-         public async Task<Response<KeyValue>> GetKeyValueAsync(string key, GetKeyValueOptions options, CancellationToken cancellation)
+        public async Task<Response<KeyValue>> GetAsync(string key, GetKeyValueOptions options, CancellationToken cancellation)
         {
             if (string.IsNullOrEmpty(key)) {
                 throw new ArgumentNullException(nameof(key));
@@ -98,7 +101,7 @@ namespace Azure.Configuration
             try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Get, url);
 
-                context.AddHeader("Accept", MediaTypeKeyValueApplication);
+                context.AddHeader(MediaTypeKeyValueApplicationHeader);
 
                 if (options != null && options.PreferredDateTime.HasValue) {
                     var dateTime = options.PreferredDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
@@ -116,7 +119,10 @@ namespace Azure.Configuration
 
                 Func<ReadOnlySequence<byte>, KeyValue> contentParser = null;
                 if (response.Status == 200) {
-                    contentParser = (ros) => { return KeyValueResultParser.Parse(ros); };
+                    contentParser = (ros) => {
+                        if (ConfigurationServiceParser.TryParse(ros, out KeyValue result, out _)) return result;
+                        throw new Exception("invalid response content");
+                    };
                 }
                 // TODO (pri 1): make sure the right things happen for NotFound reponse
                 return new Response<KeyValue>(response, contentParser);
