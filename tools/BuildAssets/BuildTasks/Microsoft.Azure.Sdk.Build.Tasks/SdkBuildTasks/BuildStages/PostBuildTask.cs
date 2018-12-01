@@ -202,6 +202,15 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             return combinedApiMap;
         }
 
+        //private Assembly GetAssemblyFromAD(string assemblyFullPath)
+        //{
+        //    var domain = AppDomain.CreateDomain("NewDomainName");
+        //    var t = typeof(TypeIWantToLoad);
+        //    var runnable = domain.CreateInstanceFromAndUnwrap(@"C:\myDll.dll", t.Name) as IRunnable;
+        //    if (runnable == null) throw new Exception("broke");
+        //    runnable.Run();
+        //}
+
         private IEnumerable<Tuple<string, string>> NormalizeTuple(IEnumerable<Tuple<string, string, string>> apiMap)
         {
             //TODO: get rid of second dictionary (optimize)

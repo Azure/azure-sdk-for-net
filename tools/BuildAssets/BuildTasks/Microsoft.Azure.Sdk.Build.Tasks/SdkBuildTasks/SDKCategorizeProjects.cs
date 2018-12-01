@@ -183,6 +183,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
 
         public string[] UnFilteredProjects { get; private set; }
+        public object Contstants { get; private set; }
         #endregion
 
         /// <summary>
@@ -502,8 +503,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         private List<string> GetProjectImports(SdkProjectMetaData sdkProjMD)
         {
-            string rpProps = Constants.BuildStageConstant.PROPS_APITAG_FILE_NAME;
-            string multiApiProps = Constants.BuildStageConstant.PROPS_MULTIAPITAG_FILE_NAME;
+            string apiTagFileName = GetApiTagFileName(sdkProjMD);
+            //string rpProps = Constants.BuildStageConstant.PROPS_APITAG_FILE_NAME;
+            //string multiApiProps = Constants.BuildStageConstant.PROPS_MULTIAPITAG_FILE_NAME;
             //$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))
             List<string> importList = new List<string>();
             ProjectRootElement rootElm = sdkProjMD.MsBuildProject.Xml;
@@ -511,18 +513,44 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             foreach(ProjectImportElement imp in importElms)
             {
-                if(imp.Project.Contains(rpProps))
+                if(imp.Project.Contains(apiTagFileName))
                 {
-                    importList.Add(rpProps);
+                    importList.Add(apiTagFileName);
                 }
 
-                if(imp.Project.Contains(multiApiProps))
-                {
-                    importList.Add(multiApiProps);
-                }
+                //if(imp.Project.Contains(rpProps))
+                //{
+                //    importList.Add(rpProps);
+                //}
+
+                //if(imp.Project.Contains(multiApiProps))
+                //{
+                //    importList.Add(multiApiProps);
+                //}
             }
 
             return importList;
+        }
+
+        private string GetApiTagFileName(SdkProjectMetaData sdkProjMD)
+        {
+            string projFilePath = sdkProjMD.FullProjectPath.ToLower();
+            string apiTagFileName = string.Empty;
+            //if(projFilePath.Contains("Profiles", new ObjectComparer<string>((l, r) => l.Equals(r, StringComparison.OrdinalIgnoreCase))))
+            if (projFilePath.Contains("profiles"))
+            {
+                apiTagFileName = Constants.BuildStageConstant.PROPS_PROFILE_FILE_NAME;
+            }
+            else if (projFilePath.Contains("multiapi"))
+            {
+                apiTagFileName = Constants.BuildStageConstant.PROPS_MULTIAPITAG_FILE_NAME;
+            }
+            else
+            {
+                apiTagFileName = Constants.BuildStageConstant.PROPS_APITAG_FILE_NAME;
+            }
+
+            return apiTagFileName;
         }
 
         private string GetTargetFullPath(SdkProjectMetaData sdkProj, string targetFxMoniker)
