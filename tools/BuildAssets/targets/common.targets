@@ -24,9 +24,9 @@
       CleanLatestProjects;
       CleanSDKPackageFiles
     </CleanTraversedProjectsDependsOn>
-	<CoreAzSdkBuildDependsOn>
-		BuildAzSdkProjects;
-	</CoreAzSdkBuildDependsOn>
+	  <CoreAzSdkBuildDependsOn>
+		  BuildAzSdkProjects;
+	  </CoreAzSdkBuildDependsOn>
     <BuildTraversedProjectsDependsOn>
       $(PreBuildStaticAnalysisTargets);
       RestoreLatestProjects;
@@ -48,12 +48,12 @@
       SignNugetPackage;
     </SignNugetDependsOn>
     <PackageNugetDependsOn>
-      $(RunTestProjectsDependsOn);
-      RunSignTargets;
+      $(SignDependsOn);
       Package;
     </PackageNugetDependsOn>
     <PublishNugetDependsOn>
 	    <!-- SignNugetPackage; -->
+      $(SignNugetDependsOn);
       PublishingNuget
     </PublishNugetDependsOn>
     <HelpDependsOn>
@@ -74,6 +74,7 @@
     <Message Text="PackageOutputPath .... $(PackageOutputPath)" Importance="Low" />
     <Message Text="Scope .... $(Scope)"  Importance="Low" />
     <Message Text="BuildInParallel .... $(BuildInParallel)"  Importance="Low" />
+    <Message Text="LocalPublishNugetDir .... $(LocalPublishNugetDir)"  Importance="Low" />
 
     <Message Text="NetSdkBuildTargetsDir .... $(NetSdkBuildTargetsDir)"  Importance="Low" />
     <Message Text="NetSdkBuildToolsDir .... $(NetSdkBuildToolsDir)" Importance="Low" />
@@ -278,7 +279,8 @@
         PackageOutputPath=$(PackageOutputPath); 
         NoPackageAnalysis=true; 
         IncludeSymbols=true;
-        NoBuild=true;">
+        SymbolPackageFormat=snupkg;
+        NoBuild=true;" Condition=" '@(ProjectsToPackage)' != '' ">
       <Output TaskParameter="TargetOutputs" ItemName="SdkNuGetPackages" />
     </MSBuild>
 
@@ -290,6 +292,7 @@
         PackageOutputPath=$(NonSdkPackageOutputPath); 
         NoPackageAnalysis=true; 
         IncludeSymbols=true;
+        SymbolPackageFormat=snupkg;
         NoBuild=true;" Condition=" '@(NonSdkProjectsToPackage)' != '' ">
       <Output TaskParameter="TargetOutputs" ItemName="NonSdkNuGetPackages" />
     </MSBuild>
@@ -298,8 +301,10 @@
   </Target>
   
   <Target Name="PublishingNuget">
-    <Error Condition=" ('$(NugetPackageName)' == '') AND '$(PublishMultiPackage)' == 'false' " Text="Please Provide Package Name that has to be published /p:NugetPackagename=[packagename]" />
-    <Error Condition=" ('$(NugetPackageName)' == '') AND ('$(Scope)' == '' OR '$(Scope)' == 'all') AND '$(PublishMultiPackage)' == 'false' " Text="Publishing nuget package without specifying scope or packageName has now been disabled" />
+    <Error Condition=" ('$(NugetPackageName)' == '') AND '$(MultiPackagePublish)' != 'true' " Text="Please Provide Package Name that has to be published /p:NugetPackageName=[packagename]" />
+    <Error Condition="( ('$(Scope)' == '' OR '$(Scope)' == 'all' OR '$(Scope)' == 'All') AND '$(MultiPackagePublish)' != 'true' )" 
+                        Text="Publishing nuget package without specifying scope and packageName has now been disabled (e.g /p:NugetPackageName=Microsoft.Azure.Management.Compute /p:Scope=SDKs\Compute )" />
+                    <!-- Condition=" ('$(NugetPackageName)' == '') OR ('$(Scope)' == '' OR '$(Scope)' == 'all' OR '$(Scope)' == 'All') AND '$(PublishMultiPackage)' != 'true' "  -->
     <PropertyGroup>
       <PublishNugetToDir Condition=" '$(PublishNugetToDir)' == '' ">$(LibraryRoot)PublishedNugets</PublishNugetToDir>
       <TaskDebugOutput Condition=" '$(TaskDebugOutput)' == '' ">false</TaskDebugOutput>
