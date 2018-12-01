@@ -1,17 +1,11 @@
 ﻿using Azure.Core;
 using Azure.Core.Net;
-using Azure.Core.Net.Pipeline;
 using System;
 using System.Buffers;
-using System.Buffers.Text;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.JsonLab;
-using System.Threading;
-using System.Threading.Tasks;
 using static System.Buffers.Text.Encodings;
 
 namespace Azure.Configuration
@@ -22,6 +16,13 @@ namespace Azure.Configuration
         const string MediaTypeProblemApplication = "application/problem+json";
 
         const string KvRoute = "/kv/";
+        static readonly byte[] KvRouteBytes = Encoding.ASCII.GetBytes(KvRoute);
+
+        static readonly byte[] s_after = Encoding.ASCII.GetBytes("after");
+        static readonly byte[] s_keyQueryFilter = Encoding.ASCII.GetBytes(KeyQueryFilter);
+        static readonly byte[] s_labelQueryFilter = Encoding.ASCII.GetBytes(LabelQueryFilter);
+        static readonly byte[] s_fieldsQueryFilter = Encoding.ASCII.GetBytes(FieldsQueryFilter);
+
         const string RevisionsRoute = "/revisions/";
         const string LocksRoute = "/locks/";
 
@@ -51,35 +52,62 @@ namespace Azure.Configuration
             AddAuthenticationHeader(context, ServiceMethod.Put, written);
         }
 
-        // TODO (pri 2) : add UrlBuilder and use it.
+        Url BuildUrlForGetBatch(QueryKeyValueCollectionOptions options)
+        {
+            var urlBuilder = new UrlWriter(new Url(_baseUri), 100);
+            urlBuilder.AppendPath(KvRouteBytes); // TODO (pri 1): it seems like this causes the path to end with /. is that ok?
+
+            if (options.Index != 0)
+            {
+                urlBuilder.AppendQuery(s_after, options.Index);
+            }
+
+            if (!string.IsNullOrEmpty(options.KeyFilter))
+            {
+                urlBuilder.AppendQuery(s_keyQueryFilter, options.KeyFilter);
+            }
+
+            if (options.LabelFilter != null)
+            {
+                if (options.LabelFilter == string.Empty)
+                {
+                    options.LabelFilter = "\0";
+                }
+                urlBuilder.AppendQuery(s_labelQueryFilter, options.LabelFilter);
+            }
+
+            if (options.FieldsSelector != KeyValueFields.All)
+            {
+                // TODO (pri 3): this should be optimized
+                var filter = (options.FieldsSelector).ToString().ToLower().Replace(" ", "");
+                urlBuilder.AppendQuery(s_fieldsQueryFilter, filter);
+            }
+
+            return urlBuilder.ToUrl();
+        }
+
         Url BuildUriForGetKeyValue(string key, GetKeyValueOptions options)
         {
-            //key = Uri.EscapeDataString(key); TODO (pri 2): We don't need to do this now becausee Uri will do it, right?
-            var requestUri = new Uri(_baseUri, KvRoute + key);
+            var builder = new UrlWriter(_baseUri.ToString(), 100);
+            builder.AppendPath(KvRouteBytes);
+            builder.AppendPath(key);
+
             if (options != null) {
-                var queryBuild = new Dictionary<string, string>();
                 if (options.Label != null) {
-                    queryBuild.Add(LabelQueryFilter, options.Label);
+                    builder.AppendQuery(s_labelQueryFilter, options.Label);
                 }
-                if (options.FieldsSelector != KeyValueFields.All) {
-                    queryBuild.Add(FieldsQueryFilter, (options.FieldsSelector).ToString().ToLower().Replace(" ", ""));
-                }
-                if (queryBuild.Count > 0) {
-                    requestUri = new Uri(requestUri + ToQueryString(queryBuild), UriKind.Relative);
+                if (options.FieldsSelector != KeyValueFields.All)
+                {
+                    // TODO (pri 3): this should be optimized
+                    var filter = (options.FieldsSelector).ToString().ToLower().Replace(" ", "");
+                    builder.AppendQuery(s_fieldsQueryFilter, filter);
                 }
             }
-            return new Url(requestUri);
+            return builder.ToUrl();
         }
 
         Url BuildUrlForSetKeyValue(KeyValue keyValue)
-        {
-            Uri requestUri = new Uri(_baseUri, KvRoute + Uri.EscapeDataString(keyValue.Key));   // TODO: Call EscapeDataString?
-            if (keyValue.Label != null) {
-                var queryBuild = new Dictionary<string, string> { { LabelQueryFilter, keyValue.Label } };
-                requestUri = new Uri(requestUri + ToQueryString(queryBuild), UriKind.Absolute); // TODO (pri 3): this used to be relative.
-            }
-            return new Url(requestUri);
-        }
+            => BuildUriForGetKeyValue(keyValue.Key, new GetKeyValueOptions() { Label = keyValue.Label });
 
         static string ToQueryString(Dictionary<string, string> parameters)
         {

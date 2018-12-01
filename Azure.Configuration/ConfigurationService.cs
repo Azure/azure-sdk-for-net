@@ -91,9 +91,7 @@ namespace Azure.Configuration
 
         public async Task<Response<KeyValue>> GetAsync(string key, GetKeyValueOptions options, CancellationToken cancellation)
         {
-            if (string.IsNullOrEmpty(key)) {
-                throw new ArgumentNullException(nameof(key));
-            }
+            if (string.IsNullOrEmpty(key)) { throw new ArgumentNullException(nameof(key)); }
 
             Url url = BuildUriForGetKeyValue(key, options);
 
@@ -124,10 +122,47 @@ namespace Azure.Configuration
                         throw new Exception("invalid response content");
                     };
                 }
-                // TODO (pri 1): make sure the right things happen for NotFound reponse
                 return new Response<KeyValue>(response, contentParser);
             }
             catch {
+                if (context != null) context.Dispose();
+                throw;
+            }
+        }
+
+        public async Task<Response<KeyValueBatch>> GetBatchAsync(QueryKeyValueCollectionOptions options, CancellationToken cancellation)
+        {
+            var requestUri = BuildUrlForGetBatch(options);
+            ServiceCallContext context = null;
+            try
+            {
+                context = Pipeline.CreateContext(cancellation, ServiceMethod.Get, requestUri);
+
+                context.AddHeader(MediaTypeKeyValueApplicationHeader);
+                if (options.PreferredDateTime != null)
+                {
+                    context.AddHeader(AcceptDatetimeHeader, options.PreferredDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat));
+                }
+
+                await Pipeline.ProcessAsync(context).ConfigureAwait(false);
+
+                ServiceResponse response = context.Response;
+                if (!response.TryGetHeader(Header.Constants.ContentLength, out long contentLength))
+                {
+                    throw new Exception("bad response: no content length header");
+                }
+
+                await response.ReadContentAsync(contentLength).ConfigureAwait(false);
+
+                Func<ReadOnlySequence<byte>, KeyValueBatch> contentParser = null;
+                if (response.Status == 200)
+                {
+                    contentParser = (ros) => { return KeyValueBatch.Parse(response); };
+                }
+                return new Response<KeyValueBatch>(response, contentParser);
+            }
+            catch
+            {
                 if (context != null) context.Dispose();
                 throw;
             }

@@ -26,7 +26,7 @@ namespace Azure.Configuration.Tests
         };
 
         [Test]
-        public async Task SetKeyValue()
+        public async Task Set()
         {
             string connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
             ConfigurationService.ParseConnectionString(connectionString, out var uri, out var credential, out var secret);
@@ -53,7 +53,7 @@ namespace Azure.Configuration.Tests
         }
 
         [Test]
-        public async Task GetKeyValue()
+        public async Task Get()
         {
             string connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
             ConfigurationService.ParseConnectionString(connectionString, out var uri, out var credential, out var secret);
@@ -68,16 +68,19 @@ namespace Azure.Configuration.Tests
             var pool = new TestPool<byte>();
             service.Pipeline.Pool = pool;
 
-            Response<KeyValue> added = await service.GetAsync("test", default, CancellationToken.None);
+            Response<KeyValue> got = await service.GetAsync("test", default, CancellationToken.None);
 
-            Assert.AreEqual(s_testKey.Key, added.Result.Key);
-            Assert.AreEqual(s_testKey.Label, added.Result.Label);
-            Assert.AreEqual(s_testKey.ContentType, added.Result.ContentType);
-            Assert.AreEqual(s_testKey.Locked, added.Result.Locked);
+            Assert.AreEqual(s_testKey.Key, got.Result.Key);
+            Assert.AreEqual(s_testKey.Label, got.Result.Label);
+            Assert.AreEqual(s_testKey.ContentType, got.Result.ContentType);
+            Assert.AreEqual(s_testKey.Locked, got.Result.Locked);
+
+            got.Dispose();
+            Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
         [Test]
-        public async Task GetKeyValues()
+        public async Task GetBatch()
         {
             string connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
             ConfigurationService.ParseConnectionString(connectionString, out var uri, out var credential, out var secret);
@@ -107,9 +110,12 @@ namespace Azure.Configuration.Tests
                         keyIndex++;
                     }
                     query.Index = batch.NextIndex;
+
                     if (query.Index == 0) break;
                 }
             }
+
+            Assert.AreEqual(0, pool.CurrentlyRented);
         }
     }
 
