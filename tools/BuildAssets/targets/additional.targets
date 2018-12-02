@@ -1,6 +1,36 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--<Import Project="common.targets"/>-->
   <!--
+  Sign Targets code
+
+  <Target Name="BuildMsBuildTask">
+    <PackagesDirectory $(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\packages
+    <Exec Command="dotnet restore $(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.sln"/>
+    <MSBuild Projects="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
+				 Targets="Build"
+				 Properties="Configuration=Debug;Platform=AnyCPU" />
+  </Target>
+
+  <Target Name="BuildCiSign" Condition=" '$(CodeSign)' == 'true' ">
+    <ItemGroup>
+      <OnPremiseBuildProj Include="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise\*.csproj" />
+      <OnPremiseBuildFile Include="$(CIToolsPath)\*Tools.Build.*.dll" />
+    </ItemGroup>
+
+    <MSBuild Targets="Restore"
+      Projects="@(OnPremiseBuildProj)"
+      ContinueOnError="ErrorAndStop" />
+
+    <MSBuild Targets="Build"
+         Projects="@(OnPremiseBuildProj)"
+         Condition="'$(OnPremiseBuild)' == 'true'"
+         ContinueOnError="ErrorAndStop" Properties="" />
+    <Error Condition="!Exists('@(OnPremiseBuildFile)')" Text="Unable to Create CI Sign binaries ...." ContinueOnError="false"/>
+    <Message Condition="Exists('@(OnPremiseBuildFile)')" Text="Successfully created CI Sign binaries ...."/>
+  </Target>
+
+END OF SIGN targets
+
   <Import Project="$(MSBuildExtensionsPath)\..\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.targets"/>
   <Import Condition=" $(OnPremiseBuild) " Project="$(CIToolsPath)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />
   <Import Project="$(MSBuildExtensionsPath)\..\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.targets" />
