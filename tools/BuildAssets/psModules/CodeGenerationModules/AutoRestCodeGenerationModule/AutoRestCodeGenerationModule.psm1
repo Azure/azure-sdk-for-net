@@ -205,7 +205,27 @@ function Populate-Metadata {
     $metadataTemplate = $metadataTemplate.Replace("{{CodeGenerationErrors}}", "")
     $metadataTemplate= $metadataTemplate.TrimEnd()
     $metadataTemplate = $metadataTemplate.Replace('\', '\\')
+    $metadataTemplate = $metadataTemplate + "`n"
     return $metadataTemplate
+}
+
+function Get-MetadataCode {
+    param([string] $sdkInfo,
+          [string] $metadataTemplate)
+        # If there is no regex match, we need to insert it for the first time
+        # We need to find the third } which is where we now insert the template
+        $substr = $sdkInfo
+        $tokenNum = 0
+        $subIndex = 0
+        while($tokenNum -lt 4)
+        {
+            $i= $substr.IndexOf("}");
+            $subIndex = $subIndex + $i
+            $substr = $substr.Substring($i+1, $substr.Length-1-$i)
+            $tokenNum = $tokenNum +1
+        }
+        $sdkInfo = $sdkInfo.Insert($subIndex +1, $metadataTemplate)
+        return $sdkInfo
 }
 
 function Start-MetadataGeneration {
@@ -277,8 +297,7 @@ function Start-MetadataGeneration {
             $metadataDict.Add("{{AutoRestVersion}}", $AutoRestVersion)
             $metadataDict.Add("{{AutoRestCmdExecuted}}", $AutoRestCommandExecuted)
             $metadataDict.Add("{{AutoRestBootStrapperVersion}}", $ver)
-            $metadataTemplate = Populate-Metadata $metadataTemplate $metadataDict
-                
+            $metadataTemplate = Populate-Metadata $metadataTemplate $metadataDict 
             $sdkInfo = Get-Content $sdkInfoFile -Raw
             if($sdkInfo -cmatch '(.*)\/\/ BEGIN: Code Generation Metadata Section(\n|.)*\/\/ END: Code Generation Metadata Section')
             {
@@ -287,31 +306,30 @@ function Start-MetadataGeneration {
             }
             else 
             {
-                # If there is no regex match, we need to insert it for the first time
-                # We need to find the third } which is where we now insert the template
-                $tokenNum = 0
-                $substr = $sdkInfo
-                $subIndex = 0
-                while($tokenNum -lt 4)
+                if($sdkInfo.GetType().IsArray)
                 {
-                    $i= $substr.IndexOf("}");
-                    $subIndex = $subIndex + $i
-                    $substr = $substr.Substring($i+1, $substr.Length-1-$i)
-                    $tokenNum = $tokenNum +1
+                    Foreach($info in $sdkInfo)
+                    {
+                        $newSdkInfo = Get-MetadataCode $info $metadataTemplate
+                        Set-Content -Path $sdkInfoFile -Value $newSdkInfo
+                    }
                 }
-                $sdkInfo = $sdkInfo.Insert($subIndex +1, $metadataTemplate)
+                else 
+                {
+                    $sdkInfo = Get-MetadataCode $sdkInfo $metadataTemplate
+                    Set-Content -Path $sdkInfoFile -Value $sdkInfo
+                }
             }
-            Set-Content -Path $sdkInfoFile -Value $sdkInfo.Trim()
         }        
     }
 }
 
 function Get-ErrorStream {
-    $errorStream.ToString()
+    $errorStream.ToString().Trim()
 }
 
 function Get-OutputStream {
-    $outputStream.ToString()
+    $outputStream.ToString().Trim()
 }
 
 <#
@@ -430,7 +448,7 @@ function Start-AutoRestCodeGeneration {
         
         if([string]::IsNullOrWhiteSpace($SdkDirectory) -or $SdkDirectory.Contains("Documents\WindowsPowerShell\Modules"))
         {
-            Write-Error "Could not find default output directory since script is not run from a sdk repo, please provide one!"
+            Write-Error "Could not find root for output directory since script is not run from SDK repo, please provide this using the -SdkRepoPath parameter!"
             return
         }
         Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags -SdkRepoRootPath $SdkRepoRootPath
@@ -565,7 +583,6 @@ function Start-CodeGeneration {
     
     if(-not [string]::IsNullOrWhiteSpace($LocalConfigFilePath)) 
     {
-        
         # if generating using a local config file, create an obscure temp log file, makes detection easier
         Remove-Item "$localSdkRepoDirectory\_metadata\$($ResourceProvider.Replace("/","_")).txt" -ErrorAction SilentlyContinue
         $logFile = [System.IO.Path]::GetTempFileName()+".txt";
@@ -607,7 +624,6 @@ function Start-CodeGeneration {
     finally {
         Get-OutputStream | Out-File -FilePath $logFile -Encoding utf8 | Out-Null
         $errors = Get-ErrorStream
-        $errors | Out-File -FilePath $logFile -Encoding utf8 | Out-Null
         if(-not [string]::IsNullOrWhiteSpace($errors) -and $generateSDKMetadata)
         {
             $errors | Out-File -FilePath $logFile -Append -Encoding utf8 | Out-Null

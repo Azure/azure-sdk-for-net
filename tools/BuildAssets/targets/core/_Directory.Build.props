@@ -20,6 +20,8 @@
 	  <SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
     <NugetPackageName/>
     <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
+    <LocalPublishNugetDir>$(LibraryRoot)PublishedNugets</LocalPublishNugetDir>
+	<CommonTags>SHA256Signed</CommonTags>
   </PropertyGroup>
   <PropertyGroup>
     <CIToolsPath>$(OnPremiseBuildTasks)</CIToolsPath>
