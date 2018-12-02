@@ -27,6 +27,8 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 
         public string[] RestoreCacheLocations { get; set; }
 
+        public string NupkgOutputDir { get; set; }
+
         public string PackageSearchPattern { get; set; }
 
         public bool DebugTrace { get; set; }
@@ -49,7 +51,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         public override bool Execute()
         {
             this.DebugTraceEnabled = DebugTrace;
-
             packageToBeCleaned?.AddRange(PackageReferences);
 
             List<string> localCacheLocations = new NugetExec().GetRestoreCacheLocation();
@@ -81,13 +82,13 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                 TaskLogger.LogDebugInfo("Cleaning of Packages completed.....");
             }
 
+            DeleteNupkgOutputDir();
+
             return true;
         }
 
         private async Task CleanRestoredPackagesAsync(string cacheLocationDirPath)
         {
-            //await Task.Run(() =>
-            //{
             if (Directory.Exists(cacheLocationDirPath))
             {
                 TaskLogger.LogDebugInfo("Checking {0}", cacheLocationDirPath);
@@ -122,8 +123,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                 }
             }
         }
-            //});
-        
 
         private async Task DeleteDirAsync(string dirToBeDeletedFullPath)
         {
@@ -149,6 +148,22 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             }
 
             testCount++;
+        }
+
+        private void DeleteNupkgOutputDir()
+        {
+            if(Directory.Exists(NupkgOutputDir))
+            {
+                try
+                {
+                    Directory.Delete(NupkgOutputDir, recursive: true);
+                }
+                catch(Exception ex)
+                {
+                    TaskLogger.LogInfo(ex.ToString());
+                }
+                
+            }
         }
     }
 }

@@ -13,6 +13,7 @@
 	<Target Name="PublishNuget" DependsOnTargets="$(PublishNugetDependsOn)" />
 	<Target Name="CreateNugetPackage" DependsOnTargets="$(PackageNugetDependsOn)" />
 	<Target Name="RunTests" DependsOnTargets="$(RunTestProjectsDependsOn)" />
+	<Target Name="Sign" DependsOnTargets="$(SignDependsOn)" />
 	<Target Name="SignNuget" DependsOnTargets="$(SignNugetDependsOn)" />
 	<Target Name="Utils" DependsOnTargets="$(UtilDependsOn)" />
 	<Target Name="Help" DependsOnTargets="$(HelpDependsOn)" />   
