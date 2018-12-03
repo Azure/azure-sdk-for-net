@@ -2,10 +2,10 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.props'))" />
   <PropertyGroup>
     <Description>Sample Project for testing project publishing.</Description>
-    <AssemblyName>Microsft.Azure.Management.SampleProjectPublish</AssemblyName>
+    <AssemblyName>Microsoft.Azure.Management.SampleProjectPublish</AssemblyName>
     <AssemblyTitle>Client Runtime Library for Microsoft AutoRest Generated Clients</AssemblyTitle>
     <Version>0.9.0-Preview</Version>
-    <PackageId>Microsft.Azure.Management.SampleProjectPublish</PackageId>
+    <PackageId>Microsoft.Azure.Management.SampleProjectPublish</PackageId>
     <PackageTags>SampleProjectPublish $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes><![CDATA[
         1) Sample project to test project publishing to nuget
