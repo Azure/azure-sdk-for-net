@@ -215,7 +215,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             string nugPattern = string.Format("*{0}*.nupkg", nugetPkgName);
             string nugSymPkgPattern = string.Format("*{0}*.symbols.nupkg", nugetPkgName);
 
-            LogInfo("Trying to find nuget packages '{0}' and '{1}'", nugPattern, nugSymPkgPattern);
+            LogInfo("Trying to find nuget packages '{0}' and '{1}' under dir '{2}'", nugPattern, nugSymPkgPattern, PackageOutputPath);
             IEnumerable<string> dupeFiles = Directory.EnumerateFiles(PackageOutputPath, nugPattern, SearchOption.AllDirectories);
             IEnumerable<string> foundSymbolPkgFiles = Directory.EnumerateFiles(PackageOutputPath, nugSymPkgPattern, SearchOption.AllDirectories);
             IEnumerable<string> pkgOutputContents = Directory.EnumerateFiles(PackageOutputPath);
@@ -225,6 +225,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 if(dupeFiles.Any<string>())
                 {
                     LogInfo("Found '{0}' nuget packages", dupeFiles.Count<string>().ToString());
+                }
+                else
+                {
+                    LogError("Unable to find any nuget packages for the pattern '{0}' in directory '{1}'", nugPattern, PackageOutputPath);
                 }
             }
             else
@@ -237,6 +241,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 if (foundSymbolPkgFiles.Any<string>())
                 {
                     LogInfo("Found '{0}' nuget symbols packages", foundSymbolPkgFiles.Count<string>().ToString());
+                }
+                else
+                {
+                    LogError("Unable to find any nuget symbol packages for the pattern '{0}' in directory '{1}'", nugSymPkgPattern, PackageOutputPath);
                 }
             }
             else
@@ -272,6 +280,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 Check.NotEmptyNotNull(nuSymPkg, "Nuget Symbol Package");
             }
 
+            LogInfo("Returning '{0}' and '{1}'", nupkg, nuSymPkg);
             return new Tuple<string, string>(nupkg, nuSymPkg);
         }
 
@@ -435,7 +444,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         {
             if (IsBuildEngineInitialized)
             {
-                Log.LogErrorFromException(ex);
+                Log.LogErrorFromException(ex, showStackTrace: true);
             }
             else
             {
@@ -461,6 +470,5 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         }
 
         #endregion
-
     }
 }
