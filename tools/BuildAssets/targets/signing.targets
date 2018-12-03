@@ -3,11 +3,10 @@
   <PropertyGroup>
     <OnPremiseTargetsFile>$(CISignRepo)\tools\sdkbuildtools\targets\onPremise.targets</OnPremiseTargetsFile>
   </PropertyGroup>
-    
 
   <!-- Policheck properties -->
   <PropertyGroup>
-    <DebugMessageImp>Normal</DebugMessageImp>
+    <DebugMessageImp>Low</DebugMessageImp>
     <PolicheckScanDir>$(ScopeScanPath)</PolicheckScanDir>
   </PropertyGroup>
 
@@ -22,7 +21,7 @@
       <PolicheckScanDir Condition=" Exists($(ScopeScanPath))">$(ScopeScanPath)</PolicheckScanDir>
     </PropertyGroup>
   </Target>
-  <Target Name="PreSignBinaries" DependsOnTargets="PreSignBinariesDependsOn" Condition=" '$(CodeSign)' == 'true' AND '$(Configuration)' == 'true' ">
+  <Target Name="PreSignBinaries" DependsOnTargets="PreSignBinariesDependsOn" Condition=" '$(CodeSign)' == 'true' AND '$(Configuration)' == 'Release' ">
     <Message Text="DelaySignedFileItems ....... @(DelaySignedFileItems)" Importance="$(DebugMessageImp)" />
     <CallTarget Targets="PoliCheckTarget" RunEachTargetSeparately="true" />
     <Message Text="Done executing PreSign Target" Importance="$(DebugMessageImp)" />
@@ -40,10 +39,9 @@
     </PropertyGroup>
   </Target>
 
-  <Target Name="SignBinaries" DependsOnTargets="SignBinariesDependsOn" Condition=" '$(CodeSign)' == 'true' AND '$(Configuration)' == 'true' ">
+  <Target Name="SignBinaries" DependsOnTargets="SignBinariesDependsOn" Condition=" '$(CodeSign)' == 'true' AND '$(Configuration)' == 'Release' ">
     <Message Text="ProjectFile .... $(OnPremiseTargetsFile)" Importance="$(DebugMessageImp)" />
     <CallTarget Targets="AuthenticodeSignBinariesTarget" RunEachTargetSeparately="true" />
-    <!-- <MSBuild Projects="$(OnPremiseTargetsFile)" Targets="AuthenticodeSignTarget" /> -->
     <Message Text="Done executing Sign Target" Importance="$(DebugMessageImp)" />
   </Target>
 
@@ -67,7 +65,7 @@
       <SignOperationLogDir>$(BinariesFolder)</SignOperationLogDir>
     </PropertyGroup>
   </Target>
-  <Target Name="SignNugetPackage" DependsOnTargets="SignNugetPackageDependsOn" Condition=" '$(CodeSign)' == 'true' AND '$(Configuration)' == 'true' ">
+  <Target Name="SignNugetPackage" DependsOnTargets="SignNugetPackageDependsOn" Condition=" '$(CodeSign)' == 'true' AND '$(Configuration)' == 'Release' ">
     <CallTarget Targets="AuthenticodeSignNugetTarget" />
     <Message Text="Done executing Signing Nuget Packages" Importance="$(DebugMessageImp)" />
   </Target>
