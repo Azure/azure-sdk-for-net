@@ -154,6 +154,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
             NugetPublishStatus symbolStatus = null;
             List<Tuple<NugetPublishStatus, NugetPublishStatus>> statusList = new List<Tuple<NugetPublishStatus, NugetPublishStatus>>();
 
+           
             // Check if publishing nuget has to be skipped
             if (SkipPublishingNuget == false)
             {
@@ -181,44 +182,6 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
             //statusList.Add(new Tuple<NugetPublishStatus, NugetPublishStatus>(nugetStatus, symbolStatus));
             return status;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nugPkgs"></param>
-        /// <returns></returns>
-        //public List<NugetPublishStatus> Publish(Tuple<string, string> nugPkgs)
-        //{
-        //    StringBuilder sb = new StringBuilder();
-        //    List<NugetPublishStatus> publishStatusList = new List<NugetPublishStatus>();
-        //    NugetPublishStatus nugPubStatus = null;
-
-        //    // Check if publishing nuget has to be skipped
-        //    if (SkipPublishingNuget == false)
-        //    {
-        //        nugPubStatus = Publish(nugPkgs.Item1);
-        //        publishStatusList.Add(nugPubStatus);
-        //    }
-
-        //    // Check if publishing symbols has to be skipped
-        //    if (SkipPublishingSymbols == false)
-        //    {
-        //        // Check if nuget was published, not checking will result in nullRef
-        //        if (SkipPublishingNuget == false)
-        //        {
-        //            if (nugPubStatus.NugetPublishExitCode == 0)
-        //            {
-        //                publishStatusList.Add(Publish(nugPkgs.Item2));
-        //            }
-        //        }
-        //        else
-        //        {
-        //            publishStatusList.Add(Publish(nugPkgs.Item2));
-        //        }
-        //    }
-
-        //    return publishStatusList;
-        //}
 
         #endregion
 

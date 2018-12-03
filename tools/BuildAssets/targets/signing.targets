@@ -22,7 +22,7 @@
       <PolicheckScanDir Condition=" Exists($(ScopeScanPath))">$(ScopeScanPath)</PolicheckScanDir>
     </PropertyGroup>
   </Target>
-  <Target Name="PreSignBinaries" DependsOnTargets="PreSignBinariesDependsOn" Condition=" '$(CodeSign)' == 'true' " >
+  <Target Name="PreSignBinaries" DependsOnTargets="PreSignBinariesDependsOn" Condition=" '$(CodeSign)' == 'true' AND '$(Configuration)' == 'true' ">
     <Message Text="DelaySignedFileItems ....... @(DelaySignedFileItems)" Importance="$(DebugMessageImp)" />
     <CallTarget Targets="PoliCheckTarget" RunEachTargetSeparately="true" />
     <Message Text="Done executing PreSign Target" Importance="$(DebugMessageImp)" />
@@ -40,7 +40,7 @@
     </PropertyGroup>
   </Target>
 
-  <Target Name="SignBinaries" DependsOnTargets="SignBinariesDependsOn" Condition=" '$(CodeSign)' == 'true' " >
+  <Target Name="SignBinaries" DependsOnTargets="SignBinariesDependsOn" Condition=" '$(CodeSign)' == 'true' AND '$(Configuration)' == 'true' ">
     <Message Text="ProjectFile .... $(OnPremiseTargetsFile)" Importance="$(DebugMessageImp)" />
     <CallTarget Targets="AuthenticodeSignBinariesTarget" RunEachTargetSeparately="true" />
     <!-- <MSBuild Projects="$(OnPremiseTargetsFile)" Targets="AuthenticodeSignTarget" /> -->
@@ -67,7 +67,7 @@
       <SignOperationLogDir>$(BinariesFolder)</SignOperationLogDir>
     </PropertyGroup>
   </Target>
-  <Target Name="SignNugetPackage" DependsOnTargets="SignNugetPackageDependsOn" Condition=" '$(CodeSign)' == 'true' ">
+  <Target Name="SignNugetPackage" DependsOnTargets="SignNugetPackageDependsOn" Condition=" '$(CodeSign)' == 'true' AND '$(Configuration)' == 'true' ">
     <CallTarget Targets="AuthenticodeSignNugetTarget" />
     <Message Text="Done executing Signing Nuget Packages" Importance="$(DebugMessageImp)" />
   </Target>

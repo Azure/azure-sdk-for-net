@@ -332,20 +332,35 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     }
                 }
 
-                statusList = nug.Publish(pkgList);
+                if(pkgList.Any<Tuple<string, string>>())
+                {
+                    foreach (Tuple<string, string> npkg in pkgList)
+                    {
+                        LogInfo("Publishing nuget package: '{0}' and Symbols package '{1}'", npkg.Item1, npkg.Item2);
+                    }
+
+                    statusList = nug.Publish(pkgList);
+                }
             }
 
             if (!ScopePath.Equals("all", StringComparison.OrdinalIgnoreCase) && MultiPackagePublish == false)
             {
                 nupkgs = GetNugetPkgs(NugetPackageName);
-                Tuple<NugetPublishStatus, NugetPublishStatus> singlePkg = nug.Publish(nupkgs);
-                statusList.Add(singlePkg);
+                
+                if(!string.IsNullOrWhiteSpace(nupkgs.Item1))
+                {
+                    LogInfo("Publishing nuget package: '{0}'", nupkgs.Item1);
+                    LogInfo("Publishing nuget symbols package: '{0}'", nupkgs.Item2);
+                    Tuple<NugetPublishStatus, NugetPublishStatus> singlePkg = nug.Publish(nupkgs);
+                    statusList.Add(singlePkg);
+                }
+                else
+                {
+                    LogException(new ApplicationException("No nuget packages found for publishing"));
+                }
             }
 
             return statusList;
-
-            //List<NugetPublishStatus> publishStatusList = nug.Publish(nupkgs);
-            //return publishStatusList;
         }
 
         private void DebugInfo()

@@ -133,13 +133,6 @@
             <param name="directoryNameToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Microsoft.Azure.Sdk.Build.ExecProcess.NugetExec.GetRestoreCacheLocation(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="nugPkgs"></param>
-            <returns></returns>
-        </member>
         <member name="T:Microsoft.Azure.Sdk.Build.ExecProcess.NugetPublishStatus">
             <summary>
             Structure to get publish status

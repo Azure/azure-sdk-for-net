@@ -116,6 +116,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
 
         #region publishing multi-packages
         [Fact(Skip ="Skiping test to be run by auth users")]
+        //[Fact]
         public void PublishMultiPackageUnderScope()
         {
             //msbuild .\build.proj /t:PublishNuget /p:Scope=SDKs\KeyVault /p:MultiPackagePublish=true /p:PublishNugetToPath=D:\myFork\BuildToolsForSdk\binaries\testPublish /p:PackageOutputPath=D:\myFork\BuildToolsForSdk\binaries\packages
@@ -151,6 +152,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
 
 
         [Fact(Skip = "Skiping test to be run by auth users")]
+        //[Fact]
         public void SkipNugetPublishForAllScope()
         {
             PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
