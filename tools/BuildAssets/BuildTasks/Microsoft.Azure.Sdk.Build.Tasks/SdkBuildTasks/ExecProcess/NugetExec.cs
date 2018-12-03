@@ -4,6 +4,7 @@
 //namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
 namespace Microsoft.Azure.Sdk.Build.ExecProcess
 {
+    using Microsoft.Build.Utilities;
     using Microsoft.WindowsAzure.Build.Tasks.Utilities;
     using System;
     using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
         string _nugetExePath;
         #endregion
 
+        private TaskLoggingHelper TaskLogger { get; set; }
 
         public string ApiKey { get; set; }
 
@@ -101,8 +103,18 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
             _defaultNugetArgsFormat = "push {0} -source {1} -ApiKey {2} -NonInteractive -Timeout {3}";
         }
 
+        public NugetExec(string nugetExePath, TaskLoggingHelper logger): this(nugetExePath)
+        {
+            TaskLogger = logger;
+        }
+
         public NugetExec() : this(Constants.NugetDefaults.NUGET_PATH)
         {
+        }
+
+        public NugetExec(TaskLoggingHelper logger) : this()
+        {
+            TaskLogger = logger;
         }
 
         #region Publish

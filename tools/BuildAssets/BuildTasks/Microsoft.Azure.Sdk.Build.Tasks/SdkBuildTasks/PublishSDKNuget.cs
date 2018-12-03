@@ -214,8 +214,46 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         {
             string nugPattern = string.Format("*{0}*.nupkg", nugetPkgName);
             string nugSymPkgPattern = string.Format("*{0}*.symbols.nupkg", nugetPkgName);
+
+            LogInfo("Trying to find nuget packages '{0}' and '{1}'", nugPattern, nugSymPkgPattern);
             IEnumerable<string> dupeFiles = Directory.EnumerateFiles(PackageOutputPath, nugPattern, SearchOption.AllDirectories);
             IEnumerable<string> foundSymbolPkgFiles = Directory.EnumerateFiles(PackageOutputPath, nugSymPkgPattern, SearchOption.AllDirectories);
+            IEnumerable<string> pkgOutputContents = Directory.EnumerateFiles(PackageOutputPath);
+
+            if(dupeFiles != null)
+            {
+                if(dupeFiles.Any<string>())
+                {
+                    LogInfo("Found '{0}' nuget packages", dupeFiles.Count<string>().ToString());
+                }
+            }
+            else
+            {
+                LogInfo("Unable to find any nuget packages for the pattern '{0}' in directory '{1}'", nugPattern, PackageOutputPath);
+            }
+
+            if (foundSymbolPkgFiles != null)
+            {
+                if (foundSymbolPkgFiles.Any<string>())
+                {
+                    LogInfo("Found '{0}' nuget symbols packages", foundSymbolPkgFiles.Count<string>().ToString());
+                }
+            }
+            else
+            {
+                LogError("Unable to find any nuget symbol packages for the pattern '{0}' in directory '{1}'", nugSymPkgPattern, PackageOutputPath);
+            }
+
+            if(pkgOutputContents != null)
+            {
+                if(pkgOutputContents.Any<string>())
+                {
+                    foreach(string fl in pkgOutputContents)
+                    {
+                        LogInfo(String.Format("Found '{0}'", fl));
+                    }
+                }
+            }
 
             var foundNugetPkgFiles = dupeFiles.Except<string>(foundSymbolPkgFiles, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
 
@@ -302,11 +340,11 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             if (string.IsNullOrEmpty(NugetExePath))
             {
-                nug = new NugetExec();
+                nug = new NugetExec(this.Log);
             }
             else
             {
-                nug = new NugetExec(NugetExePath);
+                nug = new NugetExec(NugetExePath, this.Log);
             }
 
             nug.PublishToPath = PublishNugetToPath;
@@ -415,6 +453,11 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             {
                 Debug.WriteLine(errorMessage);
             }
+        }
+
+        private void LogError(string errorMessage, params string[] args)
+        {
+            LogError(string.Format(errorMessage, args));
         }
 
         #endregion
