@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="targetRegions">The target regions where the Image
         /// Version is going to be replicated to. This property is
-        /// updateable.</param>
+        /// updatable.</param>
         public GalleryArtifactPublishingProfileBase(GalleryArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>))
         {
             TargetRegions = targetRegions;
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the target regions where the Image Version is going to
-        /// be replicated to. This property is updateable.
+        /// be replicated to. This property is updatable.
         /// </summary>
         [JsonProperty(PropertyName = "targetRegions")]
         public IList<TargetRegion> TargetRegions { get; set; }
