@@ -1,21 +1,185 @@
 ﻿using Azure.Core.Net;
 using Azure.Core.Net.Pipeline;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static System.Buffers.Text.Encodings;
 
 namespace Azure.Configuration.Test
 {
+    // TODO (pri 3): Add and Set mocks are the same. Is that ok?
+    class AddMockTransport : KeyValueMockTransport
+    {
+        public AddMockTransport(KeyValue responseContent)
+            : base(HttpMethod.Put, responseContent)
+        {
+            _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
+            _expectedRequestContent = "{\"key\":\"test_value\",\"content_type\":\"test_content_type\"}";
+        }
+    }
+
+    class SetMockTransport : KeyValueMockTransport
+    {
+        public SetMockTransport(KeyValue responseContent)
+            : base(HttpMethod.Put, responseContent)
+        {
+            _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
+            _expectedRequestContent = "{\"key\":\"test_value\",\"content_type\":\"test_content_type\"}";
+        }
+    }
+
+    class UpdateMockTransport : KeyValueMockTransport
+    {
+        public UpdateMockTransport(KeyValue responseContent)
+            : base(HttpMethod.Put, responseContent)
+        {
+            _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
+            _expectedRequestContent = "{\"key\":\"test_value\",\"content_type\":\"test_content_type\"}";
+        }
+
+        protected override void VerifyRequestCore(HttpRequestMessage request)
+        {
+            Assert.IsTrue(request.Headers.Contains("If-Match"));
+        }
+    }
+
+    class DeleteMockTransport : KeyValueMockTransport
+    {
+        public KeyValue _responseContent;
+
+        public DeleteMockTransport(KeyValue responseContent)
+            : base(HttpMethod.Delete, responseContent)
+        {
+            _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
+            _expectedRequestContent = null;
+        }
+    }
+
+    class GetMockTransport : KeyValueMockTransport
+    {
+        public GetMockTransport(KeyValue responseContent)
+            : base(HttpMethod.Get, responseContent)
+        {
+            _expectedMethod = HttpMethod.Get;
+            _expectedUri = "https://contoso.azconfig.io/kv/test_key";
+        }
+
+        public GetMockTransport(params HttpStatusCode[] statusCodes)
+            : base(HttpMethod.Get, null)
+        {
+            Responses.Clear();
+            foreach (var statusCode in statusCodes) {
+                Responses.Add(statusCode);
+            }
+            _expectedMethod = HttpMethod.Get;
+            _expectedUri = "https://contoso.azconfig.io/kv/test_key_not_present";
+        }
+    }
+
+    class LockingMockTransport : KeyValueMockTransport
+    {
+        public LockingMockTransport(KeyValue responseContent, bool lockOtherwiseUnlock)
+            : base(lockOtherwiseUnlock ? HttpMethod.Put : HttpMethod.Delete, responseContent)
+        {
+            _expectedUri = "https://contoso.azconfig.io/locks/test_key?label=test_label";
+            _expectedRequestContent = null;
+        }
+    }
+
+    class GetBatchMockTransport : MockHttpClientTransport
+    {
+        public List<KeyValue> KeyValues = new List<KeyValue>();
+        public List<(int index, int count)> Batches = new List<(int index, int count)>();
+        int _currentBathIndex = 0;
+
+        public GetBatchMockTransport(int numberOfItems)
+        {
+            _expectedMethod = HttpMethod.Get;
+            _expectedUri = null;
+            _expectedRequestContent = null;
+            for (int i = 0; i < numberOfItems; i++)
+            {
+                var item = new KeyValue()
+                {
+                    Key = $"key{i}",
+                    Label = "label",
+                    Value = "val",
+                    ETag = "c3c231fd-39a0-4cb6-3237-4614474b92c1",
+                    ContentType = "text"
+                };
+                KeyValues.Add(item);
+            }
+        }
+
+        protected override void WriteResponseCore(HttpResponseMessage response)
+        {
+            var batch = Batches[_currentBathIndex++];
+            var bathItems = new List<KeyValue>(batch.count);
+            int itemIndex = batch.index;
+            int count = batch.count;
+            while (count-- > 0)
+            {
+                bathItems.Add(KeyValues[itemIndex++]);
+            }
+            string json = JsonConvert.SerializeObject(bathItems).ToLowerInvariant();
+            response.Content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            long jsonByteCount = Encoding.UTF8.GetByteCount(json);
+            response.Content.Headers.Add("Content-Length", jsonByteCount.ToString());
+            if (itemIndex < KeyValues.Count)
+            {
+                response.Headers.Add("Link", $"</kv?after={itemIndex}>;rel=\"next\"");
+            }
+        }
+    }
+
+    class KeyValueMockTransport : MockHttpClientTransport
+    {
+        KeyValue _responseContent;
+
+        public KeyValueMockTransport(HttpMethod expectedMethod, KeyValue responseContent)
+        {
+            _expectedMethod = expectedMethod;
+            _responseContent = responseContent;
+        }
+
+        protected sealed override void WriteResponseCore(HttpResponseMessage response)
+        {
+            string json = JsonConvert.SerializeObject(_responseContent).ToLowerInvariant();
+            response.Content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            long jsonByteCount = Encoding.UTF8.GetByteCount(json);
+            response.Content.Headers.Add("Content-Length", jsonByteCount.ToString());
+        }
+
+        protected static KeyValue CloneKey(KeyValue original)
+        {
+            var cloned = new KeyValue();
+            cloned.Key = original.Key;
+            cloned.Label = original.Label;
+            cloned.Value = original.Value;
+            cloned.ETag = original.ETag;
+            cloned.ContentType = original.ContentType;
+            cloned.LastModified = original.LastModified;
+            cloned.Locked = original.Locked;
+            foreach (var kvp in original.Tags) {
+                cloned.Tags.Add(kvp);
+            }
+            return cloned;
+        }
+    }
+
     abstract class MockHttpClientTransport : HttpClientTransport
     {
         protected HttpMethod _expectedMethod;
         protected string _expectedUri;
-        protected string _expectedContent;
+        protected string _expectedRequestContent;
         int _nextResponse;
 
         public List<Response> Responses = new List<Response>();
@@ -46,7 +210,7 @@ namespace Azure.Configuration.Test
 
         void VerifyRequestContent(HttpRequestMessage request)
         {
-            if (_expectedContent == null)
+            if (_expectedRequestContent == null)
             {
                 Assert.IsNull(request.Content);
             }
@@ -54,7 +218,7 @@ namespace Azure.Configuration.Test
             {
                 Assert.NotNull(request.Content);
                 var contentString = request.Content.ReadAsStringAsync().Result;
-                Assert.AreEqual(_expectedContent, contentString);
+                Assert.AreEqual(_expectedRequestContent, contentString);
             }
         }
 

@@ -2,10 +2,10 @@
 using Azure.Core.Net;
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.JsonLab;
+using System.Threading.Tasks;
 using static System.Buffers.Text.Encodings;
 
 namespace Azure.Configuration
@@ -13,25 +13,36 @@ namespace Azure.Configuration
     public partial class ConfigurationService
     {
         #region String Table
+
+        const string SdkName = "Azure-Configuration";
+        const string SdkVersion = "1.0.0";
+
         const string MediaTypeProblemApplication = "application/problem+json";
+        const string AcceptDateTimeFormat = "ddd, dd MMM yyy HH:mm:ss 'GMT'";
+        const string AcceptDatetimeHeader = "Accept-Datetime";
 
         const string KvRoute = "/kv/";
         static readonly byte[] KvRouteBytes = Encoding.ASCII.GetBytes(KvRoute);
 
-        static readonly byte[] s_after = Encoding.ASCII.GetBytes("after");
-        static readonly byte[] s_keyQueryFilter = Encoding.ASCII.GetBytes(KeyQueryFilter);
-        static readonly byte[] s_labelQueryFilter = Encoding.ASCII.GetBytes(LabelQueryFilter);
-        static readonly byte[] s_fieldsQueryFilter = Encoding.ASCII.GetBytes(FieldsQueryFilter);
+        const string LocksRoute = "/locks/";
+        static readonly byte[] LocksRouteBytes = Encoding.ASCII.GetBytes(LocksRoute);
 
         const string RevisionsRoute = "/revisions/";
-        const string LocksRoute = "/locks/";
+        static readonly byte[] RevisionsRouteBytes = Encoding.ASCII.GetBytes(RevisionsRoute);
+
+        const string KeyQueryFilter = "key";
+        static readonly byte[] s_keyQueryFilter = Encoding.ASCII.GetBytes(KeyQueryFilter);
 
         const string LabelQueryFilter = "label";
-        const string KeyQueryFilter = "key";
-        const string FieldsQueryFilter = "fields";
+        static readonly byte[] s_labelQueryFilter = Encoding.ASCII.GetBytes(LabelQueryFilter);
 
-        const string AcceptDateTimeFormat = "ddd, dd MMM yyy HH:mm:ss 'GMT'";
-        const string AcceptDatetimeHeader = "Accept-Datetime";
+        const string FieldsQueryFilter = "fields";
+        static readonly byte[] s_fieldsQueryFilter = Encoding.ASCII.GetBytes(FieldsQueryFilter);
+
+        static readonly byte[] s_after = Encoding.ASCII.GetBytes("after");
+
+        const string IfMatchName = "If-Match";
+        Header IfNoneMatchWildcard = new Header("If-None-Match", "*");
         #endregion
 
         static readonly Header MediaTypeKeyValueApplicationHeader = new Header(
@@ -39,17 +50,62 @@ namespace Azure.Configuration
             Encoding.ASCII.GetBytes("application/vnd.microsoft.appconfig.kv+json")
         );
 
-        void WriteJsonContent(KeyValue setting, ServiceCallContext context)
+        static readonly Func<ReadOnlySequence<byte>, KeyValue> s_parser = (ros) => {
+            if (ConfigurationServiceParser.TryParse(ros, out KeyValue result, out _)) return result;
+            throw new Exception("invalid response content");
+        };
+
+        static async Task<Response<KeyValue>> CreateKeyValueResponse(ServiceCallContext context)
         {
-            var writer = Utf8JsonWriter.Create(context.ContentWriter);
-            writer.WriteObjectStart();
-            writer.WriteAttribute("key", setting.Value);
-            writer.WriteAttribute("content_type", setting.ContentType);
-            writer.WriteObjectEnd();
-            writer.Flush();
-            var written = context.ContentWriter.Written;
-            context.AddHeader(Header.Common.CreateContentLength(written.Length));
-            AddAuthenticationHeader(context, ServiceMethod.Put, written);
+            ServiceResponse response = context.Response;
+
+            if (response.Status != 200) {
+                return new Response<KeyValue>(response);
+            }
+
+            if (!response.TryGetHeader(Header.Constants.ContentLength, out long contentLength)) {
+                throw new Exception("bad response: no content length header");
+            }
+            await response.ReadContentAsync(contentLength).ConfigureAwait(false);
+
+            return new Response<KeyValue>(response, s_parser);
+        }
+
+        static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
+        {
+            uri = null;
+            credential = null;
+            secret = null;
+            if (string.IsNullOrEmpty(connectionString)) throw new ArgumentNullException(nameof(connectionString));
+
+            // Parse connection string
+            string[] args = connectionString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            if (args.Length < 3)
+            {
+                throw new ArgumentException("invalid connection string segment count", nameof(connectionString));
+            }
+
+            const string endpointString = "Endpoint=";
+            const string idString = "Id=";
+            const string secretString = "Secret=";
+
+            foreach (var arg in args)
+            {
+                var segment = arg.Trim();
+                if (segment.StartsWith(endpointString, StringComparison.OrdinalIgnoreCase))
+                {
+                    uri = new Uri(segment.Substring(segment.IndexOf('=') + 1));
+                }
+                else if (segment.StartsWith(idString, StringComparison.OrdinalIgnoreCase))
+                {
+                    credential = segment.Substring(segment.IndexOf('=') + 1);
+                }
+                else if (segment.StartsWith(secretString, StringComparison.OrdinalIgnoreCase))
+                {
+                    var secretBase64 = segment.Substring(segment.IndexOf('=') + 1);
+                    secret = Convert.FromBase64String(secretBase64);
+                }
+            };
         }
 
         Url BuildUrlForGetBatch(QueryKeyValueCollectionOptions options)
@@ -86,7 +142,7 @@ namespace Azure.Configuration
             return urlBuilder.ToUrl();
         }
 
-        Url BuildUriForGetKeyValue(string key, GetKeyValueOptions options)
+        Url BuildUrlForKvRoute(string key, GetKeyValueOptions options)
         {
             var builder = new UrlWriter(_baseUri.ToString(), 100);
             builder.AppendPath(KvRouteBytes);
@@ -106,17 +162,35 @@ namespace Azure.Configuration
             return builder.ToUrl();
         }
 
-        Url BuildUrlForSetKeyValue(KeyValue keyValue)
-            => BuildUriForGetKeyValue(keyValue.Key, new GetKeyValueOptions() { Label = keyValue.Label });
+        Url BuildUrlForKvRoute(KeyValue keyValue)
+            => BuildUrlForKvRoute(keyValue.Key, new GetKeyValueOptions() { Label = keyValue.Label });
 
-        static string ToQueryString(Dictionary<string, string> parameters)
+        Url BuildUriForLocksRoute(KeyValue keyValue)
         {
-            var sb = new StringBuilder("?");
-            foreach (var kv in parameters) {
-                if (sb.Length > 1) sb.Append('&');
-                sb.Append(kv.Key).Append('=').Append(kv.Value);
+            var builder = new UrlWriter(_baseUri.ToString(), 100);
+            builder.AppendPath(LocksRouteBytes);
+            builder.AppendPath(keyValue.Key);
+
+            if (keyValue.Label != null)
+            {
+                builder.AppendQuery(s_labelQueryFilter, keyValue.Label);
             }
-            return sb.ToString();
+            
+            return builder.ToUrl();
+        }
+
+        // TODO (pri 1): serialize the Tags field
+        void WriteJsonContent(KeyValue setting, ServiceCallContext context)
+        {
+            var writer = Utf8JsonWriter.Create(context.ContentWriter);
+            writer.WriteObjectStart();
+            writer.WriteAttribute("key", setting.Value);
+            writer.WriteAttribute("content_type", setting.ContentType);
+            writer.WriteObjectEnd();
+            writer.Flush();
+            var written = context.ContentWriter.Written;
+            context.AddHeader(Header.Common.CreateContentLength(written.Length));
+            AddAuthenticationHeader(context, ServiceMethod.Put, written);
         }
 
         void AddAuthenticationHeader(ServiceCallContext context, ServiceMethod method, ReadOnlySequence<byte> content)

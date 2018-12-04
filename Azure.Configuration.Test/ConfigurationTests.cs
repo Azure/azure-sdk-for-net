@@ -1,105 +1,175 @@
 ﻿using Azure.Core.Net;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Configuration.Test;
 using Azure.Core.Testing;
-using System.Collections.Generic;
 
 namespace Azure.Configuration.Tests
 {
     public class ConfigurationServiceTests
     {
-        static readonly KeyValue s_testKey = new KeyValue() {
-            Key = "test",
-            Label = "test",
-            Value = "test_now",
+        static readonly string connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
+        static readonly KeyValue s_testKey = new KeyValue()
+        {
+            Key = "test_key",
+            Label = "test_label",
+            Value = "test_value",
             ETag = "c3c231fd-39a0-4cb6-3237-4614474b92c6",
-            ContentType = "text",
+            ContentType = "test_content_type",
             LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
             Locked = false
         };
 
-        [Test]
-        public async Task Set()
+        private static (ConfigurationService service, TestPool<byte> pool) CreateTestService(MockHttpClientTransport transport)
         {
-            string connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
-            ConfigurationService.ParseConnectionString(connectionString, out var uri, out var credential, out var secret);
-
-            var service = new ConfigurationService(uri, credential, secret);
-
-            var transport = new SetKeyValueMockTransport();
-            transport.KeyValue = s_testKey;
-            transport.Responses.Add(HttpStatusCode.NotFound);
-            transport.Responses.Add(HttpStatusCode.OK);
-            service.Pipeline.Transport = transport;
+            var service = new ConfigurationService(connectionString);
             var pool = new TestPool<byte>();
+
+            if (transport.Responses.Count == 0)
+            {
+                transport.Responses.Add(HttpStatusCode.NotFound);
+                transport.Responses.Add(HttpStatusCode.OK);
+            }
+            service.Pipeline.Transport = transport;
             service.Pipeline.Pool = pool;
 
-            Response<KeyValue> added = await service.SetAsync(s_testKey, CancellationToken.None);
+            return (service, pool);
+        }
 
-            Assert.AreEqual(s_testKey.Key, added.Result.Key);
-            Assert.AreEqual(s_testKey.Label, added.Result.Label);
-            Assert.AreEqual(s_testKey.ContentType, added.Result.ContentType);
-            Assert.AreEqual(s_testKey.Locked, added.Result.Locked);
-
-            added.Dispose();
-            Assert.AreEqual(0, pool.CurrentlyRented);
+        private static void AssertEqual(KeyValue expected, KeyValue actual)
+        {
+            Assert.AreEqual(s_testKey.Key, actual.Key);
+            Assert.AreEqual(s_testKey.Label, actual.Label);
+            Assert.AreEqual(s_testKey.ContentType, actual.ContentType);
+            Assert.AreEqual(s_testKey.Locked, actual.Locked);
         }
 
         [Test]
         public async Task Get()
         {
-            string connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
-            ConfigurationService.ParseConnectionString(connectionString, out var uri, out var credential, out var secret);
+            var transport = new GetMockTransport(s_testKey);
+            var (service, pool) = CreateTestService(transport);
 
-            var service = new ConfigurationService(uri, credential, secret);
+            Response<KeyValue> response = await service.GetAsync(key: "test_key", options: default, CancellationToken.None);
 
-            var transport = new GetKeyValueMockTransport();
-            transport.KeyValue = s_testKey;
-            transport.Responses.Add(HttpStatusCode.NotFound);
-            transport.Responses.Add(HttpStatusCode.OK);
-            service.Pipeline.Transport = transport;
-            var pool = new TestPool<byte>();
-            service.Pipeline.Pool = pool;
+            AssertEqual(s_testKey, response.Result);
 
-            Response<KeyValue> got = await service.GetAsync("test", default, CancellationToken.None);
+            response.Dispose();
+            Assert.AreEqual(0, pool.CurrentlyRented);
+        }
 
-            Assert.AreEqual(s_testKey.Key, got.Result.Key);
-            Assert.AreEqual(s_testKey.Label, got.Result.Label);
-            Assert.AreEqual(s_testKey.ContentType, got.Result.ContentType);
-            Assert.AreEqual(s_testKey.Locked, got.Result.Locked);
+        [Test]
+        public async Task GetNotFound()
+        {
+            var transport = new GetMockTransport(HttpStatusCode.NotFound);
+            var (service, pool) = CreateTestService(transport);
 
-            got.Dispose();
+            Response<KeyValue> response = await service.GetAsync(key: "test_key_not_present", options: default, CancellationToken.None);
+
+            Assert.AreEqual(404, response.Status);
+            Assert.IsNull(response.Result);
+
+            response.Dispose();
+            Assert.AreEqual(0, pool.CurrentlyRented);
+        }
+
+        [Test]
+        public async Task Add()
+        {
+            var transport = new AddMockTransport(s_testKey);
+            var (service, pool) = CreateTestService(transport);
+
+            Response<KeyValue> response = await service.AddAsync(s_testKey, CancellationToken.None);
+
+            AssertEqual(s_testKey, response.Result);
+
+            response.Dispose();
+            Assert.AreEqual(0, pool.CurrentlyRented);
+        }
+
+        [Test]
+        public async Task Set()
+        {
+            var transport = new SetMockTransport(s_testKey);
+            var (service, pool) = CreateTestService(transport);
+
+            Response<KeyValue> response = await service.SetAsync(s_testKey, CancellationToken.None);
+
+            AssertEqual(s_testKey, response.Result);
+
+            response.Dispose();
+            Assert.AreEqual(0, pool.CurrentlyRented);
+        }
+
+        [Test]
+        public async Task Update()
+        {
+            var transport = new UpdateMockTransport(s_testKey);
+            var (service, pool) = CreateTestService(transport);
+
+            Response<KeyValue> response = await service.UpdateAsync(s_testKey, CancellationToken.None);
+
+            AssertEqual(s_testKey, response.Result);
+
+            response.Dispose();
+            Assert.AreEqual(0, pool.CurrentlyRented);
+        }
+
+        [Test]
+        public async Task Delete()
+        {
+            var transport = new DeleteMockTransport(s_testKey);
+            var (service, pool) = CreateTestService(transport);
+
+            Response<KeyValue> response = await service.DeleteAsync(s_testKey, CancellationToken.None);
+
+            AssertEqual(s_testKey, response.Result);
+
+            response.Dispose();
+            Assert.AreEqual(0, pool.CurrentlyRented);
+        }
+
+        [Test]
+        public async Task Lock()
+        {
+            var (service, pool) = CreateTestService(new LockingMockTransport(s_testKey, lockOtherwiseUnlock: true));
+
+            Response<KeyValue> response = await service.LockAsync(s_testKey, CancellationToken.None);
+
+            AssertEqual(s_testKey, response.Result);
+
+            response.Dispose();
+            Assert.AreEqual(0, pool.CurrentlyRented);
+        }
+
+        [Test]
+        public async Task Unlock()
+        {
+            var (service, pool) = CreateTestService(new LockingMockTransport(s_testKey, lockOtherwiseUnlock: false));
+
+            Response<KeyValue> response = await service.UnlockAsync(s_testKey, CancellationToken.None);
+
+            AssertEqual(s_testKey, response.Result);
+
+            response.Dispose();
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
         [Test]
         public async Task GetBatch()
         {
-            string connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
-            ConfigurationService.ParseConnectionString(connectionString, out var uri, out var credential, out var secret);
-
-            var service = new ConfigurationService(uri, credential, secret);
-
-            var transport = new GetBatchAsyncMockTransport(5);
+            var transport = new GetBatchMockTransport(5);
             transport.Batches.Add((0, 4));
             transport.Batches.Add((4, 1));
 
-            transport.Responses.Add(HttpStatusCode.NotFound);
-            transport.Responses.Add(HttpStatusCode.OK);
-            service.Pipeline.Transport = transport;
-            var pool = new TestPool<byte>();
-            service.Pipeline.Pool = pool;
+            var (service, pool) = CreateTestService(transport);
 
             var query = new QueryKeyValueCollectionOptions();
             int keyIndex = 0;
-            while(true)
+            while (true)
             {
                 using (var response = await service.GetBatchAsync(query, CancellationToken.None))
                 {
@@ -116,95 +186,6 @@ namespace Azure.Configuration.Tests
             }
 
             Assert.AreEqual(0, pool.CurrentlyRented);
-        }
-    }
-
-    class SetKeyValueMockTransport : MockHttpClientTransport
-    {
-        public KeyValue KeyValue;
-        
-        public SetKeyValueMockTransport()
-        {
-            _expectedMethod = HttpMethod.Put;
-            _expectedUri = "https://contoso.azconfig.io/kv/test?label=test";
-            _expectedContent = "{\"key\":\"test_now\",\"content_type\":\"text\"}";
-        }
-
-        protected override void WriteResponseCore(HttpResponseMessage response)
-        {
-            string json = JsonConvert.SerializeObject(KeyValue).ToLowerInvariant();
-            response.Content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            long jsonByteCount = Encoding.UTF8.GetByteCount(json);
-            response.Content.Headers.Add("Content-Length", jsonByteCount.ToString());
-        }
-    }
-
-    class GetKeyValueMockTransport : MockHttpClientTransport
-    {
-        public KeyValue KeyValue;
-
-        public GetKeyValueMockTransport()
-        {
-            _expectedMethod = HttpMethod.Get;
-            _expectedUri = "https://contoso.azconfig.io/kv/test";
-            _expectedContent = null;
-        }
-
-        protected override void WriteResponseCore(HttpResponseMessage response)
-        {
-            string json = JsonConvert.SerializeObject(KeyValue).ToLowerInvariant();
-            response.Content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            long jsonByteCount = Encoding.UTF8.GetByteCount(json);
-            response.Content.Headers.Add("Content-Length", jsonByteCount.ToString());
-        }
-    }
-
-    class GetBatchAsyncMockTransport : MockHttpClientTransport
-    {
-        public List<KeyValue> KeyValues = new List<KeyValue>();
-        public List<(int index, int count)> Batches = new List<(int index, int count)>();
-        int _currentBathIndex = 0;
-        
-        public GetBatchAsyncMockTransport(int numberOfItems)
-        {
-            _expectedMethod = HttpMethod.Get;
-            _expectedUri = null;
-            _expectedContent = null;
-            for(int i=0; i< numberOfItems; i++)
-            {
-                var item = new KeyValue()
-                {
-                    Key = $"key{i}",
-                    Label = "label",
-                    Value = "val",
-                    ETag = "c3c231fd-39a0-4cb6-3237-4614474b92c1",
-                    ContentType = "text"
-                };
-                KeyValues.Add(item);
-            }
-        }
-
-        protected override void WriteResponseCore(HttpResponseMessage response)
-        {
-            var batch = Batches[_currentBathIndex++];
-            var bathItems = new List<KeyValue>(batch.count);
-            int itemIndex = batch.index;
-            int count = batch.count;
-            while(count -- > 0)
-            {
-                bathItems.Add(KeyValues[itemIndex++]);
-            }
-            string json = JsonConvert.SerializeObject(bathItems).ToLowerInvariant();
-            response.Content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            long jsonByteCount = Encoding.UTF8.GetByteCount(json);
-            response.Content.Headers.Add("Content-Length", jsonByteCount.ToString());
-            if (itemIndex < KeyValues.Count)
-            {
-                response.Headers.Add("Link", $"</kv?after={itemIndex}>;rel=\"next\"");
-            }
         }
     }
 }

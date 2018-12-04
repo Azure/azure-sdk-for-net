@@ -11,9 +11,6 @@ namespace Azure.Configuration
 {
     public partial class ConfigurationService
     {
-        internal const string SdkName = "Azure-Configuration";
-        internal const string SdkVersion = "1.0.0";
-
         readonly Uri _baseUri;
         readonly string _credential;
         readonly byte[] _secret;
@@ -33,28 +30,52 @@ namespace Azure.Configuration
             return pipeline;
         }
 
-        public ConfigurationService(Uri baseUri, string credential, byte[] secret, ServicePipeline pipeline)
+        public ConfigurationService(string connectionString)
+           : this(connectionString, CreateDefaultPipeline())
+        { }
+
+        public ConfigurationService(string connectionString, ServicePipeline pipeline)
         {
             Pipeline = pipeline;
-            _baseUri = baseUri;
-            _credential = credential;
-            _secret = secret;
+            ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
         }
 
-        public ConfigurationService(Uri baseUri, string credential, byte[] secret)
-           : this(baseUri, credential, secret, CreateDefaultPipeline())
-        { }
+        public async Task<Response<KeyValue>> AddAsync(KeyValue setting, CancellationToken cancellation)
+        {
+            if (setting == null) throw new ArgumentNullException(nameof(setting));
+            if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+
+            Url url = BuildUrlForKvRoute(setting);
+
+            ServiceCallContext context = null;
+            try {
+                context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
+
+                context.AddHeader(MediaTypeKeyValueApplicationHeader);
+                context.AddHeader(IfNoneMatchWildcard);
+                context.AddHeader(Header.Common.JsonContentType);
+
+                WriteJsonContent(setting, context);
+
+                await Pipeline.ProcessAsync(context).ConfigureAwait(false);
+
+                return await CreateKeyValueResponse(context);
+            }
+            catch {
+                if (context != null) context.Dispose();
+                throw;
+            }
+        }
 
         public async Task<Response<KeyValue>> SetAsync(KeyValue setting, CancellationToken cancellation)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
-            Url url = BuildUrlForSetKeyValue(setting);
+            Url url = BuildUrlForKvRoute(setting);
 
             ServiceCallContext context = null;
-            try
-            {
+            try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
@@ -64,26 +85,109 @@ namespace Azure.Configuration
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
-                ServiceResponse response = context.Response;
-                if (!response.TryGetHeader(Header.Constants.ContentLength, out long contentLength))
-                {
-                    throw new Exception("bad response: no content length header");
-                }
-
-                await response.ReadContentAsync(contentLength).ConfigureAwait(false);
-
-                Func<ReadOnlySequence<byte>, KeyValue> contentParser = null;
-                if (response.Status == 200)
-                {
-                    contentParser = (ros) => {
-                        if(ConfigurationServiceParser.TryParse(ros, out KeyValue result, out _)) return result;
-                        throw new Exception("invalid response content");
-                    };
-                }
-                return new Response<KeyValue>(response, contentParser);
+                return await CreateKeyValueResponse(context);
             }
-            catch
-            {
+            catch {
+                if (context != null) context.Dispose();
+                throw;
+            }
+        }
+
+        public async Task<Response<KeyValue>> UpdateAsync(KeyValue setting, CancellationToken cancellation)
+        {
+            if (setting == null) throw new ArgumentNullException(nameof(setting));
+            if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+            if (string.IsNullOrEmpty(setting.ETag)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.ETag)}");
+
+            Url url = BuildUrlForKvRoute(setting);
+
+            ServiceCallContext context = null;
+            try {
+                context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
+
+                context.AddHeader(MediaTypeKeyValueApplicationHeader);
+                context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
+                context.AddHeader(Header.Common.JsonContentType);
+
+                WriteJsonContent(setting, context);
+
+                await Pipeline.ProcessAsync(context).ConfigureAwait(false);
+
+                return await CreateKeyValueResponse(context);
+            }
+            catch {
+                if (context != null) context.Dispose();
+                throw;
+            }
+        }
+
+        public async Task<Response<KeyValue>> DeleteAsync(KeyValue setting, CancellationToken cancellation)
+        {
+            if (setting == null) throw new ArgumentNullException(nameof(setting));
+            if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+            if (string.IsNullOrEmpty(setting.ETag)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.ETag)}");
+
+            Url url = BuildUrlForKvRoute(setting);
+
+            ServiceCallContext context = null;
+            try {
+                context = Pipeline.CreateContext(cancellation, ServiceMethod.Delete, url);
+
+                context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
+
+                await Pipeline.ProcessAsync(context).ConfigureAwait(false);
+
+                return await CreateKeyValueResponse(context);
+            }
+            catch {
+                if (context != null) context.Dispose();
+                throw;
+            }
+        }
+
+        public async Task<Response<KeyValue>> LockAsync(KeyValue setting, CancellationToken cancellation)
+        {
+            if (setting == null) throw new ArgumentNullException(nameof(setting));
+            if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+            if (string.IsNullOrEmpty(setting.ETag)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.ETag)}");
+
+            Url url = BuildUriForLocksRoute(setting);
+
+            ServiceCallContext context = null;
+            try {
+                context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
+
+                context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
+
+                await Pipeline.ProcessAsync(context).ConfigureAwait(false);
+
+                return await CreateKeyValueResponse(context);
+            }
+            catch {
+                if (context != null) context.Dispose();
+                throw;
+            }
+        }
+
+        public async Task<Response<KeyValue>> UnlockAsync(KeyValue setting, CancellationToken cancellation)
+        {
+            if (setting == null) throw new ArgumentNullException(nameof(setting));
+            if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+            if (string.IsNullOrEmpty(setting.ETag)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.ETag)}");
+
+            Url url = BuildUriForLocksRoute(setting);
+
+            ServiceCallContext context = null;
+            try {
+                context = Pipeline.CreateContext(cancellation, ServiceMethod.Delete, url);
+
+                context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
+
+                await Pipeline.ProcessAsync(context).ConfigureAwait(false);
+
+                return await CreateKeyValueResponse(context);
+            }
+            catch {
                 if (context != null) context.Dispose();
                 throw;
             }
@@ -93,7 +197,7 @@ namespace Azure.Configuration
         {
             if (string.IsNullOrEmpty(key)) { throw new ArgumentNullException(nameof(key)); }
 
-            Url url = BuildUriForGetKeyValue(key, options);
+            Url url = BuildUrlForKvRoute(key, options);
 
             ServiceCallContext context = null;
             try {
@@ -105,24 +209,10 @@ namespace Azure.Configuration
                     var dateTime = options.PreferredDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
                     context.AddHeader(AcceptDatetimeHeader, dateTime);
                 }
-                
+
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
-                ServiceResponse response = context.Response;
-                if (!response.TryGetHeader(Header.Constants.ContentLength, out long contentLength)) {
-                    throw new Exception("bad response: no content length header");
-                }
-
-                await response.ReadContentAsync(contentLength).ConfigureAwait(false);
-
-                Func<ReadOnlySequence<byte>, KeyValue> contentParser = null;
-                if (response.Status == 200) {
-                    contentParser = (ros) => {
-                        if (ConfigurationServiceParser.TryParse(ros, out KeyValue result, out _)) return result;
-                        throw new Exception("invalid response content");
-                    };
-                }
-                return new Response<KeyValue>(response, contentParser);
+                return await CreateKeyValueResponse(context);
             }
             catch {
                 if (context != null) context.Dispose();
@@ -134,35 +224,30 @@ namespace Azure.Configuration
         {
             var requestUri = BuildUrlForGetBatch(options);
             ServiceCallContext context = null;
-            try
-            {
+            try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Get, requestUri);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
-                if (options.PreferredDateTime != null)
-                {
+                if (options.PreferredDateTime != null) {
                     context.AddHeader(AcceptDatetimeHeader, options.PreferredDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat));
                 }
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
                 ServiceResponse response = context.Response;
-                if (!response.TryGetHeader(Header.Constants.ContentLength, out long contentLength))
-                {
+                if (!response.TryGetHeader(Header.Constants.ContentLength, out long contentLength)) {
                     throw new Exception("bad response: no content length header");
                 }
 
                 await response.ReadContentAsync(contentLength).ConfigureAwait(false);
 
                 Func<ReadOnlySequence<byte>, KeyValueBatch> contentParser = null;
-                if (response.Status == 200)
-                {
+                if (response.Status == 200) {
                     contentParser = (ros) => { return KeyValueBatch.Parse(response); };
                 }
                 return new Response<KeyValueBatch>(response, contentParser);
             }
-            catch
-            {
+            catch {
                 if (context != null) context.Dispose();
                 throw;
             }
@@ -179,8 +264,7 @@ namespace Azure.Configuration
                 UserAgentHeader = Header.Common.CreateUserAgent(SdkName, SdkVersion, _applicationId);
             }
 
-            public string ApplicationId
-            {
+            public string ApplicationId {
                 get { return _applicationId; }
                 set {
                     if (string.Equals(_applicationId, value, StringComparison.Ordinal)) return;
@@ -199,43 +283,6 @@ namespace Azure.Configuration
             [EditorBrowsable(EditorBrowsableState.Never)]
             public override string ToString() => base.ToString();
             #endregion
-        }
-
-        public static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
-        {
-            uri = null;
-            credential = null;
-            secret = null;
-            if (string.IsNullOrEmpty(connectionString)) throw new ArgumentNullException(nameof(connectionString));
-
-            // Parse connection string
-            string[] args = connectionString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            if (args.Length < 3)
-            {
-                throw new ArgumentException("invalid connection string segment count", nameof(connectionString));
-            }
-
-            const string endpointString = "Endpoint=";
-            const string idString = "Id=";
-            const string secretString = "Secret=";
-
-            foreach (var arg in args)
-            {
-                var segment = arg.Trim();
-                if (segment.StartsWith(endpointString, StringComparison.OrdinalIgnoreCase))
-                {
-                    uri = new Uri(segment.Substring(segment.IndexOf('=') + 1));
-                }
-                else if (segment.StartsWith(idString, StringComparison.OrdinalIgnoreCase))
-                {
-                    credential = segment.Substring(segment.IndexOf('=') + 1);
-                }
-                else if (segment.StartsWith(secretString, StringComparison.OrdinalIgnoreCase))
-                {
-                    var secretBase64 = segment.Substring(segment.IndexOf('=') + 1);
-                    secret = Convert.FromBase64String(secretBase64);
-                }
-            };
         }
     }
 }
