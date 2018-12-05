@@ -82,10 +82,6 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PresentationTimeRange != null)
-            {
-                PresentationTimeRange.Validate();
-            }
             if (FirstQuality != null)
             {
                 FirstQuality.Validate();

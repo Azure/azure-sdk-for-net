@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'EnvelopeEncryption'</param>
         /// <param name="labelReferenceInStreamingPolicy">Label of Content Key
         /// as specified in the Streaming Policy</param>
-        /// <param name="value">Value of  of Content Key</param>
+        /// <param name="value">Value of Content Key</param>
         /// <param name="policyName">ContentKeyPolicy used by Content
         /// Key</param>
         /// <param name="tracks">Tracks which use this Content Key</param>
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Media.Models
         public string LabelReferenceInStreamingPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets value of  of Content Key
+        /// Gets or sets value of Content Key
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

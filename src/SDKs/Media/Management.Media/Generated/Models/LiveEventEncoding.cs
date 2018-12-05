@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="encodingType">The encoding type for Live Event.  This
         /// value is specified at creation time and cannot be updated. Possible
-        /// values include: 'None', 'Basic'</param>
+        /// values include: 'None', 'Basic', 'Standard'</param>
         /// <param name="presetName">The encoding preset name.  This value is
         /// specified at creation time and cannot be updated.</param>
         public LiveEventEncoding(LiveEventEncodingType? encodingType = default(LiveEventEncodingType?), string presetName = default(string))
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Gets or sets the encoding type for Live Event.  This value is
         /// specified at creation time and cannot be updated. Possible values
-        /// include: 'None', 'Basic'
+        /// include: 'None', 'Basic', 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "encodingType")]
         public LiveEventEncodingType? EncodingType { get; set; }
