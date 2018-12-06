@@ -220,6 +220,38 @@
             Assert.Null(batchException.RequestInformation.BatchError);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void TestBatchExceptionCreatedWithRetryAfterDuration()
+        {
+            Protocol.Models.BatchErrorException batchErrorException = new Protocol.Models.BatchErrorException()
+            {
+                Body = null, //Body is null
+                Response = new HttpResponseMessageWrapper(new HttpResponseMessage(HttpStatusCode.Accepted), string.Empty)
+            };
+            batchErrorException.Response.Headers.Add(InternalConstants.RetryAfterHeader, new List<string> { "10" });
+            BatchException batchException = new BatchException(batchErrorException);
+
+            Assert.Equal(TimeSpan.FromSeconds(10), batchException.RequestInformation.RetryAfter);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void TestBatchExceptionCreatedWithRetryAfterDateTime()
+        {
+            DateTime retryAfter = DateTime.UtcNow.Add(TimeSpan.FromSeconds(10));
+            string retryAfterString = retryAfter.ToString("r");
+            Protocol.Models.BatchErrorException batchErrorException = new Protocol.Models.BatchErrorException()
+            {
+                Body = null, //Body is null
+                Response = new HttpResponseMessageWrapper(new HttpResponseMessage(HttpStatusCode.Accepted), string.Empty)
+            };
+            batchErrorException.Response.Headers.Add(InternalConstants.RetryAfterHeader, new List<string> { retryAfterString });
+            BatchException batchException = new BatchException(batchErrorException);
+
+            Assert.True(TimeSpan.FromSeconds(9) <= batchException.RequestInformation.RetryAfter && batchException.RequestInformation.RetryAfter <= TimeSpan.FromSeconds(10));
+        }
+
         #endregion
 
         #region BatchRequest immutability tests
