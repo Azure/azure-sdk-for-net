@@ -12,7 +12,7 @@ namespace ComputerVisionSDK.Tests
 {
     public class VisionRecognizeTextTests : BaseTests
     {
-        static private RecognitionResult GetRecognitionResultWithPolling(IComputerVisionClient client, string operationLocation)
+        static private TextRecognitionResult GetRecognitionResultWithPolling(IComputerVisionClient client, string operationLocation)
         {
             string operationId = operationLocation.Substring(operationLocation.LastIndexOf('/') + 1);
 
@@ -47,7 +47,7 @@ namespace ComputerVisionSDK.Tests
 
                     Assert.NotNull(headers.OperationLocation);
 
-                    RecognitionResult recognitionResult = GetRecognitionResultWithPolling(client, headers.OperationLocation);
+                    TextRecognitionResult recognitionResult = GetRecognitionResultWithPolling(client, headers.OperationLocation);
 
                     Assert.NotNull(recognitionResult);
 
@@ -76,7 +76,7 @@ namespace ComputerVisionSDK.Tests
 
                     Assert.NotNull(headers.OperationLocation);
 
-                    RecognitionResult recognitionResult = GetRecognitionResultWithPolling(client, headers.OperationLocation);
+                    TextRecognitionResult recognitionResult = GetRecognitionResultWithPolling(client, headers.OperationLocation);
 
                     Assert.NotNull(recognitionResult);
 
