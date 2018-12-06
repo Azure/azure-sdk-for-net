@@ -260,7 +260,7 @@
 	
   </Target>
   
-  <Target Name="Package">
+  <Target Name="Package" DependsOnTargets="CategorizeProjects">
     <Message Text="Packaging..... @(net452SDKProj);@(netStd14SDKProj);@(nonSdkProject)" />
     <Message Text="PackageOutputDir....... $(BuiltPackageOutputDir)" />
     <PropertyGroup>
