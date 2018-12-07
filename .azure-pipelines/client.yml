@@ -1,0 +1,167 @@
+#Variables: 
+#   ‘source.scope’ list of projects to build (Ex: SDKs\KeyVault\dataPlane) 
+#   ‘system.debug’ bool for debug tracing
+
+resources:
+- repo: self
+queue:
+  name: Hosted VS2017
+  demands: msbuild
+
+steps:
+- script: |
+   set _VSWHERE="%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
+   for /f "usebackq tokens=*" %%i in (`%_VSWHERE% -latest -prerelease -property installationPath`) do set _VSCOMNTOOLS=%%i\Common7\Tools
+   echo "%_VSCOMNTOOLS%\VsDevCmd.bat"
+   call "%_VSCOMNTOOLS%\VsDevCmd.bat"
+   
+   sn -Vr *,31bf3856ad364e35
+  displayName: 'Allow unsigned build tool'
+
+- task: MSBuild@1
+  displayName: 'Init Build'
+  inputs:
+    solution: build.proj
+
+    msbuildArguments: '/t:Init /flp:LogFile=msbuild.Initlog;Verbosity=normal'
+
+
+- task: MSBuild@1
+  displayName: 'Build assemblies and run tests'
+  inputs:
+    solution: build.proj
+
+    msbuildArguments: '/t:RunTests /p:Scope=$(source.scope) /p:Configuration=Release /clp:ShowTimestamp /flp:Summary;Verbosity=minimal;LogFile=FullBuild.sum /flp1:warningsonly;logfile=FullBuild.wrn /flp2:errorsonly;logfile=FullBuild.err /p:DebugTrace=$(system.debug) /p:CodeSign=false /p:AuthenticodeSign=false /p:RunGlobalReadinessTools=false /p:EnablePreBuildTarget=false /p:EnablePostBuildTarget=false'
+
+
+- task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
+  displayName: 'Sign KeyVault Assemblies'
+  inputs:
+    ConnectedServiceName: 'ESRP Signing Service'
+
+    FolderPath: 'src\SDKs'
+
+    #TODO: This could use better filtering as this will include test assemblies as well.
+    Pattern: '*.dll'
+
+    signConfigType: inlineSignParams
+
+    inlineOperation: |
+     [
+         {
+             "keyCode": "CP-233863-SN",
+             "operationSetCode": "StrongNameSign",
+             "parameters": [ ],
+             "toolName": "sign",
+             "toolVersion": "1.0"
+         },
+         {
+             "keyCode": "CP-233863-SN",
+             "operationSetCode": "StrongNameVerify",
+             "parameters": [ ],
+             "toolName": "sign",
+             "toolVersion": "1.0"
+         },
+         {
+             "keyCode": "CP-230012",
+             "operationSetCode": "SigntoolSign",
+             "parameters": [
+             {
+                 "parameterName": "OpusName",
+                 "parameterValue": "Microsoft"
+             },
+             {
+                 "parameterName": "OpusInfo",
+                 "parameterValue": "http://www.microsoft.com"
+             },
+             {
+                 "parameterName": "FileDigest",
+                 "parameterValue": "/fd \"SHA256\""
+             },
+             {
+                 "parameterName": "PageHash",
+                 "parameterValue": "/NPH"
+             },
+             {
+                 "parameterName": "TimeStamp",
+                 "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+             }
+             ],
+             "toolName": "sign",
+             "toolVersion": "1.0"
+         },
+         {
+             "keyCode": "CP-230012",
+             "operationSetCode": "SigntoolVerify",
+             "parameters": [ ],
+             "toolName": "sign",
+             "toolVersion": "1.0"
+         }
+     ]
+
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+- task: MSBuild@1
+  displayName: 'Build NuGet Packages'
+  inputs:
+    solution: build.proj
+
+    #TODO: change the target to just "Package" once it's merged into the main bootstrap flow
+    msbuildArguments: '/t:CategorizeProjects,Package /p:Scope=$(source.scope) /p:Configuration=Release /flp:v=diag /flp:Summary;Verbosity=minimal;LogFile=PkgBuild.sum /flp1:warningsonly;logfile=PkgBuild.wrn /flp2:errorsonly;logfile=PkgBuild.err /p:DebugOutput=true /p:DebugTrace=$(system.debug)'
+
+
+- task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
+  displayName: 'Sign NuGet Packages'
+  inputs:
+    ConnectedServiceName: 'ESRP Signing Service'
+
+    FolderPath: 'binaries\packages'
+
+    Pattern: '*.nupkg'
+
+    signConfigType: inlineSignParams
+
+    inlineOperation: |
+     [
+         {
+             "keyCode": "CP-401405",
+             "operationSetCode": "NuGetSign",
+             "parameters": [ ],
+             "toolName": "sign",
+             "toolVersion": "1.0"
+         },
+         {
+             "keyCode": "CP-401405",
+             "operationSetCode": "NuGetVerify",
+             "parameters": [ ],
+             "toolName": "sign",
+             "toolVersion": "1.0"
+         }
+     ]
+
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+- script: |
+   set _VSWHERE="%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
+   for /f "usebackq tokens=*" %%i in (`%_VSWHERE% -latest -prerelease -property installationPath`) do set _VSCOMNTOOLS=%%i\Common7\Tools
+   echo "%_VSCOMNTOOLS%\VsDevCmd.bat"
+   call "%_VSCOMNTOOLS%\VsDevCmd.bat"
+   
+   sn -Vl
+   sn -Vu *,31bf3856ad364e35
+  displayName: 'Clean up unsigned build tool allowance'
+  condition: always()
+
+- task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+  displayName: 'Component Detection'
+
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifacts'
+  inputs:
+    PathtoPublish: 'binaries\packages'
+
+    ArtifactName: packages
+
+
