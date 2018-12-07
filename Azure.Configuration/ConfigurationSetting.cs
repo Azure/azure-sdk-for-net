@@ -9,7 +9,7 @@ using System.Text.JsonLab;
 
 namespace Azure.Configuration
 {
-    public sealed class KeyValue
+    public sealed class ConfigurationSetting
     {
         /// <summary>
         /// The primary identifier of a key-value.
@@ -56,15 +56,15 @@ namespace Azure.Configuration
         public IDictionary<string, string> Tags { get; set; }
     }
 
-    public sealed class KeyValueBatch : IEnumerable<KeyValue>
+    public sealed class SettingBatch : IEnumerable<ConfigurationSetting>
     {
-        List<KeyValue> _parsed;
+        List<ConfigurationSetting> _parsed;
 
         public int NextIndex { get; set; }
 
-        internal static KeyValueBatch Parse(ServiceResponse response)
+        internal static SettingBatch Parse(ServiceResponse response)
         {
-            var batch = new KeyValueBatch();
+            var batch = new SettingBatch();
             if (TryGetNextAfterValue(ref response, out int next))
             {
                 batch.NextIndex = next;
@@ -73,7 +73,7 @@ namespace Azure.Configuration
             return batch;
         }
 
-        public IEnumerator<KeyValue> GetEnumerator() => _parsed.GetEnumerator();
+        public IEnumerator<ConfigurationSetting> GetEnumerator() => _parsed.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => _parsed.GetEnumerator();
 
         static readonly byte[] s_link = Encoding.ASCII.GetBytes("Link");
@@ -111,7 +111,7 @@ namespace Azure.Configuration
             lastmodified
         }
 
-        static void SetValue(ref Utf8JsonReader json, JsonState state, ref KeyValue result)
+        static void SetValue(ref Utf8JsonReader json, JsonState state, ref ConfigurationSetting result)
         {
             switch (state)
             {
@@ -140,9 +140,9 @@ namespace Azure.Configuration
             }
         }
 
-        public static bool TryParse(ReadOnlySequence<byte> content, out KeyValue result, out long consumed)
+        public static bool TryParse(ReadOnlySequence<byte> content, out ConfigurationSetting result, out long consumed)
         {
-            result = new KeyValue();
+            result = new ConfigurationSetting();
             consumed = 0;
             var json = new Utf8JsonReader(content, true);
             JsonState state = JsonState.Other;
@@ -166,21 +166,21 @@ namespace Azure.Configuration
             return true;
         }
 
-        public static bool TryParse(ReadOnlySequence<byte> content, out List<KeyValue> result, out long consumed)
+        public static bool TryParse(ReadOnlySequence<byte> content, out List<ConfigurationSetting> result, out long consumed)
         {
             var debug = Encoding.UTF8.GetString(content.ToArray());
 
-            result = new List<KeyValue>();
+            result = new List<ConfigurationSetting>();
             consumed = 0;
             var json = new Utf8JsonReader(content, true);
             JsonState state = JsonState.Other;
-            KeyValue value = default;
+            ConfigurationSetting value = default;
             while (json.Read())
             {
                 switch (json.TokenType)
                 {
                     case JsonTokenType.StartObject:
-                        value = new KeyValue();
+                        value = new ConfigurationSetting();
                         break;
                     case JsonTokenType.EndObject:
                         result.Add(value);

@@ -12,7 +12,7 @@ namespace Azure.Configuration.Tests
     public class ConfigurationServiceTests
     {
         static readonly string connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
-        static readonly KeyValue s_testKey = new KeyValue()
+        static readonly ConfigurationSetting s_testKey = new ConfigurationSetting()
         {
             Key = "test_key",
             Label = "test_label",
@@ -23,9 +23,9 @@ namespace Azure.Configuration.Tests
             Locked = false
         };
 
-        private static (ConfigurationService service, TestPool<byte> pool) CreateTestService(MockHttpClientTransport transport)
+        private static (ConfigurationClient service, TestPool<byte> pool) CreateTestService(MockHttpClientTransport transport)
         {
-            var service = new ConfigurationService(connectionString);
+            var service = new ConfigurationClient(connectionString);
             var pool = new TestPool<byte>();
 
             if (transport.Responses.Count == 0)
@@ -39,7 +39,7 @@ namespace Azure.Configuration.Tests
             return (service, pool);
         }
 
-        private static void AssertEqual(KeyValue expected, KeyValue actual)
+        private static void AssertEqual(ConfigurationSetting expected, ConfigurationSetting actual)
         {
             Assert.AreEqual(s_testKey.Key, actual.Key);
             Assert.AreEqual(s_testKey.Label, actual.Label);
@@ -53,7 +53,7 @@ namespace Azure.Configuration.Tests
             var transport = new GetMockTransport(s_testKey);
             var (service, pool) = CreateTestService(transport);
 
-            Response<KeyValue> response = await service.GetAsync(key: "test_key", options: default, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.GetAsync(key: "test_key", options: default, CancellationToken.None);
 
             AssertEqual(s_testKey, response.Result);
 
@@ -67,7 +67,7 @@ namespace Azure.Configuration.Tests
             var transport = new GetMockTransport(HttpStatusCode.NotFound);
             var (service, pool) = CreateTestService(transport);
 
-            Response<KeyValue> response = await service.GetAsync(key: "test_key_not_present", options: default, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.GetAsync(key: "test_key_not_present", options: default, CancellationToken.None);
 
             Assert.AreEqual(404, response.Status);
             Assert.IsNull(response.Result);
@@ -82,7 +82,7 @@ namespace Azure.Configuration.Tests
             var transport = new AddMockTransport(s_testKey);
             var (service, pool) = CreateTestService(transport);
 
-            Response<KeyValue> response = await service.AddAsync(s_testKey, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.AddAsync(s_testKey, CancellationToken.None);
 
             AssertEqual(s_testKey, response.Result);
 
@@ -96,7 +96,7 @@ namespace Azure.Configuration.Tests
             var transport = new SetMockTransport(s_testKey);
             var (service, pool) = CreateTestService(transport);
 
-            Response<KeyValue> response = await service.SetAsync(s_testKey, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.SetAsync(s_testKey, CancellationToken.None);
 
             AssertEqual(s_testKey, response.Result);
 
@@ -110,7 +110,7 @@ namespace Azure.Configuration.Tests
             var transport = new UpdateMockTransport(s_testKey);
             var (service, pool) = CreateTestService(transport);
 
-            Response<KeyValue> response = await service.UpdateAsync(s_testKey, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.UpdateAsync(s_testKey, CancellationToken.None);
 
             AssertEqual(s_testKey, response.Result);
 
@@ -124,7 +124,7 @@ namespace Azure.Configuration.Tests
             var transport = new DeleteMockTransport(s_testKey);
             var (service, pool) = CreateTestService(transport);
 
-            Response<KeyValue> response = await service.DeleteAsync(s_testKey, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.DeleteAsync(s_testKey, CancellationToken.None);
 
             AssertEqual(s_testKey, response.Result);
 
@@ -137,7 +137,7 @@ namespace Azure.Configuration.Tests
         {
             var (service, pool) = CreateTestService(new LockingMockTransport(s_testKey, lockOtherwiseUnlock: true));
 
-            Response<KeyValue> response = await service.LockAsync(s_testKey, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.LockAsync(s_testKey, CancellationToken.None);
 
             AssertEqual(s_testKey, response.Result);
 
@@ -150,7 +150,7 @@ namespace Azure.Configuration.Tests
         {
             var (service, pool) = CreateTestService(new LockingMockTransport(s_testKey, lockOtherwiseUnlock: false));
 
-            Response<KeyValue> response = await service.UnlockAsync(s_testKey, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.UnlockAsync(s_testKey, CancellationToken.None);
 
             AssertEqual(s_testKey, response.Result);
 
@@ -167,13 +167,13 @@ namespace Azure.Configuration.Tests
 
             var (service, pool) = CreateTestService(transport);
 
-            var query = new QueryKeyValueCollectionOptions();
+            var query = new GetBatchOptions();
             int keyIndex = 0;
             while (true)
             {
                 using (var response = await service.GetBatchAsync(query, CancellationToken.None))
                 {
-                    KeyValueBatch batch = response.Result;
+                    SettingBatch batch = response.Result;
                     foreach (var value in batch)
                     {
                         Assert.AreEqual("key" + keyIndex.ToString(), value.Key);

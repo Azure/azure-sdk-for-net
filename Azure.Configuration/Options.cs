@@ -3,7 +3,7 @@
 namespace Azure.Configuration
 {
     [Flags]
-    public enum KeyValueFields
+    public enum SettingFields
     {
         None = 0x0000,
         Key = 0x0001,
@@ -18,7 +18,7 @@ namespace Azure.Configuration
         All = Key | Label | Value | ContentType | ETag | LastModified | Locked | Tags
     }
 
-    public sealed class GetKeyValueOptions
+    public sealed class GetSettingOptions
     {
         /// <summary>
         /// Specific label of the key.
@@ -33,7 +33,7 @@ namespace Azure.Configuration
         /// <summary>
         /// IKeyValue fields that will be retrieved.
         /// </summary>
-        public KeyValueFields FieldsSelector { get; set; } = KeyValueFields.All;
+        public SettingFields FieldsSelector { get; set; } = SettingFields.All;
     }
 
     public static class LabelFilters
@@ -47,7 +47,7 @@ namespace Azure.Configuration
         public const string Any = "*";
     }
 
-    public sealed class QueryKeyValueCollectionOptions
+    public sealed class GetBatchOptions
     {
         /// <summary>
         /// Keys that will be used to filter.
@@ -64,7 +64,7 @@ namespace Azure.Configuration
         /// <summary>
         /// IKeyValue fields that will be retrieved.
         /// </summary>
-        public KeyValueFields FieldsSelector { get; set; } = KeyValueFields.All;
+        public SettingFields FieldsSelector { get; set; } = SettingFields.All;
 
         /// <summary>
         /// If set, then key values will be retrieved exactly as they existed at the provided time.
@@ -74,5 +74,5 @@ namespace Azure.Configuration
         public int Index { get; set; }
     }
 
-    public struct KeyValueRange { }
+    public struct BatchRange { }
 }

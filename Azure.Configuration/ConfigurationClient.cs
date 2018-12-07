@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Configuration
 {
-    public partial class ConfigurationService
+    public partial class ConfigurationClient
     {
         readonly Uri _baseUri;
         readonly string _credential;
@@ -19,28 +19,17 @@ namespace Azure.Configuration
 
         public readonly ConfigurationServiceOptions Options = new ConfigurationServiceOptions("v1.0");
 
-        static ServicePipeline CreateDefaultPipeline()
-        {
-            var pipeline = new ServicePipeline(
-                new HttpClientTransport(),
-                new LoggingPolicy(),
-                new RetryPolicy(),
-                new TelemetryPolicy(SdkName, SdkVersion, null)
-            );
-            return pipeline;
-        }
-
-        public ConfigurationService(string connectionString)
-           : this(connectionString, CreateDefaultPipeline())
+        public ConfigurationClient(string connectionString)
+           : this(connectionString, ServicePipeline.Create(SdkName, SdkVersion))
         { }
 
-        public ConfigurationService(string connectionString, ServicePipeline pipeline)
+        public ConfigurationClient(string connectionString, ServicePipeline pipeline)
         {
             Pipeline = pipeline;
             ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
         }
 
-        public async Task<Response<KeyValue>> AddAsync(KeyValue setting, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -67,7 +56,7 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<KeyValue>> SetAsync(KeyValue setting, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellation)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -93,7 +82,7 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<KeyValue>> UpdateAsync(KeyValue setting, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -121,7 +110,7 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<KeyValue>> DeleteAsync(KeyValue setting, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> DeleteAsync(ConfigurationSetting setting, CancellationToken cancellation)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -145,7 +134,7 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<KeyValue>> LockAsync(KeyValue setting, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> LockAsync(ConfigurationSetting setting, CancellationToken cancellation)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -169,7 +158,7 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<KeyValue>> UnlockAsync(KeyValue setting, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> UnlockAsync(ConfigurationSetting setting, CancellationToken cancellation)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -193,7 +182,7 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<KeyValue>> GetAsync(string key, GetKeyValueOptions options, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> GetAsync(string key, GetSettingOptions options, CancellationToken cancellation)
         {
             if (string.IsNullOrEmpty(key)) { throw new ArgumentNullException(nameof(key)); }
 
@@ -220,7 +209,7 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<KeyValueBatch>> GetBatchAsync(QueryKeyValueCollectionOptions options, CancellationToken cancellation)
+        public async Task<Response<SettingBatch>> GetBatchAsync(GetBatchOptions options, CancellationToken cancellation)
         {
             var requestUri = BuildUrlForGetBatch(options);
             ServiceCallContext context = null;
@@ -241,11 +230,11 @@ namespace Azure.Configuration
 
                 await response.ReadContentAsync(contentLength).ConfigureAwait(false);
 
-                Func<ReadOnlySequence<byte>, KeyValueBatch> contentParser = null;
+                Func<ServiceResponse, SettingBatch> contentParser = null;
                 if (response.Status == 200) {
-                    contentParser = (ros) => { return KeyValueBatch.Parse(response); };
+                    contentParser = (rsp) => { return SettingBatch.Parse(rsp); };
                 }
-                return new Response<KeyValueBatch>(response, contentParser);
+                return new Response<SettingBatch>(response, contentParser);
             }
             catch {
                 if (context != null) context.Dispose();

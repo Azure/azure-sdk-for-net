@@ -10,11 +10,11 @@ using static System.Buffers.Text.Encodings;
 
 namespace Azure.Configuration
 {
-    public partial class ConfigurationService
+    public partial class ConfigurationClient
     {
         #region String Table
 
-        const string SdkName = "Azure-Configuration";
+        const string SdkName = "Azure.Configuration";
         const string SdkVersion = "1.0.0";
 
         const string MediaTypeProblemApplication = "application/problem+json";
@@ -50,17 +50,17 @@ namespace Azure.Configuration
             Encoding.ASCII.GetBytes("application/vnd.microsoft.appconfig.kv+json")
         );
 
-        static readonly Func<ReadOnlySequence<byte>, KeyValue> s_parser = (ros) => {
-            if (ConfigurationServiceParser.TryParse(ros, out KeyValue result, out _)) return result;
+        static readonly Func<ServiceResponse, ConfigurationSetting> s_parser = (rsp) => {
+            if (ConfigurationServiceParser.TryParse(rsp.Content, out ConfigurationSetting result, out _)) return result;
             throw new Exception("invalid response content");
         };
 
-        static async Task<Response<KeyValue>> CreateKeyValueResponse(ServiceCallContext context)
+        static async Task<Response<ConfigurationSetting>> CreateKeyValueResponse(ServiceCallContext context)
         {
             ServiceResponse response = context.Response;
 
             if (response.Status != 200) {
-                return new Response<KeyValue>(response);
+                return new Response<ConfigurationSetting>(response);
             }
 
             if (!response.TryGetHeader(Header.Constants.ContentLength, out long contentLength)) {
@@ -68,7 +68,7 @@ namespace Azure.Configuration
             }
             await response.ReadContentAsync(contentLength).ConfigureAwait(false);
 
-            return new Response<KeyValue>(response, s_parser);
+            return new Response<ConfigurationSetting>(response, s_parser);
         }
 
         static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
@@ -108,7 +108,7 @@ namespace Azure.Configuration
             };
         }
 
-        Url BuildUrlForGetBatch(QueryKeyValueCollectionOptions options)
+        Url BuildUrlForGetBatch(GetBatchOptions options)
         {
             var urlBuilder = new UrlWriter(new Url(_baseUri), 100);
             urlBuilder.AppendPath(KvRouteBytes); // TODO (pri 1): it seems like this causes the path to end with /. is that ok?
@@ -132,7 +132,7 @@ namespace Azure.Configuration
                 urlBuilder.AppendQuery(s_labelQueryFilter, options.LabelFilter);
             }
 
-            if (options.FieldsSelector != KeyValueFields.All)
+            if (options.FieldsSelector != SettingFields.All)
             {
                 // TODO (pri 3): this should be optimized
                 var filter = (options.FieldsSelector).ToString().ToLower().Replace(" ", "");
@@ -142,7 +142,7 @@ namespace Azure.Configuration
             return urlBuilder.ToUrl();
         }
 
-        Url BuildUrlForKvRoute(string key, GetKeyValueOptions options)
+        Url BuildUrlForKvRoute(string key, GetSettingOptions options)
         {
             var builder = new UrlWriter(_baseUri.ToString(), 100);
             builder.AppendPath(KvRouteBytes);
@@ -152,7 +152,7 @@ namespace Azure.Configuration
                 if (options.Label != null) {
                     builder.AppendQuery(s_labelQueryFilter, options.Label);
                 }
-                if (options.FieldsSelector != KeyValueFields.All)
+                if (options.FieldsSelector != SettingFields.All)
                 {
                     // TODO (pri 3): this should be optimized
                     var filter = (options.FieldsSelector).ToString().ToLower().Replace(" ", "");
@@ -162,10 +162,10 @@ namespace Azure.Configuration
             return builder.ToUrl();
         }
 
-        Url BuildUrlForKvRoute(KeyValue keyValue)
-            => BuildUrlForKvRoute(keyValue.Key, new GetKeyValueOptions() { Label = keyValue.Label });
+        Url BuildUrlForKvRoute(ConfigurationSetting keyValue)
+            => BuildUrlForKvRoute(keyValue.Key, new GetSettingOptions() { Label = keyValue.Label });
 
-        Url BuildUriForLocksRoute(KeyValue keyValue)
+        Url BuildUriForLocksRoute(ConfigurationSetting keyValue)
         {
             var builder = new UrlWriter(_baseUri.ToString(), 100);
             builder.AppendPath(LocksRouteBytes);
@@ -180,7 +180,7 @@ namespace Azure.Configuration
         }
 
         // TODO (pri 1): serialize the Tags field
-        void WriteJsonContent(KeyValue setting, ServiceCallContext context)
+        void WriteJsonContent(ConfigurationSetting setting, ServiceCallContext context)
         {
             var writer = Utf8JsonWriter.Create(context.ContentWriter);
             writer.WriteObjectStart();

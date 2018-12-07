@@ -16,7 +16,7 @@ namespace Azure.Configuration.Test
     // TODO (pri 3): Add and Set mocks are the same. Is that ok?
     class AddMockTransport : KeyValueMockTransport
     {
-        public AddMockTransport(KeyValue responseContent)
+        public AddMockTransport(ConfigurationSetting responseContent)
             : base(HttpMethod.Put, responseContent)
         {
             _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
@@ -26,7 +26,7 @@ namespace Azure.Configuration.Test
 
     class SetMockTransport : KeyValueMockTransport
     {
-        public SetMockTransport(KeyValue responseContent)
+        public SetMockTransport(ConfigurationSetting responseContent)
             : base(HttpMethod.Put, responseContent)
         {
             _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
@@ -36,7 +36,7 @@ namespace Azure.Configuration.Test
 
     class UpdateMockTransport : KeyValueMockTransport
     {
-        public UpdateMockTransport(KeyValue responseContent)
+        public UpdateMockTransport(ConfigurationSetting responseContent)
             : base(HttpMethod.Put, responseContent)
         {
             _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
@@ -51,9 +51,9 @@ namespace Azure.Configuration.Test
 
     class DeleteMockTransport : KeyValueMockTransport
     {
-        public KeyValue _responseContent;
+        public ConfigurationSetting _responseContent;
 
-        public DeleteMockTransport(KeyValue responseContent)
+        public DeleteMockTransport(ConfigurationSetting responseContent)
             : base(HttpMethod.Delete, responseContent)
         {
             _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
@@ -63,7 +63,7 @@ namespace Azure.Configuration.Test
 
     class GetMockTransport : KeyValueMockTransport
     {
-        public GetMockTransport(KeyValue responseContent)
+        public GetMockTransport(ConfigurationSetting responseContent)
             : base(HttpMethod.Get, responseContent)
         {
             _expectedMethod = HttpMethod.Get;
@@ -84,7 +84,7 @@ namespace Azure.Configuration.Test
 
     class LockingMockTransport : KeyValueMockTransport
     {
-        public LockingMockTransport(KeyValue responseContent, bool lockOtherwiseUnlock)
+        public LockingMockTransport(ConfigurationSetting responseContent, bool lockOtherwiseUnlock)
             : base(lockOtherwiseUnlock ? HttpMethod.Put : HttpMethod.Delete, responseContent)
         {
             _expectedUri = "https://contoso.azconfig.io/locks/test_key?label=test_label";
@@ -94,7 +94,7 @@ namespace Azure.Configuration.Test
 
     class GetBatchMockTransport : MockHttpClientTransport
     {
-        public List<KeyValue> KeyValues = new List<KeyValue>();
+        public List<ConfigurationSetting> KeyValues = new List<ConfigurationSetting>();
         public List<(int index, int count)> Batches = new List<(int index, int count)>();
         int _currentBathIndex = 0;
 
@@ -105,7 +105,7 @@ namespace Azure.Configuration.Test
             _expectedRequestContent = null;
             for (int i = 0; i < numberOfItems; i++)
             {
-                var item = new KeyValue()
+                var item = new ConfigurationSetting()
                 {
                     Key = $"key{i}",
                     Label = "label",
@@ -120,7 +120,7 @@ namespace Azure.Configuration.Test
         protected override void WriteResponseCore(HttpResponseMessage response)
         {
             var batch = Batches[_currentBathIndex++];
-            var bathItems = new List<KeyValue>(batch.count);
+            var bathItems = new List<ConfigurationSetting>(batch.count);
             int itemIndex = batch.index;
             int count = batch.count;
             while (count-- > 0)
@@ -141,9 +141,9 @@ namespace Azure.Configuration.Test
 
     class KeyValueMockTransport : MockHttpClientTransport
     {
-        KeyValue _responseContent;
+        ConfigurationSetting _responseContent;
 
-        public KeyValueMockTransport(HttpMethod expectedMethod, KeyValue responseContent)
+        public KeyValueMockTransport(HttpMethod expectedMethod, ConfigurationSetting responseContent)
         {
             _expectedMethod = expectedMethod;
             _responseContent = responseContent;
@@ -158,9 +158,9 @@ namespace Azure.Configuration.Test
             response.Content.Headers.Add("Content-Length", jsonByteCount.ToString());
         }
 
-        protected static KeyValue CloneKey(KeyValue original)
+        protected static ConfigurationSetting CloneKey(ConfigurationSetting original)
         {
-            var cloned = new KeyValue();
+            var cloned = new ConfigurationSetting();
             cloned.Key = original.Key;
             cloned.Label = original.Label;
             cloned.Value = original.Value;
@@ -224,7 +224,7 @@ namespace Azure.Configuration.Test
 
         void VerifyUserAgentHeader(HttpRequestMessage request)
         {
-            var expected = Utf8.ToString(Header.Common.CreateUserAgent("Azure-Configuration", "1.0.0").Value);
+            var expected = Utf8.ToString(Header.Common.CreateUserAgent("Azure.Configuration", "1.0.0").Value);
 
             Assert.True(request.Headers.Contains("User-Agent"));
             var userAgentValues = request.Headers.GetValues("User-Agent");
