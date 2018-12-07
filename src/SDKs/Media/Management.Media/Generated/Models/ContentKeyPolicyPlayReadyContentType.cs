@@ -11,75 +11,117 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ContentKeyPolicyPlayReadyContentType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ContentKeyPolicyPlayReadyContentType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ContentKeyPolicyPlayReadyContentTypeConverter))]
+    public struct ContentKeyPolicyPlayReadyContentType : System.IEquatable<ContentKeyPolicyPlayReadyContentType>
     {
+        private ContentKeyPolicyPlayReadyContentType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// Represents a ContentKeyPolicyPlayReadyContentType that is
         /// unavailable in current API version.
         /// </summary>
-        [EnumMember(Value = "Unknown")]
-        Unknown,
+        public static readonly ContentKeyPolicyPlayReadyContentType Unknown = "Unknown";
+
         /// <summary>
         /// Unspecified content type.
         /// </summary>
-        [EnumMember(Value = "Unspecified")]
-        Unspecified,
+        public static readonly ContentKeyPolicyPlayReadyContentType Unspecified = "Unspecified";
+
         /// <summary>
         /// Ultraviolet download content type.
         /// </summary>
-        [EnumMember(Value = "UltraVioletDownload")]
-        UltraVioletDownload,
+        public static readonly ContentKeyPolicyPlayReadyContentType UltraVioletDownload = "UltraVioletDownload";
+
         /// <summary>
         /// Ultraviolet streaming content type.
         /// </summary>
-        [EnumMember(Value = "UltraVioletStreaming")]
-        UltraVioletStreaming
-    }
-    internal static class ContentKeyPolicyPlayReadyContentTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this ContentKeyPolicyPlayReadyContentType? value)
+        public static readonly ContentKeyPolicyPlayReadyContentType UltraVioletStreaming = "UltraVioletStreaming";
+
+
+        /// <summary>
+        /// Underlying value of enum ContentKeyPolicyPlayReadyContentType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for
+        /// ContentKeyPolicyPlayReadyContentType
+        /// </summary>
+        public override string ToString()
         {
-            return value == null ? null : ((ContentKeyPolicyPlayReadyContentType)value).ToSerializedValue();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static string ToSerializedValue(this ContentKeyPolicyPlayReadyContentType value)
+        /// <summary>
+        /// Compares enums of type ContentKeyPolicyPlayReadyContentType
+        /// </summary>
+        public bool Equals(ContentKeyPolicyPlayReadyContentType e)
         {
-            switch( value )
-            {
-                case ContentKeyPolicyPlayReadyContentType.Unknown:
-                    return "Unknown";
-                case ContentKeyPolicyPlayReadyContentType.Unspecified:
-                    return "Unspecified";
-                case ContentKeyPolicyPlayReadyContentType.UltraVioletDownload:
-                    return "UltraVioletDownload";
-                case ContentKeyPolicyPlayReadyContentType.UltraVioletStreaming:
-                    return "UltraVioletStreaming";
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
-        internal static ContentKeyPolicyPlayReadyContentType? ParseContentKeyPolicyPlayReadyContentType(this string value)
+        /// <summary>
+        /// Implicit operator to convert string to
+        /// ContentKeyPolicyPlayReadyContentType
+        /// </summary>
+        public static implicit operator ContentKeyPolicyPlayReadyContentType(string value)
         {
-            switch( value )
-            {
-                case "Unknown":
-                    return ContentKeyPolicyPlayReadyContentType.Unknown;
-                case "Unspecified":
-                    return ContentKeyPolicyPlayReadyContentType.Unspecified;
-                case "UltraVioletDownload":
-                    return ContentKeyPolicyPlayReadyContentType.UltraVioletDownload;
-                case "UltraVioletStreaming":
-                    return ContentKeyPolicyPlayReadyContentType.UltraVioletStreaming;
-            }
-            return null;
+            return new ContentKeyPolicyPlayReadyContentType(value);
         }
+
+        /// <summary>
+        /// Implicit operator to convert ContentKeyPolicyPlayReadyContentType
+        /// to string
+        /// </summary>
+        public static implicit operator string(ContentKeyPolicyPlayReadyContentType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum
+        /// ContentKeyPolicyPlayReadyContentType
+        /// </summary>
+        public static bool operator == (ContentKeyPolicyPlayReadyContentType e1, ContentKeyPolicyPlayReadyContentType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum
+        /// ContentKeyPolicyPlayReadyContentType
+        /// </summary>
+        public static bool operator != (ContentKeyPolicyPlayReadyContentType e1, ContentKeyPolicyPlayReadyContentType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ContentKeyPolicyPlayReadyContentType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ContentKeyPolicyPlayReadyContentType && Equals((ContentKeyPolicyPlayReadyContentType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ContentKeyPolicyPlayReadyContentType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

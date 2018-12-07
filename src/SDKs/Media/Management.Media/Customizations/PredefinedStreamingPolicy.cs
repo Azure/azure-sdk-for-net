@@ -44,14 +44,13 @@ namespace Microsoft.Azure.Management.Media
         /// Predefined Streaming Policy which supports envelope and cenc
         /// encryption
         /// </summary>
-        public static readonly PredefinedStreamingPolicy SecureStreaming = "Predefined_SecureStreaming";
+        public static readonly PredefinedStreamingPolicy MultiDrmCencStreaming = "Predefined_MultiDrmCencStreaming";
 
         /// <summary>
         /// Predefined Streaming Policy which supports clear key, cenc and cbcs
         /// encryption
         /// </summary>
-        public static readonly PredefinedStreamingPolicy SecureStreamingWithFairPlay = "Predefined_SecureStreamingWithFairPlay";
-
+        public static readonly PredefinedStreamingPolicy MultiDrmStreaming = "Predefined_MultiDrmStreaming";
 
         /// <summary>
         /// Underlying value of enum PredefinedStreamingPolicy
