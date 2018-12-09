@@ -18,38 +18,29 @@
 		<BuildWideDebugTrace Condition=" '$(DebugTrace)' == '' ">false</BuildWideDebugTrace>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
-
-	<!-- <PropertyGroup Condition=" '$(Configuration)' == 'Debug' AND '$(DelaySignForInternalsVisible)' == 'true' ">
-		There are certain projects that needs internals visible for test purpose
-		<SignAssembly>true</SignAssembly>
-		<DelaySign>true</DelaySign>
-		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-	</PropertyGroup>
-	<PropertyGroup>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	</PropertyGroup>
 	
-	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+	<!--  AND ('$(CodeSign)' == 'true')
+	<PropertyGroup Condition=" ('$(IsBuildToolsProject)' == 'false' OR '$(IsBuildToolsProject)' == '') ">
 		<SignAssembly>true</SignAssembly>
 		<DelaySign>true</DelaySign>
-		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-	</PropertyGroup> -->
-
-  <PropertyGroup>
+		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>	
+	</PropertyGroup>
+-->
+	<PropertyGroup>
 		<SignManifestRootDir>$(BinariesFolder)\signManifest</SignManifestRootDir>
 		<SignServiceDir>$(SignManifestRootDir)\signService</SignServiceDir>
 		<SignClientConfigDir>$(SignManifestRootDir)\signClientConfig</SignClientConfigDir>
 		<AuthenticodeSign>false</AuthenticodeSign>
-  </PropertyGroup>
-  <PropertyGroup>
+	</PropertyGroup>
+	<PropertyGroup>
 		<PackageRootDir>$(BuiltPackageOutputDir)</PackageRootDir>
 		<UnsignedPackageRootDir>$(PackageRootDir)\unsigned</UnsignedPackageRootDir>
 		<SignedPackageRootDir>$(PackageRootDir)\signed</SignedPackageRootDir>
-  </PropertyGroup>
+	</PropertyGroup>
   
-  <PropertyGroup>	
+	<PropertyGroup>	
 		<BuildNameLabel>DesktopBuild</BuildNameLabel>
-  </PropertyGroup>
+	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
 		<DefineConstants>net452;FullNetFx;LEGACY</DefineConstants>
