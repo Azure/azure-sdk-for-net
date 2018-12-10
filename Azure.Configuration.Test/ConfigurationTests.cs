@@ -167,7 +167,7 @@ namespace Azure.Configuration.Tests
 
             var (service, pool) = CreateTestService(transport);
 
-            var query = new GetBatchOptions();
+            var query = new BatchQueryOptions();
             int keyIndex = 0;
             while (true)
             {
@@ -179,9 +179,9 @@ namespace Azure.Configuration.Tests
                         Assert.AreEqual("key" + keyIndex.ToString(), value.Key);
                         keyIndex++;
                     }
-                    query.Index = batch.NextIndex;
+                    query.StartIndex = batch.NextIndex;
 
-                    if (query.Index == 0) break;
+                    if (query.StartIndex == 0) break;
                 }
             }
 

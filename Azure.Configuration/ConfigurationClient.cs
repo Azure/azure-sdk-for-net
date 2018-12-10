@@ -182,7 +182,7 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> GetAsync(string key, GetSettingOptions options, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> GetAsync(string key, SettingQueryOptions options, CancellationToken cancellation)
         {
             if (string.IsNullOrEmpty(key)) { throw new ArgumentNullException(nameof(key)); }
 
@@ -209,7 +209,7 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetBatchAsync(GetBatchOptions options, CancellationToken cancellation)
+        public async Task<Response<SettingBatch>> GetBatchAsync(BatchQueryOptions options, CancellationToken cancellation)
         {
             var requestUri = BuildUrlForGetBatch(options);
             ServiceCallContext context = null;

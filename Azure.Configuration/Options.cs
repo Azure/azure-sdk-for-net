@@ -18,12 +18,15 @@ namespace Azure.Configuration
         All = Key | Label | Value | ContentType | ETag | LastModified | Locked | Tags
     }
 
-    public sealed class GetSettingOptions
+    public class SettingQueryOptions
     {
+        public const string NullFilter = "\0";
+        public const string AnyFilter = "*";
+
         /// <summary>
         /// Specific label of the key.
         /// </summary>
-        public string Label { get; set; } = LabelFilters.Null;
+        public string LabelFilter { get; set; } = NullFilter;
 
         /// <summary>
         /// If set, then key values will be retrieved exactly as they existed at the provided time.
@@ -36,43 +39,14 @@ namespace Azure.Configuration
         public SettingFields FieldsSelector { get; set; } = SettingFields.All;
     }
 
-    public static class LabelFilters
-    {
-        public const string Null = "\0";
-        public const string Any = "*";
-    }
-
-    public static class KeyFilters
-    {
-        public const string Any = "*";
-    }
-
-    public sealed class GetBatchOptions
+    public sealed class BatchQueryOptions : SettingQueryOptions
     {
         /// <summary>
         /// Keys that will be used to filter.
         /// </summary>
         /// <remarks>See the documentation for this SDK for details on the format of filter expressions</remarks>
-        public string KeyFilter { get; set; } = KeyFilters.Any;
+        public string KeyFilter { get; set; } = AnyFilter;
 
-        /// <summary>
-        /// Labels that will be used to filter.
-        /// </summary>
-        /// <remarks>See the documentation for this SDK for details on the format of filter expressions</remarks>
-        public string LabelFilter { get; set; } = LabelFilters.Any;
-
-        /// <summary>
-        /// IKeyValue fields that will be retrieved.
-        /// </summary>
-        public SettingFields FieldsSelector { get; set; } = SettingFields.All;
-
-        /// <summary>
-        /// If set, then key values will be retrieved exactly as they existed at the provided time.
-        /// </summary>
-        public DateTimeOffset? PreferredDateTime { get; set; }
-
-        public int Index { get; set; }
+        public int StartIndex { get; set; }
     }
-
-    public struct BatchRange { }
 }

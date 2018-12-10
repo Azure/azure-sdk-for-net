@@ -108,14 +108,14 @@ namespace Azure.Configuration
             };
         }
 
-        Url BuildUrlForGetBatch(GetBatchOptions options)
+        Url BuildUrlForGetBatch(BatchQueryOptions options)
         {
             var urlBuilder = new UrlWriter(new Url(_baseUri), 100);
             urlBuilder.AppendPath(KvRouteBytes); // TODO (pri 1): it seems like this causes the path to end with /. is that ok?
 
-            if (options.Index != 0)
+            if (options.StartIndex != 0)
             {
-                urlBuilder.AppendQuery(s_after, options.Index);
+                urlBuilder.AppendQuery(s_after, options.StartIndex);
             }
 
             if (!string.IsNullOrEmpty(options.KeyFilter))
@@ -142,15 +142,15 @@ namespace Azure.Configuration
             return urlBuilder.ToUrl();
         }
 
-        Url BuildUrlForKvRoute(string key, GetSettingOptions options)
+        Url BuildUrlForKvRoute(string key, SettingQueryOptions options)
         {
             var builder = new UrlWriter(_baseUri.ToString(), 100);
             builder.AppendPath(KvRouteBytes);
             builder.AppendPath(key);
 
             if (options != null) {
-                if (options.Label != null) {
-                    builder.AppendQuery(s_labelQueryFilter, options.Label);
+                if (options.LabelFilter != null) {
+                    builder.AppendQuery(s_labelQueryFilter, options.LabelFilter);
                 }
                 if (options.FieldsSelector != SettingFields.All)
                 {
@@ -163,7 +163,7 @@ namespace Azure.Configuration
         }
 
         Url BuildUrlForKvRoute(ConfigurationSetting keyValue)
-            => BuildUrlForKvRoute(keyValue.Key, new GetSettingOptions() { Label = keyValue.Label });
+            => BuildUrlForKvRoute(keyValue.Key, new SettingQueryOptions() { LabelFilter = keyValue.Label });
 
         Url BuildUriForLocksRoute(ConfigurationSetting keyValue)
         {
