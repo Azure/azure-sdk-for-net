@@ -14,9 +14,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes the parameters of differencing disk settings that can be be
+    /// Describes the parameters of ephemeral disk settings that can be
     /// specified for operating system disk. &lt;br&gt;&lt;br&gt; NOTE: The
-    /// differencing disk settings can only be specified for managed disk.
+    /// ephemeral disk settings can only be specified for managed disk.
     /// </summary>
     public partial class DiffDiskSettings
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the DiffDiskSettings class.
         /// </summary>
-        /// <param name="option">Specifies the differencing disk settings for
+        /// <param name="option">Specifies the ephemeral disk settings for
         /// operating system disk. Possible values include: 'Local'</param>
         public DiffDiskSettings(string option = default(string))
         {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the differencing disk settings for operating
+        /// Gets or sets specifies the ephemeral disk settings for operating
         /// system disk. Possible values include: 'Local'
         /// </summary>
         [JsonProperty(PropertyName = "option")]

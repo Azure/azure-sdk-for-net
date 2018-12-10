@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="toTime">To time of the query</param>
         /// <param name="groupByThrottlePolicy">Group query result by Throttle
         /// Policy applied.</param>
-        /// <param name="groupByOperationName">Group query result by  by
-        /// Operation Name.</param>
+        /// <param name="groupByOperationName">Group query result by Operation
+        /// Name.</param>
         /// <param name="groupByResourceName">Group query result by Resource
         /// Name.</param>
         public ThrottledRequestsInput(string blobContainerSasUri, System.DateTime fromTime, System.DateTime toTime, bool? groupByThrottlePolicy = default(bool?), bool? groupByOperationName = default(bool?), bool? groupByResourceName = default(bool?))

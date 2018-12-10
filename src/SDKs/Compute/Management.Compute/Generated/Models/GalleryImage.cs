@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="description">The description of this gallery Image
-        /// Definition resource. This property is updateable.</param>
+        /// Definition resource. This property is updatable.</param>
         /// <param name="eula">The Eula agreement for the gallery Image
         /// Definition.</param>
         /// <param name="privacyStatementUri">The privacy statement
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="releaseNoteUri">The release note uri.</param>
         /// <param name="endOfLifeDate">The end of life date of the gallery
         /// Image Definition. This property can be used for decommissioning
-        /// purposes. This property is updateable.</param>
+        /// purposes. This property is updatable.</param>
         /// <param name="provisioningState">The current state of the gallery
         /// Image Definition.</param>
         public GalleryImage(string location, OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string provisioningState = default(string))
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the description of this gallery Image Definition
-        /// resource. This property is updateable.
+        /// resource. This property is updatable.
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the end of life date of the gallery Image Definition.
         /// This property can be used for decommissioning purposes. This
-        /// property is updateable.
+        /// property is updatable.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endOfLifeDate")]
         public System.DateTime? EndOfLifeDate { get; set; }

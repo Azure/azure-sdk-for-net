@@ -35,11 +35,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="targetRegions">The target regions where the Image
         /// Version is going to be replicated to. This property is
-        /// updateable.</param>
+        /// updatable.</param>
         /// <param name="replicaCount">The number of replicas of the Image
         /// Version to be created per region. This property would take effect
         /// for a region when regionalReplicaCount is not specified. This
-        /// property is updateable.</param>
+        /// property is updatable.</param>
         /// <param name="excludeFromLatest">If set to true, Virtual Machines
         /// deployed from the latest version of the Image Definition won't use
         /// this Image Version.</param>
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Image Version is published.</param>
         /// <param name="endOfLifeDate">The end of life date of the gallery
         /// Image Version. This property can be used for decommissioning
-        /// purposes. This property is updateable.</param>
+        /// purposes. This property is updatable.</param>
         public GalleryImageVersionPublishingProfile(GalleryArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?))
             : base(source, targetRegions)
         {
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets the number of replicas of the Image Version to be
         /// created per region. This property would take effect for a region
         /// when regionalReplicaCount is not specified. This property is
-        /// updateable.
+        /// updatable.
         /// </summary>
         [JsonProperty(PropertyName = "replicaCount")]
         public int? ReplicaCount { get; set; }
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the end of life date of the gallery Image Version.
         /// This property can be used for decommissioning purposes. This
-        /// property is updateable.
+        /// property is updatable.
         /// </summary>
         [JsonProperty(PropertyName = "endOfLifeDate")]
         public System.DateTime? EndOfLifeDate { get; set; }
