@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes The SKU capabilites object.
+    /// Describes The SKU capabilities object.
     /// </summary>
     public partial class ResourceSkuCapabilities
     {

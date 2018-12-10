@@ -14,26 +14,29 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The vault id is an Azure Resource Manager Resource id in the form
-    /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+    /// Parameters for Reimaging Virtual Machine. NOTE: Virtual Machine OS disk
+    /// will always be reimaged
     /// </summary>
-    public partial class SourceVault
+    public partial class VirtualMachineReimageParameters
     {
         /// <summary>
-        /// Initializes a new instance of the SourceVault class.
+        /// Initializes a new instance of the VirtualMachineReimageParameters
+        /// class.
         /// </summary>
-        public SourceVault()
+        public VirtualMachineReimageParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SourceVault class.
+        /// Initializes a new instance of the VirtualMachineReimageParameters
+        /// class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        public SourceVault(string id = default(string))
+        /// <param name="tempDisk">Specifies whether to reimage temp disk.
+        /// Default value: false.</param>
+        public VirtualMachineReimageParameters(bool? tempDisk = default(bool?))
         {
-            Id = id;
+            TempDisk = tempDisk;
             CustomInit();
         }
 
@@ -43,10 +46,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource Id
+        /// Gets or sets specifies whether to reimage temp disk. Default value:
+        /// false.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "tempDisk")]
+        public bool? TempDisk { get; set; }
 
     }
 }

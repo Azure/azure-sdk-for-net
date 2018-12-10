@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <param name="writeAcceleratorEnabled">Specifies whether
         /// writeAccelerator should be enabled or disabled on the disk.</param>
-        /// <param name="diffDiskSettings">Specifies the differencing Disk
+        /// <param name="diffDiskSettings">Specifies the ephemeral Disk
         /// Settings for the operating system disk used by the virtual
         /// machine.</param>
         /// <param name="diskSizeGB">Specifies the size of an empty data disk
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? WriteAcceleratorEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the differencing Disk Settings for the
+        /// Gets or sets specifies the ephemeral Disk Settings for the
         /// operating system disk used by the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "diffDiskSettings")]

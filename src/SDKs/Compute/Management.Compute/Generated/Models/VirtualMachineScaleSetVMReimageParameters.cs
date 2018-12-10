@@ -10,30 +10,31 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The vault id is an Azure Resource Manager Resource id in the form
-    /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
+    /// Describes a Virtual Machine Scale Set VM Reimage Parameters.
     /// </summary>
-    public partial class SourceVault
+    public partial class VirtualMachineScaleSetVMReimageParameters : VirtualMachineReimageParameters
     {
         /// <summary>
-        /// Initializes a new instance of the SourceVault class.
+        /// Initializes a new instance of the
+        /// VirtualMachineScaleSetVMReimageParameters class.
         /// </summary>
-        public SourceVault()
+        public VirtualMachineScaleSetVMReimageParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SourceVault class.
+        /// Initializes a new instance of the
+        /// VirtualMachineScaleSetVMReimageParameters class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        public SourceVault(string id = default(string))
+        /// <param name="tempDisk">Specifies whether to reimage temp disk.
+        /// Default value: false.</param>
+        public VirtualMachineScaleSetVMReimageParameters(bool? tempDisk = default(bool?))
+            : base(tempDisk)
         {
-            Id = id;
             CustomInit();
         }
 
@@ -41,12 +42,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets resource Id
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
 
     }
 }
