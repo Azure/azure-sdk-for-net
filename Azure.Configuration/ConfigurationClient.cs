@@ -110,19 +110,17 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> DeleteAsync(string key, string label = default, ModifiedAccessConditions filter = default, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> DeleteAsync(string key, SettingFilter filter = null, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Url url = BuildUrlForKvRoute(key, label);
+            Url url = BuildUrlForKvRoute(key, filter);
 
             PipelineCallContext context = null;
             try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Delete, url);
 
-                if (filter.IfMatch != default) {
-                    context.AddHeader(IfMatchName, $"\"{filter.IfMatch}\"");
-                }
+                AddFilterHeaders(filter, context);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -134,19 +132,17 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> LockAsync(string key, string label = default, ModifiedAccessConditions filter = default, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> LockAsync(string key, SettingFilter filter = null, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Url url = BuildUriForLocksRoute(key, label);
+            Url url = BuildUriForLocksRoute(key, filter);
 
             PipelineCallContext context = null;
             try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
 
-                if (filter.IfMatch != default) {
-                    context.AddHeader(IfMatchName, $"\"{filter.IfMatch}\"");
-                }
+                AddFilterHeaders(filter, context);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -158,19 +154,17 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> UnlockAsync(string key, string label = default, ModifiedAccessConditions filter = default, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> UnlockAsync(string key, SettingFilter filter = null, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Url url = BuildUriForLocksRoute(key, label);
+            Url url = BuildUriForLocksRoute(key, filter);
 
             PipelineCallContext context = null;
             try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Delete, url);
 
-                if (filter.IfMatch != default) {
-                    context.AddHeader(IfMatchName, $"\"{filter.IfMatch}\"");
-                }
+                AddFilterHeaders(filter, context);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -182,11 +176,11 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> GetAsync(string key, SettingQueryOptions options, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> GetAsync(string key, SettingFilter filter = null, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) { throw new ArgumentNullException(nameof(key)); }
 
-            Url url = BuildUrlForKvRoute(key, options);
+            Url url = BuildUrlForKvRoute(key, filter);
 
             PipelineCallContext context = null;
             try {
@@ -194,11 +188,6 @@ namespace Azure.Configuration
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
 
-                if (options != null && options.PreferredDateTime.HasValue) {
-                    var dateTime = options.PreferredDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                    context.AddHeader(AcceptDatetimeHeader, dateTime);
-                }
-
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
                 return await CreateKeyValueResponse(context);
@@ -209,7 +198,7 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetBatchAsync(BatchQueryOptions options, CancellationToken cancellation)
+        public async Task<Response<SettingBatch>> GetBatchAsync(BatchFilter options, CancellationToken cancellation = default)
         {
             var requestUri = BuildUrlForGetBatch(options);
             PipelineCallContext context = null;
@@ -217,8 +206,8 @@ namespace Azure.Configuration
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Get, requestUri);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
-                if (options.PreferredDateTime != null) {
-                    context.AddHeader(AcceptDatetimeHeader, options.PreferredDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat));
+                if (options.Revision != null) {
+                    context.AddHeader(AcceptDatetimeHeader, options.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat));
                 }
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);

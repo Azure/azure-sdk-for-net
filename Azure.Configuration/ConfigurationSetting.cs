@@ -4,6 +4,7 @@ using System.Buffers;
 using System.Buffers.Text;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Text.JsonLab;
 
@@ -54,9 +55,18 @@ namespace Azure.Configuration
         /// A dictionary of tags that can help identify what a key-value may be applicable for.
         /// </summary>
         public IDictionary<string, string> Tags { get; set; }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => base.ToString();
     }
 
-    public sealed class SettingBatch : IEnumerable<ConfigurationSetting>
+    public class SettingBatch : IEnumerable<ConfigurationSetting>
     {
         List<ConfigurationSetting> _parsed;
 
@@ -73,6 +83,7 @@ namespace Azure.Configuration
             return batch;
         }
 
+        // TODO (pri 2): add struct enumerator 
         public IEnumerator<ConfigurationSetting> GetEnumerator() => _parsed.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => _parsed.GetEnumerator();
 
@@ -91,6 +102,17 @@ namespace Azure.Configuration
             ReadOnlySpan<byte> urlBytes = headerValue.Slice(afterIndex + s_after.Length);
             return Utf8Parser.TryParse(urlBytes, out afterValue, out _);
         }
+
+        #region nobody wants to see these
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => base.ToString();
+        #endregion
     }
 
     static class ConfigurationServiceParser

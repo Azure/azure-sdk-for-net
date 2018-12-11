@@ -2,6 +2,7 @@
 using Azure.Core.Net;
 using System;
 using System.Buffers;
+using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.JsonLab;
@@ -54,6 +55,21 @@ namespace Azure.Configuration
             if (ConfigurationServiceParser.TryParse(rsp.Content.Bytes, out ConfigurationSetting result, out _)) return result;
             throw new Exception("invalid response content");
         };
+
+        // TODO (pri 3): do all the methods that call this accept revisions?
+        static void AddFilterHeaders(SettingFilter filter, PipelineCallContext context)
+        {
+            if (filter == null) return;
+
+            if (filter.ETag.IfMatch != default) {
+                context.AddHeader(IfMatchName, $"\"{filter.ETag.IfMatch}\"");
+            }
+
+            if (filter.Revision.HasValue) {
+                var dateTime = filter.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
+                context.AddHeader(AcceptDatetimeHeader, dateTime);
+            }
+        }
 
         static async Task<Response<ConfigurationSetting>> CreateKeyValueResponse(PipelineCallContext context)
         {
@@ -108,87 +124,69 @@ namespace Azure.Configuration
             };
         }
 
-        Url BuildUrlForGetBatch(BatchQueryOptions options)
-        {
-            var urlBuilder = new UrlWriter(new Url(_baseUri), 100);
-            urlBuilder.AppendPath(KvRouteBytes); // TODO (pri 1): it seems like this causes the path to end with /. is that ok?
+        Url BuildUrlForKvRoute(ConfigurationSetting keyValue)
+            => BuildUrlForKvRoute(keyValue.Key, new SettingFilter() { Label = keyValue.Label }); // TODO (pri 2) : does this need to filter ETag?
 
-            if (options.StartIndex != 0)
-            {
-                urlBuilder.AppendQuery(s_after, options.StartIndex);
-            }
-
-            if (!string.IsNullOrEmpty(options.KeyFilter))
-            {
-                urlBuilder.AppendQuery(s_keyQueryFilter, options.KeyFilter);
-            }
-
-            if (options.LabelFilter != null)
-            {
-                if (options.LabelFilter == string.Empty)
-                {
-                    options.LabelFilter = "\0";
-                }
-                urlBuilder.AppendQuery(s_labelQueryFilter, options.LabelFilter);
-            }
-
-            if (options.FieldsSelector != SettingFields.All)
-            {
-                // TODO (pri 3): this should be optimized
-                var filter = (options.FieldsSelector).ToString().ToLower().Replace(" ", "");
-                urlBuilder.AppendQuery(s_fieldsQueryFilter, filter);
-            }
-
-            return urlBuilder.ToUrl();
-        }
-
-        Url BuildUrlForKvRoute(string key, SettingQueryOptions options)
+        Url BuildUrlForKvRoute(string key, SettingFilter filter)
         {
             var builder = new UrlWriter(_baseUri.ToString(), 100);
             builder.AppendPath(KvRouteBytes);
             builder.AppendPath(key);
 
-            if (options != null) {
-                if (options.LabelFilter != null) {
-                    builder.AppendQuery(s_labelQueryFilter, options.LabelFilter);
+            if (filter != null) {
+                if (filter.Label != null) {
+                    builder.AppendQuery(s_labelQueryFilter, filter.Label);
                 }
-                if (options.FieldsSelector != SettingFields.All)
+                if (filter.Fields != SettingFields.All)
                 {
                     // TODO (pri 3): this should be optimized
-                    var filter = (options.FieldsSelector).ToString().ToLower().Replace(" ", "");
-                    builder.AppendQuery(s_fieldsQueryFilter, filter);
+                    var filterString = (filter.Fields).ToString().ToLower().Replace(" ", "");
+                    builder.AppendQuery(s_fieldsQueryFilter, filterString);
                 }
             }
             return builder.ToUrl();
         }
 
-        Url BuildUrlForKvRoute(string key, string label)
-        {
-            var builder = new UrlWriter(_baseUri.ToString(), 100);
-            builder.AppendPath(KvRouteBytes);
-            builder.AppendPath(key);
-
-            if (label != null) {
-                builder.AppendQuery(s_labelQueryFilter, label);
-            }
-            return builder.ToUrl();
-        }
-
-        Url BuildUrlForKvRoute(ConfigurationSetting keyValue)
-            => BuildUrlForKvRoute(keyValue.Key, new SettingQueryOptions() { LabelFilter = keyValue.Label });
-
-        Url BuildUriForLocksRoute(string key, string label)
+        Url BuildUriForLocksRoute(string key, SettingFilter options)
         {
             var builder = new UrlWriter(_baseUri.ToString(), 100);
             builder.AppendPath(LocksRouteBytes);
             builder.AppendPath(key);
 
-            if (label != null)
-            {
-                builder.AppendQuery(s_labelQueryFilter, label);
+            if (options != null && options.Label != null) {
+                builder.AppendQuery(s_labelQueryFilter, options.Label);
             }
             
             return builder.ToUrl();
+        }
+
+        Url BuildUrlForGetBatch(BatchFilter options)
+        {
+            var urlBuilder = new UrlWriter(new Url(_baseUri), 100);
+            urlBuilder.AppendPath(KvRouteBytes); // TODO (pri 1): it seems like this causes the path to end with /. is that ok?
+
+            if (options.StartIndex != 0) {
+                urlBuilder.AppendQuery(s_after, options.StartIndex);
+            }
+
+            if (!string.IsNullOrEmpty(options.Key)) {
+                urlBuilder.AppendQuery(s_keyQueryFilter, options.Key);
+            }
+
+            if (options.Label != null) {
+                if (options.Label == string.Empty) {
+                    options.Label = "\0";
+                }
+                urlBuilder.AppendQuery(s_labelQueryFilter, options.Label);
+            }
+
+            if (options.Fields != SettingFields.All) {
+                // TODO (pri 3): this should be optimized
+                var filter = (options.Fields).ToString().ToLower().Replace(" ", "");
+                urlBuilder.AppendQuery(s_fieldsQueryFilter, filter);
+            }
+
+            return urlBuilder.ToUrl();
         }
 
         // TODO (pri 1): serialize the Tags field
@@ -229,5 +227,16 @@ namespace Azure.Configuration
                 context.AddHeader("Authentication", $"HMAC-SHA256 Credential={_credential}, SignedHeaders={signedHeaders}, Signature={signature}");
             }
         }
+
+        #region nobody wants to see these
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => base.ToString();
+        #endregion
     }
 }

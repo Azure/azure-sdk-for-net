@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Azure.Core.Net;
+using System;
+using System.ComponentModel;
 
 namespace Azure.Configuration
 {
     [Flags]
-    public enum SettingFields
+    public enum SettingFields : uint
     {
         None = 0x0000,
         Key = 0x0001,
@@ -15,37 +17,49 @@ namespace Azure.Configuration
         Locked = 0x0040,
         Tags = 0x0080,
 
-        All = Key | Label | Value | ContentType | ETag | LastModified | Locked | Tags
+        All = uint.MaxValue
     }
 
-    public class SettingQueryOptions
+    public class SettingFilter
     {
-        public const string NullFilter = "\0";
-        public const string AnyFilter = "*";
-
         /// <summary>
         /// Specific label of the key.
         /// </summary>
-        public string LabelFilter { get; set; } = NullFilter;
+        public string Label { get; set; } = null;
+
+        public ETagFilter ETag { get; set; }
 
         /// <summary>
         /// If set, then key values will be retrieved exactly as they existed at the provided time.
         /// </summary>
-        public DateTimeOffset? PreferredDateTime { get; set; }
+        public DateTimeOffset? Revision { get; set; }
 
         /// <summary>
         /// IKeyValue fields that will be retrieved.
         /// </summary>
-        public SettingFields FieldsSelector { get; set; } = SettingFields.All;
+        public SettingFields Fields { get; set; } = SettingFields.All;
+
+        public static implicit operator SettingFilter(string label) => new SettingFilter() { Label = label};
+
+        #region nobody wants to see these
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => base.ToString();
+        #endregion
     }
 
-    public sealed class BatchQueryOptions : SettingQueryOptions
+    public class BatchFilter : SettingFilter
     {
         /// <summary>
         /// Keys that will be used to filter.
         /// </summary>
         /// <remarks>See the documentation for this SDK for details on the format of filter expressions</remarks>
-        public string KeyFilter { get; set; } = AnyFilter;
+        public string Key { get; set; } = "*";
 
         public int StartIndex { get; set; }
     }
