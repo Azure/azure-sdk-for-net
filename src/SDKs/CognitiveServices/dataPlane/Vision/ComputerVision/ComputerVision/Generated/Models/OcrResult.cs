@@ -42,7 +42,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// different angles, only part of the text will be recognized
         /// correctly.</param>
         /// <param name="orientation">Orientation of the text recognized in the
-        /// image. The value (up,down,left, or right) refers to the direction
+        /// image. The value (up, down, left, or right) refers to the direction
         /// that the top of the recognized text is facing, after the image has
         /// been rotated around its center according to the detected text angle
         /// (see textAngle property).</param>
@@ -86,9 +86,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
 
         /// <summary>
         /// Gets or sets orientation of the text recognized in the image. The
-        /// value (up,down,left, or right) refers to the direction that the top
-        /// of the recognized text is facing, after the image has been rotated
-        /// around its center according to the detected text angle (see
+        /// value (up, down, left, or right) refers to the direction that the
+        /// top of the recognized text is facing, after the image has been
+        /// rotated around its center according to the detected text angle (see
         /// textAngle property).
         /// </summary>
         [JsonProperty(PropertyName = "orientation")]

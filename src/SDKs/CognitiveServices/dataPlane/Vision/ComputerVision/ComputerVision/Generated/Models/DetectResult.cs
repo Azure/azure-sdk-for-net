@@ -11,30 +11,31 @@
 namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Result of image analysis using a specific domain model including
-    /// additional metadata.
+    /// Result of a DetectImage call.
     /// </summary>
-    public partial class DomainModelResults
+    public partial class DetectResult
     {
         /// <summary>
-        /// Initializes a new instance of the DomainModelResults class.
+        /// Initializes a new instance of the DetectResult class.
         /// </summary>
-        public DomainModelResults()
+        public DetectResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DomainModelResults class.
+        /// Initializes a new instance of the DetectResult class.
         /// </summary>
-        /// <param name="result">Model-specific response.</param>
+        /// <param name="objects">An array of detected objects.</param>
         /// <param name="requestId">Id of the REST API request.</param>
-        public DomainModelResults(object result = default(object), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
+        public DetectResult(IList<DetectedObject> objects = default(IList<DetectedObject>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
-            Result = result;
+            Objects = objects;
             RequestId = requestId;
             Metadata = metadata;
             CustomInit();
@@ -46,10 +47,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets model-specific response.
+        /// Gets an array of detected objects.
         /// </summary>
-        [JsonProperty(PropertyName = "result")]
-        public object Result { get; set; }
+        [JsonProperty(PropertyName = "objects")]
+        public IList<DetectedObject> Objects { get; private set; }
 
         /// <summary>
         /// Gets or sets id of the REST API request.
