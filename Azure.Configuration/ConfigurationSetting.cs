@@ -69,7 +69,7 @@ namespace Azure.Configuration
             {
                 batch.NextIndex = next;
             }
-            ConfigurationServiceParser.TryParse(response.Content, out batch._parsed, out long consumed);
+            ConfigurationServiceParser.TryParse(response.Content.Bytes, out batch._parsed, out long consumed);
             return batch;
         }
 

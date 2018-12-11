@@ -51,11 +51,11 @@ namespace Azure.Configuration
         );
 
         static readonly Func<ServiceResponse, ConfigurationSetting> s_parser = (rsp) => {
-            if (ConfigurationServiceParser.TryParse(rsp.Content, out ConfigurationSetting result, out _)) return result;
+            if (ConfigurationServiceParser.TryParse(rsp.Content.Bytes, out ConfigurationSetting result, out _)) return result;
             throw new Exception("invalid response content");
         };
 
-        static async Task<Response<ConfigurationSetting>> CreateKeyValueResponse(ServiceCallContext context)
+        static async Task<Response<ConfigurationSetting>> CreateKeyValueResponse(PipelineCallContext context)
         {
             ServiceResponse response = context.Response;
 
@@ -66,7 +66,7 @@ namespace Azure.Configuration
             if (!response.TryGetHeader(Header.Constants.ContentLength, out long contentLength)) {
                 throw new Exception("bad response: no content length header");
             }
-            await response.ReadContentAsync(contentLength).ConfigureAwait(false);
+            await response.Content.ReadAsync(contentLength).ConfigureAwait(false);
 
             return new Response<ConfigurationSetting>(response, s_parser);
         }
@@ -162,25 +162,37 @@ namespace Azure.Configuration
             return builder.ToUrl();
         }
 
+        Url BuildUrlForKvRoute(string key, string label)
+        {
+            var builder = new UrlWriter(_baseUri.ToString(), 100);
+            builder.AppendPath(KvRouteBytes);
+            builder.AppendPath(key);
+
+            if (label != null) {
+                builder.AppendQuery(s_labelQueryFilter, label);
+            }
+            return builder.ToUrl();
+        }
+
         Url BuildUrlForKvRoute(ConfigurationSetting keyValue)
             => BuildUrlForKvRoute(keyValue.Key, new SettingQueryOptions() { LabelFilter = keyValue.Label });
 
-        Url BuildUriForLocksRoute(ConfigurationSetting keyValue)
+        Url BuildUriForLocksRoute(string key, string label)
         {
             var builder = new UrlWriter(_baseUri.ToString(), 100);
             builder.AppendPath(LocksRouteBytes);
-            builder.AppendPath(keyValue.Key);
+            builder.AppendPath(key);
 
-            if (keyValue.Label != null)
+            if (label != null)
             {
-                builder.AppendQuery(s_labelQueryFilter, keyValue.Label);
+                builder.AppendQuery(s_labelQueryFilter, label);
             }
             
             return builder.ToUrl();
         }
 
         // TODO (pri 1): serialize the Tags field
-        void WriteJsonContent(ConfigurationSetting setting, ServiceCallContext context)
+        void WriteJsonContent(ConfigurationSetting setting, PipelineCallContext context)
         {
             var writer = Utf8JsonWriter.Create(context.ContentWriter);
             writer.WriteObjectStart();
@@ -193,7 +205,7 @@ namespace Azure.Configuration
             AddAuthenticationHeader(context, ServiceMethod.Put, written);
         }
 
-        void AddAuthenticationHeader(ServiceCallContext context, ServiceMethod method, ReadOnlySequence<byte> content)
+        void AddAuthenticationHeader(PipelineCallContext context, ServiceMethod method, ReadOnlySequence<byte> content)
         {
             string contentHash = null;
             using (var alg = SHA256.Create())

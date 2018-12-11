@@ -15,28 +15,28 @@ namespace Azure.Configuration
         readonly string _credential;
         readonly byte[] _secret;
 
-        public ServicePipeline Pipeline { get; }
+        public ClientPipeline Pipeline { get; }
 
         public readonly ConfigurationServiceOptions Options = new ConfigurationServiceOptions("v1.0");
 
         public ConfigurationClient(string connectionString)
-           : this(connectionString, ServicePipeline.Create(SdkName, SdkVersion))
+           : this(connectionString, ClientPipeline.Create(SdkName, SdkVersion))
         { }
 
-        public ConfigurationClient(string connectionString, ServicePipeline pipeline)
+        public ConfigurationClient(string connectionString, ClientPipeline pipeline)
         {
             Pipeline = pipeline;
             ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
         }
 
-        public async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
             Url url = BuildUrlForKvRoute(setting);
 
-            ServiceCallContext context = null;
+            PipelineCallContext context = null;
             try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
 
@@ -56,14 +56,14 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
             Url url = BuildUrlForKvRoute(setting);
 
-            ServiceCallContext context = null;
+            PipelineCallContext context = null;
             try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
 
@@ -82,7 +82,7 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -90,7 +90,7 @@ namespace Azure.Configuration
 
             Url url = BuildUrlForKvRoute(setting);
 
-            ServiceCallContext context = null;
+            PipelineCallContext context = null;
             try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
 
@@ -110,19 +110,19 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> DeleteAsync(ConfigurationSetting setting, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> DeleteAsync(string key, string label = default, ModifiedAccessConditions filter = default, CancellationToken cancellation = default)
         {
-            if (setting == null) throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
-            if (string.IsNullOrEmpty(setting.ETag)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.ETag)}");
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Url url = BuildUrlForKvRoute(setting);
+            Url url = BuildUrlForKvRoute(key, label);
 
-            ServiceCallContext context = null;
+            PipelineCallContext context = null;
             try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Delete, url);
 
-                context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
+                if (filter.IfMatch != default) {
+                    context.AddHeader(IfMatchName, $"\"{filter.IfMatch}\"");
+                }
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -134,19 +134,19 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> LockAsync(ConfigurationSetting setting, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> LockAsync(string key, string label = default, ModifiedAccessConditions filter = default, CancellationToken cancellation = default)
         {
-            if (setting == null) throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
-            if (string.IsNullOrEmpty(setting.ETag)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.ETag)}");
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Url url = BuildUriForLocksRoute(setting);
+            Url url = BuildUriForLocksRoute(key, label);
 
-            ServiceCallContext context = null;
+            PipelineCallContext context = null;
             try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
 
-                context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
+                if (filter.IfMatch != default) {
+                    context.AddHeader(IfMatchName, $"\"{filter.IfMatch}\"");
+                }
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -158,19 +158,19 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> UnlockAsync(ConfigurationSetting setting, CancellationToken cancellation)
+        public async Task<Response<ConfigurationSetting>> UnlockAsync(string key, string label = default, ModifiedAccessConditions filter = default, CancellationToken cancellation = default)
         {
-            if (setting == null) throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
-            if (string.IsNullOrEmpty(setting.ETag)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.ETag)}");
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Url url = BuildUriForLocksRoute(setting);
+            Url url = BuildUriForLocksRoute(key, label);
 
-            ServiceCallContext context = null;
+            PipelineCallContext context = null;
             try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Delete, url);
 
-                context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
+                if (filter.IfMatch != default) {
+                    context.AddHeader(IfMatchName, $"\"{filter.IfMatch}\"");
+                }
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -188,7 +188,7 @@ namespace Azure.Configuration
 
             Url url = BuildUrlForKvRoute(key, options);
 
-            ServiceCallContext context = null;
+            PipelineCallContext context = null;
             try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Get, url);
 
@@ -212,7 +212,7 @@ namespace Azure.Configuration
         public async Task<Response<SettingBatch>> GetBatchAsync(BatchQueryOptions options, CancellationToken cancellation)
         {
             var requestUri = BuildUrlForGetBatch(options);
-            ServiceCallContext context = null;
+            PipelineCallContext context = null;
             try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Get, requestUri);
 
@@ -228,7 +228,7 @@ namespace Azure.Configuration
                     throw new Exception("bad response: no content length header");
                 }
 
-                await response.ReadContentAsync(contentLength).ConfigureAwait(false);
+                await response.Content.ReadAsync(contentLength).ConfigureAwait(false);
 
                 Func<ServiceResponse, SettingBatch> contentParser = null;
                 if (response.Status == 200) {

@@ -1,11 +1,11 @@
-﻿using Azure.Core.Net;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Configuration.Test;
 using Azure.Core.Testing;
+using Azure.Core;
 
 namespace Azure.Configuration.Tests
 {
@@ -124,7 +124,7 @@ namespace Azure.Configuration.Tests
             var transport = new DeleteMockTransport(s_testKey);
             var (service, pool) = CreateTestService(transport);
 
-            Response<ConfigurationSetting> response = await service.DeleteAsync(s_testKey, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.DeleteAsync(s_testKey.Key, s_testKey.Label);
 
             AssertEqual(s_testKey, response.Result);
 
@@ -137,7 +137,7 @@ namespace Azure.Configuration.Tests
         {
             var (service, pool) = CreateTestService(new LockingMockTransport(s_testKey, lockOtherwiseUnlock: true));
 
-            Response<ConfigurationSetting> response = await service.LockAsync(s_testKey, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.LockAsync(s_testKey.Key, s_testKey.Label);
 
             AssertEqual(s_testKey, response.Result);
 
@@ -150,7 +150,7 @@ namespace Azure.Configuration.Tests
         {
             var (service, pool) = CreateTestService(new LockingMockTransport(s_testKey, lockOtherwiseUnlock: false));
 
-            Response<ConfigurationSetting> response = await service.UnlockAsync(s_testKey, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.UnlockAsync(s_testKey.Key, s_testKey.Label);
 
             AssertEqual(s_testKey, response.Result);
 
