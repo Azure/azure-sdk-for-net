@@ -19,9 +19,7 @@
     <TaskBinaryOutput>..\..\..\tasks</TaskBinaryOutput>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
     <OutputPath>$(TaskBinaryOutput)</OutputPath>
-    <DelaySign>false</DelaySign>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Build" Version="15.1.1012" />
