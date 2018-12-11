@@ -14,7 +14,7 @@
 		<DelaySign>true</DelaySign>
 		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
 		<NoWarn>1591;1701;1573;CS1591</NoWarn>
-		<DefaultPathTokenToIgnore>$(IgnorePathTokens) Microsoft.Azure.KeyVault.Samples</DefaultPathTokenToIgnore>
+		<DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) $(IgnorePathTokens)</DefaultPathTokenToIgnore>
 		<BuildWideDebugTrace Condition=" '$(DebugTrace)' == '' ">false</BuildWideDebugTrace>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
@@ -28,7 +28,7 @@
 	<PropertyGroup>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
-	
+
 	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
 		<SignAssembly>true</SignAssembly>
 		<DelaySign>true</DelaySign>
@@ -46,8 +46,8 @@
 		<UnsignedPackageRootDir>$(PackageRootDir)\unsigned</UnsignedPackageRootDir>
 		<SignedPackageRootDir>$(PackageRootDir)\signed</SignedPackageRootDir>
   </PropertyGroup>
-  
-  <PropertyGroup>	
+
+  <PropertyGroup>
 		<BuildNameLabel>DesktopBuild</BuildNameLabel>
   </PropertyGroup>
 
