@@ -256,11 +256,15 @@
     <Exec Command="dotnet test -f $(NetFx461) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetFx461)\%(net452TestProj.Filename).trx /nodeReuse:false" Condition="@(net461TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net461TestProj.RootDir)%(net461TestProj.Directory)" />
   </Target>
 
-  <Target Name="PackgNugetBootStrap" DependsOnTargets="Package;SignNugetPackage">
-	
-  </Target>
+  <!--
+    This target is primarily being used by DevOps pipeline scenario for data plan which is using VSO tasks to sign.
+    So this target assumes build outputs are already generated and would simply like to package the
+    signed artificats (without rebuilding)
+    NOTE: This package cannot be used independently, will get an error as build outputs are not generated.
+  -->
+  <Target Name="PackageNoBuild" DependsOnTargets="CategorizeProjects;Package" />
   
-  <Target Name="Package" DependsOnTargets="CategorizeProjects">
+  <Target Name="Package">
     <Message Text="Packaging..... @(net452SDKProj);@(netStd14SDKProj);@(nonSdkProject)" />
     <Message Text="PackageOutputDir....... $(BuiltPackageOutputDir)" />
     <PropertyGroup>

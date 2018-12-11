@@ -1,4 +1,5 @@
 ﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('buildTools.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Sdk.Build.Tasks</PackageId>
     <Description>Provides .NET SDK Build tools tasks</Description>
@@ -19,6 +20,8 @@
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
     <OutputPath>$(TaskBinaryOutput)</OutputPath>
+    <AssemblyOriginatorKeyFile>D:\myFork\LTSBuild\tools\BuildTools.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>    
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="StaticAnalysisTasks\**" />
