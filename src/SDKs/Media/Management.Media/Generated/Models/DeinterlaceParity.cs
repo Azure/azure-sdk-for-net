@@ -11,65 +11,106 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DeinterlaceParity.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum DeinterlaceParity
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(DeinterlaceParityConverter))]
+    public struct DeinterlaceParity : System.IEquatable<DeinterlaceParity>
     {
+        private DeinterlaceParity(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// Automatically detect the order of fields
         /// </summary>
-        [EnumMember(Value = "Auto")]
-        Auto,
+        public static readonly DeinterlaceParity Auto = "Auto";
+
         /// <summary>
         /// Apply top field first processing of input video.
         /// </summary>
-        [EnumMember(Value = "TopFieldFirst")]
-        TopFieldFirst,
+        public static readonly DeinterlaceParity TopFieldFirst = "TopFieldFirst";
+
         /// <summary>
         /// Apply bottom field first processing of input video.
         /// </summary>
-        [EnumMember(Value = "BottomFieldFirst")]
-        BottomFieldFirst
-    }
-    internal static class DeinterlaceParityEnumExtension
-    {
-        internal static string ToSerializedValue(this DeinterlaceParity? value)
+        public static readonly DeinterlaceParity BottomFieldFirst = "BottomFieldFirst";
+
+
+        /// <summary>
+        /// Underlying value of enum DeinterlaceParity
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for DeinterlaceParity
+        /// </summary>
+        public override string ToString()
         {
-            return value == null ? null : ((DeinterlaceParity)value).ToSerializedValue();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static string ToSerializedValue(this DeinterlaceParity value)
+        /// <summary>
+        /// Compares enums of type DeinterlaceParity
+        /// </summary>
+        public bool Equals(DeinterlaceParity e)
         {
-            switch( value )
-            {
-                case DeinterlaceParity.Auto:
-                    return "Auto";
-                case DeinterlaceParity.TopFieldFirst:
-                    return "TopFieldFirst";
-                case DeinterlaceParity.BottomFieldFirst:
-                    return "BottomFieldFirst";
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
-        internal static DeinterlaceParity? ParseDeinterlaceParity(this string value)
+        /// <summary>
+        /// Implicit operator to convert string to DeinterlaceParity
+        /// </summary>
+        public static implicit operator DeinterlaceParity(string value)
         {
-            switch( value )
-            {
-                case "Auto":
-                    return DeinterlaceParity.Auto;
-                case "TopFieldFirst":
-                    return DeinterlaceParity.TopFieldFirst;
-                case "BottomFieldFirst":
-                    return DeinterlaceParity.BottomFieldFirst;
-            }
-            return null;
+            return new DeinterlaceParity(value);
         }
+
+        /// <summary>
+        /// Implicit operator to convert DeinterlaceParity to string
+        /// </summary>
+        public static implicit operator string(DeinterlaceParity e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum DeinterlaceParity
+        /// </summary>
+        public static bool operator == (DeinterlaceParity e1, DeinterlaceParity e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum DeinterlaceParity
+        /// </summary>
+        public static bool operator != (DeinterlaceParity e1, DeinterlaceParity e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for DeinterlaceParity
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is DeinterlaceParity && Equals((DeinterlaceParity)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode DeinterlaceParity
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

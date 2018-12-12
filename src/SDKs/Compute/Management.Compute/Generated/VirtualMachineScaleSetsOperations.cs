@@ -1485,7 +1485,8 @@ namespace Microsoft.Azure.Management.Compute
 
         /// <summary>
         /// Reimages (upgrade the operating system) one or more virtual machines in a
-        /// VM scale set.
+        /// VM scale set which don't have a ephemeral OS disk, for virtual machines who
+        /// have a ephemeral OS disk the virtual machine is reset to initial state.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1493,10 +1494,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the VM scale set.
         /// </param>
-        /// <param name='instanceIds'>
-        /// The virtual machine scale set instance ids. Omitting the virtual machine
-        /// scale set instance ids will result in the operation being performed on all
-        /// virtual machines in the virtual machine scale set.
+        /// <param name='vmScaleSetReimageInput'>
+        /// Parameters for Reimaging VM ScaleSet.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1504,10 +1503,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = default(VirtualMachineScaleSetReimageParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginReimageWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginReimageWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmScaleSetReimageInput, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3890,7 +3889,8 @@ namespace Microsoft.Azure.Management.Compute
 
         /// <summary>
         /// Reimages (upgrade the operating system) one or more virtual machines in a
-        /// VM scale set.
+        /// VM scale set which don't have a ephemeral OS disk, for virtual machines who
+        /// have a ephemeral OS disk the virtual machine is reset to initial state.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -3898,10 +3898,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the VM scale set.
         /// </param>
-        /// <param name='instanceIds'>
-        /// The virtual machine scale set instance ids. Omitting the virtual machine
-        /// scale set instance ids will result in the operation being performed on all
-        /// virtual machines in the virtual machine scale set.
+        /// <param name='vmScaleSetReimageInput'>
+        /// Parameters for Reimaging VM ScaleSet.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3921,7 +3919,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = default(VirtualMachineScaleSetReimageParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -3936,12 +3934,6 @@ namespace Microsoft.Azure.Management.Compute
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             string apiVersion = "2018-10-01";
-            VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = default(VirtualMachineScaleSetVMInstanceIDs);
-            if (instanceIds != null)
-            {
-                vmInstanceIDs = new VirtualMachineScaleSetVMInstanceIDs();
-                vmInstanceIDs.InstanceIds = instanceIds;
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3951,8 +3943,8 @@ namespace Microsoft.Azure.Management.Compute
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("vmScaleSetName", vmScaleSetName);
+                tracingParameters.Add("vmScaleSetReimageInput", vmScaleSetReimageInput);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("vmInstanceIDs", vmInstanceIDs);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginReimage", tracingParameters);
             }
@@ -4005,9 +3997,9 @@ namespace Microsoft.Azure.Management.Compute
 
             // Serialize Request
             string _requestContent = null;
-            if(vmInstanceIDs != null)
+            if(vmScaleSetReimageInput != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(vmInstanceIDs, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(vmScaleSetReimageInput, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

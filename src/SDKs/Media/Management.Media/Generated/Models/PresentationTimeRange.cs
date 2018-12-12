@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="timescale">The time scale of time stamps.</param>
         /// <param name="forceEndTimestamp">The indicator of forcing exsiting
         /// of end time stamp.</param>
-        public PresentationTimeRange(long startTimestamp, long endTimestamp, long presentationWindowDuration, long liveBackoffDuration, long timescale, bool forceEndTimestamp)
+        public PresentationTimeRange(long? startTimestamp = default(long?), long? endTimestamp = default(long?), long? presentationWindowDuration = default(long?), long? liveBackoffDuration = default(long?), long? timescale = default(long?), bool? forceEndTimestamp = default(bool?))
         {
             StartTimestamp = startTimestamp;
             EndTimestamp = endTimestamp;
@@ -60,47 +60,37 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Gets or sets the absolute start time boundary.
         /// </summary>
         [JsonProperty(PropertyName = "startTimestamp")]
-        public long StartTimestamp { get; set; }
+        public long? StartTimestamp { get; set; }
 
         /// <summary>
         /// Gets or sets the absolute end time boundary.
         /// </summary>
         [JsonProperty(PropertyName = "endTimestamp")]
-        public long EndTimestamp { get; set; }
+        public long? EndTimestamp { get; set; }
 
         /// <summary>
         /// Gets or sets the relative to end sliding window.
         /// </summary>
         [JsonProperty(PropertyName = "presentationWindowDuration")]
-        public long PresentationWindowDuration { get; set; }
+        public long? PresentationWindowDuration { get; set; }
 
         /// <summary>
         /// Gets or sets the relative to end right edge.
         /// </summary>
         [JsonProperty(PropertyName = "liveBackoffDuration")]
-        public long LiveBackoffDuration { get; set; }
+        public long? LiveBackoffDuration { get; set; }
 
         /// <summary>
         /// Gets or sets the time scale of time stamps.
         /// </summary>
         [JsonProperty(PropertyName = "timescale")]
-        public long Timescale { get; set; }
+        public long? Timescale { get; set; }
 
         /// <summary>
         /// Gets or sets the indicator of forcing exsiting of end time stamp.
         /// </summary>
         [JsonProperty(PropertyName = "forceEndTimestamp")]
-        public bool ForceEndTimestamp { get; set; }
+        public bool? ForceEndTimestamp { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

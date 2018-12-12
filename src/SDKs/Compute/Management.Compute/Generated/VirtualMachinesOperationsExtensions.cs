@@ -702,6 +702,51 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Reimages the virtual machine which has an ephemeral OS disk back to its
+            /// initial state.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='tempDisk'>
+            /// Specifies whether to reimage temp disk. Default value: false.
+            /// </param>
+            public static void Reimage(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? tempDisk = default(bool?))
+            {
+                operations.ReimageAsync(resourceGroupName, vmName, tempDisk).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Reimages the virtual machine which has an ephemeral OS disk back to its
+            /// initial state.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='tempDisk'>
+            /// Specifies whether to reimage temp disk. Default value: false.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ReimageAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? tempDisk = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ReimageWithHttpMessagesAsync(resourceGroupName, vmName, tempDisk, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// The operation to perform maintenance on a virtual machine.
             /// </summary>
             /// <param name='operations'>
@@ -1189,6 +1234,51 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task BeginRedeployAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginRedeployWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Reimages the virtual machine which has an ephemeral OS disk back to its
+            /// initial state.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='tempDisk'>
+            /// Specifies whether to reimage temp disk. Default value: false.
+            /// </param>
+            public static void BeginReimage(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? tempDisk = default(bool?))
+            {
+                operations.BeginReimageAsync(resourceGroupName, vmName, tempDisk).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Reimages the virtual machine which has an ephemeral OS disk back to its
+            /// initial state.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='tempDisk'>
+            /// Specifies whether to reimage temp disk. Default value: false.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginReimageAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? tempDisk = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginReimageWithHttpMessagesAsync(resourceGroupName, vmName, tempDisk, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

@@ -11,56 +11,103 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for TrackPropertyCompareOperation.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum TrackPropertyCompareOperation
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(TrackPropertyCompareOperationConverter))]
+    public struct TrackPropertyCompareOperation : System.IEquatable<TrackPropertyCompareOperation>
     {
+        private TrackPropertyCompareOperation(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// Unknown track property compare operation
         /// </summary>
-        [EnumMember(Value = "Unknown")]
-        Unknown,
+        public static readonly TrackPropertyCompareOperation Unknown = "Unknown";
+
         /// <summary>
         /// Equal operation
         /// </summary>
-        [EnumMember(Value = "Equal")]
-        Equal
-    }
-    internal static class TrackPropertyCompareOperationEnumExtension
-    {
-        internal static string ToSerializedValue(this TrackPropertyCompareOperation? value)
+        public static readonly TrackPropertyCompareOperation Equal = "Equal";
+
+
+        /// <summary>
+        /// Underlying value of enum TrackPropertyCompareOperation
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for TrackPropertyCompareOperation
+        /// </summary>
+        public override string ToString()
         {
-            return value == null ? null : ((TrackPropertyCompareOperation)value).ToSerializedValue();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static string ToSerializedValue(this TrackPropertyCompareOperation value)
+        /// <summary>
+        /// Compares enums of type TrackPropertyCompareOperation
+        /// </summary>
+        public bool Equals(TrackPropertyCompareOperation e)
         {
-            switch( value )
-            {
-                case TrackPropertyCompareOperation.Unknown:
-                    return "Unknown";
-                case TrackPropertyCompareOperation.Equal:
-                    return "Equal";
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
-        internal static TrackPropertyCompareOperation? ParseTrackPropertyCompareOperation(this string value)
+        /// <summary>
+        /// Implicit operator to convert string to
+        /// TrackPropertyCompareOperation
+        /// </summary>
+        public static implicit operator TrackPropertyCompareOperation(string value)
         {
-            switch( value )
-            {
-                case "Unknown":
-                    return TrackPropertyCompareOperation.Unknown;
-                case "Equal":
-                    return TrackPropertyCompareOperation.Equal;
-            }
-            return null;
+            return new TrackPropertyCompareOperation(value);
         }
+
+        /// <summary>
+        /// Implicit operator to convert TrackPropertyCompareOperation to
+        /// string
+        /// </summary>
+        public static implicit operator string(TrackPropertyCompareOperation e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum TrackPropertyCompareOperation
+        /// </summary>
+        public static bool operator == (TrackPropertyCompareOperation e1, TrackPropertyCompareOperation e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum TrackPropertyCompareOperation
+        /// </summary>
+        public static bool operator != (TrackPropertyCompareOperation e1, TrackPropertyCompareOperation e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for TrackPropertyCompareOperation
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is TrackPropertyCompareOperation && Equals((TrackPropertyCompareOperation)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode TrackPropertyCompareOperation
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

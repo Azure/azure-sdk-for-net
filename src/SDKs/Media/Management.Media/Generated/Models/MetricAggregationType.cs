@@ -11,65 +11,106 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for MetricAggregationType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum MetricAggregationType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(MetricAggregationTypeConverter))]
+    public struct MetricAggregationType : System.IEquatable<MetricAggregationType>
     {
+        private MetricAggregationType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// The average.
         /// </summary>
-        [EnumMember(Value = "Average")]
-        Average,
+        public static readonly MetricAggregationType Average = "Average";
+
         /// <summary>
         /// The count of a number of items, usually requests.
         /// </summary>
-        [EnumMember(Value = "Count")]
-        Count,
+        public static readonly MetricAggregationType Count = "Count";
+
         /// <summary>
         /// The sum.
         /// </summary>
-        [EnumMember(Value = "Total")]
-        Total
-    }
-    internal static class MetricAggregationTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this MetricAggregationType? value)
+        public static readonly MetricAggregationType Total = "Total";
+
+
+        /// <summary>
+        /// Underlying value of enum MetricAggregationType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for MetricAggregationType
+        /// </summary>
+        public override string ToString()
         {
-            return value == null ? null : ((MetricAggregationType)value).ToSerializedValue();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static string ToSerializedValue(this MetricAggregationType value)
+        /// <summary>
+        /// Compares enums of type MetricAggregationType
+        /// </summary>
+        public bool Equals(MetricAggregationType e)
         {
-            switch( value )
-            {
-                case MetricAggregationType.Average:
-                    return "Average";
-                case MetricAggregationType.Count:
-                    return "Count";
-                case MetricAggregationType.Total:
-                    return "Total";
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
-        internal static MetricAggregationType? ParseMetricAggregationType(this string value)
+        /// <summary>
+        /// Implicit operator to convert string to MetricAggregationType
+        /// </summary>
+        public static implicit operator MetricAggregationType(string value)
         {
-            switch( value )
-            {
-                case "Average":
-                    return MetricAggregationType.Average;
-                case "Count":
-                    return MetricAggregationType.Count;
-                case "Total":
-                    return MetricAggregationType.Total;
-            }
-            return null;
+            return new MetricAggregationType(value);
         }
+
+        /// <summary>
+        /// Implicit operator to convert MetricAggregationType to string
+        /// </summary>
+        public static implicit operator string(MetricAggregationType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum MetricAggregationType
+        /// </summary>
+        public static bool operator == (MetricAggregationType e1, MetricAggregationType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum MetricAggregationType
+        /// </summary>
+        public static bool operator != (MetricAggregationType e1, MetricAggregationType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for MetricAggregationType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is MetricAggregationType && Equals((MetricAggregationType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode MetricAggregationType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

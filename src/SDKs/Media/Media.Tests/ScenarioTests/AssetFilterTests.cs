@@ -111,6 +111,70 @@ namespace Media.Tests.ScenarioTests
             }
         }
 
+        [Fact]
+        public void AssetFilterOptionalPropertiesTest()
+        {
+            using (MockContext context = this.StartMockContextAndInitializeClients(this.GetType().FullName))
+            {
+                try
+                {
+                    CreateMediaServicesAccount();
+
+                    string assetName = TestUtilities.GenerateName("assetoptionalfilter");
+                    string assetDescription = "A test asset";
+
+                    string filterName = TestUtilities.GenerateName("assetoptionalfilter");
+
+                    // Create an asset
+                    Asset inputForAsset = new Asset(description: assetDescription);
+                    Asset createdAsset = MediaClient.Assets.CreateOrUpdate(ResourceGroup, AccountName, assetName, inputForAsset);
+
+                    // Get AssetFilter, which should not exist
+                    AssetFilter assetFilter = MediaClient.AssetFilters.Get(ResourceGroup, AccountName, assetName, filterName);
+                    Assert.Null(assetFilter);
+
+                    // List AssetFilters, which should be empty
+                    var assetFilters = MediaClient.AssetFilters.List(ResourceGroup, AccountName, assetName);
+                    Assert.Empty(assetFilters);
+
+                    // Create an AssetFilter
+                    // Some of the AssetFilter parameters are for Live. Create a filter for VOD that does not specify Live parameters
+                    var ptr = new PresentationTimeRange(startTimestamp: 1, endTimestamp: 600 * HNSTimescale);
+                    AssetFilter input = new AssetFilter(presentationTimeRange: ptr);
+                    AssetFilter createdAssetFilter = MediaClient.AssetFilters.CreateOrUpdate(ResourceGroup, AccountName, assetName, filterName, input);
+                    ValidateAssetFilter(createdAssetFilter, expectedFirstQuality: null, expectedName: filterName, expectedPresentationTimeRange: ptr, expectedTracks: null);
+
+                    // List asset filters and validate the created filter shows up
+                    assetFilters = MediaClient.AssetFilters.List(ResourceGroup, AccountName, assetName);
+                    Assert.Single(assetFilters);
+                    ValidateAssetFilter(assetFilters.First(), expectedFirstQuality: null, expectedName: filterName, expectedPresentationTimeRange: ptr, expectedTracks: null);
+
+                    // Get the newly created asset
+                    assetFilter = MediaClient.AssetFilters.Get(ResourceGroup, AccountName, assetName, filterName);
+                    Assert.NotNull(assetFilter);
+                    ValidateAssetFilter(assetFilter, expectedFirstQuality: null, expectedName: filterName, expectedPresentationTimeRange: ptr, expectedTracks: null);
+
+                    // Delete the asset filter
+                    MediaClient.AssetFilters.Delete(ResourceGroup, AccountName, assetName, filterName);
+
+                    // List asset filters, which should be empty again
+                    assetFilters = MediaClient.AssetFilters.List(ResourceGroup, AccountName, assetName);
+                    Assert.Empty(assetFilters);
+
+                    // Get the asset filter, which should not exist
+                    assetFilter = MediaClient.AssetFilters.Get(ResourceGroup, AccountName, assetName, filterName);
+                    Assert.Null(assetFilter);
+
+                    // Delete the asset
+                    MediaClient.Assets.Delete(ResourceGroup, AccountName, assetName);
+                }
+                finally
+                {
+                    DeleteMediaServicesAccount();
+                }
+            }
+        }
+
         internal static void ValidateAssetFilter(AssetFilter assetFilter, FirstQuality expectedFirstQuality, string expectedName, PresentationTimeRange expectedPresentationTimeRange, IList<FilterTrackSelection> expectedTracks)
         {
             Assert.Equal(expectedFirstQuality?.Bitrate, assetFilter.FirstQuality?.Bitrate);
@@ -123,7 +187,7 @@ namespace Media.Tests.ScenarioTests
                 Assert.Equal(expectedPresentationTimeRange.EndTimestamp, assetFilter.PresentationTimeRange.EndTimestamp);
                 Assert.Equal(expectedPresentationTimeRange.PresentationWindowDuration, assetFilter.PresentationTimeRange.PresentationWindowDuration);
                 Assert.Equal(expectedPresentationTimeRange.LiveBackoffDuration, assetFilter.PresentationTimeRange.LiveBackoffDuration);
-                Assert.Equal(expectedPresentationTimeRange.Timescale, assetFilter.PresentationTimeRange.Timescale);
+                Assert.Equal(expectedPresentationTimeRange.Timescale?? HNSTimescale, assetFilter.PresentationTimeRange.Timescale);
                 Assert.Equal(expectedPresentationTimeRange.ForceEndTimestamp, assetFilter.PresentationTimeRange.ForceEndTimestamp);
             }
             else

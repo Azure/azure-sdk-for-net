@@ -11,65 +11,106 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for MetricUnit.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum MetricUnit
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(MetricUnitConverter))]
+    public struct MetricUnit : System.IEquatable<MetricUnit>
     {
+        private MetricUnit(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// The number of bytes.
         /// </summary>
-        [EnumMember(Value = "Bytes")]
-        Bytes,
+        public static readonly MetricUnit Bytes = "Bytes";
+
         /// <summary>
         /// The count.
         /// </summary>
-        [EnumMember(Value = "Count")]
-        Count,
+        public static readonly MetricUnit Count = "Count";
+
         /// <summary>
         /// The number of milliseconds.
         /// </summary>
-        [EnumMember(Value = "Milliseconds")]
-        Milliseconds
-    }
-    internal static class MetricUnitEnumExtension
-    {
-        internal static string ToSerializedValue(this MetricUnit? value)
+        public static readonly MetricUnit Milliseconds = "Milliseconds";
+
+
+        /// <summary>
+        /// Underlying value of enum MetricUnit
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for MetricUnit
+        /// </summary>
+        public override string ToString()
         {
-            return value == null ? null : ((MetricUnit)value).ToSerializedValue();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static string ToSerializedValue(this MetricUnit value)
+        /// <summary>
+        /// Compares enums of type MetricUnit
+        /// </summary>
+        public bool Equals(MetricUnit e)
         {
-            switch( value )
-            {
-                case MetricUnit.Bytes:
-                    return "Bytes";
-                case MetricUnit.Count:
-                    return "Count";
-                case MetricUnit.Milliseconds:
-                    return "Milliseconds";
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
-        internal static MetricUnit? ParseMetricUnit(this string value)
+        /// <summary>
+        /// Implicit operator to convert string to MetricUnit
+        /// </summary>
+        public static implicit operator MetricUnit(string value)
         {
-            switch( value )
-            {
-                case "Bytes":
-                    return MetricUnit.Bytes;
-                case "Count":
-                    return MetricUnit.Count;
-                case "Milliseconds":
-                    return MetricUnit.Milliseconds;
-            }
-            return null;
+            return new MetricUnit(value);
         }
+
+        /// <summary>
+        /// Implicit operator to convert MetricUnit to string
+        /// </summary>
+        public static implicit operator string(MetricUnit e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum MetricUnit
+        /// </summary>
+        public static bool operator == (MetricUnit e1, MetricUnit e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum MetricUnit
+        /// </summary>
+        public static bool operator != (MetricUnit e1, MetricUnit e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for MetricUnit
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is MetricUnit && Equals((MetricUnit)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode MetricUnit
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }
