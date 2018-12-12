@@ -646,7 +646,7 @@ namespace BatchClientIntegrationTests
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
                 {
-                    string poolId = "TestPoolAutoscaleVerbs" + TestUtilities.GetMyName();
+                    string poolId = TestUtilities.GenerateResourceId();
                     const int targetDedicated = 0;
                     const string autoscaleFormula1 = "$TargetDedicatedNodes=0;$TargetLowPriorityNodes=0;$NodeDeallocationOption=requeue";
                     const string autoscaleFormula2 = "$TargetDedicatedNodes=0;$TargetLowPriorityNodes=0;$NodeDeallocationOption=terminate";
@@ -669,6 +669,8 @@ namespace BatchClientIntegrationTests
                         boundPool.Refresh();
                         Assert.True(boundPool.AutoScaleEnabled);
                         Assert.Equal(autoscaleFormula1, boundPool.AutoScaleFormula);
+                        this.testOutputHelper.WriteLine($"Got the pool");
+
                         Assert.NotNull(boundPool.AutoScaleRun);
                         Assert.NotNull(boundPool.AutoScaleRun.Results);
                         Assert.Contains(autoscaleFormula1, boundPool.AutoScaleRun.Results);
@@ -963,7 +965,7 @@ namespace BatchClientIntegrationTests
             {
                 using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
                 {
-                    string poolId = "TestResizePool-" + TestUtilities.GetMyName() + "-" + TestUtilities.GetTimeStamp();
+                    string poolId = TestUtilities.GenerateResourceId();
 
                     try
                     {
@@ -974,6 +976,8 @@ namespace BatchClientIntegrationTests
 
                         await pool.CommitAsync().ConfigureAwait(false);
                         await pool.RefreshAsync().ConfigureAwait(false);
+
+                        await TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromMinutes(1));
 
                         await pool.ResizeAsync(
                             targetDedicatedComputeNodes: targetDedicated,

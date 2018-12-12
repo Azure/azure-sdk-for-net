@@ -1046,17 +1046,16 @@
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
-        public void Bug1770926_UpdateTask()
+        public void UpdateTask_TaskIsUpdatedAsExpected()
         {
             Action test = () =>
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
                 {
-                    const string testName = "Bug1770926_UpdateTask";
-                    const string taskId = "Bug1770926_UpdateTask_Task1";
+                    const string taskId = "task1";
 
-                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-" + testName;
-                    TaskConstraints defaultConstraints = new TaskConstraints(TimeSpan.MaxValue, TimeSpan.MaxValue, 0);
+                    string jobId = TestUtilities.GenerateResourceId();
+                    TaskConstraints defaultConstraints = new TaskConstraints(TimeSpan.MaxValue, TimeSpan.FromDays(7), 0);
                     try
                     {
                         //
