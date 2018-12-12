@@ -63,22 +63,34 @@ namespace Azure.Configuration.Test
 
     class GetMockTransport : KeyValueMockTransport
     {
-        public GetMockTransport(ConfigurationSetting responseContent)
-            : base(HttpMethod.Get, responseContent)
+        public GetMockTransport(string queryKey, SettingFilter filter, ConfigurationSetting result)
+            : base(HttpMethod.Get, result)
         {
             _expectedMethod = HttpMethod.Get;
-            _expectedUri = "https://contoso.azconfig.io/kv/test_key";
+            if (filter== null || filter.Label == null) {
+                _expectedUri = $"https://contoso.azconfig.io/kv/{queryKey}";
+            }
+            else {
+                _expectedUri = $"https://contoso.azconfig.io/kv/{queryKey}?label={filter.Label}";
+            }
         }
 
-        public GetMockTransport(params HttpStatusCode[] statusCodes)
-            : base(HttpMethod.Get, null)
+        public GetMockTransport(string queryKey, SettingFilter filter, params HttpStatusCode[] statusCodes)
+            : this(queryKey, filter, result: null)
         {
             Responses.Clear();
             foreach (var statusCode in statusCodes) {
                 Responses.Add(statusCode);
             }
-            _expectedMethod = HttpMethod.Get;
-            _expectedUri = "https://contoso.azconfig.io/kv/test_key_not_present";
+        }
+
+        protected override void WriteResponseCore(HttpResponseMessage response)
+        {
+            base.WriteResponseCore(response);
+            response.Content.Headers.TryAddWithoutValidation("Last-Modified", "Tue, 05 Dec 2017 02:41:26 GMT");
+            response.Content.Headers.TryAddWithoutValidation("Content-Type", "application/vnd.microsoft.appconfig.kv+json; charset=utf-8;");
+            var etag = _responseContent.ETag.ToString();
+            response.Headers.TryAddWithoutValidation("ETag", etag);
         }
     }
 
@@ -101,7 +113,7 @@ namespace Azure.Configuration.Test
         public GetBatchMockTransport(int numberOfItems)
         {
             _expectedMethod = HttpMethod.Get;
-            _expectedUri = null;
+            _expectedUri = new StringCheck("https://contoso.azconfig.io/kv/?", StringCheck.CheckKind.StartsWith);
             _expectedRequestContent = null;
             for (int i = 0; i < numberOfItems; i++)
             {
@@ -141,7 +153,7 @@ namespace Azure.Configuration.Test
 
     class KeyValueMockTransport : MockHttpClientTransport
     {
-        ConfigurationSetting _responseContent;
+        protected ConfigurationSetting _responseContent;
 
         public KeyValueMockTransport(HttpMethod expectedMethod, ConfigurationSetting responseContent)
         {
@@ -149,13 +161,13 @@ namespace Azure.Configuration.Test
             _responseContent = responseContent;
         }
 
-        protected sealed override void WriteResponseCore(HttpResponseMessage response)
+        protected override void WriteResponseCore(HttpResponseMessage response)
         {
             string json = JsonConvert.SerializeObject(_responseContent).ToLowerInvariant();
             response.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             long jsonByteCount = Encoding.UTF8.GetByteCount(json);
-            response.Content.Headers.Add("Content-Length", jsonByteCount.ToString());
+            response.Content.Headers.Add("Content-Length", jsonByteCount.ToString()); // TODO (pri 3): is this actually present?
         }
 
         protected static ConfigurationSetting CloneKey(ConfigurationSetting original)
@@ -178,10 +190,11 @@ namespace Azure.Configuration.Test
     abstract class MockHttpClientTransport : HttpClientTransport
     {
         protected HttpMethod _expectedMethod;
-        protected string _expectedUri;
-        protected string _expectedRequestContent;
+        protected StringCheck _expectedUri;
+        protected StringCheck? _expectedRequestContent;
         int _nextResponse;
 
+        public Dictionary<string, StringCheck> Headers = new Dictionary<string, StringCheck>();
         public List<Response> Responses = new List<Response>();
 
         protected override Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage request)
@@ -200,11 +213,11 @@ namespace Azure.Configuration.Test
 
         protected virtual void VerifyRequestCore(HttpRequestMessage request) { }
         protected abstract void WriteResponseCore(HttpResponseMessage response);
-
+      
         void VerifyRequestLine(HttpRequestMessage request)
         {
             Assert.AreEqual(_expectedMethod, request.Method);
-            if(_expectedUri != null) Assert.AreEqual(_expectedUri, request.RequestUri.OriginalString);
+            _expectedUri.Verify(request.RequestUri.ToString());
             Assert.AreEqual(new Version(2, 0), request.Version);
         }
 
@@ -218,7 +231,7 @@ namespace Azure.Configuration.Test
             {
                 Assert.NotNull(request.Content);
                 var contentString = request.Content.ReadAsStringAsync().Result;
-                Assert.AreEqual(_expectedRequestContent, contentString);
+                _expectedRequestContent.Value.Verify(contentString);
             }
         }
 
@@ -236,6 +249,19 @@ namespace Azure.Configuration.Test
             Assert.Fail("could not find User-Agent header value " + expected);
         }
 
+        void VerifyHeaders(HttpRequestMessage request)
+        {
+            foreach(var check in Headers) {
+                if(!request.Headers.TryGetValues(check.Key, out var values)){
+                    Assert.Fail("header {0} not found", check.Key);
+                }
+                var list = new List<string>(values);
+                if (list.Count > 1) throw new NotImplementedException();
+
+                check.Value.Verify(list[0]);
+            }
+        }
+
         bool WriteResponse(HttpResponseMessage response)
         {
             if (_nextResponse >= Responses.Count) _nextResponse = 0;
@@ -249,6 +275,46 @@ namespace Azure.Configuration.Test
             public HttpStatusCode ResponseCode;
 
             public static implicit operator Response(HttpStatusCode status) => new Response() {  ResponseCode = status };
+        }
+
+        public struct StringCheck
+        {
+            CheckKind Kind;
+            string Expected;
+            Func<string, bool> Custom;
+
+            public StringCheck(string expected, CheckKind check = CheckKind.Equals)
+            {
+                Expected = expected;
+                Kind = check;
+                Custom = null;
+            }
+
+            public static implicit operator StringCheck(string expected) => new StringCheck(expected);
+
+            public void Verify(string actual)
+            {
+                switch (Kind) {
+                    case CheckKind.Equals:
+                        Assert.AreEqual(Expected, actual);
+                        break;
+                    case CheckKind.StartsWith:
+                        Assert.True(actual.StartsWith(Expected));
+                        break;
+                    case CheckKind.Custom:
+                        Assert.True(Custom(actual));
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+
+            public enum CheckKind
+            {
+                Equals,
+                StartsWith,
+                Custom
+            }
         }
     }
 }

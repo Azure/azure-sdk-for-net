@@ -12,7 +12,7 @@ namespace Azure.Configuration.Tests
     public class ConfigurationServiceTests
     {
         static readonly string connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
-        static readonly ConfigurationSetting s_testKey = new ConfigurationSetting()
+        static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting()
         {
             Key = "test_key",
             Label = "test_label",
@@ -41,21 +41,24 @@ namespace Azure.Configuration.Tests
 
         private static void AssertEqual(ConfigurationSetting expected, ConfigurationSetting actual)
         {
-            Assert.AreEqual(s_testKey.Key, actual.Key);
-            Assert.AreEqual(s_testKey.Label, actual.Label);
-            Assert.AreEqual(s_testKey.ContentType, actual.ContentType);
-            Assert.AreEqual(s_testKey.Locked, actual.Locked);
+            Assert.AreEqual(s_testSetting.Key, actual.Key);
+            Assert.AreEqual(s_testSetting.Label, actual.Label);
+            Assert.AreEqual(s_testSetting.ContentType, actual.ContentType);
+            Assert.AreEqual(s_testSetting.Locked, actual.Locked);
         }
 
         [Test]
         public async Task Get()
         {
-            var transport = new GetMockTransport(s_testKey);
+            var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            Response<ConfigurationSetting> response = await service.GetAsync(key: "test_key", filter: default, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.GetAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
+            Assert.AreEqual(200, response.Status);
+            Assert.True(response.TryGetHeader("ETag", out string etagHeader));
+            Assert.AreEqual(response.Result.ETag, etagHeader);
 
-            AssertEqual(s_testKey, response.Result);
+            AssertEqual(s_testSetting, response.Result);
 
             response.Dispose();
             Assert.AreEqual(0, pool.CurrentlyRented);
@@ -64,10 +67,10 @@ namespace Azure.Configuration.Tests
         [Test]
         public async Task GetNotFound()
         {
-            var transport = new GetMockTransport(HttpStatusCode.NotFound);
+            var transport = new GetMockTransport(s_testSetting.Key, default, HttpStatusCode.NotFound);
             var (service, pool) = CreateTestService(transport);
 
-            Response<ConfigurationSetting> response = await service.GetAsync(key: "test_key_not_present", filter: default, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.GetAsync(s_testSetting.Key, filter: default, CancellationToken.None);
 
             Assert.AreEqual(404, response.Status);
             Assert.IsNull(response.Result);
@@ -79,12 +82,12 @@ namespace Azure.Configuration.Tests
         [Test]
         public async Task Add()
         {
-            var transport = new AddMockTransport(s_testKey);
+            var transport = new AddMockTransport(s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            Response<ConfigurationSetting> response = await service.AddAsync(s_testKey, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.AddAsync(s_testSetting, CancellationToken.None);
 
-            AssertEqual(s_testKey, response.Result);
+            AssertEqual(s_testSetting, response.Result);
 
             response.Dispose();
             Assert.AreEqual(0, pool.CurrentlyRented);
@@ -93,12 +96,12 @@ namespace Azure.Configuration.Tests
         [Test]
         public async Task Set()
         {
-            var transport = new SetMockTransport(s_testKey);
+            var transport = new SetMockTransport(s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            Response<ConfigurationSetting> response = await service.SetAsync(s_testKey, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.SetAsync(s_testSetting, CancellationToken.None);
 
-            AssertEqual(s_testKey, response.Result);
+            AssertEqual(s_testSetting, response.Result);
 
             response.Dispose();
             Assert.AreEqual(0, pool.CurrentlyRented);
@@ -107,12 +110,12 @@ namespace Azure.Configuration.Tests
         [Test]
         public async Task Update()
         {
-            var transport = new UpdateMockTransport(s_testKey);
+            var transport = new UpdateMockTransport(s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            Response<ConfigurationSetting> response = await service.UpdateAsync(s_testKey, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.UpdateAsync(s_testSetting, CancellationToken.None);
 
-            AssertEqual(s_testKey, response.Result);
+            AssertEqual(s_testSetting, response.Result);
 
             response.Dispose();
             Assert.AreEqual(0, pool.CurrentlyRented);
@@ -121,12 +124,12 @@ namespace Azure.Configuration.Tests
         [Test]
         public async Task Delete()
         {
-            var transport = new DeleteMockTransport(s_testKey);
+            var transport = new DeleteMockTransport(s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            Response<ConfigurationSetting> response = await service.DeleteAsync(s_testKey.Key, s_testKey.Label);
+            Response<ConfigurationSetting> response = await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label);
 
-            AssertEqual(s_testKey, response.Result);
+            AssertEqual(s_testSetting, response.Result);
 
             response.Dispose();
             Assert.AreEqual(0, pool.CurrentlyRented);
@@ -135,11 +138,11 @@ namespace Azure.Configuration.Tests
         [Test]
         public async Task Lock()
         {
-            var (service, pool) = CreateTestService(new LockingMockTransport(s_testKey, lockOtherwiseUnlock: true));
+            var (service, pool) = CreateTestService(new LockingMockTransport(s_testSetting, lockOtherwiseUnlock: true));
 
-            Response<ConfigurationSetting> response = await service.LockAsync(s_testKey.Key, s_testKey.Label);
+            Response<ConfigurationSetting> response = await service.LockAsync(s_testSetting.Key, s_testSetting.Label);
 
-            AssertEqual(s_testKey, response.Result);
+            AssertEqual(s_testSetting, response.Result);
 
             response.Dispose();
             Assert.AreEqual(0, pool.CurrentlyRented);
@@ -148,11 +151,11 @@ namespace Azure.Configuration.Tests
         [Test]
         public async Task Unlock()
         {
-            var (service, pool) = CreateTestService(new LockingMockTransport(s_testKey, lockOtherwiseUnlock: false));
+            var (service, pool) = CreateTestService(new LockingMockTransport(s_testSetting, lockOtherwiseUnlock: false));
 
-            Response<ConfigurationSetting> response = await service.UnlockAsync(s_testKey.Key, s_testKey.Label);
+            Response<ConfigurationSetting> response = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label);
 
-            AssertEqual(s_testKey, response.Result);
+            AssertEqual(s_testSetting, response.Result);
 
             response.Dispose();
             Assert.AreEqual(0, pool.CurrentlyRented);

@@ -7,6 +7,12 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
+// TODO (pri 1): Add all functionality from the spec: https://msazure.visualstudio.com/Azure%20AppConfig/Azure%20AppConfig%20Team/_git/AppConfigService?path=%2Fdocs%2Fprotocol&version=GBdev
+// TODO (pri 1): Support "List subset of keys" 
+// TODO (pri 1): Support "Time-Based Access" 
+// TODO (pri 1): Support "KeyValue Revisions"
+// TODO (pri 1): Support "Real-time Consistency"
+// TODO (pri 2): Add retry policy with automatic throttling
 namespace Azure.Configuration
 {
     public partial class ConfigurationClient
@@ -198,16 +204,16 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetBatchAsync(BatchFilter options, CancellationToken cancellation = default)
+        public async Task<Response<SettingBatch>> GetBatchAsync(BatchFilter filter, CancellationToken cancellation = default)
         {
-            var requestUri = BuildUrlForGetBatch(options);
+            var requestUri = BuildUrlForGetBatch(filter);
             PipelineCallContext context = null;
             try {
                 context = Pipeline.CreateContext(cancellation, ServiceMethod.Get, requestUri);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
-                if (options.Revision != null) {
-                    context.AddHeader(AcceptDatetimeHeader, options.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat));
+                if (filter.Revision != null) {
+                    context.AddHeader(AcceptDatetimeHeader, filter.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat));
                 }
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
@@ -231,6 +237,7 @@ namespace Azure.Configuration
             }
         }
 
+        // TODO (pri 0): setting applicationId has no effect
         public struct ConfigurationServiceOptions
         {
             internal Header UserAgentHeader;
