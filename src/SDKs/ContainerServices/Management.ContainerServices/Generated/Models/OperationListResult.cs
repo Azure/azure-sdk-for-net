@@ -12,25 +12,25 @@ namespace ManagedClusters.Models
     using System.Linq;
 
     /// <summary>
-    /// Tags object for patch operations.
+    /// The List Compute Operation operation response.
     /// </summary>
-    public partial class TagsObject
+    public partial class OperationListResult
     {
         /// <summary>
-        /// Initializes a new instance of the TagsObject class.
+        /// Initializes a new instance of the OperationListResult class.
         /// </summary>
-        public TagsObject()
+        public OperationListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TagsObject class.
+        /// Initializes a new instance of the OperationListResult class.
         /// </summary>
-        /// <param name="tags">Resource tags.</param>
-        public TagsObject(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="value">The list of compute operations</param>
+        public OperationListResult(IList<OperationValue> value = default(IList<OperationValue>))
         {
-            Tags = tags;
+            Value = value;
             CustomInit();
         }
 
@@ -40,10 +40,10 @@ namespace ManagedClusters.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags.
+        /// Gets the list of compute operations
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<OperationValue> Value { get; private set; }
 
     }
 }
