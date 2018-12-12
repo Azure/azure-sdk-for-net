@@ -1,4 +1,5 @@
 ﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('buildTools.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Sdk.Build.Tasks</PackageId>
     <Description>Provides .NET SDK Build tools tasks</Description>
@@ -17,7 +18,6 @@
     <TaskBinaryOutput>..\..\..\tasks</TaskBinaryOutput>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
     <OutputPath>$(TaskBinaryOutput)</OutputPath>
   </PropertyGroup>
   <ItemGroup>

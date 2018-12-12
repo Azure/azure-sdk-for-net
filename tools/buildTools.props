@@ -1,0 +1,11 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<IsBuildToolsProject>true</IsBuildToolsProject>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition=" '$(IsBuildToolsProject)' == 'true' ">
+		<SignAssembly>true</SignAssembly>
+		<DelaySign>false</DelaySign>
+		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\BuildTools.snk</AssemblyOriginatorKeyFile>	
+	</PropertyGroup>
+</Project>
