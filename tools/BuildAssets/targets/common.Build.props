@@ -14,65 +14,45 @@
 		<DelaySign>true</DelaySign>
 		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
 		<NoWarn>1591;1701;1573;CS1591</NoWarn>
-		<DefaultPathTokenToIgnore>$(IgnorePathTokens) Microsoft.Azure.KeyVault.Samples</DefaultPathTokenToIgnore>
+		<DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) $(IgnorePathTokens)</DefaultPathTokenToIgnore>
 		<BuildWideDebugTrace Condition=" '$(DebugTrace)' == '' ">false</BuildWideDebugTrace>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
-
-	<!-- <PropertyGroup Condition=" '$(Configuration)' == 'Debug' AND '$(DelaySignForInternalsVisible)' == 'true' ">
-		There are certain projects that needs internals visible for test purpose
-		<SignAssembly>true</SignAssembly>
-		<DelaySign>true</DelaySign>
-		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-	</PropertyGroup>
-	<PropertyGroup>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	</PropertyGroup>
 	
-	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-		<SignAssembly>true</SignAssembly>
-		<DelaySign>true</DelaySign>
-		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-	</PropertyGroup> -->
-
-  <PropertyGroup>
+	<PropertyGroup>
 		<SignManifestRootDir>$(BinariesFolder)\signManifest</SignManifestRootDir>
 		<SignServiceDir>$(SignManifestRootDir)\signService</SignServiceDir>
 		<SignClientConfigDir>$(SignManifestRootDir)\signClientConfig</SignClientConfigDir>
 		<AuthenticodeSign>false</AuthenticodeSign>
-  </PropertyGroup>
-  <PropertyGroup>
+	</PropertyGroup>
+	<PropertyGroup>
 		<PackageRootDir>$(BuiltPackageOutputDir)</PackageRootDir>
 		<UnsignedPackageRootDir>$(PackageRootDir)\unsigned</UnsignedPackageRootDir>
 		<SignedPackageRootDir>$(PackageRootDir)\signed</SignedPackageRootDir>
-  </PropertyGroup>
+	</PropertyGroup>
   
-  <PropertyGroup>	
+	<PropertyGroup>	
 		<BuildNameLabel>DesktopBuild</BuildNameLabel>
-  </PropertyGroup>
+	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
 		<DefineConstants>net452;FullNetFx;LEGACY</DefineConstants>
 		<OutputPath>bin\$(Configuration)\</OutputPath>
-		<!-- <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile> -->
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
 		<DefineConstants>netstandard14</DefineConstants>
 		<OutputPath>bin\$(Configuration)\</OutputPath>
-		<!-- <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile> -->
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
 		<DefineConstants>netcoreapp11</DefineConstants>
 		<OutputPath>bin\$(Configuration)\</OutputPath>
-		<!-- <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile> -->
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
 		<DefineConstants>netcoreapp20</DefineConstants>
 		<OutputPath>bin\$(Configuration)\</OutputPath>
-		<!-- <DocumentationFile>bin\$(Configuration)\$(TargetFrameworks)\$(AssemblyName).xml</DocumentationFile> -->
 	</PropertyGroup>
 
 	<Choose>
