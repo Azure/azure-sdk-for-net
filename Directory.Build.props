@@ -1,16 +1,28 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
-		<LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
-		<BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
-		<SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
-	</PropertyGroup>
-	<PropertyGroup>
-		<NetSdkBuildTargetsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)\targets</NetSdkBuildTargetsDir>
-		<NetSdkBuildTargetsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildTargetsDir)' == '' ">$(SdkBuildToolsDir)\targets</NetSdkBuildTargetsDir>		
-		<NetSdkBuildToolsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)</NetSdkBuildToolsDir>
-		<NetSdkBuildToolsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildToolsDir)' == '' ">$(SdkBuildToolsDir)</NetSdkBuildToolsDir>
-	</PropertyGroup>
-  
-	<Import Project="$(NetSdkBuildTargetsDir)\core\_Directory.Build.props" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_Directory.Build.props') "/>
+  <PropertyGroup>
+    <LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
+    <LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
+    <BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
+    <SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NetSdkBuildTargetsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)\targets</NetSdkBuildTargetsDir>
+    <NetSdkBuildTargetsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildTargetsDir)' == '' ">$(SdkBuildToolsDir)\targets</NetSdkBuildTargetsDir>
+    <NetSdkBuildToolsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)</NetSdkBuildToolsDir>
+    <NetSdkBuildToolsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildToolsDir)' == '' ">$(SdkBuildToolsDir)</NetSdkBuildToolsDir>
+  </PropertyGroup>
+
+  <!-- If Scope is specified then don't ignore any tests by default otherwise when building all ignore the projects with issues -->
+  <PropertyGroup Condition="'$(Scope)' == '' or '$(Scope)' == 'All'">
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Microsoft.Rest.ClientRuntime.Tracing.Tests</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Microsoft.Azure.Services.AppAuthentication.IntegrationTests</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Batch\DataPlane</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Batch\Support</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) KeyVault\dataPlane\Microsoft.Azure.KeyVault.Tests</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) KeyVault\dataPlane\Microsoft.Azure.KeyVault.Extensions.Tests</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) LocationBasedServices</DefaultPathTokenToIgnore>
+  </PropertyGroup>
+
+  <Import Project="$(NetSdkBuildTargetsDir)\core\_Directory.Build.props" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_Directory.Build.props') "/>
 </Project>
