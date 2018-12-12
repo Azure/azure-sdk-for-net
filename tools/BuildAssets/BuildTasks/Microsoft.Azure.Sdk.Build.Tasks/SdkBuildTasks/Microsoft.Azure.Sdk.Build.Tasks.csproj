@@ -18,10 +18,7 @@
     <TaskBinaryOutput>..\..\..\tasks</TaskBinaryOutput>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
     <OutputPath>$(TaskBinaryOutput)</OutputPath>
-    <AssemblyOriginatorKeyFile>D:\myFork\LTSBuild\tools\BuildTools.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>false</DelaySign>    
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="StaticAnalysisTasks\**" />
