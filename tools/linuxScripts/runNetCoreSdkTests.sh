@@ -136,6 +136,7 @@ restoreBuildKV() {
         kvItem=`basename $kvDir`
         if [ -d $kvDir ] && [ "$kvItem" != "Microsoft.Azure.KeyVault.Samples" ]
         then
+            printf "trying..... $kvItem\n"
             if [[ "$kvItem" =~ "Tests" ]]; then
                 kvTestProj=($kvDir/*.csproj)
                 kvTProj=$( skip_Rps $kvSdkProj )
@@ -149,6 +150,7 @@ restoreBuildKV() {
                     kvSdkProj=($kvDir/*.csproj)
                     kvProj=$( skip_Rps $kvSdkProj )
                     if [ "$kvProj" == "false" ]; then
+                        printf "KV BuildProject ... $kvSdkProj\n"
                         dotnet restore $kvSdkProj -r $ubuntu1404
                         dotnet build $kvSdkProj -f $netstd14
                     fi
@@ -160,7 +162,7 @@ restoreBuildKV() {
 
 skip_Rps() {
     retVal=false
-    #printf "checking......$1\n"
+    printf "checking......$1\n"
     if [[ ("$1" =~ "Authorization")  || ( "$1" =~ "Gallery" ) || ("$1" =~ "Automation") || ( "$1" =~ "Intune" ) || ( "$1" =~ "DataLake.Store" ) 
                 || ( "$1" =~ "Monitor" ) || ( "$1" =~ "RedisCache" ) || ( "$1" =~ "Search" )
                 || ( "$1" =~ "DeviceProvisioningServices") || ("$1" =~ "ServerManagement") || ( "$1" =~ "BotService")
