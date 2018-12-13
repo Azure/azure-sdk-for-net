@@ -1,0 +1,43 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="ValidateTargetFrameworks" BeforeTargets="Build">
+    <ItemGroup>
+      <RequiredTargetFrameworks Include="$(RequiredTargetFrameworks)" />
+      <ConfiguredTargetFrameworks Include="$(TargetFrameworks)" />
+      <MissingTargetFrameworks Include="@(RequiredTargetFrameworks)" Exclude="@(ConfiguredTargetFrameworks)" />
+    </ItemGroup>
+
+    <Error Condition="'@(RequiredTargetFrameworks)' == ''" Text="List of required target frameworks is empty something must have messed up property RequiredTargetFrameworks[$(RequiredTargetFrameworks)]." />
+    <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
+  </Target>
+
+  <PropertyGroup>
+    <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
+    <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestHelperLibrary)' == 'true'">
+    <IsPackable>false</IsPackable>
+    <SignAssembly>false</SignAssembly>
+    <RequiredTargetFrameworks>netcoreapp2.0</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <DefaultReferenceTargets>AzSdk.test.reference.targets</DefaultReferenceTargets>
+
+    <!-- Disable running of tests for test helper libraries -->
+    <IsTestProject Condition="'$(IsTestHelperLibrary)' == 'true'">false</IsTestProject>
+  </PropertyGroup>
+
+  <!-- This allows us to build .NET Framework targets on non-windows
+    TODO: Move the NETFramework reference assemblies to a feed other then the roslyn feed.
+  -->
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-alpha-004" PrivateAssets="all" IsImplicitlyDefined="true" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(SignAssembly)' != 'false'">
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)')" />
+</Project>
