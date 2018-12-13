@@ -10,6 +10,7 @@
 		<PackageId>Microsoft.Azure.Management.LabServices</PackageId>
 		<PackageTags>LabServices;</PackageTags>
 		<PackageReleaseNotes>Release api version 2018-10-15.</PackageReleaseNotes>
+        <ProjectGuid>{B2143F8C-A1B8-4042-ACAB-CB7797E24C9F}</ProjectGuid>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
