@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.Build.Traversal">
+  <ItemGroup>
+    <ProjectReference Include="src\SDKs\DataPlane.proj" />
+    <ProjectReference Include="src\SDKs\DataPlaneTests.proj" />
+  </ItemGroup>
+</Project>
