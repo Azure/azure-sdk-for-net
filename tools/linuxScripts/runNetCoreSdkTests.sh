@@ -154,7 +154,6 @@ restoreBuildKV() {
                     fi
                 fi
             fi
-            fi
         fi
     done
 }
