@@ -8,7 +8,7 @@
 		<Description>Provides management capabilities for Microsoft Azure IotHub.</Description>
 		<AssemblyTitle>Microsoft Azure IotHub Management</AssemblyTitle>
 		<AssemblyName>Microsoft.Azure.Management.IotHub</AssemblyName>
-		<Version>2.1.2</Version>
+		<Version>2.8.0-preview</Version>
 		<PackageTags>Microsoft Azure IotHub;IotHub management;IotHub;</PackageTags>
 		<PackageReleaseNotes>Device streaming API version update for IotHub.</PackageReleaseNotes>
 	</PropertyGroup>
