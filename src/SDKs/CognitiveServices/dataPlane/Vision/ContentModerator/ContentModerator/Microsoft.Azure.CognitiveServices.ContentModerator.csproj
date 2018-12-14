@@ -13,7 +13,8 @@
 <![CDATA[
 This is a public release of the Cognitive Services Content Moderator SDK.
 
-Included with this release is support for Content Moderator API
+Changes in this release:
+1) Change the namespace from `Microsoft.CognitiveServices.ContentModerator` to `Microsoft.Azure.CognitiveServices.ContentModerator`.
 ]]>
 	</PackageReleaseNotes>
   </PropertyGroup>
