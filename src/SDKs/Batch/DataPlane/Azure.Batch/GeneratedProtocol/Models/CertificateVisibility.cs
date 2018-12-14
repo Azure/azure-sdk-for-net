@@ -28,13 +28,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [EnumMember(Value = "starttask")]
         StartTask,
         /// <summary>
-        /// The certificate should be visibile to the user accounts under which
+        /// The certificate should be visible to the user accounts under which
         /// job tasks are run.
         /// </summary>
         [EnumMember(Value = "task")]
         Task,
         /// <summary>
-        /// The certificate should be visibile to the user accounts under which
+        /// The certificate should be visible to the user accounts under which
         /// users remotely access the node.
         /// </summary>
         [EnumMember(Value = "remoteuser")]

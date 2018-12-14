@@ -475,7 +475,7 @@
             // If this test fails try increasing the size of the Task in case maximum size increase
             for (int i = 0; i < 10000; i++)
             {
-                resourceFile = new ResourceFile("https://mystorageaccount.blob.core.windows.net/files/resourceFile" + i, "resourceFile" + i);
+                resourceFile = ResourceFile.FromUrl("https://mystorageaccount.blob.core.windows.net/files/resourceFile" + i, "resourceFile" + i);
                 resourceFiles.Add(resourceFile);
             }
             await SynchronizationContextHelper.RunTestAsync(async () =>
@@ -517,7 +517,7 @@
             // If this test fails try increasing the size of the Task in case maximum size increase
             for (int i = 0; i < 100; i++)
             {
-                resourceFile = new ResourceFile("https://mystorageaccount.blob.core.windows.net/files/resourceFile" + i, "resourceFile" + i);
+                resourceFile = ResourceFile.FromUrl("https://mystorageaccount.blob.core.windows.net/files/resourceFile" + i, "resourceFile" + i);
                 resourceFiles.Add(resourceFile);
             }
             await SynchronizationContextHelper.RunTestAsync(async () =>

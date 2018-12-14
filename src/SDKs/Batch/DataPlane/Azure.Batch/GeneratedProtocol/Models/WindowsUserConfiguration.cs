@@ -14,26 +14,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Settings for the operating system disk of the virtual machine.
+    /// Properties used to create a user account on a Windows node.
     /// </summary>
-    public partial class OSDisk
+    public partial class WindowsUserConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the OSDisk class.
+        /// Initializes a new instance of the WindowsUserConfiguration class.
         /// </summary>
-        public OSDisk()
+        public WindowsUserConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OSDisk class.
+        /// Initializes a new instance of the WindowsUserConfiguration class.
         /// </summary>
-        /// <param name="caching">The type of caching to enable for the OS
-        /// disk.</param>
-        public OSDisk(CachingType? caching = default(CachingType?))
+        /// <param name="loginMode">The login mode for the user.</param>
+        public WindowsUserConfiguration(LoginMode? loginMode = default(LoginMode?))
         {
-            Caching = caching;
+            LoginMode = loginMode;
             CustomInit();
         }
 
@@ -43,16 +42,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the type of caching to enable for the OS disk.
+        /// Gets or sets the login mode for the user.
         /// </summary>
         /// <remarks>
-        /// The default value for caching is readwrite. For information about
-        /// the caching options see:
-        /// https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
-        /// Possible values include: 'none', 'readOnly', 'readWrite'
+        /// The default value for VirtualMachineConfiguration pools is batch
+        /// and for CloudServiceConfiguration pools is interactive. Possible
+        /// values include: 'batch', 'interactive'
         /// </remarks>
-        [JsonProperty(PropertyName = "caching")]
-        public CachingType? Caching { get; set; }
+        [JsonProperty(PropertyName = "loginMode")]
+        public LoginMode? LoginMode { get; set; }
 
     }
 }

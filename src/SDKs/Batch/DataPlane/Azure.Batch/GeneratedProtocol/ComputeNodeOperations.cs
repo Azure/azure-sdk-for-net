@@ -91,6 +91,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<ComputeNodeAddUserHeaders>> AddUserWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeUser user, ComputeNodeAddUserOptions computeNodeAddUserOptions = default(ComputeNodeAddUserOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -145,8 +149,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "AddUser", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/users").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/users";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             List<string> _queryParameters = new List<string>();
@@ -342,6 +347,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<ComputeNodeDeleteUserHeaders>> DeleteUserWithHttpMessagesAsync(string poolId, string nodeId, string userName, ComputeNodeDeleteUserOptions computeNodeDeleteUserOptions = default(ComputeNodeDeleteUserOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -396,8 +405,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteUser", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/users/{userName}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/users/{userName}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             _url = _url.Replace("{userName}", System.Uri.EscapeDataString(userName));
@@ -554,10 +564,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// compute node.
         /// </summary>
         /// <remarks>
-        /// This operation replaces of all the updateable properties of the account.
-        /// For example, if the expiryTime element is not specified, the current value
-        /// is replaced with the default value, not left unmodified. You can update a
-        /// user account on a node only when it is in the idle or running state.
+        /// This operation replaces of all the updatable properties of the account. For
+        /// example, if the expiryTime element is not specified, the current value is
+        /// replaced with the default value, not left unmodified. You can update a user
+        /// account on a node only when it is in the idle or running state.
         /// </remarks>
         /// <param name='poolId'>
         /// The ID of the pool that contains the compute node.
@@ -594,6 +604,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<ComputeNodeUpdateUserHeaders>> UpdateUserWithHttpMessagesAsync(string poolId, string nodeId, string userName, NodeUpdateUserParameter nodeUpdateUserParameter, ComputeNodeUpdateUserOptions computeNodeUpdateUserOptions = default(ComputeNodeUpdateUserOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -653,8 +667,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateUser", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/users/{userName}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/users/{userName}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             _url = _url.Replace("{userName}", System.Uri.EscapeDataString(userName));
@@ -847,6 +862,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<ComputeNode,ComputeNodeGetHeaders>> GetWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetOptions computeNodeGetOptions = default(ComputeNodeGetOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -902,8 +921,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             List<string> _queryParameters = new List<string>();
@@ -1116,6 +1136,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<ComputeNodeRebootHeaders>> RebootWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeRebootOption? nodeRebootOption = default(ComputeNodeRebootOption?), ComputeNodeRebootOptions computeNodeRebootOptions = default(ComputeNodeRebootOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -1172,8 +1196,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "Reboot", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/reboot").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/reboot";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             List<string> _queryParameters = new List<string>();
@@ -1372,6 +1397,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<ComputeNodeReimageHeaders>> ReimageWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeReimageOption? nodeReimageOption = default(ComputeNodeReimageOption?), ComputeNodeReimageOptions computeNodeReimageOptions = default(ComputeNodeReimageOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -1428,8 +1457,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "Reimage", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/reimage").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/reimage";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             List<string> _queryParameters = new List<string>();
@@ -1627,6 +1657,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<ComputeNodeDisableSchedulingHeaders>> DisableSchedulingWithHttpMessagesAsync(string poolId, string nodeId, DisableComputeNodeSchedulingOption? nodeDisableSchedulingOption = default(DisableComputeNodeSchedulingOption?), ComputeNodeDisableSchedulingOptions computeNodeDisableSchedulingOptions = default(ComputeNodeDisableSchedulingOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -1683,8 +1717,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "DisableScheduling", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/disablescheduling").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/disablescheduling";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             List<string> _queryParameters = new List<string>();
@@ -1877,6 +1912,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<ComputeNodeEnableSchedulingHeaders>> EnableSchedulingWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeEnableSchedulingOptions computeNodeEnableSchedulingOptions = default(ComputeNodeEnableSchedulingOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -1926,8 +1965,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "EnableScheduling", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/enablescheduling").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/enablescheduling";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             List<string> _queryParameters = new List<string>();
@@ -2119,6 +2159,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<ComputeNodeGetRemoteLoginSettingsResult,ComputeNodeGetRemoteLoginSettingsHeaders>> GetRemoteLoginSettingsWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetRemoteLoginSettingsOptions computeNodeGetRemoteLoginSettingsOptions = default(ComputeNodeGetRemoteLoginSettingsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -2168,8 +2212,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "GetRemoteLoginSettings", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/remoteloginsettings").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/remoteloginsettings";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             List<string> _queryParameters = new List<string>();
@@ -2380,6 +2425,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<Stream,ComputeNodeGetRemoteDesktopHeaders>> GetRemoteDesktopWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions = default(ComputeNodeGetRemoteDesktopOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -2429,8 +2478,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "GetRemoteDesktop", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/rdp").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/rdp";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             List<string> _queryParameters = new List<string>();
@@ -2632,6 +2682,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<UploadBatchServiceLogsResult,ComputeNodeUploadBatchServiceLogsHeaders>> UploadBatchServiceLogsWithHttpMessagesAsync(string poolId, string nodeId, UploadBatchServiceLogsConfiguration uploadBatchServiceLogsConfiguration, ComputeNodeUploadBatchServiceLogsOptions computeNodeUploadBatchServiceLogsOptions = default(ComputeNodeUploadBatchServiceLogsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -2686,8 +2740,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "UploadBatchServiceLogs", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/uploadbatchservicelogs").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/uploadbatchservicelogs";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             List<string> _queryParameters = new List<string>();
@@ -2894,6 +2949,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<IPage<ComputeNode>,ComputeNodeListHeaders>> ListWithHttpMessagesAsync(string poolId, ComputeNodeListOptions computeNodeListOptions = default(ComputeNodeListOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -2956,8 +3015,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)

@@ -55,6 +55,18 @@
         "ConstructorArgumentType": "Optional"
       },
       "Value": null
+    },
+    {
+      "Key": {
+        "Type": "WindowsUserConfiguration",
+        "Name": "WindowsUserConfiguration",
+        "SummaryComment": "The Windows-specific user configuration for the user account.",
+        "RemarksComment": "This property can only be specified if the user is on a Windows pool. If not specified and on a Windows pool, the user is created with the default options.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional"
+      },
+      "Value": null
     }
   ]
 }

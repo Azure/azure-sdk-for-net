@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// If omitted, the task runs as a non-administrative user unique to
-        /// the task on Windows nodes, or a a non-administrative user unique to
+        /// the task on Windows nodes, or a non-administrative user unique to
         /// the pool on Linux nodes.
         /// </remarks>
         [JsonProperty(PropertyName = "userIdentity")]

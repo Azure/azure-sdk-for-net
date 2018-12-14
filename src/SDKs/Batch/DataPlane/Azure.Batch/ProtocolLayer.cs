@@ -52,7 +52,8 @@
         /// </summary>
         internal ProtocolLayer(string baseUrl, ServiceClientCredentials credentials)
         {
-            this._client = new Protocol.BatchServiceClient(new Uri(baseUrl), credentials);
+            this._client = new Protocol.BatchServiceClient(credentials);
+            this._client.BatchUrl = baseUrl;
             this._client.HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(InternalConstants.UserAgentProductName, typeof(ProtocolLayer).GetTypeInfo().Assembly.GetName().Version.ToString()));
 
             this._client.HttpClient.Timeout = Timeout.InfiniteTimeSpan; //Client side timeout will be set per-request
@@ -1249,23 +1250,6 @@
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNode.ReimageWithHttpMessagesAsync(
                 poolId,
                 computeNodeId,
-                request.Parameters,
-                request.Options,
-                request.CustomHeaders,
-                lambdaCancelToken);
-
-            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
-
-            return asyncTask;
-        }
-
-        public Task<AzureOperationHeaderResponse<Models.PoolUpgradeOSHeaders>> UpgradePoolOS(string poolId, string targetOSVersion, BehaviorManager bhMgr, CancellationToken cancellationToken)
-        {
-            var parameters = targetOSVersion;
-            var request = new PoolUpgradeOSBatchRequest(this._client, parameters, cancellationToken);
-
-            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.UpgradeOSWithHttpMessagesAsync(
-                poolId,
                 request.Parameters,
                 request.Options,
                 request.CustomHeaders,

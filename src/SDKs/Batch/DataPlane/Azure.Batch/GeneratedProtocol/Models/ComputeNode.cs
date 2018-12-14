@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// for task scheduling.</param>
         /// <param name="stateTransitionTime">The time at which the compute
         /// node entered its current state.</param>
-        /// <param name="lastBootTime">The time at which the compute node was
-        /// started.</param>
+        /// <param name="lastBootTime">The last time at which the compute node
+        /// was started.</param>
         /// <param name="allocationTime">The time at which this compute node
         /// was allocated to the pool.</param>
         /// <param name="ipAddress">The IP address that other compute nodes can
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the compute node was started.
+        /// Gets or sets the last time at which the compute node was started.
         /// </summary>
         /// <remarks>
         /// This property may not be present if the node state is unusable.
@@ -168,6 +168,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the time at which this compute node was allocated to
         /// the pool.
         /// </summary>
+        /// <remarks>
+        /// This is the time when the node was initially allocated and doesn't
+        /// change once set. It is not updated when the node is service healed
+        /// or preempted.
+        /// </remarks>
         [JsonProperty(PropertyName = "allocationTime")]
         public System.DateTime? AllocationTime { get; set; }
 
