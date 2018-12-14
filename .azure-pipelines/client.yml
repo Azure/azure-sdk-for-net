@@ -40,7 +40,7 @@ jobs:
           PathtoPublish: 'binaries\packages'
           ArtifactName: packages
 
-  - job: 'Audit_Windows'
+  - job: 'Test_Windows'
 
     pool:
       vmImage: 'vs2017-win2016'
@@ -73,7 +73,7 @@ jobs:
         displayName: 'Clean up unsigned build tool allowance'
         condition: always()
 
-  - job: 'Audit_Linux'
+  - job: 'Test_Linux'
 
     pool:
       vmImage: 'ubuntu-16.04'
@@ -83,6 +83,7 @@ jobs:
           $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE="true"
           $env:DOTNET_CLI_TELEMETRY_OPTOUT="1"
 
+          # this is roughly equivalent to calling "msbuild build.proj /t:Init" on Windows
           bash ./tools/linuxScripts/getBuildTools.sh
 
           foreach ($proj in (dir -r -i *.csproj src/$(scope)))
@@ -96,10 +97,7 @@ jobs:
 
              if ($proj.Name.Contains(".Tests.") -or $proj.Name.Contains(".TestFramework."))
              {
-                 Write-Host "dotnet restore $proj"
-                 #dotnet restore $proj
-
-                 Write-Host "dotnet test $proj -f netcoreapp2.0"
+                 Write-Host "dotnet test $proj -f netcoreapp2.0 /nodeReuse:false"
                  dotnet test $proj -f netcoreapp2.0 /nodeReuse:false
                  if ($LastExitCode -ne 0)
                  {
@@ -109,9 +107,6 @@ jobs:
              }
              else
              {
-                 #Write-Host "dotnet restore $proj -r ubuntu.16.04-x64"
-                 #dotnet restore $proj -r ubuntu.16.04-x64
-
                  # Can only build netstandard on Linux
                  Write-Host "dotnet build $proj -f netstandard1.4"
                  dotnet build $proj -f netstandard1.4 
