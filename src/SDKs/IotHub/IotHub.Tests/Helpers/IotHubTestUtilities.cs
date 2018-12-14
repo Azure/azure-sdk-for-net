@@ -24,7 +24,7 @@ namespace IotHub.Tests.Helpers
         public static string DefaultCertificateIotHubName = "DotNetCertificateHub";
         public static string DefaultCertificateResourceGroupName = "DotNetCertificateHubRG";
         public static string DefaultIotHubCertificateName = "DotNetCertificateHubCertificate";
-        public static string DefaultIotHubCertificateSubject = "CN=Azure IoT Root CA";
+        public static string DefaultIotHubCertificateSubject = "Azure IoT Root CA";
         public static string DefaultIotHubCertificateThumbprint = "9F0983E8F2DB2DB3582997FEF331247D872DEE32";
         public static string DefaultIotHubCertificateType = "Microsoft.Devices/IotHubs/Certificates";
         public static string DefaultIotHubCertificateContent = "MIIBvjCCAWOgAwIBAgIQG6PoBFT6GLJGNKn/EaxltTAKBggqhkjOPQQDAjAcMRow"
