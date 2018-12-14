@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -17,7 +19,8 @@ namespace Microsoft.Azure.Management.Batch.Models
     /// An application package which represents a particular version of an
     /// application.
     /// </summary>
-    public partial class ApplicationPackage
+    [Rest.Serialization.JsonTransformation]
+    public partial class ApplicationPackage : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the ApplicationPackage class.
@@ -30,11 +33,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <summary>
         /// Initializes a new instance of the ApplicationPackage class.
         /// </summary>
-        /// <param name="id">The ID of the application.</param>
-        /// <param name="version">The version of the application
-        /// package.</param>
+        /// <param name="id">The ID of the resource.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="type">The type of the resource.</param>
+        /// <param name="etag">The ETag of the resource, used for concurrency
+        /// statements.</param>
         /// <param name="state">The current state of the application package.
-        /// Possible values include: 'Pending', 'Active', 'Unmapped'</param>
+        /// Possible values include: 'Pending', 'Active'</param>
         /// <param name="format">The format of the application package, if the
         /// package is active.</param>
         /// <param name="storageUrl">The URL for the application package in
@@ -43,10 +48,9 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Storage URL will expire.</param>
         /// <param name="lastActivationTime">The time at which the package was
         /// last activated, if the package is active.</param>
-        public ApplicationPackage(string id = default(string), string version = default(string), PackageState? state = default(PackageState?), string format = default(string), string storageUrl = default(string), System.DateTime? storageUrlExpiry = default(System.DateTime?), System.DateTime? lastActivationTime = default(System.DateTime?))
+        public ApplicationPackage(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), PackageState? state = default(PackageState?), string format = default(string), string storageUrl = default(string), System.DateTime? storageUrlExpiry = default(System.DateTime?), System.DateTime? lastActivationTime = default(System.DateTime?))
+            : base(id, name, type, etag)
         {
-            Id = id;
-            Version = version;
             State = state;
             Format = format;
             StorageUrl = storageUrl;
@@ -61,48 +65,36 @@ namespace Microsoft.Azure.Management.Batch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the ID of the application.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the version of the application package.
-        /// </summary>
-        [JsonProperty(PropertyName = "version")]
-        public string Version { get; private set; }
-
-        /// <summary>
         /// Gets the current state of the application package. Possible values
-        /// include: 'Pending', 'Active', 'Unmapped'
+        /// include: 'Pending', 'Active'
         /// </summary>
-        [JsonProperty(PropertyName = "state")]
+        [JsonProperty(PropertyName = "properties.state")]
         public PackageState? State { get; private set; }
 
         /// <summary>
         /// Gets the format of the application package, if the package is
         /// active.
         /// </summary>
-        [JsonProperty(PropertyName = "format")]
+        [JsonProperty(PropertyName = "properties.format")]
         public string Format { get; private set; }
 
         /// <summary>
         /// Gets the URL for the application package in Azure Storage.
         /// </summary>
-        [JsonProperty(PropertyName = "storageUrl")]
+        [JsonProperty(PropertyName = "properties.storageUrl")]
         public string StorageUrl { get; private set; }
 
         /// <summary>
         /// Gets the UTC time at which the Azure Storage URL will expire.
         /// </summary>
-        [JsonProperty(PropertyName = "storageUrlExpiry")]
+        [JsonProperty(PropertyName = "properties.storageUrlExpiry")]
         public System.DateTime? StorageUrlExpiry { get; private set; }
 
         /// <summary>
         /// Gets the time at which the package was last activated, if the
         /// package is active.
         /// </summary>
-        [JsonProperty(PropertyName = "lastActivationTime")]
+        [JsonProperty(PropertyName = "properties.lastActivationTime")]
         public System.DateTime? LastActivationTime { get; private set; }
 
     }
