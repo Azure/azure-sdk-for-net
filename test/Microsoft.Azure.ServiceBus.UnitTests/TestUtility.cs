@@ -24,9 +24,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             // Validate the connection string
             NamespaceConnectionString = new ServiceBusConnectionStringBuilder(envConnectionString).ToString();
+            WebSocketsNamespaceConnectionString = new ServiceBusConnectionStringBuilder(envConnectionString){TransportType = TransportType.AmqpWebSockets}.ToString();
         }
 
         internal static string NamespaceConnectionString { get; }
+
+        internal static string WebSocketsNamespaceConnectionString { get; }
 
         internal static string GetEntityConnectionString(string entityName)
         {
@@ -53,7 +56,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
 
             var messagesToSend = new List<Message>();
-            for (int i = 0; i < messageCount; i++)
+            for (var i = 0; i < messageCount; i++)
             {
                 var message = new Message(Encoding.UTF8.GetBytes("test" + i));
                 message.Label = "test" + i;
@@ -64,18 +67,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Log($"Sent {messageCount} messages");
         }
 
-        internal static async Task<IEnumerable<Message>> ReceiveMessagesAsync(IMessageReceiver messageReceiver, int messageCount)
+        internal static async Task<IList<Message>> ReceiveMessagesAsync(IMessageReceiver messageReceiver, int messageCount, TimeSpan timeout = default)
         {
-            int receiveAttempts = 0;
+            var receiveAttempts = 0;
             var messagesToReturn = new List<Message>();
+            var stopwatch = Stopwatch.StartNew();
 
-            while (receiveAttempts++ < TestConstants.MaxAttemptsCount && messagesToReturn.Count < messageCount)
+            if (timeout == default)
+            {
+                timeout = TimeSpan.Zero;
+            }
+
+            while (messagesToReturn.Count < messageCount && (receiveAttempts++ < TestConstants.MaxAttemptsCount || stopwatch.Elapsed < timeout))
             {
                 var messages = await messageReceiver.ReceiveAsync(messageCount - messagesToReturn.Count);
-                if (messages != null)
+                if (messages == null)
                 {
-                    messagesToReturn.AddRange(messages);
+                    await Task.Delay(TestConstants.WaitTimeBetweenAttempts);
+                    continue;
                 }
+
+                messagesToReturn.AddRange(messages);
             }
 
             VerifyUniqueMessages(messagesToReturn);
@@ -95,7 +107,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var msg = await messageReceiver.ReceiveDeferredMessageAsync(sequenceNumber);
                 if (msg != null)
                 {
-                    messagesToReturn.Add(msg); 
+                    messagesToReturn.Add(msg);
                 }
             }
 
@@ -111,7 +123,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         internal static async Task<IEnumerable<Message>> PeekMessagesAsync(IMessageReceiver messageReceiver, int messageCount)
         {
-            int receiveAttempts = 0;
+            var receiveAttempts = 0;
             var peekedMessages = new List<Message>();
 
             while (receiveAttempts++ < TestConstants.MaxAttemptsCount && peekedMessages.Count < messageCount)
@@ -128,15 +140,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             return peekedMessages;
         }
 
-        internal static async Task CompleteMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
+        internal static async Task CompleteMessagesAsync(IMessageReceiver messageReceiver, IList<Message> messages)
         {
             await messageReceiver.CompleteAsync(messages.Select(message => message.SystemProperties.LockToken));
-            Log($"Completed {messages.Count()} messages");
+            Log($"Completed {messages.Count} messages");
         }
 
         internal static async Task AbandonMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
         {
-            int count = 0;
+            var count = 0;
             foreach (var message in messages)
             {
                 await messageReceiver.AbandonAsync(message.SystemProperties.LockToken);
@@ -147,7 +159,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         internal static async Task DeadLetterMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
         {
-            int count = 0;
+            var count = 0;
             foreach (var message in messages)
             {
                 await messageReceiver.DeadLetterAsync(message.SystemProperties.LockToken);
@@ -158,7 +170,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         internal static async Task DeferMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
         {
-            int count = 0;
+            var count = 0;
             foreach (var message in messages)
             {
                 await messageReceiver.DeferAsync(message.SystemProperties.LockToken);
@@ -174,11 +186,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await Task.FromResult(false);
             }
 
-            for (int i = 0; i < numberOfSessions; i++)
+            for (var i = 0; i < numberOfSessions; i++)
             {
                 var messagesToSend = new List<Message>();
-                string sessionId = TestConstants.SessionPrefix + i;
-                for (int j = 0; j < messagesPerSession; j++)
+                var sessionId = TestConstants.SessionPrefix + i;
+                for (var j = 0; j < messagesPerSession; j++)
                 {
                     var message = new Message(Encoding.UTF8.GetBytes("test" + j));
                     message.Label = "test" + j;
@@ -196,7 +208,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             if (messages != null && messages.Count > 1)
             {
-                HashSet<long> sequenceNumbers = new HashSet<long>();
+                var sequenceNumbers = new HashSet<long>();
                 foreach (var message in messages)
                 {
                     if (!sequenceNumbers.Add(message.SystemProperties.SequenceNumber))

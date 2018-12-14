@@ -3,9 +3,12 @@
 
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
+    using System;
+
     static class TestConstants
     {
         internal const int MaxAttemptsCount = 5;
+        internal readonly static TimeSpan WaitTimeBetweenAttempts = TimeSpan.FromSeconds(1);
 
         internal const string ConnectionStringEnvironmentVariable = "azure-service-bus-dotnet/connectionstring";
 

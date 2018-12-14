@@ -6,11 +6,13 @@ namespace Microsoft.Azure.ServiceBus
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Transactions;
     using Primitives;
 
     /// <summary>
     /// Represents an abstraction for retrying messaging operations. Users should not 
     /// implement this class, and instead should use one of the provided implementations.
+    /// <remarks>RetryPolicy will not be applied when an ambient transaction is found.</remarks>
     /// </summary>
     public abstract class RetryPolicy
     {
@@ -128,9 +130,9 @@ namespace Microsoft.Azure.ServiceBus
 
         internal bool ShouldRetry(TimeSpan remainingTime, int currentRetryCount, Exception lastException, out TimeSpan retryInterval)
         {
-            if (lastException == null)
+            // There is no exception information or there's there's an ambient transaction - should not retry
+            if (lastException == null || Transaction.Current != null)
             {
-                // there are no exceptions.
                 retryInterval = TimeSpan.Zero;
                 return false;
             }

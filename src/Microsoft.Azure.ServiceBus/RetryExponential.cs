@@ -8,7 +8,8 @@ namespace Microsoft.Azure.ServiceBus
 
     /// <summary>
     /// RetryPolicy implementation where the delay between retries will grow in a staggered exponential manner.
-    /// RetryIntervals will be computed using a retryFactor which is a function of deltaBackOff (MaximumBackoff - MinimumBackoff) and MaximumRetryCount
+    /// RetryIntervals will be computed using a retryFactor which is a function of deltaBackOff (MaximumBackoff - MinimumBackoff) and MaximumRetryCount.
+    /// <remarks>RetryPolicy will not be applied when an ambient transaction is found.</remarks>
     /// </summary>
     public sealed class RetryExponential : RetryPolicy
     {

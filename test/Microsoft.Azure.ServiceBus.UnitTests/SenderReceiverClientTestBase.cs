@@ -25,8 +25,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         internal async Task ReceiveDeleteTestCase(IMessageSender messageSender, IMessageReceiver messageReceiver, int messageCount)
         {
             await TestUtility.SendMessagesAsync(messageSender, messageCount);
-            var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount);
-            Assert.True(messageCount == receivedMessages.Count);
+            var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount, TimeSpan.FromSeconds(10));
+            Assert.Equal(receivedMessages.Count, messageCount);
         }
 
         internal async Task PeekLockWithAbandonTestCase(IMessageSender messageSender, IMessageReceiver messageReceiver, int messageCount)
