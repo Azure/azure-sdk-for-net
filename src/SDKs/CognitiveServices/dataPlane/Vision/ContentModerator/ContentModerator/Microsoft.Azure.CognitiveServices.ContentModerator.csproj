@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.ContentModerator</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Content Moderator APIs.</Description>
-    <Version>1.0.0</Version>
+    <Version>2.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.ContentModerator</AssemblyName>
     <PackageTags>ContentModerator;Content Moderator;</PackageTags>
     <PackageReleaseNotes>
