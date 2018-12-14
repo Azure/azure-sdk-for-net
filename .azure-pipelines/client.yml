@@ -3,8 +3,7 @@ trigger:
 
 # Variables:
 #  'targetSDK' the dataPlane SDK you want to build (Ex: KeyVault)
-#  'scope-W' set in the pipeline definition to 'SDKs\$(targetSDK)\dataPlane'
-#  'scope-L' set in the pipeline definition to 'SDKs/$(targetSDK)/dataPlane'
+#  'scope' should be set in the pipeline definition to 'SDKs/$(targetSDK)/dataPlane'
 #  'build.useLatest' indicates whether or not to use build bootstrap files from the LTSBuildTools branch
 
 jobs:
@@ -28,7 +27,7 @@ jobs:
         displayName: 'Build NuGet Package'
         inputs:
           solution: build.proj
-          msbuildArguments: '/t:CreateNugetPackage /p:Scope=$(scope-W) /p:Configuration=Release /clp:ShowTimestamp /flp:Summary;Verbosity=minimal;LogFile=FullBuild.sum /flp1:warningsonly;logfile=FullBuild.wrn /flp2:errorsonly;logfile=FullBuild.err /p:DebugTrace=$(system.debug) /p:CodeSign=false /p:AuthenticodeSign=false /p:RunGlobalReadinessTools=false /p:EnablePreBuildTarget=false /p:EnablePostBuildTarget=false /p:SkipTests=true'
+          msbuildArguments: '/t:CreateNugetPackage /p:Scope=$(scope) /p:Configuration=Release /clp:ShowTimestamp /flp:Summary;Verbosity=minimal;LogFile=FullBuild.sum /flp1:warningsonly;logfile=FullBuild.wrn /flp2:errorsonly;logfile=FullBuild.err /p:DebugTrace=$(system.debug) /p:CodeSign=false /p:AuthenticodeSign=false /p:RunGlobalReadinessTools=false /p:EnablePreBuildTarget=false /p:EnablePostBuildTarget=false /p:SkipTests=true'
 
       - script: |
          "%ProgramFiles(x86)%\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe" -Vu *,31bf3856ad364e35
@@ -61,7 +60,7 @@ jobs:
         displayName: 'Run Tests'
         inputs:
           solution: build.proj
-          msbuildArguments: '/t:RunTests /p:Scope=$(scope-W) /p:Configuration=Release /clp:ShowTimestamp /flp:Summary;Verbosity=minimal;LogFile=FullTest.sum /flp1:warningsonly;logfile=FullTest.wrn /flp2:errorsonly;logfile=FullTest.err /p:DebugTrace=$(system.debug) /p:CodeSign=false /p:AuthenticodeSign=false /p:RunGlobalReadinessTools=false /p:EnablePreBuildTarget=false /p:EnablePostBuildTarget=false'
+          msbuildArguments: '/t:RunTests /p:Scope=$(scope) /p:Configuration=Release /clp:ShowTimestamp /flp:Summary;Verbosity=minimal;LogFile=FullTest.sum /flp1:warningsonly;logfile=FullTest.wrn /flp2:errorsonly;logfile=FullTest.err /p:DebugTrace=$(system.debug) /p:CodeSign=false /p:AuthenticodeSign=false /p:RunGlobalReadinessTools=false /p:EnablePreBuildTarget=false /p:EnablePostBuildTarget=false'
 
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: 'Component Detection'
@@ -86,7 +85,7 @@ jobs:
 
           bash ./tools/linuxScripts/getBuildTools.sh
 
-          foreach ($proj in (dir -r -i *.csproj src/$(scope-L)))
+          foreach ($proj in (dir -r -i *.csproj src/$(scope)))
           {
              # Have to skip this one because it depends on Windows Cryptography Next Generation (CNG)
              if ($proj.Name.Contains("Microsoft.Azure.KeyVault.Tests.csproj"))
