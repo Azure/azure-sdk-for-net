@@ -18,7 +18,13 @@
 		<BuildWideDebugTrace Condition=" '$(DebugTrace)' == '' ">false</BuildWideDebugTrace>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
-	
+
+	<!-- Full debug symbols for archiving and publishing to Symweb -->
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
 	<PropertyGroup>
 		<SignManifestRootDir>$(BinariesFolder)\signManifest</SignManifestRootDir>
 		<SignServiceDir>$(SignManifestRootDir)\signService</SignServiceDir>
@@ -30,6 +36,11 @@
 		<UnsignedPackageRootDir>$(PackageRootDir)\unsigned</UnsignedPackageRootDir>
 		<SignedPackageRootDir>$(PackageRootDir)\signed</SignedPackageRootDir>
 	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
   
 	<PropertyGroup>	
 		<BuildNameLabel>DesktopBuild</BuildNameLabel>

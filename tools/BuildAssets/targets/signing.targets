@@ -70,7 +70,10 @@
     <Message Text="Done executing Signing Nuget Packages" Importance="$(DebugMessageImp)" />
   </Target>
 
-  <Target Name="RunSignTargets" Condition=" '$(CodeSign)' == 'true' " DependsOnTargets="SignBinaries" />
+  <Target Name="RunSignTargets" Condition=" '$(CodeSign)' == 'true' 
+        AND '$(SkipAuthSign)' != 'true' 
+        AND '$(Configuration)' == 'Release' "
+        DependsOnTargets="SignBinaries" />
   <!--  DependsOnTargets="SignBinaries;PostSignBinaries" 
   RunEachTargetSeparately="true" 
   -->

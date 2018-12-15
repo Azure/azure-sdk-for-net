@@ -27,6 +27,107 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         private List<string> authScopes;
         #endregion
 
+        #region Properties
+        internal bool IsBuildEngineInitialized
+        {
+            get
+            {
+                if (this.BuildEngine != null)
+                {
+                    _buildEngineInitialized = true;
+                }
+
+                return _buildEngineInitialized;
+            }
+        }
+
+        #region Required Properties
+       
+
+        /// <summary>
+        /// Gets or Sets relative scope Path (e.g. SDKs\Compute relative path after root\src)
+        /// </summary>
+        [Required]
+        public string ScopePath { get; set; }
+        /// <summary>
+        /// Gets or sets output path for nuget that got packaged/generated
+        /// </summary>
+        [Required]
+        public string PackageOutputPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets nuget publishing path.
+        /// Official Nuget Path is https://www.nuget.org/api/v2/package/
+        /// </summary>
+        [Required]
+        public string PublishNugetToPath { get; set; }
+        #endregion
+
+        /// <summary>
+        /// Gets or sets Nuget Package Name that needs to be published
+        /// </summary>
+        public string NugetPackageName { get; set; }
+        /// <summary>
+        /// Sets or gets the path to Nuget.exe
+        /// </summary>
+        public string NugetExePath { get; set; }
+        /// <summary>
+        /// GitHub userId
+        /// </summary>
+        public string CIUserId { get; set; }
+
+        /// <summary>
+        /// Publish all nuget found under particular scope
+        /// e.g. publish all nugets under KeyVault
+        /// </summary>
+        //public bool publishAllNugetsUnderScope { get { return _publishAllNugetsunderScope; } set { _publishAllNugetsunderScope = value; } }
+
+
+        public bool SkipSymbolPublishing { get; set; }
+
+        public bool SkipNugetPublishing { get; set; }
+
+        public bool TaskDebugOutput { get; set; }
+
+        public bool MultiPackagePublish { get; set; }
+
+        public List<Tuple<NugetPublishStatus, NugetPublishStatus>> NugetPublishStatus { get; private set; }
+
+        /// <summary>
+        /// API key to be used to publish the nuget pakcage
+        /// </summary>
+        public string ApiKey
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_apiKey))
+                {
+                    if (!string.IsNullOrEmpty(PublishNugetToPath))
+                    {
+                        if (PublishNugetToPath.StartsWith(Constants.NugetDefaults.NUGET_PUBLISH_URL))
+                        {
+                            _apiKey = System.Environment.GetEnvironmentVariable(Constants.NugetDefaults.SDK_NUGET_APIKEY_ENV);
+                            Check.NotNull(_apiKey, "ApiKeyRetrieval");
+                        }
+                        else
+                        {
+                            // If local path or file share, we publish using a default api key
+                            Check.DirectoryExists(PublishNugetToPath);
+                            _apiKey = Constants.NugetDefaults.DEFAULT_API_KEY;
+                        }
+                    }
+                }
+
+                return _apiKey;
+            }
+            set
+            {
+                _apiKey = value;
+            }
+        }
+
+        #endregion
+
         public PublishSDKNugetTask()
         {            
             _publishAllNugetsunderScope = false;
@@ -59,107 +160,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             Check.NotEmptyNotNull(PackageOutputPath, "PackageOutputPath");
             Check.NotEmptyNotNull(PublishNugetToPath, "PublishNugetToPath");
         }
-
-        #region Properties
-        internal bool IsBuildEngineInitialized
-        {
-            get
-            {
-                if(this.BuildEngine != null)
-                {
-                    _buildEngineInitialized = true;
-                }
-
-                return _buildEngineInitialized;
-            }
-        }
-
-
-        #region Required Properties
-
-        /// <summary>
-        /// Gets or Sets relative scope Path (e.g. SDKs\Compute relative path after root\src)
-        /// </summary>
-        [Required]
-        public string ScopePath { get; set; }
-        /// <summary>
-        /// Gets or sets output path for nuget that got packaged/generated
-        /// </summary>
-        [Required]
-        public string PackageOutputPath { get; set; }
-        
-        /// <summary>
-        /// Gets or sets nuget publishing path.
-        /// Official Nuget Path is https://www.nuget.org/api/v2/package/
-        /// </summary>
-        [Required]
-        public string PublishNugetToPath { get; set; }
-        #endregion
-
-        /// <summary>
-        /// Gets or sets Nuget Package Name that needs to be published
-        /// </summary>
-        public string NugetPackageName { get; set; }
-        /// <summary>
-        /// Sets or gets the path to Nuget.exe
-        /// </summary>
-        public string NugetExePath { get; set; }
-        /// <summary>
-        /// GitHub userId
-        /// </summary>
-        public string CIUserId { get; set; }
-        
-        /// <summary>
-        /// Publish all nuget found under particular scope
-        /// e.g. publish all nugets under KeyVault
-        /// </summary>
-        //public bool publishAllNugetsUnderScope { get { return _publishAllNugetsunderScope; } set { _publishAllNugetsunderScope = value; } }
-
-
-        public bool SkipSymbolPublishing { get; set; }
-        
-        public bool SkipNugetPublishing { get; set; }
-
-        public bool TaskDebugOutput { get; set; }
-
-        public bool MultiPackagePublish { get; set; }
-
-        public List<Tuple<NugetPublishStatus, NugetPublishStatus>> NugetPublishStatus { get; private set; }
-
-        /// <summary>
-        /// API key to be used to publish the nuget pakcage
-        /// </summary>
-        public string ApiKey
-        {
-            get
-            {
-                if(string.IsNullOrEmpty(_apiKey))
-                {
-                    if(!string.IsNullOrEmpty(PublishNugetToPath))
-                    {
-                        if(PublishNugetToPath.StartsWith(Constants.NugetDefaults.NUGET_PUBLISH_URL))
-                        {
-                            _apiKey = System.Environment.GetEnvironmentVariable(Constants.NugetDefaults.SDK_NUGET_APIKEY_ENV);
-                            Check.NotNull(_apiKey, "ApiKeyRetrieval");
-                        }
-                        else
-                        {
-                            // If local path or file share, we publish using a default api key
-                            Check.DirectoryExists(PublishNugetToPath);
-                            _apiKey = Constants.NugetDefaults.DEFAULT_API_KEY;
-                        }
-                    }
-                }
-
-                return _apiKey;
-            }
-            set
-            {
-                _apiKey = value;
-            }
-        }
-
-        #endregion
 
         public override bool Execute()
         {
@@ -208,7 +208,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             return pkgList;
         }
-
 
         private Tuple<string, string> GetNugetPkgs(string nugetPkgName)
         {
@@ -300,13 +299,27 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             if (status.NugetPublishExitCode != 0)
             {
                 string exMessage = string.Format("{0}\r\n ExitCode:{1}\r\n {2}\r\n", status.PublishArgs, status.NugetPublishExitCode.ToString(), status.NugetPublishStatusOutput);
-                if (status.CaughtException != null)
+                string lsExMsg = exMessage.ToLower();
+
+                //We are facing an unusual error only for our service account where it's exiting with a non-zero exit code due to unable to establish Trust relationship with the nuget server
+                //As archiving symbols has to be done in the same step as building/publishing, we cannot afford to fail at this stage.
+                //Swallowing this error for time being as the nuget is published successfully and there is no way to reproduce this using normal account.
+                //Will need time to setup a repro where a request can be run interactively for service account and run a netmon trace to get more information.
+                if (exMessage.ToLower().Contains("ssl/tls secure channel"))
                 {
-                    throw new ApplicationException(exMessage, status.CaughtException);
+                    ApplicationException appEx = new ApplicationException(exMessage);
+                    LogWarningFromException(appEx);
                 }
                 else
-                {
-                    throw new ApplicationException(exMessage);
+                { 
+                    if (status.CaughtException != null)
+                    {
+                        throw new ApplicationException(exMessage, status.CaughtException);
+                    }
+                    else
+                    {
+                        throw new ApplicationException(exMessage);
+                    }
                 }
             }
             else
@@ -407,6 +420,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 }
             }
 
+
+
             return statusList;
         }
 
@@ -467,6 +482,16 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         private void LogError(string errorMessage, params string[] args)
         {
             LogError(string.Format(errorMessage, args));
+        }
+
+        private void LogWarning(string warningMessage, params string[] args)
+        {
+            Log.LogWarning(warningMessage, args);
+        }
+
+        private void LogWarningFromException(Exception ex)
+        {
+            Log.LogWarningFromException(ex, true);
         }
 
         #endregion

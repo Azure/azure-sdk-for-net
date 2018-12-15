@@ -4,6 +4,33 @@
         <name>Microsoft.Azure.Sdk.Build.Tasks</name>
     </assembly>
     <members>
+        <member name="T:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask">
+            <summary>
+            Archive Symbols Task will
+            1) Copy the build output to an UNC Path (provided from Jenkins Job in order to hardcode paths and to avoid publishing internal UNC paths)
+            2) Create the required request file
+            3) Execute the request to queue up the Symbols Archiving request
+            
+            TODO:
+                Symbols service has no automated way to inform if the request was processed
+                Currently they send an email
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.BuildJobId">
+            <summary>
+            In Jenkins ${BUILD_NUMBER} provides the JobId
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.FindDir(System.String,System.String)">
+            <summary>
+            Finds directory that is being passed in <paramref name="dirName"/>
+            Walks one directory up at a time until it finds <paramref name="dirName"/>
+            This function assumes <paramref name="filePath"/> is indeed a file path and not directory path
+            </summary>
+            <param name="filePath"></param>
+            <param name="dirName"></param>
+            <returns></returns>
+        </member>
         <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BaseTasks.NetSdkTask.TaskInstance">
             <summary>
             Task instance of each derived task.

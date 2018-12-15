@@ -15,6 +15,7 @@
 	<Target Name="RunTests" DependsOnTargets="$(RunTestProjectsDependsOn)" />
 	<Target Name="Sign" DependsOnTargets="$(SignDependsOn)" />
 	<Target Name="SignNuget" DependsOnTargets="$(SignNugetDependsOn)" />
+	<Target Name="ArchiveSymbols" DependsOnTargets="$(ArchiveSymbolsDependsOn)" />
 	<Target Name="Utils" DependsOnTargets="$(UtilDependsOn)" />
 	<Target Name="Help" DependsOnTargets="$(HelpDependsOn)" />   
 </Project>
