@@ -14,10 +14,6 @@ namespace Azure.Configuration
     public partial class ConfigurationClient
     {
         #region String Table
-
-        const string SdkName = "Azure.Configuration";
-        const string SdkVersion = "1.0.0";
-
         const string MediaTypeProblemApplication = "application/problem+json";
         const string AcceptDateTimeFormat = "ddd, dd MMM yyy HH:mm:ss 'GMT'";
         const string AcceptDatetimeHeader = "Accept-Datetime";

@@ -187,7 +187,7 @@ namespace Azure.Configuration.Test
         }
     }
 
-    abstract class MockHttpClientTransport : HttpClientTransport
+    abstract class MockHttpClientTransport : HttpPipelineTransport
     {
         protected HttpMethod _expectedMethod;
         protected StringCheck _expectedUri;
@@ -199,6 +199,11 @@ namespace Azure.Configuration.Test
 
         protected override Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage request)
         {
+            if (Responses.Count == 0) {
+                Responses.Add(HttpStatusCode.NotFound);
+                Responses.Add(HttpStatusCode.OK);
+            }
+
             VerifyRequestLine(request);
             VerifyRequestContent(request);
             VerifyUserAgentHeader(request);

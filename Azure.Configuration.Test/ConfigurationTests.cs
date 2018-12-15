@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Azure.Configuration.Test;
 using Azure.Core.Testing;
 using Azure.Core;
+using Azure.Core.Net;
+using System.Buffers;
 
 namespace Azure.Configuration.Tests
 {
@@ -25,18 +27,16 @@ namespace Azure.Configuration.Tests
 
         private static (ConfigurationClient service, TestPool<byte> pool) CreateTestService(MockHttpClientTransport transport)
         {
-            var service = new ConfigurationClient(connectionString);
-            var pool = new TestPool<byte>();
+            var options = new ClientOptions();
+            var testPool = new TestPool<byte>();
+            options.Pool = testPool;
 
-            if (transport.Responses.Count == 0)
-            {
-                transport.Responses.Add(HttpStatusCode.NotFound);
-                transport.Responses.Add(HttpStatusCode.OK);
-            }
-            service.Pipeline.Transport = transport;
-            service.Pipeline.Pool = pool;
+            options.Transport = transport; 
+            options.Logger = new MockLogger();
 
-            return (service, pool);
+            var service = new ConfigurationClient(connectionString, options);
+
+            return (service, testPool);
         }
 
         private static void AssertEqual(ConfigurationSetting expected, ConfigurationSetting actual)
@@ -45,6 +45,21 @@ namespace Azure.Configuration.Tests
             Assert.AreEqual(s_testSetting.Label, actual.Label);
             Assert.AreEqual(s_testSetting.ContentType, actual.ContentType);
             Assert.AreEqual(s_testSetting.Locked, actual.Locked);
+        }
+
+        [Test]
+        public async Task ConfiguringTheClient()
+        {
+            var options = new ClientOptions();
+            options.ApplicationId = "test_application";
+            options.Logger = new MockLogger();
+            options.Pool = ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4);
+            options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
+
+            var client = new ConfigurationClient(connectionString, options);
+            Response<ConfigurationSetting> response = await client.GetAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
+
+            response.Dispose();
         }
 
         [Test]

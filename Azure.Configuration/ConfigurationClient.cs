@@ -17,21 +17,24 @@ namespace Azure.Configuration
 {
     public partial class ConfigurationClient
     {
+        const string SdkName = "Azure.Configuration";
+        const string SdkVersion = "1.0.0";
+        
         readonly Uri _baseUri;
         readonly string _credential;
         readonly byte[] _secret;
+        ClientOptions _options;
+        ClientPipeline Pipeline;
 
-        public ClientPipeline Pipeline { get; }
-
-        public readonly ConfigurationServiceOptions Options = new ConfigurationServiceOptions("v1.0");
-
-        public ConfigurationClient(string connectionString)
-           : this(connectionString, ClientPipeline.Create(SdkName, SdkVersion))
-        { }
-
-        public ConfigurationClient(string connectionString, ClientPipeline pipeline)
+        public ConfigurationClient(string connectionString) 
+            : this(connectionString, options : new ClientOptions())
         {
-            Pipeline = pipeline;
+        }
+
+        public ConfigurationClient(string connectionString, ClientOptions options)
+        {
+            _options = options;
+            Pipeline = _options.Create(SdkName, SdkVersion);
             ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
         }
 
@@ -44,7 +47,7 @@ namespace Azure.Configuration
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
+                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Put, url);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(IfNoneMatchWildcard);
@@ -71,7 +74,7 @@ namespace Azure.Configuration
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
+                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Put, url);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(Header.Common.JsonContentType);
@@ -98,7 +101,7 @@ namespace Azure.Configuration
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
+                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Put, url);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
@@ -124,7 +127,7 @@ namespace Azure.Configuration
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(cancellation, ServiceMethod.Delete, url);
+                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Delete, url);
 
                 AddFilterHeaders(filter, context);
 
@@ -146,7 +149,7 @@ namespace Azure.Configuration
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(cancellation, ServiceMethod.Put, url);
+                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Put, url);
 
                 AddFilterHeaders(filter, context);
 
@@ -168,7 +171,7 @@ namespace Azure.Configuration
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(cancellation, ServiceMethod.Delete, url);
+                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Delete, url);
 
                 AddFilterHeaders(filter, context);
 
@@ -190,7 +193,7 @@ namespace Azure.Configuration
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(cancellation, ServiceMethod.Get, url);
+                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Get, url);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
 
@@ -209,7 +212,7 @@ namespace Azure.Configuration
             var requestUri = BuildUrlForGetBatch(filter);
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(cancellation, ServiceMethod.Get, requestUri);
+                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Get, requestUri);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 if (filter.Revision != null) {
@@ -235,39 +238,6 @@ namespace Azure.Configuration
                 if (context != null) context.Dispose();
                 throw;
             }
-        }
-
-        // TODO (pri 0): setting applicationId has no effect
-        public struct ConfigurationServiceOptions
-        {
-            internal Header UserAgentHeader;
-            string _applicationId;
-
-            public ConfigurationServiceOptions(string apiVersion)
-            {
-                _applicationId = default;
-                UserAgentHeader = Header.Common.CreateUserAgent(SdkName, SdkVersion, _applicationId);
-            }
-
-            public string ApplicationId {
-                get { return _applicationId; }
-                set {
-                    if (string.Equals(_applicationId, value, StringComparison.Ordinal)) return;
-                    _applicationId = value;
-                    UserAgentHeader = Header.Common.CreateUserAgent(SdkName, SdkVersion, _applicationId);
-                }
-            }
-
-            #region nobody wants to see these
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            public override bool Equals(object obj) => base.Equals(obj);
-
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            public override int GetHashCode() => base.GetHashCode();
-
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            public override string ToString() => base.ToString();
-            #endregion
         }
     }
 }
