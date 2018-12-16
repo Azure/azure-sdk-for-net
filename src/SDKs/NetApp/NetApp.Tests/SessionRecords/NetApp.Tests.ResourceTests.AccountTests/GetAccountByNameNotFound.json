@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/0661b131-4a11-479b-96bf-2f95acca2f73/resourceGroups/sdk-tests-rg/providers/Microsoft.NetApp/netAppAccounts/sdk-tests-acc1?api-version=2017-08-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDY2MWIxMzEtNGExMS00NzliLTk2YmYtMmY5NWFjY2EyZjczL3Jlc291cmNlR3JvdXBzL3Nkay10ZXN0cy1yZy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldEFwcC9uZXRBcHBBY2NvdW50cy9zZGstdGVzdHMtYWNjMT9hcGktdmVyc2lvbj0yMDE3LTA4LTE1",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "fa0ea6ad-d776-4c4d-90e7-1358b062baaf"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26020.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.6.3.9600.",
+          "Microsoft.Azure.Management.NetApp.AzureNetAppFilesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 15 Dec 2018 00:11:48 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "c37896e0-3353-4e00-a421-318280f3a715"
+        ],
+        "x-ms-correlation-request-id": [
+          "c37896e0-3353-4e00-a421-318280f3a715"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH2:20181215T001148Z:c37896e0-3353-4e00-a421-318280f3a715"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "162"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.NetApp/netAppAccounts/sdk-tests-acc1' under resource group 'sdk-tests-rg' was not found.\"\r\n  }\r\n}",
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "0661b131-4a11-479b-96bf-2f95acca2f73"
+  }
+}
