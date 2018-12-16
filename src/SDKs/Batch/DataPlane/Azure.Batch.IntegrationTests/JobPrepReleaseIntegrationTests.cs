@@ -324,7 +324,7 @@
                                 JobPreparationTask prep = new JobPreparationTask("cmd /c JobPrep Task");
                                 unboundJob.JobPreparationTask = prep;
 
-                                ResourceFile[] badResFiles = {new ResourceFile("https://127.0.0.1/foo/bar/baf", "bob.txt")};
+                                ResourceFile[] badResFiles = { ResourceFile.FromUrl("https://127.0.0.1/foo/bar/baf", "bob.txt")};
 
                                 prep.ResourceFiles = badResFiles;
 
@@ -417,7 +417,7 @@
                                 JobReleaseTask relTask = new JobReleaseTask("cmd /c echo Job Release Task");
                                 unboundJob.JobReleaseTask = relTask;
                                 
-                                ResourceFile[] badResFiles = {new ResourceFile("https://127.0.0.1/foo/bar/baf", "bob.txt")};
+                                ResourceFile[] badResFiles = { ResourceFile.FromUrl("https://127.0.0.1/foo/bar/baf", "bob.txt")};
 
                                 relTask.ResourceFiles = badResFiles;
 
@@ -770,7 +770,7 @@
 
             for (int i = 0; i < correctIList.Count; i++)
             {
-                Assert.Equal(correctIList[i].BlobSource, unknownIList[i].BlobSource);
+                Assert.Equal(correctIList[i].HttpUrl, unknownIList[i].HttpUrl);
                 Assert.Equal(correctIList[i].FilePath, unknownIList[i].FilePath);
             }
         }

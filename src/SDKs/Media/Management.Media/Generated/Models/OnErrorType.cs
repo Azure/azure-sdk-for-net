@@ -11,58 +11,103 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for OnErrorType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum OnErrorType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(OnErrorTypeConverter))]
+    public struct OnErrorType : System.IEquatable<OnErrorType>
     {
+        private OnErrorType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// Tells the service that if this TransformOutput fails, then any
         /// other incomplete TransformOutputs can be stopped.
         /// </summary>
-        [EnumMember(Value = "StopProcessingJob")]
-        StopProcessingJob,
+        public static readonly OnErrorType StopProcessingJob = "StopProcessingJob";
+
         /// <summary>
         /// Tells the service that if this TransformOutput fails, then allow
         /// any other TransformOutput to continue.
         /// </summary>
-        [EnumMember(Value = "ContinueJob")]
-        ContinueJob
-    }
-    internal static class OnErrorTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this OnErrorType? value)
+        public static readonly OnErrorType ContinueJob = "ContinueJob";
+
+
+        /// <summary>
+        /// Underlying value of enum OnErrorType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for OnErrorType
+        /// </summary>
+        public override string ToString()
         {
-            return value == null ? null : ((OnErrorType)value).ToSerializedValue();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static string ToSerializedValue(this OnErrorType value)
+        /// <summary>
+        /// Compares enums of type OnErrorType
+        /// </summary>
+        public bool Equals(OnErrorType e)
         {
-            switch( value )
-            {
-                case OnErrorType.StopProcessingJob:
-                    return "StopProcessingJob";
-                case OnErrorType.ContinueJob:
-                    return "ContinueJob";
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
-        internal static OnErrorType? ParseOnErrorType(this string value)
+        /// <summary>
+        /// Implicit operator to convert string to OnErrorType
+        /// </summary>
+        public static implicit operator OnErrorType(string value)
         {
-            switch( value )
-            {
-                case "StopProcessingJob":
-                    return OnErrorType.StopProcessingJob;
-                case "ContinueJob":
-                    return OnErrorType.ContinueJob;
-            }
-            return null;
+            return new OnErrorType(value);
         }
+
+        /// <summary>
+        /// Implicit operator to convert OnErrorType to string
+        /// </summary>
+        public static implicit operator string(OnErrorType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum OnErrorType
+        /// </summary>
+        public static bool operator == (OnErrorType e1, OnErrorType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum OnErrorType
+        /// </summary>
+        public static bool operator != (OnErrorType e1, OnErrorType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for OnErrorType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is OnErrorType && Equals((OnErrorType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode OnErrorType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

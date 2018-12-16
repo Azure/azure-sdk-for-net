@@ -17,7 +17,7 @@ namespace Microsoft.Azure.KeyVault
     /// </summary>
     public class KeyVaultKeyResolver : IKeyResolver
     {
-        private readonly KeyVaultClient _client;
+        private readonly IKeyVaultClient _client;
         private readonly string         _name;
 
         /// <summary>
@@ -34,13 +34,10 @@ namespace Microsoft.Azure.KeyVault
         /// Create a new Key Vault KeyResolver that uses the specified KeyVaultClient
         /// </summary>
         /// <param name="client">Key Vault client</param>
-        public KeyVaultKeyResolver( KeyVaultClient client )
+        public KeyVaultKeyResolver( IKeyVaultClient client )
         {
-            if ( client == null )
-                throw new ArgumentNullException( "client" );
-
-            _name   = null;
-            _client = client;
+            _name = null;
+            _client = client ?? throw new ArgumentNullException( "client" );
         }
 
         /// <summary>
@@ -61,7 +58,7 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>
         /// <param name="vaultName">The URL for the Key Vault, e.g. https://myvault.vault.azure.net/ </param>
         /// <param name="client">Key Vault client</param>
-        public KeyVaultKeyResolver( string vaultName, KeyVaultClient client )
+        public KeyVaultKeyResolver( string vaultName, IKeyVaultClient client )
         {
             if ( string.IsNullOrWhiteSpace( vaultName ) )
                 throw new ArgumentNullException( "vaultName" );

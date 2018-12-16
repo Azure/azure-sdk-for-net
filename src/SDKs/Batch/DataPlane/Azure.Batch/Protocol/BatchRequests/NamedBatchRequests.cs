@@ -1574,28 +1574,6 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     }
 
     /// <summary>
-    /// An <see cref="IBatchRequest"/> for the PoolUpgradeOS operation.
-    /// </summary>
-    public class PoolUpgradeOSBatchRequest : Protocol.BatchRequest<
-        string,
-        PoolUpgradeOSOptions,
-        AzureOperationHeaderResponse<PoolUpgradeOSHeaders>>
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PoolUpgradeOSBatchRequest" /> class.
-        /// </summary>
-        /// <param name="serviceClient">The service client to use.</param>
-        /// <param name="parameters">The parameters to use.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public PoolUpgradeOSBatchRequest(
-            BatchServiceClient serviceClient,
-            string parameters,
-            CancellationToken cancellationToken) : base(serviceClient, parameters, cancellationToken)
-        {
-        }
-    }
-
-    /// <summary>
     /// An <see cref="IBatchRequest"/> for the PoolRemoveNodes operation.
     /// </summary>
     public class PoolRemoveNodesBatchRequest : Protocol.BatchRequest<

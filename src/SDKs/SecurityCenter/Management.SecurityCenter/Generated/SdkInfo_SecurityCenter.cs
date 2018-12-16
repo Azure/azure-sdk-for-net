@@ -19,20 +19,36 @@ namespace Microsoft.Azure.Management.Security
           {
               return new Tuple<string, string, string>[]
               {
+                new Tuple<string, string, string>("Security", "AdvancedThreatProtection", "2017-08-01-preview"),
                 new Tuple<string, string, string>("Security", "Alerts", "2015-06-01-preview"),
+                new Tuple<string, string, string>("Security", "AllowedConnections", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "AutoProvisioningSettings", "2017-08-01-preview"),
                 new Tuple<string, string, string>("Security", "Compliances", "2017-08-01-preview"),
                 new Tuple<string, string, string>("Security", "DiscoveredSecuritySolutions", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "ExternalSecuritySolutions", "2015-06-01-preview"),
+                new Tuple<string, string, string>("Security", "InformationProtectionPolicies", "2017-08-01-preview"),
                 new Tuple<string, string, string>("Security", "JitNetworkAccessPolicies", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Locations", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Operations", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Pricings", "2017-08-01-preview"),
                 new Tuple<string, string, string>("Security", "SecurityContacts", "2017-08-01-preview"),
+                new Tuple<string, string, string>("Security", "Settings", "2017-08-01-preview"),
                 new Tuple<string, string, string>("Security", "Tasks", "2015-06-01-preview"),
+                new Tuple<string, string, string>("Security", "Topology", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "WorkspaceSettings", "2017-08-01-preview"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/security/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Rome\\apiVteam\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "5bda5206ea6a22eb087812f653dfc22f79b78195";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

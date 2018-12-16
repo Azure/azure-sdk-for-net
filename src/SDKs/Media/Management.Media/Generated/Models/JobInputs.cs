@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes a list of of inputs to a Job.
+    /// Describes a list of inputs to a Job.
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Media.JobInputs")]
     public partial class JobInputs : JobInput

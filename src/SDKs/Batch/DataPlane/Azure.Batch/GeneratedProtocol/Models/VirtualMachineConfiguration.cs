@@ -39,8 +39,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// use.</param>
         /// <param name="nodeAgentSKUId">The SKU of the Batch node agent to be
         /// provisioned on compute nodes in the pool.</param>
-        /// <param name="osDisk">Settings for the operating system disk of the
-        /// Virtual Machine.</param>
         /// <param name="windowsConfiguration">Windows operating system
         /// settings on the virtual machine.</param>
         /// <param name="dataDisks">The configuration for data disks attached
@@ -49,10 +47,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// used when deploying the operating system.</param>
         /// <param name="containerConfiguration">The container configuration
         /// for the pool.</param>
-        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSKUId, OSDisk osDisk = default(OSDisk), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration))
+        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSKUId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration))
         {
             ImageReference = imageReference;
-            OsDisk = osDisk;
             NodeAgentSKUId = nodeAgentSKUId;
             WindowsConfiguration = windowsConfiguration;
             DataDisks = dataDisks;
@@ -72,13 +69,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }
-
-        /// <summary>
-        /// Gets or sets settings for the operating system disk of the Virtual
-        /// Machine.
-        /// </summary>
-        [JsonProperty(PropertyName = "osDisk")]
-        public OSDisk OsDisk { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU of the Batch node agent to be provisioned on
@@ -102,8 +92,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// machine.
         /// </summary>
         /// <remarks>
-        /// This property must not be specified if the imageReference or osDisk
-        /// property specifies a Linux OS image.
+        /// This property must not be specified if the imageReference property
+        /// specifies a Linux OS image.
         /// </remarks>
         [JsonProperty(PropertyName = "windowsConfiguration")]
         public WindowsConfiguration WindowsConfiguration { get; set; }

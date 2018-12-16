@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code below this line -->
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.Kusto</PackageId>
+    <Description>Provides developers with libraries for the updated kusto platform under Azure Resource manager to create ane manage clusters. Note: This client library is for Virtual Machines under Azure Resource Manager.</Description>
+    <Version>0.9.0-preview</Version>
+    <AssemblyName>Microsoft.Azure.Management.Kusto</AssemblyName>
+    <PackageTags>management;kusto;;;</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+        This is a public preview release of the Azure Kusto SDK. Included with this release is creating and managing clusters.
+      ]]>
+</PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>

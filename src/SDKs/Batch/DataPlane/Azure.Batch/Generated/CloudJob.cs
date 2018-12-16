@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<JobReleaseTask> JobReleaseTaskProperty;
             public readonly PropertyAccessor<DateTime?> LastModifiedProperty;
             public readonly PropertyAccessor<IList<MetadataItem>> MetadataProperty;
+            public readonly PropertyAccessor<JobNetworkConfiguration> NetworkConfigurationProperty;
             public readonly PropertyAccessor<Common.OnAllTasksComplete?> OnAllTasksCompleteProperty;
             public readonly PropertyAccessor<Common.OnTaskFailure?> OnTaskFailureProperty;
             public readonly PropertyAccessor<PoolInformation> PoolInformationProperty;
@@ -62,6 +63,7 @@ namespace Microsoft.Azure.Batch
                 this.JobReleaseTaskProperty = this.CreatePropertyAccessor<JobReleaseTask>(nameof(JobReleaseTask), BindingAccess.Read | BindingAccess.Write);
                 this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>(nameof(LastModified), BindingAccess.None);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>(nameof(Metadata), BindingAccess.Read | BindingAccess.Write);
+                this.NetworkConfigurationProperty = this.CreatePropertyAccessor<JobNetworkConfiguration>(nameof(NetworkConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor<Common.OnAllTasksComplete?>(nameof(OnAllTasksComplete), BindingAccess.Read | BindingAccess.Write);
                 this.OnTaskFailureProperty = this.CreatePropertyAccessor<Common.OnTaskFailure?>(nameof(OnTaskFailure), BindingAccess.Read | BindingAccess.Write);
                 this.PoolInformationProperty = this.CreatePropertyAccessor<PoolInformation>(nameof(PoolInformation), BindingAccess.Read | BindingAccess.Write);
@@ -125,6 +127,10 @@ namespace Microsoft.Azure.Batch
                     MetadataItem.ConvertFromProtocolCollection(protocolObject.Metadata),
                     nameof(Metadata),
                     BindingAccess.Read | BindingAccess.Write);
+                this.NetworkConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NetworkConfiguration, o => new JobNetworkConfiguration(o).Freeze()),
+                    nameof(NetworkConfiguration),
+                    BindingAccess.Read);
                 this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.OnAllTasksComplete, Common.OnAllTasksComplete>(protocolObject.OnAllTasksComplete),
                     nameof(OnAllTasksComplete),
@@ -334,6 +340,15 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the network configuration for the job.
+        /// </summary>
+        public JobNetworkConfiguration NetworkConfiguration
+        {
+            get { return this.propertyContainer.NetworkConfigurationProperty.Value; }
+            set { this.propertyContainer.NetworkConfigurationProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the action the Batch service should take when all tasks in the job are in the <see cref="Common.JobState.Completed"/> 
         /// state.
         /// </summary>
@@ -484,6 +499,7 @@ namespace Microsoft.Azure.Batch
                 JobPreparationTask = UtilitiesInternal.CreateObjectWithNullCheck(this.JobPreparationTask, (o) => o.GetTransportObject()),
                 JobReleaseTask = UtilitiesInternal.CreateObjectWithNullCheck(this.JobReleaseTask, (o) => o.GetTransportObject()),
                 Metadata = UtilitiesInternal.ConvertToProtocolCollection(this.Metadata),
+                NetworkConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.NetworkConfiguration, (o) => o.GetTransportObject()),
                 OnAllTasksComplete = UtilitiesInternal.MapNullableEnum<Common.OnAllTasksComplete, Models.OnAllTasksComplete>(this.OnAllTasksComplete),
                 OnTaskFailure = UtilitiesInternal.MapNullableEnum<Common.OnTaskFailure, Models.OnTaskFailure>(this.OnTaskFailure),
                 PoolInfo = UtilitiesInternal.CreateObjectWithNullCheck(this.PoolInformation, (o) => o.GetTransportObject()),
