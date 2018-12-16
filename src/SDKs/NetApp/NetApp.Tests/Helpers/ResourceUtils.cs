@@ -25,7 +25,6 @@ namespace NetApp.Tests.Helpers
         private const int delay = 5000;
         private const int retryAttempts = 3;
 
-
         public static void CreateAccount(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location)
         {
             var netAppAccount = new NetAppAccount()
