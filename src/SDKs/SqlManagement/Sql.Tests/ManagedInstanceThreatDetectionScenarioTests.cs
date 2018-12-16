@@ -25,8 +25,6 @@ namespace Sql.Tests
         [Fact]
         public void TestManagedInstanceThreatDetection()
         {
-            string testPrefix = "mi-security-alert-test-";
-
             ResourceGroup resourceGroup = m_testFixture.ResourceGroup;
             ManagedInstance managedInstance = m_testFixture.ManagedInstance;
             SqlManagementClient sqlClient = m_testFixture.Context.GetClient<SqlManagementClient>();
