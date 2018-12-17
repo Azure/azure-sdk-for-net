@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.CognitiveServices.ContentModerator.Models
+namespace Microsoft.Azure.CognitiveServices.ContentModerator.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
