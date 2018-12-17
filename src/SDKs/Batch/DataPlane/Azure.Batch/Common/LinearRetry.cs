@@ -52,7 +52,10 @@
             RetryDecision decision;
             if (shouldRetry)
             {
-                decision = RetryDecision.RetryWithDelay(this.DeltaBackoff);
+                TimeSpan? retryAfter = (exception as BatchException)?.RequestInformation?.RetryAfter;
+                var delay = retryAfter.HasValue && this.DeltaBackoff > retryAfter ? retryAfter.Value : this.DeltaBackoff;
+
+                decision = RetryDecision.RetryWithDelay(delay);
             }
             else
             {

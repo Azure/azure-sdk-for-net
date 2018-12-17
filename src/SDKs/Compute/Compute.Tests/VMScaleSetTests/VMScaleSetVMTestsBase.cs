@@ -22,11 +22,7 @@ namespace Compute.Tests
             {
                 Assert.NotNull(vmScaleSetVMOut.Zones);
                 Assert.Equal(1, vmScaleSetVMOut.Zones.Count);
-#if NET46
-                Assert.True(vmScaleSet.Zones.Any(vmssZone => vmssZone == vmScaleSetVMOut.Zones.First()));
-#else
                 Assert.Contains(vmScaleSet.Zones, vmssZone => vmssZone == vmScaleSetVMOut.Zones.First());
-#endif
             }
         }
 
@@ -93,11 +89,7 @@ namespace Compute.Tests
         protected void ValidateVMScaleSetVMInstanceView(VirtualMachineScaleSetVMInstanceView vmScaleSetVMInstanceView, bool hasManagedDisks = false)
         {
             Assert.NotNull(vmScaleSetVMInstanceView);
-#if NET46
-            Assert.True(vmScaleSetVMInstanceView.Statuses.Any(s => !string.IsNullOrEmpty(s.Code)));
-#else
             Assert.Contains(vmScaleSetVMInstanceView.Statuses, s => !string.IsNullOrEmpty(s.Code));
-#endif
 
             if (!hasManagedDisks)
             {

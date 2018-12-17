@@ -178,7 +178,15 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         public Dictionary<string, string> Tags { get; private set; }
 
-        public ClusterIdentity ClusterIdentity { get; private set; }
+        /// <summary>
+        /// Gets or sets the managed identity of the cluster.
+        /// </summary>
+        public ClusterIdentity ClusterIdentity { get; set; }
+
+         /// <summary>
+         /// Gets or sets the disk encryption properties.
+         /// </summary>
+         public DiskEncryptionProperties DiskEncryptionProperties { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
@@ -229,6 +237,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             this.DefaultStorageInfo = parameters.DefaultStorageInfo;
             this.Tags = parameters.Tags;
             this.ClusterIdentity = parameters.ClusterIdentity;
+            this.DiskEncryptionProperties = parameters.DiskEncryptionProperties;
         }
     }
 }

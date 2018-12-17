@@ -33,8 +33,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Initializes a new instance of the SecurityContact class.
         /// </summary>
         /// <param name="email">The email of this security contact</param>
-        /// <param name="phone">The phone number of this security
-        /// contact</param>
         /// <param name="alertNotifications">Whether to send security alerts
         /// notifications to the security contact. Possible values include:
         /// 'On', 'Off'</param>
@@ -44,7 +42,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public SecurityContact(string email, string phone, string alertNotifications, string alertsToAdmins, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="phone">The phone number of this security
+        /// contact</param>
+        public SecurityContact(string email, string alertNotifications, string alertsToAdmins, string id = default(string), string name = default(string), string type = default(string), string phone = default(string))
             : base(id, name, type)
         {
             Email = email;
@@ -96,10 +96,6 @@ namespace Microsoft.Azure.Management.Security.Models
             if (Email == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Email");
-            }
-            if (Phone == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Phone");
             }
             if (AlertNotifications == null)
             {

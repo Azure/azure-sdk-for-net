@@ -58,7 +58,8 @@ namespace Microsoft.Azure.Management.Advisor.Models
         /// recommendation.</param>
         /// <param name="suppressionIds">The list of snoozed and dismissed
         /// rules for the recommendation.</param>
-        public ResourceRecommendationBase(string id = default(string), string name = default(string), string type = default(string), string category = default(string), string impact = default(string), string impactedField = default(string), string impactedValue = default(string), System.DateTime? lastUpdated = default(System.DateTime?), IDictionary<string, object> metadata = default(IDictionary<string, object>), string recommendationTypeId = default(string), string risk = default(string), ShortDescription shortDescription = default(ShortDescription), IList<System.Guid?> suppressionIds = default(IList<System.Guid?>))
+        /// <param name="extendedProperties">Extended properties</param>
+        public ResourceRecommendationBase(string id = default(string), string name = default(string), string type = default(string), string category = default(string), string impact = default(string), string impactedField = default(string), string impactedValue = default(string), System.DateTime? lastUpdated = default(System.DateTime?), IDictionary<string, object> metadata = default(IDictionary<string, object>), string recommendationTypeId = default(string), string risk = default(string), ShortDescription shortDescription = default(ShortDescription), IList<System.Guid?> suppressionIds = default(IList<System.Guid?>), IDictionary<string, string> extendedProperties = default(IDictionary<string, string>))
             : base(id, name, type)
         {
             Category = category;
@@ -71,6 +72,7 @@ namespace Microsoft.Azure.Management.Advisor.Models
             Risk = risk;
             ShortDescription = shortDescription;
             SuppressionIds = suppressionIds;
+            ExtendedProperties = extendedProperties;
             CustomInit();
         }
 
@@ -143,6 +145,12 @@ namespace Microsoft.Azure.Management.Advisor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.suppressionIds")]
         public IList<System.Guid?> SuppressionIds { get; set; }
+
+        /// <summary>
+        /// Gets or sets extended properties
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.extendedProperties")]
+        public IDictionary<string, string> ExtendedProperties { get; set; }
 
     }
 }

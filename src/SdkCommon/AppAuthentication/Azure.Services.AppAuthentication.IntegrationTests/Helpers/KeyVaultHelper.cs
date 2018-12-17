@@ -30,7 +30,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests.Helpers
             if (0 == string.CompareOrdinal(certContentSecret.ContentType, CertificateContentType.Pfx))
             {
                 return certContentSecret.Value;
-
             }
 
             throw new Exception($"Certificate not found at {secretUrl}");

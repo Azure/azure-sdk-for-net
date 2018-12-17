@@ -1,0 +1,124 @@
+trigger:
+- psSdkJson6
+
+# Variables:
+#  'targetSDK' the dataPlane SDK you want to build (Ex: KeyVault)
+#  'scope' should be set in the pipeline definition to 'SDKs/$(targetSDK)/dataPlane'
+#  'build.useLatest' indicates whether or not to use build bootstrap files from the LTSBuildTools branch
+
+jobs:
+  - job: 'Build_Packages'
+
+    pool:
+      vmImage: 'vs2017-win2016'
+
+    steps:
+      - script: |
+         "%ProgramFiles(x86)%\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe" -Vr *,31bf3856ad364e35
+        displayName: 'Allow unsigned build tool'
+
+      - task: MSBuild@1
+        displayName: 'Init Build'
+        inputs:
+          solution: build.proj
+          msbuildArguments: '/t:Init /flp:LogFile=msbuild.Initlog;Verbosity=normal /p:UseLatest=$(build.useLatest)'
+
+      - task: MSBuild@1
+        displayName: 'Build NuGet Package'
+        inputs:
+          solution: build.proj
+          msbuildArguments: '/t:CreateNugetPackage /p:Scope=$(scope) /p:Configuration=Release /clp:ShowTimestamp /flp:Summary;Verbosity=minimal;LogFile=FullBuild.sum /flp1:warningsonly;logfile=FullBuild.wrn /flp2:errorsonly;logfile=FullBuild.err /p:DebugTrace=$(system.debug) /p:CodeSign=false /p:AuthenticodeSign=false /p:RunGlobalReadinessTools=false /p:EnablePreBuildTarget=false /p:EnablePostBuildTarget=false /p:SkipTests=true'
+
+      - script: |
+         "%ProgramFiles(x86)%\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe" -Vu *,31bf3856ad364e35
+        displayName: 'Clean up unsigned build tool allowance'
+        condition: always()
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifacts'
+        inputs:
+          PathtoPublish: 'binaries\packages'
+          ArtifactName: packages
+
+  - job: 'Test_Windows'
+
+    pool:
+      vmImage: 'vs2017-win2016'
+
+    steps:
+      - script: |
+         "%ProgramFiles(x86)%\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe" -Vr *,31bf3856ad364e35
+        displayName: 'Allow unsigned build tool'
+
+      - task: MSBuild@1
+        displayName: 'Init Build'
+        inputs:
+          solution: build.proj
+          msbuildArguments: '/t:Init /flp:LogFile=msbuild.Initlog;Verbosity=normal /p:UseLatest=$(build.useLatest)'
+
+      - task: MSBuild@1
+        displayName: 'Run Tests'
+        inputs:
+          solution: build.proj
+          msbuildArguments: '/t:RunTests /p:Scope=$(scope) /p:Configuration=Release /clp:ShowTimestamp /flp:Summary;Verbosity=minimal;LogFile=FullTest.sum /flp1:warningsonly;logfile=FullTest.wrn /flp2:errorsonly;logfile=FullTest.err /p:DebugTrace=$(system.debug) /p:CodeSign=false /p:AuthenticodeSign=false /p:RunGlobalReadinessTools=false /p:EnablePreBuildTarget=false /p:EnablePostBuildTarget=false'
+
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Detection'
+        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on 
+        # scheduled builds should be good enough.
+        condition: and(succeeded(), eq(variables['Build.Reason'], 'Schedule'))
+
+      - script: |
+         "%ProgramFiles(x86)%\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe" -Vu *,31bf3856ad364e35
+        displayName: 'Clean up unsigned build tool allowance'
+        condition: always()
+
+  - job: 'Test_Linux'
+
+    pool:
+      vmImage: 'ubuntu-16.04'
+
+    steps:
+      - powershell: |
+          $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE="true"
+          $env:DOTNET_CLI_TELEMETRY_OPTOUT="1"
+
+          # this is roughly equivalent to calling "msbuild build.proj /t:Init" on Windows
+          bash ./tools/linuxScripts/getBuildTools.sh
+
+          foreach ($proj in (dir -r -i *.csproj src/$(scope)))
+          {
+             # Have to skip this one because it depends on Windows Cryptography Next Generation (CNG)
+             if ($proj.Name.Contains("Microsoft.Azure.KeyVault.Tests.csproj"))
+             {
+                 Write-Host "skipping $proj"
+                 continue
+             }
+
+             if ($proj.Name.Contains(".Tests.") -or $proj.Name.Contains(".TestFramework."))
+             {
+                 Write-Host "dotnet test $proj -f netcoreapp2.0 /nodeReuse:false"
+                 dotnet test $proj -f netcoreapp2.0 /nodeReuse:false
+                 if ($LastExitCode -ne 0)
+                 {
+                     Write-Host "audit test $proj failed with exit code $LastExitCode"
+                     exit 1
+                 }
+             }
+             else
+             {
+                 # Can only build netstandard on Linux
+                 Write-Host "dotnet build $proj -f netstandard1.4"
+                 dotnet build $proj -f netstandard1.4 
+                 if ($LastExitCode -ne 0)
+                 {
+                     Write-Host "audit built $proj failed with exit code $LastExitCode"
+                     exit 1
+                 }
+             }
+          }
+
+        displayName: 'Build & Test'
+
+
+

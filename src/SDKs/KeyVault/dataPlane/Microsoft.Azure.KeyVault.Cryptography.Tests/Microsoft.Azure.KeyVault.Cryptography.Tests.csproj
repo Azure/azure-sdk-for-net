@@ -5,27 +5,14 @@
     <Description>Microsoft Azure Key Vault Cryptography tests</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Cryptography tests</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.KeyVault.Cryptography.Tests</AssemblyName>
-    <VersionPrefix>3.0.0-alpha</VersionPrefix>    
+    <Version>1.0.0</Version>    
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
-  <!--<ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.KeyVault.Core\Microsoft.Azure.KeyVault.Core.csproj" />
     <ProjectReference Include="..\Microsoft.Azure.KeyVault.Cryptography\Microsoft.Azure.KeyVault.Cryptography.csproj" />
     <ProjectReference Include="..\Microsoft.Azure.KeyVault.WebKey\Microsoft.Azure.KeyVault.WebKey.csproj" />
   </ItemGroup>
-
-  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
-    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.3.0" />
-  </ItemGroup>-->
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
     <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />

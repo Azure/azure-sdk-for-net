@@ -125,22 +125,12 @@ namespace Compute.Tests
             if (listeners[0].Protocol == ProtocolTypes.Http)
             {
                 Assert.Null(listeners[0].CertificateUrl);
-
                 Assert.True(listeners[1].Protocol == ProtocolTypes.Https);
-#if NET46
-                Assert.True(listeners[1].CertificateUrl.Equals(winRMCertificateUrl, StringComparison.OrdinalIgnoreCase));
-#else
                 Assert.Equal(listeners[1].CertificateUrl, winRMCertificateUrl, ignoreCase: true);
-#endif
             }
             else if (listeners[0].Protocol == ProtocolTypes.Https)
             {
-#if NET46
-                Assert.True(listeners[0].CertificateUrl.Equals(winRMCertificateUrl, StringComparison.OrdinalIgnoreCase));
-#else
                 Assert.Equal(listeners[0].CertificateUrl, winRMCertificateUrl, ignoreCase: true);
-#endif
-
                 Assert.True(listeners[1].Protocol == ProtocolTypes.Http);
                 Assert.Null(listeners[1].CertificateUrl);
             }

@@ -53,7 +53,7 @@
             StartTask st = new StartTask("cmd /c set & MSMpiSetup.exe -unattend -force");
 
             // used for tests of StartTask(info)
-            st.ResourceFiles = new List<ResourceFile> { new ResourceFile("https://manoj123.blob.core.windows.net/mpi/MSMpiSetup.exe", "MSMpiSetup.exe") };  // TODO: remove the dependency on magic blob.  bring this into project and use filestaging or something
+            st.ResourceFiles = new List<ResourceFile> { ResourceFile.FromUrl("https://manoj123.blob.core.windows.net/mpi/MSMpiSetup.exe", "MSMpiSetup.exe") };  // TODO: remove the dependency on magic blob.  bring this into project and use filestaging or something
             st.UserIdentity = new UserIdentity(new AutoUserSpecification(elevationLevel: ElevationLevel.Admin));
             st.WaitForSuccess = true;
             newPool.StartTask = st;
@@ -231,7 +231,7 @@
                         CloudTask hwTask = new CloudTask(id: "mpi", commandline: @"cmd /c ""%MSMPI_BIN%\mpiexec.exe"" -p 6050 -wdir %AZ_BATCH_TASK_SHARED_DIR%\ Sieve.exe 1000");
                         hwTask.MultiInstanceSettings = new MultiInstanceSettings(@"cmd /c start cmd /c ""%MSMPI_BIN%\smpd.exe"" -d 3 -p 6050", 3);
                         hwTask.MultiInstanceSettings.CommonResourceFiles = new List<ResourceFile>();
-                        hwTask.MultiInstanceSettings.CommonResourceFiles.Add(new ResourceFile("https://manoj123.blob.core.windows.net/mpi/Sieve.exe", "Sieve.exe"));
+                        hwTask.MultiInstanceSettings.CommonResourceFiles.Add(ResourceFile.FromUrl("https://manoj123.blob.core.windows.net/mpi/Sieve.exe", "Sieve.exe"));
 
                         // add Task to Job
                         boundJob.AddTask(hwTask);
@@ -1046,17 +1046,16 @@
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
-        public void Bug1770926_UpdateTask()
+        public void UpdateTask_TaskIsUpdatedAsExpected()
         {
             Action test = () =>
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
                 {
-                    const string testName = "Bug1770926_UpdateTask";
-                    const string taskId = "Bug1770926_UpdateTask_Task1";
+                    const string taskId = "task1";
 
-                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-" + testName;
-                    TaskConstraints defaultConstraints = new TaskConstraints(TimeSpan.MaxValue, TimeSpan.MaxValue, 0);
+                    string jobId = TestUtilities.GenerateResourceId();
+                    TaskConstraints defaultConstraints = new TaskConstraints(TimeSpan.MaxValue, TimeSpan.FromDays(7), 0);
                     try
                     {
                         //

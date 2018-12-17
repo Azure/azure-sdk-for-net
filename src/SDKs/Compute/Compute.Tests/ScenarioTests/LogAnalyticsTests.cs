@@ -44,11 +44,7 @@ namespace Compute.Tests
                     var result = m_CrpClient.LogAnalytics.ExportRequestRateByInterval(requestRateByIntervalInput, "westcentralus");
 
                     //BUG: LogAnalytics API does not return correct result.
-#if NET46
-                    //Assert.True(result.Properties.Output.EndsWith(".csv"));
-#else
                     //Assert.EndsWith(".csv", result.Properties.Output);
-#endif
 
                     ThrottledRequestsInput throttledRequestsInput = new ThrottledRequestsInput()
                     {
@@ -61,11 +57,7 @@ namespace Compute.Tests
                     result = m_CrpClient.LogAnalytics.ExportThrottledRequests(throttledRequestsInput, "westcentralus");
 
                     //BUG: LogAnalytics API does not return correct result.
-#if NET46
-                    //Assert.True(result.Properties.Output.EndsWith(".csv"));
-#else
                     //Assert.EndsWith(".csv", result.Properties.Output);
-#endif
                 }
                 finally
                 {
@@ -86,11 +78,7 @@ namespace Compute.Tests
 
                 var blobClient = storageAccount.CreateCloudBlobClient();
                 CloudBlobContainer container = blobClient.GetContainerReference("sascontainer");
-#if NET46
-                container.CreateIfNotExists();
-#else
                 container.CreateIfNotExistsAsync();
-#endif
                 sasUri = GetContainerSasUri(container);
             }
 

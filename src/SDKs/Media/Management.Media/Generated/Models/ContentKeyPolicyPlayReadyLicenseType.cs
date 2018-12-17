@@ -11,66 +11,112 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ContentKeyPolicyPlayReadyLicenseType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ContentKeyPolicyPlayReadyLicenseType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ContentKeyPolicyPlayReadyLicenseTypeConverter))]
+    public struct ContentKeyPolicyPlayReadyLicenseType : System.IEquatable<ContentKeyPolicyPlayReadyLicenseType>
     {
+        private ContentKeyPolicyPlayReadyLicenseType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// Represents a ContentKeyPolicyPlayReadyLicenseType that is
         /// unavailable in current API version.
         /// </summary>
-        [EnumMember(Value = "Unknown")]
-        Unknown,
+        public static readonly ContentKeyPolicyPlayReadyLicenseType Unknown = "Unknown";
+
         /// <summary>
         /// Non persistent license.
         /// </summary>
-        [EnumMember(Value = "NonPersistent")]
-        NonPersistent,
+        public static readonly ContentKeyPolicyPlayReadyLicenseType NonPersistent = "NonPersistent";
+
         /// <summary>
         /// Persistent license. Allows offline playback.
         /// </summary>
-        [EnumMember(Value = "Persistent")]
-        Persistent
-    }
-    internal static class ContentKeyPolicyPlayReadyLicenseTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this ContentKeyPolicyPlayReadyLicenseType? value)
+        public static readonly ContentKeyPolicyPlayReadyLicenseType Persistent = "Persistent";
+
+
+        /// <summary>
+        /// Underlying value of enum ContentKeyPolicyPlayReadyLicenseType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for
+        /// ContentKeyPolicyPlayReadyLicenseType
+        /// </summary>
+        public override string ToString()
         {
-            return value == null ? null : ((ContentKeyPolicyPlayReadyLicenseType)value).ToSerializedValue();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static string ToSerializedValue(this ContentKeyPolicyPlayReadyLicenseType value)
+        /// <summary>
+        /// Compares enums of type ContentKeyPolicyPlayReadyLicenseType
+        /// </summary>
+        public bool Equals(ContentKeyPolicyPlayReadyLicenseType e)
         {
-            switch( value )
-            {
-                case ContentKeyPolicyPlayReadyLicenseType.Unknown:
-                    return "Unknown";
-                case ContentKeyPolicyPlayReadyLicenseType.NonPersistent:
-                    return "NonPersistent";
-                case ContentKeyPolicyPlayReadyLicenseType.Persistent:
-                    return "Persistent";
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
-        internal static ContentKeyPolicyPlayReadyLicenseType? ParseContentKeyPolicyPlayReadyLicenseType(this string value)
+        /// <summary>
+        /// Implicit operator to convert string to
+        /// ContentKeyPolicyPlayReadyLicenseType
+        /// </summary>
+        public static implicit operator ContentKeyPolicyPlayReadyLicenseType(string value)
         {
-            switch( value )
-            {
-                case "Unknown":
-                    return ContentKeyPolicyPlayReadyLicenseType.Unknown;
-                case "NonPersistent":
-                    return ContentKeyPolicyPlayReadyLicenseType.NonPersistent;
-                case "Persistent":
-                    return ContentKeyPolicyPlayReadyLicenseType.Persistent;
-            }
-            return null;
+            return new ContentKeyPolicyPlayReadyLicenseType(value);
         }
+
+        /// <summary>
+        /// Implicit operator to convert ContentKeyPolicyPlayReadyLicenseType
+        /// to string
+        /// </summary>
+        public static implicit operator string(ContentKeyPolicyPlayReadyLicenseType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum
+        /// ContentKeyPolicyPlayReadyLicenseType
+        /// </summary>
+        public static bool operator == (ContentKeyPolicyPlayReadyLicenseType e1, ContentKeyPolicyPlayReadyLicenseType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum
+        /// ContentKeyPolicyPlayReadyLicenseType
+        /// </summary>
+        public static bool operator != (ContentKeyPolicyPlayReadyLicenseType e1, ContentKeyPolicyPlayReadyLicenseType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ContentKeyPolicyPlayReadyLicenseType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ContentKeyPolicyPlayReadyLicenseType && Equals((ContentKeyPolicyPlayReadyLicenseType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ContentKeyPolicyPlayReadyLicenseType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

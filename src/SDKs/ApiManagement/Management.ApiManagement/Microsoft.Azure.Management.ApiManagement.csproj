@@ -8,9 +8,9 @@
     <Description>Provides ApiManagement management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure API Management Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.ApiManagement</AssemblyName>
-    <Version>4.0.5-preview</Version>
+    <Version>4.0.6-preview</Version>
     <PackageTags>Microsoft Azure ApiManagement management;API Management;</PackageTags>
-    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+    <PackageReleaseNotes>Refer https://aka.ms/apimdotnetsdkchangelog for release notes.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

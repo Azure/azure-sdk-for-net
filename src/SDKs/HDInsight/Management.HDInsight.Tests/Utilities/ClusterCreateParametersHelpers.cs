@@ -31,7 +31,10 @@ namespace Management.HDInsight.Tests
         private const string ResourceUri = "";
         private const string CertificateFile = @"";
         private const string AdlDefaultStorageAccountName = "";
-
+        private const string VaultUri = "";
+        private const string KeyName = "";
+        private const string KeyVersion = "";
+        private const string MsiResourceId = "";
 
         // These can be set to anything but all created clusters should be deleted after usage so these aren't secret.
         private const string DefaultContainer = "default";
@@ -123,6 +126,29 @@ namespace Management.HDInsight.Tests
                 };
             }
             return null;
+        }
+
+         public static DiskEncryptionProperties GetDiskEncryptionProperties()
+         {
+             return new DiskEncryptionProperties
+             {
+                 VaultUri = VaultUri,
+                 KeyName = KeyName,
+                 KeyVersion = KeyVersion,
+                 MsiResourceId = MsiResourceId
+             };
+         }
+
+         public static ClusterIdentity GetClusterIdentity()
+         {
+             return new ClusterIdentity
+             {
+                 Type = ResourceIdentityType.UserAssigned,
+                 UserAssignedIdentities = new Dictionary<string, ClusterIdentityUserAssignedIdentitiesValue>()
+                {
+                    { ClusterCreateParametersHelpers.MsiResourceId, new ClusterIdentityUserAssignedIdentitiesValue() }
+                }
+             };
         }
 
         public static ClusterCreateParametersExtended GetIaasClusterSpec(string containerName = DefaultContainer, bool adlStorage = false)

@@ -22,7 +22,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "VisualSearchWithBinary");
 
-                IVisualSearchAPI client = new VisualSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                IVisualSearchClient client = new VisualSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "image.jpg"), FileMode.Open))
                 {
@@ -51,7 +51,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "VisualSearchWithInsightsToken");
 
-                IVisualSearchAPI client = new VisualSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                IVisualSearchClient client = new VisualSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 ImageInfo ImageInfo = new ImageInfo(imageInsightsToken: ImageInsightsToken, cropArea: CropArea);
                 Filters Filters = new Filters(site: "www.bing.com");
@@ -80,7 +80,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "VisualSearchWithUrl");
 
-                IVisualSearchAPI client = new VisualSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                IVisualSearchClient client = new VisualSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 ImageInfo ImageInfo = new ImageInfo(url: ImageUrl, cropArea: CropArea);
                 VisualSearchRequest VisualSearchRequest = new VisualSearchRequest(imageInfo: ImageInfo);
@@ -107,7 +107,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "VisualSearchWithKnowledgeRequestObject");
 
-                IVisualSearchAPI client = new VisualSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                IVisualSearchClient client = new VisualSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 ImageInfo ImageInfo = new ImageInfo(url: ImageUrl, cropArea: CropArea);
                 VisualSearchRequest VisualSearchRequest = new VisualSearchRequest(imageInfo: ImageInfo);

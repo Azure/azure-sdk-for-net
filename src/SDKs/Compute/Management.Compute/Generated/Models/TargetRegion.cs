@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">The name of the region.</param>
         /// <param name="regionalReplicaCount">The number of replicas of the
         /// Image Version to be created per region. This property is
-        /// updateable.</param>
+        /// updatable.</param>
         public TargetRegion(string name, int? regionalReplicaCount = default(int?))
         {
             Name = name;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the number of replicas of the Image Version to be
-        /// created per region. This property is updateable.
+        /// created per region. This property is updatable.
         /// </summary>
         [JsonProperty(PropertyName = "regionalReplicaCount")]
         public int? RegionalReplicaCount { get; set; }

@@ -111,6 +111,25 @@ namespace Management.HDInsight.Tests
         }
 
         [Fact]
+        public void TestCreateKafkaClusterWithDiskEncryption()
+        {
+            string testName = nameof(TestCreateKafkaClusterWithDiskEncryption);
+            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
+            parameters.ClusterType = "Kafka";
+            parameters.WorkerNodeDataDisksGroups = new List<DataDisksGroups>
+            {
+                new DataDisksGroups
+                {
+                     DisksPerNode = 8
+                }
+            };
+
+            parameters.ClusterIdentity = ClusterCreateParametersHelpers.GetClusterIdentity();
+            parameters.DiskEncryptionProperties = ClusterCreateParametersHelpers.GetDiskEncryptionProperties();
+            RunCreateClusterTestInNewResourceGroup(GetType().FullName, testName, "hdisdk-kafka-byok", parameters);
+        }
+
+        [Fact]
         public void TestCreateWithDataLakeStorage()
         {
             string testName = "TestCreateWithDataLakeStorage";

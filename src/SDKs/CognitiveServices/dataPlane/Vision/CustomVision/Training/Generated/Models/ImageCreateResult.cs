@@ -26,10 +26,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the ImageCreateResult class.
         /// </summary>
-        /// <param name="status">Possible values include: 'OK', 'OKDuplicate',
-        /// 'ErrorSource', 'ErrorImageFormat', 'ErrorImageSize',
-        /// 'ErrorStorage', 'ErrorLimitExceed', 'ErrorTagLimitExceed',
-        /// 'ErrorRegionLimitExceed', 'ErrorUnknown'</param>
+        /// <param name="sourceUrl">Source URL of the image.</param>
+        /// <param name="status">Status of the image creation. Possible values
+        /// include: 'OK', 'OKDuplicate', 'ErrorSource', 'ErrorImageFormat',
+        /// 'ErrorImageSize', 'ErrorStorage', 'ErrorLimitExceed',
+        /// 'ErrorTagLimitExceed', 'ErrorRegionLimitExceed', 'ErrorUnknown',
+        /// 'ErrorNegativeAndRegularTagOnSameImage'</param>
+        /// <param name="image">The image.</param>
         public ImageCreateResult(string sourceUrl = default(string), string status = default(string), Image image = default(Image))
         {
             SourceUrl = sourceUrl;
@@ -44,20 +47,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets source URL of the image.
         /// </summary>
         [JsonProperty(PropertyName = "sourceUrl")]
         public string SourceUrl { get; private set; }
 
         /// <summary>
-        /// Gets possible values include: 'OK', 'OKDuplicate', 'ErrorSource',
-        /// 'ErrorImageFormat', 'ErrorImageSize', 'ErrorStorage',
-        /// 'ErrorLimitExceed', 'ErrorTagLimitExceed',
-        /// 'ErrorRegionLimitExceed', 'ErrorUnknown'
+        /// Gets status of the image creation. Possible values include: 'OK',
+        /// 'OKDuplicate', 'ErrorSource', 'ErrorImageFormat', 'ErrorImageSize',
+        /// 'ErrorStorage', 'ErrorLimitExceed', 'ErrorTagLimitExceed',
+        /// 'ErrorRegionLimitExceed', 'ErrorUnknown',
+        /// 'ErrorNegativeAndRegularTagOnSameImage'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; private set; }
 
         /// <summary>
+        /// Gets the image.
         /// </summary>
         [JsonProperty(PropertyName = "image")]
         public Image Image { get; private set; }

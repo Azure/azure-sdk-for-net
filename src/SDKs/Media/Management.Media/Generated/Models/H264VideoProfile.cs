@@ -11,93 +11,122 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for H264VideoProfile.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum H264VideoProfile
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(H264VideoProfileConverter))]
+    public struct H264VideoProfile : System.IEquatable<H264VideoProfile>
     {
+        private H264VideoProfile(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// Tells the encoder to automatically determine the appropriate H.264
         /// profile.
         /// </summary>
-        [EnumMember(Value = "Auto")]
-        Auto,
+        public static readonly H264VideoProfile Auto = "Auto";
+
         /// <summary>
         /// Baseline profile
         /// </summary>
-        [EnumMember(Value = "Baseline")]
-        Baseline,
+        public static readonly H264VideoProfile Baseline = "Baseline";
+
         /// <summary>
         /// Main profile
         /// </summary>
-        [EnumMember(Value = "Main")]
-        Main,
+        public static readonly H264VideoProfile Main = "Main";
+
         /// <summary>
         /// High profile.
         /// </summary>
-        [EnumMember(Value = "High")]
-        High,
+        public static readonly H264VideoProfile High = "High";
+
         /// <summary>
         /// High 4:2:2 profile.
         /// </summary>
-        [EnumMember(Value = "High422")]
-        High422,
+        public static readonly H264VideoProfile High422 = "High422";
+
         /// <summary>
         /// High 4:4:4 predictive profile.
         /// </summary>
-        [EnumMember(Value = "High444")]
-        High444
-    }
-    internal static class H264VideoProfileEnumExtension
-    {
-        internal static string ToSerializedValue(this H264VideoProfile? value)
+        public static readonly H264VideoProfile High444 = "High444";
+
+
+        /// <summary>
+        /// Underlying value of enum H264VideoProfile
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for H264VideoProfile
+        /// </summary>
+        public override string ToString()
         {
-            return value == null ? null : ((H264VideoProfile)value).ToSerializedValue();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static string ToSerializedValue(this H264VideoProfile value)
+        /// <summary>
+        /// Compares enums of type H264VideoProfile
+        /// </summary>
+        public bool Equals(H264VideoProfile e)
         {
-            switch( value )
-            {
-                case H264VideoProfile.Auto:
-                    return "Auto";
-                case H264VideoProfile.Baseline:
-                    return "Baseline";
-                case H264VideoProfile.Main:
-                    return "Main";
-                case H264VideoProfile.High:
-                    return "High";
-                case H264VideoProfile.High422:
-                    return "High422";
-                case H264VideoProfile.High444:
-                    return "High444";
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
-        internal static H264VideoProfile? ParseH264VideoProfile(this string value)
+        /// <summary>
+        /// Implicit operator to convert string to H264VideoProfile
+        /// </summary>
+        public static implicit operator H264VideoProfile(string value)
         {
-            switch( value )
-            {
-                case "Auto":
-                    return H264VideoProfile.Auto;
-                case "Baseline":
-                    return H264VideoProfile.Baseline;
-                case "Main":
-                    return H264VideoProfile.Main;
-                case "High":
-                    return H264VideoProfile.High;
-                case "High422":
-                    return H264VideoProfile.High422;
-                case "High444":
-                    return H264VideoProfile.High444;
-            }
-            return null;
+            return new H264VideoProfile(value);
         }
+
+        /// <summary>
+        /// Implicit operator to convert H264VideoProfile to string
+        /// </summary>
+        public static implicit operator string(H264VideoProfile e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum H264VideoProfile
+        /// </summary>
+        public static bool operator == (H264VideoProfile e1, H264VideoProfile e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum H264VideoProfile
+        /// </summary>
+        public static bool operator != (H264VideoProfile e1, H264VideoProfile e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for H264VideoProfile
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is H264VideoProfile && Equals((H264VideoProfile)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode H264VideoProfile
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

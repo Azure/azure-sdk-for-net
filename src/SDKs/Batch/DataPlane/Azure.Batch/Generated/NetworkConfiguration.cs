@@ -24,17 +24,23 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
+            public readonly PropertyAccessor<Common.DynamicVNetAssignmentScope?> DynamicVNetAssignmentScopeProperty;
             public readonly PropertyAccessor<PoolEndpointConfiguration> EndpointConfigurationProperty;
             public readonly PropertyAccessor<string> SubnetIdProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
+                this.DynamicVNetAssignmentScopeProperty = this.CreatePropertyAccessor<Common.DynamicVNetAssignmentScope?>(nameof(DynamicVNetAssignmentScope), BindingAccess.Read | BindingAccess.Write);
                 this.EndpointConfigurationProperty = this.CreatePropertyAccessor<PoolEndpointConfiguration>(nameof(EndpointConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.SubnetIdProperty = this.CreatePropertyAccessor<string>(nameof(SubnetId), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.NetworkConfiguration protocolObject) : base(BindingState.Bound)
             {
+                this.DynamicVNetAssignmentScopeProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.MapNullableEnum<Models.DynamicVNetAssignmentScope, Common.DynamicVNetAssignmentScope>(protocolObject.DynamicVNetAssignmentScope),
+                    nameof(DynamicVNetAssignmentScope),
+                    BindingAccess.Read);
                 this.EndpointConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.EndpointConfiguration, o => new PoolEndpointConfiguration(o).Freeze()),
                     nameof(EndpointConfiguration),
@@ -66,6 +72,18 @@ namespace Microsoft.Azure.Batch
         #endregion Constructors
 
         #region NetworkConfiguration
+
+        /// <summary>
+        /// Gets or sets the scope of the dynamic VNet assignment.
+        /// </summary>
+        /// <remarks>
+        /// This property can only be specified for pools created with a <see cref="CloudPool.VirtualMachineConfiguration"/>.
+        /// </remarks>
+        public Common.DynamicVNetAssignmentScope? DynamicVNetAssignmentScope
+        {
+            get { return this.propertyContainer.DynamicVNetAssignmentScopeProperty.Value; }
+            set { this.propertyContainer.DynamicVNetAssignmentScopeProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets or sets the configuration for endpoints on compute nodes in the Batch pool.
@@ -132,6 +150,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.NetworkConfiguration result = new Models.NetworkConfiguration()
             {
+                DynamicVNetAssignmentScope = UtilitiesInternal.MapNullableEnum<Common.DynamicVNetAssignmentScope, Models.DynamicVNetAssignmentScope>(this.DynamicVNetAssignmentScope),
                 EndpointConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.EndpointConfiguration, (o) => o.GetTransportObject()),
                 SubnetId = this.SubnetId,
             };

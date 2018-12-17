@@ -6,34 +6,6 @@
   "Properties": [
     {
       "Key": {
-        "Type": "double",
-        "Name": "DataEgressGiB",
-        "SummaryComment": "The cross data center network egress from the pool during this interval, in gibibytes.",
-        "RemarksComment": null,
-        "BoundAccess": "read",
-        "UnboundAccess": "none"
-      },
-      "Value": {
-        "Type": "double",
-        "Name": "DataEgressGiB"
-      }
-    },
-    {
-      "Key": {
-        "Type": "double",
-        "Name": "DataIngressGiB",
-        "SummaryComment": "The cross data center network ingress to the pool during this interval, in gibibytes.",
-        "RemarksComment": null,
-        "BoundAccess": "read",
-        "UnboundAccess": "none"
-      },
-      "Value": {
-        "Type": "double",
-        "Name": "DataIngressGiB"
-      }
-    },
-    {
-      "Key": {
         "Type": "DateTime",
         "Name": "EndTime",
         "SummaryComment": "The end time of the aggregation interval for this entry.",

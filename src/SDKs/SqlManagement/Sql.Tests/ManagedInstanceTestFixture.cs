@@ -51,7 +51,7 @@ namespace Sql.Tests
             }
         }
 
-        private VirtualNetwork CreateVirtualNetwork(SqlManagementTestContext context, ResourceGroup resourceGroup, string location)
+        public static VirtualNetwork CreateVirtualNetwork(SqlManagementTestContext context, ResourceGroup resourceGroup, string location)
         {
             NetworkManagementClient networkClient = context.GetClient<NetworkManagementClient>();
 

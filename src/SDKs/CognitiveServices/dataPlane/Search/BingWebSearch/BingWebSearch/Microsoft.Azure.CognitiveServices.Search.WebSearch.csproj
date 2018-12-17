@@ -6,10 +6,16 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Search.WebSearch</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Web Search API.</Description>
-    <VersionPrefix>1.2.0</VersionPrefix>
+    <Version>2.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Search.WebSearch</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;WebSearch API;BingWebSearch API;REST HTTPclient;WebSearchSDK;BingWebSearchSDK;netcore451511</PackageTags>
-    <PackageReleaseNotes>This is a public release of the Cognitive Services Search SDK. Included with this release is support for Web Search API.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+    <![CDATA[
+    Changes in this release:
+    1. Support overriding the default endpoint.
+    2. Change client class name to `WebSearchClient`.
+    ]]>
+	</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

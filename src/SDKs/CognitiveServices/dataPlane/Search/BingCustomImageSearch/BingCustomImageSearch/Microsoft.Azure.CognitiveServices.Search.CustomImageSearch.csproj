@@ -6,13 +6,15 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Search.CustomImageSearch</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Custom Image Search API.</Description>
-    <VersionPrefix>1.2.0</VersionPrefix>
+    <Version>2.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Search.CustomImageSearch</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;CustomImageSearch API;BingImageCustomSearch API;REST HTTPclient;CustomImageSearchSDK;BingCustomImageSearchSDK;netcore451511</PackageTags>
 	<PackageReleaseNotes>
-    		<![CDATA[
-      - Added support for guid custom config
-		]]></PackageReleaseNotes>
+    <![CDATA[
+    Changes in this release:
+    1. Support overriding the default endpoint.
+    ]]>
+	</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

@@ -63,6 +63,7 @@ namespace Azure.Batch.Unit.Tests
                 new ComparerPropertyMapping(typeof(PoolSpecification), typeof(Protocol.Models.PoolSpecification), "TargetLowPriorityComputeNodes", "TargetLowPriorityNodes"),
 
                 new ComparerPropertyMapping(typeof(CloudServiceConfiguration), typeof(Protocol.Models.CloudServiceConfiguration), "OSFamily", "OsFamily"),
+                new ComparerPropertyMapping(typeof(CloudServiceConfiguration), typeof(Protocol.Models.CloudServiceConfiguration), "OSVersion", "OsVersion"),
 
                 new ComparerPropertyMapping(typeof(TaskInformation), typeof(Protocol.Models.TaskInformation), "ExecutionInformation", "TaskExecutionInformation"),
 
@@ -618,11 +619,11 @@ namespace Azure.Batch.Unit.Tests
             const string blobPath = "Bar";
             const string mode = "0700";
 
-            ResourceFile resourceFile = new ResourceFile(blobPath, filePath, mode);
+            ResourceFile resourceFile = ResourceFile.FromUrl(blobPath, filePath, mode);
             Protocol.Models.ResourceFile protoFile = resourceFile.GetTransportObject();
 
             Assert.Equal(filePath, protoFile.FilePath);
-            Assert.Equal(blobPath, protoFile.BlobSource);
+            Assert.Equal(blobPath, protoFile.HttpUrl);
             Assert.Equal(mode, protoFile.FileMode);
         }
 

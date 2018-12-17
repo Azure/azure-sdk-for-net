@@ -11,92 +11,121 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for FilterTrackPropertyType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum FilterTrackPropertyType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(FilterTrackPropertyTypeConverter))]
+    public struct FilterTrackPropertyType : System.IEquatable<FilterTrackPropertyType>
     {
+        private FilterTrackPropertyType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// The unknown track property type.
         /// </summary>
-        [EnumMember(Value = "Unknown")]
-        Unknown,
+        public static readonly FilterTrackPropertyType Unknown = "Unknown";
+
         /// <summary>
         /// The type.
         /// </summary>
-        [EnumMember(Value = "Type")]
-        Type,
+        public static readonly FilterTrackPropertyType Type = "Type";
+
         /// <summary>
         /// The name.
         /// </summary>
-        [EnumMember(Value = "Name")]
-        Name,
+        public static readonly FilterTrackPropertyType Name = "Name";
+
         /// <summary>
         /// The language.
         /// </summary>
-        [EnumMember(Value = "Language")]
-        Language,
+        public static readonly FilterTrackPropertyType Language = "Language";
+
         /// <summary>
         /// The fourCC.
         /// </summary>
-        [EnumMember(Value = "FourCC")]
-        FourCC,
+        public static readonly FilterTrackPropertyType FourCC = "FourCC";
+
         /// <summary>
         /// The bitrate.
         /// </summary>
-        [EnumMember(Value = "Bitrate")]
-        Bitrate
-    }
-    internal static class FilterTrackPropertyTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this FilterTrackPropertyType? value)
+        public static readonly FilterTrackPropertyType Bitrate = "Bitrate";
+
+
+        /// <summary>
+        /// Underlying value of enum FilterTrackPropertyType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for FilterTrackPropertyType
+        /// </summary>
+        public override string ToString()
         {
-            return value == null ? null : ((FilterTrackPropertyType)value).ToSerializedValue();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static string ToSerializedValue(this FilterTrackPropertyType value)
+        /// <summary>
+        /// Compares enums of type FilterTrackPropertyType
+        /// </summary>
+        public bool Equals(FilterTrackPropertyType e)
         {
-            switch( value )
-            {
-                case FilterTrackPropertyType.Unknown:
-                    return "Unknown";
-                case FilterTrackPropertyType.Type:
-                    return "Type";
-                case FilterTrackPropertyType.Name:
-                    return "Name";
-                case FilterTrackPropertyType.Language:
-                    return "Language";
-                case FilterTrackPropertyType.FourCC:
-                    return "FourCC";
-                case FilterTrackPropertyType.Bitrate:
-                    return "Bitrate";
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
-        internal static FilterTrackPropertyType? ParseFilterTrackPropertyType(this string value)
+        /// <summary>
+        /// Implicit operator to convert string to FilterTrackPropertyType
+        /// </summary>
+        public static implicit operator FilterTrackPropertyType(string value)
         {
-            switch( value )
-            {
-                case "Unknown":
-                    return FilterTrackPropertyType.Unknown;
-                case "Type":
-                    return FilterTrackPropertyType.Type;
-                case "Name":
-                    return FilterTrackPropertyType.Name;
-                case "Language":
-                    return FilterTrackPropertyType.Language;
-                case "FourCC":
-                    return FilterTrackPropertyType.FourCC;
-                case "Bitrate":
-                    return FilterTrackPropertyType.Bitrate;
-            }
-            return null;
+            return new FilterTrackPropertyType(value);
         }
+
+        /// <summary>
+        /// Implicit operator to convert FilterTrackPropertyType to string
+        /// </summary>
+        public static implicit operator string(FilterTrackPropertyType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum FilterTrackPropertyType
+        /// </summary>
+        public static bool operator == (FilterTrackPropertyType e1, FilterTrackPropertyType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum FilterTrackPropertyType
+        /// </summary>
+        public static bool operator != (FilterTrackPropertyType e1, FilterTrackPropertyType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for FilterTrackPropertyType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is FilterTrackPropertyType && Equals((FilterTrackPropertyType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode FilterTrackPropertyType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

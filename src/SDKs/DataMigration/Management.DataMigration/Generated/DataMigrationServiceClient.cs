@@ -100,6 +100,11 @@ namespace Microsoft.Azure.Management.DataMigration
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the IFilesOperations.
+        /// </summary>
+        public virtual IFilesOperations Files { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the DataMigrationServiceClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -346,6 +351,7 @@ namespace Microsoft.Azure.Management.DataMigration
             Projects = new ProjectsOperations(this);
             Usages = new UsagesOperations(this);
             Operations = new Operations(this);
+            Files = new FilesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

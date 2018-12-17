@@ -16,6 +16,7 @@ namespace DataMigration.Tests.ScenarioTests
         protected static string DmsDeploymentName;
         protected static string DmsProjectName;
         protected static string DmsTaskName;
+        protected static string DmsFileName;
 
         public CRUDDMSTestsBase()
         {
@@ -23,6 +24,7 @@ namespace DataMigration.Tests.ScenarioTests
             DmsDeploymentName = "DmsSdkService";
             DmsProjectName = "DmsSdkProject";
             DmsTaskName = "DmsSdkTask";
+            DmsFileName = "DmsSdkFile";
         }
 
         protected Project CreateDMSProject(MockContext context,

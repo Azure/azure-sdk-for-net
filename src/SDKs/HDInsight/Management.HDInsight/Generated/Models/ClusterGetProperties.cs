@@ -50,7 +50,9 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="errors">The list of errors.</param>
         /// <param name="connectivityEndpoints">The list of connectivity
         /// endpoints.</param>
-        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>))
+        /// <param name="diskEncryptionProperties">The disk encryption
+        /// properties.</param>
+        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties))
         {
             ClusterVersion = clusterVersion;
             OsType = osType;
@@ -64,6 +66,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             QuotaInfo = quotaInfo;
             Errors = errors;
             ConnectivityEndpoints = connectivityEndpoints;
+            DiskEncryptionProperties = diskEncryptionProperties;
             CustomInit();
         }
 
@@ -147,6 +150,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "connectivityEndpoints")]
         public IList<ConnectivityEndpoint> ConnectivityEndpoints { get; set; }
+
+        /// <summary>
+        /// Gets or sets the disk encryption properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskEncryptionProperties")]
+        public DiskEncryptionProperties DiskEncryptionProperties { get; set; }
 
         /// <summary>
         /// Validate the object.

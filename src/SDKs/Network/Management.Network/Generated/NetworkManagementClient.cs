@@ -344,11 +344,6 @@ namespace Microsoft.Azure.Management.Network
         public virtual IVirtualNetworkPeeringsOperations VirtualNetworkPeerings { get; private set; }
 
         /// <summary>
-        /// Gets the IVirtualNetworkTapsOperations.
-        /// </summary>
-        public virtual IVirtualNetworkTapsOperations VirtualNetworkTaps { get; private set; }
-
-        /// <summary>
         /// Gets the IVirtualNetworkGatewaysOperations.
         /// </summary>
         public virtual IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; private set; }
@@ -362,6 +357,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ILocalNetworkGatewaysOperations.
         /// </summary>
         public virtual ILocalNetworkGatewaysOperations LocalNetworkGateways { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkTapsOperations.
+        /// </summary>
+        public virtual IVirtualNetworkTapsOperations VirtualNetworkTaps { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualWansOperations.
@@ -703,10 +703,10 @@ namespace Microsoft.Azure.Management.Network
             VirtualNetworks = new VirtualNetworksOperations(this);
             Subnets = new SubnetsOperations(this);
             VirtualNetworkPeerings = new VirtualNetworkPeeringsOperations(this);
-            VirtualNetworkTaps = new VirtualNetworkTapsOperations(this);
             VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
             VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
             LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
+            VirtualNetworkTaps = new VirtualNetworkTapsOperations(this);
             VirtualWans = new VirtualWansOperations(this);
             VpnSites = new VpnSitesOperations(this);
             VpnSitesConfiguration = new VpnSitesConfigurationOperations(this);
@@ -796,7 +796,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-08-01";
+            string apiVersion = "2018-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -994,7 +994,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "virtualWANName");
             }
-            string apiVersion = "2018-08-01";
+            string apiVersion = "2018-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

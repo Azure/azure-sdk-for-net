@@ -28,7 +28,9 @@ namespace Microsoft.Azure.Batch
     /// />. Even if the <see cref="TaskConstraints.MaxTaskRetryCount" /> is 0, an internal retry due to a recovery operation 
     /// may occur. Because of this, all tasks should be idempotent. This means tasks need to tolerate being interrupted and 
     /// restarted without causing any corruption or duplicate data. The best practice for long running tasks is to use some 
-    /// form of checkpointing.
+    /// form of checkpointing. The maximum lifetime of a task from addition to completion is 180 days. If a task has not 
+    /// completed within 180 days of being added it will be terminated by the Batch service and left in whatever state it 
+    /// was in at that time.
     /// </remarks>
     public partial class CloudTask : ITransportObjectProvider<Models.TaskAddParameter>, IInheritedBehaviors, IPropertyMetadata
     {
@@ -484,6 +486,11 @@ namespace Microsoft.Azure.Batch
         /// Gets or sets a list of files that the Batch service will download to the compute node before running the command 
         /// line.
         /// </summary>
+        /// <remarks>
+        /// There is a maximum size for the list of resource files. When the max size is exceeded, the request will fail 
+        /// and the response error code will be RequestEntityTooLarge. If this occurs, the collection of resource files must 
+        /// be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers.
+        /// </remarks>
         public IList<ResourceFile> ResourceFiles
         {
             get { return this.propertyContainer.ResourceFilesProperty.Value; }

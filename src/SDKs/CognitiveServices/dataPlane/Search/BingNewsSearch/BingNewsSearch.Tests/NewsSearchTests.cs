@@ -18,7 +18,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "NewsSearch");
 
-                INewsSearchAPI client = new NewsSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                INewsSearchClient client = new NewsSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 var resp = client.News.SearchAsync(query: "tom cruise").Result;
 
@@ -43,7 +43,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "NewsCategory");
 
-                INewsSearchAPI client = new NewsSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                INewsSearchClient client = new NewsSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 var resp = client.News.CategoryAsync(category: "sports").Result;
 
@@ -69,7 +69,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "NewsTrending");
 
-                INewsSearchAPI client = new NewsSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                INewsSearchClient client = new NewsSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 var resp = client.News.TrendingAsync().Result;
 
