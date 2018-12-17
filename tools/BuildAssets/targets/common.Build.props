@@ -37,11 +37,6 @@
 		<SignedPackageRootDir>$(PackageRootDir)\signed</SignedPackageRootDir>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  
 	<PropertyGroup>	
 		<BuildNameLabel>DesktopBuild</BuildNameLabel>
 	</PropertyGroup>

@@ -10,9 +10,6 @@ namespace Build.Tasks.Tests
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Runtime.InteropServices;
-    using System.Text;
-    using System.Threading.Tasks;
     using Xunit;
 
     public class ArchiveSymbolsTests : BuildTestBase
@@ -29,13 +26,13 @@ namespace Build.Tasks.Tests
             IEnumerable<ITaskItem> files = Directory.EnumerateFiles(outputDir).Select<string, ITaskItem>((item) => new TaskItem(item));
             ArchiveSymbolsTask symTsk = new ArchiveSymbolsTask();
 
-            symTsk.PublishSymbolStatusEmailTo = "sampleEmail@testDomain.com";
-            symTsk.SymbolsArchiveRootDir = System.Environment.GetEnvironmentVariable("temp");
-            symTsk.SkipExecuteSymbolRequest = true;
+            symTsk.ArchiveSymbolsRequestStatusEmail = "sampleEmail@testDomain.com";
+            symTsk.ArchiveSymbolsRootDir = System.Environment.GetEnvironmentVariable("temp");
+            symTsk.SkipExecuteSymbolsRequest = true;
             symTsk.BuiltAssemblyFileCollection = files.ToArray<ITaskItem>();
             symTsk.Execute();
 
-            Assert.True(symTsk.SymbolRequestFileList.Count > 0);
+            Assert.True(symTsk.SymbolsRequestFileList.Count > 0);
         }
 
         [Fact]
@@ -47,9 +44,9 @@ namespace Build.Tasks.Tests
 
             IEnumerable<ITaskItem> files = Directory.EnumerateFiles(outputDir).Select<string, ITaskItem>((item) => new TaskItem(item));
             ArchiveSymbolsTask symTsk = new ArchiveSymbolsTask();
-            symTsk.PublishSymbolStatusEmailTo = "sampleEmail@testDomain.com";
-            symTsk.SymbolsArchiveRootDir = localUNCPath;
-            symTsk.SymbolReqProjectName = "SomeRandomProjectName";
+            symTsk.ArchiveSymbolsRequestStatusEmail = "sampleEmail@testDomain.com";
+            symTsk.ArchiveSymbolsRootDir = localUNCPath;
+            symTsk.ArchiveSymbolsRequestProjectName = "SomeRandomProjectName";
             symTsk.BuiltAssemblyFileCollection = files.ToArray<ITaskItem>();
             Assert.Throws<ApplicationException>(() => symTsk.Execute());
         }

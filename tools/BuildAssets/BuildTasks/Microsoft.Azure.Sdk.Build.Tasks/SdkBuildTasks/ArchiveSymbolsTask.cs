@@ -18,9 +18,12 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
     /// 2) Create the required request file
     /// 3) Execute the request to queue up the Symbols Archiving request
     /// 
+    /// In case the Archive requests and you ever need to queuen up a new request for symbol archive
+    /// Use the cmdline printed in the log (requestOutput\requestOutput.txt) to execute from command line to queue up a new request for the same exact symbols
+    /// 
     /// TODO:
     ///     Symbols service has no automated way to inform if the request was processed
-    ///     Currently they send an email
+    ///     Currently an email is sent
     /// </summary>
     public class ArchiveSymbolsTask : NetSdkTask
     {
@@ -37,11 +40,17 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
 
         protected override INetSdkTask TaskInstance => this;
 
+        /// <summary>
+        /// List of ITaskItem that represents built assembly files        
+        /// </summary>
         [Required]
         public ITaskItem[] BuiltAssemblyFileCollection { get; set; }
 
+        /// <summary>
+        /// UNC path where symbols/assemblies will be copied which is used by the Symbols Archive process that will process your archive requests at a later stage
+        /// </summary>
         [Required]
-        public string SymbolsArchiveRootDir
+        public string ArchiveSymbolsRootDir
         {
             get
             {
@@ -63,11 +72,23 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
             }
         }
 
-        public string ArchiveRequestStatusEmail { get; set; }
-
+        /// <summary>
+        /// List of symbol archive request files
+        /// This is primarily used for test purpose
+        /// </summary>
         [Output]
-        public List<string> SymbolRequestFileList { get; set; }
+        public List<string> SymbolsRequestFileList { get; set; }
 
+
+        /// <summary>
+        /// In case the process of archiving symbols fail, this email will be used to communicate the current status of your archive request
+        /// </summary>
+        public string ArchiveSymbolsRequestStatusEmail { get; set; }
+
+        /// <summary>
+        /// This is an internal list that is used to process assembly list
+        /// Rather than dealing with ITaskItems, this is a list of ITaskItem.ItemSpec
+        /// </summary>
         private List<string> BuiltAssemblyList
         {
             get
@@ -113,16 +134,22 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
             }
         }
 
-        public bool SkipExecuteSymbolRequest { get; set; }
-
-        public string PublishSymbolStatusEmailTo { get; set; }
-
-        public string SymbolReqProjectName { get; set; }
+        /// <summary>
+        /// True: Will not execute to queue up symbols request, will only create the request file and copy symbols to the SysmbolArchiveRootDir
+        /// False: Will create request file as well as execute to queue up symbol archive request
+        /// </summary>
+        public bool SkipExecuteSymbolsRequest { get; set; }
+        
+        /// <summary>
+        /// Project name registered with Symbol Archiving service
+        /// If not provided default name will be used set by the Azure .NET SDK team
+        /// </summary>
+        public string ArchiveSymbolsRequestProjectName { get; set; }
 
         public ArchiveSymbolsTask()
         {
-            SymbolRequestFileList = new List<string>();
-            SkipExecuteSymbolRequest = false;
+            SymbolsRequestFileList = new List<string>();
+            SkipExecuteSymbolsRequest = false;
         }
 
         public override bool Execute()
@@ -134,9 +161,9 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
             foreach(SymbolsCopyInfo symInfo in symbolList)
             {
                 symInfo.CreateSymbolRequest();
-                SymbolRequestFileList.Add(symInfo.SymbolRequestFilePath);
+                SymbolsRequestFileList.Add(symInfo.SymbolRequestFilePath);
 
-                if(SkipExecuteSymbolRequest == false)
+                if(SkipExecuteSymbolsRequest == false)
                 {
                     symInfo.SendSymbolRequest();
                     
@@ -157,7 +184,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
 
         private List<SymbolsCopyInfo> GetSymbolsInfo()
         {
-            // 12-12-2018\BuildJobId-4DigitRandomNumber\PackageName
+            // Symbol archive Path format: 12-12-2018\BuildJobId-4DigitRandomNumber\PackageName
             int randomMaxValue = 9999;
             Random rnd = new Random(DateTime.Now.Second);
             string dateStr = DateTime.Now.ToString("dd-MM-yyyy");
@@ -198,13 +225,12 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
                             //ASSUMPTION: the output path for compiled will be the default path that VS has ProjectDir\bin\debug|release\FxVersion\
                             sdkDir = Path.GetDirectoryName(sdkDir);
                             string rpName = Path.GetFileName(sdkDir);
-                            string archiveDir = Path.Combine(SymbolsArchiveRootDir, dateStr, jobId, rpName);
+                            string archiveDir = Path.Combine(ArchiveSymbolsRootDir, dateStr, jobId, rpName);
                             string reqId = string.Format("{0}-{1}", jobId, (requestIdCount++).ToString());
                             SymbolsCopyInfo symInfo = new SymbolsCopyInfo(outputRootDir, sdkDir, archiveDir, reqId);
-                            symInfo.StatusEmailTo = PublishSymbolStatusEmailTo;
                             symInfo.AssemblyFileVersion = FileVersionInfo.GetVersionInfo(asmFile).ProductVersion;
-                            symInfo.SymbolRequestProjectName = SymbolReqProjectName;
-                            symInfo.StatusEmailTo = ArchiveRequestStatusEmail;
+                            symInfo.SymbolRequestingProjectName = ArchiveSymbolsRequestProjectName;
+                            symInfo.StatusEmailTo = ArchiveSymbolsRequestStatusEmail;
                             symReqList.Add(symInfo);
 
                             TaskLogger.LogInfo("Creating archive request for '{0}' remoteDir '{1}'", symInfo.SrcDirPath, symInfo.DestDirPath);
@@ -253,6 +279,9 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
         }
     }
 
+    /// <summary>
+    /// Internal data structure to hold Symbol Archive request meta data
+    /// </summary>
     internal class SymbolsCopyInfo
     {
         #region const
@@ -287,7 +316,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
 
         public string ArchiveRequestErrorOutput { get; set; }
 
-        public string SymbolRequestProjectName
+        public string SymbolRequestingProjectName
         {
             get
             {
@@ -442,9 +471,9 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
 
             reqSB.AppendLine(string.Format("Directory={0}", DestDirPath));
 
-            reqSB.AppendLine(string.Format("ProductGroup={0}", SYM_PROJECT_NAME));
-            reqSB.AppendLine(string.Format("ProductName={0}", SYM_PROJECT_NAME));
-            reqSB.AppendLine(string.Format("Project={0}", this.SymbolRequestProjectName));
+            reqSB.AppendLine(string.Format("ProductGroup={0}", this.SymbolRequestingProjectName));
+            reqSB.AppendLine(string.Format("ProductName={0}", this.SymbolRequestingProjectName));
+            reqSB.AppendLine(string.Format("Project={0}", this.SymbolRequestingProjectName));
             
             reqSB.AppendLine(string.Format("Recursive={0}", "yes"));
             reqSB.AppendLine(string.Format("Release={0}", "rtm"));
@@ -453,6 +482,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
             reqSB.AppendLine(string.Format("SubmitToArchive={0}", "all"));
             reqSB.AppendLine(string.Format("SubmitToInternet={0}", "yes"));
 
+            //TODO: parameterize the below property if we need to track much more closely
             reqSB.AppendLine(string.Format("UserName={0}", "abhishah"));
 
             string reqFileName = string.Format("{0}-{1}.txt", RequestId, RPName);

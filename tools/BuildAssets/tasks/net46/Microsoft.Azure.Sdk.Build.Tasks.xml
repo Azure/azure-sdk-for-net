@@ -11,14 +11,56 @@
             2) Create the required request file
             3) Execute the request to queue up the Symbols Archiving request
             
+            In case the Archive requests and you ever need to queuen up a new request for symbol archive
+            Use the cmdline printed in the log (requestOutput\requestOutput.txt) to execute from command line to queue up a new request for the same exact symbols
+            
             TODO:
                 Symbols service has no automated way to inform if the request was processed
-                Currently they send an email
+                Currently an email is sent
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.BuiltAssemblyFileCollection">
+            <summary>
+            List of ITaskItem that represents built assembly files        
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.ArchiveSymbolsRootDir">
+            <summary>
+            UNC path where symbols/assemblies will be copied which is used by the Symbols Archive process that will process your archive requests at a later stage
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.SymbolsRequestFileList">
+            <summary>
+            List of symbol archive request files
+            This is primarily used for test purpose
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.ArchiveSymbolsRequestStatusEmail">
+            <summary>
+            In case the process of archiving symbols fail, this email will be used to communicate the current status of your archive request
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.BuiltAssemblyList">
+            <summary>
+            This is an internal list that is used to process assembly list
+            Rather than dealing with ITaskItems, this is a list of ITaskItem.ItemSpec
             </summary>
         </member>
         <member name="P:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.BuildJobId">
             <summary>
             In Jenkins ${BUILD_NUMBER} provides the JobId
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.SkipExecuteSymbolsRequest">
+            <summary>
+            True: Will not execute to queue up symbols request, will only create the request file and copy symbols to the SysmbolArchiveRootDir
+            False: Will create request file as well as execute to queue up symbol archive request
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.ArchiveSymbolsRequestProjectName">
+            <summary>
+            Project name registered with Symbol Archiving service
+            If not provided default name will be used set by the Azure .NET SDK team
             </summary>
         </member>
         <member name="M:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.FindDir(System.String,System.String)">
@@ -30,6 +72,11 @@
             <param name="filePath"></param>
             <param name="dirName"></param>
             <returns></returns>
+        </member>
+        <member name="T:Microsoft.Azure.Sdk.Build.Tasks.SymbolsCopyInfo">
+            <summary>
+            Internal data structure to hold Symbol Archive request meta data
+            </summary>
         </member>
         <member name="P:Microsoft.Azure.Sdk.Build.Tasks.BaseTasks.NetSdkTask.TaskInstance">
             <summary>
