@@ -5,16 +5,8 @@
     <PackageId>LabServices.Tests</PackageId>
     <AssemblyName>LabServices.Tests</AssemblyName>
     <Version>1.0.0</Version>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>2.0</OldToolsVersion>
-    <ProjectGuid>{DC1024AF-4E20-4E65-9ED8-09CC26385B8B}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
-    <!--<PackageReference Include="Microsoft.Azure.Management.LabServices" Version="1.2.0" />-->
     <ProjectReference Include="..\Management.LabServices\Microsoft.Azure.Management.LabServices.csproj" />
     <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
   </ItemGroup>
