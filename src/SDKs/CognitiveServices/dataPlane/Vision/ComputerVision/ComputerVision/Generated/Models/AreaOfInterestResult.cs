@@ -14,27 +14,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of image analysis using a specific domain model including
-    /// additional metadata.
+    /// Result of AreaOfInterest operation.
     /// </summary>
-    public partial class DomainModelResults
+    public partial class AreaOfInterestResult
     {
         /// <summary>
-        /// Initializes a new instance of the DomainModelResults class.
+        /// Initializes a new instance of the AreaOfInterestResult class.
         /// </summary>
-        public DomainModelResults()
+        public AreaOfInterestResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DomainModelResults class.
+        /// Initializes a new instance of the AreaOfInterestResult class.
         /// </summary>
-        /// <param name="result">Model-specific response.</param>
+        /// <param name="areaOfInterest">A bounding box for an area of interest
+        /// inside an image.</param>
         /// <param name="requestId">Id of the REST API request.</param>
-        public DomainModelResults(object result = default(object), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
+        public AreaOfInterestResult(BoundingRect areaOfInterest = default(BoundingRect), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
-            Result = result;
+            AreaOfInterest = areaOfInterest;
             RequestId = requestId;
             Metadata = metadata;
             CustomInit();
@@ -46,10 +46,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets model-specific response.
+        /// Gets a bounding box for an area of interest inside an image.
         /// </summary>
-        [JsonProperty(PropertyName = "result")]
-        public object Result { get; set; }
+        [JsonProperty(PropertyName = "areaOfInterest")]
+        public BoundingRect AreaOfInterest { get; private set; }
 
         /// <summary>
         /// Gets or sets id of the REST API request.
