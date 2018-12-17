@@ -1,4 +1,4 @@
-﻿using Azure.Core.Net;
+﻿using Azure.Core;
 using System;
 using System.ComponentModel;
 

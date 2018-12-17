@@ -27,7 +27,7 @@ namespace Azure.Configuration.Tests
 
         private static (ConfigurationClient service, TestPool<byte> pool) CreateTestService(MockHttpClientTransport transport)
         {
-            var options = new ClientOptions();
+            var options = new PipelineOptions();
             var testPool = new TestPool<byte>();
             options.Pool = testPool;
 
@@ -50,7 +50,7 @@ namespace Azure.Configuration.Tests
         [Test]
         public async Task ConfiguringTheClient()
         {
-            var options = new ClientOptions();
+            var options = new PipelineOptions();
             options.ApplicationId = "test_application";
             options.Logger = new MockLogger();
             options.Pool = ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4);

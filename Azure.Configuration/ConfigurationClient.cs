@@ -22,18 +22,18 @@ namespace Azure.Configuration
         readonly Uri _baseUri;
         readonly string _credential;
         readonly byte[] _secret;
-        ClientOptions _options;
+        PipelineOptions _options;
         ClientPipeline Pipeline;
 
         public ConfigurationClient(string connectionString) 
-            : this(connectionString, options : new ClientOptions())
+            : this(connectionString, options : new PipelineOptions())
         {
         }
 
-        public ConfigurationClient(string connectionString, ClientOptions options)
+        public ConfigurationClient(string connectionString, PipelineOptions options)
         {
             _options = options;
-            Pipeline = _options.Create(SdkName, SdkVersion);
+            Pipeline = ClientPipeline.Create(_options, SdkName, SdkVersion);
             ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
         }
 
