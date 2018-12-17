@@ -1,9 +1,6 @@
 ﻿using Azure.Core;
 using Azure.Core.Net;
-using Azure.Core.Net.Pipeline;
 using System;
-using System.Buffers;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,6 +10,8 @@ using System.Threading.Tasks;
 // TODO (pri 1): Support "KeyValue Revisions"
 // TODO (pri 1): Support "Real-time Consistency"
 // TODO (pri 2): Add retry policy with automatic throttling
+// TODO (pri 2): Add support for filters (fields, label, etc.)
+// TODO (pri 2): Make sure the whole object gets deserialized/serialized.
 namespace Azure.Configuration
 {
     public partial class ConfigurationClient
@@ -43,11 +42,11 @@ namespace Azure.Configuration
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
-            Url url = BuildUrlForKvRoute(setting);
+            Uri uri = BuildUrlForKvRoute(setting);
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Put, url);
+                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Put, uri);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(IfNoneMatchWildcard);
@@ -70,7 +69,7 @@ namespace Azure.Configuration
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
-            Url url = BuildUrlForKvRoute(setting);
+            Uri url = BuildUrlForKvRoute(setting);
 
             PipelineCallContext context = null;
             try {
@@ -97,7 +96,7 @@ namespace Azure.Configuration
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
             if (string.IsNullOrEmpty(setting.ETag)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.ETag)}");
 
-            Url url = BuildUrlForKvRoute(setting);
+            Uri url = BuildUrlForKvRoute(setting);
 
             PipelineCallContext context = null;
             try {
@@ -123,7 +122,7 @@ namespace Azure.Configuration
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Url url = BuildUrlForKvRoute(key, filter);
+            Uri url = BuildUrlForKvRoute(key, filter);
 
             PipelineCallContext context = null;
             try {
@@ -145,7 +144,7 @@ namespace Azure.Configuration
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Url url = BuildUriForLocksRoute(key, filter);
+            Uri url = BuildUriForLocksRoute(key, filter);
 
             PipelineCallContext context = null;
             try {
@@ -167,7 +166,7 @@ namespace Azure.Configuration
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Url url = BuildUriForLocksRoute(key, filter);
+            Uri url = BuildUriForLocksRoute(key, filter);
 
             PipelineCallContext context = null;
             try {
@@ -189,7 +188,7 @@ namespace Azure.Configuration
         {
             if (string.IsNullOrEmpty(key)) { throw new ArgumentNullException(nameof(key)); }
 
-            Url url = BuildUrlForKvRoute(key, filter);
+            Uri url = BuildUrlForKvRoute(key, filter);
 
             PipelineCallContext context = null;
             try {

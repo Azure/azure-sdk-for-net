@@ -13,34 +13,17 @@ namespace Azure.Configuration
 {
     public partial class ConfigurationClient
     {
-        #region String Table
         const string MediaTypeProblemApplication = "application/problem+json";
         const string AcceptDateTimeFormat = "ddd, dd MMM yyy HH:mm:ss 'GMT'";
         const string AcceptDatetimeHeader = "Accept-Datetime";
-
         const string KvRoute = "/kv/";
-        static readonly byte[] KvRouteBytes = Encoding.ASCII.GetBytes(KvRoute);
-
         const string LocksRoute = "/locks/";
-        static readonly byte[] LocksRouteBytes = Encoding.ASCII.GetBytes(LocksRoute);
-
         const string RevisionsRoute = "/revisions/";
-        static readonly byte[] RevisionsRouteBytes = Encoding.ASCII.GetBytes(RevisionsRoute);
-
         const string KeyQueryFilter = "key";
-        static readonly byte[] s_keyQueryFilter = Encoding.ASCII.GetBytes(KeyQueryFilter);
-
         const string LabelQueryFilter = "label";
-        static readonly byte[] s_labelQueryFilter = Encoding.ASCII.GetBytes(LabelQueryFilter);
-
         const string FieldsQueryFilter = "fields";
-        static readonly byte[] s_fieldsQueryFilter = Encoding.ASCII.GetBytes(FieldsQueryFilter);
-
-        static readonly byte[] s_after = Encoding.ASCII.GetBytes("after");
-
         const string IfMatchName = "If-Match";
         Header IfNoneMatchWildcard = new Header("If-None-Match", "*");
-        #endregion
 
         static readonly Header MediaTypeKeyValueApplicationHeader = new Header(
             Header.Constants.Accept,
@@ -120,69 +103,59 @@ namespace Azure.Configuration
             };
         }
 
-        Url BuildUrlForKvRoute(ConfigurationSetting keyValue)
+        Uri BuildUrlForKvRoute(ConfigurationSetting keyValue)
             => BuildUrlForKvRoute(keyValue.Key, new SettingFilter() { Label = keyValue.Label }); // TODO (pri 2) : does this need to filter ETag?
 
-        Url BuildUrlForKvRoute(string key, SettingFilter filter)
+        Uri BuildUrlForKvRoute(string key, SettingFilter filter)
         {
-            var builder = new UrlWriter(_baseUri.ToString(), 100);
-            builder.AppendPath(KvRouteBytes);
-            builder.AppendPath(key);
+            var builder = new UriBuilder(_baseUri);
+            builder.Path = KvRoute + key;
 
-            if (filter != null) {
-                if (filter.Label != null) {
-                    builder.AppendQuery(s_labelQueryFilter, filter.Label);
-                }
-                if (filter.Fields != SettingFields.All)
-                {
-                    // TODO (pri 3): this should be optimized
-                    var filterString = (filter.Fields).ToString().ToLower().Replace(" ", "");
-                    builder.AppendQuery(s_fieldsQueryFilter, filterString);
-                }
+            if (filter != null && filter.Label != null) {
+                builder.AppendQuery(LabelQueryFilter, filter.Label);                 
             }
-            return builder.ToUrl();
+
+            return builder.Uri;
         }
 
-        Url BuildUriForLocksRoute(string key, SettingFilter options)
+        Uri BuildUriForLocksRoute(string key, SettingFilter filter)
         {
-            var builder = new UrlWriter(_baseUri.ToString(), 100);
-            builder.AppendPath(LocksRouteBytes);
-            builder.AppendPath(key);
+            var builder = new UriBuilder(_baseUri);
+            builder.Path = LocksRoute + key;
 
-            if (options != null && options.Label != null) {
-                builder.AppendQuery(s_labelQueryFilter, options.Label);
+            if (filter != null && filter.Label != null) {
+                builder.AppendQuery(LabelQueryFilter, filter.Label);
             }
-            
-            return builder.ToUrl();
+
+            return builder.Uri;
         }
 
-        Url BuildUrlForGetBatch(BatchFilter options)
+        Uri BuildUrlForGetBatch(BatchFilter options)
         {
-            var urlBuilder = new UrlWriter(new Url(_baseUri), 100);
-            urlBuilder.AppendPath(KvRouteBytes); // TODO (pri 1): it seems like this causes the path to end with /. is that ok?
+            var builder = new UriBuilder(_baseUri);
+            builder.Path = KvRoute;
 
             if (options.StartIndex != 0) {
-                urlBuilder.AppendQuery(s_after, options.StartIndex);
+                builder.AppendQuery("after", options.StartIndex);
             }
 
             if (!string.IsNullOrEmpty(options.Key)) {
-                urlBuilder.AppendQuery(s_keyQueryFilter, options.Key);
+                builder.AppendQuery(KeyQueryFilter, options.Key);
             }
 
             if (options.Label != null) {
                 if (options.Label == string.Empty) {
                     options.Label = "\0";
                 }
-                urlBuilder.AppendQuery(s_labelQueryFilter, options.Label);
+                builder.AppendQuery(LabelQueryFilter, options.Label);
             }
 
             if (options.Fields != SettingFields.All) {
-                // TODO (pri 3): this should be optimized
-                var filter = (options.Fields).ToString().ToLower().Replace(" ", "");
-                urlBuilder.AppendQuery(s_fieldsQueryFilter, filter);
+                var filter = (options.Fields).ToString().ToLower();
+                builder.AppendQuery(FieldsQueryFilter, filter);
             }
 
-            return urlBuilder.ToUrl();
+            return builder.Uri;
         }
 
         // TODO (pri 1): serialize the Tags field

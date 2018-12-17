@@ -57,7 +57,7 @@ namespace Azure.Configuration.Tests
             options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
 
             var client = new ConfigurationClient(connectionString, options);
-            Response<ConfigurationSetting> response = await client.GetAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
+            Response<ConfigurationSetting> response = await client.GetAsync(key: s_testSetting.Key, filter: null, CancellationToken.None);
 
             response.Dispose();
         }
@@ -68,7 +68,7 @@ namespace Azure.Configuration.Tests
             var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            Response<ConfigurationSetting> response = await service.GetAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.GetAsync(key: s_testSetting.Key, filter : default, CancellationToken.None);
             Assert.AreEqual(200, response.Status);
             Assert.True(response.TryGetHeader("ETag", out string etagHeader));
             Assert.AreEqual(response.Result.ETag, etagHeader);
