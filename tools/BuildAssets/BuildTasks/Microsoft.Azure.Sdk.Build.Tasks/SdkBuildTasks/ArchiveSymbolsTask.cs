@@ -402,6 +402,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
             }
             finally
             {
+                string errFileContents = string.Empty;
                 if (sb.Length > 0)
                 {
                     if (File.Exists(outputFilePath))
@@ -418,10 +419,16 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
                         if (errFiles.Any<string>())
                         {
                             string ef = errFiles.First<string>();
-                            sb.AppendLine();
-                            sb.AppendLine(File.ReadAllText(ef));
-                            sb.AppendLine();
-                            this.ArchiveRequestErrorOutput = sb.ToString();
+                            errFileContents = File.ReadAllText(ef);
+
+                            //We have seen cases where the .err file is generated without any errors.
+                            if(!string.IsNullOrWhiteSpace(errFileContents))
+                            {
+                                sb.AppendLine();
+                                sb.AppendLine(errFileContents);
+                                sb.AppendLine();
+                                this.ArchiveRequestErrorOutput = sb.ToString();
+                            }
                         }
                     }
 
