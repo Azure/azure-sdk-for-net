@@ -72,11 +72,6 @@ namespace Microsoft.Azure.Management.ContainerService
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IContainerServicesOperations.
-        /// </summary>
-        public virtual IContainerServicesOperations ContainerServices { get; private set; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -85,6 +80,11 @@ namespace Microsoft.Azure.Management.ContainerService
         /// Gets the IManagedClustersOperations.
         /// </summary>
         public virtual IManagedClustersOperations ManagedClusters { get; private set; }
+
+        /// <summary>
+        /// Gets the IContainerServicesOperations.
+        /// </summary>
+        public virtual IContainerServicesOperations ContainerServices { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ContainerServiceClient class.
@@ -327,9 +327,9 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </summary>
         private void Initialize()
         {
-            ContainerServices = new ContainerServicesOperations(this);
             Operations = new Operations(this);
             ManagedClusters = new ManagedClustersOperations(this);
+            ContainerServices = new ContainerServicesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

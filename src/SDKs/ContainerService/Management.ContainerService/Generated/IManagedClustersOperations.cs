@@ -135,10 +135,10 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </exception>
         Task<AzureOperationResponse<ManagedClusterAccessProfile>> GetAccessProfileWithHttpMessagesAsync(string resourceGroupName, string resourceName, string roleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets clusteradmin credential of a managed cluster.
+        /// Gets cluster admin credential of a managed cluster.
         /// </summary>
         /// <remarks>
-        /// Gets clusteradmin credential of the managed cluster with a
+        /// Gets cluster admin credential of the managed cluster with a
         /// specified resource group and name.
         /// </remarks>
         /// <param name='resourceGroupName'>
@@ -164,11 +164,11 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </exception>
         Task<AzureOperationResponse<CredentialResults>> ListClusterAdminCredentialsWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets clusteruser credential of a managed cluster.
+        /// Gets cluster user credential of a managed cluster.
         /// </summary>
         /// <remarks>
-        /// Gets clusteruser credential of the managed cluster with a specified
-        /// resource group and name.
+        /// Gets cluster user credential of the managed cluster with a
+        /// specified resource group and name.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

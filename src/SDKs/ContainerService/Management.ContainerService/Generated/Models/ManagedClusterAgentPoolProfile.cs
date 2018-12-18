@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="storageProfile">Storage profile specifies what kind of
         /// storage used. Defaults to ManagedDisks. Possible values include:
         /// 'StorageAccount', 'ManagedDisks'</param>
-        /// <param name="vnetSubnetID">VNet SubnetID specifies the vnet's
+        /// <param name="vnetSubnetID">VNet SubnetID specifies the VNet's
         /// subnet identifier.</param>
         /// <param name="maxPods">Maximum number of pods that can run on a
         /// node.</param>
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string StorageProfile { get; private set; }
 
         /// <summary>
-        /// Gets or sets vNet SubnetID specifies the vnet's subnet identifier.
+        /// Gets or sets vNet SubnetID specifies the VNet's subnet identifier.
         /// </summary>
         [JsonProperty(PropertyName = "vnetSubnetID")]
         public string VnetSubnetID { get; set; }
