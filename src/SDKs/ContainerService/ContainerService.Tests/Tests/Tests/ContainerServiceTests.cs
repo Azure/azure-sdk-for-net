@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
         /// Test the creation a container service instance.
         /// </summary>
         [Fact]
-        public void ContainerInstanceCreateTest()
+        public void ContainerServiceCreateTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -23,7 +23,6 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
             {
                 var resourceClient = ContainerServiceTestUtilities.GetResourceManagementClient(context, handler);
                 var containerServiceClient = ContainerServiceTestUtilities.GetContainerServiceManagementClient(context, handler);
-
                 var resourceGroup = ContainerServiceTestUtilities.CreateResourceGroup(resourceClient);
             }
         }
