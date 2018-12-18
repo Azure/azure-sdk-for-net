@@ -18,11 +18,11 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
     /// 2) Create the required request file
     /// 3) Execute the request to queue up the Symbols Archiving request
     /// 
-    /// In case the Archive requests and you ever need to queuen up a new request for symbol archive
-    /// Use the cmdline printed in the log (requestOutput\requestOutput.txt) to execute from command line to queue up a new request for the same exact symbols
+    /// In case the Archive request fails and you ever need to queue up a new request for symbol archive
+    /// Use the cmdline printed in the log (requestOutput\requestcmdlineOutput.txt) to execute from command line to queue up a new request for the same exact symbols
     /// 
     /// TODO:
-    ///     Symbols service has no automated way to inform if the request was processed
+    ///     Symbols service has no automated way to inform if the request was not processed
     ///     Currently an email is sent
     /// </summary>
     public class ArchiveSymbolsTask : NetSdkTask
@@ -35,11 +35,10 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
         #region fields
         private string _symbolsArchiveRootDir;
         private string _buildJobId;
-        private List<string> _assemblyList;
+        private List<string> _assemblyFilePathList;
         #endregion
-
-        protected override INetSdkTask TaskInstance => this;
-
+        
+        #region Task Properties
         /// <summary>
         /// List of ITaskItem that represents built assembly files        
         /// </summary>
@@ -56,8 +55,8 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
             {
                 if (!Directory.Exists(_symbolsArchiveRootDir))
                 {
-                    string alternatePath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    if (!File.Exists(alternatePath))
+                    string alternatePath = Path.GetTempPath();                    
+                    if (!Directory.Exists(alternatePath))
                     {
                         string expMsg = string.Format("Provided path '{0}', does not exists and unable to determine alternate Symbols Archive directory path.", _symbolsArchiveRootDir);
                         throw new ApplicationException(expMsg);
@@ -87,28 +86,26 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
 
         /// <summary>
         /// This is an internal list that is used to process assembly list
-        /// Rather than dealing with ITaskItems, this is a list of ITaskItem.ItemSpec
+        /// Rather than dealing with ITaskItems, this is a list of File paths derived from of ITaskItem.ItemSpec
         /// </summary>
-        private List<string> BuiltAssemblyList
+        private List<string> BuiltAssemblyFilePathList
         {
             get
             {
-                if(_assemblyList == null)
+                if(_assemblyFilePathList == null)
                 {
-                    if(BuiltAssemblyFileCollection != null)
+                    _assemblyFilePathList = new List<string>();
+
+                    if (BuiltAssemblyFileCollection != null)
                     {
                         if(BuiltAssemblyFileCollection.Any<ITaskItem>())
                         {
-                            _assemblyList = BuiltAssemblyFileCollection.Select<ITaskItem, string>((item) => item.ItemSpec)?.ToList<string>();
-                        }
-                        else
-                        {
-                            _assemblyList = new List<string>();
+                            _assemblyFilePathList = BuiltAssemblyFileCollection.Select<ITaskItem, string>((item) => item.ItemSpec)?.ToList<string>();
                         }
                     }
                 }
 
-                return _assemblyList;
+                return _assemblyFilePathList;
             }
         }
 
@@ -121,8 +118,8 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
             {
                 if(string.IsNullOrWhiteSpace(_buildJobId))
                 {
-                    Random r = new Random(DateTime.Now.Minute);
-                    _buildJobId = string.Format("rnd{0}", r.Next(99999).ToString());
+                    Random rnd = new Random();
+                    _buildJobId = string.Format("rnd{0}", rnd.Next(99999).ToString());
                 }
 
                 return _buildJobId;
@@ -146,6 +143,10 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
         /// </summary>
         public string ArchiveSymbolsRequestProjectName { get; set; }
 
+        protected override INetSdkTask TaskInstance => this;
+
+        #endregion
+
         public ArchiveSymbolsTask()
         {
             SymbolsRequestFileList = new List<string>();
@@ -155,7 +156,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
         public override bool Execute()
         {
             TaskLogger.LogInfo("Executing Archiving Task.....");
-
             List<SymbolsCopyInfo> symbolList = GetSymbolsInfo();
 
             foreach(SymbolsCopyInfo symInfo in symbolList)
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
         {
             // Symbol archive Path format: 12-12-2018\BuildJobId-4DigitRandomNumber\PackageName
             int randomMaxValue = 9999;
-            Random rnd = new Random(DateTime.Now.Second);
+            Random rnd = new Random();
             string dateStr = DateTime.Now.ToString("dd-MM-yyyy");
             string jobId = string.Format("{0}-{1}", BuildJobId, rnd.Next(randomMaxValue));
             int requestIdCount = 1;
@@ -199,16 +199,16 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
             // archive copy both target symbols
             // We then go two level up, that will give us the ResourceProvider directory
             // This directory helps in creating distinct directory names to avoid collision in scenario where there are more than
-            // one nuget package is getting published
+            // one nuget packages getting published
 
-            foreach(string asmFile in BuiltAssemblyList)
+            foreach(string asmFilePath in BuiltAssemblyFilePathList)
             {
                 TaskLogger.LogInfo("Trying to find {0} dir in the directory hierarchy", OUTPUT_ROOTDIRNAME_RELEASE);
-                string outputRootDir = FindDir(asmFile, OUTPUT_ROOTDIRNAME_RELEASE);
+                string outputRootDir = FindDir(asmFilePath, OUTPUT_ROOTDIRNAME_RELEASE);
                 if(string.IsNullOrWhiteSpace(outputRootDir))
                 {
                     TaskLogger.LogInfo("Trying to find {0} dir in the directory hierarchy", OUTPUT_ROOTDIRNAME_DEBUG);
-                    outputRootDir = FindDir(asmFile, OUTPUT_ROOTDIRNAME_DEBUG);
+                    outputRootDir = FindDir(asmFilePath, OUTPUT_ROOTDIRNAME_DEBUG);
                 }
 
                 TaskLogger.LogInfo("Found dir '{0}'", outputRootDir);
@@ -222,18 +222,22 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
                         string sdkDir = FindDir(outputRootDir, "bin");
                         if (!string.IsNullOrWhiteSpace(sdkDir))
                         {
-                            //ASSUMPTION: the output path for compiled will be the default path that VS has ProjectDir\bin\debug|release\FxVersion\
+                            //ASSUMPTION: the output path for compiled projects will be the default path that VS has ProjectDir\bin\debug|release\FxVersion\
                             sdkDir = Path.GetDirectoryName(sdkDir);
                             string rpName = Path.GetFileName(sdkDir);
                             string archiveDir = Path.Combine(ArchiveSymbolsRootDir, dateStr, jobId, rpName);
                             string reqId = string.Format("{0}-{1}", jobId, (requestIdCount++).ToString());
                             SymbolsCopyInfo symInfo = new SymbolsCopyInfo(outputRootDir, sdkDir, archiveDir, reqId);
-                            symInfo.AssemblyFileVersion = FileVersionInfo.GetVersionInfo(asmFile).ProductVersion;
+                            symInfo.AssemblyFileVersion = FileVersionInfo.GetVersionInfo(asmFilePath).ProductVersion;
                             symInfo.SymbolRequestingProjectName = ArchiveSymbolsRequestProjectName;
                             symInfo.StatusEmailTo = ArchiveSymbolsRequestStatusEmail;
                             symReqList.Add(symInfo);
 
                             TaskLogger.LogInfo("Creating archive request for '{0}' remoteDir '{1}'", symInfo.SrcDirPath, symInfo.DestDirPath);
+                        }
+                        else
+                        {
+                            TaskLogger.LogError(string.Format("Unable to detect 'bin' directory in the provided assembly path '{0}'", asmFilePath));
                         }
                     }
                 }
@@ -262,7 +266,8 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
 
                 while (currDirPath != dirRoot)
                 {
-                    //We use GetFileName, as it works for non-existant paths
+                    //We use GetFileName, as it works for non-existant 
+                    // file paths (paths that have not yet been created on the file system)
                     string cDir = Path.GetFileName(currDirPath);
 
                     if(cDir.Equals(dirName, StringComparison.OrdinalIgnoreCase))
@@ -286,6 +291,8 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
     {
         #region const
         const string SYM_PROJECT_NAME = "AzureDotNetSdks";
+        const string SYM_REQUEST_CMD = @"\\symbols\tools\createrequest.cmd";
+        const string CMDLINE_OUTPUT_FILENAME = "requestcmdlineOutput.txt";
         #endregion
 
         #region fields
@@ -352,6 +359,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
 
         public void SendSymbolRequest()
         {
+            int waitTimeOutMS = 60000;
             StringBuilder sb = new StringBuilder();
             string errOutput = string.Empty;
             Process proc = null;
@@ -361,9 +369,9 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
             try
             {   
                 outputDir = Path.Combine(Path.GetDirectoryName(this.SymbolRequestFilePath), "requestOutput");
-                outputFilePath = Path.Combine(outputDir, "requestOutput.txt");
+                outputFilePath = Path.Combine(outputDir, CMDLINE_OUTPUT_FILENAME);
 
-                string args = string.Format(@" /c \\symbols\tools\createrequest.cmd -i {0} -d {1} -c -a", this.SymbolRequestFilePath, outputDir);
+                string args = string.Format(@" /c {0} -i {1} -d {2} -c -a", SYM_REQUEST_CMD, this.SymbolRequestFilePath, outputDir);
                 ProcessStartInfo procInfo = new ProcessStartInfo("cmd.exe");
                 procInfo.Arguments = args;
                 procInfo.CreateNoWindow = true;
@@ -374,9 +382,8 @@ namespace Microsoft.Azure.Sdk.Build.Tasks
                 proc = new Process();
                 proc.StartInfo = procInfo;
                 proc.Start();
-                proc.WaitForExit(60000);
+                proc.WaitForExit(waitTimeOutMS);
 
-                //errOutput = proc?.StandardError?.ReadToEnd();
                 string output = proc?.StandardOutput?.ReadToEnd();
 
                 sb.AppendLine(args);

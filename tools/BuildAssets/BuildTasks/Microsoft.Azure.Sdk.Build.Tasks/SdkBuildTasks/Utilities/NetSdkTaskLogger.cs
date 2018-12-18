@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Utilities
             }
             else
             {
-                Debug.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.ToString());                
                 throw ex;
             }
         }
