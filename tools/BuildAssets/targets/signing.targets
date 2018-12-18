@@ -65,12 +65,16 @@
       <SignOperationLogDir>$(BinariesFolder)</SignOperationLogDir>
     </PropertyGroup>
   </Target>
-  <Target Name="SignNugetPackage" DependsOnTargets="SignNugetPackageDependsOn" Condition=" '$(CodeSign)' == 'true' AND '$(Configuration)' == 'Release' ">
+  <Target Name="SignNugetPackage" DependsOnTargets="SignNugetPackageDependsOn" 
+          Condition=" '$(CodeSign)' == 'true' AND '$(Configuration)' == 'Release' AND '$(SkipAuthSign)' != 'true' ">
     <CallTarget Targets="AuthenticodeSignNugetTarget" />
     <Message Text="Done executing Signing Nuget Packages" Importance="$(DebugMessageImp)" />
   </Target>
 
-  <Target Name="RunSignTargets" Condition=" '$(CodeSign)' == 'true' " DependsOnTargets="SignBinaries" />
+  <Target Name="RunSignTargets" Condition=" '$(CodeSign)' == 'true' 
+        AND '$(SkipAuthSign)' != 'true' 
+        AND '$(Configuration)' == 'Release' "
+        DependsOnTargets="SignBinaries" />
   <!--  DependsOnTargets="SignBinaries;PostSignBinaries" 
   RunEachTargetSeparately="true" 
   -->

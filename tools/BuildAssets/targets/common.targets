@@ -54,8 +54,15 @@
     <PublishNugetDependsOn>
 	    <!-- SignNugetPackage; -->
       $(SignNugetDependsOn);
-      PublishingNuget
+      PublishingNuget;
+      ArchiveSymbolsTarget
     </PublishNugetDependsOn>
+    <ArchiveSymbolsDependsOn>
+      <!-- Currently running this target independently will archive the pdbs but are not gurantee to match with dll during debugging.
+      Because this will rebuild the binaries -->
+      $(BuildTraversedProjectsDependsOn);
+      ArchiveSymbolsTarget;
+    </ArchiveSymbolsDependsOn>
     <HelpDependsOn>
       DisplayHelp
     </HelpDependsOn>
@@ -313,7 +320,7 @@
       <PublishNugetToDir Condition=" '$(PublishNugetToDir)' == '' ">$(LibraryRoot)PublishedNugets</PublishNugetToDir>
       <TaskDebugOutput Condition=" '$(TaskDebugOutput)' == '' ">false</TaskDebugOutput>
       <SkipNugetPublishing Condition=" '$(SkipNugetPublishing)' == '' ">false</SkipNugetPublishing>
-      <SkipSymbolPublishing Condition=" '$(SkipSymbolPublishing)' == '' ">false</SkipSymbolPublishing>
+      <SkipSymbolPublishing Condition=" '$(SkipSymbolPublishing)' == '' ">true</SkipSymbolPublishing>
     </PropertyGroup>
 	
     <Message Text="NugetPackageName...... $(NugetPackageName)" Condition=" '$(DebugTrace)' == 'true' "/>
@@ -337,6 +344,23 @@
       MultiPackagePublish="$(MultiPackagePublish)" 
       ScopePath="$(Scope)"
       />
+  </Target>
+
+  <Target Name="ArchiveSymbolsTarget" Condition=" '$(CodeSign)' == 'true'         
+        AND '$(Configuration)' == 'Release' AND '$(SkipArchiveSymbols)' != 'true' ">
+    <Message Text="Archiving Symbols......." />
+    <Message Text="AssemblyFileList ==== @(FilesToSign)" Importance="Normal" />
+    <Message Text="ArchiveSymbolsRootDir ==== $(ArchiveSymbolsRootDir)" Importance="Normal" />
+    <!--  -->
+    <ArchiveSymbolsTask
+      BuiltAssemblyFileCollection="@(FilesToSign)"
+      ArchiveSymbolsRootDir="$(ArchiveSymbolsRootDir)"
+      BuildJobId="$(JenkinsJobId)"
+      ArchiveSymbolsRequestStatusEmail="$(ArchiveSymbolsRequestStatusEmail)"
+      ArchiveSymbolsRequestProjectName="$(ArchiveSymbolsRequestProjectName)"      
+      SkipExecuteSymbolsRequest="$(SkipExecuteSymbolsRequest)"
+    >
+    </ArchiveSymbolsTask>
   </Target>
 
   <Target Name="CategorizeProjects">
