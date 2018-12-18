@@ -12,31 +12,39 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Contains information about orchestrator.
+    /// The profile of an orchestrator and its available versions.
     /// </summary>
-    public partial class OrchestratorProfile
+    public partial class OrchestratorVersionProfile
     {
         /// <summary>
-        /// Initializes a new instance of the OrchestratorProfile class.
+        /// Initializes a new instance of the OrchestratorVersionProfile class.
         /// </summary>
-        public OrchestratorProfile()
+        public OrchestratorVersionProfile()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OrchestratorProfile class.
+        /// Initializes a new instance of the OrchestratorVersionProfile class.
         /// </summary>
         /// <param name="orchestratorType">Orchestrator type.</param>
         /// <param name="orchestratorVersion">Orchestrator version (major,
         /// minor, patch).</param>
-        public OrchestratorProfile(string orchestratorType, string orchestratorVersion)
+        /// <param name="defaultProperty">Installed by default if version is
+        /// not specified.</param>
+        /// <param name="upgrades">The list of available upgrade
+        /// versions.</param>
+        public OrchestratorVersionProfile(string orchestratorType, string orchestratorVersion, bool defaultProperty, IList<OrchestratorProfile> upgrades)
         {
             OrchestratorType = orchestratorType;
             OrchestratorVersion = orchestratorVersion;
+            DefaultProperty = defaultProperty;
+            Upgrades = upgrades;
             CustomInit();
         }
 
@@ -58,6 +66,18 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string OrchestratorVersion { get; set; }
 
         /// <summary>
+        /// Gets or sets installed by default if version is not specified.
+        /// </summary>
+        [JsonProperty(PropertyName = "default")]
+        public bool DefaultProperty { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of available upgrade versions.
+        /// </summary>
+        [JsonProperty(PropertyName = "upgrades")]
+        public IList<OrchestratorProfile> Upgrades { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -72,6 +92,20 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             if (OrchestratorVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "OrchestratorVersion");
+            }
+            if (Upgrades == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Upgrades");
+            }
+            if (Upgrades != null)
+            {
+                foreach (var element in Upgrades)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

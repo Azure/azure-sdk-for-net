@@ -1,25 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<!-- Please do not move/edit code below this line -->
-	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-	<!-- Please do not move/edit code below this line -->
 
-	<PropertyGroup>
-		<Description>Microsoft Azure Container Service Management Library</Description>
-		<Version>2.0.0</Version>
-		<AssemblyName>Microsoft.Azure.Management.ContainerService</AssemblyName>
-		<PackageId>Microsoft.Azure.Management.ContainerService</PackageId>
-		<PackageTags>Microsoft Azure Container Service Management;Container Service;</PackageTags>
-		<PackageReleaseNotes>
-			<![CDATA[
-        This is a release of the Azure Container Service SDK.
-      ]]>
-		</PackageReleaseNotes>
-	</PropertyGroup>
-	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-	</PropertyGroup>
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code below this line -->
+  
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.ContainerService</PackageId>
+    <Description>Provides developers with a library to create and manage all Azure Kubernetes Service resources. </Description>
+    <Version>1.0.0</Version>
+    <AssemblyName>Microsoft.Azure.Management.ContainerService</AssemblyName>
+    <PackageTags>Microsoft Azure Kubernetes Service; Microsoft Azure ContainerService;</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+  </PropertyGroup>
 
-	<!-- Please do not move/edit code below this line -->
-	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
-	<!-- Please do not move/edit code above this line -->
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+
 </Project>

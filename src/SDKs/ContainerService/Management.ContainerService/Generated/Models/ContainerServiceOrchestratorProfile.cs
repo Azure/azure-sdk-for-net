@@ -15,25 +15,31 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains information about orchestrator.
+    /// Profile for the container service orchestrator.
     /// </summary>
-    public partial class OrchestratorProfile
+    public partial class ContainerServiceOrchestratorProfile
     {
         /// <summary>
-        /// Initializes a new instance of the OrchestratorProfile class.
+        /// Initializes a new instance of the
+        /// ContainerServiceOrchestratorProfile class.
         /// </summary>
-        public OrchestratorProfile()
+        public ContainerServiceOrchestratorProfile()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OrchestratorProfile class.
+        /// Initializes a new instance of the
+        /// ContainerServiceOrchestratorProfile class.
         /// </summary>
-        /// <param name="orchestratorType">Orchestrator type.</param>
-        /// <param name="orchestratorVersion">Orchestrator version (major,
-        /// minor, patch).</param>
-        public OrchestratorProfile(string orchestratorType, string orchestratorVersion)
+        /// <param name="orchestratorType">The orchestrator to use to manage
+        /// container service cluster resources. Valid values are Kubernetes,
+        /// Swarm, DCOS, DockerCE and Custom. Possible values include:
+        /// 'Kubernetes', 'Swarm', 'DCOS', 'DockerCE', 'Custom'</param>
+        /// <param name="orchestratorVersion">The version of the orchestrator
+        /// to use. You can specify the major.minor.patch part of the actual
+        /// version.For example, you can specify version as "1.6.11".</param>
+        public ContainerServiceOrchestratorProfile(string orchestratorType, string orchestratorVersion = default(string))
         {
             OrchestratorType = orchestratorType;
             OrchestratorVersion = orchestratorVersion;
@@ -46,13 +52,18 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets orchestrator type.
+        /// Gets or sets the orchestrator to use to manage container service
+        /// cluster resources. Valid values are Kubernetes, Swarm, DCOS,
+        /// DockerCE and Custom. Possible values include: 'Kubernetes',
+        /// 'Swarm', 'DCOS', 'DockerCE', 'Custom'
         /// </summary>
         [JsonProperty(PropertyName = "orchestratorType")]
         public string OrchestratorType { get; set; }
 
         /// <summary>
-        /// Gets or sets orchestrator version (major, minor, patch).
+        /// Gets or sets the version of the orchestrator to use. You can
+        /// specify the major.minor.patch part of the actual version.For
+        /// example, you can specify version as "1.6.11".
         /// </summary>
         [JsonProperty(PropertyName = "orchestratorVersion")]
         public string OrchestratorVersion { get; set; }
@@ -68,10 +79,6 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             if (OrchestratorType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "OrchestratorType");
-            }
-            if (OrchestratorVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "OrchestratorVersion");
             }
         }
     }

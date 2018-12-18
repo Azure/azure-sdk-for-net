@@ -12,11 +12,14 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 {
 
     /// <summary>
-    /// Defines values for OSType.
+    /// Defines values for ContainerServiceOrchestratorTypes.
     /// </summary>
-    public static class OSType
+    public static class ContainerServiceOrchestratorTypes
     {
-        public const string Linux = "Linux";
-        public const string Windows = "Windows";
+        public const string Kubernetes = "Kubernetes";
+        public const string Swarm = "Swarm";
+        public const string DCOS = "DCOS";
+        public const string DockerCE = "DockerCE";
+        public const string Custom = "Custom";
     }
 }

@@ -16,30 +16,34 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 
     /// <summary>
     /// Information about a service principal identity for the cluster to use
-    /// for manipulating Azure APIs.
+    /// for manipulating Azure APIs. Either secret or keyVaultSecretRef must be
+    /// specified.
     /// </summary>
-    public partial class ManagedClusterServicePrincipalProfile
+    public partial class ContainerServiceServicePrincipalProfile
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ManagedClusterServicePrincipalProfile class.
+        /// ContainerServiceServicePrincipalProfile class.
         /// </summary>
-        public ManagedClusterServicePrincipalProfile()
+        public ContainerServiceServicePrincipalProfile()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// ManagedClusterServicePrincipalProfile class.
+        /// ContainerServiceServicePrincipalProfile class.
         /// </summary>
         /// <param name="clientId">The ID for the service principal.</param>
         /// <param name="secret">The secret password associated with the
         /// service principal in plain text.</param>
-        public ManagedClusterServicePrincipalProfile(string clientId, string secret = default(string))
+        /// <param name="keyVaultSecretRef">Reference to a secret stored in
+        /// Azure Key Vault.</param>
+        public ContainerServiceServicePrincipalProfile(string clientId, string secret = default(string), KeyVaultSecretRef keyVaultSecretRef = default(KeyVaultSecretRef))
         {
             ClientId = clientId;
             Secret = secret;
+            KeyVaultSecretRef = keyVaultSecretRef;
             CustomInit();
         }
 
@@ -62,6 +66,12 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string Secret { get; set; }
 
         /// <summary>
+        /// Gets or sets reference to a secret stored in Azure Key Vault.
+        /// </summary>
+        [JsonProperty(PropertyName = "keyVaultSecretRef")]
+        public KeyVaultSecretRef KeyVaultSecretRef { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -72,6 +82,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             if (ClientId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ClientId");
+            }
+            if (KeyVaultSecretRef != null)
+            {
+                KeyVaultSecretRef.Validate();
             }
         }
     }

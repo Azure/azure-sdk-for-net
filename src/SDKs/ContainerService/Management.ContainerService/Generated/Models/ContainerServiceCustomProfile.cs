@@ -15,28 +15,28 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     using System.Linq;
 
     /// <summary>
-    /// Profile for diagnostics on the container service cluster.
+    /// Properties to configure a custom container service cluster.
     /// </summary>
-    public partial class ContainerServiceDiagnosticsProfile
+    public partial class ContainerServiceCustomProfile
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ContainerServiceDiagnosticsProfile class.
+        /// Initializes a new instance of the ContainerServiceCustomProfile
+        /// class.
         /// </summary>
-        public ContainerServiceDiagnosticsProfile()
+        public ContainerServiceCustomProfile()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ContainerServiceDiagnosticsProfile class.
+        /// Initializes a new instance of the ContainerServiceCustomProfile
+        /// class.
         /// </summary>
-        /// <param name="vmDiagnostics">Profile for diagnostics on the
-        /// container service VMs.</param>
-        public ContainerServiceDiagnosticsProfile(ContainerServiceVMDiagnostics vmDiagnostics)
+        /// <param name="orchestrator">The name of the custom orchestrator to
+        /// use.</param>
+        public ContainerServiceCustomProfile(string orchestrator)
         {
-            VmDiagnostics = vmDiagnostics;
+            Orchestrator = orchestrator;
             CustomInit();
         }
 
@@ -46,10 +46,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets profile for diagnostics on the container service VMs.
+        /// Gets or sets the name of the custom orchestrator to use.
         /// </summary>
-        [JsonProperty(PropertyName = "vmDiagnostics")]
-        public ContainerServiceVMDiagnostics VmDiagnostics { get; set; }
+        [JsonProperty(PropertyName = "orchestrator")]
+        public string Orchestrator { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -59,13 +59,9 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (VmDiagnostics == null)
+            if (Orchestrator == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "VmDiagnostics");
-            }
-            if (VmDiagnostics != null)
-            {
-                VmDiagnostics.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "Orchestrator");
             }
         }
     }
