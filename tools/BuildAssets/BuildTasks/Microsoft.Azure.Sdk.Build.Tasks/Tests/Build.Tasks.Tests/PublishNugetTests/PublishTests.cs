@@ -110,8 +110,9 @@ namespace Build.Tasks.Tests.PublishNugetTests
         public void DefaultPublishPaths()
         {
             NugetExec nugEx = new NugetExec();
-            Assert.Equal("https://www.nuget.org/api/v2/package/", nugEx.PublishToPath);
-            Assert.Equal("https://nuget.smbsrc.net", nugEx.PublishSymbolToPath);
+            Assert.Equal("https://api.nuget.org/v3/index.json", nugEx.PublishToPath);
+            //TODO: Enabled this once we switch to the new snupkg symbol publishing after the VS upgrade
+            //Assert.Equal("https://nuget.smbsrc.net", nugEx.PublishSymbolToPath);
         }
 
         #region publishing multi-packages
