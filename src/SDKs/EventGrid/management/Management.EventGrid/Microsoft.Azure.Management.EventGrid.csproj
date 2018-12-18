@@ -6,10 +6,10 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.EventGrid</PackageId>
     <Description>Provides developers with a library to create and manage all Azure EventGrid resources. </Description>
-    <Version>3.0.1-preview</Version>
+    <Version>4.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
     <PackageTags>Microsoft Azure EventGrid Management;Event Grid;Event Grid management;</PackageTags>
-    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+    <PackageReleaseNotes>Introducing 2019-01-01 as new GA API version.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
