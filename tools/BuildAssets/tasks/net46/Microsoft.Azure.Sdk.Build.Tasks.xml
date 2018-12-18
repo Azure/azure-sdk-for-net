@@ -11,11 +11,11 @@
             2) Create the required request file
             3) Execute the request to queue up the Symbols Archiving request
             
-            In case the Archive requests and you ever need to queuen up a new request for symbol archive
-            Use the cmdline printed in the log (requestOutput\requestOutput.txt) to execute from command line to queue up a new request for the same exact symbols
+            In case the Archive request fails and you ever need to queue up a new request for symbol archive
+            Use the cmdline printed in the log (requestOutput\requestcmdlineOutput.txt) to execute from command line to queue up a new request for the same exact symbols
             
             TODO:
-                Symbols service has no automated way to inform if the request was processed
+                Symbols service has no automated way to inform if the request was not processed
                 Currently an email is sent
             </summary>
         </member>
@@ -40,10 +40,10 @@
             In case the process of archiving symbols fail, this email will be used to communicate the current status of your archive request
             </summary>
         </member>
-        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.BuiltAssemblyList">
+        <member name="P:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.BuiltAssemblyFilePathList">
             <summary>
             This is an internal list that is used to process assembly list
-            Rather than dealing with ITaskItems, this is a list of ITaskItem.ItemSpec
+            Rather than dealing with ITaskItems, this is a list of File paths derived from of ITaskItem.ItemSpec
             </summary>
         </member>
         <member name="P:Microsoft.Azure.Sdk.Build.Tasks.ArchiveSymbolsTask.BuildJobId">
