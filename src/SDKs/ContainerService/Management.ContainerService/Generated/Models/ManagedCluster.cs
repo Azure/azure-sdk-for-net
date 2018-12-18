@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// when creating the managed cluster.</param>
         /// <param name="dnsPrefix">DNS prefix specified when creating the
         /// managed cluster.</param>
-        /// <param name="fqdn">FDQN for the master pool.</param>
+        /// <param name="fqdn">FQDN for the master pool.</param>
         /// <param name="agentPoolProfiles">Properties of the agent pool.
         /// Currently only one agent pool can exist.</param>
         /// <param name="linuxProfile">Profile for Linux VMs in the container
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string DnsPrefix { get; set; }
 
         /// <summary>
-        /// Gets FDQN for the master pool.
+        /// Gets FQDN for the master pool.
         /// </summary>
         [JsonProperty(PropertyName = "properties.fqdn")]
         public string Fqdn { get; private set; }

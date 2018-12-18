@@ -67,11 +67,6 @@ namespace Microsoft.Azure.Management.ContainerService
 
 
         /// <summary>
-        /// Gets the IContainerServicesOperations.
-        /// </summary>
-        IContainerServicesOperations ContainerServices { get; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
@@ -80,6 +75,11 @@ namespace Microsoft.Azure.Management.ContainerService
         /// Gets the IManagedClustersOperations.
         /// </summary>
         IManagedClustersOperations ManagedClusters { get; }
+
+        /// <summary>
+        /// Gets the IContainerServicesOperations.
+        /// </summary>
+        IContainerServicesOperations ContainerServices { get; }
 
     }
 }

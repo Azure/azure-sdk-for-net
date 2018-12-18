@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.ContainerService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<OperationValue>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<OperationValue>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

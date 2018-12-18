@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.ContainerService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ManagedCluster>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ManagedCluster>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.ContainerService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ManagedCluster>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ManagedCluster>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -825,10 +825,10 @@ namespace Microsoft.Azure.Management.ContainerService
         }
 
         /// <summary>
-        /// Gets clusteradmin credential of a managed cluster.
+        /// Gets cluster admin credential of a managed cluster.
         /// </summary>
         /// <remarks>
-        /// Gets clusteradmin credential of the managed cluster with a specified
+        /// Gets cluster admin credential of the managed cluster with a specified
         /// resource group and name.
         /// </remarks>
         /// <param name='resourceGroupName'>
@@ -1023,10 +1023,10 @@ namespace Microsoft.Azure.Management.ContainerService
         }
 
         /// <summary>
-        /// Gets clusteruser credential of a managed cluster.
+        /// Gets cluster user credential of a managed cluster.
         /// </summary>
         /// <remarks>
-        /// Gets clusteruser credential of the managed cluster with a specified
+        /// Gets cluster user credential of the managed cluster with a specified
         /// resource group and name.
         /// </remarks>
         /// <param name='resourceGroupName'>
@@ -2280,7 +2280,7 @@ namespace Microsoft.Azure.Management.ContainerService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ManagedCluster>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ManagedCluster>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2457,7 +2457,7 @@ namespace Microsoft.Azure.Management.ContainerService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ManagedCluster>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ManagedCluster>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
