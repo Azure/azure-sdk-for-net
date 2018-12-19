@@ -19,14 +19,23 @@ namespace Microsoft.Azure.Management.EventGrid
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("EventGrid", "DomainTopics", "2018-09-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "Domains", "2018-09-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "EventSubscriptions", "2018-09-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "Operations", "2018-09-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "TopicTypes", "2018-09-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "Topics", "2018-09-15-preview"),
+                new Tuple<string, string, string>("EventGrid", "EventSubscriptions", "2019-01-01"),
+                new Tuple<string, string, string>("EventGrid", "Operations", "2019-01-01"),
+                new Tuple<string, string, string>("EventGrid", "TopicTypes", "2019-01-01"),
+                new Tuple<string, string, string>("EventGrid", "Topics", "2019-01-01"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/eventgrid/management/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\GA19\\SubmitSdk100\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "60ba6c3597808284eb834fb432a0b20e9fc8c837";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+
