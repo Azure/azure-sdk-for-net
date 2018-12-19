@@ -7,7 +7,6 @@
 
     <!-- Setup default target frameworks -->
     <RequiredTargetFrameworks>net461;netstandard2.0</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(IsTestProject)' == 'true'">net461;netcoreapp2.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <!-- Setup common output paths -->
@@ -37,4 +36,6 @@
     <Authors>Microsoft</Authors>
     <IsPackable Condition="'$(IsTestProject)' == 'true'">false</IsPackable>
   </PropertyGroup>
+
+  <Import Condition="'$(IsTestProject)' == 'true'" Project="tests.props" />
 </Project>
