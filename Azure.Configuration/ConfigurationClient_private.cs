@@ -173,14 +173,14 @@ namespace Azure.Configuration
             }
 
             using (var hmac = new HMACSHA256(_secret))
-            { 
-                var (_, host, pathAndQuery) = context.Url;
-                string hostString = Utf8.ToString(host);
-                string pathAndQueryString = Utf8.ToString(pathAndQuery); 
+            {
+                var host = context.Uri.Host;
+                var pathAndQuery = context.Uri.PathAndQuery;
+
                 string verb = method.ToString().ToUpper();
                 DateTimeOffset utcNow = DateTimeOffset.UtcNow;
                 var utcNowString = utcNow.ToString("r");
-                var stringToSign = $"{verb}\n{pathAndQueryString}\n{utcNowString};{hostString};{contentHash}";
+                var stringToSign = $"{verb}\n{pathAndQuery}\n{utcNowString};{host};{contentHash}";
                 var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.ASCII.GetBytes(stringToSign))); // Calculate the signature
                 context.AddHeader("Date", utcNowString);
                 context.AddHeader("x-ms-content-sha256", contentHash);
