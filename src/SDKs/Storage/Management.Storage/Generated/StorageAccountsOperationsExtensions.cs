@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             /// <param name='expand'>
             /// May be used to expand the properties within account's properties. By
-            /// default, data is not included when fecthing properties. Currently we only
+            /// default, data is not included when fetching properties. Currently we only
             /// support geoReplicationStats. Possible values include: 'geoReplicationStats'
             /// </param>
             public static StorageAccount GetProperties(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountExpand? expand = default(StorageAccountExpand?))
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             /// <param name='expand'>
             /// May be used to expand the properties within account's properties. By
-            /// default, data is not included when fecthing properties. Currently we only
+            /// default, data is not included when fetching properties. Currently we only
             /// support geoReplicationStats. Possible values include: 'geoReplicationStats'
             /// </param>
             /// <param name='cancellationToken'>
@@ -422,7 +422,7 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='keyName'>
-            /// The name of storage keys that want to be regenerated, possible vaules are
+            /// The name of storage keys that want to be regenerated, possible values are
             /// key1, key2.
             /// </param>
             public static StorageAccountListKeysResult RegenerateKey(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string keyName)
@@ -446,7 +446,7 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='keyName'>
-            /// The name of storage keys that want to be regenerated, possible vaules are
+            /// The name of storage keys that want to be regenerated, possible values are
             /// key1, key2.
             /// </param>
             /// <param name='cancellationToken'>

@@ -45,10 +45,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// available for reads. Element may be default value if value of
         /// LastSyncTime is not available, this can happen if secondary is
         /// offline or we are in bootstrap.</param>
-        public GeoReplicationStats(string status = default(string), System.DateTime? lastSyncTime = default(System.DateTime?))
+        /// <param name="canFailover">A boolean flag which indicates whether or
+        /// not account failover is supported for the account.</param>
+        public GeoReplicationStats(string status = default(string), System.DateTime? lastSyncTime = default(System.DateTime?), bool? canFailover = default(bool?))
         {
             Status = status;
             LastSyncTime = lastSyncTime;
+            CanFailover = canFailover;
             CustomInit();
         }
 
@@ -79,6 +82,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastSyncTime")]
         public System.DateTime? LastSyncTime { get; private set; }
+
+        /// <summary>
+        /// Gets a boolean flag which indicates whether or not account failover
+        /// is supported for the account.
+        /// </summary>
+        [JsonProperty(PropertyName = "canFailover")]
+        public bool? CanFailover { get; private set; }
 
     }
 }
