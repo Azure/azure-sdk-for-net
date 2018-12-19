@@ -30,11 +30,6 @@ namespace Azure.Configuration
             Encoding.ASCII.GetBytes("application/vnd.microsoft.appconfig.kv+json")
         );
 
-        static readonly Func<ServiceResponse, ConfigurationSetting> s_parser = (rsp) => {
-            if (ConfigurationServiceParser.TryParse(rsp.Content.Bytes, out ConfigurationSetting result, out _)) return result;
-            throw new Exception("invalid response content");
-        };
-
         // TODO (pri 3): do all the methods that call this accept revisions?
         static void AddFilterHeaders(SettingFilter filter, PipelineCallContext context)
         {
@@ -58,12 +53,9 @@ namespace Azure.Configuration
                 return new Response<ConfigurationSetting>(response);
             }
 
-            if (!response.TryGetHeader(Header.Constants.ContentLength, out long contentLength)) {
-                throw new Exception("bad response: no content length header");
-            }
-            await response.Content.ReadAsync(contentLength).ConfigureAwait(false);
+            var result = await ConfigurationServiceParser.Parse(response.Content.Stream, context.Cancellation);
 
-            return new Response<ConfigurationSetting>(response, s_parser);
+            return new Response<ConfigurationSetting>(response, result);
         }
 
         static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
@@ -163,7 +155,7 @@ namespace Azure.Configuration
         {
             var writer = Utf8JsonWriter.Create(context.ContentWriter);
             writer.WriteObjectStart();
-            writer.WriteAttribute("key", setting.Value);
+            writer.WriteAttribute("value", setting.Value);
             writer.WriteAttribute("content_type", setting.ContentType);
             writer.WriteObjectEnd();
             writer.Flush();
@@ -193,7 +185,7 @@ namespace Azure.Configuration
                 context.AddHeader("Date", utcNowString);
                 context.AddHeader("x-ms-content-sha256", contentHash);
                 string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
-                context.AddHeader("Authentication", $"HMAC-SHA256 Credential={_credential}, SignedHeaders={signedHeaders}, Signature={signature}");
+                context.AddHeader("Authorization", $"HMAC-SHA256 Credential={_credential}, SignedHeaders={signedHeaders}, Signature={signature}");
             }
         }
 

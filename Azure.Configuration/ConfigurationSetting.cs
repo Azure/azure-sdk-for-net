@@ -5,8 +5,11 @@ using System.Buffers.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Text;
 using System.Text.JsonLab;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Configuration
 {
@@ -126,7 +129,7 @@ namespace Azure.Configuration
 
             key,
             label,
-            contenttype,
+            content_type,
             locked,
             value,
             etag,
@@ -140,7 +143,7 @@ namespace Azure.Configuration
                 // strings
                 case JsonState.key: result.Key = json.GetValueAsString(); break;
                 case JsonState.label: result.Label = json.GetValueAsString(); break;
-                case JsonState.contenttype: result.ContentType = json.GetValueAsString(); break;
+                case JsonState.content_type: result.ContentType = json.GetValueAsString(); break;
                 case JsonState.value: result.Value = json.GetValueAsString(); break;
                 case JsonState.etag: result.ETag = json.GetValueAsString(); break;
 
@@ -162,16 +165,33 @@ namespace Azure.Configuration
             }
         }
 
+        public static async Task<ConfigurationSetting> Parse(Stream content, CancellationToken cancel)
+        {
+            byte[] buffer = null;
+            try {
+                buffer = ArrayPool<byte>.Shared.Rent(4096);
+                var read = await content.ReadAsync(buffer, 0, buffer.Length, cancel);
+                var sequence = new ReadOnlySequence<byte>(buffer, 0, read);
+                if(TryParse(sequence, out ConfigurationSetting result, out _)) {
+                    return result;
+                }
+                else {
+                    throw new NotImplementedException();
+                }
+            }
+            finally {
+                if(buffer!=null) ArrayPool<byte>.Shared.Return(buffer);
+            }
+        }
+
         public static bool TryParse(ReadOnlySequence<byte> content, out ConfigurationSetting result, out long consumed)
         {
             result = new ConfigurationSetting();
             consumed = 0;
             var json = new Utf8JsonReader(content, true);
             JsonState state = JsonState.Other;
-            while (json.Read())
-            {
-                switch (json.TokenType)
-                {
+            while (json.Read()) {
+                switch (json.TokenType) {
                     case JsonTokenType.PropertyName:
                         state = json.Value.ToJsonState();
                         break;

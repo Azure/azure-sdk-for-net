@@ -11,7 +11,7 @@ using System.Buffers;
 
 namespace Azure.Configuration.Tests
 {
-    public class ConfigurationServiceTests
+    public class ConfigurationMockTests
     {
         static readonly string connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
         static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting()

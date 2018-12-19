@@ -20,7 +20,7 @@ namespace Azure.Configuration.Test
             : base(HttpMethod.Put, responseContent)
         {
             _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
-            _expectedRequestContent = "{\"key\":\"test_value\",\"content_type\":\"test_content_type\"}";
+            _expectedRequestContent = "{\"value\":\"test_value\",\"content_type\":\"test_content_type\"}";
         }
     }
 
@@ -30,7 +30,7 @@ namespace Azure.Configuration.Test
             : base(HttpMethod.Put, responseContent)
         {
             _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
-            _expectedRequestContent = "{\"key\":\"test_value\",\"content_type\":\"test_content_type\"}";
+            _expectedRequestContent = "{\"value\":\"test_value\",\"content_type\":\"test_content_type\"}";
         }
     }
 
@@ -40,7 +40,7 @@ namespace Azure.Configuration.Test
             : base(HttpMethod.Put, responseContent)
         {
             _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
-            _expectedRequestContent = "{\"key\":\"test_value\",\"content_type\":\"test_content_type\"}";
+            _expectedRequestContent = "{\"value\":\"test_value\",\"content_type\":\"test_content_type\"}";
         }
 
         protected override void VerifyRequestCore(HttpRequestMessage request)
@@ -164,6 +164,7 @@ namespace Azure.Configuration.Test
         protected override void WriteResponseCore(HttpResponseMessage response)
         {
             string json = JsonConvert.SerializeObject(_responseContent).ToLowerInvariant();
+            json = json.Replace("contenttype", "content_type");
             response.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             long jsonByteCount = Encoding.UTF8.GetByteCount(json);
