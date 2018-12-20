@@ -1,10 +1,13 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+    <RepoEngPath>$(MSBuildThisFileDirectory)eng/</RepoEngPath>
     <IsDataPlaneProject Condition="$(MSBuildProjectDirectory.Contains('DataPlane'))">true</IsDataPlaneProject>
-    <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
+
+    <!-- TODO: Remove this filter once all DataPlane SDKs are converted -->
+    <IsDataPlaneProject Condition="!$(MSBuildProjectDirectory.Contains('KeyVault')) and !$(MSBuildProjectDirectory.Contains('Template'))">false</IsDataPlaneProject>
   </PropertyGroup>
 
-  <Import Project="eng/Directory.Build.Mgmt.props" Condition="'$(IsDataPlaneProject)' != 'true'" />
-  <Import Project="eng/Directory.Build.Data.props" Condition="'$(IsDataPlaneProject)' == 'true'" />
+  <Import Project="$(RepoEngPath)Directory.Build.Mgmt.props" Condition="'$(IsDataPlaneProject)' != 'true'" />
+  <Import Project="$(RepoEngPath)Directory.Build.Data.props" Condition="'$(IsDataPlaneProject)' == 'true'" />
 </Project>

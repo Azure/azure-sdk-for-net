@@ -9,4 +9,21 @@
     <Error Condition="'@(RequiredTargetFrameworks)' == ''" Text="List of required target frameworks is empty something must have messed up property RequiredTargetFrameworks[$(RequiredTargetFrameworks)]." />
     <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
   </Target>
+
+  <PropertyGroup>
+    <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
+    <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestHelperLibrary)' == 'true'">
+    <IsPackable>false</IsPackable>
+    <RequiredTargetFrameworks>netcoreapp2.0</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <DefaultReferenceTargets>AzSdk.test.reference.targets</DefaultReferenceTargets>
+
+    <!-- Disable running of tests for test helper libraries -->
+    <IsTestProject Condition="'$(IsTestHelperLibrary)' == 'true'">false</IsTestProject>
+  </PropertyGroup>
+
+  <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)')" />
 </Project>

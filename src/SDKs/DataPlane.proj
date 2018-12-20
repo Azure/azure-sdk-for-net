@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.Build.Traversal">
   <ItemGroup>
     <ProjectReference Include="Template\DataPlane\**\*.*proj" Exclude="Template\DataPlane\**\*.Tests.*proj" />
+    <ProjectReference Include="KeyVault\DataPlane\**\*.*proj" Exclude="KeyVault\DataPlane\**\*.Tests.*proj" />
   </ItemGroup>
 </Project>

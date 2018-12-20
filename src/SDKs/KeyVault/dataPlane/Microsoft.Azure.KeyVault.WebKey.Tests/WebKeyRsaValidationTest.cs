@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
-// 
+//
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -36,10 +36,10 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             {
                 throw new CryptographicException( string.Format( "{0} is not supported", key.GetType().FullName ) );
             }
-#elif NETCOREAPP20
+#elif NETCOREAPP2_0
             plainText = key.Decrypt(cipherText, RSAEncryptionPadding.OaepSHA1);
 #else
-#error Unknown Build Flavor            
+#error Unknown Build Flavor
 #endif
 
             return plainText;
@@ -61,10 +61,10 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             {
                 throw new CryptographicException( string.Format( "{0} is not supported", key.GetType().FullName ) );
             }
-#elif NETCOREAPP20
+#elif NETCOREAPP2_0
             cipherText = key.Encrypt( _plainText, RSAEncryptionPadding.OaepSHA1 );
 #else
-            #error Unknown Build Flavor            
+            #error Unknown Build Flavor
 #endif
 
             return cipherText;
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         {
             EncryptDecrypt( publicKey.ToRSA(), privateKey.ToRSA( true ) );
         }
-        
+
         [Fact]
         public void OrdinaryKeyMustWork()
         {

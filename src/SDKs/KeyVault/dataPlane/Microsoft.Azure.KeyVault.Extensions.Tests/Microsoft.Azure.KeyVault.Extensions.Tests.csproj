@@ -1,10 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
-    <PackageId>Microsoft.Azure.KeyVault.Extensions.Tests</PackageId>
-    <Description>Microsoft Azure Key Vault Extensions tests</Description>
-    <Version>1.0.0</Version>
-    <AssemblyName>Microsoft.Azure.KeyVault.Extensions.Tests</AssemblyName>    
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <None Update="appsettings.json">
@@ -30,12 +26,7 @@
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.14.0" />
   </ItemGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
-    <DefineConstants>$(DefineConstants);NETSTANDARD14;NETCOREAPP20</DefineConstants>
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+  <ItemGroup Condition="'$(IsTargetingNetCoreApp)' == 'true'">
     <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
@@ -44,5 +35,4 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-
 </Project>

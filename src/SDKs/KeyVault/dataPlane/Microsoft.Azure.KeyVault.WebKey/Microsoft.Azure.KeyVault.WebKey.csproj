@@ -1,28 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.props'))" />
   <PropertyGroup>
-    <PackageId>Microsoft.Azure.KeyVault.WebKey</PackageId>
     <Description>Microsoft Azure Key Vault WebKey Class Library</Description>
-    <AssemblyTitle>Microsoft Azure Key Vault WebKey</AssemblyTitle>
-    <AssemblyName>Microsoft.Azure.KeyVault.WebKey</AssemblyName>
-    <Version>3.0.2</Version>
     <PackageTags>Microsoft Azure Key Vault WebKey</PackageTags>
-    <PackageReleaseNotes>      
+    <PackageReleaseNotes>
       <![CDATA[
         Republishing to sign package with correct hash.
       ]]>
     </PackageReleaseNotes>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.Runtime" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
@@ -31,5 +23,4 @@
     <PackageReference Include="System.Linq" Version="4.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
-
 </Project>

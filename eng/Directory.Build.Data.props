@@ -4,9 +4,17 @@
     <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
     <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
     <PlatformName Condition="'$(PlatformName)' == ''">$(Platform)</PlatformName>
+  </PropertyGroup>
 
-    <!-- Setup default target frameworks -->
-    <RequiredTargetFrameworks>net461;netstandard2.0</RequiredTargetFrameworks>
+  <!-- TargetFramework default properties -->
+  <PropertyGroup>
+    <RequiredTargetFrameworks>net452;netstandard1.4</RequiredTargetFrameworks>
+
+    <IsTargetingNetFx Condition="$(TargetFramework.StartsWith('net4'))">true</IsTargetingNetFx>
+    <IsTargetingNetStandard Condition="$(TargetFramework.StartsWith('netstandard'))">true</IsTargetingNetStandard>
+    <IsTargetingNetCoreApp Condition="$(TargetFramework.StartsWith('netcoreapp'))">true</IsTargetingNetCoreApp>
+
+    <DefineConstants Condition="'$(IsTargetingNetFx)' == 'true'">$(DefineConstants);FullNetFx</DefineConstants>
   </PropertyGroup>
 
   <!-- Setup common output paths -->
@@ -34,8 +42,7 @@
     <Company>Microsoft Corporation</Company>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <Authors>Microsoft</Authors>
-    <IsPackable Condition="'$(IsTestProject)' == 'true'">false</IsPackable>
+    <Product>Azure .NET SDK</Product>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
-
-  <Import Condition="'$(IsTestProject)' == 'true'" Project="tests.props" />
 </Project>
