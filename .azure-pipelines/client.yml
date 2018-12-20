@@ -13,7 +13,7 @@ jobs:
       vmImage: 'vs2017-win2016'
 
     steps:
-      - script: dotnet pack dirs.proj /p:PackageOutputPath=$(Build.ArtifactStagingDirectory)
+      - script: dotnet pack src/SDKs/DataPlane.proj /p:PackageOutputPath=$(Build.ArtifactStagingDirectory)
         displayName: 'Build & Package'
 
       - task: PublishBuildArtifacts@1
@@ -25,7 +25,7 @@ jobs:
       vmImage: 'vs2017-win2016'
 
     steps:
-      - script: dotnet test dirs.proj
+      - script: dotnet test src/SDKs/DataPlaneTests.proj
         displayName: 'Build & Test'
 
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
@@ -40,5 +40,5 @@ jobs:
       vmImage: 'ubuntu-16.04'
 
     steps:
-      - script: dotnet test dirs.proj
+      - script: dotnet test src/SDKs/DataPlaneTests.proj
         displayName: 'Build & Test'
