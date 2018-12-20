@@ -22,14 +22,18 @@ namespace Compute.Tests
 {
     public class VMScaleSetTestsBase : VMTestBase
     {
-        protected VirtualMachineScaleSetExtension GetTestVMSSVMExtension()
+        protected VirtualMachineScaleSetExtension GetTestVMSSVMExtension(
+            string name = "vmssext01",
+            string publisher = "Microsoft.Compute",
+            string type = "VMAccessAgent",
+            string version = "2.0")
         {
             var vmExtension = new VirtualMachineScaleSetExtension
             {
-                Name = "vmssext01",
-                Publisher = "Microsoft.Compute",
-                Type = "VMAccessAgent",
-                TypeHandlerVersion = "2.0",
+                Name = name,
+                Publisher = publisher,
+                Type = type,
+                TypeHandlerVersion = version,
                 AutoUpgradeMinorVersion = true,
                 Settings = "{}",
                 ProtectedSettings = "{}"
@@ -320,7 +324,8 @@ namespace Compute.Tests
             var loadBalancer = (getPublicIpAddressResponse != null && createWithHealthProbe) ?
                 CreatePublicLoadBalancerWithProbe(rgName, getPublicIpAddressResponse) : null;
 
-            inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount.Name, imageRef, subnetResponse.Id, hasManagedDisks:createWithManagedDisks,
+            Assert.True(createWithManagedDisks || storageAccount != null);
+            inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount?.Name, imageRef, subnetResponse.Id, hasManagedDisks:createWithManagedDisks,
                 healthProbeId: loadBalancer?.Probes?.FirstOrDefault()?.Id,
                 loadBalancerBackendPoolId: loadBalancer?.BackendAddressPools?.FirstOrDefault()?.Id, zones: zones, osDiskSizeInGB: osDiskSizeInGB);
             if (vmScaleSetCustomizer != null)
