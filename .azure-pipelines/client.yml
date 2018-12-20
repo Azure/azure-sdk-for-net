@@ -25,8 +25,14 @@ jobs:
       vmImage: 'vs2017-win2016'
 
     steps:
-      - script: dotnet test src/SDKs/DataPlaneTests.proj
+      - script: dotnet test src/SDKs/DataPlaneTests.proj --logger trx
         displayName: 'Build & Test'
+
+      - task: PublishTestResults@2
+        displayName: 'Publish Test Results'
+        inputs:
+          testResultsFormat: XUnit
+          testResultsFiles: '**/*.trx'
 
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: 'Component Detection'
@@ -40,5 +46,11 @@ jobs:
       vmImage: 'ubuntu-16.04'
 
     steps:
-      - script: dotnet test src/SDKs/DataPlaneTests.proj
+      - script: dotnet test src/SDKs/DataPlaneTests.proj --logger trx
         displayName: 'Build & Test'
+
+      - task: PublishTestResults@2
+        displayName: 'Publish Test Results'
+        inputs:
+          testResultsFormat: XUnit
+          testResultsFiles: '**/*.trx'

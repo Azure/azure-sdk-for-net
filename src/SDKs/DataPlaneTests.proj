@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.Build.Traversal">
   <ItemGroup>
-    <ProjectReference Include="Template\DataPlane\**\*.Tests.*proj" />
-    <ProjectReference Include="KeyVault\DataPlane\**\*.Tests.*proj" />
+    <DisabledTestProjects Include="KeyVault\DataPlane\Microsoft.Azure.KeyVault.Tests\Microsoft.Azure.KeyVault.Tests.csproj" />
+    <ProjectReference Include="Template\DataPlane\**\*.Tests.*proj" Exclude="@(DisabledTestProjects)" />
+    <ProjectReference Include="KeyVault\DataPlane\**\*.Tests.*proj" Exclude="@(DisabledTestProjects)" />
   </ItemGroup>
 </Project>
