@@ -31,7 +31,7 @@ jobs:
       - task: PublishTestResults@2
         displayName: 'Publish Test Results'
         inputs:
-          testResultsFormat: XUnit
+          testResultsFormat: VSTest
           testResultsFiles: '**/*.trx'
 
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
@@ -52,5 +52,5 @@ jobs:
       - task: PublishTestResults@2
         displayName: 'Publish Test Results'
         inputs:
-          testResultsFormat: XUnit
+          testResultsFormat: VSTest
           testResultsFiles: '**/*.trx'
