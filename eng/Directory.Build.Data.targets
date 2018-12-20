@@ -25,5 +25,12 @@
     <IsTestProject Condition="'$(IsTestHelperLibrary)' == 'true'">false</IsTestProject>
   </PropertyGroup>
 
+  <!-- This allows us to build .NET Framework targets on non-windows
+    TODO: Move the NETFramework reference assemblies to a feed other then the roslyn feed.
+  -->
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-alpha-004" PrivateAssets="all" IsImplicitlyDefined="true" />
+  </ItemGroup>
+
   <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)')" />
 </Project>

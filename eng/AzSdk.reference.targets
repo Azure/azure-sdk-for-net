@@ -14,12 +14,4 @@
     <Reference Include="System.Net.Http" />
     <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
   </ItemGroup>
-
-  <!-- This allows us to build .NET Framework targets on non-windows
-
-  TODO: Need to put these packages on a feed that isn't the roslyn myget feed before we use them
-  <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-alpha-004" PrivateAssets="all" IsImplicitlyDefined="true" />
-  </ItemGroup>
--->
 </Project>
