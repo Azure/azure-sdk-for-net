@@ -3,7 +3,6 @@
 [assembly: System.Runtime.InteropServices.GuidAttribute("a042adf0-ef65-4f87-b634-322a409f3d61")]
 namespace Microsoft.Azure.ServiceBus
 {
-    
     public abstract class ClientEntity : Microsoft.Azure.ServiceBus.IClientEntity
     {
         protected ClientEntity(string clientTypeName, string postfix, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy) { }
@@ -39,6 +38,8 @@ namespace Microsoft.Azure.ServiceBus
         public override bool Equals(object obj) { }
         public override bool Equals(Microsoft.Azure.ServiceBus.Filter other) { }
         public override int GetHashCode() { }
+        public static bool ==(Microsoft.Azure.ServiceBus.CorrelationFilter o1, Microsoft.Azure.ServiceBus.CorrelationFilter o2) { }
+        public static bool !=(Microsoft.Azure.ServiceBus.CorrelationFilter p1, Microsoft.Azure.ServiceBus.CorrelationFilter p2) { }
         public override string ToString() { }
     }
     public class static EntityNameHelper
@@ -79,6 +80,8 @@ namespace Microsoft.Azure.ServiceBus
         public override bool Equals(object obj) { }
         public override bool Equals(Microsoft.Azure.ServiceBus.Filter other) { }
         public override int GetHashCode() { }
+        public static bool ==(Microsoft.Azure.ServiceBus.FalseFilter o1, Microsoft.Azure.ServiceBus.FalseFilter o2) { }
+        public static bool !=(Microsoft.Azure.ServiceBus.FalseFilter o1, Microsoft.Azure.ServiceBus.FalseFilter o2) { }
         public override string ToString() { }
     }
     public abstract class Filter : System.IEquatable<Microsoft.Azure.ServiceBus.Filter>
@@ -289,6 +292,8 @@ namespace Microsoft.Azure.ServiceBus
         public override bool Equals(object obj) { }
         public bool Equals(Microsoft.Azure.ServiceBus.RuleDescription otherRule) { }
         public override int GetHashCode() { }
+        public static bool ==(Microsoft.Azure.ServiceBus.RuleDescription o1, Microsoft.Azure.ServiceBus.RuleDescription o2) { }
+        public static bool !=(Microsoft.Azure.ServiceBus.RuleDescription o1, Microsoft.Azure.ServiceBus.RuleDescription o2) { }
     }
     public sealed class ServerBusyException : Microsoft.Azure.ServiceBus.ServiceBusException
     {
@@ -393,6 +398,8 @@ namespace Microsoft.Azure.ServiceBus
         public override bool Equals(object obj) { }
         public override bool Equals(Microsoft.Azure.ServiceBus.Filter other) { }
         public override int GetHashCode() { }
+        public static bool ==(Microsoft.Azure.ServiceBus.SqlFilter o1, Microsoft.Azure.ServiceBus.SqlFilter o2) { }
+        public static bool !=(Microsoft.Azure.ServiceBus.SqlFilter o1, Microsoft.Azure.ServiceBus.SqlFilter o2) { }
         public override string ToString() { }
     }
     public sealed class SqlRuleAction : Microsoft.Azure.ServiceBus.RuleAction
@@ -403,6 +410,8 @@ namespace Microsoft.Azure.ServiceBus
         public override bool Equals(object obj) { }
         public override bool Equals(Microsoft.Azure.ServiceBus.RuleAction other) { }
         public override int GetHashCode() { }
+        public static bool ==(Microsoft.Azure.ServiceBus.SqlRuleAction o1, Microsoft.Azure.ServiceBus.SqlRuleAction o2) { }
+        public static bool !=(Microsoft.Azure.ServiceBus.SqlRuleAction o1, Microsoft.Azure.ServiceBus.SqlRuleAction o2) { }
         public override string ToString() { }
     }
     public class SubscriptionClient : Microsoft.Azure.ServiceBus.ClientEntity, Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.IClientEntity, Microsoft.Azure.ServiceBus.ISubscriptionClient
@@ -466,6 +475,8 @@ namespace Microsoft.Azure.ServiceBus
         public override bool Equals(object obj) { }
         public override bool Equals(Microsoft.Azure.ServiceBus.Filter other) { }
         public override int GetHashCode() { }
+        public static bool ==(Microsoft.Azure.ServiceBus.TrueFilter o1, Microsoft.Azure.ServiceBus.TrueFilter o2) { }
+        public static bool !=(Microsoft.Azure.ServiceBus.TrueFilter o1, Microsoft.Azure.ServiceBus.TrueFilter o2) { }
         public override string ToString() { }
     }
     public sealed class UnauthorizedException : Microsoft.Azure.ServiceBus.ServiceBusException
@@ -476,7 +487,6 @@ namespace Microsoft.Azure.ServiceBus
 }
 namespace Microsoft.Azure.ServiceBus.Core
 {
-    
     public interface IMessageReceiver : Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.IClientEntity
     {
         long LastPeekedSequenceNumber { get; }
@@ -591,7 +601,6 @@ namespace Microsoft.Azure.ServiceBus.Core
 }
 namespace Microsoft.Azure.ServiceBus.Diagnostics
 {
-    
     public class static MessageExtensions
     {
         public static System.Diagnostics.Activity ExtractActivity(this Microsoft.Azure.ServiceBus.Message message, string activityName = null) { }
@@ -599,9 +608,7 @@ namespace Microsoft.Azure.ServiceBus.Diagnostics
 }
 namespace Microsoft.Azure.ServiceBus.InteropExtensions
 {
-    
     public class static DataContractBinarySerializer<T>
-    
     {
         public static readonly System.Runtime.Serialization.XmlObjectSerializer Instance;
     }
@@ -612,7 +619,6 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
 }
 namespace Microsoft.Azure.ServiceBus.Management
 {
-    
     public enum AccessRights
     {
         Manage = 0,
@@ -634,6 +640,8 @@ namespace Microsoft.Azure.ServiceBus.Management
         public override bool Equals(object obj) { }
         public bool Equals(Microsoft.Azure.ServiceBus.Management.AuthorizationRules other) { }
         public override int GetHashCode() { }
+        public static bool ==(Microsoft.Azure.ServiceBus.Management.AuthorizationRules o1, Microsoft.Azure.ServiceBus.Management.AuthorizationRules o2) { }
+        public static bool !=(Microsoft.Azure.ServiceBus.Management.AuthorizationRules o1, Microsoft.Azure.ServiceBus.Management.AuthorizationRules o2) { }
     }
     public enum EntityStatus
     {
@@ -723,6 +731,8 @@ namespace Microsoft.Azure.ServiceBus.Management
         public override bool Equals(object obj) { }
         public bool Equals(Microsoft.Azure.ServiceBus.Management.QueueDescription otherDescription) { }
         public override int GetHashCode() { }
+        public static bool ==(Microsoft.Azure.ServiceBus.Management.QueueDescription o1, Microsoft.Azure.ServiceBus.Management.QueueDescription o2) { }
+        public static bool !=(Microsoft.Azure.ServiceBus.Management.QueueDescription o1, Microsoft.Azure.ServiceBus.Management.QueueDescription o2) { }
     }
     public class QueueRuntimeInfo
     {
@@ -747,6 +757,8 @@ namespace Microsoft.Azure.ServiceBus.Management
         public override bool Equals(object obj) { }
         public override bool Equals(Microsoft.Azure.ServiceBus.Management.AuthorizationRule other) { }
         public override int GetHashCode() { }
+        public static bool ==(Microsoft.Azure.ServiceBus.Management.SharedAccessAuthorizationRule o1, Microsoft.Azure.ServiceBus.Management.SharedAccessAuthorizationRule o2) { }
+        public static bool !=(Microsoft.Azure.ServiceBus.Management.SharedAccessAuthorizationRule o1, Microsoft.Azure.ServiceBus.Management.SharedAccessAuthorizationRule o2) { }
     }
     public class SubscriptionDescription : System.IEquatable<Microsoft.Azure.ServiceBus.Management.SubscriptionDescription>
     {
@@ -768,6 +780,8 @@ namespace Microsoft.Azure.ServiceBus.Management
         public override bool Equals(object obj) { }
         public bool Equals(Microsoft.Azure.ServiceBus.Management.SubscriptionDescription otherDescription) { }
         public override int GetHashCode() { }
+        public static bool ==(Microsoft.Azure.ServiceBus.Management.SubscriptionDescription o1, Microsoft.Azure.ServiceBus.Management.SubscriptionDescription o2) { }
+        public static bool !=(Microsoft.Azure.ServiceBus.Management.SubscriptionDescription o1, Microsoft.Azure.ServiceBus.Management.SubscriptionDescription o2) { }
     }
     public class SubscriptionRuntimeInfo
     {
@@ -797,6 +811,8 @@ namespace Microsoft.Azure.ServiceBus.Management
         public override bool Equals(object obj) { }
         public bool Equals(Microsoft.Azure.ServiceBus.Management.TopicDescription otherDescription) { }
         public override int GetHashCode() { }
+        public static bool ==(Microsoft.Azure.ServiceBus.Management.TopicDescription o1, Microsoft.Azure.ServiceBus.Management.TopicDescription o2) { }
+        public static bool !=(Microsoft.Azure.ServiceBus.Management.TopicDescription o1, Microsoft.Azure.ServiceBus.Management.TopicDescription o2) { }
     }
     public class TopicRuntimeInfo
     {
@@ -811,7 +827,6 @@ namespace Microsoft.Azure.ServiceBus.Management
 }
 namespace Microsoft.Azure.ServiceBus.Primitives
 {
-    
     public class AzureActiveDirectoryTokenProvider : Microsoft.Azure.ServiceBus.Primitives.TokenProvider
     {
         public override System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Primitives.SecurityToken> GetTokenAsync(string appliesTo, System.TimeSpan timeout) { }
