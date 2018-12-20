@@ -56,8 +56,6 @@ namespace Azure.Configuration.Tests
             Response<ConfigurationSetting> response = await service.GetAsync(key: s_testSetting.Key, filter : default, CancellationToken.None);
 
             Assert.AreEqual(200, response.Status);
-            Assert.True(response.TryGetHeader("ETag", out string etagHeader));
-            Assert.AreEqual(response.Result.ETag, etagHeader);
 
             AssertEqual(s_testSetting, response.Result);
 

@@ -61,10 +61,12 @@ namespace Azure.Configuration.Test
         }
     }
 
-    class GetMockTransport : KeyValueMockTransport
+    // TODO (pri 3): this should emit the etag response header
+    class GetMockTransport : MockHttpClientTransport
     {
+        string _responseContent;
+
         public GetMockTransport(string queryKey, SettingFilter filter, ConfigurationSetting result)
-            : base(HttpMethod.Get, result)
         {
             _expectedMethod = HttpMethod.Get;
             if (filter== null || filter.Label == null) {
@@ -73,6 +75,10 @@ namespace Azure.Configuration.Test
             else {
                 _expectedUri = $"https://contoso.azconfig.io/kv/{queryKey}?label={filter.Label}";
             }
+            _expectedRequestContent = null;
+
+            string json = JsonConvert.SerializeObject(result).ToLowerInvariant();
+            _responseContent = json.Replace("contenttype", "content_type");
         }
 
         public GetMockTransport(string queryKey, SettingFilter filter, params HttpStatusCode[] statusCodes)
@@ -86,11 +92,13 @@ namespace Azure.Configuration.Test
 
         protected override void WriteResponseCore(HttpResponseMessage response)
         {
-            base.WriteResponseCore(response);
+            response.Content = new StringContent(_responseContent, Encoding.UTF8, "application/json");
+
+            long jsonByteCount = Encoding.UTF8.GetByteCount(_responseContent);
+            response.Content.Headers.Add("Content-Length", jsonByteCount.ToString()); // TODO (pri 3): the service actually responds with chunked encoding
+
             response.Content.Headers.TryAddWithoutValidation("Last-Modified", "Tue, 05 Dec 2017 02:41:26 GMT");
             response.Content.Headers.TryAddWithoutValidation("Content-Type", "application/vnd.microsoft.appconfig.kv+json; charset=utf-8;");
-            var etag = _responseContent.ETag.ToString();
-            response.Headers.TryAddWithoutValidation("ETag", etag);
         }
     }
 
@@ -151,6 +159,7 @@ namespace Azure.Configuration.Test
         }
     }
 
+    // TODO (pri 3): this should be eliminated. Mocks should derive from MockHttpClientTransport; otherwise it's hard to tell what's going on
     class KeyValueMockTransport : MockHttpClientTransport
     {
         protected ConfigurationSetting _responseContent;
@@ -170,22 +179,6 @@ namespace Azure.Configuration.Test
             long jsonByteCount = Encoding.UTF8.GetByteCount(json);
             response.Content.Headers.Add("Content-Length", jsonByteCount.ToString()); // TODO (pri 3): is this actually present?
         }
-
-        protected static ConfigurationSetting CloneKey(ConfigurationSetting original)
-        {
-            var cloned = new ConfigurationSetting();
-            cloned.Key = original.Key;
-            cloned.Label = original.Label;
-            cloned.Value = original.Value;
-            cloned.ETag = original.ETag;
-            cloned.ContentType = original.ContentType;
-            cloned.LastModified = original.LastModified;
-            cloned.Locked = original.Locked;
-            foreach (var kvp in original.Tags) {
-                cloned.Tags.Add(kvp);
-            }
-            return cloned;
-        }
     }
 
     abstract class MockHttpClientTransport : HttpPipelineTransport
@@ -193,28 +186,36 @@ namespace Azure.Configuration.Test
         protected HttpMethod _expectedMethod;
         protected StringCheck _expectedUri;
         protected StringCheck? _expectedRequestContent;
+        public Dictionary<string, StringCheck> _expectedRequestHeaders = new Dictionary<string, StringCheck>();
+
+        public List<Response> Responses = new List<Response>();
         int _nextResponse;
 
-        public Dictionary<string, StringCheck> Headers = new Dictionary<string, StringCheck>();
-        public List<Response> Responses = new List<Response>();
-
-        protected override Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage request)
+        protected sealed override Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage request)
         {
-            if (Responses.Count == 0) {
+            if (Responses.Count == 0)
+            { // TODO (pri 3): this should not be hardcoded here
                 Responses.Add(HttpStatusCode.NotFound);
                 Responses.Add(HttpStatusCode.OK);
             }
 
-            VerifyRequestLine(request);
-            VerifyRequestContent(request);
-            VerifyUserAgentHeader(request);
-            VerifyRequestCore(request);
+            VerifyRequest(request);
+
             HttpResponseMessage response = new HttpResponseMessage();
             if (WriteResponse(response))
             {
                 WriteResponseCore(response);
             }
             return Task.FromResult(response);
+        }
+
+        void VerifyRequest(HttpRequestMessage request)
+        {
+            VerifyRequestLine(request);
+            VerifyRequestHeaders(request);
+            VerifyRequestContent(request);
+            VerifyUserAgentHeader(request); // TODO (pri 3): why is it not part of the _expectedHeaders collection?
+            VerifyRequestCore(request);
         }
 
         protected virtual void VerifyRequestCore(HttpRequestMessage request) { }
@@ -255,9 +256,9 @@ namespace Azure.Configuration.Test
             Assert.Fail("could not find User-Agent header value " + expected);
         }
 
-        void VerifyHeaders(HttpRequestMessage request)
+        void VerifyRequestHeaders(HttpRequestMessage request)
         {
-            foreach(var check in Headers) {
+            foreach(var check in _expectedRequestHeaders) {
                 if(!request.Headers.TryGetValues(check.Key, out var values)){
                     Assert.Fail("header {0} not found", check.Key);
                 }

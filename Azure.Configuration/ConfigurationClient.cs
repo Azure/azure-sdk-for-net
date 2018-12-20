@@ -59,7 +59,7 @@ namespace Azure.Configuration
                 return await CreateKeyValueResponse(context);
             }
             catch {
-                if (context != null) context.Dispose();
+                if (context != null) context.Dispose(); // TODO (pri 1) : should we always dispose given the content is eagerly deserialized?
                 throw;
             }
         }
