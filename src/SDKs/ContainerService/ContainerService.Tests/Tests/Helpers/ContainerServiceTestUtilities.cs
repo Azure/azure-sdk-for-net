@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
         internal const string ResourceGroupPrefix = "aks-dotnet-sdk-RG-";
         internal const string AgentPoolProfileName = "aksdotnetagent";
         internal const string VMSize = "Standard_A1";
-        internal const string AKSDotnetDevSpId = "08894bbb-66d9-4ca5-98db-9603a984f257";
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {

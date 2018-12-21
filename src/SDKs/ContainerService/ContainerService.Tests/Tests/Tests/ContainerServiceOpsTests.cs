@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
 
                 var servicePrincipalProfile = new ManagedClusterServicePrincipalProfile
                 {
-                    ClientId = ContainerServiceTestUtilities.AKSDotnetDevSpId,
+                    ClientId = Environment.GetEnvironmentVariable("AKS_DEV_SPID"),
                     Secret = Environment.GetEnvironmentVariable("AKS_DEV_SP_SECRET")
                 };
 
