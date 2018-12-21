@@ -55,22 +55,64 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
             {
                 InitializeClients(context);
 
-                var location = ContainerServiceTestUtilities.GetLocationFromProvider(ResourceManagementClient);
+                string location = ContainerServiceTestUtilities.GetLocationFromProvider(resourceManagementClient);
 
-                var resourceGroup = ResourceManagementClient.TryGetResourceGroup(location);
+                var resourceGroup = resourceManagementClient.TryGetResourceGroup(location);
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
                     resourceGroup = TestUtilities.GenerateName(ContainerServiceTestUtilities.ResourceGroupPrefix);
-                    ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                    resourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
                 }
 
-                var servicePrincipalProfile = new ManagedClusterServicePrincipalProfile
-                {
-                    ClientId = Environment.GetEnvironmentVariable("AKS_DEV_SPID"),
-                    Secret = Environment.GetEnvironmentVariable("AKS_DEV_SP_SECRET")
-                };
+                string clusterName = TestUtilities.GenerateName();
 
-                var agentPoolProfiles = new List<ManagedClusterAgentPoolProfile>
+                // Create a managed AKS cluster
+                ManagedCluster managedClusterResult = await CreateManagedCluster(
+                    ResourceManagementClient, 
+                    ContainerServiceClient,
+                    location,
+                    clusterName,
+                    resourceGroup);
+
+                try
+                {
+                    Assert.NotNull(managedClusterResult);
+                    Assert.Equal(clusterName, managedClusterResult.Name);
+                    Assert.Equal(ContainerServiceTestUtilities.DnsPrefix, managedClusterResult.DnsPrefix);
+                }
+                catch (Exception) { throw; }
+                finally
+                {
+                    // Block to clean up our test resources via ResourceGroup deletion
+                    ResourceManagementClient.ResourceGroups.Delete(resourceGroup);
+                }
+            }
+        }
+
+        /// <summary>
+        /// CreateManagedCluster creates an AKS managed cluster
+        /// </summary>
+        /// <param name="resourceManagementClient"></param>
+        /// <param name="containerServiceClient"></param>
+        /// <param name="location"></param>
+        /// <param name="clusterName"></param>
+        /// <param name="resourceGroupName"></param>
+        /// <returns></returns>
+        internal async static Task<ManagedCluster> CreateManagedCluster(
+            ResourceManagementClient resourceManagementClient,
+            ContainerServiceClient containerServiceClient,
+            string location,
+            string clusterName,
+            string resourceGroupName)
+        {
+
+            var servicePrincipalProfile = new ManagedClusterServicePrincipalProfile
+            {
+                ClientId = Environment.GetEnvironmentVariable("AKS_DEV_SPID"),
+                Secret = Environment.GetEnvironmentVariable("AKS_DEV_SP_SECRET")
+            };
+
+            var agentPoolProfiles = new List<ManagedClusterAgentPoolProfile>
                 {
                     new ManagedClusterAgentPoolProfile
                     {
@@ -79,22 +121,16 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
                         Count = 1
                     }
                 };
-               
-                ManagedCluster desiredManagedCluster = new ManagedCluster
-                {
-                    DnsPrefix = ContainerServiceTestUtilities.DnsPrefix,
-                    Location = location,
-                    AgentPoolProfiles = agentPoolProfiles,
-                    ServicePrincipalProfile = servicePrincipalProfile
-                };
 
-                string clusterName = TestUtilities.GenerateName();
-                ManagedCluster managedClusterResult = await ContainerServiceClient.ManagedClusters.CreateOrUpdateAsync(resourceGroup, clusterName, desiredManagedCluster);
-
-                Assert.NotNull(managedClusterResult);
-                Assert.Equal(clusterName, managedClusterResult.Name);
-                Assert.Equal(ContainerServiceTestUtilities.DnsPrefix, managedClusterResult.DnsPrefix);
-            }
+            ManagedCluster desiredManagedCluster = new ManagedCluster
+            {
+                DnsPrefix = ContainerServiceTestUtilities.DnsPrefix,
+                Location = location,
+                AgentPoolProfiles = agentPoolProfiles,
+                ServicePrincipalProfile = servicePrincipalProfile
+            };
+            
+            return await containerServiceClient.ManagedClusters.CreateOrUpdateAsync(resourceGroupName, clusterName, desiredManagedCluster);
         }
     }
 }
