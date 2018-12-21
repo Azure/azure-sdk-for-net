@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Management.ContainerService\Microsoft.Azure.Management.ContainerService.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Tests\SessionRecords\" />
-  </ItemGroup>
-
 </Project>
