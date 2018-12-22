@@ -28,7 +28,8 @@ namespace Maps.Tests.Helpers
         // These are used to create default accounts
         public static string DefaultResourceGroupLocation = IsTestTenant ? null : "westus";
         public static string DefaultLocation = IsTestTenant ? null : "global";
-        public const string DefaultSkuName = "S0";
+        public const string DefaultSkuName = "s0";
+        public const string S1SkuName = "s1";
         public static Dictionary<string, string> DefaultTags
             = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" } };
 
@@ -120,18 +121,19 @@ namespace Maps.Tests.Helpers
 
             if (useDefaults)
             {
-                Assert.Equal(MapsManagementTestUtilities.DefaultLocation, account.Location);
-                Assert.Equal(MapsManagementTestUtilities.DefaultSkuName, account.Sku.Name);
+                Assert.Equal(MapsManagementTestUtilities.DefaultLocation, account.Location, ignoreCase: true);
+                Assert.Equal(MapsManagementTestUtilities.DefaultSkuName, account.Sku.Name, ignoreCase: true);
 
                 Assert.NotNull(account.Tags);
+                Assert.NotNull(account.Properties.XMsClientId);
                 Assert.Equal(2, account.Tags.Count);
                 Assert.Equal("value1", account.Tags["key1"]);
                 Assert.Equal("value2", account.Tags["key2"]);
             }
             else
             {
-                Assert.Equal(skuName, account.Sku.Name);
-                Assert.Equal(location, account.Location);
+                Assert.Equal(skuName, account.Sku.Name, ignoreCase: true);
+                Assert.Equal(location, account.Location, ignoreCase: true);
             }
         }
 

@@ -7,10 +7,10 @@
     <PackageId>Microsoft.Azure.Management.Maps</PackageId>
     <PackageReleaseNotes>This package replaces Microsoft.Azure.Management.LocationBasedServices. Azure Location Based Services is now Azure Maps.</PackageReleaseNotes>
     <Description>Microsoft Azure Management Maps Library</Description>
-    <VersionPrefix>1.0.1</VersionPrefix>
+    <VersionPrefix>1.0.2</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.Maps</AssemblyName>
     <PackageTags>Microsoft Azure Maps management;Location Services;Location Services management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
-    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+    <PackageReleaseNotes>Expose the x-ms-client-id property.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
