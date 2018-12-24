@@ -1,9 +1,9 @@
-2018-12-18 02:50:27 UTC
+2018-12-24 03:03:06 UTC
 
 1) azure-rest-api-specs repository information
-GitHub user: blueww
-Branch:      subdomain
-Commit:      2355740b4e2f935b7496dea2aed5780b96337cac
+GitHub user: azure
+Branch:      master
+Commit:      789256cb59131b904f83de5e83ed911ec74e7d74
 
 2) AutoRest information
 Requested version: latest
