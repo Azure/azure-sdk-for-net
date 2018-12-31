@@ -74,18 +74,189 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
                     clusterName,
                     resourceGroup);
 
-                try
+                Assert.NotNull(managedClusterResult);
+                Assert.Equal(clusterName, managedClusterResult.Name);
+                Assert.Equal(ContainerServiceTestUtilities.DnsPrefix, managedClusterResult.DnsPrefix);
+
+                // Clean up our Azure resources
+                ResourceManagementClient.ResourceGroups.DeleteAsync(resourceGroup).Wait();
+            }
+        }
+
+        /// <summary>
+        /// Test an update to an AKS cluster
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task ContainerServiceUpdateServiceTest()
+        {
+            using (MockContext context = MockContext.Start(GetType().FullName))
+            {
+                InitializeClients(context);
+
+                string location = ContainerServiceTestUtilities.GetLocationFromProvider(resourceManagementClient);
+
+                var resourceGroup = resourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
-                    Assert.NotNull(managedClusterResult);
-                    Assert.Equal(clusterName, managedClusterResult.Name);
-                    Assert.Equal(ContainerServiceTestUtilities.DnsPrefix, managedClusterResult.DnsPrefix);
+                    resourceGroup = TestUtilities.GenerateName(ContainerServiceTestUtilities.ResourceGroupPrefix);
+                    resourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
                 }
-                catch (Exception) { throw; }
-                finally
+
+                string clusterName = TestUtilities.GenerateName();
+
+                // Create a managed AKS cluster
+                ManagedCluster managedClusterResult = await CreateManagedCluster(
+                    ResourceManagementClient,
+                    ContainerServiceClient,
+                    location,
+                    clusterName,
+                    resourceGroup);
+
+                // Alter the number of agents and invoke update
+                managedClusterResult.AgentPoolProfiles[0].Count = 2;
+
+                var updatedCluster = await ContainerServiceClient.ManagedClusters.CreateOrUpdateAsync(resourceGroup, clusterName, managedClusterResult);
+
+                Assert.Equal(2, updatedCluster.AgentPoolProfiles[0].Count);
+                Assert.Equal(clusterName, managedClusterResult.Name);
+
+                // Clean up our Azure resources
+                ResourceManagementClient.ResourceGroups.DeleteAsync(resourceGroup).Wait();
+            }
+        }
+
+        /// <summary>
+        /// Test the deletion of an AKS cluster
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task ContainerServiceDeleteServiceTest()
+        {
+            using (MockContext context = MockContext.Start(GetType().FullName))
+            {
+                InitializeClients(context);
+
+                string location = ContainerServiceTestUtilities.GetLocationFromProvider(resourceManagementClient);
+
+                var resourceGroup = resourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
-                    // Block to clean up our test resources via ResourceGroup deletion
-                    ResourceManagementClient.ResourceGroups.Delete(resourceGroup);
+                    resourceGroup = TestUtilities.GenerateName(ContainerServiceTestUtilities.ResourceGroupPrefix);
+                    resourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
                 }
+
+                string clusterName = TestUtilities.GenerateName();
+
+                // Create a managed AKS cluster
+                ManagedCluster managedClusterResult = await CreateManagedCluster(
+                    ResourceManagementClient,
+                    ContainerServiceClient,
+                    location,
+                    clusterName,
+                    resourceGroup);
+
+                // Wait for 10 seconds a sanity check
+                TestUtilities.Wait(10000);
+
+                // Delete the cluster
+                containerServiceClient.ManagedClusters.DeleteAsync(resourceGroup, clusterName).Wait();
+
+                // List clusters by resource group
+                var managedService = await containerServiceClient.ManagedClusters.ListByResourceGroupAsync(resourceGroup);
+
+                Assert.True(!managedService.IsAny());
+
+                // Clean up our Azure resources
+                ResourceManagementClient.ResourceGroups.DeleteAsync(resourceGroup).Wait();
+            }
+        }
+
+        /// <summary>
+        /// Test the fetching up update profiles for an AKS cluster
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task ContainerServiceGetUpgradeProfileTest()
+        {
+            using (MockContext context = MockContext.Start(GetType().FullName))
+            {
+                InitializeClients(context);
+
+                string location = ContainerServiceTestUtilities.GetLocationFromProvider(resourceManagementClient);
+
+                var resourceGroup = resourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(ContainerServiceTestUtilities.ResourceGroupPrefix);
+                    resourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
+
+                string clusterName = TestUtilities.GenerateName();
+
+                // Create a managed AKS cluster
+                ManagedCluster managedClusterResult = await CreateManagedCluster(
+                    ResourceManagementClient,
+                    ContainerServiceClient,
+                    location,
+                    clusterName,
+                    resourceGroup);
+
+                // Wait for 10 seconds a sanity check
+                TestUtilities.Wait(10000);
+
+                var upgradeProfiles = await containerServiceClient.ManagedClusters.GetUpgradeProfileAsync(resourceGroup, clusterName);
+
+                Assert.True(upgradeProfiles.AgentPoolProfiles.Count > 0);
+                Assert.True(upgradeProfiles.ControlPlaneProfile.Upgrades.Count > 0);
+
+                // Clean up our Azure resources
+                ResourceManagementClient.ResourceGroups.DeleteAsync(resourceGroup).Wait();
+            }
+        }
+
+        /// <summary>
+        /// Test the fetching of AKS cluster credentials
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task ContainerServiceGetCredentialsTest()
+        {
+            using (MockContext context = MockContext.Start(GetType().FullName))
+            {
+                InitializeClients(context);
+
+                string location = ContainerServiceTestUtilities.GetLocationFromProvider(resourceManagementClient);
+
+                var resourceGroup = resourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(ContainerServiceTestUtilities.ResourceGroupPrefix);
+                    resourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
+
+                string clusterName = TestUtilities.GenerateName();
+
+                // Create a managed AKS cluster
+                ManagedCluster managedClusterResult = await CreateManagedCluster(
+                    ResourceManagementClient,
+                    ContainerServiceClient,
+                    location,
+                    clusterName,
+                    resourceGroup);
+
+                // Fetch admin credentials
+                var adminCredentials = await containerServiceClient.ManagedClusters.ListClusterAdminCredentialsAsync(resourceGroup, clusterName);
+
+                Assert.True(adminCredentials.Kubeconfigs.Count > 0);
+
+                // Fetch user credentials
+                var userCredentials = await containerServiceClient.ManagedClusters.ListClusterUserCredentialsAsync(resourceGroup, clusterName);
+
+                Assert.True(userCredentials.Kubeconfigs.Count > 0);
+
+                // Clean up our Azure resources
+                ResourceManagementClient.ResourceGroups.DeleteAsync(resourceGroup).Wait();
             }
         }
 
