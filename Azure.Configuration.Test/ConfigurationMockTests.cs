@@ -69,7 +69,7 @@ namespace Azure.Configuration.Tests
             var transport = new GetMockTransport(s_testSetting.Key, default, HttpStatusCode.NotFound);
             var (service, pool) = CreateTestService(transport);
 
-            Response<ConfigurationSetting> response = await service.GetAsync(s_testSetting.Key, filter: default, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.GetAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
 
             Assert.AreEqual(404, response.Status);
             Assert.IsNull(response.Result);
@@ -84,7 +84,7 @@ namespace Azure.Configuration.Tests
             var transport = new AddMockTransport(s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            Response<ConfigurationSetting> response = await service.AddAsync(s_testSetting, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.AddAsync(setting: s_testSetting, CancellationToken.None);
 
             AssertEqual(s_testSetting, response.Result);
 

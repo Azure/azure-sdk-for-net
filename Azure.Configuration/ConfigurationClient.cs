@@ -186,15 +186,19 @@ namespace Azure.Configuration
 
         public async Task<Response<ConfigurationSetting>> GetAsync(string key, SettingFilter filter = null, CancellationToken cancellation = default)
         {
-            if (string.IsNullOrEmpty(key)) { throw new ArgumentNullException(nameof(key)); }
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
 
             Uri url = BuildUrlForKvRoute(key, filter);
-
+            
             PipelineCallContext context = null;
             try {
                 context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Get, url);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
+                AddFilterHeaders(filter, context);
+                context.AddHeader(Header.Common.JsonContentType);
+
+                AddAuthenticationHeader(context, ServiceMethod.Get, default);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
