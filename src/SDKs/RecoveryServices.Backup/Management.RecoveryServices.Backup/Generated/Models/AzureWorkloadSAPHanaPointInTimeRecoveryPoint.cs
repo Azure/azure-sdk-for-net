@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -18,7 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Recovery point specific to PointInTime in SAPHana
     /// </summary>
-    public partial class AzureWorkloadSAPHanaPointInTimeRecoveryPoint : AzureWorkloadSAPHanaRecoveryPoint
+    public partial class AzureWorkloadSAPHanaPointInTimeRecoveryPoint : AzureWorkloadPointInTimeRecoveryPoint
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -39,9 +38,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Invalid', 'Full', 'Log', 'Differential'</param>
         /// <param name="timeRanges">List of log ranges</param>
         public AzureWorkloadSAPHanaPointInTimeRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), string type = default(string), IList<PointInTimeRange> timeRanges = default(IList<PointInTimeRange>))
-            : base(recoveryPointTimeInUTC, type)
+            : base(recoveryPointTimeInUTC, type, timeRanges)
         {
-            TimeRanges = timeRanges;
             CustomInit();
         }
 
@@ -49,12 +47,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets list of log ranges
-        /// </summary>
-        [JsonProperty(PropertyName = "timeRanges")]
-        public IList<PointInTimeRange> TimeRanges { get; set; }
 
     }
 }

@@ -51,9 +51,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// sent. Possible values include: 'Invalid', 'VM', 'FileFolder',
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
         /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
-        /// 'AzureFileShare', 'SAPHanaDatabase'</param>
-        public AzureSQLAGWorkloadContainerProtectionContainer(string friendlyName = default(string), string backupManagementType = default(string), string registrationStatus = default(string), string healthStatus = default(string), string sourceResourceId = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), AzureWorkloadContainerExtendedInfo extendedInfo = default(AzureWorkloadContainerExtendedInfo), string workloadType = default(string))
-            : base(friendlyName, backupManagementType, registrationStatus, healthStatus, sourceResourceId, lastUpdatedTime, extendedInfo, workloadType)
+        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase'</param>
+        /// <param name="operationType">Re-Do Operation. Possible values
+        /// include: 'Invalid', 'Register', 'Reregister'</param>
+        public AzureSQLAGWorkloadContainerProtectionContainer(string friendlyName = default(string), string backupManagementType = default(string), string registrationStatus = default(string), string healthStatus = default(string), string sourceResourceId = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), AzureWorkloadContainerExtendedInfo extendedInfo = default(AzureWorkloadContainerExtendedInfo), string workloadType = default(string), string operationType = default(string))
+            : base(friendlyName, backupManagementType, registrationStatus, healthStatus, sourceResourceId, lastUpdatedTime, extendedInfo, workloadType, operationType)
         {
             CustomInit();
         }

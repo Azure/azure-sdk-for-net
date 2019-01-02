@@ -52,6 +52,40 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </exception>
         Task<AzureOperationResponse<PreValidateEnableBackupResponse>> ValidateWithHttpMessagesAsync(string azureRegion, PreValidateEnableBackupRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Provides the details of the protection intent up item. This is an
+        /// asynchronous operation. To know the status of the operation,
+        /// call the GetItemOperationResult API.
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Fabric name associated with the backed up item.
+        /// </param>
+        /// <param name='intentObjectName'>
+        /// Backed up item name whose details are to be fetched.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ProtectionIntentResource>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, string fabricName, string intentObjectName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create Intent for Enabling backup of an item. This is a synchronous
         /// operation.
         /// </summary>
@@ -87,5 +121,34 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ProtectionIntentResource>> CreateOrUpdateWithHttpMessagesAsync(string vaultName, string resourceGroupName, string fabricName, string intentObjectName, ProtectionIntentResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Used to remove intent from an item
+        /// </summary>
+        /// <param name='vaultName'>
+        /// The name of the recovery services vault.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group where the recovery services vault is
+        /// present.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Fabric name associated with the intent.
+        /// </param>
+        /// <param name='intentObjectName'>
+        /// Intent to be deleted.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string vaultName, string resourceGroupName, string fabricName, string intentObjectName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

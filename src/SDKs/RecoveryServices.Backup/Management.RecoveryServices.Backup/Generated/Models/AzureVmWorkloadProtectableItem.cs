@@ -49,19 +49,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// AG</param>
         /// <param name="isAutoProtectable">Indicates if protectable item is
         /// auto-protectable</param>
+        /// <param name="isAutoProtected">Indicates if protectable item is
+        /// auto-protected</param>
         /// <param name="subinquireditemcount">For instance or AG, indicates
         /// number of DB's present</param>
         /// <param name="subprotectableitemcount">For instance or AG, indicates
         /// number of DB's to be protected</param>
         /// <param name="prebackupvalidation">Pre-backup validation for
         /// protectable objects</param>
-        public AzureVmWorkloadProtectableItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), string protectionState = default(string), string parentName = default(string), string parentUniqueName = default(string), string serverName = default(string), bool? isAutoProtectable = default(bool?), int? subinquireditemcount = default(int?), int? subprotectableitemcount = default(int?), PreBackupValidation prebackupvalidation = default(PreBackupValidation))
+        public AzureVmWorkloadProtectableItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), string protectionState = default(string), string parentName = default(string), string parentUniqueName = default(string), string serverName = default(string), bool? isAutoProtectable = default(bool?), bool? isAutoProtected = default(bool?), int? subinquireditemcount = default(int?), int? subprotectableitemcount = default(int?), PreBackupValidation prebackupvalidation = default(PreBackupValidation))
             : base(backupManagementType, workloadType, friendlyName, protectionState)
         {
             ParentName = parentName;
             ParentUniqueName = parentUniqueName;
             ServerName = serverName;
             IsAutoProtectable = isAutoProtectable;
+            IsAutoProtected = isAutoProtected;
             Subinquireditemcount = subinquireditemcount;
             Subprotectableitemcount = subprotectableitemcount;
             Prebackupvalidation = prebackupvalidation;
@@ -99,6 +102,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "isAutoProtectable")]
         public bool? IsAutoProtectable { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates if protectable item is auto-protected
+        /// </summary>
+        [JsonProperty(PropertyName = "isAutoProtected")]
+        public bool? IsAutoProtected { get; set; }
 
         /// <summary>
         /// Gets or sets for instance or AG, indicates number of DB's present

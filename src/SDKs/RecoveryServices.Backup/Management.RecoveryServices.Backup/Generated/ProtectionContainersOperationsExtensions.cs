@@ -23,6 +23,66 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class ProtectionContainersOperationsExtensions
     {
             /// <summary>
+            /// Grants restore access to container.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name associated the container.
+            /// </param>
+            /// <param name='containerName'>
+            /// Name of the container for which access is required
+            /// </param>
+            /// <param name='parameters'>
+            /// restore access request
+            /// </param>
+            public static GenericRestoreAccessResponse AccessRestore(this IProtectionContainersOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, GenericRestoreAccessRequest parameters)
+            {
+                return operations.AccessRestoreAsync(vaultName, resourceGroupName, fabricName, containerName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Grants restore access to container.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name associated the container.
+            /// </param>
+            /// <param name='containerName'>
+            /// Name of the container for which access is required
+            /// </param>
+            /// <param name='parameters'>
+            /// restore access request
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GenericRestoreAccessResponse> AccessRestoreAsync(this IProtectionContainersOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, GenericRestoreAccessRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AccessRestoreWithHttpMessagesAsync(vaultName, resourceGroupName, fabricName, containerName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets details of the specific container registered to your Recovery Services
             /// Vault.
             /// </summary>
@@ -204,12 +264,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
 
             /// <summary>
-            /// Inquires all the protectable item in the given container that can be
-            /// protected.
+            /// Inquires all the protectable items under the given container.
             /// </summary>
             /// <remarks>
-            /// Inquires all the protectable items that are protectable under the given
-            /// container.
+            /// This is an async operation and the results should be tracked using location
+            /// header or Azure-async-url.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -236,12 +295,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
 
             /// <summary>
-            /// Inquires all the protectable item in the given container that can be
-            /// protected.
+            /// Inquires all the protectable items under the given container.
             /// </summary>
             /// <remarks>
-            /// Inquires all the protectable items that are protectable under the given
-            /// container.
+            /// This is an async operation and the results should be tracked using location
+            /// header or Azure-async-url.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

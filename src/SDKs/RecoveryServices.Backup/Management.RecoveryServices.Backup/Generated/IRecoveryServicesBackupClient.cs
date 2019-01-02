@@ -65,6 +65,46 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
 
         /// <summary>
+        /// Gets the IBackupFabricsOperations.
+        /// </summary>
+        IBackupFabricsOperations BackupFabrics { get; }
+
+        /// <summary>
+        /// Gets the IScopedBackupPoliciesOperations.
+        /// </summary>
+        IScopedBackupPoliciesOperations ScopedBackupPolicies { get; }
+
+        /// <summary>
+        /// Gets the IScopedProtectionPoliciesOperations.
+        /// </summary>
+        IScopedProtectionPoliciesOperations ScopedProtectionPolicies { get; }
+
+        /// <summary>
+        /// Gets the IScopedProtectionPolicyOperationResultsOperations.
+        /// </summary>
+        IScopedProtectionPolicyOperationResultsOperations ScopedProtectionPolicyOperationResults { get; }
+
+        /// <summary>
+        /// Gets the IScopedProtectionPolicyOperationStatusesOperations.
+        /// </summary>
+        IScopedProtectionPolicyOperationStatusesOperations ScopedProtectionPolicyOperationStatuses { get; }
+
+        /// <summary>
+        /// Gets the IBackupProtectionContainersInFabricOperations.
+        /// </summary>
+        IBackupProtectionContainersInFabricOperations BackupProtectionContainersInFabric { get; }
+
+        /// <summary>
+        /// Gets the IBackupProtectedItemsInContainerOperations.
+        /// </summary>
+        IBackupProtectedItemsInContainerOperations BackupProtectedItemsInContainer { get; }
+
+        /// <summary>
+        /// Gets the IProtectionContainersOperations.
+        /// </summary>
+        IProtectionContainersOperations ProtectionContainers { get; }
+
+        /// <summary>
         /// Gets the IProtectionIntentOperations.
         /// </summary>
         IProtectionIntentOperations ProtectionIntent { get; }
@@ -110,6 +150,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         IBackupProtectedItemsOperations BackupProtectedItems { get; }
 
         /// <summary>
+        /// Gets the IBackupProtectionIntentOperations.
+        /// </summary>
+        IBackupProtectionIntentOperations BackupProtectionIntent { get; }
+
+        /// <summary>
         /// Gets the IBackupUsageSummariesOperations.
         /// </summary>
         IBackupUsageSummariesOperations BackupUsageSummaries { get; }
@@ -138,11 +183,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Gets the IProtectableContainersOperations.
         /// </summary>
         IProtectableContainersOperations ProtectableContainers { get; }
-
-        /// <summary>
-        /// Gets the IProtectionContainersOperations.
-        /// </summary>
-        IProtectionContainersOperations ProtectionContainers { get; }
 
         /// <summary>
         /// Gets the IBackupWorkloadItemsOperations.
