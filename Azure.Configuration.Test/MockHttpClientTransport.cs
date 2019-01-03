@@ -14,33 +14,42 @@ using static System.Buffers.Text.Encodings;
 namespace Azure.Configuration.Test
 {
     // TODO (pri 3): Add and Set mocks are the same. Is that ok?
-    class AddMockTransport : KeyValueMockTransport
+    class AddMockTransport : MockHttpClientTransport
     {
         public AddMockTransport(ConfigurationSetting responseContent)
-            : base(HttpMethod.Put, responseContent)
         {
-            _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
-            _expectedRequestContent = "{\"value\":\"test_value\",\"content_type\":\"test_content_type\"}";
+            _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
+            _expectedMethod = HttpMethod.Put;
+            _expectedRequestContent = $"{{\"value\":\"{responseContent.Value}\",\"content_type\":\"{responseContent.ContentType}\"}}";
+
+            string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
+            _responseContent = json.Replace("contenttype", "content_type");
         }
     }
 
-    class SetMockTransport : KeyValueMockTransport
+    class SetMockTransport : MockHttpClientTransport
     {
-        public SetMockTransport(ConfigurationSetting responseContent)
-            : base(HttpMethod.Put, responseContent)
+        public SetMockTransport(ConfigurationSetting testSetting)
         {
-            _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
-            _expectedRequestContent = "{\"value\":\"test_value\",\"content_type\":\"test_content_type\"}";
+            _expectedUri = $"https://contoso.azconfig.io/kv/{testSetting.Key}{GetExtraUriParameters(testSetting)}";
+            _expectedMethod = HttpMethod.Put;
+            _expectedRequestContent = $"{{\"value\":\"{testSetting.Value}\",\"content_type\":\"{testSetting.ContentType}\"}}";
+
+            string json = JsonConvert.SerializeObject(testSetting).ToLowerInvariant();
+            _responseContent = json.Replace("contenttype", "content_type");
         }
     }
 
-    class UpdateMockTransport : KeyValueMockTransport
+    class UpdateMockTransport : MockHttpClientTransport
     {
         public UpdateMockTransport(ConfigurationSetting responseContent)
-            : base(HttpMethod.Put, responseContent)
         {
-            _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
-            _expectedRequestContent = "{\"value\":\"test_value\",\"content_type\":\"test_content_type\"}";
+            _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
+            _expectedMethod = HttpMethod.Put;
+            _expectedRequestContent = $"{{\"value\":\"{responseContent.Value}\",\"content_type\":\"{responseContent.ContentType}\"}}";
+
+            string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
+            _responseContent = json.Replace("contenttype", "content_type");
         }
 
         protected override void VerifyRequestCore(HttpRequestMessage request)
@@ -49,32 +58,26 @@ namespace Azure.Configuration.Test
         }
     }
 
-    class DeleteMockTransport : KeyValueMockTransport
+    class DeleteMockTransport : MockHttpClientTransport
     {
-        public ConfigurationSetting _responseContent;
-
-        public DeleteMockTransport(ConfigurationSetting responseContent)
-            : base(HttpMethod.Delete, responseContent)
+        public DeleteMockTransport(string key, SettingFilter filter, ConfigurationSetting result)
         {
-            _expectedUri = "https://contoso.azconfig.io/kv/test_key?label=test_label";
+            _expectedUri = $"https://contoso.azconfig.io/kv/{key}{GetExtraUriParameters(filter)}";
             _expectedRequestContent = null;
+            _expectedMethod = HttpMethod.Delete;
+
+            string json = JsonConvert.SerializeObject(result).ToLowerInvariant();
+            _responseContent = json.Replace("contenttype", "content_type");
         }
     }
 
     // TODO (pri 3): this should emit the etag response header
     class GetMockTransport : MockHttpClientTransport
     {
-        string _responseContent;
-
         public GetMockTransport(string queryKey, SettingFilter filter, ConfigurationSetting result)
         {
             _expectedMethod = HttpMethod.Get;
-            if (filter== null || filter.Label == null) {
-                _expectedUri = $"https://contoso.azconfig.io/kv/{queryKey}";
-            }
-            else {
-                _expectedUri = $"https://contoso.azconfig.io/kv/{queryKey}?label={filter.Label}";
-            }
+            _expectedUri = $"https://contoso.azconfig.io/kv/{queryKey}{GetExtraUriParameters(filter)}";
             _expectedRequestContent = null;
 
             string json = JsonConvert.SerializeObject(result).ToLowerInvariant();
@@ -89,27 +92,20 @@ namespace Azure.Configuration.Test
                 Responses.Add(statusCode);
             }
         }
-
-        protected override void WriteResponseCore(HttpResponseMessage response)
-        {
-            response.Content = new StringContent(_responseContent, Encoding.UTF8, "application/json");
-
-            long jsonByteCount = Encoding.UTF8.GetByteCount(_responseContent);
-            response.Content.Headers.Add("Content-Length", jsonByteCount.ToString()); // TODO (pri 3): the service actually responds with chunked encoding
-
-            response.Content.Headers.TryAddWithoutValidation("Last-Modified", "Tue, 05 Dec 2017 02:41:26 GMT");
-            response.Content.Headers.TryAddWithoutValidation("Content-Type", "application/vnd.microsoft.appconfig.kv+json; charset=utf-8;");
-        }
     }
 
-    class LockingMockTransport : KeyValueMockTransport
+    class LockingMockTransport : MockHttpClientTransport
     {
         public LockingMockTransport(ConfigurationSetting responseContent, bool lockOtherwiseUnlock)
-            : base(lockOtherwiseUnlock ? HttpMethod.Put : HttpMethod.Delete, responseContent)
         {
-            _expectedUri = "https://contoso.azconfig.io/locks/test_key?label=test_label";
+            _expectedUri = $"https://contoso.azconfig.io/locks/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedRequestContent = null;
+            _expectedMethod = lockOtherwiseUnlock ? HttpMethod.Put : HttpMethod.Delete;
+
+            string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
+            _responseContent = json.Replace("contenttype", "content_type");
         }
+
     }
 
     class GetBatchMockTransport : MockHttpClientTransport
@@ -158,31 +154,10 @@ namespace Azure.Configuration.Test
             }
         }
     }
-
-    // TODO (pri 3): this should be eliminated. Mocks should derive from MockHttpClientTransport; otherwise it's hard to tell what's going on
-    class KeyValueMockTransport : MockHttpClientTransport
-    {
-        protected ConfigurationSetting _responseContent;
-
-        public KeyValueMockTransport(HttpMethod expectedMethod, ConfigurationSetting responseContent)
-        {
-            _expectedMethod = expectedMethod;
-            _responseContent = responseContent;
-        }
-
-        protected override void WriteResponseCore(HttpResponseMessage response)
-        {
-            string json = JsonConvert.SerializeObject(_responseContent).ToLowerInvariant();
-            json = json.Replace("contenttype", "content_type");
-            response.Content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            long jsonByteCount = Encoding.UTF8.GetByteCount(json);
-            response.Content.Headers.Add("Content-Length", jsonByteCount.ToString()); // TODO (pri 3): is this actually present?
-        }
-    }
-
+    
     abstract class MockHttpClientTransport : HttpPipelineTransport
     {
+        protected string _responseContent;
         protected HttpMethod _expectedMethod;
         protected StringCheck _expectedUri;
         protected StringCheck? _expectedRequestContent;
@@ -219,7 +194,35 @@ namespace Azure.Configuration.Test
         }
 
         protected virtual void VerifyRequestCore(HttpRequestMessage request) { }
-        protected abstract void WriteResponseCore(HttpResponseMessage response);
+        
+        protected virtual void WriteResponseCore(HttpResponseMessage response)
+        {
+            response.Content = new StringContent(_responseContent, Encoding.UTF8, "application/json");
+
+            long jsonByteCount = Encoding.UTF8.GetByteCount(_responseContent);
+            response.Content.Headers.Add("Content-Length", jsonByteCount.ToString()); // TODO (pri 3): the service actually responds with chunked encoding
+
+            response.Content.Headers.TryAddWithoutValidation("Last-Modified", "Tue, 05 Dec 2017 02:41:26 GMT");
+            response.Content.Headers.TryAddWithoutValidation("Content-Type", "application/vnd.microsoft.appconfig.kv+json; charset=utf-8;");
+        }
+
+        protected string GetExtraUriParameters(SettingFilter filter)
+        {
+            if (filter != null && filter.Label != null)
+            {
+                return $"?label={filter.Label}";
+            }
+            return string.Empty;
+        }
+
+        protected string GetExtraUriParameters(ConfigurationSetting setting)
+        {
+            if (setting.Label != null)
+            {
+                return $"?label={setting.Label}";
+            }
+            return string.Empty;
+        }
       
         void VerifyRequestLine(HttpRequestMessage request)
         {

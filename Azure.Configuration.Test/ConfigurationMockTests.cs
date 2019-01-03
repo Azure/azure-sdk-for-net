@@ -100,6 +100,7 @@ namespace Azure.Configuration.Tests
 
             Response<ConfigurationSetting> response = await service.SetAsync(s_testSetting, CancellationToken.None);
 
+            Assert.AreEqual(200, response.Status);
             AssertEqual(s_testSetting, response.Result);
 
             response.Dispose();
@@ -123,10 +124,12 @@ namespace Azure.Configuration.Tests
         [Test]
         public async Task Delete()
         {
-            var transport = new DeleteMockTransport(s_testSetting);
+            var transport = new DeleteMockTransport(s_testSetting.Key, new SettingFilter() {Label = s_testSetting.Label }, s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            Response<ConfigurationSetting> response = await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label);
+            Response<ConfigurationSetting> response = await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label);
+
+            Assert.AreEqual(200, response.Status);
 
             AssertEqual(s_testSetting, response.Result);
 
