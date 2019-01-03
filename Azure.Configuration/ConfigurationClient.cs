@@ -129,6 +129,7 @@ namespace Azure.Configuration
                 context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Delete, url);
 
                 AddFilterHeaders(filter, context);
+                AddAuthenticationHeader(context, ServiceMethod.Delete, default);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 

@@ -8,6 +8,16 @@ namespace Azure.Configuration.Tests
 {
     public class ConfigurationLiveTests
     {
+        static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting()
+        {
+            Key = "test_key",
+            Value = "test_value",
+            Label = "test_label",
+            ContentType = "test_content_type",
+            LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
+            Locked = false
+        };
+
         private static void AssertEqual(ConfigurationSetting expected, ConfigurationSetting actual)
         {
             Assert.AreEqual(expected.Key, actual.Key);
@@ -17,169 +27,217 @@ namespace Azure.Configuration.Tests
         }
 
         [Test]
-        public async Task Set()
+        public async Task DeleteNotFound()
         {
-            ConfigurationSetting testSetting = new ConfigurationSetting()
-            {
-                Key = "test_key_set",
-                Label = "test_label_set",
-                Value = "test_value_set",
-                ETag = "c3c231fd-39a0-4cb6-3237-4614474b92c6",
-                ContentType = "test_content_type",
-                LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
-                Locked = false
-            };
-
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
 
-            Response<ConfigurationSetting> response = await service.SetAsync(testSetting, CancellationToken.None);
+            Response<ConfigurationSetting> response = await service.DeleteAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
+
+            Assert.AreEqual(204, response.Status);
+            
+            response.Dispose();
+        }
+
+        [Test]
+        public async Task Delete()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            // Prepare environment
+            var testSettingDiff = s_testSetting.Clone();
+            testSettingDiff.Label = "test_label_diff";
+
+            await service.SetAsync(s_testSetting, CancellationToken.None);
+            await service.SetAsync(testSettingDiff, CancellationToken.None);
+
+            try
+            {
+                // Test
+                Response<ConfigurationSetting> response = await service.DeleteAsync(key: testSettingDiff.Key, filter: new SettingFilter() { Label = testSettingDiff.Label }, CancellationToken.None);
+
+                Assert.AreEqual(200, response.Status);
+
+                ConfigurationSetting setting = response.Result;
+                AssertEqual(testSettingDiff, setting);
+
+                response.Dispose();
+            }
+            finally
+            {
+                await service.DeleteAsync(key: s_testSetting.Key, filter: new SettingFilter() { Label = s_testSetting.Label }, CancellationToken.None);
+            }
+        }
+
+        [Test]
+        public async Task DeleteWithLabel()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            // Prepare environment
+            await service.SetAsync(s_testSetting, CancellationToken.None);
+
+            // Test
+            Response<ConfigurationSetting> response = await service.DeleteAsync(key: s_testSetting.Key, filter: new SettingFilter() { Label = s_testSetting.Label }, CancellationToken.None);
 
             Assert.AreEqual(200, response.Status);
-            Assert.True(response.TryGetHeader("ETag", out string etagHeader));
-            
-            ConfigurationSetting setting = response.Result;
 
-            AssertEqual(testSetting, setting);
+            ConfigurationSetting setting = response.Result;
+            AssertEqual(s_testSetting, setting);
 
             response.Dispose();
+        }
+
+        [Test]
+        public async Task Set()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            try
+            {
+                Response<ConfigurationSetting> response = await service.SetAsync(s_testSetting, CancellationToken.None);
+
+                Assert.AreEqual(200, response.Status);
+                Assert.True(response.TryGetHeader("ETag", out string etagHeader));
+
+                ConfigurationSetting setting = response.Result;
+
+                AssertEqual(s_testSetting, setting);
+
+                response.Dispose();
+            }
+            finally
+            {
+                await service.DeleteAsync(key: s_testSetting.Key, filter: new SettingFilter() { Label = s_testSetting.Label }, CancellationToken.None);
+            }
         }
 
         [Test]
         public async Task UpdateIfAny()
         {
-            ConfigurationSetting testSetting = new ConfigurationSetting()
-            {
-                Key = "test_key_update",
-                Label = "test_label_update",
-                Value = "test_value_update",
-                ETag = "*",
-                ContentType = "test_content_type",
-                LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
-                Locked = false
-            };
-
-            ConfigurationSetting testSetting2 = new ConfigurationSetting()
-            {
-                Key = "test_key_update",
-                Label = "test_label_update_2",
-                Value = "test_value_update_2",
-                ETag = "*",
-                ContentType = "test_content_type",
-                LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
-                Locked = false
-            };
-
-            ConfigurationSetting testSettingNewValue = new ConfigurationSetting()
-            {
-                Key = "test_key_update",
-                Label = "test_label_update",
-                Value = "test_value_update_3",
-                ETag = "*",
-                ContentType = "test_content_type",
-                LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
-                Locked = false
-            };
-                       
-
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
 
             // Prepare environment
-            await service.SetAsync(testSetting, CancellationToken.None);
-            await service.SetAsync(testSetting2, CancellationToken.None);
-            
-            // Test
-            Response<ConfigurationSetting> response = await service.UpdateAsync(testSettingNewValue, CancellationToken.None);
+            var testSettingDiff = s_testSetting.Clone();
+            testSettingDiff.Label = "test_label_diff";
 
-            Assert.AreEqual(200, response.Status);
-            
-            ConfigurationSetting responseSetting = response.Result;
+            await service.SetAsync(s_testSetting, CancellationToken.None);
+            await service.SetAsync(testSettingDiff, CancellationToken.None);
 
-            AssertEqual(testSettingNewValue, responseSetting);
+            var testSettingUpdate = s_testSetting.Clone();
+            testSettingUpdate.Value = "test_value_update";
+            testSettingUpdate.ETag = "*";
 
-            response.Dispose();
+            try
+            {
+                // Test
+                Response<ConfigurationSetting> response = await service.UpdateAsync(testSettingUpdate, CancellationToken.None);
+
+                Assert.AreEqual(200, response.Status);
+
+                ConfigurationSetting responseSetting = response.Result;
+
+                AssertEqual(testSettingUpdate, responseSetting);
+
+                response.Dispose();
+            }
+            finally
+            {
+                await service.DeleteAsync(key: testSettingUpdate.Key, filter: new SettingFilter() { Label = testSettingUpdate.Label }, CancellationToken.None);
+                await service.DeleteAsync(key: testSettingDiff.Key, filter: new SettingFilter() { Label = testSettingDiff.Label }, CancellationToken.None);
+            }
         }
 
         [Test]
         public async Task Get()
         {
-            ConfigurationSetting testSetting = new ConfigurationSetting()
-            {
-                Key = "test_key_get",
-                Value = "test_value_get",
-                ETag = "c3c231fd-39a0-4cb6-3237-4614474b92c6",
-                ContentType = "test_content_type",
-                LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
-                Locked = false
-            };
-
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
 
             // Prepare environment
-            await service.SetAsync(testSetting, CancellationToken.None);
+            var testSettingNoLabel = s_testSetting.Clone();
+            testSettingNoLabel.Label = null;
+            await service.SetAsync(testSettingNoLabel, CancellationToken.None);
 
-            // Test
-            Response<ConfigurationSetting> response = await service.GetAsync(key:testSetting.Key, filter: default, CancellationToken.None);
+            try
+            {
+                // Test
+                Response<ConfigurationSetting> response = await service.GetAsync(key: testSettingNoLabel.Key, filter: default, CancellationToken.None);
 
-            Assert.AreEqual(200, response.Status);
-            Assert.True(response.TryGetHeader("ETag", out string etagHeader));
+                Assert.AreEqual(200, response.Status);
+                Assert.True(response.TryGetHeader("ETag", out string etagHeader));
 
-            ConfigurationSetting setting = response.Result;
+                ConfigurationSetting setting = response.Result;
 
-            AssertEqual(testSetting, setting);
+                AssertEqual(testSettingNoLabel, setting);
 
-            response.Dispose();
+                response.Dispose();
+            }
+            finally
+            {
+                await service.DeleteAsync(key: testSettingNoLabel.Key, filter: default, CancellationToken.None);
+            }
         }
 
         [Test]
         public async Task GetWithLabel()
         {
-            ConfigurationSetting testSettingNoLabel = new ConfigurationSetting()
-            {
-                Key = "test_key_getl",
-                Value = "test_value_getl",
-                ETag = "c3c231fd-39a0-4cb6-3237-4614474b92c6",
-                ContentType = "test_content_type",
-                LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
-                Locked = false
-            };
-
-            ConfigurationSetting testSettingWithLabel = new ConfigurationSetting()
-            {
-                Key = "test_key_getl",
-                Label = "test_label_getl",
-                Value = "test_value_getl",
-                ETag = "c3c231fd-39a0-4cb6-3237-4614474b92c6",
-                ContentType = "test_content_type",
-                LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
-                Locked = false
-            };
-
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
 
             // Prepare environment
+            var testSettingNoLabel = s_testSetting.Clone();
+            testSettingNoLabel.Label = null;
             await service.SetAsync(testSettingNoLabel, CancellationToken.None);
-            await service.SetAsync(testSettingWithLabel, CancellationToken.None);
+            await service.SetAsync(s_testSetting, CancellationToken.None);
 
-            // Test
-            Response<ConfigurationSetting> response = await service.GetAsync(key: testSettingWithLabel.Key, filter: new SettingFilter() { Label = testSettingWithLabel.Label }, CancellationToken.None);
+            try
+            {
+                // Test
+                Response<ConfigurationSetting> response = await service.GetAsync(key: s_testSetting.Key, filter: new SettingFilter() { Label = s_testSetting.Label }, CancellationToken.None);
 
-            Assert.AreEqual(200, response.Status);
-            Assert.True(response.TryGetHeader("ETag", out string etagHeader));
+                Assert.AreEqual(200, response.Status);
+                Assert.True(response.TryGetHeader("ETag", out string etagHeader));
 
-            ConfigurationSetting responseSetting = response.Result;
+                ConfigurationSetting responseSetting = response.Result;
 
-            AssertEqual(testSettingWithLabel, responseSetting);
+                AssertEqual(s_testSetting, responseSetting);
 
-            response.Dispose();
+                response.Dispose();
+            }
+            finally
+            {
+                await service.DeleteAsync(key: s_testSetting.Key, filter: new SettingFilter() { Label = s_testSetting.Label }, CancellationToken.None);
+                await service.DeleteAsync(key: testSettingNoLabel.Key, filter: default, CancellationToken.None);
+            }
         }
 
+    }
+
+    public static class ConfigurationSettingExtensions
+    {
+        public static ConfigurationSetting Clone(this ConfigurationSetting setting)
+        {
+            return new ConfigurationSetting
+            {
+                Key = setting.Key,
+                Value = setting.Value,
+                Label = setting.Label,
+                ContentType = setting.ContentType,
+                LastModified = setting.LastModified,
+                Locked = setting.Locked
+            };
+        }
     }
 }
