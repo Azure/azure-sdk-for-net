@@ -51,8 +51,7 @@ namespace Azure.Configuration
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(IfNoneMatchWildcard);
                 context.AddHeader(Header.Common.JsonContentType);
-
-                WriteJsonContent(setting, context);
+                context.AddContent(new SettingContent(setting, context, _secret, _credential));
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -77,8 +76,7 @@ namespace Azure.Configuration
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(Header.Common.JsonContentType);
-
-                WriteJsonContent(setting, context);
+                context.AddContent(new SettingContent(setting, context, _secret, _credential));
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -105,8 +103,7 @@ namespace Azure.Configuration
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
                 context.AddHeader(Header.Common.JsonContentType);
-
-                WriteJsonContent(setting, context);
+                context.AddContent(new SettingContent(setting, context, _secret, _credential));
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -129,7 +126,7 @@ namespace Azure.Configuration
                 context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Delete, url);
 
                 AddFilterHeaders(filter, context);
-                AddAuthenticationHeader(context, ServiceMethod.Delete, default);
+                ConfigurationClient.AddAuthenticationHeader(context, ServiceMethod.Delete, default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -199,7 +196,7 @@ namespace Azure.Configuration
                 AddFilterHeaders(filter, context);
                 context.AddHeader(Header.Common.JsonContentType);
 
-                AddAuthenticationHeader(context, ServiceMethod.Get, default);
+                ConfigurationClient.AddAuthenticationHeader(context, ServiceMethod.Get, default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 

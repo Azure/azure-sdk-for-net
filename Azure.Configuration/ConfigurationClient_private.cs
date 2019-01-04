@@ -3,9 +3,11 @@ using Azure.Core.Net;
 using System;
 using System.Buffers;
 using System.ComponentModel;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.JsonLab;
+using System.Threading;
 using System.Threading.Tasks;
 using static System.Buffers.Text.Encodings;
 
@@ -150,29 +152,95 @@ namespace Azure.Configuration
             return builder.Uri;
         }
 
-        // TODO (pri 1): serialize the Tags field
-        void WriteJsonContent(ConfigurationSetting setting, PipelineCallContext context)
+        class SettingContent : PipelineContent
         {
-            var writer = Utf8JsonWriter.Create(context.ContentWriter);
-            writer.WriteObjectStart();
-            writer.WriteAttribute("value", setting.Value);
-            writer.WriteAttribute("content_type", setting.ContentType);
-            writer.WriteObjectEnd();
-            writer.Flush();
-            var written = context.ContentWriter.Written;
-            context.AddHeader(Header.Common.CreateContentLength(written.Length));
-            AddAuthenticationHeader(context, ServiceMethod.Put, written);
+            ConfigurationSetting _setting;
+            PipelineCallContext _context;
+            byte[] _secret;
+            string _credental;
+            int _serializeLength = -1;
+
+            public SettingContent(ConfigurationSetting setting, PipelineCallContext context, byte[] secret, string credental)
+            {
+                _setting = setting;
+                _context = context;
+                _secret = secret;
+                _credental = credental;
+            }
+
+            public override void Dispose() { }
+
+            public override bool TryComputeLength(out long length)
+            {
+                if(_serializeLength == -1)
+                {
+                    length = 0;
+                    return false;
+                }
+                length = _serializeLength;
+                return true;
+            }
+
+            public async override Task WriteTo(Stream stream)
+            {
+                using (var writer = new ArrayWriter()) {
+                    Write(writer);
+                    _serializeLength = writer.Written;
+                    _context.AddHeader(Header.Common.CreateContentLength(_serializeLength)); // TODO (pri 2): I don't think it should be here. It adds it second time when retry happens.
+                    AddAuthenticationHeader(_context, ServiceMethod.Put, writer.Buffer.AsMemory(0, _serializeLength), _secret, _credental);
+                    await stream.WriteAsync(writer.Buffer, 0, _serializeLength);
+                }
+
+                void Write(ArrayWriter writer)
+                {
+                    var json = new Utf8JsonWriter<ArrayWriter>(writer);
+                    json.WriteObjectStart();
+                    json.WriteAttribute("value", _setting.Value);
+                    json.WriteAttribute("content_type", _setting.ContentType);
+                    json.WriteObjectEnd();
+                    json.Flush();
+                }
+            }
+
+            // TODO (pri 2): Utf8JsonWriter will have Written property soon and this type should be removed then.
+            // TODO (pri 2): Utf8JsonWriter will have the ability to write to Stream, at which point this code can be simplified
+            class ArrayWriter : IBufferWriter<byte>, IDisposable
+            {
+                byte[] _buffer;
+                int _written = 0;
+
+                public ArrayWriter(int length = 1024)
+                {
+                    _buffer = ArrayPool<byte>.Shared.Rent(length);
+                }
+
+                public int Written => _written;
+                public byte[] Buffer => _buffer;
+
+                public void Advance(int count) => _written += count;
+
+                public void Dispose()
+                {
+                    if (_buffer != null) ArrayPool<byte>.Shared.Return(_buffer);
+                    _buffer = null;
+                }
+
+                public Memory<byte> GetMemory(int sizeHint = 0) => _buffer.AsMemory(_written);
+
+                public Span<byte> GetSpan(int sizeHint = 0) => _buffer.AsSpan(_written);
+            }
         }
 
-        void AddAuthenticationHeader(PipelineCallContext context, ServiceMethod method, ReadOnlySequence<byte> content)
+        internal static void AddAuthenticationHeader(PipelineCallContext context, ServiceMethod method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
         {
             string contentHash = null;
             using (var alg = SHA256.Create())
             {
+                // TODO (pri 3): ToArray should nopt be called here. Instead, TryGetArray, or PipelineContent should do hashing on the fly 
                 contentHash = Convert.ToBase64String(alg.ComputeHash(content.ToArray()));
             }
 
-            using (var hmac = new HMACSHA256(_secret))
+            using (var hmac = new HMACSHA256(secret))
             {
                 var host = context.Uri.Host;
                 var pathAndQuery = context.Uri.PathAndQuery;
@@ -185,7 +253,7 @@ namespace Azure.Configuration
                 context.AddHeader("Date", utcNowString);
                 context.AddHeader("x-ms-content-sha256", contentHash);
                 string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
-                context.AddHeader("Authorization", $"HMAC-SHA256 Credential={_credential}, SignedHeaders={signedHeaders}, Signature={signature}");
+                context.AddHeader("Authorization", $"HMAC-SHA256 Credential={credential}, SignedHeaders={signedHeaders}, Signature={signature}");
             }
         }
 

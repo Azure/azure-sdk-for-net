@@ -136,7 +136,7 @@ namespace Azure.Configuration
             lastmodified
         }
 
-        static void SetValue(ref Utf8JsonReader json, JsonState state, ref ConfigurationSetting result)
+        static void SetValue(ref Utf8Json.Reader json, JsonState state, ref ConfigurationSetting result)
         {
             switch (state)
             {
@@ -188,23 +188,25 @@ namespace Azure.Configuration
         {
             result = new ConfigurationSetting();
             consumed = 0;
-            var json = new Utf8JsonReader(content, true);
+            var json = new Utf8Json();
+
+            var reader = json.GetReader(content, true);
             JsonState state = JsonState.Other;
-            while (json.Read()) {
-                switch (json.TokenType) {
+            while (reader.Read()) {
+                switch (reader.TokenType) {
                     case JsonTokenType.PropertyName:
-                        state = json.Value.ToJsonState();
+                        state = reader.Value.ToJsonState();
                         break;
                     case JsonTokenType.Number:
                     case JsonTokenType.String:
                     case JsonTokenType.False:
                     case JsonTokenType.True:
-                        SetValue(ref json, state, ref result);
+                        SetValue(ref reader, state, ref result);
                         break;
                 }
             }
 
-            consumed = json.Consumed;
+            consumed = reader.Consumed;
             return true;
         }
 
@@ -214,12 +216,14 @@ namespace Azure.Configuration
 
             result = new List<ConfigurationSetting>();
             consumed = 0;
-            var json = new Utf8JsonReader(content, true);
+            var json = new Utf8Json();                
+            var reader = json.GetReader(content, true);
+
             JsonState state = JsonState.Other;
             ConfigurationSetting value = default;
-            while (json.Read())
+            while (reader.Read())
             {
-                switch (json.TokenType)
+                switch (reader.TokenType)
                 {
                     case JsonTokenType.StartObject:
                         value = new ConfigurationSetting();
@@ -228,21 +232,21 @@ namespace Azure.Configuration
                         result.Add(value);
                         break;
                     case JsonTokenType.EndArray:
-                        consumed = json.Consumed;
+                        consumed = reader.Consumed;
                         return true;
                     case JsonTokenType.PropertyName:
-                        state = json.Value.ToJsonState();
+                        state = reader.Value.ToJsonState();
                         break;
                     case JsonTokenType.Number:
                     case JsonTokenType.String:
                     case JsonTokenType.False:
                     case JsonTokenType.True:
-                        SetValue(ref json, state, ref value);
+                        SetValue(ref reader, state, ref value);
                         break;
                 }
             }
 
-            consumed = json.Consumed;
+            consumed = reader.Consumed;
             return true;
         }
 

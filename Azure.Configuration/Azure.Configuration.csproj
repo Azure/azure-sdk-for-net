@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Memory" Version="4.5.1" />
-    <PackageReference Include="System.Text.JsonLab" Version="0.1.0-preview2-181029-2" />
+    <PackageReference Include="System.Text.JsonLab" Version="0.1.0-preview2-190103-1" />
   </ItemGroup>
 
   <ItemGroup>
