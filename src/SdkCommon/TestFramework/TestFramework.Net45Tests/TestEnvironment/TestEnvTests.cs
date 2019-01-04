@@ -113,5 +113,23 @@ namespace TestFramework.Net45Tests
             string subscriptionId = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.SubscriptionIdKey];
             Assert.False(string.IsNullOrEmpty(subscriptionId));
         }
+
+
+        [Theory(Skip = "Interactive Test")]
+        //[Theory]
+        [InlineData("<ConnectionString>")]
+        //[InlineData("SubscriptionId=<subId>;AADTenant=<tenantId>;UserId=<uid.onmicrosoft.com;Password=<pwd>")]
+        public void AdHocAuthTest(string connStr)
+        {
+            // Use the commented out InlineData to get RawToken by first logging in using the username/password. Once you get the RawToken, then use the other
+            // Inline data connection string to inject your raw token to run this test.
+            // We use the subscription Id to verify if the RawToken can get the subscription information and hence verifies if the RawToken can be used for Auth purpose
+
+            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", connStr);
+            HttpMockServer.Mode = HttpRecorderMode.Record;
+            TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
+            string subscriptionId = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.SubscriptionIdKey];
+            Assert.False(string.IsNullOrEmpty(subscriptionId));
+        }
     }
 }
