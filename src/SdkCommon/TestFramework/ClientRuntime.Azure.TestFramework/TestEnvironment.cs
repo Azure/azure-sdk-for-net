@@ -251,7 +251,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     Login();
                 }
 
-                VerifySubscription();
+                VerifyAuthTokens();
             }
         }
 
@@ -260,7 +260,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         private void Login()
         {
-            string password = this.ConnectionString.GetValue(ConnectionStringKeys.PasswordKey);
+            string userPassword = this.ConnectionString.GetValue(ConnectionStringKeys.PasswordKey);
             string spnClientId = this.ConnectionString.GetValue(ConnectionStringKeys.ServicePrincipalKey);
             string spnSecret = this.ConnectionString.GetValue(ConnectionStringKeys.ServicePrincipalSecretKey);
             //We use this because when login silently using userTokenProvider, we need to provide a well known ClientId for an app that has delegating permissions.
@@ -296,15 +296,17 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
                 this.TokenInfo[TokenAudience.Management] = mgmAuthResult.Result;
 
-                UpdateTokenInfoWithGraphToken(spnClientId, spnSecret, graphAADServiceSettings);
+                UpdateTokenInfoWithGraphToken(graphAADServiceSettings, spnClientId: spnClientId, spnSecret: spnSecret);
             }
-            else if ((!string.IsNullOrEmpty(this.UserName)) && (!string.IsNullOrEmpty(password)))
+            else if ((!string.IsNullOrEmpty(this.UserName)) && (!string.IsNullOrEmpty(userPassword)))
             {
 #if FullNetFx
                 Task<TokenCredentials> mgmAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
-                                                                           .LoginSilentAsync(PowerShellClientId, this.Tenant, this.UserName, password, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
+                                                                           .LoginSilentAsync(PowerShellClientId, this.Tenant, this.UserName, userPassword, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
 
                 this.TokenInfo[TokenAudience.Management] = mgmAuthResult.Result;
+
+                UpdateTokenInfoWithGraphToken(graphAADServiceSettings, userName: this.UserName, password: userPassword, psClientId: PowerShellClientId);
 #else
                 throw new NotSupportedException("Username/Password login is supported only in NET452 and above projects");
 #endif
@@ -321,15 +323,35 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             #endregion
         }
 
-        void UpdateTokenInfoWithGraphToken(string spnClientId, string spnSecret, ActiveDirectoryServiceSettings graphAADServiceSettings)
+        /// <summary>
+        /// Acquire Graph token
+        /// </summary>
+        /// <param name="graphAADServiceSettings"></param>
+        /// <param name="spnClientId"></param>
+        /// <param name="spnSecret"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="psClientId"></param>
+        private void UpdateTokenInfoWithGraphToken(ActiveDirectoryServiceSettings graphAADServiceSettings, string spnClientId = "", string spnSecret = "",
+                                            string userName = "", string password = "", string psClientId = "")
         {
+            Task<TokenCredentials> graphAuthResult = null;
             try
-            {
-                Task<TokenCredentials> graphAuthResult = Task.Run(async () => (TokenCredentials)await ApplicationTokenProvider
+            {   
+                if (!string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(password))
+                {
+#if FullNetFx
+                    graphAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
+                                .LoginSilentAsync(psClientId, this.Tenant, userName, password, graphAADServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
+#endif
+                }
+                else if (!string.IsNullOrWhiteSpace(spnClientId) && !string.IsNullOrWhiteSpace(spnSecret))
+                {
+                    graphAuthResult = Task.Run(async () => (TokenCredentials)await ApplicationTokenProvider
                                                                            .LoginSilentAsync(this.Tenant, spnClientId, spnSecret, graphAADServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
+                }   
 
-                this.TokenInfo[TokenAudience.Graph] = graphAuthResult.Result;
-                VerifyGraphToken();
+                this.TokenInfo[TokenAudience.Graph] = graphAuthResult?.Result;                
             }
             catch(Exception ex)
             {
@@ -389,6 +411,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 #endif
         }
 
+        private void VerifyAuthTokens()
+        {
+            VerifySubscription();
+            VerifyGraphToken();
+        }
         /// <summary>
         /// Retrieve subscriptions for current user and verify if the provided subscription Id matches from the retrieved subscription list
         /// </summary>
@@ -399,11 +426,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             StringBuilder sb = new StringBuilder();
             string callerId = string.Empty;
             string subs = string.Empty;
-
-            List<SubscriptionInfo> subscriptionList = ListSubscriptions(this.BaseUri.ToString(), this.TokenInfo[TokenAudience.Management]);
+            List<SubscriptionInfo> subscriptionList = new List<SubscriptionInfo>();
 
             if (this.TokenInfo[TokenAudience.Management] != null)
             {
+                subscriptionList = ListSubscriptions(this.BaseUri.ToString(), this.TokenInfo[TokenAudience.Management]);
                 try { callerId = this.TokenInfo[TokenAudience.Management].CallerId; } catch { }
             }
 
@@ -516,7 +543,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 }
                 catch(Exception ex)
                 {
-                    string graphFailMessage = string.Format(@"Unable to make request to graph endpoint '{0}' using credentials provided in the connections tring", this.GraphUri);
+                    string graphFailMessage = string.Format(@"Unable to make request to graph endpoint '{0}' using credentials provided within the connectionstring", this.GraphUri);
                     Debug.WriteLine(graphFailMessage, ex.ToString());
                 }
             }
