@@ -277,12 +277,6 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
             string resourceGroupName)
         {
 
-            var servicePrincipalProfile = new ManagedClusterServicePrincipalProfile
-            {
-                ClientId = Environment.GetEnvironmentVariable("AKS_DEV_SPID"),
-                Secret = Environment.GetEnvironmentVariable("AKS_DEV_SP_SECRET")
-            };
-
             var agentPoolProfiles = new List<ManagedClusterAgentPoolProfile>
                 {
                     new ManagedClusterAgentPoolProfile
@@ -298,7 +292,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
                 DnsPrefix = ContainerServiceTestUtilities.DnsPrefix,
                 Location = location,
                 AgentPoolProfiles = agentPoolProfiles,
-                ServicePrincipalProfile = servicePrincipalProfile
+                ServicePrincipalProfile = null
             };
             
             return await containerServiceClient.ManagedClusters.CreateOrUpdateAsync(resourceGroupName, clusterName, desiredManagedCluster);
