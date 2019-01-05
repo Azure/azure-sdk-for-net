@@ -14,6 +14,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
     using System.Threading.Tasks;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using System.ComponentModel;
+    using System.Diagnostics;
 
     /// <summary>
     /// Test Environment class
@@ -44,6 +45,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// Base Uri used by the Test Environment
         /// </summary>
         public Uri BaseUri { get; set; }
+
+        /// <summary>
+        /// Base Azure Graph Uri used by the Test Environment
+        /// </summary>
+        public Uri GraphUri { get; set; }
 
         /// <summary>
         /// UserName used by the Test Environment
@@ -94,6 +100,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             this.SubscriptionId = this.ConnectionString.GetValue(ConnectionStringKeys.SubscriptionIdKey);
             this.UserName = this.ConnectionString.GetValue(ConnectionStringKeys.UserIdKey);
             this.Tenant = this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey);
+            
             if (string.IsNullOrEmpty(this.ConnectionString.GetValue(ConnectionStringKeys.BaseUriKey)))
             {
                 this.BaseUri = this.Endpoints.ResourceManagementUri;
@@ -101,6 +108,15 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             else
             {
                 this.BaseUri = new Uri(this.ConnectionString.GetValue(ConnectionStringKeys.BaseUriKey));
+            }
+
+            if (string.IsNullOrWhiteSpace(this.ConnectionString.GetValue(ConnectionStringKeys.GraphUriKey)))
+            {
+                this.GraphUri = this.Endpoints.GraphUri;
+            }
+            else if (!string.IsNullOrWhiteSpace(this.ConnectionString.GetValue(ConnectionStringKeys.GraphUriKey)))
+            {
+                this.GraphUri = new Uri(this.ConnectionString.GetValue(ConnectionStringKeys.GraphUriKey));
             }
 
             SetupHttpRecorderMode();
@@ -235,7 +251,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     Login();
                 }
 
-                VerifySubscription();
+                VerifyAuthTokens();
             }
         }
 
@@ -244,7 +260,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         private void Login()
         {
-            string password = this.ConnectionString.GetValue(ConnectionStringKeys.PasswordKey);
+            string userPassword = this.ConnectionString.GetValue(ConnectionStringKeys.PasswordKey);
             string spnClientId = this.ConnectionString.GetValue(ConnectionStringKeys.ServicePrincipalKey);
             string spnSecret = this.ConnectionString.GetValue(ConnectionStringKeys.ServicePrincipalSecretKey);
             //We use this because when login silently using userTokenProvider, we need to provide a well known ClientId for an app that has delegating permissions.
@@ -263,6 +279,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             {
                 AuthenticationEndpoint = new Uri(this.Endpoints.AADAuthUri.ToString() + this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey)),
                 TokenAudience = this.Endpoints.AADTokenAudienceUri
+                
             };
             ActiveDirectoryServiceSettings graphAADServiceSettings = new ActiveDirectoryServiceSettings()
             {
@@ -278,14 +295,18 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                                                                            .LoginSilentAsync(this.Tenant, spnClientId, spnSecret, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
 
                 this.TokenInfo[TokenAudience.Management] = mgmAuthResult.Result;
+
+                UpdateTokenInfoWithGraphToken(graphAADServiceSettings, spnClientId: spnClientId, spnSecret: spnSecret);
             }
-            else if ((!string.IsNullOrEmpty(this.UserName)) && (!string.IsNullOrEmpty(password)))
+            else if ((!string.IsNullOrEmpty(this.UserName)) && (!string.IsNullOrEmpty(userPassword)))
             {
 #if FullNetFx
                 Task<TokenCredentials> mgmAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
-                                                                           .LoginSilentAsync(PowerShellClientId, this.Tenant, this.UserName, password, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
+                                                                           .LoginSilentAsync(PowerShellClientId, this.Tenant, this.UserName, userPassword, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
 
                 this.TokenInfo[TokenAudience.Management] = mgmAuthResult.Result;
+
+                UpdateTokenInfoWithGraphToken(graphAADServiceSettings, userName: this.UserName, password: userPassword, psClientId: PowerShellClientId);
 #else
                 throw new NotSupportedException("Username/Password login is supported only in NET452 and above projects");
 #endif
@@ -300,6 +321,43 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 #endif
             }
             #endregion
+        }
+
+        /// <summary>
+        /// Acquire Graph token
+        /// </summary>
+        /// <param name="graphAADServiceSettings"></param>
+        /// <param name="spnClientId"></param>
+        /// <param name="spnSecret"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="psClientId"></param>
+        private void UpdateTokenInfoWithGraphToken(ActiveDirectoryServiceSettings graphAADServiceSettings, string spnClientId = "", string spnSecret = "",
+                                            string userName = "", string password = "", string psClientId = "")
+        {
+            Task<TokenCredentials> graphAuthResult = null;
+            try
+            {   
+                if (!string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(password))
+                {
+#if FullNetFx
+                    graphAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
+                                .LoginSilentAsync(psClientId, this.Tenant, userName, password, graphAADServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
+#endif
+                }
+                else if (!string.IsNullOrWhiteSpace(spnClientId) && !string.IsNullOrWhiteSpace(spnSecret))
+                {
+                    graphAuthResult = Task.Run(async () => (TokenCredentials)await ApplicationTokenProvider
+                                                                           .LoginSilentAsync(this.Tenant, spnClientId, spnSecret, graphAADServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
+                }   
+
+                this.TokenInfo[TokenAudience.Graph] = graphAuthResult?.Result;                
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(string.Format("Error while acquiring Graph Token: '{0}'", ex.ToString()));
+                // Not all accounts are registered to have access to Graph endpoints. 
+            }
         }
 
         /// <summary>
@@ -353,6 +411,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 #endif
         }
 
+        private void VerifyAuthTokens()
+        {
+            VerifySubscription();
+            VerifyGraphToken();
+        }
         /// <summary>
         /// Retrieve subscriptions for current user and verify if the provided subscription Id matches from the retrieved subscription list
         /// </summary>
@@ -363,11 +426,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             StringBuilder sb = new StringBuilder();
             string callerId = string.Empty;
             string subs = string.Empty;
-
-            List<SubscriptionInfo> subscriptionList = ListSubscriptions(this.BaseUri.ToString(), this.TokenInfo[TokenAudience.Management]);
+            List<SubscriptionInfo> subscriptionList = new List<SubscriptionInfo>();
 
             if (this.TokenInfo[TokenAudience.Management] != null)
             {
+                subscriptionList = ListSubscriptions(this.BaseUri.ToString(), this.TokenInfo[TokenAudience.Management]);
                 try { callerId = this.TokenInfo[TokenAudience.Management].CallerId; } catch { }
             }
 
@@ -452,6 +515,38 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             var jsonResult = JObject.Parse(jsonString);
             var results = ((JArray)jsonResult["value"]).Select(item => new SubscriptionInfo((JObject)item)).ToList();
             return results;
+        }
+
+        /// <summary>
+        /// Verify accquired graph token
+        /// </summary>
+        private void VerifyGraphToken()
+        {
+            if (this.TokenInfo[TokenAudience.Graph] != null)
+            {
+                try
+                {
+                    string operationUrl = string.Format(@"{0}{1}/users?$orderby=displayName&$top=25&api-version=1.6", this.GraphUri, this.Tenant);
+                    TokenCredentials graphCredential = this.TokenInfo[TokenAudience.Graph];
+
+                    var request = new HttpRequestMessage
+                    {
+                        RequestUri = new Uri(operationUrl)
+                    };
+
+                    HttpClient client = new HttpClient();
+                    graphCredential.ProcessHttpRequestAsync(request, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+                    HttpResponseMessage response = client.SendAsync(request).Result;
+                    response.EnsureSuccessStatusCode();
+                    string jsonString = response.Content.ReadAsStringAsync().Result;
+                    var jsonResult = JObject.Parse(jsonString);
+                }
+                catch(Exception ex)
+                {
+                    string graphFailMessage = string.Format(@"Unable to make request to graph endpoint '{0}' using credentials provided within the connectionstring", this.GraphUri);
+                    Debug.WriteLine(graphFailMessage, ex.ToString());
+                }
+            }
         }
 
         /// <summary>
