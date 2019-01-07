@@ -46,12 +46,17 @@ namespace Azure.Configuration
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Put, uri);
+                context = Pipeline.CreateContext(_options, cancellation);
 
+                context.AddRequestLine(ServiceMethod.Put, uri);
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(IfNoneMatchWildcard);
                 context.AddHeader(Header.Common.JsonContentType);
-                context.AddContent(new SettingContent(setting, context, _secret, _credential));
+
+                var content = new SettingContent(setting, context);
+                context.AddHeader(Header.Common.CreateContentLength(content.Bytes.Length));
+                AddAuthenticationHeader(context, uri, ServiceMethod.Put, content.Bytes, _secret, _credential);
+                context.AddContent(content);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -68,15 +73,20 @@ namespace Azure.Configuration
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
-            Uri url = BuildUrlForKvRoute(setting);
+            Uri uri = BuildUrlForKvRoute(setting);
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Put, url);
+                context = Pipeline.CreateContext(_options, cancellation);
 
+                context.AddRequestLine(ServiceMethod.Put, uri);
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(Header.Common.JsonContentType);
-                context.AddContent(new SettingContent(setting, context, _secret, _credential));
+
+                var content = new SettingContent(setting, context);
+                context.AddHeader(Header.Common.CreateContentLength(content.Bytes.Length));
+                AddAuthenticationHeader(context, uri, ServiceMethod.Put, content.Bytes, _secret, _credential);
+                context.AddContent(content);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -94,16 +104,21 @@ namespace Azure.Configuration
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
             if (string.IsNullOrEmpty(setting.ETag)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.ETag)}");
 
-            Uri url = BuildUrlForKvRoute(setting);
+            Uri uri = BuildUrlForKvRoute(setting);
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Put, url);
+                context = Pipeline.CreateContext(_options, cancellation);
 
+                context.AddRequestLine(ServiceMethod.Put, uri);
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
                 context.AddHeader(Header.Common.JsonContentType);
-                context.AddContent(new SettingContent(setting, context, _secret, _credential));
+
+                var content = new SettingContent(setting, context);
+                context.AddHeader(Header.Common.CreateContentLength(content.Bytes.Length));
+                AddAuthenticationHeader(context, uri, ServiceMethod.Put, content.Bytes, _secret, _credential);
+                context.AddContent(content);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -119,14 +134,15 @@ namespace Azure.Configuration
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Uri url = BuildUrlForKvRoute(key, filter);
+            Uri uri = BuildUrlForKvRoute(key, filter);
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Delete, url);
+                context = Pipeline.CreateContext(_options, cancellation);
+                context.AddRequestLine(ServiceMethod.Delete, uri);
 
                 AddFilterHeaders(filter, context);
-                AddAuthenticationHeader(context, ServiceMethod.Delete, default, _secret, _credential);
+                AddAuthenticationHeader(context, uri, ServiceMethod.Delete, content: default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -142,11 +158,12 @@ namespace Azure.Configuration
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Uri url = BuildUriForLocksRoute(key, filter);
+            Uri uri = BuildUriForLocksRoute(key, filter);
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Put, url);
+                context = Pipeline.CreateContext(_options, cancellation);
+                context.AddRequestLine(ServiceMethod.Put, uri);
 
                 AddFilterHeaders(filter, context);
 
@@ -164,11 +181,12 @@ namespace Azure.Configuration
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Uri url = BuildUriForLocksRoute(key, filter);
+            Uri uri = BuildUriForLocksRoute(key, filter);
 
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Delete, url);
+                context = Pipeline.CreateContext(_options, cancellation);
+                context.AddRequestLine(ServiceMethod.Delete, uri);
 
                 AddFilterHeaders(filter, context);
 
@@ -186,17 +204,18 @@ namespace Azure.Configuration
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
 
-            Uri url = BuildUrlForKvRoute(key, filter);
+            Uri uri = BuildUrlForKvRoute(key, filter);
             
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Get, url);
+                context = Pipeline.CreateContext(_options, cancellation);
+                context.AddRequestLine(ServiceMethod.Get, uri);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddFilterHeaders(filter, context);
                 context.AddHeader(Header.Common.JsonContentType);
 
-                AddAuthenticationHeader(context, ServiceMethod.Get, default, _secret, _credential);
+                AddAuthenticationHeader(context, uri, ServiceMethod.Get, content: default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -210,10 +229,11 @@ namespace Azure.Configuration
 
         public async Task<Response<SettingBatch>> GetBatchAsync(BatchFilter filter, CancellationToken cancellation = default)
         {
-            var requestUri = BuildUrlForGetBatch(filter);
+            var uri = BuildUrlForGetBatch(filter);
             PipelineCallContext context = null;
             try {
-                context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Get, requestUri);
+                context = Pipeline.CreateContext(_options, cancellation);
+                context.AddRequestLine(ServiceMethod.Get, uri);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 if (filter.Revision != null) {

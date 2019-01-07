@@ -29,13 +29,13 @@ namespace Azure.Configuration.Test
 
     class SetMockTransport : MockHttpClientTransport
     {
-        public SetMockTransport(ConfigurationSetting testSetting)
+        public SetMockTransport(ConfigurationSetting responseContent)
         {
-            _expectedUri = $"https://contoso.azconfig.io/kv/{testSetting.Key}{GetExtraUriParameters(testSetting)}";
+            _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedMethod = HttpMethod.Put;
-            _expectedRequestContent = $"{{\"value\":\"{testSetting.Value}\",\"content_type\":\"{testSetting.ContentType}\"}}";
+            _expectedRequestContent = $"{{\"value\":\"{responseContent.Value}\",\"content_type\":\"{responseContent.ContentType}\"}}";
 
-            string json = JsonConvert.SerializeObject(testSetting).ToLowerInvariant();
+            string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
             _responseContent = json.Replace("contenttype", "content_type");
         }
     }

@@ -151,54 +151,64 @@ namespace Azure.Configuration
             return builder.Uri;
         }
 
+        internal static void AddAuthenticationHeader(PipelineCallContext context, Uri uri, ServiceMethod method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
+        {
+            string contentHash = null;
+            using (var alg = SHA256.Create())
+            {
+                // TODO (pri 3): ToArray should nopt be called here. Instead, TryGetArray, or PipelineContent should do hashing on the fly 
+                contentHash = Convert.ToBase64String(alg.ComputeHash(content.ToArray()));
+            }
+
+            using (var hmac = new HMACSHA256(secret))
+            {
+                var host = uri.Host;
+                var pathAndQuery = uri.PathAndQuery;
+
+                string verb = method.ToString().ToUpper();
+                DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+                var utcNowString = utcNow.ToString("r");
+                var stringToSign = $"{verb}\n{pathAndQuery}\n{utcNowString};{host};{contentHash}";
+                var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.ASCII.GetBytes(stringToSign))); // Calculate the signature
+                context.AddHeader("Date", utcNowString);
+                context.AddHeader("x-ms-content-sha256", contentHash);
+                string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
+                context.AddHeader("Authorization", $"HMAC-SHA256 Credential={credential}, SignedHeaders={signedHeaders}, Signature={signature}");
+            }
+        }
+
         class SettingContent : PipelineContent
         {
-            ConfigurationSetting _setting;
-            PipelineCallContext _context;
-            byte[] _secret;
-            string _credental;
-            int _serializeLength = -1;
+            byte[] _content;
+            int _contentLength;
 
-            public SettingContent(ConfigurationSetting setting, PipelineCallContext context, byte[] secret, string credental)
+            public SettingContent(ConfigurationSetting setting, PipelineCallContext context)
             {
-                _setting = setting;
-                _context = context;
-                _secret = secret;
-                _credental = credental;
+                var writer = new ArrayWriter();
+
+                var json = new Utf8JsonWriter<ArrayWriter>(writer);
+                json.WriteObjectStart();
+                json.WriteAttribute("value", setting.Value);
+                json.WriteAttribute("content_type", setting.ContentType);
+                json.WriteObjectEnd();
+                json.Flush();
+                _contentLength = writer.Written;
+                _content = writer.Buffer;
             }
+
+            public ReadOnlyMemory<byte> Bytes => _content.AsMemory(0, _contentLength);
 
             public override void Dispose() { }
 
             public override bool TryComputeLength(out long length)
             {
-                if(_serializeLength == -1)
-                {
-                    length = 0;
-                    return false;
-                }
-                length = _serializeLength;
+                length = _contentLength;
                 return true;
             }
 
             public async override Task WriteTo(Stream stream)
             {
-                using (var writer = new ArrayWriter()) {
-                    Write(writer);
-                    _serializeLength = writer.Written;
-                    _context.AddHeader(Header.Common.CreateContentLength(_serializeLength)); // TODO (pri 2): I don't think it should be here. It adds it second time when retry happens.
-                    AddAuthenticationHeader(_context, ServiceMethod.Put, writer.Buffer.AsMemory(0, _serializeLength), _secret, _credental);
-                    await stream.WriteAsync(writer.Buffer, 0, _serializeLength);
-                }
-
-                void Write(ArrayWriter writer)
-                {
-                    var json = new Utf8JsonWriter<ArrayWriter>(writer);
-                    json.WriteObjectStart();
-                    json.WriteAttribute("value", _setting.Value);
-                    json.WriteAttribute("content_type", _setting.ContentType);
-                    json.WriteObjectEnd();
-                    json.Flush();
-                }
+                await stream.WriteAsync(_content, 0, _contentLength);
             }
 
             // TODO (pri 2): Utf8JsonWriter will have Written property soon and this type should be removed then.
@@ -227,32 +237,6 @@ namespace Azure.Configuration
                 public Memory<byte> GetMemory(int sizeHint = 0) => _buffer.AsMemory(_written);
 
                 public Span<byte> GetSpan(int sizeHint = 0) => _buffer.AsSpan(_written);
-            }
-        }
-
-        internal static void AddAuthenticationHeader(PipelineCallContext context, ServiceMethod method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
-        {
-            string contentHash = null;
-            using (var alg = SHA256.Create())
-            {
-                // TODO (pri 3): ToArray should nopt be called here. Instead, TryGetArray, or PipelineContent should do hashing on the fly 
-                contentHash = Convert.ToBase64String(alg.ComputeHash(content.ToArray()));
-            }
-
-            using (var hmac = new HMACSHA256(secret))
-            {
-                var host = context.Uri.Host;
-                var pathAndQuery = context.Uri.PathAndQuery;
-
-                string verb = method.ToString().ToUpper();
-                DateTimeOffset utcNow = DateTimeOffset.UtcNow;
-                var utcNowString = utcNow.ToString("r");
-                var stringToSign = $"{verb}\n{pathAndQuery}\n{utcNowString};{host};{contentHash}";
-                var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.ASCII.GetBytes(stringToSign))); // Calculate the signature
-                context.AddHeader("Date", utcNowString);
-                context.AddHeader("x-ms-content-sha256", contentHash);
-                string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
-                context.AddHeader("Authorization", $"HMAC-SHA256 Credential={credential}, SignedHeaders={signedHeaders}, Signature={signature}");
             }
         }
 
