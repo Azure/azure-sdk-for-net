@@ -55,7 +55,7 @@ namespace Azure.Configuration
                 return new Response<ConfigurationSetting>(response);
             }
 
-            var result = await ConfigurationServiceParser.Parse(response.Content.Stream, context.Cancellation);
+            var result = await ConfigurationServiceParser.ParseSettingAsync(response.Content, context.Cancellation);
 
             return new Response<ConfigurationSetting>(response, result);
         }

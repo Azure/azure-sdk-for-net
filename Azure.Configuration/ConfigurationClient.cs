@@ -126,7 +126,7 @@ namespace Azure.Configuration
                 context = Pipeline.CreateContext(_options, cancellation, ServiceMethod.Delete, url);
 
                 AddFilterHeaders(filter, context);
-                ConfigurationClient.AddAuthenticationHeader(context, ServiceMethod.Delete, default, _secret, _credential);
+                AddAuthenticationHeader(context, ServiceMethod.Delete, default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -196,7 +196,7 @@ namespace Azure.Configuration
                 AddFilterHeaders(filter, context);
                 context.AddHeader(Header.Common.JsonContentType);
 
-                ConfigurationClient.AddAuthenticationHeader(context, ServiceMethod.Get, default, _secret, _credential);
+                AddAuthenticationHeader(context, ServiceMethod.Get, default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -227,13 +227,12 @@ namespace Azure.Configuration
                     throw new Exception("bad response: no content length header");
                 }
 
-                await response.Content.ReadAsync(contentLength).ConfigureAwait(false);
-
-                Func<ServiceResponse, SettingBatch> contentParser = null;
-                if (response.Status == 200) {
-                    contentParser = (rsp) => { return SettingBatch.Parse(rsp); };
+                if (response.Status != 200) {
+                    return new Response<SettingBatch>(response);
                 }
-                return new Response<SettingBatch>(response, contentParser);
+
+                var batch = await SettingBatch.ParseAsync(response, cancellation);
+                return new Response<SettingBatch>(response, batch);
             }
             catch {
                 if (context != null) context.Dispose();

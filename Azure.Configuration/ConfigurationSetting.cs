@@ -75,14 +75,15 @@ namespace Azure.Configuration
 
         public int NextIndex { get; set; }
 
-        internal static SettingBatch Parse(ServiceResponse response)
+        internal static async Task<SettingBatch> ParseAsync(ServiceResponse response, CancellationToken cancellation)
         {
             var batch = new SettingBatch();
             if (TryGetNextAfterValue(ref response, out int next))
             {
                 batch.NextIndex = next;
             }
-            ConfigurationServiceParser.TryParse(response.Content.Bytes, out batch._parsed, out long consumed);
+
+            batch._parsed = await ConfigurationServiceParser.ParseSettingsAsync(response.Content, cancellation);
             return batch;
         }
 
@@ -165,7 +166,7 @@ namespace Azure.Configuration
             }
         }
 
-        public static async Task<ConfigurationSetting> Parse(Stream content, CancellationToken cancel)
+        public static async Task<ConfigurationSetting> ParseSettingAsync(Stream content, CancellationToken cancel)
         {
             byte[] buffer = null;
             try {
@@ -181,6 +182,29 @@ namespace Azure.Configuration
             }
             finally {
                 if(buffer!=null) ArrayPool<byte>.Shared.Return(buffer);
+            }
+        }
+
+        public static async Task<List<ConfigurationSetting>> ParseSettingsAsync(Stream content, CancellationToken cancel)
+        {
+            byte[] buffer = null;
+            try
+            {
+                buffer = ArrayPool<byte>.Shared.Rent(4096);
+                var read = await content.ReadAsync(buffer, 0, buffer.Length, cancel);
+                var sequence = new ReadOnlySequence<byte>(buffer, 0, read);
+                if (TryParse(sequence, out List<ConfigurationSetting> result, out _))
+                {
+                    return result;
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+            finally
+            {
+                if (buffer != null) ArrayPool<byte>.Shared.Return(buffer);
             }
         }
 
