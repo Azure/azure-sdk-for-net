@@ -7,7 +7,6 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.JsonLab;
-using System.Threading;
 using System.Threading.Tasks;
 using static System.Buffers.Text.Encodings;
 
@@ -55,7 +54,7 @@ namespace Azure.Configuration
                 return new Response<ConfigurationSetting>(response);
             }
 
-            var result = await ConfigurationServiceParser.ParseSettingAsync(response.Content, context.Cancellation);
+            var result = await ConfigurationServiceParser.ParseSettingAsync(response.ContentStream, context.Cancellation);
 
             return new Response<ConfigurationSetting>(response, result);
         }

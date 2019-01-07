@@ -231,7 +231,7 @@ namespace Azure.Configuration
                     return new Response<SettingBatch>(response);
                 }
 
-                var batch = await SettingBatch.ParseAsync(response, cancellation);
+                var batch = await ConfigurationServiceParser.ParseBatchAsync(response, cancellation);
                 return new Response<SettingBatch>(response, batch);
             }
             catch {
