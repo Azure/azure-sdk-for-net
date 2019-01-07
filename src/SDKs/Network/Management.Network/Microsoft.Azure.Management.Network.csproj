@@ -7,16 +7,14 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.7.0-preview</Version>
+		<Version>19.8.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-        - Added new child resource for ApplicationGateway: ApplicationGatewayRewriteRuleSets
-        - Added support for ManagedServiceIdentity in ApplicationGateway
-        - Added support for KeyVault's secret Id in ApplicationGatewaySslCertificates
-        - Added support for FlowLogFormatParameters in FlowLogInformation
-        - Added support for TrafficAnalyticsInterval in TrafficAnalyticsConfiguration
-        - The following properties are made read-only as they were intended to be read-only: AzureFirewall's PrivateIPAddress, NetworkInterface's VirtualMachine
+        - Added new list operations for ApplicationGateway's child resources
+        - Added operation for updating ApplicationSecurityGroup's tags
+        - Added list operation for ExpressRouteCircuitConnection
+        - Added support for DdosSettings in PublicIpAddress
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
