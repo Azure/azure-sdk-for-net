@@ -54,7 +54,7 @@ namespace Azure.Configuration
                 return new Response<ConfigurationSetting>(response);
             }
 
-            var result = await ConfigurationServiceParser.ParseSettingAsync(response.ContentStream, context.Cancellation);
+            var result = await ConfigurationServiceSerializer.ParseSettingAsync(response.ContentStream, context.Cancellation);
 
             return new Response<ConfigurationSetting>(response, result);
         }
@@ -151,7 +151,25 @@ namespace Azure.Configuration
             return builder.Uri;
         }
 
-        internal static void AddAuthenticationHeader(PipelineCallContext context, Uri uri, ServiceMethod method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
+        static ReadOnlyMemory<byte> Serialize(ConfigurationSetting setting)
+        {
+            ReadOnlyMemory<byte> content = default;
+            int size = 256;
+            while (true)
+            {
+                byte[] buffer = new byte[size];
+                if (ConfigurationServiceSerializer.TrySerialize(setting, buffer, out int written))
+                {
+                    content = buffer.AsMemory(0, written);
+                    break;
+                }
+                size *= 2;
+            }
+
+            return content;
+        }
+
+        internal static void AddAuthenticationHeaders(PipelineCallContext context, Uri uri, ServiceMethod method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
         {
             string contentHash = null;
             using (var alg = SHA256.Create())
@@ -170,73 +188,11 @@ namespace Azure.Configuration
                 var utcNowString = utcNow.ToString("r");
                 var stringToSign = $"{verb}\n{pathAndQuery}\n{utcNowString};{host};{contentHash}";
                 var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.ASCII.GetBytes(stringToSign))); // Calculate the signature
+                string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
+
                 context.AddHeader("Date", utcNowString);
                 context.AddHeader("x-ms-content-sha256", contentHash);
-                string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
                 context.AddHeader("Authorization", $"HMAC-SHA256 Credential={credential}, SignedHeaders={signedHeaders}, Signature={signature}");
-            }
-        }
-
-        class SettingContent : PipelineContent
-        {
-            byte[] _content;
-            int _contentLength;
-
-            public SettingContent(ConfigurationSetting setting, PipelineCallContext context)
-            {
-                var writer = new ArrayWriter();
-
-                var json = new Utf8JsonWriter<ArrayWriter>(writer);
-                json.WriteObjectStart();
-                json.WriteAttribute("value", setting.Value);
-                json.WriteAttribute("content_type", setting.ContentType);
-                json.WriteObjectEnd();
-                json.Flush();
-                _contentLength = writer.Written;
-                _content = writer.Buffer;
-            }
-
-            public ReadOnlyMemory<byte> Bytes => _content.AsMemory(0, _contentLength);
-
-            public override void Dispose() { }
-
-            public override bool TryComputeLength(out long length)
-            {
-                length = _contentLength;
-                return true;
-            }
-
-            public async override Task WriteTo(Stream stream)
-            {
-                await stream.WriteAsync(_content, 0, _contentLength);
-            }
-
-            // TODO (pri 2): Utf8JsonWriter will have Written property soon and this type should be removed then.
-            // TODO (pri 2): Utf8JsonWriter will have the ability to write to Stream, at which point this code can be simplified
-            class ArrayWriter : IBufferWriter<byte>, IDisposable
-            {
-                byte[] _buffer;
-                int _written = 0;
-
-                public ArrayWriter(int length = 1024)
-                {
-                    _buffer = ArrayPool<byte>.Shared.Rent(length);
-                }
-
-                public int Written => _written;
-                public byte[] Buffer => _buffer;
-
-                public void Advance(int count) => _written += count;
-
-                public void Dispose()
-                {
-                    if (_buffer != null) ArrayPool<byte>.Shared.Return(_buffer);
-                    _buffer = null;
-                }
-
-                public Memory<byte> GetMemory(int sizeHint = 0) => _buffer.AsMemory(_written);
-
-                public Span<byte> GetSpan(int sizeHint = 0) => _buffer.AsSpan(_written);
             }
         }
 

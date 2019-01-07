@@ -45,7 +45,8 @@ namespace Azure.Configuration
             Uri uri = BuildUrlForKvRoute(setting);
 
             PipelineCallContext context = null;
-            try {
+            try
+            {
                 context = Pipeline.CreateContext(_options, cancellation);
 
                 context.AddRequestLine(ServiceMethod.Put, uri);
@@ -53,10 +54,11 @@ namespace Azure.Configuration
                 context.AddHeader(IfNoneMatchWildcard);
                 context.AddHeader(Header.Common.JsonContentType);
 
-                var content = new SettingContent(setting, context);
-                context.AddHeader(Header.Common.CreateContentLength(content.Bytes.Length));
-                AddAuthenticationHeader(context, uri, ServiceMethod.Put, content.Bytes, _secret, _credential);
-                context.AddContent(content);
+                ReadOnlyMemory<byte> content = Serialize(setting);
+
+                AddAuthenticationHeaders(context, uri, ServiceMethod.Put, content, _secret, _credential);
+                context.AddHeader(Header.Common.CreateContentLength(content.Length));
+                context.AddContent(PipelineContent.Create(content));
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -83,10 +85,11 @@ namespace Azure.Configuration
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(Header.Common.JsonContentType);
 
-                var content = new SettingContent(setting, context);
-                context.AddHeader(Header.Common.CreateContentLength(content.Bytes.Length));
-                AddAuthenticationHeader(context, uri, ServiceMethod.Put, content.Bytes, _secret, _credential);
-                context.AddContent(content);
+                ReadOnlyMemory<byte> content = Serialize(setting);
+
+                AddAuthenticationHeaders(context, uri, ServiceMethod.Put, content, _secret, _credential);
+                context.AddHeader(Header.Common.CreateContentLength(content.Length));
+                context.AddContent(PipelineContent.Create(content));
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -115,10 +118,11 @@ namespace Azure.Configuration
                 context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
                 context.AddHeader(Header.Common.JsonContentType);
 
-                var content = new SettingContent(setting, context);
-                context.AddHeader(Header.Common.CreateContentLength(content.Bytes.Length));
-                AddAuthenticationHeader(context, uri, ServiceMethod.Put, content.Bytes, _secret, _credential);
-                context.AddContent(content);
+                ReadOnlyMemory<byte> content = Serialize(setting);
+
+                AddAuthenticationHeaders(context, uri, ServiceMethod.Put, content, _secret, _credential);
+                context.AddHeader(Header.Common.CreateContentLength(content.Length));
+                context.AddContent(PipelineContent.Create(content));
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -142,7 +146,7 @@ namespace Azure.Configuration
                 context.AddRequestLine(ServiceMethod.Delete, uri);
 
                 AddFilterHeaders(filter, context);
-                AddAuthenticationHeader(context, uri, ServiceMethod.Delete, content: default, _secret, _credential);
+                AddAuthenticationHeaders(context, uri, ServiceMethod.Delete, content: default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -215,7 +219,7 @@ namespace Azure.Configuration
                 AddFilterHeaders(filter, context);
                 context.AddHeader(Header.Common.JsonContentType);
 
-                AddAuthenticationHeader(context, uri, ServiceMethod.Get, content: default, _secret, _credential);
+                AddAuthenticationHeaders(context, uri, ServiceMethod.Get, content: default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -251,7 +255,7 @@ namespace Azure.Configuration
                     return new Response<SettingBatch>(response);
                 }
 
-                var batch = await ConfigurationServiceParser.ParseBatchAsync(response, cancellation);
+                var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellation);
                 return new Response<SettingBatch>(response, batch);
             }
             catch {

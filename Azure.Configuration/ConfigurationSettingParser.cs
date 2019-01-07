@@ -14,10 +14,23 @@ namespace Azure.Configuration
     // This should be simplified twice:
     // - once JsonReader supports for reading from stream
     // - second time we have the serializer
-    static class ConfigurationServiceParser
+    static class ConfigurationServiceSerializer
     {
         static byte[][] s_nameTable;
         static JsonState[] s_valueTable;
+
+        public static bool TrySerialize(ConfigurationSetting setting, byte[] buffer, out int written)
+        {
+            var writer = new ArrayWriter(buffer);
+            var json = new Utf8JsonWriter<ArrayWriter>(writer);
+            json.WriteObjectStart();
+            json.WriteAttribute("value", setting.Value);
+            json.WriteAttribute("content_type", setting.ContentType);
+            json.WriteObjectEnd();
+            json.Flush();
+            written = writer.Written;
+            return true;
+        }
 
         public enum JsonState : byte
         {
@@ -44,7 +57,7 @@ namespace Azure.Configuration
             return JsonState.Other;
         }
 
-        static ConfigurationServiceParser()
+        static ConfigurationServiceSerializer()
         {
             var names = Enum.GetNames(typeof(JsonState));
             s_nameTable = new byte[names.Length][];
@@ -220,5 +233,25 @@ namespace Azure.Configuration
             ReadOnlySpan<byte> urlBytes = headerValue.Slice(afterIndex + s_after.Length);
             return Utf8Parser.TryParse(urlBytes, out afterValue, out _);
         }
+    }
+
+    // TODO (pri 2): Utf8JsonWriter will have Written property soon and this type should be removed then.
+    // TODO (pri 2): Utf8JsonWriter will have the ability to write to Stream, at which point this code can be simplified
+    class ArrayWriter : IBufferWriter<byte>
+    {
+        byte[] _buffer;
+        int _written = 0;
+
+        public ArrayWriter(byte[] buffer)
+            => _buffer = buffer;
+
+        public int Written => _written;
+        public byte[] Buffer => _buffer;
+
+        public void Advance(int count) => _written += count;
+
+        public Memory<byte> GetMemory(int sizeHint = 0) => _buffer.AsMemory(_written);
+
+        public Span<byte> GetSpan(int sizeHint = 0) => _buffer.AsSpan(_written);
     }
 }
