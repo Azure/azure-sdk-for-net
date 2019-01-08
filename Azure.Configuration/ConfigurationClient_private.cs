@@ -1,14 +1,10 @@
 ﻿using Azure.Core;
 using Azure.Core.Net;
 using System;
-using System.Buffers;
 using System.ComponentModel;
-using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.JsonLab;
 using System.Threading.Tasks;
-using static System.Buffers.Text.Encodings;
 
 namespace Azure.Configuration
 {
@@ -46,7 +42,7 @@ namespace Azure.Configuration
             }
         }
 
-        static async Task<Response<ConfigurationSetting>> CreateKeyValueResponse(PipelineCallContext context)
+        static async Task<Response<ConfigurationSetting>> CreateResponse(PipelineCallContext context)
         {
             ServiceResponse response = context.Response;
 

@@ -18,15 +18,15 @@ namespace Azure.Configuration
     {
         const string SdkName = "Azure.Configuration";
         const string SdkVersion = "1.0.0";
-        
+
         readonly Uri _baseUri;
         readonly string _credential;
         readonly byte[] _secret;
         PipelineOptions _options;
         ClientPipeline Pipeline;
 
-        public ConfigurationClient(string connectionString) 
-            : this(connectionString, options : new PipelineOptions())
+        public ConfigurationClient(string connectionString)
+            : this(connectionString, options: new PipelineOptions())
         {
         }
 
@@ -44,29 +44,24 @@ namespace Azure.Configuration
 
             Uri uri = BuildUrlForKvRoute(setting);
 
-            PipelineCallContext context = null;
-            try
+            using (PipelineCallContext context = Pipeline.CreateContext(_options, cancellation))
             {
-                context = Pipeline.CreateContext(_options, cancellation);
-
-                context.AddRequestLine(ServiceMethod.Put, uri);
-                context.AddHeader(MediaTypeKeyValueApplicationHeader);
-                context.AddHeader(IfNoneMatchWildcard);
-                context.AddHeader(Header.Common.JsonContentType);
-
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                AddAuthenticationHeaders(context, uri, ServiceMethod.Put, content, _secret, _credential);
+                context.AddRequestLine(ServiceMethod.Put, uri);
+
+                context.AddHeader(IfNoneMatchWildcard);
+
+                context.AddHeader(MediaTypeKeyValueApplicationHeader);
+                context.AddHeader(Header.Common.JsonContentType);
                 context.AddHeader(Header.Common.CreateContentLength(content.Length));
+                AddAuthenticationHeaders(context, uri, ServiceMethod.Put, content, _secret, _credential);
+
                 context.AddContent(PipelineContent.Create(content));
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
-                return await CreateKeyValueResponse(context);
-            }
-            catch {
-                if (context != null) context.Dispose(); // TODO (pri 1) : should we always dispose given the content is eagerly deserialized?
-                throw;
+                return await CreateResponse(context);
             }
         }
 
@@ -77,27 +72,22 @@ namespace Azure.Configuration
 
             Uri uri = BuildUrlForKvRoute(setting);
 
-            PipelineCallContext context = null;
-            try {
-                context = Pipeline.CreateContext(_options, cancellation);
-
-                context.AddRequestLine(ServiceMethod.Put, uri);
-                context.AddHeader(MediaTypeKeyValueApplicationHeader);
-                context.AddHeader(Header.Common.JsonContentType);
-
+            using (PipelineCallContext context = Pipeline.CreateContext(_options, cancellation))
+            {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                AddAuthenticationHeaders(context, uri, ServiceMethod.Put, content, _secret, _credential);
+                context.AddRequestLine(ServiceMethod.Put, uri);
+
+                context.AddHeader(MediaTypeKeyValueApplicationHeader);
+                context.AddHeader(Header.Common.JsonContentType);
                 context.AddHeader(Header.Common.CreateContentLength(content.Length));
+                AddAuthenticationHeaders(context, uri, ServiceMethod.Put, content, _secret, _credential);
+
                 context.AddContent(PipelineContent.Create(content));
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
-                return await CreateKeyValueResponse(context);
-            }
-            catch {
-                if (context != null) context.Dispose();
-                throw;
+                return await CreateResponse(context);
             }
         }
 
@@ -109,28 +99,24 @@ namespace Azure.Configuration
 
             Uri uri = BuildUrlForKvRoute(setting);
 
-            PipelineCallContext context = null;
-            try {
-                context = Pipeline.CreateContext(_options, cancellation);
-
-                context.AddRequestLine(ServiceMethod.Put, uri);
-                context.AddHeader(MediaTypeKeyValueApplicationHeader);
-                context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
-                context.AddHeader(Header.Common.JsonContentType);
-
+            using (PipelineCallContext context = Pipeline.CreateContext(_options, cancellation))
+            {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                AddAuthenticationHeaders(context, uri, ServiceMethod.Put, content, _secret, _credential);
+                context.AddRequestLine(ServiceMethod.Put, uri);
+
+                context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
+
+                context.AddHeader(MediaTypeKeyValueApplicationHeader);
+                context.AddHeader(Header.Common.JsonContentType);
                 context.AddHeader(Header.Common.CreateContentLength(content.Length));
+                AddAuthenticationHeaders(context, uri, ServiceMethod.Put, content, _secret, _credential);
+
                 context.AddContent(PipelineContent.Create(content));
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
-                return await CreateKeyValueResponse(context);
-            }
-            catch {
-                if (context != null) context.Dispose();
-                throw;
+                return await CreateResponse(context);
             }
         }
 
@@ -140,9 +126,8 @@ namespace Azure.Configuration
 
             Uri uri = BuildUrlForKvRoute(key, filter);
 
-            PipelineCallContext context = null;
-            try {
-                context = Pipeline.CreateContext(_options, cancellation);
+            using (PipelineCallContext context = Pipeline.CreateContext(_options, cancellation))
+            {
                 context.AddRequestLine(ServiceMethod.Delete, uri);
 
                 AddFilterHeaders(filter, context);
@@ -150,11 +135,7 @@ namespace Azure.Configuration
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
-                return await CreateKeyValueResponse(context);
-            }
-            catch {
-                if (context != null) context.Dispose();
-                throw;
+                return await CreateResponse(context);
             }
         }
 
@@ -164,20 +145,15 @@ namespace Azure.Configuration
 
             Uri uri = BuildUriForLocksRoute(key, filter);
 
-            PipelineCallContext context = null;
-            try {
-                context = Pipeline.CreateContext(_options, cancellation);
+            using (PipelineCallContext context = Pipeline.CreateContext(_options, cancellation))
+            {
                 context.AddRequestLine(ServiceMethod.Put, uri);
 
                 AddFilterHeaders(filter, context);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
-                return await CreateKeyValueResponse(context);
-            }
-            catch {
-                if (context != null) context.Dispose();
-                throw;
+                return await CreateResponse(context);
             }
         }
 
@@ -187,20 +163,15 @@ namespace Azure.Configuration
 
             Uri uri = BuildUriForLocksRoute(key, filter);
 
-            PipelineCallContext context = null;
-            try {
-                context = Pipeline.CreateContext(_options, cancellation);
+            using (PipelineCallContext context = Pipeline.CreateContext(_options, cancellation))
+            {
                 context.AddRequestLine(ServiceMethod.Delete, uri);
 
                 AddFilterHeaders(filter, context);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
-                return await CreateKeyValueResponse(context);
-            }
-            catch {
-                if (context != null) context.Dispose();
-                throw;
+                return await CreateResponse(context);
             }
         }
 
@@ -209,10 +180,9 @@ namespace Azure.Configuration
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
 
             Uri uri = BuildUrlForKvRoute(key, filter);
-            
-            PipelineCallContext context = null;
-            try {
-                context = Pipeline.CreateContext(_options, cancellation);
+
+            using (PipelineCallContext context = Pipeline.CreateContext(_options, cancellation))
+            {
                 context.AddRequestLine(ServiceMethod.Get, uri);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
@@ -223,44 +193,39 @@ namespace Azure.Configuration
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
-                return await CreateKeyValueResponse(context);
-            }
-            catch {
-                if (context != null) context.Dispose();
-                throw;
+                return await CreateResponse(context);
             }
         }
 
         public async Task<Response<SettingBatch>> GetBatchAsync(BatchFilter filter, CancellationToken cancellation = default)
         {
             var uri = BuildUrlForGetBatch(filter);
-            PipelineCallContext context = null;
-            try {
-                context = Pipeline.CreateContext(_options, cancellation);
+
+            using (PipelineCallContext context = Pipeline.CreateContext(_options, cancellation))
+            {
                 context.AddRequestLine(ServiceMethod.Get, uri);
 
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
-                if (filter.Revision != null) {
+                if (filter.Revision != null)
+                {
                     context.AddHeader(AcceptDatetimeHeader, filter.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat));
                 }
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
                 ServiceResponse response = context.Response;
-                if (!response.TryGetHeader(Header.Constants.ContentLength, out long contentLength)) {
+                if (!response.TryGetHeader(Header.Constants.ContentLength, out long contentLength))
+                {
                     throw new Exception("bad response: no content length header");
                 }
 
-                if (response.Status != 200) {
+                if (response.Status != 200)
+                {
                     return new Response<SettingBatch>(response);
                 }
 
                 var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellation);
                 return new Response<SettingBatch>(response, batch);
-            }
-            catch {
-                if (context != null) context.Dispose();
-                throw;
             }
         }
     }
