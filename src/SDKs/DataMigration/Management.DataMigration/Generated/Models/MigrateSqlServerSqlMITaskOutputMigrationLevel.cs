@@ -48,8 +48,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="message">Migration progress message</param>
         /// <param name="serverRoleResults">Map of server role migration
         /// results.</param>
-        /// <param name="orphanedUsers">Map of users to database name of
-        /// orphaned users.</param>
+        /// <param name="orphanedUsersInfo">List of orphaned users.</param>
         /// <param name="databases">Selected databases as a map from database
         /// name to database id</param>
         /// <param name="sourceServerVersion">Source server version</param>
@@ -60,7 +59,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// version</param>
         /// <param name="exceptionsAndWarnings">Migration exceptions and
         /// warnings.</param>
-        public MigrateSqlServerSqlMITaskOutputMigrationLevel(string id = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string status = default(string), string state = default(string), IDictionary<string, string> agentJobs = default(IDictionary<string, string>), IDictionary<string, string> logins = default(IDictionary<string, string>), string message = default(string), IDictionary<string, StartMigrationScenarioServerRoleResult> serverRoleResults = default(IDictionary<string, StartMigrationScenarioServerRoleResult>), IDictionary<string, string> orphanedUsers = default(IDictionary<string, string>), IDictionary<string, string> databases = default(IDictionary<string, string>), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), string targetServerVersion = default(string), string targetServerBrandVersion = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
+        public MigrateSqlServerSqlMITaskOutputMigrationLevel(string id = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string status = default(string), string state = default(string), IDictionary<string, string> agentJobs = default(IDictionary<string, string>), IDictionary<string, string> logins = default(IDictionary<string, string>), string message = default(string), IDictionary<string, StartMigrationScenarioServerRoleResult> serverRoleResults = default(IDictionary<string, StartMigrationScenarioServerRoleResult>), IList<OrphanedUserInfo> orphanedUsersInfo = default(IList<OrphanedUserInfo>), IDictionary<string, string> databases = default(IDictionary<string, string>), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), string targetServerVersion = default(string), string targetServerBrandVersion = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
             : base(id)
         {
             StartedOn = startedOn;
@@ -71,7 +70,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             Logins = logins;
             Message = message;
             ServerRoleResults = serverRoleResults;
-            OrphanedUsers = orphanedUsers;
+            OrphanedUsersInfo = orphanedUsersInfo;
             Databases = databases;
             SourceServerVersion = sourceServerVersion;
             SourceServerBrandVersion = sourceServerBrandVersion;
@@ -140,10 +139,10 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public IDictionary<string, StartMigrationScenarioServerRoleResult> ServerRoleResults { get; private set; }
 
         /// <summary>
-        /// Gets map of users to database name of orphaned users.
+        /// Gets list of orphaned users.
         /// </summary>
-        [JsonProperty(PropertyName = "orphanedUsers")]
-        public IDictionary<string, string> OrphanedUsers { get; private set; }
+        [JsonProperty(PropertyName = "orphanedUsersInfo")]
+        public IList<OrphanedUserInfo> OrphanedUsersInfo { get; private set; }
 
         /// <summary>
         /// Gets selected databases as a map from database name to database id
