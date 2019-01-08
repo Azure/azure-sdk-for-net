@@ -48,16 +48,16 @@ namespace Azure.Configuration
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                context.AddRequestLine(ServiceMethod.Put, uri);
+                context.SetRequestLine(ServiceMethod.Put, uri);
 
+                context.AddHeader("Host", uri.Host);
                 context.AddHeader(IfNoneMatchWildcard);
-
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(Header.Common.JsonContentType);
                 context.AddHeader(Header.Common.CreateContentLength(content.Length));
                 AddAuthenticationHeaders(context, uri, ServiceMethod.Put, content, _secret, _credential);
 
-                context.AddContent(PipelineContent.Create(content));
+                context.SetContent(PipelineContent.Create(content));
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -76,14 +76,15 @@ namespace Azure.Configuration
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                context.AddRequestLine(ServiceMethod.Put, uri);
+                context.SetRequestLine(ServiceMethod.Put, uri);
 
+                context.AddHeader("Host", uri.Host);
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(Header.Common.JsonContentType);
                 context.AddHeader(Header.Common.CreateContentLength(content.Length));
                 AddAuthenticationHeaders(context, uri, ServiceMethod.Put, content, _secret, _credential);
 
-                context.AddContent(PipelineContent.Create(content));
+                context.SetContent(PipelineContent.Create(content));
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -103,16 +104,16 @@ namespace Azure.Configuration
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                context.AddRequestLine(ServiceMethod.Put, uri);
+                context.SetRequestLine(ServiceMethod.Put, uri);
 
+                context.AddHeader("Host", uri.Host);
                 context.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
-
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 context.AddHeader(Header.Common.JsonContentType);
                 context.AddHeader(Header.Common.CreateContentLength(content.Length));
                 AddAuthenticationHeaders(context, uri, ServiceMethod.Put, content, _secret, _credential);
 
-                context.AddContent(PipelineContent.Create(content));
+                context.SetContent(PipelineContent.Create(content));
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -128,8 +129,9 @@ namespace Azure.Configuration
 
             using (PipelineCallContext context = Pipeline.CreateContext(_options, cancellation))
             {
-                context.AddRequestLine(ServiceMethod.Delete, uri);
+                context.SetRequestLine(ServiceMethod.Delete, uri);
 
+                context.AddHeader("Host", uri.Host);
                 AddFilterHeaders(filter, context);
                 AddAuthenticationHeaders(context, uri, ServiceMethod.Delete, content: default, _secret, _credential);
 
@@ -147,8 +149,9 @@ namespace Azure.Configuration
 
             using (PipelineCallContext context = Pipeline.CreateContext(_options, cancellation))
             {
-                context.AddRequestLine(ServiceMethod.Put, uri);
+                context.SetRequestLine(ServiceMethod.Put, uri);
 
+                context.AddHeader("Host", uri.Host);
                 AddFilterHeaders(filter, context);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
@@ -165,8 +168,9 @@ namespace Azure.Configuration
 
             using (PipelineCallContext context = Pipeline.CreateContext(_options, cancellation))
             {
-                context.AddRequestLine(ServiceMethod.Delete, uri);
+                context.SetRequestLine(ServiceMethod.Delete, uri);
 
+                context.AddHeader("Host", uri.Host);
                 AddFilterHeaders(filter, context);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
@@ -183,8 +187,9 @@ namespace Azure.Configuration
 
             using (PipelineCallContext context = Pipeline.CreateContext(_options, cancellation))
             {
-                context.AddRequestLine(ServiceMethod.Get, uri);
+                context.SetRequestLine(ServiceMethod.Get, uri);
 
+                context.AddHeader("Host", uri.Host);
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddFilterHeaders(filter, context);
                 context.AddHeader(Header.Common.JsonContentType);
@@ -203,8 +208,9 @@ namespace Azure.Configuration
 
             using (PipelineCallContext context = Pipeline.CreateContext(_options, cancellation))
             {
-                context.AddRequestLine(ServiceMethod.Get, uri);
+                context.SetRequestLine(ServiceMethod.Get, uri);
 
+                context.AddHeader("Host", uri.Host);
                 context.AddHeader(MediaTypeKeyValueApplicationHeader);
                 if (filter.Revision != null)
                 {
