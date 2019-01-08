@@ -6,6 +6,7 @@ using Azure.Core;
 
 namespace Azure.Configuration.Tests
 {
+    [Category("Live")]
     public class ConfigurationLiveTests
     {
         static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting()
