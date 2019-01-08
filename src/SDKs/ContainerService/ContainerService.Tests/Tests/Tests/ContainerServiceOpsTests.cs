@@ -29,13 +29,6 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
 
                 var location = ContainerServiceTestUtilities.GetLocationFromProvider(ResourceManagementClient);
 
-                var resourceGroup = ResourceManagementClient.TryGetResourceGroup(location);
-                if (string.IsNullOrWhiteSpace(resourceGroup))
-                {
-                    resourceGroup = TestUtilities.GenerateName(ContainerServiceTestUtilities.ResourceGroupPrefix);
-                    ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                }
-
                 var orchestratorsListResult = await ContainerServiceClient.ContainerServices.ListOrchestratorsAsync(location);
                 
                 Assert.NotNull(orchestratorsListResult);
