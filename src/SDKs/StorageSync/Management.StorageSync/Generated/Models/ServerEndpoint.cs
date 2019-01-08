@@ -52,8 +52,16 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="lastWorkflowId">ServerEndpoint lastWorkflowId</param>
         /// <param name="lastOperationName">Resource Last Operation
         /// Name</param>
-        /// <param name="syncStatus">Sync Health Status</param>
-        public ServerEndpoint(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), object syncStatus = default(object))
+        /// <param name="syncStatus">Server Endpoint properties.</param>
+        /// <param name="offlineDataTransfer">Offline data transfer. Possible
+        /// values include: 'on', 'off'</param>
+        /// <param name="offlineDataTransferStorageAccountResourceId">Offline
+        /// data transfer storage account resource ID</param>
+        /// <param name="offlineDataTransferStorageAccountTenantId">Offline
+        /// data transfer storage account tenant ID</param>
+        /// <param name="offlineDataTransferShareName">Offline data transfer
+        /// share name</param>
+        public ServerEndpoint(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), ServerEndpointHealth syncStatus = default(ServerEndpointHealth), string offlineDataTransfer = default(string), string offlineDataTransferStorageAccountResourceId = default(string), string offlineDataTransferStorageAccountTenantId = default(string), string offlineDataTransferShareName = default(string))
             : base(id, name, type)
         {
             ServerLocalPath = serverLocalPath;
@@ -66,6 +74,10 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             LastWorkflowId = lastWorkflowId;
             LastOperationName = lastOperationName;
             SyncStatus = syncStatus;
+            OfflineDataTransfer = offlineDataTransfer;
+            OfflineDataTransferStorageAccountResourceId = offlineDataTransferStorageAccountResourceId;
+            OfflineDataTransferStorageAccountTenantId = offlineDataTransferStorageAccountTenantId;
+            OfflineDataTransferShareName = offlineDataTransferShareName;
             CustomInit();
         }
 
@@ -130,10 +142,35 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         public string LastOperationName { get; set; }
 
         /// <summary>
-        /// Gets or sets sync Health Status
+        /// Gets or sets server Endpoint properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties.syncStatus")]
-        public object SyncStatus { get; set; }
+        public ServerEndpointHealth SyncStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets offline data transfer. Possible values include: 'on',
+        /// 'off'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.offlineDataTransfer")]
+        public string OfflineDataTransfer { get; set; }
+
+        /// <summary>
+        /// Gets offline data transfer storage account resource ID
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.offlineDataTransferStorageAccountResourceId")]
+        public string OfflineDataTransferStorageAccountResourceId { get; private set; }
+
+        /// <summary>
+        /// Gets offline data transfer storage account tenant ID
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.offlineDataTransferStorageAccountTenantId")]
+        public string OfflineDataTransferStorageAccountTenantId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets offline data transfer share name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.offlineDataTransferShareName")]
+        public string OfflineDataTransferShareName { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -158,6 +195,10 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             if (TierFilesOlderThanDays < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "TierFilesOlderThanDays", 0);
+            }
+            if (SyncStatus != null)
+            {
+                SyncStatus.Validate();
             }
         }
     }

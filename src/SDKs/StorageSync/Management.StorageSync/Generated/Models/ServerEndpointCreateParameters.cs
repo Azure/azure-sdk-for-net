@@ -49,7 +49,11 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// days.</param>
         /// <param name="friendlyName">Friendly Name</param>
         /// <param name="serverResourceId">Server Resource Id.</param>
-        public ServerEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string))
+        /// <param name="offlineDataTransfer">Offline data transfer. Possible
+        /// values include: 'on', 'off'</param>
+        /// <param name="offlineDataTransferShareName">Offline data transfer
+        /// share name</param>
+        public ServerEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string))
             : base(id, name, type)
         {
             ServerLocalPath = serverLocalPath;
@@ -58,6 +62,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             TierFilesOlderThanDays = tierFilesOlderThanDays;
             FriendlyName = friendlyName;
             ServerResourceId = serverResourceId;
+            OfflineDataTransfer = offlineDataTransfer;
+            OfflineDataTransferShareName = offlineDataTransferShareName;
             CustomInit();
         }
 
@@ -102,6 +108,19 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.serverResourceId")]
         public string ServerResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets offline data transfer. Possible values include: 'on',
+        /// 'off'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.offlineDataTransfer")]
+        public string OfflineDataTransfer { get; set; }
+
+        /// <summary>
+        /// Gets or sets offline data transfer share name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.offlineDataTransferShareName")]
+        public string OfflineDataTransferShareName { get; set; }
 
         /// <summary>
         /// Validate the object.
