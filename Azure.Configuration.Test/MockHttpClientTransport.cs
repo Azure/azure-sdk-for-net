@@ -170,7 +170,7 @@ namespace Azure.Configuration.Test
         {
             if (Responses.Count == 0)
             { // TODO (pri 3): this should not be hardcoded here
-                Responses.Add(HttpStatusCode.NotFound);
+                Responses.Add(HttpStatusCode.GatewayTimeout);
                 Responses.Add(HttpStatusCode.OK);
             }
 

@@ -8,6 +8,7 @@ using Azure.Core.Testing;
 using Azure.Core;
 using Azure.Core.Net;
 using System.Buffers;
+using Azure.Core.Net.Pipeline;
 
 namespace Azure.Configuration.Tests
 {
@@ -201,6 +202,7 @@ namespace Azure.Configuration.Tests
             options.Logger = new MockLogger();
             options.Pool = ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4);
             options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
+            options.RetryPolicy = RetryPolicy.CreateFixed(5, default, 404);
 
             var client = new ConfigurationClient(connectionString, options);
             Response<ConfigurationSetting> response = await client.GetAsync(key: s_testSetting.Key, filter: null, CancellationToken.None);
