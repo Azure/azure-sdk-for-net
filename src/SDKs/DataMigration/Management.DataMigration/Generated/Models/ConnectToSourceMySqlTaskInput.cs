@@ -35,13 +35,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="sourceConnectionInfo">Information for connecting to
         /// MySQL source</param>
         /// <param name="targetPlatform">Target Platform for the migration.
-        /// Possible values include: 'AzureDbForMySQL'</param>
+        /// Possible values include: 'SqlServer', 'AzureDbForMySQL'</param>
         /// <param name="checkPermissionsGroup">Permission group for
         /// validations. Possible values include: 'Default',
         /// 'MigrationFromSqlServerToAzureDB',
         /// 'MigrationFromSqlServerToAzureMI',
         /// 'MigrationFromMySQLToAzureDBForMySQL'</param>
-        public ConnectToSourceMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo, string targetPlatform = default(string), string checkPermissionsGroup = default(string))
+        public ConnectToSourceMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo, string targetPlatform = default(string), ServerLevelPermissionsGroup? checkPermissionsGroup = default(ServerLevelPermissionsGroup?))
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetPlatform = targetPlatform;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
 
         /// <summary>
         /// Gets or sets target Platform for the migration. Possible values
-        /// include: 'AzureDbForMySQL'
+        /// include: 'SqlServer', 'AzureDbForMySQL'
         /// </summary>
         [JsonProperty(PropertyName = "targetPlatform")]
         public string TargetPlatform { get; set; }
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'MigrationFromMySQLToAzureDBForMySQL'
         /// </summary>
         [JsonProperty(PropertyName = "checkPermissionsGroup")]
-        public string CheckPermissionsGroup { get; set; }
+        public ServerLevelPermissionsGroup? CheckPermissionsGroup { get; set; }
 
         /// <summary>
         /// Validate the object.

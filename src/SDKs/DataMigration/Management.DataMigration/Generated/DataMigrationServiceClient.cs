@@ -47,6 +47,11 @@ namespace Microsoft.Azure.Management.DataMigration
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// Version of the API
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// Identifier of the subscription
         /// </summary>
         public string SubscriptionId { get; set; }
@@ -353,6 +358,7 @@ namespace Microsoft.Azure.Management.DataMigration
             Operations = new Operations(this);
             Files = new FilesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2018-07-15-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -394,6 +400,8 @@ namespace Microsoft.Azure.Management.DataMigration
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateSqlServerSqlDbSyncTaskOutput>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateSqlServerSqlDbTaskOutput>("resultType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateSqlServerSqlDbTaskOutput>("resultType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateSqlServerSqlMISyncTaskOutput>("resultType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateSqlServerSqlMISyncTaskOutput>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateSqlServerSqlMITaskOutput>("resultType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateSqlServerSqlMITaskOutput>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ConnectToSourceSqlServerTaskOutput>("resultType"));
