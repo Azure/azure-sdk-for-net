@@ -25,41 +25,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public partial interface IProtectionContainersOperations
     {
         /// <summary>
-        /// Grants restore access to container.
-        /// </summary>
-        /// <param name='vaultName'>
-        /// The name of the recovery services vault.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Fabric name associated the container.
-        /// </param>
-        /// <param name='containerName'>
-        /// Name of the container for which access is required
-        /// </param>
-        /// <param name='parameters'>
-        /// restore access request
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<GenericRestoreAccessResponse>> AccessRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string fabricName, string containerName, GenericRestoreAccessRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets details of the specific container registered to your Recovery
         /// Services Vault.
         /// </summary>
