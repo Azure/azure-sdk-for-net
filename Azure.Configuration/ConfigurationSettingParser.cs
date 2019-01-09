@@ -21,14 +21,13 @@ namespace Azure.Configuration
 
         public static bool TrySerialize(ConfigurationSetting setting, byte[] buffer, out int written)
         {
-            var writer = new ArrayWriter(buffer);
-            var json = new Utf8JsonWriter<ArrayWriter>(writer);
-            json.WriteObjectStart();
-            json.WriteAttribute("value", setting.Value);
-            json.WriteAttribute("content_type", setting.ContentType);
-            json.WriteObjectEnd();
+            var json = new Utf8JsonWriter2(buffer);
+            json.WriteStartObject();
+            json.WriteString("value", setting.Value);
+            json.WriteString("content_type", setting.ContentType);
+            json.WriteEndObject();
             json.Flush();
-            written = writer.Written;
+            written = (int)json.BytesWritten;
             return true;
         }
 
@@ -233,25 +232,5 @@ namespace Azure.Configuration
             ReadOnlySpan<byte> urlBytes = headerValue.Slice(afterIndex + s_after.Length);
             return Utf8Parser.TryParse(urlBytes, out afterValue, out _);
         }
-    }
-
-    // TODO (pri 2): Utf8JsonWriter will have Written property soon and this type should be removed then.
-    // TODO (pri 2): Utf8JsonWriter will have the ability to write to Stream, at which point this code can be simplified
-    class ArrayWriter : IBufferWriter<byte>
-    {
-        byte[] _buffer;
-        int _written = 0;
-
-        public ArrayWriter(byte[] buffer)
-            => _buffer = buffer;
-
-        public int Written => _written;
-        public byte[] Buffer => _buffer;
-
-        public void Advance(int count) => _written += count;
-
-        public Memory<byte> GetMemory(int sizeHint = 0) => _buffer.AsMemory(_written);
-
-        public Span<byte> GetSpan(int sizeHint = 0) => _buffer.AsSpan(_written);
     }
 }
