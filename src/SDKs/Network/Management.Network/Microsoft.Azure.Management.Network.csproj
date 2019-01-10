@@ -14,6 +14,7 @@
         - Added new list operations for ApplicationGateway's child resources
         - Added operation for updating ApplicationSecurityGroup's tags
         - Added list operation for ExpressRouteCircuitConnection
+        - Added new resource DdosCustomPolicy
         - Added support for DdosSettings in PublicIpAddress
 		]]></PackageReleaseNotes>
 	</PropertyGroup>

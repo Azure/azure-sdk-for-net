@@ -104,6 +104,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IAzureFirewallFqdnTagsOperations AzureFirewallFqdnTags { get; private set; }
 
         /// <summary>
+        /// Gets the IDdosCustomPoliciesOperations.
+        /// </summary>
+        public virtual IDdosCustomPoliciesOperations DdosCustomPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IDdosProtectionPlansOperations.
         /// </summary>
         public virtual IDdosProtectionPlansOperations DdosProtectionPlans { get; private set; }
@@ -655,6 +660,7 @@ namespace Microsoft.Azure.Management.Network
             AvailableResourceGroupDelegations = new AvailableResourceGroupDelegationsOperations(this);
             AzureFirewalls = new AzureFirewallsOperations(this);
             AzureFirewallFqdnTags = new AzureFirewallFqdnTagsOperations(this);
+            DdosCustomPolicies = new DdosCustomPoliciesOperations(this);
             DdosProtectionPlans = new DdosProtectionPlansOperations(this);
             AvailableEndpointServices = new AvailableEndpointServicesOperations(this);
             ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);

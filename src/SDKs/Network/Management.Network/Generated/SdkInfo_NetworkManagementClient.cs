@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "BgpServiceCommunities", "2018-11-01"),
                 new Tuple<string, string, string>("Network", "CheckDnsNameAvailability", "2018-11-01"),
                 new Tuple<string, string, string>("Network", "ConnectionMonitors", "2018-11-01"),
+                new Tuple<string, string, string>("Network", "DdosCustomPolicies", "2018-11-01"),
                 new Tuple<string, string, string>("Network", "DdosProtectionPlans", "2018-11-01"),
                 new Tuple<string, string, string>("Network", "DefaultSecurityRules", "2018-11-01"),
                 new Tuple<string, string, string>("Network", "ExpressRouteCircuitAuthorizations", "2018-11-01"),
@@ -99,7 +100,7 @@ namespace Microsoft.Azure.Management.Network
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/network/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\Projects\\azure-sdk-for-net\\src\\SDKs";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "a4368ac83299657f35f105033353c2133db89176";
+      public static readonly String GithubCommidId = "c9269dbd9a589cd49775b3f65b87c556c2f52cce";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
