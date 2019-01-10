@@ -4,9 +4,16 @@
 using System;
 using System.Linq;
 using ContainerService.Tests;
+using Microsoft.Azure.Management.ContainerService.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.Resources.Models;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.Azure.Graph.RBAC.Models;
+using Microsoft.Azure.Graph.RBAC;
+using System.Threading;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Microsoft.Azure.Management.ContainerService.Tests
 {
@@ -16,6 +23,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
         internal const string ResourceGroupPrefix = "aks-dotnet-sdk-RG-";
         internal const string AgentPoolProfileName = "aksdotnetagent";
         internal const string VMSize = "Standard_A1";
+        internal const string TenantIdKey = "TenantId";
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
@@ -43,7 +51,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
 
         public static string TryGetResourceGroup(this ResourceManagementClient resourceManagementClient, string location)
         {
-            const string DefaultResourceGroupName = "SDKTests";
+            const string DefaultResourceGroupName = "AKSTests";
 
             var resourceGroup = resourceManagementClient.ResourceGroups
                     .List().Where(group => string.IsNullOrWhiteSpace(location) || group.Location.Equals(location.Replace(" ", string.Empty), StringComparison.OrdinalIgnoreCase))
@@ -52,6 +60,55 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
             return resourceGroup != null
                 ? resourceGroup.Name
                 : string.Empty;
+        }
+
+        /// <summary>
+        /// CreateManagedCluster creates an AKS managed cluster
+        /// </summary>
+        /// <param name="resourceManagementClient"></param>
+        /// <param name="containerServiceClient"></param>
+        /// <param name="location"></param>
+        /// <param name="clusterName"></param>
+        /// <param name="resourceGroupName"></param>
+        /// <returns></returns>
+        internal async static Task<ManagedCluster> CreateManagedCluster(
+            MockContext context,
+            ResourceManagementClient resourceManagementClient,
+            ContainerServiceClient containerServiceClient,
+            string location,
+            string clusterName,
+            string resourceGroupName)
+        {
+
+            TestEnvironment testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
+            string authClientId = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey];
+            string authSecret = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey];
+
+            var agentPoolProfiles = new List<ManagedClusterAgentPoolProfile>
+            {
+                new ManagedClusterAgentPoolProfile
+                {
+                    Name = AgentPoolProfileName,
+                    VmSize = VMSize,
+                    Count = 1
+                }
+            };
+
+            ManagedCluster desiredManagedCluster = new ManagedCluster
+            {
+                DnsPrefix = DnsPrefix,
+                Location = location,
+                AgentPoolProfiles = agentPoolProfiles,
+                ServicePrincipalProfile = new ManagedClusterServicePrincipalProfile
+                {
+                    ClientId = authClientId,
+                    Secret = authSecret
+                }
+            };
+
+            var cluster = await containerServiceClient.ManagedClusters.CreateOrUpdateAsync(resourceGroupName, clusterName, desiredManagedCluster);
+
+            return cluster;
         }
     }
 }

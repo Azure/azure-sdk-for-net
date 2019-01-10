@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using ContainerService.Tests;
+using Microsoft.Azure.Graph.RBAC.Models;
 using Microsoft.Azure.Management.ContainerService;
 using Microsoft.Azure.Management.ContainerService.Models;
 using Microsoft.Azure.Management.Resources;
@@ -17,6 +18,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
 {
     public partial class ContainerServiceTests : TestBase
     {
+
         /// <summary>
         /// Test the listing of container orchestrators.
         /// </summary>
@@ -30,7 +32,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
                 var location = ContainerServiceTestUtilities.GetLocationFromProvider(ResourceManagementClient);
 
                 var orchestratorsListResult = await ContainerServiceClient.ContainerServices.ListOrchestratorsAsync(location);
-                
+
                 Assert.NotNull(orchestratorsListResult);
                 Assert.True(orchestratorsListResult.Orchestrators.Count > 0);
             }
@@ -59,8 +61,9 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
                 string clusterName = TestUtilities.GenerateName();
 
                 // Create a managed AKS cluster
-                ManagedCluster managedClusterResult = await CreateManagedCluster(
-                    ResourceManagementClient, 
+                ManagedCluster managedClusterResult = await ContainerServiceTestUtilities.CreateManagedCluster(
+                    context,
+                    ResourceManagementClient,
                     ContainerServiceClient,
                     location,
                     clusterName,
@@ -98,7 +101,8 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
                 string clusterName = TestUtilities.GenerateName();
 
                 // Create a managed AKS cluster
-                ManagedCluster managedClusterResult = await CreateManagedCluster(
+                ManagedCluster managedClusterResult = await ContainerServiceTestUtilities.CreateManagedCluster(
+                    context,
                     ResourceManagementClient,
                     ContainerServiceClient,
                     location,
@@ -141,7 +145,8 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
                 string clusterName = TestUtilities.GenerateName();
 
                 // Create a managed AKS cluster
-                ManagedCluster managedClusterResult = await CreateManagedCluster(
+                ManagedCluster managedClusterResult = await ContainerServiceTestUtilities.CreateManagedCluster(
+                    context,
                     ResourceManagementClient,
                     ContainerServiceClient,
                     location,
@@ -187,7 +192,8 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
                 string clusterName = TestUtilities.GenerateName();
 
                 // Create a managed AKS cluster
-                ManagedCluster managedClusterResult = await CreateManagedCluster(
+                ManagedCluster managedClusterResult = await ContainerServiceTestUtilities.CreateManagedCluster(
+                    context,
                     ResourceManagementClient,
                     ContainerServiceClient,
                     location,
@@ -230,7 +236,8 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
                 string clusterName = TestUtilities.GenerateName();
 
                 // Create a managed AKS cluster
-                ManagedCluster managedClusterResult = await CreateManagedCluster(
+                ManagedCluster managedClusterResult = await ContainerServiceTestUtilities.CreateManagedCluster(
+                    context,
                     ResourceManagementClient,
                     ContainerServiceClient,
                     location,
@@ -250,44 +257,6 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
                 // Clean up our Azure resources
                 ResourceManagementClient.ResourceGroups.DeleteAsync(resourceGroup).Wait();
             }
-        }
-
-        /// <summary>
-        /// CreateManagedCluster creates an AKS managed cluster
-        /// </summary>
-        /// <param name="resourceManagementClient"></param>
-        /// <param name="containerServiceClient"></param>
-        /// <param name="location"></param>
-        /// <param name="clusterName"></param>
-        /// <param name="resourceGroupName"></param>
-        /// <returns></returns>
-        internal async static Task<ManagedCluster> CreateManagedCluster(
-            ResourceManagementClient resourceManagementClient,
-            ContainerServiceClient containerServiceClient,
-            string location,
-            string clusterName,
-            string resourceGroupName)
-        {
-
-            var agentPoolProfiles = new List<ManagedClusterAgentPoolProfile>
-                {
-                    new ManagedClusterAgentPoolProfile
-                    {
-                        Name = ContainerServiceTestUtilities.AgentPoolProfileName,
-                        VmSize = ContainerServiceTestUtilities.VMSize,
-                        Count = 1
-                    }
-                };
-
-            ManagedCluster desiredManagedCluster = new ManagedCluster
-            {
-                DnsPrefix = ContainerServiceTestUtilities.DnsPrefix,
-                Location = location,
-                AgentPoolProfiles = agentPoolProfiles,
-                ServicePrincipalProfile = null
-            };
-            
-            return await containerServiceClient.ManagedClusters.CreateOrUpdateAsync(resourceGroupName, clusterName, desiredManagedCluster);
         }
     }
 }
