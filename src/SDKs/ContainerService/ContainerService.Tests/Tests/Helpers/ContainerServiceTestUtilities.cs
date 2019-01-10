@@ -10,10 +10,6 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.Resources.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Microsoft.Azure.Graph.RBAC.Models;
-using Microsoft.Azure.Graph.RBAC;
-using System.Threading;
-using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Microsoft.Azure.Management.ContainerService.Tests
 {
@@ -23,7 +19,6 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
         internal const string ResourceGroupPrefix = "aks-dotnet-sdk-RG-";
         internal const string AgentPoolProfileName = "aksdotnetagent";
         internal const string VMSize = "Standard_A1";
-        internal const string TenantIdKey = "TenantId";
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
