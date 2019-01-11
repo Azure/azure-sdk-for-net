@@ -69,6 +69,13 @@ namespace Azure.Configuration.Test
             string json = JsonConvert.SerializeObject(result).ToLowerInvariant();
             _responseContent = json.Replace("contenttype", "content_type");
         }
+
+        public DeleteMockTransport(string key, SettingFilter filter, HttpStatusCode statusCode)
+            : this(key, filter, result: null)
+        {
+            Responses.Clear();
+            Responses.Add(statusCode);
+        }
     }
 
     // TODO (pri 3): this should emit the etag response header

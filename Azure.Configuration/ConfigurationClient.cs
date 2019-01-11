@@ -153,6 +153,7 @@ namespace Azure.Configuration
 
                 context.AddHeader("Host", uri.Host);
                 AddFilterHeaders(filter, context);
+                AddAuthenticationHeaders(context, uri, ServiceMethod.Put, content: default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 
@@ -172,6 +173,7 @@ namespace Azure.Configuration
 
                 context.AddHeader("Host", uri.Host);
                 AddFilterHeaders(filter, context);
+                AddAuthenticationHeaders(context, uri, ServiceMethod.Delete, content: default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(context).ConfigureAwait(false);
 

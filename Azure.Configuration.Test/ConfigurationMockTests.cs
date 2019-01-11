@@ -121,7 +121,7 @@ namespace Azure.Configuration.Tests
             response.Dispose();
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
-
+        
         [Test]
         public async Task Delete()
         {
@@ -133,6 +133,21 @@ namespace Azure.Configuration.Tests
             Assert.AreEqual(200, response.Status);
 
             AssertEqual(s_testSetting, response.Result);
+
+            response.Dispose();
+            Assert.AreEqual(0, pool.CurrentlyRented);
+        }
+
+        [Test]
+        public async Task DeleteNotFound()
+        {
+            var transport = new DeleteMockTransport(s_testSetting.Key, default, HttpStatusCode.NotFound);
+            var (service, pool) = CreateTestService(transport);
+
+            Response<ConfigurationSetting> response = await service.DeleteAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
+
+            Assert.AreEqual(404, response.Status);
+            Assert.IsNull(response.Result);
 
             response.Dispose();
             Assert.AreEqual(0, pool.CurrentlyRented);
