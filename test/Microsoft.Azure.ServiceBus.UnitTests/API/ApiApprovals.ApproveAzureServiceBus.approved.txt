@@ -675,6 +675,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public virtual System.Threading.Tasks.Task DeleteRuleAsync(string topicPath, string subscriptionName, string ruleName, System.Threading.CancellationToken cancellationToken = null) { }
         public virtual System.Threading.Tasks.Task DeleteSubscriptionAsync(string topicPath, string subscriptionName, System.Threading.CancellationToken cancellationToken = null) { }
         public virtual System.Threading.Tasks.Task DeleteTopicAsync(string topicPath, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.NamespaceInfo> GetNamespaceInfoAsync(System.Threading.CancellationToken cancellationToken = null) { }
         public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.QueueDescription> GetQueueAsync(string queuePath, System.Threading.CancellationToken cancellationToken = null) { }
         public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.QueueRuntimeInfo> GetQueueRuntimeInfoAsync(string queuePath, System.Threading.CancellationToken cancellationToken = null) { }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Management.QueueDescription>> GetQueuesAsync(int count = 100, int skip = 0, System.Threading.CancellationToken cancellationToken = null) { }
@@ -707,6 +708,30 @@ namespace Microsoft.Azure.ServiceBus.Management
     {
         public MessagingEntityAlreadyExistsException(string message) { }
         public MessagingEntityAlreadyExistsException(string message, System.Exception innerException) { }
+    }
+    public enum MessagingSku
+    {
+        Basic = 1,
+        Standard = 2,
+        Premium = 3,
+        Others = 99,
+    }
+    public class NamespaceInfo
+    {
+        public NamespaceInfo() { }
+        public string Alias { get; set; }
+        public System.DateTime CreatedTime { get; set; }
+        public Microsoft.Azure.ServiceBus.Management.MessagingSku MessagingSku { get; set; }
+        public int MessagingUnits { get; set; }
+        public System.DateTime ModifiedTime { get; set; }
+        public string Name { get; set; }
+        public Microsoft.Azure.ServiceBus.Management.NamespaceType NamespaceType { get; set; }
+    }
+    public enum NamespaceType
+    {
+        ServiceBus = 0,
+        Mixed = 2,
+        Others = 99,
     }
     public class QueueDescription : System.IEquatable<Microsoft.Azure.ServiceBus.Management.QueueDescription>
     {

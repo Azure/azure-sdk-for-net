@@ -78,6 +78,18 @@ namespace Microsoft.Azure.ServiceBus.Management
             return clone;
         }
 
+        /// <summary>
+        /// Gets information related to the currently used namespace.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns><see cref="NamespaceInfo"/> containing namespace information.</returns>
+        /// <remarks>Works with any claim (Send/Listen/Manage).</remarks>
+        public virtual async Task<NamespaceInfo> GetNamespaceInfoAsync(CancellationToken cancellationToken = default)
+        {
+            var content = await GetEntity("$namespaceinfo", null, false, cancellationToken).ConfigureAwait(false);
+            return NamespaceInfoExtensions.ParseFromContent(content);
+        }
+
         #region DeleteEntity
 
         /// <summary>
