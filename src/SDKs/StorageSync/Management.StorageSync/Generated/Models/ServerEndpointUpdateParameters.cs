@@ -40,11 +40,17 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// maintained by Cloud Tiering if it is enabled.</param>
         /// <param name="tierFilesOlderThanDays">Tier files older than
         /// days.</param>
-        public ServerEndpointUpdateParameters(string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?))
+        /// <param name="offlineDataTransfer">Offline data transfer. Possible
+        /// values include: 'on', 'off'</param>
+        /// <param name="offlineDataTransferShareName">Offline data transfer
+        /// share name</param>
+        public ServerEndpointUpdateParameters(string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string))
         {
             CloudTiering = cloudTiering;
             VolumeFreeSpacePercent = volumeFreeSpacePercent;
             TierFilesOlderThanDays = tierFilesOlderThanDays;
+            OfflineDataTransfer = offlineDataTransfer;
+            OfflineDataTransferShareName = offlineDataTransferShareName;
             CustomInit();
         }
 
@@ -71,6 +77,19 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.tierFilesOlderThanDays")]
         public int? TierFilesOlderThanDays { get; set; }
+
+        /// <summary>
+        /// Gets or sets offline data transfer. Possible values include: 'on',
+        /// 'off'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.offlineDataTransfer")]
+        public string OfflineDataTransfer { get; set; }
+
+        /// <summary>
+        /// Gets or sets offline data transfer share name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.offlineDataTransferShareName")]
+        public string OfflineDataTransferShareName { get; set; }
 
         /// <summary>
         /// Validate the object.

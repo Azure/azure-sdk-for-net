@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// Certificate</param>
         /// <param name="agentVersion">Registered Server Agent Version</param>
         /// <param name="serverOSVersion">Registered Server OS Version</param>
-        /// <param name="serverManagementtErrorCode">Registered Server
+        /// <param name="serverManagementErrorCode">Registered Server
         /// Management Error Code</param>
         /// <param name="lastHeartBeat">Registered Server last heart
         /// beat</param>
@@ -66,13 +66,13 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="managementEndpointUri">Management Endpoint Uri</param>
         /// <param name="monitoringConfiguration">Monitoring
         /// Configuration</param>
-        public RegisteredServer(string id = default(string), string name = default(string), string type = default(string), string serverCertificate = default(string), string agentVersion = default(string), string serverOSVersion = default(string), int? serverManagementtErrorCode = default(int?), string lastHeartBeat = default(string), string provisioningState = default(string), string serverRole = default(string), string clusterId = default(string), string clusterName = default(string), string serverId = default(string), string storageSyncServiceUid = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), string discoveryEndpointUri = default(string), string resourceLocation = default(string), string serviceLocation = default(string), string friendlyName = default(string), string managementEndpointUri = default(string), string monitoringConfiguration = default(string))
+        public RegisteredServer(string id = default(string), string name = default(string), string type = default(string), string serverCertificate = default(string), string agentVersion = default(string), string serverOSVersion = default(string), int? serverManagementErrorCode = default(int?), string lastHeartBeat = default(string), string provisioningState = default(string), string serverRole = default(string), string clusterId = default(string), string clusterName = default(string), string serverId = default(string), string storageSyncServiceUid = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), string discoveryEndpointUri = default(string), string resourceLocation = default(string), string serviceLocation = default(string), string friendlyName = default(string), string managementEndpointUri = default(string), string monitoringConfiguration = default(string))
             : base(id, name, type)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
             ServerOSVersion = serverOSVersion;
-            ServerManagementtErrorCode = serverManagementtErrorCode;
+            ServerManagementErrorCode = serverManagementErrorCode;
             LastHeartBeat = lastHeartBeat;
             ProvisioningState = provisioningState;
             ServerRole = serverRole;
@@ -117,8 +117,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <summary>
         /// Gets or sets registered Server Management Error Code
         /// </summary>
-        [JsonProperty(PropertyName = "properties.serverManagementtErrorCode")]
-        public int? ServerManagementtErrorCode { get; set; }
+        [JsonProperty(PropertyName = "properties.serverManagementErrorCode")]
+        public int? ServerManagementErrorCode { get; set; }
 
         /// <summary>
         /// Gets or sets registered Server last heart beat
