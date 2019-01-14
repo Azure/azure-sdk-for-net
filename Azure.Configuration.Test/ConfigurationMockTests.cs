@@ -32,8 +32,7 @@ namespace Azure.Configuration.Tests
             var testPool = new TestPool<byte>();
             options.Pool = testPool;
 
-            options.Transport = transport; 
-            options.Logger = new MockLogger();
+            options.Transport = transport;
 
             var service = new ConfigurationClient(connectionString, options);
 
@@ -214,7 +213,6 @@ namespace Azure.Configuration.Tests
         {
             var options = new PipelineOptions();
             options.ApplicationId = "test_application";
-            options.Logger = new MockLogger();
             options.Pool = ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4);
             options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
             options.RetryPolicy = RetryPolicy.CreateFixed(5, default, 404);
