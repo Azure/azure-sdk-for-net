@@ -11,7 +11,7 @@ namespace Azure.Configuration.Tests
     {
         static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting()
         {
-            Key = "test_key",
+            Key = string.Concat("key-",Guid.NewGuid().ToString("N")),
             Value = "test_value",
             Label = "test_label",
             ContentType = "test_content_type",
@@ -290,6 +290,15 @@ namespace Azure.Configuration.Tests
                 s_testSetting.Locked = true;
                 AssertEqual(s_testSetting, responseLockSetting);
                 responseLock.Dispose();
+                
+                //Test update
+                var testSettingUpdate = s_testSetting.Clone();
+                testSettingUpdate.Value = "test_value_update";
+                testSettingUpdate.ETag = "*";
+
+                Response<ConfigurationSetting> responseUpdate = await service.UpdateAsync(testSettingUpdate, CancellationToken.None);
+                Assert.AreEqual(403, responseUpdate.Status);
+                responseUpdate.Dispose();
 
                 // Test Unlock
                 Response<ConfigurationSetting> responseUnlock = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
