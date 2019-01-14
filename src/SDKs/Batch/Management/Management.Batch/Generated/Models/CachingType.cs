@@ -21,10 +21,19 @@ namespace Microsoft.Azure.Management.Batch.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum CachingType
     {
+        /// <summary>
+        /// The caching mode for the disk is not enabled.
+        /// </summary>
         [EnumMember(Value = "None")]
         None,
+        /// <summary>
+        /// The caching mode for the disk is read only.
+        /// </summary>
         [EnumMember(Value = "ReadOnly")]
         ReadOnly,
+        /// <summary>
+        /// The caching mode for the disk is read and write.
+        /// </summary>
         [EnumMember(Value = "ReadWrite")]
         ReadWrite
     }
