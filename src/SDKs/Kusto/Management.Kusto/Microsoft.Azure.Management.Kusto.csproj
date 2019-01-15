@@ -5,13 +5,12 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Kusto</PackageId>
-    <Description>Provides management capabilities for Kusto (Azure Data Explorer) clusters.</Description>
     <Version>0.9.1-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.Kusto</AssemblyName>
     <PackageTags>management;kusto;;;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public preview release of the Azure Kusto SDK. Included with this release is creating and managing clusters.
+        Provides management capabilities for Kusto (Azure Data Explorer) clusters.
       ]]>
 </PackageReleaseNotes>
   </PropertyGroup>
