@@ -7,6 +7,18 @@ namespace Azure.Configuration
 {
     public sealed class ConfigurationSetting
     {
+        public ConfigurationSetting()
+        {
+
+        }
+
+        public ConfigurationSetting(string key, string value, string label = null)
+        {
+            Key = key;
+            Value = value;
+            Label = label;
+        }
+
         /// <summary>
         /// The primary identifier of a key-value.
         /// The key is used in unison with the label to uniquely identify a key-value.
