@@ -5,10 +5,10 @@
     <Description>Microsoft Azure Key Vault Extensions Class Library</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Extensions</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.KeyVault.Extensions</AssemblyName>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
     <PackageReleaseNotes>      
       <![CDATA[
-        Republishing to sign package with correct hash.
+        Republishing to publish symbols
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
