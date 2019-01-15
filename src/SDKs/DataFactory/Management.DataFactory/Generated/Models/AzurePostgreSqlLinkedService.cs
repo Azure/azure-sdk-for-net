@@ -46,14 +46,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the Dataset.</param>
         /// <param name="connectionString">An ODBC connection string. Type:
         /// string, SecureString or AzureKeyVaultSecretReference.</param>
+        /// <param name="password">The Azure key vault secret reference of
+        /// password in connection string.</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzurePostgreSqlLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), object encryptedCredential = default(object))
+        public AzurePostgreSqlLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), AzureKeyVaultSecretReference password = default(AzureKeyVaultSecretReference), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
+            Password = password;
             EncryptedCredential = encryptedCredential;
             CustomInit();
         }
@@ -69,6 +72,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.connectionString")]
         public object ConnectionString { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Azure key vault secret reference of password in
+        /// connection string.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.password")]
+        public AzureKeyVaultSecretReference Password { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -87,6 +97,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
+            if (Password != null)
+            {
+                Password.Validate();
+            }
         }
     }
 }

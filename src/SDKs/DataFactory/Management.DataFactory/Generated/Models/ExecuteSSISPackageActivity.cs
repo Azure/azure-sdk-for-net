@@ -47,11 +47,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
         /// <param name="runtime">Specifies the runtime to execute SSIS
-        /// package. Possible values include: 'x64', 'x86'</param>
+        /// package. The value should be "x86" or "x64". Type: string (or
+        /// Expression with resultType string).</param>
         /// <param name="loggingLevel">The logging level of SSIS package
-        /// execution.</param>
+        /// execution. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="environmentPath">The environment path to execute the
-        /// SSIS package.</param>
+        /// SSIS package. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="executionCredential">The package execution
+        /// credential.</param>
         /// <param name="projectParameters">The project level parameters to
         /// execute the SSIS package.</param>
         /// <param name="packageParameters">The package level parameters to
@@ -62,13 +67,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// connection managers to execute the SSIS package.</param>
         /// <param name="propertyOverrides">The property overrides to execute
         /// the SSIS package.</param>
-        public ExecuteSSISPackageActivity(string name, SSISPackageLocation packageLocation, IntegrationRuntimeReference connectVia, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), string runtime = default(string), string loggingLevel = default(string), string environmentPath = default(string), IDictionary<string, SSISExecutionParameter> projectParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, SSISExecutionParameter> packageParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> projectConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> packageConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, SSISPropertyOverride> propertyOverrides = default(IDictionary<string, SSISPropertyOverride>))
+        public ExecuteSSISPackageActivity(string name, SSISPackageLocation packageLocation, IntegrationRuntimeReference connectVia, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object runtime = default(object), object loggingLevel = default(object), object environmentPath = default(object), IDictionary<string, SSISExecutionCredential> executionCredential = default(IDictionary<string, SSISExecutionCredential>), IDictionary<string, SSISExecutionParameter> projectParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, SSISExecutionParameter> packageParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> projectConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> packageConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, SSISPropertyOverride> propertyOverrides = default(IDictionary<string, SSISPropertyOverride>))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             PackageLocation = packageLocation;
             Runtime = runtime;
             LoggingLevel = loggingLevel;
             EnvironmentPath = environmentPath;
+            ExecutionCredential = executionCredential;
             ConnectVia = connectVia;
             ProjectParameters = projectParameters;
             PackageParameters = packageParameters;
@@ -90,23 +96,32 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public SSISPackageLocation PackageLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the runtime to execute SSIS package.
-        /// Possible values include: 'x64', 'x86'
+        /// Gets or sets specifies the runtime to execute SSIS package. The
+        /// value should be "x86" or "x64". Type: string (or Expression with
+        /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.runtime")]
-        public string Runtime { get; set; }
+        public object Runtime { get; set; }
 
         /// <summary>
-        /// Gets or sets the logging level of SSIS package execution.
+        /// Gets or sets the logging level of SSIS package execution. Type:
+        /// string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.loggingLevel")]
-        public string LoggingLevel { get; set; }
+        public object LoggingLevel { get; set; }
 
         /// <summary>
         /// Gets or sets the environment path to execute the SSIS package.
+        /// Type: string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.environmentPath")]
-        public string EnvironmentPath { get; set; }
+        public object EnvironmentPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the package execution credential.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.executionCredential")]
+        public IDictionary<string, SSISExecutionCredential> ExecutionCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the integration runtime reference.
@@ -169,13 +184,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             {
                 PackageLocation.Validate();
             }
-            if (ConnectVia != null)
+            if (ExecutionCredential != null)
             {
-                ConnectVia.Validate();
-            }
-            if (ProjectParameters != null)
-            {
-                foreach (var valueElement in ProjectParameters.Values)
+                foreach (var valueElement in ExecutionCredential.Values)
                 {
                     if (valueElement != null)
                     {
@@ -183,9 +194,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
                     }
                 }
             }
-            if (PackageParameters != null)
+            if (ConnectVia != null)
             {
-                foreach (var valueElement1 in PackageParameters.Values)
+                ConnectVia.Validate();
+            }
+            if (ProjectParameters != null)
+            {
+                foreach (var valueElement1 in ProjectParameters.Values)
                 {
                     if (valueElement1 != null)
                     {
@@ -193,17 +208,27 @@ namespace Microsoft.Azure.Management.DataFactory.Models
                     }
                 }
             }
-            if (ProjectConnectionManagers != null)
+            if (PackageParameters != null)
             {
-                foreach (var valueElement2 in ProjectConnectionManagers.Values)
+                foreach (var valueElement2 in PackageParameters.Values)
                 {
                     if (valueElement2 != null)
                     {
-                        foreach (var valueElement3 in valueElement2.Values)
+                        valueElement2.Validate();
+                    }
+                }
+            }
+            if (ProjectConnectionManagers != null)
+            {
+                foreach (var valueElement3 in ProjectConnectionManagers.Values)
+                {
+                    if (valueElement3 != null)
+                    {
+                        foreach (var valueElement4 in valueElement3.Values)
                         {
-                            if (valueElement3 != null)
+                            if (valueElement4 != null)
                             {
-                                valueElement3.Validate();
+                                valueElement4.Validate();
                             }
                         }
                     }
@@ -211,15 +236,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             }
             if (PackageConnectionManagers != null)
             {
-                foreach (var valueElement4 in PackageConnectionManagers.Values)
+                foreach (var valueElement5 in PackageConnectionManagers.Values)
                 {
-                    if (valueElement4 != null)
+                    if (valueElement5 != null)
                     {
-                        foreach (var valueElement5 in valueElement4.Values)
+                        foreach (var valueElement6 in valueElement5.Values)
                         {
-                            if (valueElement5 != null)
+                            if (valueElement6 != null)
                             {
-                                valueElement5.Validate();
+                                valueElement6.Validate();
                             }
                         }
                     }
@@ -227,11 +252,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             }
             if (PropertyOverrides != null)
             {
-                foreach (var valueElement6 in PropertyOverrides.Values)
+                foreach (var valueElement7 in PropertyOverrides.Values)
                 {
-                    if (valueElement6 != null)
+                    if (valueElement7 != null)
                     {
-                        valueElement6.Validate();
+                        valueElement7.Validate();
                     }
                 }
             }

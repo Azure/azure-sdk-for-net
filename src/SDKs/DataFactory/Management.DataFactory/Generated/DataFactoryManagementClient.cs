@@ -91,6 +91,11 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual IIntegrationRuntimesOperations IntegrationRuntimes { get; private set; }
 
         /// <summary>
+        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
+        /// </summary>
+        public virtual IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; private set; }
+
+        /// <summary>
         /// Gets the IIntegrationRuntimeNodesOperations.
         /// </summary>
         public virtual IIntegrationRuntimeNodesOperations IntegrationRuntimeNodes { get; private set; }
@@ -379,6 +384,7 @@ namespace Microsoft.Azure.Management.DataFactory
             Operations = new Operations(this);
             Factories = new FactoriesOperations(this);
             IntegrationRuntimes = new IntegrationRuntimesOperations(this);
+            IntegrationRuntimeObjectMetadata = new IntegrationRuntimeObjectMetadataOperations(this);
             IntegrationRuntimeNodes = new IntegrationRuntimeNodesOperations(this);
             LinkedServices = new LinkedServicesOperations(this);
             Datasets = new DatasetsOperations(this);
@@ -451,6 +457,8 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySink>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<LinkedIntegrationRuntimeType>("authorizationType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<LinkedIntegrationRuntimeType>("authorizationType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SsisObjectMetadata>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SsisObjectMetadata>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
