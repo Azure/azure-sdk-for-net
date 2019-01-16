@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.Blueprint
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for PublishedArtifactsOperations.
+    /// Extension methods for AssignmentOperations.
     /// </summary>
-    public static partial class PublishedArtifactsOperationsExtensions
+    public static partial class AssignmentOperationsExtensions
     {
             /// <summary>
-            /// Get an artifact for a published Blueprint.
+            /// List Operations for given blueprint assignment within a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -32,22 +32,16 @@ namespace Microsoft.Azure.Management.Blueprint
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
-            /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// <param name='assignmentName'>
+            /// name of the assignment.
             /// </param>
-            /// <param name='versionId'>
-            /// version of the published blueprint.
-            /// </param>
-            /// <param name='artifactName'>
-            /// name of the artifact.
-            /// </param>
-            public static Artifact Get(this IPublishedArtifactsOperations operations, string scope, string blueprintName, string versionId, string artifactName)
+            public static IPage<AssignmentOperation> List(this IAssignmentOperations operations, string scope, string assignmentName)
             {
-                return operations.GetAsync(scope, blueprintName, versionId, artifactName).GetAwaiter().GetResult();
+                return operations.ListAsync(scope, assignmentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get an artifact for a published Blueprint.
+            /// List Operations for given blueprint assignment within a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -57,28 +51,22 @@ namespace Microsoft.Azure.Management.Blueprint
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
-            /// <param name='blueprintName'>
-            /// name of the blueprint.
-            /// </param>
-            /// <param name='versionId'>
-            /// version of the published blueprint.
-            /// </param>
-            /// <param name='artifactName'>
-            /// name of the artifact.
+            /// <param name='assignmentName'>
+            /// name of the assignment.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Artifact> GetAsync(this IPublishedArtifactsOperations operations, string scope, string blueprintName, string versionId, string artifactName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<AssignmentOperation>> ListAsync(this IAssignmentOperations operations, string scope, string assignmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(scope, blueprintName, versionId, artifactName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(scope, assignmentName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// List artifacts for a published Blueprint.
+            /// Get a Blueprint assignment operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -88,19 +76,19 @@ namespace Microsoft.Azure.Management.Blueprint
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
-            /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// <param name='assignmentName'>
+            /// name of the assignment.
             /// </param>
-            /// <param name='versionId'>
-            /// version of the published blueprint.
+            /// <param name='assignmentOperationName'>
+            /// Name of the assignment operation.
             /// </param>
-            public static IPage<Artifact> List(this IPublishedArtifactsOperations operations, string scope, string blueprintName, string versionId)
+            public static AssignmentOperation Get(this IAssignmentOperations operations, string scope, string assignmentName, string assignmentOperationName)
             {
-                return operations.ListAsync(scope, blueprintName, versionId).GetAwaiter().GetResult();
+                return operations.GetAsync(scope, assignmentName, assignmentOperationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List artifacts for a published Blueprint.
+            /// Get a Blueprint assignment operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -110,25 +98,25 @@ namespace Microsoft.Azure.Management.Blueprint
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
-            /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// <param name='assignmentName'>
+            /// name of the assignment.
             /// </param>
-            /// <param name='versionId'>
-            /// version of the published blueprint.
+            /// <param name='assignmentOperationName'>
+            /// Name of the assignment operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Artifact>> ListAsync(this IPublishedArtifactsOperations operations, string scope, string blueprintName, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AssignmentOperation> GetAsync(this IAssignmentOperations operations, string scope, string assignmentName, string assignmentOperationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(scope, blueprintName, versionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(scope, assignmentName, assignmentOperationName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// List artifacts for a published Blueprint.
+            /// List Operations for given blueprint assignment within a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -136,13 +124,13 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Artifact> ListNext(this IPublishedArtifactsOperations operations, string nextPageLink)
+            public static IPage<AssignmentOperation> ListNext(this IAssignmentOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List artifacts for a published Blueprint.
+            /// List Operations for given blueprint assignment within a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -153,7 +141,7 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Artifact>> ListNextAsync(this IPublishedArtifactsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<AssignmentOperation>> ListNextAsync(this IAssignmentOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,11 +37,15 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <param name="principalId">Azure Active Directory principal ID
         /// associated with this Identity.</param>
         /// <param name="tenantId">ID of the Azure Active Directory.</param>
-        public ManagedServiceIdentity(string type, string principalId = default(string), string tenantId = default(string))
+        /// <param name="userAssignedIdentities">The list of user identities
+        /// associated with the resource, key will be Azure resource Id of the
+        /// ManagedIdentity.</param>
+        public ManagedServiceIdentity(string type, string principalId = default(string), string tenantId = default(string), IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentity>))
         {
             Type = type;
             PrincipalId = principalId;
             TenantId = tenantId;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
 
@@ -67,6 +73,13 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of user identities associated with the
+        /// resource, key will be Azure resource Id of the ManagedIdentity.
+        /// </summary>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; set; }
 
         /// <summary>
         /// Validate the object.

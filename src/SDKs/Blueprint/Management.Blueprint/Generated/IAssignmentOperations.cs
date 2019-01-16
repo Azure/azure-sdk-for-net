@@ -19,12 +19,13 @@ namespace Microsoft.Azure.Management.Blueprint
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PublishedArtifactsOperations operations.
+    /// AssignmentOperations operations.
     /// </summary>
-    public partial interface IPublishedArtifactsOperations
+    public partial interface IAssignmentOperations
     {
         /// <summary>
-        /// Get an artifact for a published Blueprint.
+        /// List Operations for given blueprint assignment within a
+        /// subscription.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group
@@ -32,14 +33,8 @@ namespace Microsoft.Azure.Management.Blueprint
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
-        /// <param name='blueprintName'>
-        /// name of the blueprint.
-        /// </param>
-        /// <param name='versionId'>
-        /// version of the published blueprint.
-        /// </param>
-        /// <param name='artifactName'>
-        /// name of the artifact.
+        /// <param name='assignmentName'>
+        /// name of the assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -56,9 +51,9 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Artifact>> GetWithHttpMessagesAsync(string scope, string blueprintName, string versionId, string artifactName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<AssignmentOperation>>> ListWithHttpMessagesAsync(string scope, string assignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List artifacts for a published Blueprint.
+        /// Get a Blueprint assignment operation.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group
@@ -66,11 +61,11 @@ namespace Microsoft.Azure.Management.Blueprint
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
-        /// <param name='blueprintName'>
-        /// name of the blueprint.
+        /// <param name='assignmentName'>
+        /// name of the assignment.
         /// </param>
-        /// <param name='versionId'>
-        /// version of the published blueprint.
+        /// <param name='assignmentOperationName'>
+        /// Name of the assignment operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -87,9 +82,10 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Artifact>>> ListWithHttpMessagesAsync(string scope, string blueprintName, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AssignmentOperation>> GetWithHttpMessagesAsync(string scope, string assignmentName, string assignmentOperationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List artifacts for a published Blueprint.
+        /// List Operations for given blueprint assignment within a
+        /// subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -109,6 +105,6 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Artifact>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<AssignmentOperation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
