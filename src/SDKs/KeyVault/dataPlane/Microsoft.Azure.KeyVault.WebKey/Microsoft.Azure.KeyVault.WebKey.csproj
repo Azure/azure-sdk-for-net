@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.props'))" />
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('KeyVault.package.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.Azure.KeyVault.WebKey</PackageId>
     <Description>Microsoft Azure Key Vault WebKey Class Library</Description>

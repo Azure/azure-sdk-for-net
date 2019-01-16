@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('KeyVault.package.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.Azure.KeyVault.Cryptography</PackageId>
     <Description>Microsoft Azure Key Vault Cryptography Class Library</Description>
