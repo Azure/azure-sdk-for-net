@@ -1,16 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('KeyVault.package.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.Azure.KeyVault.Extensions</PackageId>
     <Description>Microsoft Azure Key Vault Extensions Class Library</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Extensions</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.KeyVault.Extensions</AssemblyName>
-    <Version>3.0.2</Version>
-    <PackageReleaseNotes>      
-      <![CDATA[
-        Republishing to publish symbols
-      ]]>
-    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
