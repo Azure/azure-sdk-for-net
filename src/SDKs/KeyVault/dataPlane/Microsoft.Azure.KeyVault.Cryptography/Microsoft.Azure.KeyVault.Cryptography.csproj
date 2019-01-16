@@ -4,14 +4,7 @@
     <PackageId>Microsoft.Azure.KeyVault.Cryptography</PackageId>
     <Description>Microsoft Azure Key Vault Cryptography Class Library</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Cryptography</AssemblyTitle>
-    <Version>3.0.1</Version>
     <AssemblyName>Microsoft.Azure.KeyVault.Cryptography</AssemblyName>
-    <PackageTags>Microsoft Azure Key Vault Cryptography</PackageTags>    
-    <PackageReleaseNotes>      
-      <![CDATA[
-        Republishing to sign package with correct hash.
-      ]]>
-    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
