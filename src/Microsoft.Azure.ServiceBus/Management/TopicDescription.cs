@@ -15,7 +15,6 @@ namespace Microsoft.Azure.ServiceBus.Management
         internal string path;
         TimeSpan defaultMessageTimeToLive = TimeSpan.MaxValue;
         TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
-        AuthorizationRules authorizationRules = null;
         string userMetadata = null;
 
         /// <summary>
@@ -123,22 +122,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <summary>
         /// The <see cref="AuthorizationRules"/> on the topic to control user access at entity level.
         /// </summary>
-        public AuthorizationRules AuthorizationRules
-        {
-            get
-            {
-                if (this.authorizationRules == null)
-                {
-                    this.authorizationRules = new AuthorizationRules();
-                }
-
-                return this.authorizationRules;
-            }
-            internal set
-            {
-                this.authorizationRules = value;
-            }
-        }
+        public AuthorizationRules AuthorizationRules { get; internal set; } = new AuthorizationRules();
 
         /// <summary>
         /// The current status of the topic (Enabled / Disabled).
@@ -218,9 +202,9 @@ namespace Microsoft.Azure.ServiceBus.Management
                 && this.RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
                 && this.Status.Equals(other.Status)
                 && string.Equals(this.userMetadata, other.userMetadata, StringComparison.OrdinalIgnoreCase)
-                && (this.authorizationRules != null && other.authorizationRules != null
-                    || this.authorizationRules == null && other.authorizationRules == null)
-                && (this.authorizationRules == null || this.AuthorizationRules.Equals(other.AuthorizationRules)))
+                && (this.AuthorizationRules != null && other.AuthorizationRules != null
+                    || this.AuthorizationRules == null && other.AuthorizationRules == null)
+                && (this.AuthorizationRules == null || this.AuthorizationRules.Equals(other.AuthorizationRules)))
             {
                 return true;
             }

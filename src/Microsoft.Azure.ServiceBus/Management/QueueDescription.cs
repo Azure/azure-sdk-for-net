@@ -20,7 +20,6 @@ namespace Microsoft.Azure.ServiceBus.Management
         int maxDeliveryCount = 10;
         string forwardTo = null;
         string forwardDeadLetteredMessagesTo = null;
-        AuthorizationRules authorizationRules = null;
         string userMetadata = null;
 
         /// <summary>
@@ -185,17 +184,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <summary>
         /// The <see cref="AuthorizationRules"/> on the queue to control user access at entity level.
         /// </summary>
-        public AuthorizationRules AuthorizationRules
-        {
-            get
-            {
-                return this.authorizationRules ?? (this.authorizationRules = new AuthorizationRules());
-            }
-            internal set
-            {
-                this.authorizationRules = value;
-            }
-        }
+        public AuthorizationRules AuthorizationRules { get; internal set; } = new AuthorizationRules();
 
         /// <summary>
         /// The current status of the queue (Enabled / Disabled).
@@ -320,9 +309,9 @@ namespace Microsoft.Azure.ServiceBus.Management
                 && this.RequiresSession.Equals(other.RequiresSession)
                 && this.Status.Equals(other.Status)
                 && string.Equals(this.userMetadata, other.userMetadata, StringComparison.OrdinalIgnoreCase)
-                && (this.authorizationRules != null && other.authorizationRules != null
-                    || this.authorizationRules == null && other.authorizationRules == null)
-                && (this.authorizationRules == null || this.AuthorizationRules.Equals(other.AuthorizationRules)))
+                && (this.AuthorizationRules != null && other.AuthorizationRules != null
+                    || this.AuthorizationRules == null && other.AuthorizationRules == null)
+                && (this.AuthorizationRules == null || this.AuthorizationRules.Equals(other.AuthorizationRules)))
             {
                 return true;
             }
