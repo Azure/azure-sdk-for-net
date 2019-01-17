@@ -1,4 +1,8 @@
-﻿using Azure.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using Azure.Core;
 using Azure.Core.Net;
 using System;
 using System.ComponentModel;
@@ -6,7 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Azure.Configuration
+namespace Azure.ApplicationModel.Configuration
 {
     public partial class ConfigurationClient
     {
@@ -119,7 +123,7 @@ namespace Azure.Configuration
             return builder.Uri;
         }
 
-        Uri BuildUrlForGetBatch(BatchFilter options)
+        Uri BuildUrlForGetBatch(SettingBatchFilter options)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = KvRoute;

@@ -1,4 +1,8 @@
-﻿using Azure.Core.Net;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using Azure.Core.Net;
 using System;
 using System.Buffers;
 using System.Buffers.Text;
@@ -9,7 +13,7 @@ using System.Text.JsonLab;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Configuration
+namespace Azure.ApplicationModel.Configuration
 {
     // This should be simplified twice:
     // - once JsonReader supports for reading from stream

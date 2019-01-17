@@ -1,8 +1,12 @@
-﻿using NUnit.Framework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 
-namespace Azure.Configuration.Samples
+namespace Azure.ApplicationModel.Configuration.Samples
 {
     [Category("Live")]
     public partial class ConfigurationSamples
@@ -39,6 +43,5 @@ namespace Azure.Configuration.Samples
             // stop watching
             await watcher.Stop();
         }
-
     }
 }

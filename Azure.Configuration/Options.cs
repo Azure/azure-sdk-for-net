@@ -1,8 +1,12 @@
-﻿using Azure.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using Azure.Core;
 using System;
 using System.ComponentModel;
 
-namespace Azure.Configuration
+namespace Azure.ApplicationModel.Configuration
 {
     [Flags]
     public enum SettingFields : uint
@@ -53,7 +57,7 @@ namespace Azure.Configuration
         #endregion
     }
 
-    public class BatchFilter : SettingFilter
+    public class SettingBatchFilter : SettingFilter
     {
         /// <summary>
         /// Keys that will be used to filter.

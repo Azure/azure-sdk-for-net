@@ -1,12 +1,16 @@
-﻿using NUnit.Framework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using NUnit.Framework;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Collections.Generic;
-using static Azure.Configuration.ConfigurationWatcher;
+using static Azure.ApplicationModel.Configuration.ConfigurationWatcher;
 
-namespace Azure.Configuration.Tests
+namespace Azure.ApplicationModel.Configuration.Tests
 {
     [Category("Live")]
     public class ConfigurationWatcherTests

@@ -1,25 +1,27 @@
-﻿using NUnit.Framework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using NUnit.Framework;
 using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Configuration.Test;
 using Azure.Core.Testing;
 using Azure.Core;
 using Azure.Core.Net;
 using System.Buffers;
 using Azure.Core.Net.Pipeline;
+using Azure.ApplicationModel.Configuration.Test;
 
-namespace Azure.Configuration.Tests
+namespace Azure.ApplicationModel.Configuration.Tests
 {
     public class ConfigurationMockTests
     {
         static readonly string connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
-        static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting()
+        static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
         {
-            Key = "test_key",
             Label = "test_label",
-            Value = "test_value",
             ETag = "c3c231fd-39a0-4cb6-3237-4614474b92c6",
             ContentType = "test_content_type",
             LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
@@ -187,7 +189,7 @@ namespace Azure.Configuration.Tests
 
             var (service, pool) = CreateTestService(transport);
 
-            var query = new BatchFilter();
+            var query = new SettingBatchFilter();
             int keyIndex = 0;
             while (true)
             {

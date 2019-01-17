@@ -1,16 +1,19 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 
-namespace Azure.Configuration
+namespace Azure.ApplicationModel.Configuration
 {
-    public sealed class ConfigurationSetting
+    public sealed class ConfigurationSetting : IEquatable<ConfigurationSetting>
     {
-        public ConfigurationSetting()
-        {
-
-        }
+        // TODO (pri 3): this is just for deserialization. We can remove after we move to JsonDocument
+        internal ConfigurationSetting() { }
 
         public ConfigurationSetting(string key, string value, string label = null)
         {
@@ -63,19 +66,50 @@ namespace Azure.Configuration
         /// </summary>
         public IDictionary<string, string> Tags { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public bool Equals(ConfigurationSetting other)
+        {
+            if (other == null) return false;
+            if (!string.Equals(Value, other.Value, StringComparison.Ordinal)) return false;
+            if (!string.Equals(Label, other.Label, StringComparison.Ordinal)) return false;
+            if (!string.Equals(ContentType, other.ContentType, StringComparison.Ordinal)) return false;
+            if (!LastModified.Equals(other.LastModified)) return false;
+            // TODO (pri 1): any other fields we should compare?
+            return true;
+        }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (obj is ConfigurationSetting other) {
+                return Equals(other);
+            }
+            else return false;
+        }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+        public override int GetHashCode()
+        {
+            int hash = 17;
+            if (Key!=null) hash = hash * 23 + Key.GetHashCode();
+            if (Value != null) hash = hash * 23 + Value.GetHashCode();
+            if (Label != null) hash = hash * 23 + Label.GetHashCode();
+            if (ETag != null) hash = hash * 23 + ETag.GetHashCode();
+            hash = hash * 23 + LastModified.GetHashCode();
+            return hash;
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString()
+            => $"({Key},{Value})";
     }
 
+    [DebuggerTypeProxy(typeof(SettingBatchDebugView))]
     public sealed class SettingBatch : IEnumerable<ConfigurationSetting>
     {
         IReadOnlyList<ConfigurationSetting> _settings;
+
+        internal SettingBatch() { }
 
         public SettingBatch(IReadOnlyList<ConfigurationSetting> settings, int next)
         {
@@ -89,6 +123,9 @@ namespace Azure.Configuration
         public IEnumerator<ConfigurationSetting> GetEnumerator() => _settings.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => _settings.GetEnumerator();
 
+        public ConfigurationSetting this[int index] => _settings[index];
+        public int Count => _settings.Count;
+
         #region nobody wants to see these
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
@@ -99,5 +136,23 @@ namespace Azure.Configuration
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
         #endregion
+    }
+
+    class SettingBatchDebugView
+    {
+        SettingBatch _batch;
+        ConfigurationSetting[] _items;
+
+        public SettingBatchDebugView(SettingBatch batch)
+        {
+            _batch = batch;
+            _items = new ConfigurationSetting[_batch.Count];
+            for(int i=0; i<_batch.Count; i++) {
+                _items[i] = _batch[i];
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+        public ConfigurationSetting[] Items => _items;        
     }
 }

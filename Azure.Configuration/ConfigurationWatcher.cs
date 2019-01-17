@@ -1,11 +1,15 @@
-﻿using Azure.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using Azure.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Configuration
+namespace Azure.ApplicationModel.Configuration
 {
     public class ConfigurationWatcher
     {
@@ -57,13 +61,7 @@ namespace Azure.Configuration
         protected virtual bool HasChanged(ConfigurationSetting left, ConfigurationSetting right)
         {
             if (left == null && right != null) return true;
-            if (right == null && left != null) return true;
-            if (!string.Equals(left.Value, right.Value, StringComparison.Ordinal)) return true;
-            if (!string.Equals(left.Label, right.Label, StringComparison.Ordinal)) return true;
-            if (!string.Equals(left.ContentType, right.ContentType, StringComparison.Ordinal)) return true;
-            if (!left.LastModified.Equals(right.LastModified)) return true;
-            // TODO (pri 2): how do we compare the tags?
-            return false;
+            return !left.Equals(right);
         }
 
         private async Task WatchChangesAsync(CancellationToken cancellationToken)

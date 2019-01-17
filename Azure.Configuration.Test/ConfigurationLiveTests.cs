@@ -1,18 +1,23 @@
-﻿using NUnit.Framework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using NUnit.Framework;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.Configuration.Tests
+namespace Azure.ApplicationModel.Configuration.Tests
 {
     [Category("Live")]
     public class ConfigurationLiveTests
     {
-        static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting()
+        static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting(
+            string.Concat("key-", Guid.NewGuid().ToString("N")),
+            "test_value"
+        )
         {
-            Key = string.Concat("key-",Guid.NewGuid().ToString("N")),
-            Value = "test_value",
             Label = "test_label",
             ContentType = "test_content_type",
             LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
@@ -322,10 +327,8 @@ namespace Azure.Configuration.Tests
     {
         public static ConfigurationSetting Clone(this ConfigurationSetting setting)
         {
-            return new ConfigurationSetting
+            return new ConfigurationSetting(setting.Key, setting.Value)
             {
-                Key = setting.Key,
-                Value = setting.Value,
                 Label = setting.Label,
                 ContentType = setting.ContentType,
                 LastModified = setting.LastModified,

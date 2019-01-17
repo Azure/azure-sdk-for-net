@@ -1,4 +1,8 @@
-﻿using Azure.Core.Net;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using Azure.Core.Net;
 using Azure.Core.Net.Pipeline;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -11,7 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using static System.Buffers.Text.Encodings;
 
-namespace Azure.Configuration.Test
+namespace Azure.ApplicationModel.Configuration.Test
 {
     // TODO (pri 3): Add and Set mocks are the same. Is that ok?
     class AddMockTransport : MockHttpClientTransport
@@ -128,11 +132,9 @@ namespace Azure.Configuration.Test
             _expectedRequestContent = null;
             for (int i = 0; i < numberOfItems; i++)
             {
-                var item = new ConfigurationSetting()
+                var item = new ConfigurationSetting($"key{i}", "val")
                 {
-                    Key = $"key{i}",
                     Label = "label",
-                    Value = "val",
                     ETag = "c3c231fd-39a0-4cb6-3237-4614474b92c1",
                     ContentType = "text"
                 };

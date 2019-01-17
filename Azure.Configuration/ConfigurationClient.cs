@@ -1,4 +1,8 @@
-﻿using Azure.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using Azure.Core;
 using Azure.Core.Net;
 using System;
 using System.Threading;
@@ -12,7 +16,7 @@ using System.Threading.Tasks;
 // TODO (pri 2): Add retry policy with automatic throttling
 // TODO (pri 2): Add support for filters (fields, label, etc.)
 // TODO (pri 2): Make sure the whole object gets deserialized/serialized.
-namespace Azure.Configuration
+namespace Azure.ApplicationModel.Configuration
 {
     public partial class ConfigurationClient
     {
@@ -204,7 +208,7 @@ namespace Azure.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetBatchAsync(BatchFilter filter, CancellationToken cancellation = default)
+        public async Task<Response<SettingBatch>> GetBatchAsync(SettingBatchFilter filter, CancellationToken cancellation = default)
         {
             var uri = BuildUrlForGetBatch(filter);
 
