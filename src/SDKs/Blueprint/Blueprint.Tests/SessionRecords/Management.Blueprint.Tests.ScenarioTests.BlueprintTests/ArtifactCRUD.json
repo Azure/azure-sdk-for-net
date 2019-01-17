@@ -7,14 +7,16 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Sample Blueprint from Unittest\",\r\n    \"targetScope\": \"subscription\",\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "226d2ab6-9936-488b-9f71-d5414c7d614f"
+          "76b7139b-5b8b-491e-9663-9d3300a336ed"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -27,32 +29,32 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:01 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-request-id": [
+          "6880cfa2-27ea-4f01-b23d-59a8de10bbaf"
+        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-request-id": [
-          "3242971c-654b-4240-a29b-233a2db13c15"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "373362db-d0d8-48d3-9fd3-941009d3752f"
+          "080e91ba-16a2-4ac2-ac7e-561317b45c7e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214801Z:373362db-d0d8-48d3-9fd3-941009d3752f"
+          "WESTUS2:20190117T215852Z:080e91ba-16a2-4ac2-ac7e-561317b45c7e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "1546"
@@ -64,7 +66,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2018-12-05T13:48:01-08:00\",\r\n      \"lastModified\": \"2018-12-05T13:48:01-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"fromDotnetSDK\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-01-17T13:58:52-08:00\",\r\n      \"lastModified\": \"2019-01-17T13:58:52-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"fromDotnetSDK\"\r\n}",
       "StatusCode": 201
     },
     {
@@ -74,14 +76,16 @@
       "RequestBody": "{\r\n  \"kind\": \"template\",\r\n  \"properties\": {\r\n    \"displayName\": \"vNic template\",\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"vnetName\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"VNet1\",\r\n          \"metadata\": {\r\n            \"description\": \"VNet name\"\r\n          }\r\n        },\r\n        \"vnetAddressPrefix\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"10.0.0.0/16\",\r\n          \"metadata\": {\r\n            \"description\": \"Address prefix\"\r\n          }\r\n        },\r\n        \"subnet1Prefix\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"10.0.0.0/24\",\r\n          \"metadata\": {\r\n            \"description\": \"Subnet 1 Prefix\"\r\n          }\r\n        },\r\n        \"subnet1Name\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"Subnet1\",\r\n          \"metadata\": {\r\n            \"description\": \"Subnet 1 Name\"\r\n          }\r\n        },\r\n        \"location\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"[resourceGroup().location]\",\r\n          \"metadata\": {\r\n            \"description\": \"Location for all resources.\"\r\n          }\r\n        }\r\n      },\r\n      \"variables\": {},\r\n      \"resources\": [\r\n        {\r\n          \"apiVersion\": \"2015-06-15\",\r\n          \"type\": \"Microsoft.Network/virtualNetworks\",\r\n          \"name\": \"[parameters('vnetName')]\",\r\n          \"location\": \"[parameters('location')]\",\r\n          \"properties\": {\r\n            \"addressSpace\": {\r\n              \"addressPrefixes\": [\r\n                \"[parameters('vnetAddressPrefix')]\"\r\n              ]\r\n            },\r\n            \"subnets\": [\r\n              {\r\n                \"name\": \"[parameters('subnet1Name')]\",\r\n                \"properties\": {\r\n                  \"addressPrefix\": \"[parameters('subnet1Prefix')]\"\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"resourceGroup\": \"vNicResourceGroup\",\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"value\": \"[parameters('vNetName')]\"\r\n      },\r\n      \"Location\": {\r\n        \"value\": \"[parameters('defaultLocation')]\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1ab17cbe-bd4e-4e7d-a0e9-50a6c213649b"
+          "f4e4e9cf-fa26-488b-8ed3-3690194fbcc2"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -94,32 +98,32 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:01 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-request-id": [
+          "2824ba95-68b4-43f2-b75d-b2235ee5a483"
+        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-request-id": [
-          "6599dab5-5e35-4e06-a70b-a8325f1faafe"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "8c7a33cb-2b90-4b9b-b39a-cb29318645d7"
+          "4d76ebb6-0705-4ad9-b9ee-616014288989"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214801Z:8c7a33cb-2b90-4b9b-b39a-cb29318645d7"
+          "WESTUS2:20190117T215852Z:4d76ebb6-0705-4ad9-b9ee-616014288989"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "2457"
@@ -141,14 +145,16 @@
       "RequestBody": "{\r\n  \"kind\": \"template\",\r\n  \"properties\": {\r\n    \"displayName\": \"vNic template\",\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"vnetName\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"VNet1\",\r\n          \"metadata\": {\r\n            \"description\": \"VNet name\"\r\n          }\r\n        },\r\n        \"vnetAddressPrefix\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"10.0.0.0/16\",\r\n          \"metadata\": {\r\n            \"description\": \"Address prefix\"\r\n          }\r\n        },\r\n        \"subnet1Prefix\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"10.0.0.0/24\",\r\n          \"metadata\": {\r\n            \"description\": \"Subnet 1 Prefix\"\r\n          }\r\n        },\r\n        \"subnet1Name\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"Subnet1\",\r\n          \"metadata\": {\r\n            \"description\": \"Subnet 1 Name\"\r\n          }\r\n        },\r\n        \"location\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"[resourceGroup().location]\",\r\n          \"metadata\": {\r\n            \"description\": \"Location for all resources.\"\r\n          }\r\n        }\r\n      },\r\n      \"variables\": {},\r\n      \"resources\": [\r\n        {\r\n          \"apiVersion\": \"2015-06-15\",\r\n          \"type\": \"Microsoft.Network/virtualNetworks\",\r\n          \"name\": \"[parameters('vnetName')]\",\r\n          \"location\": \"[parameters('location')]\",\r\n          \"properties\": {\r\n            \"addressSpace\": {\r\n              \"addressPrefixes\": [\r\n                \"[parameters('vnetAddressPrefix')]\"\r\n              ]\r\n            },\r\n            \"subnets\": [\r\n              {\r\n                \"name\": \"[parameters('subnet1Name')]\",\r\n                \"properties\": {\r\n                  \"addressPrefix\": \"[parameters('subnet1Prefix')]\"\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"resourceGroup\": \"vNicResourceGroup\",\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"value\": \"[parameters('vNetName')]\"\r\n      },\r\n      \"Location\": {\r\n        \"value\": \"West US\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e440e9b8-80fe-40b7-8df1-f5d52cc75950"
+          "f25da0c4-4476-4432-aa5e-87a59d5633d1"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -161,32 +167,32 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:01 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-request-id": [
+          "955aabbd-cf4b-4544-9b23-2646b64e311d"
+        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-request-id": [
-          "2171345c-ee1c-46e1-b18c-2c7b1cab2b9d"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "a106fe25-9f58-400f-b6f4-7bedda2eae57"
+          "2ffaf6d2-afba-4798-84bc-7838fea0cdc5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214802Z:a106fe25-9f58-400f-b6f4-7bedda2eae57"
+          "WESTUS2:20190117T215852Z:2ffaf6d2-afba-4798-84bc-7838fea0cdc5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "2433"
@@ -208,46 +214,48 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c33de0e1-c534-4439-b04d-8dee39791e70"
+          "94827c33-b1f4-4448-a65d-0f6c539f5e89"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:01 GMT"
-        ],
         "Pragma": [
           "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a00f2f90-4c21-46e8-be7b-f4d01e027de3"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": [
-          "7fa2391e-e5a1-4f6b-a980-2d6f60b5992a"
-        ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11997"
+          "11998"
         ],
         "x-ms-correlation-request-id": [
-          "65af3687-19a0-40df-b32f-78355e76ab89"
+          "b5fd553f-efbc-4a17-8156-ccbc9d9b9ebf"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214802Z:65af3687-19a0-40df-b32f-78355e76ab89"
+          "WESTUS2:20190117T215852Z:b5fd553f-efbc-4a17-8156-ccbc9d9b9ebf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "2457"
@@ -269,14 +277,16 @@
       "RequestBody": "{\r\n  \"kind\": \"policyAssignment\",\r\n  \"properties\": {\r\n    \"displayName\": \"Apply costCenter tag and default value\",\r\n    \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498\",\r\n    \"parameters\": {\r\n      \"tagName\": {\r\n        \"value\": \"costCenter\"\r\n      },\r\n      \"tagValue\": {\r\n        \"value\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9141ca67-bbf4-4632-84f4-e87b49ea3549"
+          "945f71b0-4819-4df8-ad2e-67efabe68fcf"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -289,32 +299,32 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:02 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-request-id": [
+          "a382c3a5-51e3-4dbe-8138-2d0a809e8f03"
+        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-request-id": [
-          "bc4af54d-3d14-4af4-b0a4-9eeb9e25decc"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1196"
         ],
         "x-ms-correlation-request-id": [
-          "8f9364a7-a8bc-4a6e-b0c8-148568c7ad03"
+          "a87d4ac7-5a27-4bf6-b699-8e3ce5c9dca7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214802Z:8f9364a7-a8bc-4a6e-b0c8-148568c7ad03"
+          "WESTUS2:20190117T215852Z:a87d4ac7-5a27-4bf6-b699-8e3ce5c9dca7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "666"
@@ -336,14 +346,16 @@
       "RequestBody": "{\r\n  \"kind\": \"policyAssignment\",\r\n  \"properties\": {\r\n    \"displayName\": \"Apply costCenter tag and default value\",\r\n    \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498\",\r\n    \"parameters\": {\r\n      \"tagName\": {\r\n        \"value\": \"costCenter\"\r\n      },\r\n      \"tagValue\": {\r\n        \"value\": \"[parameters('defaultCostCenter')]\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1e80c56c-0982-4eb2-86c2-e516b694a14e"
+          "7347ed4b-a67b-429f-846b-bce263d458e5"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -356,32 +368,32 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:02 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-request-id": [
+          "99b483db-634a-44f3-839d-156975b39150"
+        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-request-id": [
-          "ea35411b-f888-4ca5-8c9f-3742d93d9a86"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1195"
         ],
         "x-ms-correlation-request-id": [
-          "fd6eb53d-d641-4419-89f7-b06ed30b9bb6"
+          "2e99cc93-8c44-41da-ae22-8d23f2d0ab0a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214802Z:fd6eb53d-d641-4419-89f7-b06ed30b9bb6"
+          "WESTUS2:20190117T215852Z:2e99cc93-8c44-41da-ae22-8d23f2d0ab0a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "677"
@@ -403,46 +415,48 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "81f8c4e8-b3ff-458f-929c-cf37ad06a3da"
+          "abd8b705-77ca-4b94-a90b-edca69fcaa83"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:02 GMT"
-        ],
         "Pragma": [
           "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0f4f6130-7042-4321-b184-e4f69d85c0bd"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": [
-          "c3f90fed-7da1-4564-b4fb-22cceb7d45d9"
-        ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11996"
+          "11997"
         ],
         "x-ms-correlation-request-id": [
-          "c172952f-c658-4216-9676-40df5abd2ddc"
+          "ae0618bb-12a4-4330-9e23-b25f0056fad8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214802Z:c172952f-c658-4216-9676-40df5abd2ddc"
+          "WESTUS2:20190117T215852Z:ae0618bb-12a4-4330-9e23-b25f0056fad8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "666"
@@ -464,14 +478,16 @@
       "RequestBody": "{\r\n  \"kind\": \"roleAssignment\",\r\n  \"properties\": {\r\n    \"displayName\": \"Assign IT Admin SecurityGroup\",\r\n    \"roleDefinitionId\": \"/providers/Microsoft.Authorization/roleDefinitions/a26e1be5-31f6-4706-8d86-9614f3292268\",\r\n    \"principalIds\": [\r\n      \"90060f63-b531-4e12-910a-11c570a10445\",\r\n      \"9875a2ed-77f2-4f5a-94bf-1317779d658c\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d4ccdb68-6ea4-42fe-a646-e937d670c970"
+          "406bc789-236d-4ad1-abfe-5380618f44ef"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -484,32 +500,32 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:02 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-request-id": [
+          "6c6deff4-163f-4267-a284-40bfccde351c"
+        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-request-id": [
-          "472759af-e4a4-4af5-87b4-4cea2b797f65"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1194"
         ],
         "x-ms-correlation-request-id": [
-          "6e638c9c-c5d4-42a0-b2f4-be85ba119d83"
+          "ad740f17-d044-4e30-b964-e2ed55ce86c4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214802Z:6e638c9c-c5d4-42a0-b2f4-be85ba119d83"
+          "WESTUS2:20190117T215852Z:ad740f17-d044-4e30-b964-e2ed55ce86c4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "598"
@@ -531,14 +547,16 @@
       "RequestBody": "{\r\n  \"kind\": \"roleAssignment\",\r\n  \"properties\": {\r\n    \"displayName\": \"Assign Owner to Central IT Admin and ServiceOwner\",\r\n    \"roleDefinitionId\": \"/providers/Microsoft.Authorization/roleDefinitions/a26e1be5-31f6-4706-8d86-9614f3292268\",\r\n    \"principalIds\": [\r\n      \"90060f63-b531-4e12-910a-11c570a10445\",\r\n      \"9875a2ed-77f2-4f5a-94bf-1317779d658c\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9132ca42-14b4-47a1-bd69-177659c7c2b9"
+          "0ef2571f-e1ae-4213-b915-bbc1da1b3f5b"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -551,32 +569,32 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:02 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-request-id": [
+          "e85d123e-7573-47e2-8427-496ab06c0ae7"
+        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-request-id": [
-          "49669189-9666-4814-96ac-01f8dd13f42b"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1193"
         ],
         "x-ms-correlation-request-id": [
-          "7b84f7f5-1ab7-4b69-9e3b-1cf76e2a39b8"
+          "8ed847fc-0dcc-44e2-a32e-39a427f48a5a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214802Z:7b84f7f5-1ab7-4b69-9e3b-1cf76e2a39b8"
+          "WESTUS2:20190117T215852Z:8ed847fc-0dcc-44e2-a32e-39a427f48a5a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "618"
@@ -598,46 +616,48 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8678afc9-ab24-4d0e-a03b-35c655776191"
+          "770d1557-5710-4875-8cb4-65c2afc56823"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:02 GMT"
-        ],
         "Pragma": [
           "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ada848ff-c1f2-4de1-aae5-3b456eaf509b"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": [
-          "641b2986-dcd6-492f-8279-4a8696608b17"
-        ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11995"
+          "11996"
         ],
         "x-ms-correlation-request-id": [
-          "78227785-0049-4c66-baf3-882035edc8ea"
+          "9c8e0a34-5a18-4aa4-b49a-2174aef437c0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214802Z:78227785-0049-4c66-baf3-882035edc8ea"
+          "WESTUS2:20190117T215852Z:9c8e0a34-5a18-4aa4-b49a-2174aef437c0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "598"
@@ -659,46 +679,48 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0d577c7a-100b-4aaf-b27c-12fdf07c3344"
+          "fab45827-e868-4a34-af9e-102a20b7ef21"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:02 GMT"
-        ],
         "Pragma": [
           "no-cache"
+        ],
+        "x-ms-request-id": [
+          "3a71c62b-24a3-4927-b3d1-b3822356a7aa"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": [
-          "53cc856c-29e4-471a-adfc-fa1a0307262c"
-        ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11994"
+          "11995"
         ],
         "x-ms-correlation-request-id": [
-          "c3ef017c-c028-48af-8d95-6e01bfb9b039"
+          "7e29fef1-36fa-4ef7-b9b6-605efa1923a1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214802Z:c3ef017c-c028-48af-8d95-6e01bfb9b039"
+          "WESTUS2:20190117T215852Z:7e29fef1-36fa-4ef7-b9b6-605efa1923a1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "4231"
@@ -720,46 +742,48 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "67b0d012-8b8c-4b86-9cca-4795bd83fedd"
+          "79c2539f-e775-4c8a-b826-20fb0d8cdaa9"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:02 GMT"
-        ],
         "Pragma": [
           "no-cache"
+        ],
+        "x-ms-request-id": [
+          "429a7dd3-e843-4cb4-9df1-68b7b8dcd69e"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": [
-          "96be79d9-dce7-4b57-9335-e0a181eecb11"
-        ],
-        "x-ms-ratelimit-remaining-tenant-writes": [
-          "1192"
+        "x-ms-ratelimit-remaining-tenant-deletes": [
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "09da0ac8-b6fc-4404-9ada-460e03ee02cc"
+          "6a08fb7c-5410-47f0-a1e9-81722e1e18a0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214802Z:09da0ac8-b6fc-4404-9ada-460e03ee02cc"
+          "WESTUS2:20190117T215852Z:6a08fb7c-5410-47f0-a1e9-81722e1e18a0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "2433"
@@ -781,46 +805,48 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f10bd3eb-b3c9-449e-86d1-5434b63bf7e2"
+          "a3dcc15b-a52c-41ea-b9f9-4a1385c894af"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:02 GMT"
-        ],
         "Pragma": [
           "no-cache"
+        ],
+        "x-ms-request-id": [
+          "844cf2d2-ff17-4a23-afd6-8b305f48913b"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": [
-          "0fc2e943-277b-449a-b542-e73da08523ee"
-        ],
-        "x-ms-ratelimit-remaining-tenant-writes": [
-          "1191"
+        "x-ms-ratelimit-remaining-tenant-deletes": [
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "44d8ef20-824d-4db7-8df0-82bf7bd97525"
+          "538a857b-b929-4967-b974-bd7930ae84a1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214802Z:44d8ef20-824d-4db7-8df0-82bf7bd97525"
+          "WESTUS2:20190117T215852Z:538a857b-b929-4967-b974-bd7930ae84a1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "677"
@@ -842,46 +868,48 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "817c8c92-f991-420a-8b8e-eab87f7c148b"
+          "6d4d57c0-973d-43af-bf80-59c52f08c734"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:02 GMT"
-        ],
         "Pragma": [
           "no-cache"
+        ],
+        "x-ms-request-id": [
+          "cf67d20e-ecf7-4f29-9a89-d0aaa29159a9"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": [
-          "4752e9cf-a7a6-4d67-a125-b026a1fc8356"
-        ],
-        "x-ms-ratelimit-remaining-tenant-writes": [
-          "1190"
+        "x-ms-ratelimit-remaining-tenant-deletes": [
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "fd3b771e-0622-45f1-9c98-cd0fb2ceb991"
+          "ad3e107d-be15-4bff-bce5-86d75027aaff"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214802Z:fd3b771e-0622-45f1-9c98-cd0fb2ceb991"
+          "WESTUS2:20190117T215852Z:ad3e107d-be15-4bff-bce5-86d75027aaff"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "618"
@@ -903,46 +931,48 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7e36abed-0da9-4b44-8143-e9bb4d27b0ff"
+          "8931af1b-b1c2-4335-b69b-289f295a70ee"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 05 Dec 2018 21:48:02 GMT"
-        ],
         "Pragma": [
           "no-cache"
+        ],
+        "x-ms-request-id": [
+          "03f5ae03-701a-4504-929f-cfd1d5a943d4"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": [
-          "d0efb6e7-f68d-4e0b-a03f-eef1b2ac167c"
-        ],
-        "x-ms-ratelimit-remaining-tenant-writes": [
-          "1189"
+        "x-ms-ratelimit-remaining-tenant-deletes": [
+          "14996"
         ],
         "x-ms-correlation-request-id": [
-          "a4a59b63-e1d3-441e-81a0-6d2c926f8f86"
+          "5b67271a-0e78-49ba-b0cc-c80078018728"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181205T214802Z:a4a59b63-e1d3-441e-81a0-6d2c926f8f86"
+          "WESTUS2:20190117T215852Z:5b67271a-0e78-49ba-b0cc-c80078018728"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 17 Jan 2019 21:58:52 GMT"
         ],
         "Content-Length": [
           "1546"
@@ -954,12 +984,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2018-12-05T13:48:01-08:00\",\r\n      \"lastModified\": \"2018-12-05T13:48:01-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"fromDotnetSDK\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-01-17T13:58:52-08:00\",\r\n      \"lastModified\": \"2019-01-17T13:58:52-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"fromDotnetSDK\"\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "28cbf98f-381d-4425-9ac4-cf342dab9753"
+    "SubscriptionId": "4ce8c9fe-cadc-47d6-9c76-335812fd59df"
   }
 }
