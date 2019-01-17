@@ -45,7 +45,8 @@ namespace Azure.ApplicationModel.Configuration
             locked,
             value,
             etag,
-            lastmodified
+            last_modified,
+            tags
         }
 
         static JsonState ToJsonState(this ReadOnlySpan<byte> propertyName)
@@ -168,10 +169,12 @@ namespace Azure.ApplicationModel.Configuration
                 switch (reader.TokenType)
                 {
                     case JsonTokenType.StartObject:
-                        value = new ConfigurationSetting();
+                        // TODO (pri 1): manage tag objects
+                        if(state != JsonState.tags) value = new ConfigurationSetting();
                         break;
                     case JsonTokenType.EndObject:
-                        result.Add(value);
+                        // TODO (pri 1): manage tag objects
+                        if (state != JsonState.tags) result.Add(value);
                         break;
                     case JsonTokenType.EndArray:
                         consumed = reader.Consumed;
@@ -202,9 +205,9 @@ namespace Azure.ApplicationModel.Configuration
                 case JsonState.content_type: result.ContentType = json.GetValueAsString(); break;
                 case JsonState.value: result.Value = json.GetValueAsString(); break;
                 case JsonState.etag: result.ETag = json.GetValueAsString(); break;
-
+                    
                 // other
-                case JsonState.lastmodified:
+                case JsonState.last_modified:
                     // TODO (pri 1): implement date parsing
                     //if(!Utf8Parser.TryParse(json.Value, out DateTimeOffset date, out int consumed, 'O')) {
                     //    throw new Exception("bad date format " + json.GetValueAsString());

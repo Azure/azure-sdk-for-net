@@ -96,10 +96,10 @@ namespace Azure.ApplicationModel.Configuration
             };
         }
 
-        Uri BuildUrlForKvRoute(ConfigurationSetting keyValue)
-            => BuildUrlForKvRoute(keyValue.Key, new SettingFilter() { Label = keyValue.Label }); // TODO (pri 2) : does this need to filter ETag?
+        Uri BuildUriForKvRoute(ConfigurationSetting keyValue)
+            => BuildUriForKvRoute(keyValue.Key, new SettingFilter() { Label = keyValue.Label }); // TODO (pri 2) : does this need to filter ETag?
 
-        Uri BuildUrlForKvRoute(string key, SettingFilter filter)
+        Uri BuildUriForKvRoute(string key, SettingFilter filter)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = KvRoute + key;
@@ -123,31 +123,49 @@ namespace Azure.ApplicationModel.Configuration
             return builder.Uri;
         }
 
-        Uri BuildUrlForGetBatch(SettingBatchFilter options)
+        void BuildBatchQuery(UriBuilder builder, SettingBatchFilter options)
         {
-            var builder = new UriBuilder(_baseUri);
-            builder.Path = KvRoute;
-
-            if (options.StartIndex != 0) {
+            if (options.StartIndex != 0)
+            {
                 builder.AppendQuery("after", options.StartIndex);
             }
 
-            if (!string.IsNullOrEmpty(options.Key)) {
+            if (!string.IsNullOrEmpty(options.Key))
+            {
                 builder.AppendQuery(KeyQueryFilter, options.Key);
             }
 
-            if (options.Label != null) {
-                if (options.Label == string.Empty) {
+            if (options.Label != null)
+            {
+                if (options.Label == string.Empty)
+                {
                     options.Label = "\0";
                 }
                 builder.AppendQuery(LabelQueryFilter, options.Label);
             }
 
-            if (options.Fields != SettingFields.All) {
+            if (options.Fields != SettingFields.All)
+            {
                 var filter = (options.Fields).ToString().ToLower();
                 builder.AppendQuery(FieldsQueryFilter, filter);
             }
+        }
 
+        Uri BuildUriForGetBatch(SettingBatchFilter options)
+        {
+            var builder = new UriBuilder(_baseUri);
+            builder.Path = KvRoute;
+
+            BuildBatchQuery(builder, options);
+            return builder.Uri;
+        }
+
+        Uri BuildUriForRevisions(SettingBatchFilter options)
+        {
+            var builder = new UriBuilder(_baseUri);
+            builder.Path = RevisionsRoute;
+
+            BuildBatchQuery(builder, options);
             return builder.Uri;
         }
 
