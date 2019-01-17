@@ -1,20 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESz9hcGktdmVyc2lvbj0yMDE3LTExLTExLXByZXZpZXc=",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREs/YXBpLXZlcnNpb249MjAxOC0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Sample Blueprint from Unittest\",\r\n    \"targetScope\": \"subscription\",\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c36b232c-56e5-4197-b253-c5b8b974310c"
+          "226d2ab6-9936-488b-9f71-d5414c7d614f"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:42 GMT"
+          "Wed, 05 Dec 2018 21:48:01 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -37,16 +37,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "5a1f979a-bb91-432a-a8ef-f1a8ba3633fd"
+          "3242971c-654b-4240-a29b-233a2db13c15"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "664bafde-6217-45fb-953c-671515243af8"
+          "373362db-d0d8-48d3-9fd3-941009d3752f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233542Z:664bafde-6217-45fb-953c-671515243af8"
+          "WESTUS2:20181205T214801Z:373362db-d0d8-48d3-9fd3-941009d3752f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -55,7 +55,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1596"
+          "1546"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -64,24 +64,24 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"assignmentCount\": 0,\r\n      \"timeCreated\": \"2018-09-24T16:35:42-07:00\",\r\n      \"lastModified\": \"2018-09-24T16:35:42-07:00\"\r\n    },\r\n    \"versions\": {},\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"fromDotnetSDK\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2018-12-05T13:48:01-08:00\",\r\n      \"lastModified\": \"2018-12-05T13:48:01-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"fromDotnetSDK\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/vNicTemplate?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESy9hcnRpZmFjdHMvdk5pY1RlbXBsYXRlP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtcHJldmlldw==",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/vNicTemplate?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREsvYXJ0aWZhY3RzL3ZOaWNUZW1wbGF0ZT9hcGktdmVyc2lvbj0yMDE4LTExLTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"template\",\r\n  \"properties\": {\r\n    \"displayName\": \"vNic template\",\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"vnetName\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"VNet1\",\r\n          \"metadata\": {\r\n            \"description\": \"VNet name\"\r\n          }\r\n        },\r\n        \"vnetAddressPrefix\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"10.0.0.0/16\",\r\n          \"metadata\": {\r\n            \"description\": \"Address prefix\"\r\n          }\r\n        },\r\n        \"subnet1Prefix\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"10.0.0.0/24\",\r\n          \"metadata\": {\r\n            \"description\": \"Subnet 1 Prefix\"\r\n          }\r\n        },\r\n        \"subnet1Name\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"Subnet1\",\r\n          \"metadata\": {\r\n            \"description\": \"Subnet 1 Name\"\r\n          }\r\n        },\r\n        \"location\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"[resourceGroup().location]\",\r\n          \"metadata\": {\r\n            \"description\": \"Location for all resources.\"\r\n          }\r\n        }\r\n      },\r\n      \"variables\": {},\r\n      \"resources\": [\r\n        {\r\n          \"apiVersion\": \"2015-06-15\",\r\n          \"type\": \"Microsoft.Network/virtualNetworks\",\r\n          \"name\": \"[parameters('vnetName')]\",\r\n          \"location\": \"[parameters('location')]\",\r\n          \"properties\": {\r\n            \"addressSpace\": {\r\n              \"addressPrefixes\": [\r\n                \"[parameters('vnetAddressPrefix')]\"\r\n              ]\r\n            },\r\n            \"subnets\": [\r\n              {\r\n                \"name\": \"[parameters('subnet1Name')]\",\r\n                \"properties\": {\r\n                  \"addressPrefix\": \"[parameters('subnet1Prefix')]\"\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"resourceGroup\": \"vNicResourceGroup\",\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"value\": \"[parameters('vNetName')]\"\r\n      },\r\n      \"Location\": {\r\n        \"value\": \"[parameters('defaultLocation')]\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "808480a7-bc29-43ca-b52d-5e59433e020d"
+          "1ab17cbe-bd4e-4e7d-a0e9-50a6c213649b"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -95,7 +95,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:42 GMT"
+          "Wed, 05 Dec 2018 21:48:01 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -104,16 +104,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "5fa8dca2-6f86-41ea-af4c-687dbb7e8d58"
+          "6599dab5-5e35-4e06-a70b-a8325f1faafe"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "a17abf40-7a1b-4266-a1b0-b6e735417486"
+          "8c7a33cb-2b90-4b9b-b39a-cb29318645d7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233542Z:a17abf40-7a1b-4266-a1b0-b6e735417486"
+          "WESTUS2:20181205T214801Z:8c7a33cb-2b90-4b9b-b39a-cb29318645d7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -135,20 +135,20 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/vNicTemplate?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESy9hcnRpZmFjdHMvdk5pY1RlbXBsYXRlP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtcHJldmlldw==",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/vNicTemplate?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREsvYXJ0aWZhY3RzL3ZOaWNUZW1wbGF0ZT9hcGktdmVyc2lvbj0yMDE4LTExLTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"template\",\r\n  \"properties\": {\r\n    \"displayName\": \"vNic template\",\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"vnetName\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"VNet1\",\r\n          \"metadata\": {\r\n            \"description\": \"VNet name\"\r\n          }\r\n        },\r\n        \"vnetAddressPrefix\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"10.0.0.0/16\",\r\n          \"metadata\": {\r\n            \"description\": \"Address prefix\"\r\n          }\r\n        },\r\n        \"subnet1Prefix\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"10.0.0.0/24\",\r\n          \"metadata\": {\r\n            \"description\": \"Subnet 1 Prefix\"\r\n          }\r\n        },\r\n        \"subnet1Name\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"Subnet1\",\r\n          \"metadata\": {\r\n            \"description\": \"Subnet 1 Name\"\r\n          }\r\n        },\r\n        \"location\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"[resourceGroup().location]\",\r\n          \"metadata\": {\r\n            \"description\": \"Location for all resources.\"\r\n          }\r\n        }\r\n      },\r\n      \"variables\": {},\r\n      \"resources\": [\r\n        {\r\n          \"apiVersion\": \"2015-06-15\",\r\n          \"type\": \"Microsoft.Network/virtualNetworks\",\r\n          \"name\": \"[parameters('vnetName')]\",\r\n          \"location\": \"[parameters('location')]\",\r\n          \"properties\": {\r\n            \"addressSpace\": {\r\n              \"addressPrefixes\": [\r\n                \"[parameters('vnetAddressPrefix')]\"\r\n              ]\r\n            },\r\n            \"subnets\": [\r\n              {\r\n                \"name\": \"[parameters('subnet1Name')]\",\r\n                \"properties\": {\r\n                  \"addressPrefix\": \"[parameters('subnet1Prefix')]\"\r\n                }\r\n              }\r\n            ]\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"resourceGroup\": \"vNicResourceGroup\",\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"value\": \"[parameters('vNetName')]\"\r\n      },\r\n      \"Location\": {\r\n        \"value\": \"West US\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4cf0978a-0f74-46b1-a01f-c4e3f20beb08"
+          "e440e9b8-80fe-40b7-8df1-f5d52cc75950"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -162,7 +162,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:42 GMT"
+          "Wed, 05 Dec 2018 21:48:01 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -171,16 +171,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "dc788922-3049-4876-9f87-f09b3441ff13"
+          "2171345c-ee1c-46e1-b18c-2c7b1cab2b9d"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "987a61ff-5f26-4e64-84da-31737aed80d7"
+          "a106fe25-9f58-400f-b6f4-7bedda2eae57"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233542Z:987a61ff-5f26-4e64-84da-31737aed80d7"
+          "WESTUS2:20181205T214802Z:a106fe25-9f58-400f-b6f4-7bedda2eae57"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -202,20 +202,20 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/vNicTemplate?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESy9hcnRpZmFjdHMvdk5pY1RlbXBsYXRlP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtcHJldmlldw==",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/vNicTemplate?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREsvYXJ0aWZhY3RzL3ZOaWNUZW1wbGF0ZT9hcGktdmVyc2lvbj0yMDE4LTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f9bab36e-2e88-4e35-bb72-642b77521b76"
+          "c33de0e1-c534-4439-b04d-8dee39791e70"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -223,7 +223,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:42 GMT"
+          "Wed, 05 Dec 2018 21:48:01 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -232,16 +232,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "8bc4ecfd-3021-4976-ba4d-1fab49445747"
+          "7fa2391e-e5a1-4f6b-a980-2d6f60b5992a"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11999"
+          "11997"
         ],
         "x-ms-correlation-request-id": [
-          "0d42ae21-c519-4fba-9649-e3a7eae9830a"
+          "65af3687-19a0-40df-b32f-78355e76ab89"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233542Z:0d42ae21-c519-4fba-9649-e3a7eae9830a"
+          "WESTUS2:20181205T214802Z:65af3687-19a0-40df-b32f-78355e76ab89"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -263,20 +263,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/costCenterPolicy?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESy9hcnRpZmFjdHMvY29zdENlbnRlclBvbGljeT9hcGktdmVyc2lvbj0yMDE3LTExLTExLXByZXZpZXc=",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/costCenterPolicy?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREsvYXJ0aWZhY3RzL2Nvc3RDZW50ZXJQb2xpY3k/YXBpLXZlcnNpb249MjAxOC0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"policyAssignment\",\r\n  \"properties\": {\r\n    \"displayName\": \"Apply costCenter tag and default value\",\r\n    \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498\",\r\n    \"parameters\": {\r\n      \"tagName\": {\r\n        \"value\": \"costCenter\"\r\n      },\r\n      \"tagValue\": {\r\n        \"value\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cc8f9966-39e4-4076-ab0a-70eb75fa0535"
+          "9141ca67-bbf4-4632-84f4-e87b49ea3549"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -290,7 +290,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:42 GMT"
+          "Wed, 05 Dec 2018 21:48:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -299,16 +299,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "47b709d8-9d1f-4aa0-aec6-9af8ffa03d39"
+          "bc4af54d-3d14-4af4-b0a4-9eeb9e25decc"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1196"
         ],
         "x-ms-correlation-request-id": [
-          "420350ff-450e-4bc9-b36a-63c4bec33e8b"
+          "8f9364a7-a8bc-4a6e-b0c8-148568c7ad03"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233542Z:420350ff-450e-4bc9-b36a-63c4bec33e8b"
+          "WESTUS2:20181205T214802Z:8f9364a7-a8bc-4a6e-b0c8-148568c7ad03"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -330,20 +330,20 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/costCenterPolicy?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESy9hcnRpZmFjdHMvY29zdENlbnRlclBvbGljeT9hcGktdmVyc2lvbj0yMDE3LTExLTExLXByZXZpZXc=",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/costCenterPolicy?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREsvYXJ0aWZhY3RzL2Nvc3RDZW50ZXJQb2xpY3k/YXBpLXZlcnNpb249MjAxOC0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"policyAssignment\",\r\n  \"properties\": {\r\n    \"displayName\": \"Apply costCenter tag and default value\",\r\n    \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498\",\r\n    \"parameters\": {\r\n      \"tagName\": {\r\n        \"value\": \"costCenter\"\r\n      },\r\n      \"tagValue\": {\r\n        \"value\": \"[parameters('defaultCostCenter')]\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "10c388c9-b211-47bd-94ce-6eab55625454"
+          "1e80c56c-0982-4eb2-86c2-e516b694a14e"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -357,7 +357,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:43 GMT"
+          "Wed, 05 Dec 2018 21:48:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -366,16 +366,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "53c45362-c5e4-404c-9e36-234ddad20bce"
+          "ea35411b-f888-4ca5-8c9f-3742d93d9a86"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1195"
         ],
         "x-ms-correlation-request-id": [
-          "a7f4795b-6b95-4fe9-89b0-3d4f4fe5ba4a"
+          "fd6eb53d-d641-4419-89f7-b06ed30b9bb6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233543Z:a7f4795b-6b95-4fe9-89b0-3d4f4fe5ba4a"
+          "WESTUS2:20181205T214802Z:fd6eb53d-d641-4419-89f7-b06ed30b9bb6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -397,20 +397,20 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/costCenterPolicy?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESy9hcnRpZmFjdHMvY29zdENlbnRlclBvbGljeT9hcGktdmVyc2lvbj0yMDE3LTExLTExLXByZXZpZXc=",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/costCenterPolicy?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREsvYXJ0aWZhY3RzL2Nvc3RDZW50ZXJQb2xpY3k/YXBpLXZlcnNpb249MjAxOC0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4906cded-85ca-483a-944e-a9f071a3baa4"
+          "81f8c4e8-b3ff-458f-929c-cf37ad06a3da"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -418,7 +418,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:42 GMT"
+          "Wed, 05 Dec 2018 21:48:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -427,16 +427,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "695af387-577d-43a5-9bc0-03326a8f4f91"
+          "c3f90fed-7da1-4564-b4fb-22cceb7d45d9"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11998"
+          "11996"
         ],
         "x-ms-correlation-request-id": [
-          "b2c05489-2c49-443a-9d02-7e12ce3af7f6"
+          "c172952f-c658-4216-9676-40df5abd2ddc"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233542Z:b2c05489-2c49-443a-9d02-7e12ce3af7f6"
+          "WESTUS2:20181205T214802Z:c172952f-c658-4216-9676-40df5abd2ddc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -458,20 +458,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/ownerRBAC?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESy9hcnRpZmFjdHMvb3duZXJSQkFDP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtcHJldmlldw==",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/ownerRBAC?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREsvYXJ0aWZhY3RzL293bmVyUkJBQz9hcGktdmVyc2lvbj0yMDE4LTExLTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"roleAssignment\",\r\n  \"properties\": {\r\n    \"displayName\": \"Assign IT Admin SecurityGroup\",\r\n    \"roleDefinitionId\": \"/providers/Microsoft.Authorization/roleDefinitions/a26e1be5-31f6-4706-8d86-9614f3292268\",\r\n    \"principalIds\": [\r\n      \"90060f63-b531-4e12-910a-11c570a10445\",\r\n      \"9875a2ed-77f2-4f5a-94bf-1317779d658c\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "191f1631-930a-4566-af5c-e36b9f1a047f"
+          "d4ccdb68-6ea4-42fe-a646-e937d670c970"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -485,7 +485,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:43 GMT"
+          "Wed, 05 Dec 2018 21:48:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -494,16 +494,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "0b32c74c-bcff-4538-854d-49c19a6255a1"
+          "472759af-e4a4-4af5-87b4-4cea2b797f65"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1194"
         ],
         "x-ms-correlation-request-id": [
-          "1a08b5da-9646-4b47-959b-3c2d6000c907"
+          "6e638c9c-c5d4-42a0-b2f4-be85ba119d83"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233543Z:1a08b5da-9646-4b47-959b-3c2d6000c907"
+          "WESTUS2:20181205T214802Z:6e638c9c-c5d4-42a0-b2f4-be85ba119d83"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -525,20 +525,20 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/ownerRBAC?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESy9hcnRpZmFjdHMvb3duZXJSQkFDP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtcHJldmlldw==",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/ownerRBAC?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREsvYXJ0aWZhY3RzL293bmVyUkJBQz9hcGktdmVyc2lvbj0yMDE4LTExLTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"roleAssignment\",\r\n  \"properties\": {\r\n    \"displayName\": \"Assign Owner to Central IT Admin and ServiceOwner\",\r\n    \"roleDefinitionId\": \"/providers/Microsoft.Authorization/roleDefinitions/a26e1be5-31f6-4706-8d86-9614f3292268\",\r\n    \"principalIds\": [\r\n      \"90060f63-b531-4e12-910a-11c570a10445\",\r\n      \"9875a2ed-77f2-4f5a-94bf-1317779d658c\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f5fc39e1-0da7-4b6c-96e6-61b2e21dd4fc"
+          "9132ca42-14b4-47a1-bd69-177659c7c2b9"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -552,7 +552,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:43 GMT"
+          "Wed, 05 Dec 2018 21:48:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -561,16 +561,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "630ad39c-d362-43aa-8746-bcd371afa3c0"
+          "49669189-9666-4814-96ac-01f8dd13f42b"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1193"
         ],
         "x-ms-correlation-request-id": [
-          "7bc63898-96e3-412c-96ec-b28d57ac429c"
+          "7b84f7f5-1ab7-4b69-9e3b-1cf76e2a39b8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233543Z:7bc63898-96e3-412c-96ec-b28d57ac429c"
+          "WESTUS2:20181205T214802Z:7b84f7f5-1ab7-4b69-9e3b-1cf76e2a39b8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -592,20 +592,20 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/ownerRBAC?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESy9hcnRpZmFjdHMvb3duZXJSQkFDP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtcHJldmlldw==",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/ownerRBAC?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREsvYXJ0aWZhY3RzL293bmVyUkJBQz9hcGktdmVyc2lvbj0yMDE4LTExLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d9721cd6-804e-4212-b0dd-be80855cf2ad"
+          "8678afc9-ab24-4d0e-a03b-35c655776191"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -613,7 +613,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:43 GMT"
+          "Wed, 05 Dec 2018 21:48:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -622,16 +622,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "bcdb2005-d83c-4184-b14a-afedee91833d"
+          "641b2986-dcd6-492f-8279-4a8696608b17"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11997"
+          "11995"
         ],
         "x-ms-correlation-request-id": [
-          "099e6cf3-02be-46c1-81d9-6484df6b5a14"
+          "78227785-0049-4c66-baf3-882035edc8ea"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233543Z:099e6cf3-02be-46c1-81d9-6484df6b5a14"
+          "WESTUS2:20181205T214802Z:78227785-0049-4c66-baf3-882035edc8ea"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -653,20 +653,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESy9hcnRpZmFjdHM/YXBpLXZlcnNpb249MjAxNy0xMS0xMS1wcmV2aWV3",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREsvYXJ0aWZhY3RzP2FwaS12ZXJzaW9uPTIwMTgtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5ab66b35-b8e9-4941-8cbb-84f487428db4"
+          "0d577c7a-100b-4aaf-b27c-12fdf07c3344"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -674,7 +674,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:43 GMT"
+          "Wed, 05 Dec 2018 21:48:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -683,16 +683,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "3b98dba3-63b9-4e11-b93f-b54cc041a2fc"
+          "53cc856c-29e4-471a-adfc-fa1a0307262c"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11996"
+          "11994"
         ],
         "x-ms-correlation-request-id": [
-          "bd7bb3f9-5109-4e71-a63c-96b35e68dea2"
+          "c3ef017c-c028-48af-8d95-6e01bfb9b039"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233543Z:bd7bb3f9-5109-4e71-a63c-96b35e68dea2"
+          "WESTUS2:20181205T214802Z:c3ef017c-c028-48af-8d95-6e01bfb9b039"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -714,20 +714,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/vNicTemplate?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESy9hcnRpZmFjdHMvdk5pY1RlbXBsYXRlP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtcHJldmlldw==",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/vNicTemplate?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREsvYXJ0aWZhY3RzL3ZOaWNUZW1wbGF0ZT9hcGktdmVyc2lvbj0yMDE4LTExLTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "69b92230-ad87-435a-afeb-f44a848df518"
+          "67b0d012-8b8c-4b86-9cca-4795bd83fedd"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -735,7 +735,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:43 GMT"
+          "Wed, 05 Dec 2018 21:48:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -744,16 +744,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "a25e5b3a-6bd0-4362-b625-bec937ff4231"
+          "96be79d9-dce7-4b57-9335-e0a181eecb11"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1192"
         ],
         "x-ms-correlation-request-id": [
-          "416679be-eebd-4552-a4a8-9fc652dcdaa3"
+          "09da0ac8-b6fc-4404-9ada-460e03ee02cc"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233543Z:416679be-eebd-4552-a4a8-9fc652dcdaa3"
+          "WESTUS2:20181205T214802Z:09da0ac8-b6fc-4404-9ada-460e03ee02cc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -775,20 +775,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/costCenterPolicy?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESy9hcnRpZmFjdHMvY29zdENlbnRlclBvbGljeT9hcGktdmVyc2lvbj0yMDE3LTExLTExLXByZXZpZXc=",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/costCenterPolicy?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREsvYXJ0aWZhY3RzL2Nvc3RDZW50ZXJQb2xpY3k/YXBpLXZlcnNpb249MjAxOC0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7c55f511-1ed3-474c-88af-9038a63b4f42"
+          "f10bd3eb-b3c9-449e-86d1-5434b63bf7e2"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -796,7 +796,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:43 GMT"
+          "Wed, 05 Dec 2018 21:48:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -805,16 +805,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "cd96735b-cfb2-4761-819c-0f0598648a57"
+          "0fc2e943-277b-449a-b542-e73da08523ee"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1191"
         ],
         "x-ms-correlation-request-id": [
-          "e6ec3137-4e3a-492e-b8e5-25a70f8dfdec"
+          "44d8ef20-824d-4db7-8df0-82bf7bd97525"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233543Z:e6ec3137-4e3a-492e-b8e5-25a70f8dfdec"
+          "WESTUS2:20181205T214802Z:44d8ef20-824d-4db7-8df0-82bf7bd97525"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -836,20 +836,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/ownerRBAC?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESy9hcnRpZmFjdHMvb3duZXJSQkFDP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtcHJldmlldw==",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK/artifacts/ownerRBAC?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREsvYXJ0aWZhY3RzL293bmVyUkJBQz9hcGktdmVyc2lvbj0yMDE4LTExLTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a7029771-6c08-466d-9bb7-5c420bcfff48"
+          "817c8c92-f991-420a-8b8e-eab87f7c148b"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -857,7 +857,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:43 GMT"
+          "Wed, 05 Dec 2018 21:48:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -866,16 +866,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "2a842aa7-686a-4c07-b25a-e79f373dc079"
+          "4752e9cf-a7a6-4d67-a125-b026a1fc8356"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1190"
         ],
         "x-ms-correlation-request-id": [
-          "7fe49f39-6ee1-4b2e-960c-f956be4bbc02"
+          "fd3b771e-0622-45f1-9c98-cd0fb2ceb991"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233543Z:7fe49f39-6ee1-4b2e-960c-f956be4bbc02"
+          "WESTUS2:20181205T214802Z:fd3b771e-0622-45f1-9c98-cd0fb2ceb991"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -897,20 +897,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK?api-version=2017-11-11-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL0F6Qmx1ZXByaW50L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmx1ZXByaW50L2JsdWVwcmludHMvZnJvbURvdG5ldFNESz9hcGktdmVyc2lvbj0yMDE3LTExLTExLXByZXZpZXc=",
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK?api-version=2018-11-01-preview",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9BekJsdWVwcmludC9wcm92aWRlcnMvTWljcm9zb2Z0LkJsdWVwcmludC9ibHVlcHJpbnRzL2Zyb21Eb3RuZXRTREs/YXBpLXZlcnNpb249MjAxOC0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c1a52ac6-066c-4390-bcc7-78e66f25adb3"
+          "7e36abed-0da9-4b44-8143-e9bb4d27b0ff"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.1.0-Preview"
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.9.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -918,7 +918,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 24 Sep 2018 23:35:43 GMT"
+          "Wed, 05 Dec 2018 21:48:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -927,16 +927,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "0b608764-f1da-43aa-994b-917e9c6806d8"
+          "d0efb6e7-f68d-4e0b-a03f-eef1b2ac167c"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1189"
         ],
         "x-ms-correlation-request-id": [
-          "f595f7cb-d573-46f0-a903-12f2c0e9abe9"
+          "a4a59b63-e1d3-441e-81a0-6d2c926f8f86"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180924T233543Z:f595f7cb-d573-46f0-a903-12f2c0e9abe9"
+          "WESTUS2:20181205T214802Z:a4a59b63-e1d3-441e-81a0-6d2c926f8f86"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -945,7 +945,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1596"
+          "1546"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -954,7 +954,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"assignmentCount\": 0,\r\n      \"timeCreated\": \"2018-09-24T16:35:42-07:00\",\r\n      \"lastModified\": \"2018-09-24T16:35:42-07:00\"\r\n    },\r\n    \"versions\": {},\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"fromDotnetSDK\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2018-12-05T13:48:01-08:00\",\r\n      \"lastModified\": \"2018-12-05T13:48:01-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/AzBlueprint/providers/Microsoft.Blueprint/blueprints/fromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"fromDotnetSDK\"\r\n}",
       "StatusCode": 200
     }
   ],
