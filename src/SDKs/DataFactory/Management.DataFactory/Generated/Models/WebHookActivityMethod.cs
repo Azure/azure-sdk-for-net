@@ -12,11 +12,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for SSISExecutionRuntime.
+    /// Defines values for WebHookActivityMethod.
     /// </summary>
-    public static class SSISExecutionRuntime
+    public static class WebHookActivityMethod
     {
-        public const string X64 = "x64";
-        public const string X86 = "x86";
+        public const string POST = "POST";
     }
 }

@@ -41,16 +41,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
         /// itemType: DatasetDataElement.</param>
+        /// <param name="schema">Columns that define the physical type schema
+        /// of the dataset. Type: array (or Expression with resultType array),
+        /// itemType: DatasetSchemaDataElement.</param>
         /// <param name="parameters">Parameters for dataset.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
-        public Dataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder))
+        public Dataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder))
         {
             AdditionalProperties = additionalProperties;
             Description = description;
             Structure = structure;
+            Schema = schema;
             LinkedServiceName = linkedServiceName;
             Parameters = parameters;
             Annotations = annotations;
@@ -83,6 +87,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "structure")]
         public object Structure { get; set; }
+
+        /// <summary>
+        /// Gets or sets columns that define the physical type schema of the
+        /// dataset. Type: array (or Expression with resultType array),
+        /// itemType: DatasetSchemaDataElement.
+        /// </summary>
+        [JsonProperty(PropertyName = "schema")]
+        public object Schema { get; set; }
 
         /// <summary>
         /// Gets or sets linked service reference.

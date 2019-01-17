@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Trigger that runs everytime a Blob event occurs.
+    /// Trigger that runs every time a Blob event occurs.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class BlobEventsTrigger : MultiplePipelineTrigger

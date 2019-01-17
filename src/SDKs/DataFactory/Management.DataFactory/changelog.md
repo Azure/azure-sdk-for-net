@@ -1,6 +1,20 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
 ## Current version
+## Version 3.0.0
+
+###  Feature Additions
+        - Added table name in dataset
+	- Added get Dataplane access API
+	- Refactored delete activity payload
+	- Added support for HDlingsight cluster with Enterprise Sercurity package
+        - Adeed refresh and get Integration Runtime Object Metadata API
+	- Changed type of Ssis activity property type to support expression
+        - Added Webhook Activity
+        - Added winauth support in SSIS Activity
+	- Supported schema property for dataset
+	- Added validation activity
+	- Added exposure control APIs
 
 ## Version 2.3.0
 
