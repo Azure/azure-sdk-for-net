@@ -86,6 +86,11 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual IFactoriesOperations Factories { get; private set; }
 
         /// <summary>
+        /// Gets the IExposureControlOperations.
+        /// </summary>
+        public virtual IExposureControlOperations ExposureControl { get; private set; }
+
+        /// <summary>
         /// Gets the IIntegrationRuntimesOperations.
         /// </summary>
         public virtual IIntegrationRuntimesOperations IntegrationRuntimes { get; private set; }
@@ -383,6 +388,7 @@ namespace Microsoft.Azure.Management.DataFactory
         {
             Operations = new Operations(this);
             Factories = new FactoriesOperations(this);
+            ExposureControl = new ExposureControlOperations(this);
             IntegrationRuntimes = new IntegrationRuntimesOperations(this);
             IntegrationRuntimeObjectMetadata = new IntegrationRuntimeObjectMetadataOperations(this);
             IntegrationRuntimeNodes = new IntegrationRuntimeNodesOperations(this);

@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// connection managers to execute the SSIS package.</param>
         /// <param name="propertyOverrides">The property overrides to execute
         /// the SSIS package.</param>
-        public ExecuteSSISPackageActivity(string name, SSISPackageLocation packageLocation, IntegrationRuntimeReference connectVia, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object runtime = default(object), object loggingLevel = default(object), object environmentPath = default(object), IDictionary<string, SSISExecutionCredential> executionCredential = default(IDictionary<string, SSISExecutionCredential>), IDictionary<string, SSISExecutionParameter> projectParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, SSISExecutionParameter> packageParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> projectConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> packageConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, SSISPropertyOverride> propertyOverrides = default(IDictionary<string, SSISPropertyOverride>))
+        public ExecuteSSISPackageActivity(string name, SSISPackageLocation packageLocation, IntegrationRuntimeReference connectVia, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object runtime = default(object), object loggingLevel = default(object), object environmentPath = default(object), SSISExecutionCredential executionCredential = default(SSISExecutionCredential), IDictionary<string, SSISExecutionParameter> projectParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, SSISExecutionParameter> packageParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> projectConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> packageConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, SSISPropertyOverride> propertyOverrides = default(IDictionary<string, SSISPropertyOverride>))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             PackageLocation = packageLocation;
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the package execution credential.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.executionCredential")]
-        public IDictionary<string, SSISExecutionCredential> ExecutionCredential { get; set; }
+        public SSISExecutionCredential ExecutionCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the integration runtime reference.
@@ -186,13 +186,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             }
             if (ExecutionCredential != null)
             {
-                foreach (var valueElement in ExecutionCredential.Values)
-                {
-                    if (valueElement != null)
-                    {
-                        valueElement.Validate();
-                    }
-                }
+                ExecutionCredential.Validate();
             }
             if (ConnectVia != null)
             {
@@ -200,7 +194,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             }
             if (ProjectParameters != null)
             {
-                foreach (var valueElement1 in ProjectParameters.Values)
+                foreach (var valueElement in ProjectParameters.Values)
+                {
+                    if (valueElement != null)
+                    {
+                        valueElement.Validate();
+                    }
+                }
+            }
+            if (PackageParameters != null)
+            {
+                foreach (var valueElement1 in PackageParameters.Values)
                 {
                     if (valueElement1 != null)
                     {
@@ -208,27 +212,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
                     }
                 }
             }
-            if (PackageParameters != null)
+            if (ProjectConnectionManagers != null)
             {
-                foreach (var valueElement2 in PackageParameters.Values)
+                foreach (var valueElement2 in ProjectConnectionManagers.Values)
                 {
                     if (valueElement2 != null)
                     {
-                        valueElement2.Validate();
-                    }
-                }
-            }
-            if (ProjectConnectionManagers != null)
-            {
-                foreach (var valueElement3 in ProjectConnectionManagers.Values)
-                {
-                    if (valueElement3 != null)
-                    {
-                        foreach (var valueElement4 in valueElement3.Values)
+                        foreach (var valueElement3 in valueElement2.Values)
                         {
-                            if (valueElement4 != null)
+                            if (valueElement3 != null)
                             {
-                                valueElement4.Validate();
+                                valueElement3.Validate();
                             }
                         }
                     }
@@ -236,15 +230,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             }
             if (PackageConnectionManagers != null)
             {
-                foreach (var valueElement5 in PackageConnectionManagers.Values)
+                foreach (var valueElement4 in PackageConnectionManagers.Values)
                 {
-                    if (valueElement5 != null)
+                    if (valueElement4 != null)
                     {
-                        foreach (var valueElement6 in valueElement5.Values)
+                        foreach (var valueElement5 in valueElement4.Values)
                         {
-                            if (valueElement6 != null)
+                            if (valueElement5 != null)
                             {
-                                valueElement6.Validate();
+                                valueElement5.Validate();
                             }
                         }
                     }
@@ -252,11 +246,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             }
             if (PropertyOverrides != null)
             {
-                foreach (var valueElement7 in PropertyOverrides.Values)
+                foreach (var valueElement6 in PropertyOverrides.Values)
                 {
-                    if (valueElement7 != null)
+                    if (valueElement6 != null)
                     {
-                        valueElement7.Validate();
+                        valueElement6.Validate();
                     }
                 }
             }
