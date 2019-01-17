@@ -237,6 +237,10 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                     monikerString = "netstandard1.6";
                     break;
 
+                case TargetFrameworkMoniker.netstandard20:
+                    monikerString = "netstandard2.0";
+                    break;
+
                 case TargetFrameworkMoniker.net452:
                     monikerString = "net452";
                     break;
@@ -273,6 +277,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                 case TargetFrameworkMoniker.netcoreapp20:
                 case TargetFrameworkMoniker.netstandard14:
                 case TargetFrameworkMoniker.netstandard16:
+                case TargetFrameworkMoniker.netstandard20:
                     expectedFxCat = (expectedFxCategory == TargetFxCategory.NetCore);
                     break;
             }
@@ -327,6 +332,11 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                     fxSupported = false;
                     break;
 
+                case "netstandard2.0":
+                    validMoniker = TargetFrameworkMoniker.netstandard20;
+                    fxSupported = true;
+                    break;
+
                 case "net452":
                     validMoniker = TargetFrameworkMoniker.net452;
                     fxSupported = true;
@@ -379,6 +389,10 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                     validMoniker = TargetFrameworkMoniker.netstandard16;
                     break;
 
+                case "netstandard2.0":
+                    validMoniker = TargetFrameworkMoniker.netstandard20;
+                    break;
+
                 case "net452":
                     validMoniker = TargetFrameworkMoniker.net452;
                     break;
@@ -416,6 +430,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
         netcoreapp20,
         netstandard14,
         netstandard16,
+        netstandard20,
         UnSupported
     }
 

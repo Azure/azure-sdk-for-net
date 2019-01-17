@@ -266,7 +266,8 @@ namespace Build.Tasks.Tests
         }
 
 
-        [Fact(Skip ="Enabled when repo is updated")]
+        //[Fact(Skip ="Enabled when repo is updated")]
+        [Fact]
         public void AdditionalFxProject()
         {
             string scopeDir = @"SdkCommon\Auth\Az.Auth\Az.Authentication";

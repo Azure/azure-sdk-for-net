@@ -46,7 +46,17 @@
 		<OutputPath>bin\$(Configuration)\</OutputPath>
 	</PropertyGroup>
 
+		<PropertyGroup Condition=" '$(TargetFramework)'=='net461' ">
+		<DefineConstants>net461;FullNetFx</DefineConstants>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+	</PropertyGroup>
+
 	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+		<DefineConstants>netstandard14</DefineConstants>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+	</PropertyGroup>
+
+		<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
 		<DefineConstants>netstandard14</DefineConstants>
 		<OutputPath>bin\$(Configuration)\</OutputPath>
 	</PropertyGroup>
