@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"guestConfiguration\": {\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\"\r\n    },\r\n    \"context\": \"Azure policy A\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cf40ac4a-210d-44b4-b79a-a5870822a31d"
+          "0d6d05a3-1ec8-451c-9c0d-d34709b779af"
         ],
         "accept-language": [
           "en-US"
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Jan 2019 18:00:08 GMT"
+          "Fri, 18 Jan 2019 18:59:24 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -48,13 +48,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "34924002-0431-4081-ae03-86f6b4ebac6b"
+          "bc728796-2083-4063-a9e9-a6da87d53699"
         ],
         "x-ms-correlation-request-id": [
-          "34924002-0431-4081-ae03-86f6b4ebac6b"
+          "bc728796-2083-4063-a9e9-a6da87d53699"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190118T180009Z:34924002-0431-4081-ae03-86f6b4ebac6b"
+          "WESTUS2:20190118T185924Z:bc728796-2083-4063-a9e9-a6da87d53699"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -79,7 +79,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"guestConfiguration\": {\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\"\r\n    },\r\n    \"context\": \"Azure Policy B\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "67ddb46d-9529-4b62-8c43-cab8e066e4c0"
+          "51712499-a584-49e3-9c65-d46b10e1d8cc"
         ],
         "accept-language": [
           "en-US"
@@ -102,7 +102,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Jan 2019 18:00:09 GMT"
+          "Fri, 18 Jan 2019 18:59:24 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -120,13 +120,13 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "c7ff660a-d5e0-45c1-a951-399e20e65e8c"
+          "402c23cd-72f1-44b1-980a-2bc8459fd292"
         ],
         "x-ms-correlation-request-id": [
-          "c7ff660a-d5e0-45c1-a951-399e20e65e8c"
+          "402c23cd-72f1-44b1-980a-2bc8459fd292"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190118T180010Z:c7ff660a-d5e0-45c1-a951-399e20e65e8c"
+          "WESTUS2:20190118T185925Z:402c23cd-72f1-44b1-980a-2bc8459fd292"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -151,7 +151,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "41203c65-8e02-4373-93c1-fa51b3147db2"
+          "40ebe710-53fc-47ef-8ee7-c09b14ded106"
         ],
         "accept-language": [
           "en-US"
@@ -168,7 +168,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Jan 2019 18:00:08 GMT"
+          "Fri, 18 Jan 2019 18:59:24 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -186,13 +186,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "080eae6e-ccf2-439d-920a-70641bc3792b"
+          "af74d8c0-03b2-45f2-9b3e-9bc5ea319ec4"
         ],
         "x-ms-correlation-request-id": [
-          "080eae6e-ccf2-439d-920a-70641bc3792b"
+          "af74d8c0-03b2-45f2-9b3e-9bc5ea319ec4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190118T180009Z:080eae6e-ccf2-439d-920a-70641bc3792b"
+          "WESTUS2:20190118T185925Z:af74d8c0-03b2-45f2-9b3e-9bc5ea319ec4"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -207,7 +207,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"westcentralus\",\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n  \"name\": \"AuditSecureProtocol\",\r\n  \"properties\": {\r\n    \"complianceStatus\": \"Compliant\",\r\n    \"assignmentHash\": \"\",\r\n    \"latestReportId\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/95f9d4a3-15b7-4126-b7ad-dab5ef896eb4\",\r\n    \"lastComplianceStatusChecked\": \"2019-01-18T16:35:09Z\",\r\n    \"context\": null,\r\n    \"guestConfiguration\": {\r\n      \"kind\": null,\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\",\r\n      \"contentUri\": null,\r\n      \"contentHash\": null,\r\n      \"contentType\": null,\r\n      \"configurationParameter\": [],\r\n      \"configurationSetting\": null\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"westcentralus\",\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n  \"name\": \"AuditSecureProtocol\",\r\n  \"properties\": {\r\n    \"complianceStatus\": \"Compliant\",\r\n    \"assignmentHash\": \"\",\r\n    \"latestReportId\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/2b901f05-f01c-4043-84b7-bb6e958398f7\",\r\n    \"lastComplianceStatusChecked\": \"2019-01-18T18:49:51Z\",\r\n    \"context\": null,\r\n    \"guestConfiguration\": {\r\n      \"kind\": null,\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\",\r\n      \"contentUri\": null,\r\n      \"contentHash\": null,\r\n      \"contentType\": null,\r\n      \"configurationParameter\": [],\r\n      \"configurationSetting\": null\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

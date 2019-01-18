@@ -10,7 +10,7 @@
     <AssemblyTitle>Microsoft Azure Guest Configuration Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.GuestConfiguration</AssemblyName>
     <PackageTags>GuestConfiguration; Guest Configuration; GuestConfiguration policy; GuestConfigurationPolicy</PackageTags>
-    <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-dataplane-changelog. Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+    <PackageReleaseNotes>For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/psSdkJson6/src/SDKs/GuestConfiguration/Management.GuestConfiguration/changelog.md</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
