@@ -178,7 +178,14 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         [Output]
         public ITaskItem[] AzSdkPackageList { get; private set; }
-        
+
+
+
+        [Output]
+        public SdkProjectMetaData[] SuppSdkProjectMetaData { get; private set; }
+
+        [Output]
+        public SdkProjectMetaData[] SuppTestProjectMetaData { get; private set; }
 
         /// <summary>
         /// List of .NET 452 test projects that will be separated from the list of projects that
@@ -270,8 +277,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             TaskData.CategorizedProjects = projWithMetaData.ToList<SdkProjectMetaData>();
 
             #region update collections for output
-            var supportedSdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
-            var supportedTestProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.ProjectType == SdkProjctType.Test) select s.ProjectTaskItem;
+            var supportedSdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.ProjectType == SdkProjctType.Sdk) select s;
+            //var supportedSdkProjects = from s in projWithMetaData where (s.ProjectType == SdkProjctType.Sdk) select s;
+            var supportedTestProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.ProjectType == SdkProjctType.Test) select s;
+
+            var suppSdkMD = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.ProjectType == SdkProjctType.Sdk) select s;
+            var suppTestMD = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.ProjectType == SdkProjctType.Test) select s;
 
             var net452SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var net461SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.net461 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
@@ -302,8 +313,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             UnFilteredProjects = allProjects.ToArray<string>();
             nonSdkProjectToBuild = nonSdkProjects?.ToArray<ITaskItem>();
 
-            supportedSdkProjectsToBuild = supportedSdkProjects?.ToArray<ITaskItem>();
-            supportedTestProjectsToBuild = supportedTestProjects?.ToArray<ITaskItem>();
+            supportedSdkProjectsToBuild = GetUpdatedMetaData(supportedSdkProjects);
+            supportedTestProjectsToBuild = GetUpdatedMetaData(supportedTestProjects);
 
             if (PkgRefsHS.Any<string>())
             {
@@ -313,6 +324,27 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             #endregion
 
             return true;
+        }
+
+        private ITaskItem[] GetUpdatedMetaData(IEnumerable<SdkProjectMetaData> metaProjs)
+        {
+            List<ITaskItem> itList = new List<ITaskItem>();
+
+            foreach(SdkProjectMetaData sdkProj in metaProjs)
+            {
+                //ITaskItem nIt = sdkProj.ProjectTaskItem;
+                ITaskItem nIt = new Microsoft.Build.Utilities.TaskItem(sdkProj.FullProjectPath);
+                nIt.SetMetadata("IsTargetFxSupported", sdkProj.IsTargetFxSupported.ToString());
+                nIt.SetMetadata("FxMonikerString", sdkProj.FxMonikerString);
+                nIt.SetMetadata("IsNonSdkProject", sdkProj.IsNonSdkProject.ToString());
+                nIt.SetMetadata("IsProjectDataPlane", sdkProj.IsProjectDataPlane.ToString());
+                nIt.SetMetadata("ProjectType", sdkProj.ProjectType.ToString());
+
+                itList.Add(nIt);
+                nIt = null;
+            }
+
+            return itList.ToArray();
         }
 
         /// <summary>

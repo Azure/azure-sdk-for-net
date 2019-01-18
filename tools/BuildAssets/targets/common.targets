@@ -143,9 +143,9 @@
             ContinueOnError="ErrorAndStop" />
 
     <MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
-              Projects="@(nonSdkProj);@(unsupportedProj)"
-              BuildInParallel="$(BuildInParallel)"
-              ContinueOnError="ErrorAndStop" />        
+            Projects="@(nonSdkProj);@(unsupportedProj)"
+            BuildInParallel="$(BuildInParallel)"
+            ContinueOnError="ErrorAndStop" />
   </Target>
 
   <Target Name="BuildAzSdkProjects" Condition=" '$(SkipBuild)' != 'true' ">
@@ -157,8 +157,30 @@
       <LatestProjectDefaultBuildTarget Condition=" '$(LatestProjectDefaultBuildTarget)' == '' ">Build</LatestProjectDefaultBuildTarget>
     </PropertyGroup>
 
+    <ItemGroup>
+      <SdkTargetFxList Include="@(FilteredSupportedSdkProjects->'%(FxMonikerString)')" />
+      <TestTargetFxList Include="@(FilteredSupportedTestProjects->'%(FxMonikerString)')" />
+    </ItemGroup>
+
+    <RemoveDuplicates Inputs="@(SdkTargetFxList)">
+      <Output TaskParameter="Filtered" ItemName="DeDupeSdkTargetFx"/>
+    </RemoveDuplicates>
+    <RemoveDuplicates Inputs="@(TestTargetFxList)">
+      <Output TaskParameter="Filtered" ItemName="DeDupeTestTargetFx"/>
+    </RemoveDuplicates>
+
+    <PropertyGroup>
+      <SdkTargetFx>@(DeDupeSdkTargetFx)</SdkTargetFx>
+      <TestTargetFx>@(DeDupeTestTargetFx)</TestTargetFx>
+    </PropertyGroup>
+
+    <Message Text="SdkTargetFx...... $(SdkTargetFx)"/>
+    <Message Text="TestTargetFx...... $(TestTargetFx)"/>
+    <DebugTask Condition=" '$(DebugMode)' == 'true' "/>
+
      <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
              Projects="@(FilteredSupportedSdkProjects)"
+             Properties="TargetFrameworks=$(SdkTargetFx)"
              BuildInParallel="$(BuildInParallel)"
              ContinueOnError="ErrorAndStop">
       <Output TaskParameter="TargetOutputs" ItemName="supportedSdkAssemblies" />
@@ -425,15 +447,25 @@
 
       <Output TaskParameter="supportedSdkProjectsToBuild" ItemName="supportedSdkProj" />
       <Output TaskParameter="supportedTestProjectsToBuild" ItemName="supportedTestProj" />
+<!--
+      <Output TaskParameter="SuppSdkProjectMetaData" ItemName="SuppSdkProjectMetaData" />
+      <Output TaskParameter="SuppTestProjectMetaData" ItemName="SuppTestProjectMetaData" />
+-->
     </SDKCategorizeProjects>
 
     <Message Text="Categorizing Projects....."/>
     <ItemGroup>
       <TotalSdkProjects Include="@(net452SDKProj);@(net461SDKProj);@(netStd14SDKProj);@(netCore11SDKProj);@(netCore20SDKProj)"/>
       <TotalTestProjects Include="@(netCore11TestProj);@(netCore20TestProj);@(net452TestProj);@(net461TestProj)"/>
-      
+      <!--
       <TotalSupportedSdkProjects Include="@(supportedSdkProj)" />
       <TotalSupportedTestProjects Include="@(supportedTestProj)" />
+      -->
+    </ItemGroup>
+
+    <ItemGroup>
+      <FilteredSupportedSdkProjects Include="@(supportedSdkProj)" />
+      <FilteredSupportedTestProjects Include="@(supportedTestProj)" />
     </ItemGroup>
 
     <RemoveDuplicates Inputs="@(TotalSdkProjects)">
@@ -445,6 +477,7 @@
     </RemoveDuplicates>
 
     <!-- Supported Projects -->
+<!--
     <RemoveDuplicates Inputs="@(TotalSupportedSdkProjects)">
       <Output TaskParameter="Filtered" ItemName="FilteredSupportedSdkProjects"/>
     </RemoveDuplicates>
@@ -452,7 +485,7 @@
     <RemoveDuplicates Inputs="@(TotalSupportedTestProjects)">
       <Output TaskParameter="Filtered" ItemName="FilteredSupportedTestProjects"/>
     </RemoveDuplicates>
-
+-->
 	<!-- Output List -->
 	<Message Text="Supported SDKProjects ....... @(FilteredSupportedSdkProjects->Count())"/>
     <Message Text="%(FilteredSupportedSdkProjects.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
@@ -510,6 +543,22 @@
     <Message Text="%(SdkProjPackageList.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text=" "/>
     <Message Text="ProjectRootDir......... $(ProjectRootDir)" Condition=" '$(DebugTrace)' == 'true' "/>
+
+    <Message Text=" "/>
+    <Message Text="FilteredSupportedSdkProjects ....... @(FilteredSupportedSdkProjects->Count())"/>
+    <Message Text="FilteredSupportedTestProjects ....... @(FilteredSupportedTestProjects->Count())"/>
+    <Message Text="%(FilteredSupportedSdkProjects.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="%(FilteredSupportedSdkProjects.FxMonikerString)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="%(FilteredSupportedTestProjects.Identity) ......... %(FilteredSupportedTestProjects.FxMonikerString)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="@(FilteredSupportedSdkProjects->'%(FxMonikerString)')" Condition=" '$(DebugTrace)' == 'true' "/>
+
+    <ItemGroup>
+      <FxMoniker Include="@(FilteredSupportedSdkProjects->'%(FxMonikerString)')" />
+    </ItemGroup>
+
+    <Message Text="FxMonikers ....... @(FxMoniker)" />
+    <DebugTask Condition=" '$(DebugMode)' == 'true'"/>
+
   </Target>
   
   <Target Name="UpdateTools">

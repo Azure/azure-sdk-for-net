@@ -57,7 +57,7 @@
 	</PropertyGroup>
 
 		<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-		<DefineConstants>netstandard14</DefineConstants>
+		<DefineConstants>netstandard20</DefineConstants>
 		<OutputPath>bin\$(Configuration)\</OutputPath>
 	</PropertyGroup>
 

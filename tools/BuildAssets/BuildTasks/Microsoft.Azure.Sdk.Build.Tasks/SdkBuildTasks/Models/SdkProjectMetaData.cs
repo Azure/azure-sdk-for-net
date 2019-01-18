@@ -229,6 +229,10 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                     monikerString = "netcoreapp2.0";
                     break;
 
+                case TargetFrameworkMoniker.netstandard13:
+                    monikerString = "netstandard1.3";
+                    break;
+
                 case TargetFrameworkMoniker.netstandard14:
                     monikerString = "netstandard1.4";
                     break;
@@ -322,6 +326,11 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                     fxSupported = true;
                     break;
 
+                case "netstandard1.3":
+                    validMoniker = TargetFrameworkMoniker.netstandard13;
+                    fxSupported = false;
+                    break;
+
                 case "netstandard1.4":
                     validMoniker = TargetFrameworkMoniker.netstandard14;
                     fxSupported = true;
@@ -381,6 +390,10 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                     validMoniker = TargetFrameworkMoniker.netcoreapp20;
                     break;
 
+                case "netstandard1.3":
+                    validMoniker = TargetFrameworkMoniker.netstandard13;
+                    break;
+
                 case "netstandard1.4":
                     validMoniker = TargetFrameworkMoniker.netstandard14;
                     break;
@@ -428,6 +441,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
         net462,
         netcoreapp11,
         netcoreapp20,
+        netstandard13,
         netstandard14,
         netstandard16,
         netstandard20,
