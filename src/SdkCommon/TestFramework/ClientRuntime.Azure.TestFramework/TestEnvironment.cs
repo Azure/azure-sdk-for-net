@@ -300,7 +300,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
             else if ((!string.IsNullOrEmpty(this.UserName)) && (!string.IsNullOrEmpty(userPassword)))
             {
-#if FullNetFx
+//#if FullNetFx
+#if net452
                 Task<TokenCredentials> mgmAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
                                                                            .LoginSilentAsync(PowerShellClientId, this.Tenant, this.UserName, userPassword, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
 
@@ -313,7 +314,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
             else
             {
-#if FullNetFx
+//#if FullNetFx
+#if net452
                 InteractiveLogin(this.Tenant, PowerShellClientId,
                                     aadServiceSettings, graphAADServiceSettings);
 #else
@@ -340,7 +342,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             {   
                 if (!string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(password))
                 {
-#if FullNetFx
+ //#if FullNetFx
+#if net452
                     graphAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
                                 .LoginSilentAsync(psClientId, this.Tenant, userName, password, graphAADServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
 #endif
@@ -370,7 +373,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                                         ActiveDirectoryServiceSettings aadServiceSettings,
                                         ActiveDirectoryServiceSettings graphAADServiceSettings)
         {
-#if FullNetFx
+//#if FullNetFx
+#if net452
             ActiveDirectoryClientSettings clientSettings = new ActiveDirectoryClientSettings()
             {
                 ClientId = PsClientId,

@@ -10,6 +10,7 @@
 	<PackageReleaseNotes>
       <![CDATA[
         1) Fixed null ref exception when RSA private key is not found in the provided X509Certificate2
+        2) Adding support to target .NET Standard 2.0 framework
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
@@ -44,5 +45,12 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0, 4.0.0)" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2, 6.0.0)" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0, 4.0.0)" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2, 6.0.0)" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 </Project>
