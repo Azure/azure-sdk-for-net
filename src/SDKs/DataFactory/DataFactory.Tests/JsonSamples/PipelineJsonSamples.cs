@@ -52,7 +52,7 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
-        [JsonSample]         
+        [JsonSample]
         public const string CopyActivityWithSkipIncompatibleRows = @" 
 { 
   ""name"": ""MyPipeline"", 
@@ -122,7 +122,7 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
-        
+
 
         [JsonSample]
         public const string ChainedActivitiesWithParametersPipeline = @"
@@ -1883,7 +1883,7 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
         [JsonSample]
-        public const string ForeachPipeline= @"
+        public const string ForeachPipeline = @"
 {
   ""name"": ""MyForeachPipeline"",
   ""properties"": {
@@ -1985,7 +1985,7 @@ namespace DataFactory.Tests.JsonSamples
         ]
     }
 }";
-                
+
         [JsonSample]
         public const string AzureMLBatchExecutionPipeline = @"
 {
@@ -3359,6 +3359,28 @@ namespace DataFactory.Tests.JsonSamples
         ]
     }
 }";
-
+        [JsonSample]
+        public const string AzureFunActivity = @"
+{
+  ""name"": ""MyPipeline"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyActivity"",
+        ""type"": ""AzureFunctionActivity"",
+        ""typeProperties"": {
+          ""functionName"": ""GenericWebhookCSharp1"",
+          ""method"": ""POST"",
+          ""body"":
+            {
+                ""test"":""test""
+            }
+        }, 
+        ""linkedServiceName"": { ""referenceName"": ""MyLinkedServiceName"", ""type"": ""LinkedServiceReference"" }
+      } 
+    ]
+  }
+}
+";
     }
 }

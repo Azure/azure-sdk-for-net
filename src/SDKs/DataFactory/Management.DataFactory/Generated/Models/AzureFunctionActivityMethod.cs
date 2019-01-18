@@ -12,10 +12,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for WebHookActivityMethod.
+    /// Defines values for AzureFunctionActivityMethod.
     /// </summary>
-    public static class WebHookActivityMethod
+    public static class AzureFunctionActivityMethod
     {
+        public const string GET = "GET";
         public const string POST = "POST";
+        public const string PUT = "PUT";
+        public const string DELETE = "DELETE";
+        public const string OPTIONS = "OPTIONS";
+        public const string HEAD = "HEAD";
+        public const string TRACE = "TRACE";
     }
 }

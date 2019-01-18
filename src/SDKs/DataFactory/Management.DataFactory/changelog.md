@@ -4,22 +4,23 @@
 ## Version 3.0.0
 
 ###  Feature Additions
-        - Added table name in dataset
-	- Added get Dataplane access API
-	- Refactored delete activity payload
-	- Added support for HDlingsight cluster with Enterprise Sercurity package
-        - Adeed refresh and get Integration Runtime Object Metadata API
-	- Changed type of Ssis activity property type to support expression
-        - Added Webhook Activity
-        - Added winauth support in SSIS Activity
-	- Supported schema property for dataset
-	- Added validation activity
-	- Added exposure control APIs
+    - Added new APIs: 
+		  * get DataPlane access 
+			* get and refresh Integration Runtime object metadata
+			* get feature value
+    - Added new activity and linked service types to support Azure Functions
+		- Added support for HDIngsight cluster with Enterprise Sercurity package
+		- Updated exisitng activities and datasets:
+		    * Added 'tableName' property in datasets
+        * Refactored Delete activity payload by adding more properties
+        * Added support for expressions for SSIS activity property 'type'
+        * Added WinAuth support in SSIS activity
+        * Added 'schema' property to datasets
 
 ## Version 2.3.0
 
 ###  Feature Additions
-        - Added variables support to Pipelines
+    - Added variables support to Pipelines
 		- Added new AppendVariable and SetVariable activities
 		- Added support for SecureInput in activities
 		- Added ScriptActions to on demand HDI linked service
@@ -29,11 +30,11 @@
 ## Version 2.2.0
 
 ###  Feature Additions
-        - Added folders to Pipeline and Dataset
-        - Added TumblingWindowTrigger dependsOn, offset and size properties
-        - Added new API to get GitHub access token
-        - Added new property on Databricks linked Service to set Spark environment variables
-        - Fixed the casing in JSON for FactoryGitHubConfiguration 
+    - Added folders to Pipeline and Dataset
+    - Added TumblingWindowTrigger dependsOn, offset and size properties
+    - Added new API to get GitHub access token
+    - Added new property on Databricks linked Service to set Spark environment variables
+    - Fixed the casing in JSON for FactoryGitHubConfiguration 
 
 ## Version 2.1.0
 
