@@ -24,7 +24,6 @@ namespace Azure.ApplicationModel.Configuration
         public ConfigurationWatcher(ConfigurationClient client, params string[] keysToWatch)
         {
             if (client == null) throw new ArgumentNullException(nameof(client));
-
             _keysToWatch.AddRange(keysToWatch);
             _client = client;
         }

@@ -6,6 +6,7 @@ using Azure.Core;
 using Azure.Core.Net;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,10 +62,11 @@ namespace Azure.ApplicationModel.Configuration
 
         static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
         {
-            uri = null;
-            credential = null;
-            secret = null;
-            if (string.IsNullOrEmpty(connectionString)) throw new ArgumentNullException(nameof(connectionString));
+            Debug.Assert(connectionString != null); // callers check this
+
+            uri = default;
+            credential = default;
+            secret = default;
 
             // Parse connection string
             string[] args = connectionString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
@@ -77,6 +79,8 @@ namespace Azure.ApplicationModel.Configuration
             const string idString = "Id=";
             const string secretString = "Secret=";
 
+            // TODO (pri 2): this allows elements in the connection string to be in varied order. Should we disallow it?
+            // TODO (pri 2): this parser will succeed even if one of the elements is missing (e.g. if cs == "a;b;c". We should fix that.
             foreach (var arg in args)
             {
                 var segment = arg.Trim();
@@ -91,6 +95,7 @@ namespace Azure.ApplicationModel.Configuration
                 else if (segment.StartsWith(secretString, StringComparison.OrdinalIgnoreCase))
                 {
                     var secretBase64 = segment.Substring(segment.IndexOf('=') + 1);
+                    // TODO (pri 2): this might throw an obscure exception. Should we throw a consisten exception when the parser fails?
                     secret = Convert.FromBase64String(secretBase64);
                 }
             };
@@ -208,6 +213,7 @@ namespace Azure.ApplicationModel.Configuration
                 var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.ASCII.GetBytes(stringToSign))); // Calculate the signature
                 string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
 
+                // TODO (pri 3): should date header writing be moved out from here?
                 context.AddHeader("Date", utcNowString);
                 context.AddHeader("x-ms-content-sha256", contentHash);
                 context.AddHeader("Authorization", $"HMAC-SHA256 Credential={credential}, SignedHeaders={signedHeaders}, Signature={signature}");

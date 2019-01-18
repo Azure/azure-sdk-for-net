@@ -13,9 +13,9 @@ using System.Threading.Tasks;
 // TODO (pri 1): Support "Time-Based Access" 
 // TODO (pri 1): Support "KeyValue Revisions"
 // TODO (pri 1): Support "Real-time Consistency"
-// TODO (pri 2): Add retry policy with automatic throttling
 // TODO (pri 2): Add support for filters (fields, label, etc.)
 // TODO (pri 2): Make sure the whole object gets deserialized/serialized.
+// TODO (pri 3): Add retry policy with automatic throttling
 namespace Azure.ApplicationModel.Configuration
 {
     public partial class ConfigurationClient
@@ -36,6 +36,9 @@ namespace Azure.ApplicationModel.Configuration
 
         public ConfigurationClient(string connectionString, PipelineOptions options)
         {
+            if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
+            if (options == null) throw new ArgumentNullException(nameof(options));
+
             _options = options;
             Pipeline = ClientPipeline.Create(_options, SdkName, SdkVersion);
             ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);

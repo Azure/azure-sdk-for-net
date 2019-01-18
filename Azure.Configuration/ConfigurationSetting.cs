@@ -12,6 +12,9 @@ namespace Azure.ApplicationModel.Configuration
 {
     public sealed class ConfigurationSetting : IEquatable<ConfigurationSetting>
     {
+        string _key;
+        IDictionary<string, string> _tags;
+
         // TODO (pri 3): this is just for deserialization. We can remove after we move to JsonDocument
         internal ConfigurationSetting() { }
 
@@ -26,7 +29,13 @@ namespace Azure.ApplicationModel.Configuration
         /// The primary identifier of a key-value.
         /// The key is used in unison with the label to uniquely identify a key-value.
         /// </summary>
-        public string Key { get; set; }
+        public string Key {
+            get => _key;
+            set {
+                if (value == null) throw new ArgumentNullException(nameof(Key));
+                _key = value;
+            }
+        }
 
         /// <summary>
         /// A value used to group key-values.
@@ -64,7 +73,18 @@ namespace Azure.ApplicationModel.Configuration
         /// <summary>
         /// A dictionary of tags that can help identify what a key-value may be applicable for.
         /// </summary>
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags {
+            get {
+                if (_tags == null) {
+                    lock (_key) {
+                        if (_tags == null) {
+                            _tags = new Dictionary<string, string>();
+                        }
+                    }
+                }
+                return _tags;
+            }
+        }
 
         public bool Equals(ConfigurationSetting other)
         {
@@ -119,7 +139,6 @@ namespace Azure.ApplicationModel.Configuration
 
         public int NextIndex { get;  private set; }
 
-        // TODO (pri 2): add struct enumerator 
         public IEnumerator<ConfigurationSetting> GetEnumerator() => _settings.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => _settings.GetEnumerator();
 

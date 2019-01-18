@@ -208,11 +208,9 @@ namespace Azure.ApplicationModel.Configuration
                     
                 // other
                 case JsonState.last_modified:
-                    // TODO (pri 1): implement date parsing
-                    //if(!Utf8Parser.TryParse(json.Value, out DateTimeOffset date, out int consumed, 'O')) {
-                    //    throw new Exception("bad date format " + json.GetValueAsString());
-                    //}
-                    //result.LastModified = date;
+                    var str = json.GetValueAsString();
+                    var dt = DateTimeOffset.Parse(str);
+                    result.LastModified = dt;
                     break;
 
                 case JsonState.locked:
