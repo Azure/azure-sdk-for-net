@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Linq;
 
     /// <summary>
-    /// SAPHana specific recoverypoint, specifcally encaspulates full/diff
+    /// SAPHana specific recoverypoint, specifically encapsulates full/diff
     /// recoverypoints
     /// </summary>
     public partial class AzureWorkloadSAPHanaRecoveryPoint : AzureWorkloadRecoveryPoint

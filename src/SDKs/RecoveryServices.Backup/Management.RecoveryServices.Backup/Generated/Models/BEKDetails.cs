@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Linq;
 
     /// <summary>
-    /// BEK is bitlocker encrpytion key.
+    /// BEK is bitlocker encryption key.
     /// </summary>
     public partial class BEKDetails
     {

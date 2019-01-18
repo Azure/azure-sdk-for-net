@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Linq;
 
     /// <summary>
-    /// DPM workload-specifc job object.
+    /// DPM workload-specific job object.
     /// </summary>
     public partial class DpmJob : Job
     {

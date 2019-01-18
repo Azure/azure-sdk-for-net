@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the AzureVmWorkloadProtectableItem
         /// class.
         /// </summary>
-        /// <param name="backupManagementType">Type of backup managemenent to
+        /// <param name="backupManagementType">Type of backup management to
         /// backup an item.</param>
         /// <param name="workloadType">Type of workload for the backup
         /// management</param>

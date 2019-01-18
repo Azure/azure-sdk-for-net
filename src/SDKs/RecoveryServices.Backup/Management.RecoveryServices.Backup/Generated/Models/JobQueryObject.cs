@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="status">Status of the job. Possible values include:
         /// 'Invalid', 'InProgress', 'Completed', 'Failed',
         /// 'CompletedWithWarnings', 'Cancelled', 'Cancelling'</param>
-        /// <param name="backupManagementType">Type of backup managmenent for
+        /// <param name="backupManagementType">Type of backup management for
         /// the job. Possible values include: 'Invalid', 'AzureIaasVM', 'MAB',
         /// 'DPM', 'AzureBackupServer', 'AzureSql', 'AzureStorage',
         /// 'AzureWorkload', 'DefaultBackup'</param>
@@ -69,8 +69,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public string Status { get; set; }
 
         /// <summary>
-        /// Gets or sets type of backup managmenent for the job. Possible
-        /// values include: 'Invalid', 'AzureIaasVM', 'MAB', 'DPM',
+        /// Gets or sets type of backup management for the job. Possible values
+        /// include: 'Invalid', 'AzureIaasVM', 'MAB', 'DPM',
         /// 'AzureBackupServer', 'AzureSql', 'AzureStorage', 'AzureWorkload',
         /// 'DefaultBackup'
         /// </summary>

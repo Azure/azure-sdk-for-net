@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure IaaS VM workload-specifc job object.
+    /// Azure IaaS VM workload-specific job object.
     /// </summary>
     public partial class AzureIaaSVMJob : Job
     {
