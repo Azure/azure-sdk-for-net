@@ -78,7 +78,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
             finally
             {
-                await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
+                var responseDelete = await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
+                if (responseDelete.Status != 200)
+                {
+                    throw new Exception($"could not delete setting {s_testSetting.Key}");
+                }
             }
         }
 
@@ -126,7 +130,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
             finally
             {
-                await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
+                var responseDelete = await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
+                if (responseDelete.Status != 200)
+                {
+                    throw new Exception($"could not delete setting {s_testSetting.Key}");
+                }
             }
         }
 
@@ -152,7 +160,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
             finally
             {
-                await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
+                var responseDelete = await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
+                if (responseDelete.Status != 200)
+                {
+                    throw new Exception($"could not delete setting {s_testSetting.Key}");
+                }
             }
 
         }
@@ -191,8 +203,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
             finally
             {
-                await service.DeleteAsync(key: testSettingUpdate.Key, filter: testSettingUpdate.Label, CancellationToken.None);
-                await service.DeleteAsync(key: testSettingDiff.Key, filter: testSettingDiff.Label, CancellationToken.None);
+                var responseDelete = await service.DeleteAsync(key: testSettingUpdate.Key, filter: testSettingUpdate.Label, CancellationToken.None);
+                var responseDeleteDiff = await service.DeleteAsync(key: testSettingDiff.Key, filter: testSettingDiff.Label, CancellationToken.None);
+                if (responseDelete.Status != 200 || responseDeleteDiff.Status != 200)
+                {
+                    throw new Exception($"could not delete setting");
+                }
             }
         }
 
@@ -245,8 +261,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
             finally
             {
-                await service.DeleteAsync(key: setting.Key, filter: setting.Label, CancellationToken.None);
-                await service.DeleteAsync(key: testSettingUpdate.Key, filter: testSettingUpdate.Label, CancellationToken.None);
+                var responseDelete = await service.DeleteAsync(key: setting.Key, filter: setting.Label, CancellationToken.None);
+                var responseDeleteDiff = await service.DeleteAsync(key: testSettingUpdate.Key, filter: testSettingUpdate.Label, CancellationToken.None);
+                if (responseDelete.Status != 200 || responseDeleteDiff.Status != 200)
+                {
+                    throw new Exception($"could not delete setting");
+                }
             }
         }
         
@@ -279,7 +299,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
             finally
             {
-                await service.DeleteAsync(key: testSettingNoLabel.Key, filter: default, CancellationToken.None);
+                var responseDelete = await service.DeleteAsync(key: testSettingNoLabel.Key, filter: default, CancellationToken.None);
+                if (responseDelete.Status != 200)
+                {
+                    throw new Exception($"could not delete setting {testSettingNoLabel.Key}");
+                }
             }
         }
 
@@ -331,8 +355,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
             finally
             {
-                await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
-                await service.DeleteAsync(key: testSettingNoLabel.Key, filter: default, CancellationToken.None);
+                var responseDelete = await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
+                var responseDeleteDiff = await service.DeleteAsync(key: testSettingNoLabel.Key, filter: default, CancellationToken.None);
+                if (responseDelete.Status != 200 || responseDeleteDiff.Status != 200)
+                {
+                    throw new Exception($"could not delete setting");
+                }
             }
         }
 
@@ -380,7 +408,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
             finally
             {
-                await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
+                var responseDelete = await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
+                if (responseDelete.Status != 200)
+                {
+                    throw new Exception($"could not delete setting {s_testSetting.Key}");
+                }
             }
         }
 
