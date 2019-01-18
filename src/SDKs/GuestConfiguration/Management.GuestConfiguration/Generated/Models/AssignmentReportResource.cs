@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// 'Pending'</param>
         /// <param name="reasons">Compliance reason and reason code for a
         /// resource.</param>
-        /// <param name="properties">Properties of a guest configuation
+        /// <param name="properties">Properties of a guest configuration
         /// assignment resource.</param>
         public AssignmentReportResource(string complianceStatus = default(string), IList<AssignmentReportResourceComplianceReason> reasons = default(IList<AssignmentReportResourceComplianceReason>), object properties = default(object))
         {
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         public IList<AssignmentReportResourceComplianceReason> Reasons { get; set; }
 
         /// <summary>
-        /// Gets properties of a guest configuation assignment resource.
+        /// Gets properties of a guest configuration assignment resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public object Properties { get; private set; }
