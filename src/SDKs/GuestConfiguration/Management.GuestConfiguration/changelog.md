@@ -1,6 +1,6 @@
 # Microsoft.Azure.Management.GuestConfiguration release notes
 
-## Changes in 2.0.0
+## Changes in 1.0.0
 ### Features
 Provides the below client calls for Azure GuestConfiguration RP
 GuestConfiguration assignment:
