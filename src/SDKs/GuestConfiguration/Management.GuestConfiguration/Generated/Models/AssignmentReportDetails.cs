@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// Possible values include: 'Consistency', 'Initial'</param>
         /// <param name="resources">The list of resources for which guest
         /// configuration assignment compliance is checked.</param>
-        public AssignmentReportDetails(string complianceStatus = default(string), string startTime = default(string), string endTime = default(string), string jobId = default(string), string operationType = default(string), IList<AssignmentReportResource> resources = default(IList<AssignmentReportResource>))
+        public AssignmentReportDetails(string complianceStatus = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string jobId = default(string), string operationType = default(string), IList<AssignmentReportResource> resources = default(IList<AssignmentReportResource>))
         {
             ComplianceStatus = complianceStatus;
             StartTime = startTime;
@@ -73,14 +73,14 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// compliance status check.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
-        public string StartTime { get; private set; }
+        public System.DateTime? StartTime { get; private set; }
 
         /// <summary>
         /// Gets end date and time of the guest configuration assignment
         /// compliance status check.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
-        public string EndTime { get; private set; }
+        public System.DateTime? EndTime { get; private set; }
 
         /// <summary>
         /// Gets GUID of the report.

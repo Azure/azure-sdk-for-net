@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration
             /// The resource group name.
             /// </param>
             /// <param name='guestConfigurationAssignmentName'>
-            /// The guest configuration assingment name.
+            /// The guest configuration assignment name.
             /// </param>
             /// <param name='vmName'>
             /// The name of the virtual machine.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration
             /// The resource group name.
             /// </param>
             /// <param name='guestConfigurationAssignmentName'>
-            /// The guest configuration assingment name.
+            /// The guest configuration assignment name.
             /// </param>
             /// <param name='vmName'>
             /// The name of the virtual machine.
@@ -119,6 +119,49 @@ namespace Microsoft.Azure.Management.GuestConfiguration
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Delete a guest configuration assignment
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='guestConfigurationAssignmentName'>
+            /// Name of the guest configuration assignment
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static void Delete(this IGuestConfigurationAssignmentsOperations operations, string resourceGroupName, string guestConfigurationAssignmentName, string vmName)
+            {
+                operations.DeleteAsync(resourceGroupName, guestConfigurationAssignmentName, vmName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a guest configuration assignment
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='guestConfigurationAssignmentName'>
+            /// Name of the guest configuration assignment
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IGuestConfigurationAssignmentsOperations operations, string resourceGroupName, string guestConfigurationAssignmentName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, guestConfigurationAssignmentName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -211,6 +254,49 @@ namespace Microsoft.Azure.Management.GuestConfiguration
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Delete a guest configuration assignment
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='guestConfigurationAssignmentName'>
+            /// Name of the guest configuration assignment
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static void BeginDelete(this IGuestConfigurationAssignmentsOperations operations, string resourceGroupName, string guestConfigurationAssignmentName, string vmName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, guestConfigurationAssignmentName, vmName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a guest configuration assignment
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='guestConfigurationAssignmentName'>
+            /// Name of the guest configuration assignment
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IGuestConfigurationAssignmentsOperations operations, string resourceGroupName, string guestConfigurationAssignmentName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, guestConfigurationAssignmentName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

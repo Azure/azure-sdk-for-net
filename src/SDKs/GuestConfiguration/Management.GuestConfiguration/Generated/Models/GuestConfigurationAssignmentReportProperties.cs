@@ -41,13 +41,19 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// <param name="assignment">Configuration details of the guest
         /// configuration assignment.</param>
         /// <param name="vm">Information about the VM.</param>
+        /// <param name="startTime">Start date and time of the guest
+        /// configuration assignment compliance status check.</param>
+        /// <param name="endTime">End date and time of the guest configuration
+        /// assignment compliance status check.</param>
         /// <param name="details">Details of the assignment report.</param>
-        public GuestConfigurationAssignmentReportProperties(string complianceStatus = default(string), string reportId = default(string), AssignmentInfo assignment = default(AssignmentInfo), VMInfo vm = default(VMInfo), AssignmentReportDetails details = default(AssignmentReportDetails))
+        public GuestConfigurationAssignmentReportProperties(string complianceStatus = default(string), string reportId = default(string), AssignmentInfo assignment = default(AssignmentInfo), VMInfo vm = default(VMInfo), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), AssignmentReportDetails details = default(AssignmentReportDetails))
         {
             ComplianceStatus = complianceStatus;
             ReportId = reportId;
             Assignment = assignment;
             Vm = vm;
+            StartTime = startTime;
+            EndTime = endTime;
             Details = details;
             CustomInit();
         }
@@ -84,6 +90,20 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// </summary>
         [JsonProperty(PropertyName = "vm")]
         public VMInfo Vm { get; set; }
+
+        /// <summary>
+        /// Gets start date and time of the guest configuration assignment
+        /// compliance status check.
+        /// </summary>
+        [JsonProperty(PropertyName = "startTime")]
+        public System.DateTime? StartTime { get; private set; }
+
+        /// <summary>
+        /// Gets end date and time of the guest configuration assignment
+        /// compliance status check.
+        /// </summary>
+        [JsonProperty(PropertyName = "endTime")]
+        public System.DateTime? EndTime { get; private set; }
 
         /// <summary>
         /// Gets or sets details of the assignment report.
