@@ -26,8 +26,11 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <summary>
         /// Create or update a Blueprint assignment.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// azure subscriptionId, which we assign the blueprint to.
+        /// <param name='scope'>
+        /// The scope of the resource. Valid scopes are: management group
+        /// (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='assignmentName'>
         /// name of the assignment.
@@ -50,12 +53,15 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Assignment>> CreateOrUpdateWithHttpMessagesAsync(string subscriptionId, string assignmentName, Assignment assignment, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Assignment>> CreateOrUpdateWithHttpMessagesAsync(string scope, string assignmentName, Assignment assignment, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a Blueprint assignment.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// azure subscriptionId, which we assign the blueprint to.
+        /// <param name='scope'>
+        /// The scope of the resource. Valid scopes are: management group
+        /// (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='assignmentName'>
         /// name of the assignment.
@@ -75,12 +81,15 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Assignment>> GetWithHttpMessagesAsync(string subscriptionId, string assignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Assignment>> GetWithHttpMessagesAsync(string scope, string assignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a Blueprint assignment.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// azure subscriptionId, which we assign the blueprint to.
+        /// <param name='scope'>
+        /// The scope of the resource. Valid scopes are: management group
+        /// (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='assignmentName'>
         /// name of the assignment.
@@ -100,12 +109,15 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Assignment>> DeleteWithHttpMessagesAsync(string subscriptionId, string assignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Assignment>> DeleteWithHttpMessagesAsync(string scope, string assignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List Blueprint assignments within a subscription.
         /// </summary>
-        /// <param name='subscriptionId'>
-        /// azure subscriptionId, which we assign the blueprint to.
+        /// <param name='scope'>
+        /// The scope of the resource. Valid scopes are: management group
+        /// (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -122,7 +134,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Assignment>>> ListWithHttpMessagesAsync(string subscriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Assignment>>> ListWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List Blueprint assignments within a subscription.
         /// </summary>
