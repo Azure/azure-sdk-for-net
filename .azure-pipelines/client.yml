@@ -1,9 +1,8 @@
 trigger:
 - psSdkJson6
 
-variables:
-  - name: ProjectFile
-    value: eng/data-plane.proj
+# variables:
+# ProjectFile - The project to build and test. This variable is defined in pipeline web ui because we want to be able to provide it at queue time and that isn't supported in yaml yet.
 
 jobs:
   - job: 'Build_Packages'
@@ -18,10 +17,15 @@ jobs:
           version: 2.1.503
 
       - task: DotNetCoreCLI@2
-        displayName: 'Build ane Package'
+        displayName: 'Build and Package'
         inputs:
           command: pack
           packagesToPack: '$(ProjectFile)'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifacts'
+        inputs:
+          ArtifactName: packages
 
   - job: 'Test_Windows'
 
