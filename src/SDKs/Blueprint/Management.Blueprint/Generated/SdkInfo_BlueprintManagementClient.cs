@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.Blueprint
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Blueprint", "Assignments", "2017-11-11-preview"),
-                new Tuple<string, string, string>("Blueprint", "Operations", "2017-11-11-preview"),
-                new Tuple<string, string, string>("Management", "Artifacts", "2017-11-11-preview"),
-                new Tuple<string, string, string>("Management", "Blueprints", "2017-11-11-preview"),
-                new Tuple<string, string, string>("Management", "PublishedArtifacts", "2017-11-11-preview"),
-                new Tuple<string, string, string>("Management", "PublishedBlueprints", "2017-11-11-preview"),
+                new Tuple<string, string, string>("Blueprint", "Artifacts", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Blueprint", "AssignmentOperations", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Blueprint", "Assignments", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Blueprint", "Blueprints", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Blueprint", "PublishedArtifacts", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Blueprint", "PublishedBlueprints", "2018-11-01-preview"),
               }.AsEnumerable();
           }
       }

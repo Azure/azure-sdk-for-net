@@ -567,6 +567,24 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
         }
 
         [Fact]
+        public void ConsumeMediaJobOutputProgressEvent()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-2ac2fe75-6557-4de5-ab25-5713b74a6981\",  \"eventType\": \"Microsoft.Media.JobOutputProgress\",  \"eventTime\": \"2018-10-12T15:14:11.2244618\",  \"id\": \"635ca6ea-5306-4590-b2e1-22f172759336\",  \"data\": {    \"jobCorrelationData\": {    \"Field1\": \"test1\",    \"Field2\": \"test2\" },    \"label\": \"TestLabel\",    \"progress\": 50 },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            var events = this.eventGridSubscriber.DeserializeEventGridEvents(requestContent);
+
+            Assert.NotNull(events);
+            Assert.True(events[0].Data is MediaJobOutputProgressEventData);
+            MediaJobOutputProgressEventData eventData = (MediaJobOutputProgressEventData)events[0].Data;
+            Assert.Equal("TestLabel", eventData.Label);
+            Assert.Equal(50, eventData.Progress);
+            Assert.True(eventData.JobCorrelationData.ContainsKey("Field1"));
+            Assert.Equal("test1", eventData.JobCorrelationData["Field1"]);
+            Assert.True(eventData.JobCorrelationData.ContainsKey("Field2"));
+            Assert.Equal("test2", eventData.JobCorrelationData["Field2"]);
+        }
+
+        [Fact]
         public void ConsumeMediaLiveEventEncoderConnectedEvent()
         {
             string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"liveEvent/liveevent-ec9d26a8\",  \"eventType\": \"Microsoft.Media.LiveEventEncoderConnected\",  \"eventTime\": \"2018-10-12T15:52:04.2013501\",  \"id\": \"3d1f5b26-c466-47e7-927b-900985e0c5d5\",  \"data\": {    \"ingestUrl\": \"rtmp://liveevent-ec9d26a8.channel.media.azure.net:1935/live/cb5540b10a5646218c1328be95050c59\",    \"streamId\": \"Mystream1\",    \"encoderIp\": \"<ip address>\",    \"encoderPort\": \"3557\"  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
