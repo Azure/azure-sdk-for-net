@@ -18,37 +18,36 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// WebHook activity.
+    /// Azure Function activity.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("WebHook")]
     [Rest.Serialization.JsonTransformation]
-    public partial class WebHookActivity : ControlActivity
+    public partial class AzureFunctionActivity : ExecutionActivity
     {
         /// <summary>
-        /// Initializes a new instance of the WebHookActivity class.
+        /// Initializes a new instance of the AzureFunctionActivity class.
         /// </summary>
-        public WebHookActivity()
+        public AzureFunctionActivity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebHookActivity class.
+        /// Initializes a new instance of the AzureFunctionActivity class.
         /// </summary>
         /// <param name="name">Activity name.</param>
-        /// <param name="url">WebHook activity target endpoint and path. Type:
-        /// string (or Expression with resultType string).</param>
+        /// <param name="method">Rest API method for target endpoint. Possible
+        /// values include: 'GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD',
+        /// 'TRACE'</param>
+        /// <param name="functionName">Name of the Function that the Azure
+        /// Function Activity will call. Type: string (or Expression with
+        /// resultType string)</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="userProperties">Activity user properties.</param>
-        /// <param name="timeout">Specifies the timeout within which the
-        /// webhook should be called back. If there is no value specified, it
-        /// takes the value of TimeSpan.FromMinutes(10) which is 10 minutes as
-        /// default. Type: string (or Expression with resultType string),
-        /// pattern:
-        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="linkedServiceName">Linked service reference.</param>
+        /// <param name="policy">Activity policy.</param>
         /// <param name="headers">Represents the headers that will be sent to
         /// the request. For example, to set the language and type on a
         /// request: "headers" : { "Accept-Language": "en-us", "Content-Type":
@@ -57,24 +56,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="body">Represents the payload that will be sent to the
         /// endpoint. Required for POST/PUT method, not allowed for GET method
         /// Type: string (or Expression with resultType string).</param>
-        /// <param name="authentication">Authentication method used for calling
-        /// the endpoint.</param>
-        public WebHookActivity(string name, object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), object timeout = default(object), object headers = default(object), object body = default(object), WebActivityAuthentication authentication = default(WebActivityAuthentication))
-            : base(name, additionalProperties, description, dependsOn, userProperties)
+        public AzureFunctionActivity(string name, string method, object functionName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object headers = default(object), object body = default(object))
+            : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
-            Url = url;
-            Timeout = timeout;
+            Method = method;
+            FunctionName = functionName;
             Headers = headers;
             Body = body;
-            Authentication = authentication;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for WebHookActivity class.
-        /// </summary>
-        static WebHookActivity()
-        {
-            Method = "POST";
         }
 
         /// <summary>
@@ -83,21 +72,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets webHook activity target endpoint and path. Type:
-        /// string (or Expression with resultType string).
+        /// Gets or sets rest API method for target endpoint. Possible values
+        /// include: 'GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD', 'TRACE'
         /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.url")]
-        public object Url { get; set; }
+        [JsonProperty(PropertyName = "typeProperties.method")]
+        public string Method { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the timeout within which the webhook should
-        /// be called back. If there is no value specified, it takes the value
-        /// of TimeSpan.FromMinutes(10) which is 10 minutes as default. Type:
-        /// string (or Expression with resultType string), pattern:
-        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Gets or sets name of the Function that the Azure Function Activity
+        /// will call. Type: string (or Expression with resultType string)
         /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.timeout")]
-        public object Timeout { get; set; }
+        [JsonProperty(PropertyName = "typeProperties.functionName")]
+        public object FunctionName { get; set; }
 
         /// <summary>
         /// Gets or sets represents the headers that will be sent to the
@@ -118,18 +104,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object Body { get; set; }
 
         /// <summary>
-        /// Gets or sets authentication method used for calling the endpoint.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.authentication")]
-        public WebActivityAuthentication Authentication { get; set; }
-
-        /// <summary>
-        /// Rest API method for target endpoint.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.method")]
-        public static string Method { get; private set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -138,13 +112,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (Url == null)
+            if (Method == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Url");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Method");
             }
-            if (Authentication != null)
+            if (FunctionName == null)
             {
-                Authentication.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "FunctionName");
             }
         }
     }
