@@ -10,7 +10,7 @@
 		<Version>2.0.1</Version>
 		<PackageTags>Microsoft Azure ServiceBus Management;ServiceBus;ServiceBus management;</PackageTags>
 		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup>
 
   <PropertyGroup>

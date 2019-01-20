@@ -17,7 +17,7 @@
   <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 	<PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
     <RootNamespace>Microsoft.Azure.Management.StorSimple1200Series</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>

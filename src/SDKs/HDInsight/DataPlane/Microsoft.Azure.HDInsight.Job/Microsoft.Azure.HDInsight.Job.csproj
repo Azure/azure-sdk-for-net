@@ -11,7 +11,7 @@
         <PackageTags>Microsoft Azure HDInsight Job;HDInsight;HDInsight Job</PackageTags>
     </PropertyGroup>
     <PropertyGroup>
-        <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+        <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
     /// </summary>
     internal class EnvironmentHelper
     {
-#if netstandard14
+#if !FullNetFx
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = false)]
         static extern int GetSystemDirectoryW([Out] StringBuilder lpBuffer, int jSize);
 

@@ -4,18 +4,20 @@
     <PackageId>Microsoft.Rest.ClientRuntime.Azure</PackageId>
     <Description>Provides common error handling, tracing, and HTTP/REST-based pipeline manipulation.</Description>
     <AssemblyTitle>Client Runtime for Microsoft Azure Libraries</AssemblyTitle>
-    <Version>3.3.18</Version>
+    <Version>3.3.19</Version>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure</AssemblyName>
     <PackageTags>Microsoft Azure AutoRest ClientRuntime REST  $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        1) Upgrading version of Newtonsoft Json to 10.0.3
+        1) Adding support to target .NET 461 and .NET Standard 2.0 framework
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
+
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>    
+    <TargetFrameworks>net452;net461;netstandard1.4;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net452|AnyCPU'">
     <DefineConstants>DEBUG;FullNetFx;LEGACY;</DefineConstants>
   </PropertyGroup>

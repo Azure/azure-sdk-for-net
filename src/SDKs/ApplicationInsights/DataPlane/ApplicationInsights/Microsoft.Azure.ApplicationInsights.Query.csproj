@@ -12,7 +12,7 @@
     <PackageReleaseNotes>This is a preview release of the Application Insights Data SDK.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
     <RootNamespace>Microsoft.Azure.ApplicationInsights.Query</RootNamespace>
   </PropertyGroup>
 
