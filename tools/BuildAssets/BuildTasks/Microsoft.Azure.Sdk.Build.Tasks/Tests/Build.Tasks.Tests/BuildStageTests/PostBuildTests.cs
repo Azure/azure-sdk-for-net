@@ -24,7 +24,8 @@ namespace Build.Tasks.Tests
             catProjTest = new CategorizeProjectTaskTest();
         }
 
-        [Fact(Skip = "Build the scope before running this test")]
+        //[Fact(Skip = "Build the scope before running this test")]
+        [Fact]
         public void BuildOneProject()
         {
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
@@ -67,7 +68,8 @@ namespace Build.Tasks.Tests
         }
 
 
-        [Fact(Skip ="Build the scope before running this test")]
+        //[Fact(Skip ="Build the scope before running this test")]
+        [Fact]
         public void BuildAzureStackScope()
         {
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();

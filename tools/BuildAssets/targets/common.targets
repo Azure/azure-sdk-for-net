@@ -1,8 +1,9 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <NetFx452>net452</NetFx452>
-	<NetFx461>net461</NetFx461>
+	  <NetFx461>net461</NetFx461>
     <NetStd14>netstandard1.4</NetStd14>
+    <NetStd20>netstandard2.0</NetStd20>
     <NetCore11>netcoreapp1.1</NetCore11>
     <NetCore20>netcoreapp2.0</NetCore20>
   </PropertyGroup>
@@ -93,12 +94,21 @@
     </PropertyGroup>
     <Message Text="Cleaning Initiated....." />
 	  <Message Text="Cleaning @(SDKProject);@(SDKTestProject);@(nonSdkProj);@(unsupportedProj)" Condition=" '$(SkipRestore)' != 'true' "/>
+
     <MSBuild Targets="$(LatestProjectDefaultCleanTarget)"
         Projects="@(SDKProject);@(SDKTestProject);@(nonSdkProj);@(unsupportedProj)"
         Properties="PackageOutputPath=$(PackageOutputPath);Configuration=$(Configuration)"
         BuildInParallel="$(BuildInParallel)"
         ContinueOnError="ErrorAndStop" />
   </Target>
+  <!--
+  <MSBuild Targets="$(LatestProjectDefaultCleanTarget)"
+        Projects="@(FilteredSupportedSdkProjects);@(FilteredSupportedTestProjects);@(nonSdkProj);@(unsupportedProj)"
+        Properties="PackageOutputPath=$(PackageOutputPath);Configuration=$(Configuration)"
+        BuildInParallel="$(BuildInParallel)"
+        ContinueOnError="ErrorAndStop" />
+  </Target>
+  -->
 
   <Target Name="CleanSDKPackageFiles">
     <ItemGroup>
@@ -128,12 +138,17 @@
             Projects="@(SDKProject);@(SDKTestProject)"
             BuildInParallel="$(BuildInParallel)"
             ContinueOnError="ErrorAndStop" />
-	
+
+    <!--
     <MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
-              Projects="@(nonSdkProj);@(unsupportedProj)"
-              BuildInParallel="$(BuildInParallel)"
-              ContinueOnError="ErrorAndStop" />
-        
+            Projects="@(FilteredSupportedSdkProjects);@(FilteredSupportedTestProjects)"
+            BuildInParallel="$(BuildInParallel)"
+            ContinueOnError="ErrorAndStop" />
+    -->
+    <MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
+            Projects="@(nonSdkProj);@(unsupportedProj)"
+            BuildInParallel="$(BuildInParallel)"
+            ContinueOnError="ErrorAndStop" />
   </Target>
 
   <Target Name="BuildAzSdkProjects" Condition=" '$(SkipBuild)' != 'true' ">
@@ -145,7 +160,48 @@
       <LatestProjectDefaultBuildTarget Condition=" '$(LatestProjectDefaultBuildTarget)' == '' ">Build</LatestProjectDefaultBuildTarget>
     </PropertyGroup>
 
+    <!--
+    <ItemGroup>
+      <SdkTargetFxList Include="@(FilteredSupportedSdkProjects->'%(FxMonikerString)')" />
+      <TestTargetFxList Include="@(FilteredSupportedTestProjects->'%(FxMonikerString)')" />
+    </ItemGroup>
+
+    <RemoveDuplicates Inputs="@(SdkTargetFxList)">
+      <Output TaskParameter="Filtered" ItemName="DeDupeSdkTargetFx"/>
+    </RemoveDuplicates>
+    <RemoveDuplicates Inputs="@(TestTargetFxList)">
+      <Output TaskParameter="Filtered" ItemName="DeDupeTestTargetFx"/>
+    </RemoveDuplicates>
+
+    <PropertyGroup>
+      <SdkTargetFx>@(DeDupeSdkTargetFx)</SdkTargetFx>
+      <TestTargetFx>@(DeDupeTestTargetFx)</TestTargetFx>
+    </PropertyGroup>
+
+    <Message Text="SdkTargetFx...... $(SdkTargetFx)"/>
+    <Message Text="TestTargetFx...... $(TestTargetFx)"/>
+    <DebugTask Condition=" '$(DebugMode)' == 'true' "/>
+
+     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+             Projects="@(FilteredSupportedSdkProjects)"
+             Properties="TargetFrameworks=$(SdkTargetFx)"
+             BuildInParallel="$(BuildInParallel)"
+             ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="supportedSdkAssemblies" />
+    </MSBuild>
+
+        <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+             Projects="@(FilteredSupportedTestProjects)"
+             BuildInParallel="$(BuildInParallel)"
+             ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="supportedTestAssemblies" />
+    </MSBuild>
+-->
+
+    <!-- Build Filtered Projects -->
+
     <Message Text="Building SDK Projects ..... @(net452SDKProj) for $(NetFx452)" Condition=" '@(net452SDKProj)' != '' " />
+
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
              Projects="@(net452SDKProj)"
              Properties="TargetFramework=$(NetFx452)"
@@ -172,6 +228,15 @@
       <Output TaskParameter="TargetOutputs" ItemName="netStd14Assemblies" />
     </MSBuild>
 
+    <Message Text="Building SDK Projects ..... @(netStd20SDKProj) for $(NetStd20)" Condition=" '@(netStd20SDKProj)' != '' " />
+    <MSBuild Targets="Build"
+             Projects="@(netStd20SDKProj)"
+             Properties="TargetFramework=$(NetStd20)"
+             BuildInParallel="$(BuildInParallel)"
+             ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="netStd20Assemblies" />
+    </MSBuild>
+
     <Message Text="Building SDK Projects ..... @(netCore11SDKProjects) for $(NetCore11)" Condition=" '@(netCore11SDKProjects)' != '' " />
     <MSBuild Targets="Build"
              Projects="@(netCore11SDKProjects)"
@@ -191,6 +256,7 @@
     </MSBuild>
 
     <!--Test Project-->
+
 	  <!-- <Message Text="Building Test Projects ..... @(netCore11TestProj) for $(NetCore11)" Condition=" '@(netCore11TestProj)' != '' " />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
              Projects="@(netCore11TestProj)"
@@ -242,7 +308,11 @@
     </MSBuild>
 
     <ItemGroup>
-      <FilesToSign Include="@(net452Assemblies);@(net461Assemblies);@(netStd14Assemblies);@(netCore11Assemblies);@(nonSdkAssemblies)" />
+    <!--
+      <FilesToSign Include="@(supportedSdkAssemblies);@(supportedTestAssemblies);@(nonSdkAssemblies)" />
+    -->
+      <FilesToSign Include="@(net452Assemblies);@(net461Assemblies);@(netStd14Assemblies);@(netStd20Assemblies);@(netCore11Assemblies);@(nonSdkAssemblies)" />
+
     </ItemGroup>
 
     <Message Text="BuiltFiles ........ @(FilesToSign)" />
@@ -250,9 +320,11 @@
 
   <Target Name="Test" Condition=" '$(SkipTests)' != 'true' ">
     <Message Text="Executing Tests......"/>
-    <!-- <Message Text="Running .NET Core 1.1 Tests .... @(netCore11TestProj)" Condition=" '@(netCore11TestProj)' != '' " />
-    <Exec Command="dotnet test -f $(NetCore11) %(netCore11TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetCore11)\%(netCore11TestProj.Filename).trx " Condition="@(netCore11TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore11TestProj.RootDir)%(netCore11TestProj.Directory)" /> -->
-
+    <Message Text="Running .NET Core Tests .... @(FilteredSupportedTestProjects)" Condition=" '@(FilteredSupportedTestProjects)' != '' " />
+    <!--    
+    <Exec Command="dotnet test %(FilteredSupportedTestProjects.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\%(FilteredSupportedTestProjects.Filename).trx " 
+          Condition="@(FilteredSupportedTestProjects) != ''" ContinueOnError="false" WorkingDirectory="%(FilteredSupportedTestProjects.RootDir)%(FilteredSupportedTestProjects.Directory)" />
+    -->
     <Message Text="Running .NET Core 2.0 Tests .... @(netCore20TestProj)" Condition=" '@(netCore20TestProj)' != '' " />
     <Exec Command="dotnet test -f $(NetCore20) %(netCore20TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetCore20)\%(netCore20TestProj.Filename).trx /nodeReuse:false" Condition="@(netCore20TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore20TestProj.RootDir)%(netCore20TestProj.Directory)" />
 
@@ -261,6 +333,7 @@
 	
 	  <Message Text="Running .NET 4.6.1 Tests .... @(net461TestProj)" Condition=" '@(net461TestProj)' != '' " />
     <Exec Command="dotnet test -f $(NetFx461) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetFx461)\%(net452TestProj.Filename).trx /nodeReuse:false" Condition="@(net461TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net461TestProj.RootDir)%(net461TestProj.Directory)" />
+    
   </Target>
 
   <!--
@@ -272,15 +345,18 @@
   <Target Name="PackageNoBuild" DependsOnTargets="CategorizeProjects;Package" />
   
   <Target Name="Package">
-    <Message Text="Packaging..... @(net452SDKProj);@(netStd14SDKProj);@(nonSdkProject)" />
+    <Message Text="Packaging..... @(net452SDKProj);@(net461SDKProj);@(netStd14SDKProj);@(netStd20SDKProj);@(nonSdkProject)" />
     <Message Text="PackageOutputDir....... $(BuiltPackageOutputDir)" />
     <PropertyGroup>
       <!-- <SkipPublishingForNonSdkPackages Condition=" '@(nonSdkProj)' != '' ">true</SkipPublishingForNonSdkPackages> -->
       <NonSdkPackageOutputPath>$(PackageOutputPath)\ToolsPackage</NonSdkPackageOutputPath>
     </PropertyGroup>
-    <ItemGroup>
-      <ProjectsToPackage Include="@(SDKProject)" />
+    <ItemGroup>    
+      <ProjectsToPackage Include="@(SDKProject)" />      
       <NonSdkProjectsToPackage Include="@(nonSdkProject)" />
+      <!--
+      <ProjectsToPackage Include="@(FilteredSupportedSdkProjects)" />
+      -->
     </ItemGroup>
     <MSBuild
         Projects="@(ProjectsToPackage)"
@@ -374,6 +450,7 @@
       <Output TaskParameter="net452SdkProjectsToBuild" ItemName="net452SDKProj" />
 	    <Output TaskParameter="net461SdkProjectsToBuild" ItemName="net461SDKProj" />
       <Output TaskParameter="netStd14SdkProjectsToBuild" ItemName="netStd14SDKProj" />
+      <Output TaskParameter="netStd20SdkProjectsToBuild" ItemName="netStd20SDKProj" />
       <Output TaskParameter="netCore11SdkProjectsToBuild" ItemName="netCore11SDKProj" />
       <Output TaskParameter="netCore20SdkProjectsToBuild" ItemName="netCore20SDKProj" />
       <Output TaskParameter="netCore11TestProjectsToBuild" ItemName="netCore11TestProj" />
@@ -384,13 +461,31 @@
       <Output TaskParameter="nonSdkProjectToBuild" ItemName="nonSdkProj" />
       <Output TaskParameter="ProjectRootDir" PropertyName="ProjRootDir" />
       <Output TaskParameter="AzSdkPackageList" ItemName="SdkProjPkgList" />
+      <!--
+      <Output TaskParameter="supportedSdkProjectsToBuild" ItemName="supportedSdkProj" />
+      <Output TaskParameter="supportedTestProjectsToBuild" ItemName="supportedTestProj" />
+      -->
+    <!--
+      <Output TaskParameter="SuppSdkProjectMetaData" ItemName="SuppSdkProjectMetaData" />
+      <Output TaskParameter="SuppTestProjectMetaData" ItemName="SuppTestProjectMetaData" />
+    -->
     </SDKCategorizeProjects>
 
     <Message Text="Categorizing Projects....."/>
     <ItemGroup>
-      <TotalSdkProjects Include="@(net452SDKProj);@(net461SDKProj);@(netStd14SDKProj);@(netCore11SDKProj);@(netCore20SDKProj)"/>
+      <TotalSdkProjects Include="@(net452SDKProj);@(net461SDKProj);@(netStd14SDKProj);@(netStd20SDKProj);@(netCore11SDKProj);@(netCore20SDKProj)"/>
       <TotalTestProjects Include="@(netCore11TestProj);@(netCore20TestProj);@(net452TestProj);@(net461TestProj)"/>
+      <!--
+      <TotalSupportedSdkProjects Include="@(supportedSdkProj)" />
+      <TotalSupportedTestProjects Include="@(supportedTestProj)" />
+      -->
     </ItemGroup>
+    <!--
+    <ItemGroup>
+      <FilteredSupportedSdkProjects Include="@(supportedSdkProj)" />
+      <FilteredSupportedTestProjects Include="@(supportedTestProj)" />
+    </ItemGroup>
+    -->
 
     <RemoveDuplicates Inputs="@(TotalSdkProjects)">
       <Output TaskParameter="Filtered" ItemName="FilteredSdkProjects"/>
@@ -400,6 +495,15 @@
       <Output TaskParameter="Filtered" ItemName="FilteredTestProjects"/>
     </RemoveDuplicates>
 
+	  <!-- Output List -->
+	  <Message Text="Supported SDKProjects ....... @(FilteredSupportedSdkProjects->Count())"/>
+    <Message Text="%(FilteredSupportedSdkProjects.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text=" "/>
+	
+	  <Message Text="Supported TestProjects ....... @(FilteredSupportedTestProjects->Count())"/>
+    <Message Text="%(FilteredSupportedTestProjects.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text=" "/>
+		  
     <Message Text="SDKProjects ....... @(FilteredSdkProjects->Count())"/>
     <Message Text="%(FilteredSdkProjects.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text=" "/>
@@ -420,6 +524,7 @@
       <net452SDKProjects Include="@(net452SDKProj)"/>
 	    <net461SDKProjects Include="@(net461SDKProj)"/>
       <netStd14SDKProjects Include="@(netStd14SDKProj)"/>
+      <netStd20SDKProjects Include="@(netStd20SDKProj)"/>
       <netCore11SDKProjects Include="@(netCore11SDKProj)"/>
       <netCore20SDKProjects Include="@(netCore20SDKProj)"/>
       <netCore11TestProjects Include="@(netCore11TestProj)"/>
@@ -434,8 +539,13 @@
     <ItemGroup>
       <SDKProject Include="@(FilteredSdkProjects)"/>
       <SDKTestProject Include="@(FilteredTestProjects)"/>
+      
       <ProjectToScanDirs Include="%(FilteredSdkProjects.RootDir)%(FilteredSdkProjects.Directory)"/>
       <ProjectToScanDirs Include="%(FilteredTestProjects.RootDir)%(FilteredTestProjects.Directory)"/>
+      <!--
+      <ProjectToScanDirs Include="%(FilteredSupportedSdkProjects.RootDir)%(FilteredSupportedSdkProjects.Directory)"/>
+      <ProjectToScanDirs Include="%(FilteredSupportedTestProjects.RootDir)%(FilteredSupportedTestProjects.Directory)"/>
+      -->
     </ItemGroup>
 
     <Message Text=" "/>
@@ -443,6 +553,23 @@
     <Message Text="%(SdkProjPackageList.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text=" "/>
     <Message Text="ProjectRootDir......... $(ProjectRootDir)" Condition=" '$(DebugTrace)' == 'true' "/>
+
+    <!--
+    <Message Text=" "/>
+    <Message Text="FilteredSupportedSdkProjects ....... @(FilteredSupportedSdkProjects->Count())"/>
+    <Message Text="FilteredSupportedTestProjects ....... @(FilteredSupportedTestProjects->Count())"/>
+    <Message Text="%(FilteredSupportedSdkProjects.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="%(FilteredSupportedSdkProjects.FxMonikerString)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="%(FilteredSupportedTestProjects.Identity) ......... %(FilteredSupportedTestProjects.FxMonikerString)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="@(FilteredSupportedSdkProjects->'%(FxMonikerString)')" Condition=" '$(DebugTrace)' == 'true' "/>
+
+    <ItemGroup>
+      <FxMoniker Include="@(FilteredSupportedSdkProjects->'%(FxMonikerString)')" />
+    </ItemGroup>
+
+    <Message Text="FxMonikers ....... @(FxMoniker)" />
+    <DebugTask Condition=" '$(DebugMode)' == 'true'"/>
+    -->
   </Target>
   
   <Target Name="UpdateTools">

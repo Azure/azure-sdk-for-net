@@ -117,32 +117,48 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         }
 
         #region OUTPUT
+
+        #region NET 452
         /// <summary>
         /// List of projects that needs to be built
         /// </summary>
         [Output]
         public ITaskItem[] net452SdkProjectsToBuild { get; private set; }
 
+        [Output]
+        public ITaskItem[] net452TestProjectsToBuild { get; private set; }
+        #endregion
+
+        #region NET 461
         /// <summary>
         /// List of projects that needs to be built
         /// </summary>
         [Output]
         public ITaskItem[] net461SdkProjectsToBuild { get; private set; }
 
+        [Output]
+        public ITaskItem[] net461TestProjectsToBuild { get; private set; }
+        #endregion
+
+        #region NET Std 1.4
         /// <summary>
         /// List of Test Projects that needs to be build
         /// </summary>
         [Output]
         public ITaskItem[] netStd14SdkProjectsToBuild { get; private set; }
+        #endregion
 
+        #region NET Std 2.0
+        [Output]
+        public ITaskItem[] netStd20SdkProjectsToBuild { get; private set; }
+        #endregion
+        
+        #region NET Core 1.1
         /// <summary>
         /// List of Test Projects that needs to be build
         /// </summary>
         [Output]
         public ITaskItem[] netCore11SdkProjectsToBuild { get; private set; }
-
-        [Output]
-        public ITaskItem[] netCore20SdkProjectsToBuild { get; private set; }
 
         /// <summary>
         /// List of .NET 452 projects that will be separated from the list of projects that 
@@ -150,19 +166,27 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         /// </summary>
         [Output]
         public ITaskItem[] netCore11TestProjectsToBuild { get; private set; }
+        #endregion
 
+        #region NET Core 2.0
         [Output]
-        public ITaskItem[] netCore20TestProjectsToBuild { get; private set; }
-
-        [Output]
-        public ITaskItem[] net452TestProjectsToBuild { get; private set; }
+        public ITaskItem[] netCore20SdkProjectsToBuild { get; private set; }
         
         [Output]
-        public ITaskItem[] net461TestProjectsToBuild { get; private set; }
+        public ITaskItem[] netCore20TestProjectsToBuild { get; private set; }
+        #endregion
+        
 
         [Output]
         public ITaskItem[] unSupportedProjectsToBuild { get; private set; }
 
+        [Output]
+        public ITaskItem[] supportedSdkProjectsToBuild { get; private set; }
+
+        [Output]
+        public ITaskItem[] supportedTestProjectsToBuild { get; private set; }
+
+        
         [Output]
         public ITaskItem[] nonSdkProjectToBuild { get; private set; }
 
@@ -171,7 +195,14 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         [Output]
         public ITaskItem[] AzSdkPackageList { get; private set; }
-        
+
+
+
+        [Output]
+        public SdkProjectMetaData[] SuppSdkProjectMetaData { get; private set; }
+
+        [Output]
+        public SdkProjectMetaData[] SuppTestProjectMetaData { get; private set; }
 
         /// <summary>
         /// List of .NET 452 test projects that will be separated from the list of projects that
@@ -263,9 +294,19 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             TaskData.CategorizedProjects = projWithMetaData.ToList<SdkProjectMetaData>();
 
             #region update collections for output
+            var supportedSdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.ProjectType == SdkProjctType.Sdk) select s;
+            //var supportedSdkProjects = from s in projWithMetaData where (s.ProjectType == SdkProjctType.Sdk) select s;
+            var supportedTestProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.ProjectType == SdkProjctType.Test) select s;
+
+            var suppSdkMD = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.ProjectType == SdkProjctType.Sdk) select s;
+            var suppTestMD = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.ProjectType == SdkProjctType.Test) select s;
+
             var net452SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var net461SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.net461 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
+
             var netStd14SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netstandard14 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
+            var netStd20SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netstandard20 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
+
             var netCore11SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netcoreapp11 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var netCore20SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netcoreapp20 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
 
@@ -279,7 +320,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             net452SdkProjectsToBuild = net452SdkProjects?.ToArray<ITaskItem>();
             net461SdkProjectsToBuild = net461SdkProjects?.ToArray<ITaskItem>();
+
             netStd14SdkProjectsToBuild = netStd14SdkProjects?.ToArray<ITaskItem>();
+            netStd20SdkProjectsToBuild = netStd20SdkProjects?.ToArray<ITaskItem>();
+
             netCore11SdkProjectsToBuild = netCore11SdkProjects?.ToArray<ITaskItem>();
             netCore20SdkProjectsToBuild = netCore20SdkProjects?.ToArray<ITaskItem>();
 
@@ -288,9 +332,13 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             
             net452TestProjectsToBuild = testNet452Projects?.ToArray<ITaskItem>();
             net461TestProjectsToBuild = testNet461Projects?.ToArray<ITaskItem>();
+
             unSupportedProjectsToBuild = unSupportedProjects?.ToArray<ITaskItem>();
             UnFilteredProjects = allProjects.ToArray<string>();
             nonSdkProjectToBuild = nonSdkProjects?.ToArray<ITaskItem>();
+
+            supportedSdkProjectsToBuild = GetUpdatedMetaData(supportedSdkProjects);
+            supportedTestProjectsToBuild = GetUpdatedMetaData(supportedTestProjects);
 
             if (PkgRefsHS.Any<string>())
             {
@@ -300,6 +348,27 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             #endregion
 
             return true;
+        }
+
+        private ITaskItem[] GetUpdatedMetaData(IEnumerable<SdkProjectMetaData> metaProjs)
+        {
+            List<ITaskItem> itList = new List<ITaskItem>();
+
+            foreach(SdkProjectMetaData sdkProj in metaProjs)
+            {
+                //ITaskItem nIt = sdkProj.ProjectTaskItem;
+                ITaskItem nIt = new Microsoft.Build.Utilities.TaskItem(sdkProj.FullProjectPath);
+                nIt.SetMetadata("IsTargetFxSupported", sdkProj.IsTargetFxSupported.ToString());
+                nIt.SetMetadata("FxMonikerString", sdkProj.FxMonikerString);
+                nIt.SetMetadata("IsNonSdkProject", sdkProj.IsNonSdkProject.ToString());
+                nIt.SetMetadata("IsProjectDataPlane", sdkProj.IsProjectDataPlane.ToString());
+                nIt.SetMetadata("ProjectType", sdkProj.ProjectType.ToString());
+
+                itList.Add(nIt);
+                nIt = null;
+            }
+
+            return itList.ToArray();
         }
 
         /// <summary>
@@ -489,7 +558,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                               Debug.WriteLine(ex.Message);
                           }
 
-                          throw ex;
+                          throw;
                       }
                   }
                    //#if DebugInVS
@@ -586,6 +655,11 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     fxSupported = false;
                     break;
 
+                case "netstandard2.0":
+                    validMoniker = TargetFrameworkMoniker.netstandard20;
+                    fxSupported = true;
+                    break;
+
                 case "net452":
                     validMoniker = TargetFrameworkMoniker.net452;
                     fxSupported = true;
@@ -608,7 +682,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
                 case "netcoreapp1.1":
                     validMoniker = TargetFrameworkMoniker.netcoreapp11;
-                    fxSupported = true;
+                    fxSupported = false;
                     break;
 
                 case "netcoreapp2.0":
