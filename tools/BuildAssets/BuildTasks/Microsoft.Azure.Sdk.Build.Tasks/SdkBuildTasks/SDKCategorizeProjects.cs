@@ -117,32 +117,48 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         }
 
         #region OUTPUT
+
+        #region NET 452
         /// <summary>
         /// List of projects that needs to be built
         /// </summary>
         [Output]
         public ITaskItem[] net452SdkProjectsToBuild { get; private set; }
 
+        [Output]
+        public ITaskItem[] net452TestProjectsToBuild { get; private set; }
+        #endregion
+
+        #region NET 461
         /// <summary>
         /// List of projects that needs to be built
         /// </summary>
         [Output]
         public ITaskItem[] net461SdkProjectsToBuild { get; private set; }
 
+        [Output]
+        public ITaskItem[] net461TestProjectsToBuild { get; private set; }
+        #endregion
+
+        #region NET Std 1.4
         /// <summary>
         /// List of Test Projects that needs to be build
         /// </summary>
         [Output]
         public ITaskItem[] netStd14SdkProjectsToBuild { get; private set; }
+        #endregion
 
+        #region NET Std 2.0
+        [Output]
+        public ITaskItem[] netStd20SdkProjectsToBuild { get; private set; }
+        #endregion
+        
+        #region NET Core 1.1
         /// <summary>
         /// List of Test Projects that needs to be build
         /// </summary>
         [Output]
         public ITaskItem[] netCore11SdkProjectsToBuild { get; private set; }
-
-        [Output]
-        public ITaskItem[] netCore20SdkProjectsToBuild { get; private set; }
 
         /// <summary>
         /// List of .NET 452 projects that will be separated from the list of projects that 
@@ -150,15 +166,16 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         /// </summary>
         [Output]
         public ITaskItem[] netCore11TestProjectsToBuild { get; private set; }
+        #endregion
 
+        #region NET Core 2.0
         [Output]
-        public ITaskItem[] netCore20TestProjectsToBuild { get; private set; }
-
-        [Output]
-        public ITaskItem[] net452TestProjectsToBuild { get; private set; }
+        public ITaskItem[] netCore20SdkProjectsToBuild { get; private set; }
         
         [Output]
-        public ITaskItem[] net461TestProjectsToBuild { get; private set; }
+        public ITaskItem[] netCore20TestProjectsToBuild { get; private set; }
+        #endregion
+        
 
         [Output]
         public ITaskItem[] unSupportedProjectsToBuild { get; private set; }
@@ -286,7 +303,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             var net452SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var net461SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.net461 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
+
             var netStd14SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netstandard14 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
+            var netStd20SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netstandard20 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
+
             var netCore11SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netcoreapp11 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var netCore20SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netcoreapp20 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
 
@@ -300,7 +320,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             net452SdkProjectsToBuild = net452SdkProjects?.ToArray<ITaskItem>();
             net461SdkProjectsToBuild = net461SdkProjects?.ToArray<ITaskItem>();
+
             netStd14SdkProjectsToBuild = netStd14SdkProjects?.ToArray<ITaskItem>();
+            netStd20SdkProjectsToBuild = netStd20SdkProjects?.ToArray<ITaskItem>();
+
             netCore11SdkProjectsToBuild = netCore11SdkProjects?.ToArray<ITaskItem>();
             netCore20SdkProjectsToBuild = netCore20SdkProjects?.ToArray<ITaskItem>();
 
@@ -309,6 +332,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             
             net452TestProjectsToBuild = testNet452Projects?.ToArray<ITaskItem>();
             net461TestProjectsToBuild = testNet461Projects?.ToArray<ITaskItem>();
+
             unSupportedProjectsToBuild = unSupportedProjects?.ToArray<ITaskItem>();
             UnFilteredProjects = allProjects.ToArray<string>();
             nonSdkProjectToBuild = nonSdkProjects?.ToArray<ITaskItem>();

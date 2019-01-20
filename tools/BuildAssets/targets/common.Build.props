@@ -9,16 +9,30 @@
 		<AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
 		<AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
 		<SkipBuildingTestProject>false</SkipBuildingTestProject>
-		<!-- <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences> -->
+		<!-- 
+		<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+		<SignAssembly>true</SignAssembly>
+		<DelaySign Condition="'$(Configuration)' == 'Release' ">true</DelaySign>
+		<AssemblyOriginatorKeyFile Condition="'$(Configuration)' == 'Release' ">$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+		<AssemblyOriginatorKeyFile Condition=" '$(AssemblyOriginatorKeyFile)' == '' AND '$(Configuration)' == 'Debug' ">$(LibraryToolsFolder)\DebugSN.snk</AssemblyOriginatorKeyFile>
+		-->
 		<SignAssembly>true</SignAssembly>
 		<DelaySign>true</DelaySign>
 		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+		
 		<NoWarn>1591;1701;1573;CS1591</NoWarn>
 		<DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) $(IgnorePathTokens)</DefaultPathTokenToIgnore>
 		<BuildWideDebugTrace Condition=" '$(DebugTrace)' == '' ">false</BuildWideDebugTrace>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
-
+<!--
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+		<Configuration>Release</Configuration>
+		<SignAssembly>true</SignAssembly>
+		<DelaySign Condition="'$(Configuration)' == 'Release' ">true</DelaySign>
+		<AssemblyOriginatorKeyFile Condition="'$(Configuration)' == 'Release' ">$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+	</PropertyGroup>
+-->
 	<!-- Full debug symbols for archiving and publishing to Symweb -->
 	<PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DebugType>full</DebugType>

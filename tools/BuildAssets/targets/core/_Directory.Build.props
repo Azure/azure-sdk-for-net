@@ -11,7 +11,9 @@
 	  <BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
     <PoliCheckOutputDir>$(LibraryRoot)PolicheckOutput</PoliCheckOutputDir>
     <BuiltPackageOutputDir>$(BinariesFolder)\packages</BuiltPackageOutputDir>
+    <!--
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
+    -->
     <CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
     <NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
