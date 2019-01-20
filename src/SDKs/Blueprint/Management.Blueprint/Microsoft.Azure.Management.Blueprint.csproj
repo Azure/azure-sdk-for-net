@@ -23,7 +23,7 @@ ChangeNotes for 0.10.0 (breaking changes):
 </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Customizations\Extensions\" />
