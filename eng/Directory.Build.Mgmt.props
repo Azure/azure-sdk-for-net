@@ -14,12 +14,13 @@
   </PropertyGroup>
 
   <!-- If Scope is specified then don't ignore any tests by default otherwise when building all ignore the projects with issues -->
-  <PropertyGroup Condition="'$(Scope)' == '' or '$(Scope)' == 'All'">
+  <PropertyGroup Condition="'$(Scope)' == '' or '$(Scope)' == 'All' or '$(Scope)' == 'SDKs\'">
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Microsoft.Rest.ClientRuntime.Tracing.Tests</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Microsoft.Azure.Services.AppAuthentication.IntegrationTests</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Batch\DataPlane</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Batch\Support</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) LocationBasedServices</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) BotService\BotService.Tests</DefaultPathTokenToIgnore>
   </PropertyGroup>
 
   <!-- Ignore all data plane libraries following the "data-plane" naming convention -->
