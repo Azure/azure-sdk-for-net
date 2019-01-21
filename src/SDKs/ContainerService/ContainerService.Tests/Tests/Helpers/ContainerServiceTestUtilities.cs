@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
     {
         internal const string DnsPrefix = "aksdotnetsdk";
         internal const string ResourceGroupPrefix = "aks-dotnet-sdk-RG-";
-        internal const string AgentPoolProfileName = "aksdotnetagent";
+        internal const string AgentPoolProfileName = "aksagent";
         internal const string VMSize = "Standard_A1";
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
