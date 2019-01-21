@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97?api-version=2018-06-01-preview",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6\",\r\n    \"osType\": \"Linux\",\r\n    \"tier\": \"Standard\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\",\r\n      \"configurations\": {\r\n        \"gateway\": {\r\n          \"restAuthCredential.isEnabled\": \"true\",\r\n          \"restAuthCredential.username\": \"admin5274\",\r\n          \"restAuthCredential.password\": \"Password19322\"\r\n        }\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5582\",\r\n              \"password\": \"Password19917\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5582\",\r\n              \"password\": \"Password19917\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Small\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5582\",\r\n              \"password\": \"Password19917\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"storageProfile\": {\r\n      \"storageaccounts\": [\r\n        {\r\n          \"name\": \"hdicsharpstorage5035.blob.core.windows.net\",\r\n          \"isDefault\": true,\r\n          \"container\": \"default9335\",\r\n          \"key\": \"feCPx7Xfvu9/kHo8XuKbIq0CppCwph1/P0EjZY92EMHTxQywjWOPvWy5/T/7DapRcVl3FMt0ZfOo7tuVQm2YdQ==\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6\",\r\n    \"osType\": \"Linux\",\r\n    \"tier\": \"Standard\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\",\r\n      \"configurations\": {\r\n        \"gateway\": {\r\n          \"restAuthCredential.isEnabled\": \"true\",\r\n          \"restAuthCredential.username\": \"admin1131\",\r\n          \"restAuthCredential.password\": \"Password1!48\"\r\n        }\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser191\",\r\n              \"password\": \"Password1!222\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser191\",\r\n              \"password\": \"Password1!222\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Small\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser191\",\r\n              \"password\": \"Password1!222\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"storageProfile\": {\r\n      \"storageaccounts\": [\r\n        {\r\n          \"name\": \"hdicsharpstorage8722.blob.core.windows.net\",\r\n          \"isDefault\": true,\r\n          \"container\": \"default2395\",\r\n          \"key\": \"SwwUQ/u3SOyGXIgivDu4W7QG63dkkFRTS/VtA9AJIlKH/ZJ0eFnqD+3xe1NTTdbWmtqWluvmGCPtKLvyuD8qPQ==\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "32427741-412e-4e44-9837-a3798e5c9436"
+          "d7d9bc59-07bd-4043-9aa3-5bd6fe4c23c1"
         ],
         "Accept-Language": [
           "en-US"
@@ -15,13 +15,13 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1888"
+          "1884"
         ]
       },
       "ResponseHeaders": {
@@ -32,22 +32,22 @@
           "no-cache"
         ],
         "ETag": [
-          "\"d35d4c04-6114-4721-9409-7c0855619632\""
+          "\"e431950f-e606-4db6-ab78-2f90ca415728\""
         ],
         "x-ms-hdi-clusteruri": [
-          "https://management.azure.com/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204?api-version=2018-06-01-preview"
+          "https://management.azure.com/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97?api-version=2018-06-01-preview"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview"
+          "https://management.azure.com:443/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview"
         ],
         "x-ms-request-id": [
-          "131665dd-12d1-46d8-b9dd-b2561cf54b0d"
+          "1a3e8267-b42c-4d55-9345-9b7a790dcd00"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "37674ce1-03ed-4226-ba62-129ac4805884"
+          "df2eb917-996f-4f0d-a841-9320b5d0d49f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -56,13 +56,13 @@
           "1199"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133151Z:37674ce1-03ed-4226-ba62-129ac4805884"
+          "WESTUS2:20190219T101018Z:df2eb917-996f-4f0d-a841-9320b5d0d49f"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:31:50 GMT"
+          "Tue, 19 Feb 2019 10:10:18 GMT"
         ],
         "Content-Length": [
           "1250"
@@ -74,11 +74,11 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204\",\r\n  \"name\": \"hdisdk-http1204\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US 2\",\r\n  \"etag\": \"d35d4c04-6114-4721-9409-7c0855619632\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6.1000.67\",\r\n    \"clusterHdpVersion\": \"\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.6.1000.67.1901050618.json\",\r\n      \"kind\": \"Hadoop\",\r\n      \"componentVersion\": {\r\n        \"Hadoop\": \"2.7\"\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5582\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5582\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5582\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2019-01-25T13:31:51.24\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97\",\r\n  \"name\": \"hdisdk-gateway97\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US 2\",\r\n  \"etag\": \"e431950f-e606-4db6-ab78-2f90ca415728\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6.1000.67\",\r\n    \"clusterHdpVersion\": \"\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.6.1000.67.1902132019.json\",\r\n      \"kind\": \"Hadoop\",\r\n      \"componentVersion\": {\r\n        \"Hadoop\": \"2.7\"\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser191\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser191\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser191\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2019-02-19T10:10:17.543\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -86,7 +86,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -97,13 +97,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "498a7e2c-aaf1-45ea-92d3-437368ffed8d"
+          "cafe902e-1104-4790-9991-006d39d2c4c1"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "91ab2618-dd85-49ed-ae72-c6308fcf49b4"
+          "a89b31c7-47d6-47bd-8273-6258e6db6a32"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -112,13 +112,13 @@
           "11999"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133222Z:91ab2618-dd85-49ed-ae72-c6308fcf49b4"
+          "WESTUS2:20190219T101048Z:a89b31c7-47d6-47bd-8273-6258e6db6a32"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:32:22 GMT"
+          "Tue, 19 Feb 2019 10:10:48 GMT"
         ],
         "Content-Length": [
           "23"
@@ -134,7 +134,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -142,7 +142,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -153,13 +153,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "f171f5db-57a0-4f54-b3d3-62f3381b2435"
+          "6f9c06da-dfdb-414d-8070-f7f31b8e57d6"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "49823194-9644-4af8-948a-e5c8035608c8"
+          "a8156275-556c-4dc1-ac2f-6cfa09141c0b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -168,13 +168,13 @@
           "11998"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133253Z:49823194-9644-4af8-948a-e5c8035608c8"
+          "WESTUS2:20190219T101119Z:a8156275-556c-4dc1-ac2f-6cfa09141c0b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:32:52 GMT"
+          "Tue, 19 Feb 2019 10:11:18 GMT"
         ],
         "Content-Length": [
           "23"
@@ -190,7 +190,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -198,7 +198,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -209,13 +209,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "115cbe73-8f29-4bec-8bff-f4637812f4d8"
+          "669ba73c-d3e8-4f31-8d7d-27c6823c224b"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "4634fee4-dd69-4d0c-bf62-d97fcc94013e"
+          "40d460cd-ccde-4332-8523-5eca98c3d10b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -224,13 +224,13 @@
           "11997"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133323Z:4634fee4-dd69-4d0c-bf62-d97fcc94013e"
+          "WESTUS2:20190219T101150Z:40d460cd-ccde-4332-8523-5eca98c3d10b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:33:23 GMT"
+          "Tue, 19 Feb 2019 10:11:50 GMT"
         ],
         "Content-Length": [
           "23"
@@ -246,7 +246,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -254,7 +254,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -265,13 +265,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "2a77402b-0ffc-4549-b768-1ec30e8f9d2c"
+          "77dffe4d-fe66-4092-b377-265c72bc7355"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "28420615-b2d0-4b2c-a58c-1952103afef7"
+          "2a6497c4-a12b-4580-a337-a4e4e884585f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -280,13 +280,13 @@
           "11996"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133354Z:28420615-b2d0-4b2c-a58c-1952103afef7"
+          "WESTUS2:20190219T101221Z:2a6497c4-a12b-4580-a337-a4e4e884585f"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:33:53 GMT"
+          "Tue, 19 Feb 2019 10:12:20 GMT"
         ],
         "Content-Length": [
           "23"
@@ -302,7 +302,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -310,7 +310,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -321,13 +321,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "19020920-7164-4665-bfec-605b38e8f468"
+          "2e791ee5-68ef-45af-a4b1-562069004cb4"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "e7f00ac6-549c-452e-8386-ab102a9c346c"
+          "45cda9fa-b1e0-466f-868b-f338a83c6ddb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -336,13 +336,13 @@
           "11995"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133424Z:e7f00ac6-549c-452e-8386-ab102a9c346c"
+          "WESTUS2:20190219T101251Z:45cda9fa-b1e0-466f-868b-f338a83c6ddb"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:34:24 GMT"
+          "Tue, 19 Feb 2019 10:12:51 GMT"
         ],
         "Content-Length": [
           "23"
@@ -358,7 +358,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -366,7 +366,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -377,13 +377,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "317b8d4e-daa2-4f0b-8d07-0dfebbba24bb"
+          "05ff831a-883f-47e0-8725-47642c7a5685"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "1d443a77-b2c9-40bf-a6e5-0893d00828a4"
+          "566bcf12-b131-425c-b5c3-e95db477ed0d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -392,13 +392,13 @@
           "11994"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133455Z:1d443a77-b2c9-40bf-a6e5-0893d00828a4"
+          "WESTUS2:20190219T101322Z:566bcf12-b131-425c-b5c3-e95db477ed0d"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:34:54 GMT"
+          "Tue, 19 Feb 2019 10:13:22 GMT"
         ],
         "Content-Length": [
           "23"
@@ -414,7 +414,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -422,7 +422,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -433,13 +433,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6221402d-b886-4d82-bdfa-331f30c191ef"
+          "9b1fb2ef-0b0f-4dcd-ae7b-542ed6408265"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "0f941f8d-c8f1-4dec-914d-c8a7b3bd68eb"
+          "a0b94648-63a1-47cc-ae73-3fb5a383f6e1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -448,13 +448,13 @@
           "11993"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133525Z:0f941f8d-c8f1-4dec-914d-c8a7b3bd68eb"
+          "WESTUS2:20190219T101353Z:a0b94648-63a1-47cc-ae73-3fb5a383f6e1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:35:25 GMT"
+          "Tue, 19 Feb 2019 10:13:53 GMT"
         ],
         "Content-Length": [
           "23"
@@ -470,7 +470,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -478,7 +478,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -489,13 +489,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "f795dc4c-838b-451d-b48c-a3e29e57501c"
+          "36266293-09a2-4aad-8d1d-57fe4cc3343f"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "64ac526a-1fbe-4152-a98e-38a4edeee661"
+          "578cd31b-55aa-4cad-85da-a38b8a1cf8fc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -504,13 +504,13 @@
           "11992"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133556Z:64ac526a-1fbe-4152-a98e-38a4edeee661"
+          "WESTUS2:20190219T101424Z:578cd31b-55aa-4cad-85da-a38b8a1cf8fc"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:35:55 GMT"
+          "Tue, 19 Feb 2019 10:14:23 GMT"
         ],
         "Content-Length": [
           "23"
@@ -526,7 +526,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -534,7 +534,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -545,13 +545,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "e6b411bb-aade-413b-89c8-6b3941c3bf5b"
+          "117c1792-101b-4a34-9a2c-86731ad1ab52"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "4469a354-a92f-469e-b5b8-96425b7882ca"
+          "fbead53f-f9ab-490e-910f-4cedd2799eb4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -560,13 +560,13 @@
           "11991"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133626Z:4469a354-a92f-469e-b5b8-96425b7882ca"
+          "WESTUS2:20190219T101455Z:fbead53f-f9ab-490e-910f-4cedd2799eb4"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:36:26 GMT"
+          "Tue, 19 Feb 2019 10:14:54 GMT"
         ],
         "Content-Length": [
           "23"
@@ -582,7 +582,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -590,7 +590,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -601,13 +601,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "e8d4742b-e1d0-4379-8f4c-d1ceeebe1f17"
+          "d0691b52-95f1-4f44-8794-1e05bb8c7ec0"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "e2a31da4-ca07-425a-94f6-7ba3b37dcaf9"
+          "ae726de7-4945-4149-b595-c40682cce432"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -616,13 +616,13 @@
           "11990"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133657Z:e2a31da4-ca07-425a-94f6-7ba3b37dcaf9"
+          "WESTUS2:20190219T101525Z:ae726de7-4945-4149-b595-c40682cce432"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:36:57 GMT"
+          "Tue, 19 Feb 2019 10:15:25 GMT"
         ],
         "Content-Length": [
           "23"
@@ -638,7 +638,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -646,7 +646,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -657,13 +657,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "7115d388-d009-4b37-9d3c-2fd658c21414"
+          "222e766b-0cfd-4d61-b967-2e37fbe8aad1"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "83f13722-4b1a-4c6d-941a-d5e87601c0e4"
+          "b2b4e879-6d3c-455a-b39c-a3f8c0b34910"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -672,13 +672,13 @@
           "11989"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133727Z:83f13722-4b1a-4c6d-941a-d5e87601c0e4"
+          "WESTUS2:20190219T101556Z:b2b4e879-6d3c-455a-b39c-a3f8c0b34910"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:37:26 GMT"
+          "Tue, 19 Feb 2019 10:15:56 GMT"
         ],
         "Content-Length": [
           "23"
@@ -694,7 +694,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -702,7 +702,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -713,13 +713,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6192f648-fceb-4669-9c32-21dd8f53c475"
+          "62659c26-17cf-40e2-af8b-93073c34f01f"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "e0e9dad1-f4d1-4fb8-a7be-f61ca26e8d2b"
+          "d56f74bd-ea33-4f54-9e03-cb7e5318c49f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -728,13 +728,13 @@
           "11988"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133757Z:e0e9dad1-f4d1-4fb8-a7be-f61ca26e8d2b"
+          "WESTUS2:20190219T101627Z:d56f74bd-ea33-4f54-9e03-cb7e5318c49f"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:37:57 GMT"
+          "Tue, 19 Feb 2019 10:16:26 GMT"
         ],
         "Content-Length": [
           "23"
@@ -750,7 +750,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -758,7 +758,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -769,13 +769,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "7e8202ae-cb28-429c-acd6-f2bced94d40b"
+          "453dd6b0-86d1-4836-900b-c25db3e5d61e"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "0cd9f6e5-865a-4275-9132-e513e235c540"
+          "6b59691c-d3fe-47ed-b6a7-0bf4cc6a0423"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -784,13 +784,13 @@
           "11987"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133828Z:0cd9f6e5-865a-4275-9132-e513e235c540"
+          "WESTUS2:20190219T101658Z:6b59691c-d3fe-47ed-b6a7-0bf4cc6a0423"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:38:27 GMT"
+          "Tue, 19 Feb 2019 10:16:57 GMT"
         ],
         "Content-Length": [
           "23"
@@ -806,7 +806,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -814,7 +814,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -825,13 +825,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "10b5161f-aae4-4a27-abb3-1b317c8285bc"
+          "c009fe28-65be-49d5-899c-0ff0371ccde4"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "5969e81b-425b-496c-8c17-852ea32d9378"
+          "9d181f81-3282-4ece-9c05-0266af2cb2e2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -840,13 +840,13 @@
           "11986"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133858Z:5969e81b-425b-496c-8c17-852ea32d9378"
+          "WESTUS2:20190219T101728Z:9d181f81-3282-4ece-9c05-0266af2cb2e2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:38:58 GMT"
+          "Tue, 19 Feb 2019 10:17:27 GMT"
         ],
         "Content-Length": [
           "23"
@@ -862,7 +862,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -870,7 +870,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -881,13 +881,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "feef3d2c-27a9-44ff-94b6-465a7a7d5b0d"
+          "195d5c6e-3883-47bc-9ace-268d376618e1"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "bbaf2c1e-9a97-41dc-baf3-58ea5baeea49"
+          "8f58d483-9087-44ef-b218-795fd1c8d1f0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -896,13 +896,13 @@
           "11985"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133929Z:bbaf2c1e-9a97-41dc-baf3-58ea5baeea49"
+          "WESTUS2:20190219T101759Z:8f58d483-9087-44ef-b218-795fd1c8d1f0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:39:28 GMT"
+          "Tue, 19 Feb 2019 10:17:59 GMT"
         ],
         "Content-Length": [
           "23"
@@ -918,7 +918,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -926,7 +926,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -937,13 +937,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d4cf95ba-7d1f-4730-9f7e-72a7150a992e"
+          "4771b561-c826-4db1-b3d7-fb1d7d2194ef"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "a9ab78bd-251a-4a87-9515-0416243f2ed6"
+          "7b119307-a470-48af-b92d-b5b0da3e95be"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -952,13 +952,13 @@
           "11984"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T133959Z:a9ab78bd-251a-4a87-9515-0416243f2ed6"
+          "WESTUS2:20190219T101830Z:7b119307-a470-48af-b92d-b5b0da3e95be"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:39:59 GMT"
+          "Tue, 19 Feb 2019 10:18:29 GMT"
         ],
         "Content-Length": [
           "23"
@@ -974,7 +974,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -982,7 +982,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -993,13 +993,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "056f9ffe-ec58-41cc-b8f1-237d56235c98"
+          "e229620b-aca4-4877-bb89-d82b6624ee09"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "3f3a23cf-47bd-49c0-9680-559693aa0275"
+          "e44552fd-c659-4e80-b106-cc4473eff88a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1008,13 +1008,13 @@
           "11983"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134030Z:3f3a23cf-47bd-49c0-9680-559693aa0275"
+          "WESTUS2:20190219T101900Z:e44552fd-c659-4e80-b106-cc4473eff88a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:40:29 GMT"
+          "Tue, 19 Feb 2019 10:19:00 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1030,7 +1030,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1038,7 +1038,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1049,13 +1049,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "e83bef56-3fd0-4c2e-b79b-e476009fecba"
+          "a7e92420-666b-49cf-a0a0-6da42615ac7c"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "bffac636-6521-4171-aaad-94ff8f334115"
+          "5bdc3a10-68cc-4435-af18-b4b6cd3a75ba"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1064,13 +1064,13 @@
           "11982"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134100Z:bffac636-6521-4171-aaad-94ff8f334115"
+          "WESTUS2:20190219T101931Z:5bdc3a10-68cc-4435-af18-b4b6cd3a75ba"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:41:00 GMT"
+          "Tue, 19 Feb 2019 10:19:31 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1086,7 +1086,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1094,7 +1094,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1105,13 +1105,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "5bf7a6b7-aabb-47c2-b4b3-dd5038a56451"
+          "b094e543-c245-4f54-bd21-cbdfbff7c1ab"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "6cdc31d0-2151-424f-81d2-724c4251d23c"
+          "f2dc0d57-df2b-449f-a444-718d79f6f843"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1120,13 +1120,13 @@
           "11981"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134130Z:6cdc31d0-2151-424f-81d2-724c4251d23c"
+          "WESTUS2:20190219T102002Z:f2dc0d57-df2b-449f-a444-718d79f6f843"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:41:30 GMT"
+          "Tue, 19 Feb 2019 10:20:02 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1142,7 +1142,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1150,7 +1150,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1161,13 +1161,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "171c41dd-eb78-4281-b4b1-fed903d5820e"
+          "0ef00e0a-1e92-4a10-ac23-d3ad5db95e48"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "9a947f62-d10d-4848-9c60-62ccb35b59be"
+          "6c584d89-ad9c-4401-bac2-44f488e77924"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1176,13 +1176,13 @@
           "11980"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134201Z:9a947f62-d10d-4848-9c60-62ccb35b59be"
+          "WESTUS2:20190219T102033Z:6c584d89-ad9c-4401-bac2-44f488e77924"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:42:01 GMT"
+          "Tue, 19 Feb 2019 10:20:32 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1198,7 +1198,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1206,7 +1206,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1217,13 +1217,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1a7d0eba-4138-4803-9f10-2d7e44cf6be7"
+          "d7f8b8a1-0edd-4783-b388-c1b96dfb5a2f"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "1b80dca7-54e8-4292-b13a-e91c2119df4e"
+          "ff28dd6a-9e29-4d87-ad0f-b1a83a4a307f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1232,13 +1232,13 @@
           "11979"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134231Z:1b80dca7-54e8-4292-b13a-e91c2119df4e"
+          "WESTUS2:20190219T102104Z:ff28dd6a-9e29-4d87-ad0f-b1a83a4a307f"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:42:31 GMT"
+          "Tue, 19 Feb 2019 10:21:04 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1254,7 +1254,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1262,7 +1262,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1273,13 +1273,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "fa2d86fa-cb77-4bef-b084-6546133fb443"
+          "f794dd16-d9ed-49ea-84ab-6e839108ef4e"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "91d68cd3-4d28-4e04-9327-08eaef8cb92a"
+          "40b63b21-916e-43d5-8be4-938a87400308"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1288,13 +1288,13 @@
           "11978"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134304Z:91d68cd3-4d28-4e04-9327-08eaef8cb92a"
+          "WESTUS2:20190219T102134Z:40b63b21-916e-43d5-8be4-938a87400308"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:43:04 GMT"
+          "Tue, 19 Feb 2019 10:21:34 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1310,7 +1310,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1318,7 +1318,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1329,13 +1329,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "2b7f73b5-a690-4241-9a95-e931cd74c43b"
+          "f3a12739-2fee-4241-a34f-263a739a8aa3"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "ab50805f-8d49-4e1a-b6f8-25c69665cad0"
+          "c6eb59f4-1196-46a1-8e5d-b6b590978bc7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1344,13 +1344,13 @@
           "11977"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134335Z:ab50805f-8d49-4e1a-b6f8-25c69665cad0"
+          "WESTUS2:20190219T102205Z:c6eb59f4-1196-46a1-8e5d-b6b590978bc7"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:43:34 GMT"
+          "Tue, 19 Feb 2019 10:22:05 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1366,7 +1366,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1374,7 +1374,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1385,13 +1385,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6f4b3d3d-0f2f-49be-adbe-8991a7897f17"
+          "5cb61c08-82f9-49dc-9661-5fab28654d9f"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "424ce0bc-b51d-47e8-b12a-abbfed0fbb01"
+          "2786b717-f019-4123-9d51-be350a71374f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1400,13 +1400,13 @@
           "11976"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134405Z:424ce0bc-b51d-47e8-b12a-abbfed0fbb01"
+          "WESTUS2:20190219T102236Z:2786b717-f019-4123-9d51-be350a71374f"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:44:05 GMT"
+          "Tue, 19 Feb 2019 10:22:35 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1422,7 +1422,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1430,7 +1430,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1441,13 +1441,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "37b6a0c9-1856-436b-b17f-3089ae19235a"
+          "3d20f2e6-78ea-4538-927e-2c380653ee10"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "302ee979-8824-48a6-837c-6fe1b449f7b1"
+          "d01fc3fc-48ea-4699-9e20-74079a9e4a51"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1456,13 +1456,13 @@
           "11975"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134436Z:302ee979-8824-48a6-837c-6fe1b449f7b1"
+          "WESTUS2:20190219T102307Z:d01fc3fc-48ea-4699-9e20-74079a9e4a51"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:44:35 GMT"
+          "Tue, 19 Feb 2019 10:23:07 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1478,7 +1478,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1486,7 +1486,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1497,13 +1497,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "a2dbfc76-93ae-4067-a031-259b3b4ab3ad"
+          "9e9aa84b-667c-4bcb-979d-1153eb5746ee"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "cfea0267-1d0e-49ec-aaa0-5d13958b45fd"
+          "34c6d648-df93-47c2-add1-44972d954852"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1512,13 +1512,13 @@
           "11974"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134506Z:cfea0267-1d0e-49ec-aaa0-5d13958b45fd"
+          "WESTUS2:20190219T102337Z:34c6d648-df93-47c2-add1-44972d954852"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:45:05 GMT"
+          "Tue, 19 Feb 2019 10:23:37 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1534,7 +1534,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1542,7 +1542,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1553,13 +1553,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "950e3d3e-fa5a-4448-b8bd-ad863894c9a8"
+          "584bfb5a-9a71-473a-8848-841ad5f15a77"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "73f36cc8-2414-4b19-a0cd-efbd1abd47b9"
+          "e71ceb79-cbb6-482d-9e0e-6010063d0a21"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1568,13 +1568,13 @@
           "11973"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134537Z:73f36cc8-2414-4b19-a0cd-efbd1abd47b9"
+          "WESTUS2:20190219T102408Z:e71ceb79-cbb6-482d-9e0e-6010063d0a21"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:45:36 GMT"
+          "Tue, 19 Feb 2019 10:24:08 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1590,7 +1590,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1598,7 +1598,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1609,13 +1609,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "bb443440-6648-48af-b768-1294346f017b"
+          "e42eea27-9d05-4b43-a7c0-e8208e4ab954"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "39193b87-b42d-4280-a170-7f44afbe68ee"
+          "66d43730-fae7-4593-aaa4-76629d9b56dd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1624,13 +1624,13 @@
           "11972"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134607Z:39193b87-b42d-4280-a170-7f44afbe68ee"
+          "WESTUS2:20190219T102439Z:66d43730-fae7-4593-aaa4-76629d9b56dd"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:46:06 GMT"
+          "Tue, 19 Feb 2019 10:24:38 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1646,7 +1646,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1654,7 +1654,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1665,13 +1665,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "c7f515d8-1984-4fec-bdb0-047a8a5a7d79"
+          "dbb9c394-8acd-4d6b-966a-99c8bc67fc65"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "ead4f710-bfe6-48ea-9517-45b8f3aa5964"
+          "068e785f-4239-423d-8ac4-bef91f96505a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1680,13 +1680,13 @@
           "11971"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134637Z:ead4f710-bfe6-48ea-9517-45b8f3aa5964"
+          "WESTUS2:20190219T102510Z:068e785f-4239-423d-8ac4-bef91f96505a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:46:37 GMT"
+          "Tue, 19 Feb 2019 10:25:09 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1702,7 +1702,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1710,7 +1710,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1721,13 +1721,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "40827d2e-9ba2-467f-9a8b-e6d45b24abb9"
+          "a49adf48-b0a6-42d4-9b94-baa39d7a4b97"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "e8bfc7f5-e4ef-46ae-a1df-e0e369153b39"
+          "8a1e7529-4c59-458c-9ef5-cdcd26514dfb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1736,13 +1736,13 @@
           "11970"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134708Z:e8bfc7f5-e4ef-46ae-a1df-e0e369153b39"
+          "WESTUS2:20190219T102541Z:8a1e7529-4c59-458c-9ef5-cdcd26514dfb"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:47:08 GMT"
+          "Tue, 19 Feb 2019 10:25:40 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1758,7 +1758,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1766,7 +1766,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1777,13 +1777,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "3b052fd5-5244-4d8b-9721-72141ec29f4b"
+          "4f52a29f-5a8f-4c12-beba-4fe2c1bb1306"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "9bd648a0-85de-4c1e-bd7d-cf0d238a17e8"
+          "7d0f135b-ddc7-468b-8ef5-12c9ab29f744"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1792,13 +1792,13 @@
           "11969"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134738Z:9bd648a0-85de-4c1e-bd7d-cf0d238a17e8"
+          "WESTUS2:20190219T102611Z:7d0f135b-ddc7-468b-8ef5-12c9ab29f744"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:47:38 GMT"
+          "Tue, 19 Feb 2019 10:26:11 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1814,7 +1814,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1822,7 +1822,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1833,13 +1833,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "85900ccf-fbb6-4419-a088-ed5cc63d17e4"
+          "638758a6-38bb-4ddb-80dd-999c5022d120"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "c4184a97-2bac-4e4a-9f79-eeb9b4525a8c"
+          "2876cacc-e8a6-4e11-82fe-1a96c15b0a92"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1848,13 +1848,13 @@
           "11968"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134809Z:c4184a97-2bac-4e4a-9f79-eeb9b4525a8c"
+          "WESTUS2:20190219T102642Z:2876cacc-e8a6-4e11-82fe-1a96c15b0a92"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:48:09 GMT"
+          "Tue, 19 Feb 2019 10:26:42 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1870,7 +1870,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1878,7 +1878,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1889,13 +1889,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "3e390b33-1ae6-400f-904b-9c408c820b71"
+          "070ddbdc-552c-4327-893f-21fc1737b6e7"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "14aaa23e-731c-4cbb-b669-d0e9897a71e0"
+          "924053c9-d870-4b7d-95a4-3fb3fe4db9ce"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1904,13 +1904,13 @@
           "11967"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134839Z:14aaa23e-731c-4cbb-b669-d0e9897a71e0"
+          "WESTUS2:20190219T102713Z:924053c9-d870-4b7d-95a4-3fb3fe4db9ce"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:48:39 GMT"
+          "Tue, 19 Feb 2019 10:27:12 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1926,7 +1926,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1934,7 +1934,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1945,13 +1945,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "cda519d2-c50f-41b0-9f98-62b7fc07500f"
+          "deaec92e-99fe-4ed0-8486-6ef6b39a673e"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "9bfdc9a1-99d7-4dde-a8dc-8595e5f73778"
+          "371c949f-d805-4c69-9133-9723c4c53437"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1960,13 +1960,13 @@
           "11966"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134910Z:9bfdc9a1-99d7-4dde-a8dc-8595e5f73778"
+          "WESTUS2:20190219T102744Z:371c949f-d805-4c69-9133-9723c4c53437"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:49:10 GMT"
+          "Tue, 19 Feb 2019 10:27:43 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1982,7 +1982,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/create?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1990,7 +1990,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2001,13 +2001,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "bfe2d6db-31d8-4f76-952f-d014dd99fdfd"
+          "b4f31d83-0d71-4205-be65-a60398eb4270"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "c984b008-852b-4313-9e43-15e326aef3f1"
+          "72abc00c-f91e-4e66-bd1c-7c4e1f1c83b0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2016,125 +2016,13 @@
           "11965"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T134940Z:c984b008-852b-4313-9e43-15e326aef3f1"
+          "WESTUS2:20190219T102814Z:72abc00c-f91e-4e66-bd1c-7c4e1f1c83b0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:49:40 GMT"
-        ],
-        "Content-Length": [
-          "23"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26628.05",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "aebb91dd-f1d0-42fb-8e95-ad5a6fcf9fdb"
-        ],
-        "x-ms-hdi-served-by": [
-          "global"
-        ],
-        "x-ms-correlation-request-id": [
-          "979e256b-5df9-4b58-9f0d-32b30bab6281"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11964"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190125T135011Z:979e256b-5df9-4b58-9f0d-32b30bab6281"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Fri, 25 Jan 2019 13:50:11 GMT"
-        ],
-        "Content-Length": [
-          "23"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/create?api-version=2018-06-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26628.05",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "3ff44d45-8d4d-4fa5-a283-f97b23c97973"
-        ],
-        "x-ms-hdi-served-by": [
-          "global"
-        ],
-        "x-ms-correlation-request-id": [
-          "2fc7efe7-5883-463f-b161-881328bb4a8c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11963"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190125T135041Z:2fc7efe7-5883-463f-b161-881328bb4a8c"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Fri, 25 Jan 2019 13:50:40 GMT"
+          "Tue, 19 Feb 2019 10:28:13 GMT"
         ],
         "Content-Length": [
           "22"
@@ -2150,7 +2038,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2158,7 +2046,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2169,31 +2057,31 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "b9006d8f-c815-4054-ba26-b7b18781741a"
+          "0755b744-47ae-4cba-8e98-f4e1e1df739a"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "0281fae3-622f-4ac8-8077-69b674ff21e0"
+          "81c0c05a-0391-405e-9e4d-d44d92cd50a1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11962"
+          "11964"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T135042Z:0281fae3-622f-4ac8-8077-69b674ff21e0"
+          "WESTUS2:20190219T102815Z:81c0c05a-0391-405e-9e4d-d44d92cd50a1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:50:41 GMT"
+          "Tue, 19 Feb 2019 10:28:15 GMT"
         ],
         "Content-Length": [
-          "1474"
+          "1476"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2202,140 +2090,16 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204\",\r\n  \"name\": \"hdisdk-http1204\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US 2\",\r\n  \"etag\": \"d35d4c04-6114-4721-9409-7c0855619632\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6.1000.67\",\r\n    \"clusterHdpVersion\": \"2.6.5.3005-27\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.6.1000.67.1901050618.json\",\r\n      \"kind\": \"Hadoop\",\r\n      \"componentVersion\": {\r\n        \"Hadoop\": \"2.7\"\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5582\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5582\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser5582\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2019-01-25T13:31:51.24\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-http1204-ssh.azurehdinsight.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-http1204.azurehdinsight.net\",\r\n        \"port\": 443\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97\",\r\n  \"name\": \"hdisdk-gateway97\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US 2\",\r\n  \"etag\": \"e431950f-e606-4db6-ab78-2f90ca415728\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.6.1000.67\",\r\n    \"clusterHdpVersion\": \"2.6.5.3006-29\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.6.1000.67.1902132019.json\",\r\n      \"kind\": \"Hadoop\",\r\n      \"componentVersion\": {\r\n        \"Hadoop\": \"2.7\"\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser191\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser191\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser191\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2019-02-19T10:10:17.543\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-gateway97-ssh.azurehdinsight.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-gateway97.azurehdinsight.net\",\r\n        \"port\": 443\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/configurations/gateway?api-version=2018-06-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "a6e4cd94-52eb-45fb-8b0a-e537773a5171"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26628.05",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "c0e1b9f3-2610-4cdf-88cf-7c6765064ce5"
-        ],
-        "x-ms-hdi-served-by": [
-          "global"
-        ],
-        "x-ms-correlation-request-id": [
-          "49609e6a-0e5c-4658-9a0e-ea9dab117a53"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11961"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190125T135043Z:49609e6a-0e5c-4658-9a0e-ea9dab117a53"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Fri, 25 Jan 2019 13:50:42 GMT"
-        ],
-        "Content-Length": [
-          "127"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"restAuthCredential.isEnabled\": \"true\",\r\n  \"restAuthCredential.username\": \"admin5274\",\r\n  \"restAuthCredential.password\": \"Password19322\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/configurations/gateway?api-version=2018-06-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "dc4369bc-648c-4dc8-95d0-ff16160a1409"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26628.05",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "6d342ad6-6569-44d2-b551-082dbe3396ca"
-        ],
-        "x-ms-hdi-served-by": [
-          "global"
-        ],
-        "x-ms-correlation-request-id": [
-          "e089da6d-725e-445c-bbea-83086fc1f422"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11958"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190125T135144Z:e089da6d-725e-445c-bbea-83086fc1f422"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Fri, 25 Jan 2019 13:51:45 GMT"
-        ],
-        "Content-Length": [
-          "127"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"restAuthCredential.isEnabled\": \"true\",\r\n  \"restAuthCredential.username\": \"admin5274\",\r\n  \"restAuthCredential.password\": \"NewPassword1!\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/configurations/gateway?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/getGatewaySettings?api-version=2018-06-01-preview",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"restAuthCredential.isEnabled\": \"true\",\r\n  \"restAuthCredential.username\": \"admin5274\",\r\n  \"restAuthCredential.password\": \"NewPassword1!\"\r\n}",
+      "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3d2336a8-dd2b-4b1e-8aad-aff7ccd69233"
+          "e5687054-7be0-40f2-8125-4217d06b3803"
         ],
         "Accept-Language": [
           "en-US"
@@ -2344,13 +2108,267 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c9c8bba9-1e02-4611-ba7f-2503c37cdabb"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "0056d125-ba8d-4fc2-83c9-e14223053a69"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190219T102816Z:0056d125-ba8d-4fc2-83c9-e14223053a69"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 19 Feb 2019 10:28:15 GMT"
+        ],
+        "Content-Length": [
+          "126"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"restAuthCredential.isEnabled\": \"true\",\r\n  \"restAuthCredential.username\": \"admin1131\",\r\n  \"restAuthCredential.password\": \"Password1!48\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/getGatewaySettings?api-version=2018-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "028ad3d3-22eb-41aa-86b2-5cd43c3e720b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26628.05",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fadd30b4-36e5-4584-b88e-2f98589856a0"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "e7a0517a-42a7-4f0b-b3ba-7c401396be4b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190219T102817Z:e7a0517a-42a7-4f0b-b3ba-7c401396be4b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 19 Feb 2019 10:28:16 GMT"
+        ],
+        "Content-Length": [
+          "126"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"restAuthCredential.isEnabled\": \"true\",\r\n  \"restAuthCredential.username\": \"admin1131\",\r\n  \"restAuthCredential.password\": \"Password1!48\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/getGatewaySettings?api-version=2018-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5281a3d6-317c-492e-bb62-c3409072651d"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26628.05",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "33f62bab-e52e-4e56-9b35-df41dfcde36c"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "adc8b031-1959-4ecc-9537-ae71782d36fe"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190219T103020Z:adc8b031-1959-4ecc-9537-ae71782d36fe"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 19 Feb 2019 10:30:20 GMT"
+        ],
+        "Content-Length": [
+          "127"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"restAuthCredential.isEnabled\": \"true\",\r\n  \"restAuthCredential.username\": \"admin1131\",\r\n  \"restAuthCredential.password\": \"NewPassword1!\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/updateGatewaySettings?api-version=2018-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"restAuthCredential.isEnabled\": false\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e4547105-d30d-4166-9c2e-c044536fa05c"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26628.05",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "144"
+          "45"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "dbd1a3be-0033-413f-8266-db99ce2938bd"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "8cc7e7e1-f67e-4c92-bac8-1d0227d50662"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190219T102817Z:8cc7e7e1-f67e-4c92-bac8-1d0227d50662"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 19 Feb 2019 10:28:16 GMT"
+        ],
+        "Content-Length": [
+          "96"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"MethodNotAllowed\",\r\n  \"message\": \"Linux clusters do not support revoking HTTP credentials.\"\r\n}",
+      "StatusCode": 405
+    },
+    {
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/updateGatewaySettings?api-version=2018-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"restAuthCredential.isEnabled\": true,\r\n  \"restAuthCredential.username\": \"admin1131\",\r\n  \"restAuthCredential.password\": \"NewPassword1!\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "184143c2-ea58-4f33-bcfd-8118b0e88bce"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26628.05",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "142"
         ]
       },
       "ResponseHeaders": {
@@ -2361,37 +2379,37 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/operationresults/d9fe561d-c678-4cd1-8a73-01764f289081-0?api-version=2018-06-01-preview"
+          "https://management.azure.com/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/operationresults/35cf29a0-1171-48b3-91e0-c0b0434044b8-0-r?api-version=2018-06-01-preview"
         ],
         "Retry-After": [
           "60"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/d9fe561d-c678-4cd1-8a73-01764f289081-0?api-version=2018-06-01-preview"
+          "https://management.azure.com:443/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/35cf29a0-1171-48b3-91e0-c0b0434044b8-0-r?api-version=2018-06-01-preview"
         ],
         "x-ms-request-id": [
-          "7ebe5b54-be64-437c-b422-df3f4de67eec"
+          "800a1a4c-3507-4d6a-918c-0e90ba8284a3"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "76f9d7e0-4855-40ba-b87d-306e397d15e1"
+          "db74e5f8-2d6a-43f4-a91f-d60b3468d2af"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1196"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T135044Z:76f9d7e0-4855-40ba-b87d-306e397d15e1"
+          "WESTUS2:20190219T102818Z:db74e5f8-2d6a-43f4-a91f-d60b3468d2af"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:50:44 GMT"
+          "Tue, 19 Feb 2019 10:28:17 GMT"
         ],
         "Expires": [
           "-1"
@@ -2404,7 +2422,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/azureasyncoperations/d9fe561d-c678-4cd1-8a73-01764f289081-0?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/35cf29a0-1171-48b3-91e0-c0b0434044b8-0-r?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2412,7 +2430,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2423,28 +2441,84 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "66078654-6f78-4ae6-8e1b-f878502daa24"
+          "43dd2e49-f772-488a-9313-837d25dbae56"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "16bd7c02-94ee-452f-af4f-3aa157094823"
+          "6e426c14-b525-4c2c-b1e4-f499ecc7dec7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11960"
+          "11963"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T135144Z:16bd7c02-94ee-452f-af4f-3aa157094823"
+          "WESTUS2:20190219T102919Z:6e426c14-b525-4c2c-b1e4-f499ecc7dec7"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:51:43 GMT"
+          "Tue, 19 Feb 2019 10:29:18 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/azureasyncoperations/35cf29a0-1171-48b3-91e0-c0b0434044b8-0-r?api-version=2018-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26628.05",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "f5d58f78-77d9-4357-960e-ae52d639e674"
+        ],
+        "x-ms-hdi-served-by": [
+          "southcentralus"
+        ],
+        "x-ms-correlation-request-id": [
+          "0a6f23cf-de45-4ead-9a58-463976402235"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11962"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190219T103019Z:0a6f23cf-de45-4ead-9a58-463976402235"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 19 Feb 2019 10:30:19 GMT"
         ],
         "Content-Length": [
           "22"
@@ -2460,7 +2534,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7d441bdb-f39a-4ab3-8866-afb225cb9886/resourceGroups/hdicsharprg4220/providers/Microsoft.HDInsight/clusters/hdisdk-http1204/operationresults/d9fe561d-c678-4cd1-8a73-01764f289081-0?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/d262af65-f7b1-4b63-9c55-4058673d935e/resourceGroups/hdicsharprg5384/providers/Microsoft.HDInsight/clusters/hdisdk-gateway97/operationresults/35cf29a0-1171-48b3-91e0-c0b0434044b8-0-r?api-version=2018-06-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2468,7 +2542,7 @@
           "FxVersion/4.6.26628.05",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.4.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2479,28 +2553,28 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "71ca8660-9ed4-415c-aa1c-d7bdb5c7977d"
+          "4ed80b23-c1ee-48dd-8d6f-28b909b83bc7"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "c8df1326-72fd-489b-9684-94de332f9bd8"
+          "9850a466-aa11-4123-b6eb-eb81e573952c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11959"
+          "11961"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190125T135144Z:c8df1326-72fd-489b-9684-94de332f9bd8"
+          "WESTUS2:20190219T103019Z:9850a466-aa11-4123-b6eb-eb81e573952c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 25 Jan 2019 13:51:43 GMT"
+          "Tue, 19 Feb 2019 10:30:19 GMT"
         ],
         "Expires": [
           "-1"
@@ -2515,27 +2589,27 @@
   ],
   "Names": {
     ".ctor": [
-      "admin5274",
-      "Password19322",
-      "sshuser5582",
-      "Password19917",
-      "2bdd6198-a477-41d5-8780-6b5d58bd8bb8",
-      "hdicsharprg4220",
-      "hdicsharpstorage5035",
-      "hdicsharpmsi9322",
-      "hdicsharpvault665",
-      "hdicsharpadls4960",
-      "default9335",
-      "storageaccountkey9649"
+      "admin1131",
+      "Password1!48",
+      "sshuser191",
+      "Password1!222",
+      "261ea059-4340-4aa2-8dbf-c7b588484904",
+      "hdicsharprg5384",
+      "hdicsharpstorage8722",
+      "hdicsharpmsi1692",
+      "hdicsharpvault7449",
+      "hdicsharpadls2970",
+      "default2395",
+      "storageaccountkey3871"
     ],
     "TestInitialize": [
-      "7d441bdb-f39a-4ab3-8866-afb225cb9886"
+      "d262af65-f7b1-4b63-9c55-4058673d935e"
     ],
-    "TestHttpExtended": [
-      "hdisdk-http1204"
+    "TestGetOrUpdateGatewaySettings": [
+      "hdisdk-gateway97"
     ]
   },
   "Variables": {
-    "SubscriptionId": "7d441bdb-f39a-4ab3-8866-afb225cb9886"
+    "SubscriptionId": "d262af65-f7b1-4b63-9c55-4058673d935e"
   }
 }
