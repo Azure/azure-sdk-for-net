@@ -30,15 +30,9 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         /// </summary>
         /// <param name="authKey">Authentication key for communicating with
         /// services.</param>
-        /// <param name="workspaceStorageAccountName">Workspace storage account
-        /// name.</param>
-        /// <param name="workspaceStorageSasToken">Workspace storage account
-        /// SAS token.</param>
-        public ControllerConnectionDetails(string authKey = default(string), string workspaceStorageAccountName = default(string), string workspaceStorageSasToken = default(string), OrchestratorSpecificConnectionDetails orchestratorSpecificConnectionDetails = default(OrchestratorSpecificConnectionDetails))
+        public ControllerConnectionDetails(string authKey = default(string), OrchestratorSpecificConnectionDetails orchestratorSpecificConnectionDetails = default(OrchestratorSpecificConnectionDetails))
         {
             AuthKey = authKey;
-            WorkspaceStorageAccountName = workspaceStorageAccountName;
-            WorkspaceStorageSasToken = workspaceStorageSasToken;
             OrchestratorSpecificConnectionDetails = orchestratorSpecificConnectionDetails;
             CustomInit();
         }
@@ -53,18 +47,6 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         /// </summary>
         [JsonProperty(PropertyName = "authKey")]
         public string AuthKey { get; private set; }
-
-        /// <summary>
-        /// Gets workspace storage account name.
-        /// </summary>
-        [JsonProperty(PropertyName = "workspaceStorageAccountName")]
-        public string WorkspaceStorageAccountName { get; private set; }
-
-        /// <summary>
-        /// Gets workspace storage account SAS token.
-        /// </summary>
-        [JsonProperty(PropertyName = "workspaceStorageSasToken")]
-        public string WorkspaceStorageSasToken { get; private set; }
 
         /// <summary>
         /// </summary>

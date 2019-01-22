@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Contains information used to connect to a Kubernetes cluster
+    /// </summary>
     [Newtonsoft.Json.JsonObject("Kubernetes")]
     public partial class KubernetesConnectionDetails : OrchestratorSpecificConnectionDetails
     {

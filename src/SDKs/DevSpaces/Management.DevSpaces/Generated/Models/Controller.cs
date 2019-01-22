@@ -32,8 +32,6 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         /// <summary>
         /// Initializes a new instance of the Controller class.
         /// </summary>
-        /// <param name="hostSuffix">DNS suffix for public endpoints running in
-        /// the Azure Dev Spaces Controller.</param>
         /// <param name="targetContainerHostResourceId">Resource ID of the
         /// target container host</param>
         /// <param name="targetContainerHostCredentialsBase64">Credentials of
@@ -47,10 +45,12 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         /// located.</param>
         /// <param name="provisioningState">Provisioning state of the Azure Dev
         /// Spaces Controller. Possible values include: 'Succeeded', 'Failed',
-        /// 'Canceled', 'Updating', 'Creating', 'Deleting'</param>
+        /// 'Canceled', 'Updating', 'Creating', 'Deleting', 'Deleted'</param>
+        /// <param name="hostSuffix">DNS suffix for public endpoints running in
+        /// the Azure Dev Spaces Controller.</param>
         /// <param name="dataPlaneFqdn">DNS name for accessing DataPlane
         /// services</param>
-        public Controller(string hostSuffix, string targetContainerHostResourceId, string targetContainerHostCredentialsBase64, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string provisioningState = default(string), string dataPlaneFqdn = default(string))
+        public Controller(string targetContainerHostResourceId, string targetContainerHostCredentialsBase64, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string provisioningState = default(string), string hostSuffix = default(string), string dataPlaneFqdn = default(string))
             : base(id, name, type, tags, location)
         {
             ProvisioningState = provisioningState;
@@ -70,17 +70,17 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         /// <summary>
         /// Gets provisioning state of the Azure Dev Spaces Controller.
         /// Possible values include: 'Succeeded', 'Failed', 'Canceled',
-        /// 'Updating', 'Creating', 'Deleting'
+        /// 'Updating', 'Creating', 'Deleting', 'Deleted'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets DNS suffix for public endpoints running in the Azure
-        /// Dev Spaces Controller.
+        /// Gets DNS suffix for public endpoints running in the Azure Dev
+        /// Spaces Controller.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostSuffix")]
-        public string HostSuffix { get; set; }
+        public string HostSuffix { get; private set; }
 
         /// <summary>
         /// Gets DNS name for accessing DataPlane services
@@ -113,10 +113,6 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (HostSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "HostSuffix");
-            }
             if (TargetContainerHostResourceId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "TargetContainerHostResourceId");
