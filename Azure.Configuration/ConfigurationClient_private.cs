@@ -3,7 +3,7 @@
 // license information.
 
 using Azure.Core;
-using Azure.Core.Net;
+using Azure.Core.Http;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -25,37 +25,37 @@ namespace Azure.ApplicationModel.Configuration
         const string LabelQueryFilter = "label";
         const string FieldsQueryFilter = "fields";
         const string IfMatchName = "If-Match";
-        Header IfNoneMatchWildcard = new Header("If-None-Match", "*");
+        HttpHeader IfNoneMatchWildcard = new HttpHeader("If-None-Match", "*");
 
-        static readonly Header MediaTypeKeyValueApplicationHeader = new Header(
-            Header.Constants.Accept,
+        static readonly HttpHeader MediaTypeKeyValueApplicationHeader = new HttpHeader(
+            HttpHeader.Constants.Accept,
             Encoding.ASCII.GetBytes("application/vnd.microsoft.appconfig.kv+json")
         );
 
         // TODO (pri 3): do all the methods that call this accept revisions?
-        static void AddFilterHeaders(SettingFilter filter, PipelineCallContext context)
+        static void AddFilterHeaders(SettingFilter filter, HttpMessage message)
         {
             if (filter == null) return;
 
             if (filter.ETag.IfMatch != default) {
-                context.AddHeader(IfMatchName, $"\"{filter.ETag.IfMatch}\"");
+                message.AddHeader(IfMatchName, $"\"{filter.ETag.IfMatch}\"");
             }
 
             if (filter.Revision.HasValue) {
                 var dateTime = filter.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                context.AddHeader(AcceptDatetimeHeader, dateTime);
+                message.AddHeader(AcceptDatetimeHeader, dateTime);
             }
         }
 
-        static async Task<Response<ConfigurationSetting>> CreateResponse(PipelineCallContext context)
+        static async Task<Response<ConfigurationSetting>> CreateResponse(HttpMessage message)
         {
-            ServiceResponse response = context.Response;
+            PipelineResponse response = message.Response;
 
             if (response.Status != 200) {
                 return new Response<ConfigurationSetting>(response);
             }
 
-            var result = await ConfigurationServiceSerializer.ParseSettingAsync(response.ContentStream, context.Cancellation);
+            var result = await ConfigurationServiceSerializer.ParseSettingAsync(response.ContentStream, message.Cancellation);
 
             return new Response<ConfigurationSetting>(response, result);
         }
@@ -192,7 +192,7 @@ namespace Azure.ApplicationModel.Configuration
             return content;
         }
 
-        internal static void AddAuthenticationHeaders(PipelineCallContext context, Uri uri, ServiceMethod method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
+        internal static void AddAuthenticationHeaders(HttpMessage message, Uri uri, PipelineMethod method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
         {
             string contentHash = null;
             using (var alg = SHA256.Create())
@@ -214,9 +214,9 @@ namespace Azure.ApplicationModel.Configuration
                 string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
 
                 // TODO (pri 3): should date header writing be moved out from here?
-                context.AddHeader("Date", utcNowString);
-                context.AddHeader("x-ms-content-sha256", contentHash);
-                context.AddHeader("Authorization", $"HMAC-SHA256 Credential={credential}, SignedHeaders={signedHeaders}, Signature={signature}");
+                message.AddHeader("Date", utcNowString);
+                message.AddHeader("x-ms-content-sha256", contentHash);
+                message.AddHeader("Authorization", $"HMAC-SHA256 Credential={credential}, SignedHeaders={signedHeaders}, Signature={signature}");
             }
         }
 

@@ -125,19 +125,18 @@ namespace Azure.ApplicationModel.Configuration
     }
 
     [DebuggerTypeProxy(typeof(SettingBatchDebugView))]
-    public sealed class SettingBatch : IEnumerable<ConfigurationSetting>
+    public class SettingBatch : IEnumerable<ConfigurationSetting>
     {
-        IReadOnlyList<ConfigurationSetting> _settings;
-
-        internal SettingBatch() { }
+        readonly IReadOnlyList<ConfigurationSetting> _settings;
+        readonly int _nextIndex;
 
         public SettingBatch(IReadOnlyList<ConfigurationSetting> settings, int next)
         {
             _settings = settings;
-            NextIndex = next;
+            _nextIndex = next;
         }
 
-        public int NextIndex { get;  private set; }
+        public int NextIndex => _nextIndex;
 
         public IEnumerator<ConfigurationSetting> GetEnumerator() => _settings.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => _settings.GetEnumerator();

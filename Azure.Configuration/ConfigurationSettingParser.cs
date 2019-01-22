@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Core.Net;
+using Azure.Core.Http;
 using System;
 using System.Buffers;
 using System.Buffers.Text;
@@ -98,7 +98,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public static async Task<SettingBatch> ParseBatchAsync(ServiceResponse response, CancellationToken cancellation)
+        public static async Task<SettingBatch> ParseBatchAsync(PipelineResponse response, CancellationToken cancellation)
         {
             TryGetNextAfterValue(ref response, out int next);
 
@@ -224,7 +224,7 @@ namespace Azure.ApplicationModel.Configuration
 
         static readonly byte[] s_link = Encoding.ASCII.GetBytes("Link");
         static readonly byte[] s_after = Encoding.ASCII.GetBytes("?after=");
-        static bool TryGetNextAfterValue(ref ServiceResponse response, out int afterValue)
+        static bool TryGetNextAfterValue(ref PipelineResponse response, out int afterValue)
         {
             afterValue = default;
             ReadOnlySpan<byte> headerValue = default;

@@ -9,9 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Core;
-using Azure.Core.Net;
+using Azure.Core.Http;
 using System.Buffers;
-using Azure.Core.Net.Pipeline;
+using Azure.Core.Http.Pipeline;
 using Azure.ApplicationModel.Configuration.Test;
 
 namespace Azure.ApplicationModel.Configuration.Tests
