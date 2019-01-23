@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="vpnClientAddressPool">The reference of the address
         /// space resource which represents Address space for P2S
         /// VpnClient.</param>
-        /// <param name="vpnClientConnectionHealth">All P2S vpnclients'
+        /// <param name="vpnClientConnectionHealth">All P2S VPN clients'
         /// connection health status.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public AddressSpace VpnClientAddressPool { get; set; }
 
         /// <summary>
-        /// Gets all P2S vpnclients' connection health status.
+        /// Gets all P2S VPN clients' connection health status.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnClientConnectionHealth")]
         public VpnClientConnectionHealth VpnClientConnectionHealth { get; private set; }
