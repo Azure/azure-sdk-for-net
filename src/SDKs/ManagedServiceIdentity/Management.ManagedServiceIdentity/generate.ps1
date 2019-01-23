@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "managedserviceidentity/resource-manager" -AutoRestVersion "latest"
