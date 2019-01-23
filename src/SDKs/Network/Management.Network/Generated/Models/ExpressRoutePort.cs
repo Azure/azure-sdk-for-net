@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// pair(s)</param>
         /// <param name="encapsulation">Encapsulation method on physical ports.
         /// Possible values include: 'Dot1Q', 'QinQ'</param>
-        /// <param name="etherType">Ethertype of the physical port.</param>
+        /// <param name="etherType">Ether type of the physical port.</param>
         /// <param name="allocationDate">Date of the physical port allocation
         /// to be used in Letter of Authorization.</param>
         /// <param name="links">ExpressRouteLink Sub-Resources</param>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Encapsulation { get; set; }
 
         /// <summary>
-        /// Gets ethertype of the physical port.
+        /// Gets ether type of the physical port.
         /// </summary>
         [JsonProperty(PropertyName = "properties.etherType")]
         public string EtherType { get; private set; }

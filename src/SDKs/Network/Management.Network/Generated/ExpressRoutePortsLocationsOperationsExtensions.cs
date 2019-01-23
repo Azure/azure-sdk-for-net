@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network
             /// <summary>
             /// Retrieves all ExpressRoutePort peering locations. Does not return available
             /// bandwidths for each location. Available bandwidths can only be obtained
-            /// when retriving a specific peering location.
+            /// when retrieving a specific peering location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network
             /// <summary>
             /// Retrieves all ExpressRoutePort peering locations. Does not return available
             /// bandwidths for each location. Available bandwidths can only be obtained
-            /// when retriving a specific peering location.
+            /// when retrieving a specific peering location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Network
             /// <summary>
             /// Retrieves all ExpressRoutePort peering locations. Does not return available
             /// bandwidths for each location. Available bandwidths can only be obtained
-            /// when retriving a specific peering location.
+            /// when retrieving a specific peering location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Network
             /// <summary>
             /// Retrieves all ExpressRoutePort peering locations. Does not return available
             /// bandwidths for each location. Available bandwidths can only be obtained
-            /// when retriving a specific peering location.
+            /// when retrieving a specific peering location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

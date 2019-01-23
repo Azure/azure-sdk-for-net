@@ -45,12 +45,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="disabledRuleGroups">The disabled rule groups.</param>
         /// <param name="requestBodyCheck">Whether allow WAF to check request
         /// Body.</param>
-        /// <param name="maxRequestBodySize">Maxium request body size for
+        /// <param name="maxRequestBodySize">Maximum request body size for
         /// WAF.</param>
-        /// <param name="maxRequestBodySizeInKb">Maxium request body size in Kb
+        /// <param name="maxRequestBodySizeInKb">Maximum request body size in
+        /// Kb for WAF.</param>
+        /// <param name="fileUploadLimitInMb">Maximum file upload size in Mb
         /// for WAF.</param>
-        /// <param name="fileUploadLimitInMb">Maxium file upload size in Mb for
-        /// WAF.</param>
         /// <param name="exclusions">The exclusion list.</param>
         public ApplicationGatewayWebApplicationFirewallConfiguration(bool enabled, string firewallMode, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallDisabledRuleGroup> disabledRuleGroups = default(IList<ApplicationGatewayFirewallDisabledRuleGroup>), bool? requestBodyCheck = default(bool?), int? maxRequestBodySize = default(int?), int? maxRequestBodySizeInKb = default(int?), int? fileUploadLimitInMb = default(int?), IList<ApplicationGatewayFirewallExclusion> exclusions = default(IList<ApplicationGatewayFirewallExclusion>))
         {
@@ -112,19 +112,19 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? RequestBodyCheck { get; set; }
 
         /// <summary>
-        /// Gets or sets maxium request body size for WAF.
+        /// Gets or sets maximum request body size for WAF.
         /// </summary>
         [JsonProperty(PropertyName = "maxRequestBodySize")]
         public int? MaxRequestBodySize { get; set; }
 
         /// <summary>
-        /// Gets or sets maxium request body size in Kb for WAF.
+        /// Gets or sets maximum request body size in Kb for WAF.
         /// </summary>
         [JsonProperty(PropertyName = "maxRequestBodySizeInKb")]
         public int? MaxRequestBodySizeInKb { get; set; }
 
         /// <summary>
-        /// Gets or sets maxium file upload size in Mb for WAF.
+        /// Gets or sets maximum file upload size in Mb for WAF.
         /// </summary>
         [JsonProperty(PropertyName = "fileUploadLimitInMb")]
         public int? FileUploadLimitInMb { get; set; }

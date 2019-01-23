@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Network
         public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Retrieves the details of a VPNsite.
+        /// Retrieves the details of a VPN site.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the VpnSite.

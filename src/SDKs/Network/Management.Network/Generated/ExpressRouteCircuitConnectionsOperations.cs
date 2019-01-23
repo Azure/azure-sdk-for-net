@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the express route circuit connection.
         /// </param>
         /// <param name='expressRouteCircuitConnectionParameters'>
-        /// Parameters supplied to the create or update express route circuit circuit
+        /// Parameters supplied to the create or update express route circuit
         /// connection operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -738,7 +738,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the express route circuit connection.
         /// </param>
         /// <param name='expressRouteCircuitConnectionParameters'>
-        /// Parameters supplied to the create or update express route circuit circuit
+        /// Parameters supplied to the create or update express route circuit
         /// connection operation.
         /// </param>
         /// <param name='customHeaders'>

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="subnet">The reference of the subnet resource to create
-        /// a contatainer network interface ip configruation.</param>
+        /// a container network interface ip configuration.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource.</param>
         /// <param name="name">The name of the resource. This name can be used
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the reference of the subnet resource to create a
-        /// contatainer network interface ip configruation.
+        /// container network interface ip configuration.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public Subnet Subnet { get; set; }
