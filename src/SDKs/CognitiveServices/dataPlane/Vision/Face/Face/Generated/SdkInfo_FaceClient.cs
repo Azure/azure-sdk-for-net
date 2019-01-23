@@ -26,6 +26,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 new Tuple<string, string, string>("FaceClient", "LargePersonGroupPerson", "1.0"),
                 new Tuple<string, string, string>("FaceClient", "PersonGroup", "1.0"),
                 new Tuple<string, string, string>("FaceClient", "PersonGroupPerson", "1.0"),
+                new Tuple<string, string, string>("FaceClient", "Snapshot", "1.0"),
               }.AsEnumerable();
           }
       }

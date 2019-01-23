@@ -181,7 +181,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         Task<HttpOperationResponse> TrainWithHttpMessagesAsync(string largeFaceListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an existing face from a large face list (given by a
-        /// persisitedFaceId and a largeFaceListId). Persisted image related to
+        /// persistedFaceId and a largeFaceListId). Persisted image related to
         /// the face will also be deleted.
         /// </summary>
         /// <param name='largeFaceListId'>

@@ -126,7 +126,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
 
             /// <summary>
-            /// Delete an existing face from a face list (given by a persisitedFaceId and a
+            /// Delete an existing face from a face list (given by a persistedFaceId and a
             /// faceListId). Persisted image related to the face will also be deleted.
             /// </summary>
             /// <param name='operations'>
