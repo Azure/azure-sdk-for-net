@@ -16,14 +16,8 @@ using System.Threading.Tasks;
 
 namespace Azure.ApplicationModel.Configuration
 {
-    // This should be simplified twice:
-    // - once JsonReader supports for reading from stream
-    // - second time we have the serializer
     static class ConfigurationServiceSerializer
     {
-        static byte[][] s_nameTable;
-        static JsonState[] s_valueTable;
-
         public static bool TrySerialize(ConfigurationSetting setting, byte[] buffer, out int written)
         {
             try {
@@ -43,75 +37,28 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public enum JsonState : byte
+        private static ConfigurationSetting ReadSetting(JsonElement root)
         {
-            Other = 0,
+            // TODO (pri 2): make the deserializer version resilient
+            // TODO (pri 2): can any of these properties not be present in the payload? 
+            var setting = new ConfigurationSetting();
+            setting.Key = root.GetProperty("key").GetString();
+            setting.Value = root.GetProperty("value").GetString();
+            setting.Label = root.GetProperty("label").GetString();
+            setting.ContentType = root.GetProperty("content_type").GetString();
+            setting.Locked = root.GetProperty("locked").GetBoolean();
+            setting.ETag = root.GetProperty("etag").GetString();
+            setting.LastModified = DateTimeOffset.Parse(root.GetProperty("last_modified").GetString());
 
-            key,
-            label,
-            content_type,
-            locked,
-            value,
-            etag,
-            last_modified,
-            tags
+            return setting;
         }
 
-        static JsonState ToJsonState(this Utf8JsonReader reader)
+        public static async Task<ConfigurationSetting> ParseSettingAsync(Stream content, CancellationToken cancellation)
         {
-            ReadOnlySpan<byte> value;
-            if(reader.HasValueSequence)
+            using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellation).ConfigureAwait(false))
             {
-                value = reader.ValueSequence.ToArray();
-            }
-            else
-            {
-                value = reader.ValueSpan;
-            }
-            for (int i = 0; i < s_nameTable.Length; i++)
-            {
-                if (value.SequenceEqual(s_nameTable[i]))
-                {
-                    return s_valueTable[i];
-                }
-            }
-            return JsonState.Other;
-        }
-
-        static ConfigurationServiceSerializer()
-        {
-            var names = Enum.GetNames(typeof(JsonState));
-            s_nameTable = new byte[names.Length][];
-            s_valueTable = new JsonState[names.Length];
-            for (int i = 0; i < names.Length; i++)
-            {
-                var name = names[i];
-                s_nameTable[i] = Encoding.UTF8.GetBytes(name);
-                Enum.TryParse<JsonState>(name, out var value);
-                s_valueTable[i] = value;
-            }
-        }
-
-        public static async Task<ConfigurationSetting> ParseSettingAsync(Stream content, CancellationToken cancel)
-        {
-            byte[] buffer = null;
-            try
-            {
-                buffer = ArrayPool<byte>.Shared.Rent(4096);
-                var read = await content.ReadAsync(buffer, 0, buffer.Length, cancel);
-                var sequence = new ReadOnlySequence<byte>(buffer, 0, read);
-                if (TryParse(sequence, out ConfigurationSetting result, out _))
-                {
-                    return result;
-                }
-                else
-                {
-                    throw new NotImplementedException();
-                }
-            }
-            finally
-            {
-                if (buffer != null) ArrayPool<byte>.Shared.Return(buffer);
+                JsonElement root = json.RootElement;
+                return ReadSetting(root);
             }
         }
 
@@ -119,120 +66,21 @@ namespace Azure.ApplicationModel.Configuration
         {
             TryGetNextAfterValue(ref response, out int next);
 
-            var content = response.ContentStream;
-            byte[] buffer = null;
-            try
+            Stream content = response.ContentStream;
+            using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellation).ConfigureAwait(false))
             {
-                buffer = ArrayPool<byte>.Shared.Rent(4096);
-                var read = await content.ReadAsync(buffer, 0, buffer.Length, cancellation);
-                var sequence = new ReadOnlySequence<byte>(buffer, 0, read);
-                if (TryParse(sequence, out List<ConfigurationSetting> settings, out _))
+                JsonElement itemsArray = json.RootElement.GetProperty("items");
+                int length = itemsArray.GetArrayLength();
+                ConfigurationSetting[] settings = new ConfigurationSetting[length];
+
+                int i = 0;
+                foreach(JsonElement item in  itemsArray.EnumerateArray())
                 {
-                    var batch = new SettingBatch(settings, next);
-                    return batch;
+                    settings[i++] = ReadSetting(item);
                 }
-                else
-                {
-                    throw new NotImplementedException();
-                }
-            }
-            finally
-            {
-                if (buffer != null) ArrayPool<byte>.Shared.Return(buffer);
-            }
-        }
 
-        static bool TryParse(ReadOnlySequence<byte> content, out ConfigurationSetting result, out long consumed)
-        {
-            result = new ConfigurationSetting();
-            consumed = 0;
-            var reader = new Utf8JsonReader(content, true, default);
-            JsonState state = JsonState.Other;
-            while (reader.Read())
-            {
-                switch (reader.TokenType)
-                {
-                    case JsonTokenType.PropertyName:
-                        state = reader.ToJsonState();
-                        break;
-                    case JsonTokenType.Number:
-                    case JsonTokenType.String:
-                    case JsonTokenType.False:
-                    case JsonTokenType.True:
-                        SetValue(ref reader, state, ref result);
-                        break;
-                }
-            }
-
-            consumed = reader.BytesConsumed;
-            return true;
-        }
-
-        static bool TryParse(ReadOnlySequence<byte> content, out List<ConfigurationSetting> result, out long consumed)
-        {
-            var debug = Encoding.UTF8.GetString(content.ToArray());
-
-            result = new List<ConfigurationSetting>();
-            consumed = 0;
-            var reader = new Utf8JsonReader(content, true, default);
-
-            JsonState state = JsonState.Other;
-            ConfigurationSetting value = default;
-            while (reader.Read())
-            {
-                switch (reader.TokenType)
-                {
-                    case JsonTokenType.StartObject:
-                        // TODO (pri 1): manage tag objects
-                        if(state != JsonState.tags) value = new ConfigurationSetting();
-                        break;
-                    case JsonTokenType.EndObject:
-                        // TODO (pri 1): manage tag objects
-                        if (state != JsonState.tags) result.Add(value);
-                        break;
-                    case JsonTokenType.EndArray:
-                        consumed = reader.BytesConsumed;
-                        return true;
-                    case JsonTokenType.PropertyName:
-                        state = reader.ToJsonState();
-                        break;
-                    case JsonTokenType.Number:
-                    case JsonTokenType.String:
-                    case JsonTokenType.False:
-                    case JsonTokenType.True:
-                        SetValue(ref reader, state, ref value);
-                        break;
-                }
-            }
-
-            consumed = reader.BytesConsumed;
-            return true;
-        }
-
-        static void SetValue(ref Utf8JsonReader json, JsonState state, ref ConfigurationSetting result)
-        {
-            switch (state)
-            {
-                // strings
-                case JsonState.key: result.Key = json.GetString(); break;
-                case JsonState.label: result.Label = json.GetString(); break;
-                case JsonState.content_type: result.ContentType = json.GetString(); break;
-                case JsonState.value: result.Value = json.GetString(); break;
-                case JsonState.etag: result.ETag = json.GetString(); break;
-                    
-                // other
-                case JsonState.last_modified:
-                    var str = json.GetString();
-                    var dt = DateTimeOffset.Parse(str);
-                    result.LastModified = dt;
-                    break;
-
-                case JsonState.locked:
-                    if (json.TokenType == JsonTokenType.True) result.Locked = true;
-                    else if (json.TokenType == JsonTokenType.False) result.Locked = false;
-                    else throw new Exception("bad parser");
-                    break;
-                default: break;
+                var batch = new SettingBatch(settings, next);
+                return batch;
             }
         }
 

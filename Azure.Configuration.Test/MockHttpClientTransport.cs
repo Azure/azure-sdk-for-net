@@ -27,7 +27,8 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedRequestContent = $"{{\"value\":\"{responseContent.Value}\",\"content_type\":\"{responseContent.ContentType}\"}}";
 
             string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
-            _responseContent = json.Replace("contenttype", "content_type");
+            json = json.Replace("contenttype", "content_type");
+            _responseContent = json.Replace("lastmodified", "last_modified");
         }
     }
 
@@ -40,7 +41,8 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedRequestContent = $"{{\"value\":\"{responseContent.Value}\",\"content_type\":\"{responseContent.ContentType}\"}}";
 
             string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
-            _responseContent = json.Replace("contenttype", "content_type");
+            json = json.Replace("contenttype", "content_type");
+            _responseContent = json.Replace("lastmodified", "last_modified");
         }
     }
 
@@ -53,7 +55,8 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedRequestContent = $"{{\"value\":\"{responseContent.Value}\",\"content_type\":\"{responseContent.ContentType}\"}}";
 
             string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
-            _responseContent = json.Replace("contenttype", "content_type");
+            json = json.Replace("contenttype", "content_type");
+            _responseContent = json.Replace("lastmodified", "last_modified");
         }
 
         protected override void VerifyRequestCore(HttpRequestMessage request)
@@ -71,7 +74,8 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedMethod = HttpMethod.Delete;
 
             string json = JsonConvert.SerializeObject(result).ToLowerInvariant();
-            _responseContent = json.Replace("contenttype", "content_type");
+            json = json.Replace("contenttype", "content_type");
+            _responseContent = json.Replace("lastmodified", "last_modified");
         }
 
         public DeleteMockTransport(string key, SettingFilter filter, HttpStatusCode statusCode)
@@ -92,7 +96,8 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedRequestContent = null;
 
             string json = JsonConvert.SerializeObject(result).ToLowerInvariant();
-            _responseContent = json.Replace("contenttype", "content_type");
+            json = json.Replace("contenttype", "content_type");
+            _responseContent = json.Replace("lastmodified", "last_modified");
         }
 
         public GetMockTransport(string queryKey, SettingFilter filter, params HttpStatusCode[] statusCodes)
@@ -114,9 +119,9 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedMethod = lockOtherwiseUnlock ? HttpMethod.Put : HttpMethod.Delete;
 
             string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
-            _responseContent = json.Replace("contenttype", "content_type");
+            json = json.Replace("contenttype", "content_type");
+            _responseContent = json.Replace("lastmodified", "last_modified");
         }
-
     }
 
     class GetBatchMockTransport : MockHttpClientTransport
@@ -142,17 +147,24 @@ namespace Azure.ApplicationModel.Configuration.Test
             }
         }
 
+        // this is just so the mock serialization works as desired, i.e. so that the payload has items property
+        class MockBatch
+        {
+            public List<ConfigurationSetting> Items = new List<ConfigurationSetting>();
+        }
         protected override void WriteResponseCore(HttpResponseMessage response)
         {
             var batch = Batches[_currentBathIndex++];
-            var bathItems = new List<ConfigurationSetting>(batch.count);
+            var bathItems = new MockBatch();
             int itemIndex = batch.index;
             int count = batch.count;
             while (count-- > 0)
             {
-                bathItems.Add(KeyValues[itemIndex++]);
+                bathItems.Items.Add(KeyValues[itemIndex++]);
             }
             string json = JsonConvert.SerializeObject(bathItems).ToLowerInvariant();
+            json = json.Replace("contenttype", "content_type");
+            json = json.Replace("lastmodified", "last_modified");
             response.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             long jsonByteCount = Encoding.UTF8.GetByteCount(json);

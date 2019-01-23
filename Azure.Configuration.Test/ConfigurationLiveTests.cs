@@ -243,8 +243,9 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
                 int resultsReturned = 0;
                 SettingBatch batch = response.Result;
-                foreach (var value in batch)
+                for(int i=0; i<batch.Count; i++)
                 {
+                    var value = batch[i];
                     if(value.Label.Contains("update"))
                     {
                         AssertEqual(value, testSettingUpdate);

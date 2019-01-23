@@ -125,12 +125,12 @@ namespace Azure.ApplicationModel.Configuration
     }
 
     [DebuggerTypeProxy(typeof(SettingBatchDebugView))]
-    public class SettingBatch : IEnumerable<ConfigurationSetting>
+    public class SettingBatch
     {
-        readonly IReadOnlyList<ConfigurationSetting> _settings;
+        readonly ConfigurationSetting[] _settings;
         readonly int _nextIndex;
 
-        public SettingBatch(IReadOnlyList<ConfigurationSetting> settings, int next)
+        public SettingBatch(ConfigurationSetting[] settings, int next)
         {
             _settings = settings;
             _nextIndex = next;
@@ -138,11 +138,8 @@ namespace Azure.ApplicationModel.Configuration
 
         public int NextIndex => _nextIndex;
 
-        public IEnumerator<ConfigurationSetting> GetEnumerator() => _settings.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => _settings.GetEnumerator();
-
         public ConfigurationSetting this[int index] => _settings[index];
-        public int Count => _settings.Count;
+        public int Count => _settings.Length;
 
         #region nobody wants to see these
         [EditorBrowsable(EditorBrowsableState.Never)]
