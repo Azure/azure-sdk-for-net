@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         {            
             _publishAllNugetsunderScope = false;
             _buildEngineInitialized = false;
-            authUsers = new List<string>() { "hovsepm", "shahabhijeet" };
+            authUsers = new List<string>() { "hovsepm", "shahabhijeet", "praries880", "anuchandy", "jianghaolu", "lmazuel" };
             authScopes = new List<string>() { "all", "sdks", "sdkcommon", "azurestack" };
             //By default do not skip publishing both nuget and symbols
             SkipNugetPublishing = false;
