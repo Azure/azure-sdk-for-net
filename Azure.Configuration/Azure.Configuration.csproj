@@ -2,16 +2,91 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>7.3</LangVersion>
+    <NoWarn>3021</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Memory" Version="4.5.1" />
-    <PackageReference Include="System.Text.JsonLab" Version="0.1.0-preview2-190109-1" />
+    <PackageReference Include="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview.19073.1">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Azure.Core\Azure.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="json\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\BitStack.cs" Link="json\BitStack.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\ConsumeNumberResult.cs" Link="json\ConsumeNumberResult.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\ConsumeTokenResult.cs" Link="json\ConsumeTokenResult.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonCommentHandling.cs" Link="json\JsonCommentHandling.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonConstants.cs" Link="json\JsonConstants.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonDocument.cs" Link="json\JsonDocument.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonDocument.DbRow.cs" Link="json\JsonDocument.DbRow.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonDocument.MetadataDb.cs" Link="json\JsonDocument.MetadataDb.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonDocument.Parse.cs" Link="json\JsonDocument.Parse.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonDocument.StackRow.cs" Link="json\JsonDocument.StackRow.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonDocument.StackRowStack.cs" Link="json\JsonDocument.StackRowStack.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonDocument.TryGetProperty.cs" Link="json\JsonDocument.TryGetProperty.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonElement.ArrayEnumerator.cs" Link="json\JsonElement.ArrayEnumerator.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonElement.cs" Link="json\JsonElement.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonElement.ObjectEnumerator.cs" Link="json\JsonElement.ObjectEnumerator.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonHelpers.cs" Link="json\JsonHelpers.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonProperty.cs" Link="json\JsonProperty.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonReaderException.cs" Link="json\JsonReaderException.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonReaderHelper.cs" Link="json\JsonReaderHelper.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonReaderHelper.Unescaping.cs" Link="json\JsonReaderHelper.Unescaping.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonReaderOptions.cs" Link="json\JsonReaderOptions.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonReaderState.cs" Link="json\JsonReaderState.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonTokenType.cs" Link="json\JsonTokenType.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonValueType.cs" Link="json\JsonValueType.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonWriterHelper.cs" Link="json\JsonWriterHelper.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonWriterHelper.Escaping.cs" Link="json\JsonWriterHelper.Escaping.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonWriterHelper.Transcoding.cs" Link="json\JsonWriterHelper.Transcoding.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonWriterOptions.cs" Link="json\JsonWriterOptions.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\JsonWriterState.cs" Link="json\JsonWriterState.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\SequenceValidity.cs" Link="json\SequenceValidity.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\SR.cs" Link="json\SR.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\System.SR.cs" Link="json\System.SR.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\ThrowHelper.cs" Link="json\ThrowHelper.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonReader.cs" Link="json\Utf8JsonReader.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonReader.MultiSegment.cs" Link="json\Utf8JsonReader.MultiSegment.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonReader.TryGet.cs" Link="json\Utf8JsonReader.TryGet.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.cs" Link="json\Utf8JsonWriter.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteProperties.DateTime.cs" Link="json\Utf8JsonWriter.WriteProperties.DateTime.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteProperties.DateTimeOffset.cs" Link="json\Utf8JsonWriter.WriteProperties.DateTimeOffset.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteProperties.Decimal.cs" Link="json\Utf8JsonWriter.WriteProperties.Decimal.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteProperties.Double.cs" Link="json\Utf8JsonWriter.WriteProperties.Double.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteProperties.Float.cs" Link="json\Utf8JsonWriter.WriteProperties.Float.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteProperties.Guid.cs" Link="json\Utf8JsonWriter.WriteProperties.Guid.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteProperties.Helpers.cs" Link="json\Utf8JsonWriter.WriteProperties.Helpers.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteProperties.Literal.cs" Link="json\Utf8JsonWriter.WriteProperties.Literal.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteProperties.SignedNumber.cs" Link="json\Utf8JsonWriter.WriteProperties.SignedNumber.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteProperties.String.cs" Link="json\Utf8JsonWriter.WriteProperties.String.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteProperties.UnsignedNumber.cs" Link="json\Utf8JsonWriter.WriteProperties.UnsignedNumber.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteValues.Comment.cs" Link="json\Utf8JsonWriter.WriteValues.Comment.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteValues.DateTime.cs" Link="json\Utf8JsonWriter.WriteValues.DateTime.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteValues.DateTimeOffset.cs" Link="json\Utf8JsonWriter.WriteValues.DateTimeOffset.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteValues.Decimal.cs" Link="json\Utf8JsonWriter.WriteValues.Decimal.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteValues.Double.cs" Link="json\Utf8JsonWriter.WriteValues.Double.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteValues.Float.cs" Link="json\Utf8JsonWriter.WriteValues.Float.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteValues.Guid.cs" Link="json\Utf8JsonWriter.WriteValues.Guid.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteValues.Helpers.cs" Link="json\Utf8JsonWriter.WriteValues.Helpers.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteValues.Literal.cs" Link="json\Utf8JsonWriter.WriteValues.Literal.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteValues.SignedNumber.cs" Link="json\Utf8JsonWriter.WriteValues.SignedNumber.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteValues.String.cs" Link="json\Utf8JsonWriter.WriteValues.String.cs" />
+    <Compile Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\contentFiles\cs\netstandard2.0\Utf8JsonWriter.WriteValues.UnsignedNumber.cs" Link="json\Utf8JsonWriter.WriteValues.UnsignedNumber.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="C:\Users\Krzysztof\.nuget\packages\microsoft.bcl.json.sources\4.6.0-preview.19073.1\build\netstandard2.0\Strings.resx" Link="json\Strings.resx" />
   </ItemGroup>
 
 </Project>
