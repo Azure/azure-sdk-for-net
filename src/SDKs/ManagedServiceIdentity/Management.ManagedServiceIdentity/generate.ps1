@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "managedserviceidentity/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "msi/resource-manager" -AutoRestVersion "latest"
