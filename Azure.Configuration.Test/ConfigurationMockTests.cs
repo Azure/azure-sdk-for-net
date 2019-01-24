@@ -22,7 +22,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
         static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
         {
             Label = "test_label",
-            ETag = "c3c231fd-39a0-4cb6-3237-4614474b92c6",
             ContentType = "test_content_type",
             LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
             Locked = false
@@ -88,6 +87,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             Response<ConfigurationSetting> response = await service.AddAsync(setting: s_testSetting, CancellationToken.None);
 
+            Assert.AreEqual(200, response.Status);
             AssertEqual(s_testSetting, response.Result);
 
             response.Dispose();
@@ -115,8 +115,14 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var transport = new UpdateMockTransport(s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            Response<ConfigurationSetting> response = await service.UpdateAsync(s_testSetting, CancellationToken.None);
+            SettingFilter filter = new SettingFilter()
+            {
+                ETag = new ETagFilter() { IfMatch = new ETag("*") }
+            };
 
+            Response<ConfigurationSetting> response = await service.UpdateAsync(s_testSetting, filter, CancellationToken.None);
+
+            Assert.AreEqual(200, response.Status);
             AssertEqual(s_testSetting, response.Result);
 
             response.Dispose();
@@ -132,7 +138,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Response<ConfigurationSetting> response = await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label);
 
             Assert.AreEqual(200, response.Status);
-
             AssertEqual(s_testSetting, response.Result);
 
             response.Dispose();
@@ -161,6 +166,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             Response<ConfigurationSetting> response = await service.LockAsync(s_testSetting.Key, s_testSetting.Label);
 
+            Assert.AreEqual(200, response.Status);
             AssertEqual(s_testSetting, response.Result);
 
             response.Dispose();
@@ -174,6 +180,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             Response<ConfigurationSetting> response = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label);
 
+            Assert.AreEqual(200, response.Status);
             AssertEqual(s_testSetting, response.Result);
 
             response.Dispose();

@@ -106,6 +106,40 @@ namespace Azure.ApplicationModel.Configuration.Tests
             AssertEqual(s_testSetting, setting);
 
             response.Dispose();
+            responseSet.Dispose();
+        }
+
+        [Test]
+        public async Task DeleteWithETag()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            // Prepare environment
+            Response<ConfigurationSetting> responseSet = await service.SetAsync(s_testSetting, CancellationToken.None);
+            Assert.AreEqual(200, responseSet.Status);
+            Response<ConfigurationSetting> responseGet = await service.GetAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
+            Assert.AreEqual(200, responseGet.Status);
+
+            // Test
+            ConfigurationSetting settting = responseGet.Result;
+            SettingFilter filter = new SettingFilter()
+            {
+                ETag = new ETagFilter() { IfMatch = new ETag(settting.ETag) },
+                Label = settting.Label
+            };
+
+            Response<ConfigurationSetting> response = await service.DeleteAsync(key: s_testSetting.Key, filter: filter, CancellationToken.None);
+
+            Assert.AreEqual(200, response.Status);
+
+            ConfigurationSetting setting = response.Result;
+            AssertEqual(s_testSetting, setting);
+
+            response.Dispose();
+            responseSet.Dispose();
+            responseGet.Dispose();
         }
 
         [Test]
@@ -166,7 +200,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     throw new Exception($"could not delete setting {s_testSetting.Key}");
                 }
             }
-
         }
 
         [Test]
@@ -186,12 +219,16 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var testSettingUpdate = s_testSetting.Clone();
             testSettingUpdate.Value = "test_value_update";
-            testSettingUpdate.ETag = "*";
 
             try
             {
                 // Test
-                Response<ConfigurationSetting> response = await service.UpdateAsync(testSettingUpdate, CancellationToken.None);
+                SettingFilter filter = new SettingFilter()
+                {
+                    ETag = new ETagFilter() { IfMatch = new ETag("*") }
+                };
+
+                Response<ConfigurationSetting> response = await service.UpdateAsync(testSettingUpdate, filter, CancellationToken.None);
 
                 Assert.AreEqual(200, response.Status);
 
@@ -212,6 +249,48 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
+        [Test]
+        public async Task UpdateIfETag()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            Response<ConfigurationSetting> responseSet = await service.SetAsync(s_testSetting, CancellationToken.None);
+            Assert.AreEqual(200, responseSet.Status);
+            Response<ConfigurationSetting> responseGet = await service.GetAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
+            Assert.AreEqual(200, responseGet.Status);
+
+            var testSettingDiff = responseGet.Result.Clone();
+            testSettingDiff.Value = "test_value_diff";
+            
+            try
+            {
+                // Test
+                SettingFilter filter = new SettingFilter()
+                {
+                    ETag = new ETagFilter() { IfMatch = new ETag(testSettingDiff.ETag) }
+                };
+                Response<ConfigurationSetting> response = await service.UpdateAsync(testSettingDiff, filter, CancellationToken.None);
+
+                Assert.AreEqual(200, response.Status);
+
+                ConfigurationSetting responseSetting = response.Result;
+
+                AssertEqual(testSettingDiff, responseSetting);
+
+                response.Dispose();
+            }
+            finally
+            {
+                var responseDelete = await service.DeleteAsync(key: testSettingDiff.Key, filter: testSettingDiff.Label, CancellationToken.None);
+                if (responseDelete.Status != 200)
+                {
+                    throw new Exception($"could not delete setting {testSettingDiff.Key}");
+                }
+            }
+        }
+        
         [Test]
         public async Task Revisions()
         {
@@ -236,7 +315,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 // Test
                 var filter = new SettingBatchFilter();
                 filter.Key = setting.Key;
-                
+
                 Response<SettingBatch> response = await service.GetRevisionsAsync(filter, CancellationToken.None);
 
                 Assert.AreEqual(200, response.Status);
@@ -391,9 +470,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 //Test update
                 var testSettingUpdate = s_testSetting.Clone();
                 testSettingUpdate.Value = "test_value_update";
-                testSettingUpdate.ETag = "*";
-
-                Response<ConfigurationSetting> responseUpdate = await service.UpdateAsync(testSettingUpdate, CancellationToken.None);
+                
+                Response<ConfigurationSetting> responseUpdate = await service.UpdateAsync(testSettingUpdate, default, CancellationToken.None);
                 Assert.AreEqual(403, responseUpdate.Status);
                 responseUpdate.Dispose();
 
@@ -428,7 +506,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Label = setting.Label,
                 ContentType = setting.ContentType,
                 LastModified = setting.LastModified,
-                Locked = setting.Locked
+                Locked = setting.Locked,
+                ETag = setting.ETag
             };
         }
     }

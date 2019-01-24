@@ -48,6 +48,7 @@ namespace Azure.ApplicationModel.Configuration
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+            if (!string.IsNullOrEmpty(setting.ETag)) throw new ArgumentException($"{nameof(setting)}.{nameof(setting.ETag)} has to be null");
 
             Uri uri = BuildUriForKvRoute(setting);
 
@@ -99,12 +100,11 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, SettingFilter filter = null, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
-            if (string.IsNullOrEmpty(setting.ETag)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.ETag)}");
-
+            
             Uri uri = BuildUriForKvRoute(setting);
 
             using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation))
@@ -118,8 +118,9 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
                 message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
+                AddFilterHeaders(filter, message);
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Put, content, _secret, _credential);
-
+                                
                 message.SetContent(PipelineContent.Create(content));
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
