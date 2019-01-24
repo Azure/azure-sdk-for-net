@@ -1,16 +1,11 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
-		<LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
-		<BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
-		<SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
-	</PropertyGroup>
-	<PropertyGroup>
-		<NetSdkBuildTargetsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)\targets</NetSdkBuildTargetsDir>
-		<NetSdkBuildTargetsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildTargetsDir)' == '' ">$(SdkBuildToolsDir)\targets</NetSdkBuildTargetsDir>		
-		<NetSdkBuildToolsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)</NetSdkBuildToolsDir>
-		<NetSdkBuildToolsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildToolsDir)' == '' ">$(SdkBuildToolsDir)</NetSdkBuildToolsDir>
-	</PropertyGroup>
-  
-	<Import Project="$(NetSdkBuildTargetsDir)\core\_Directory.Build.props" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_Directory.Build.props') "/>
+  <PropertyGroup>
+    <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+    <RepoEngPath>$(MSBuildThisFileDirectory)eng</RepoEngPath>
+    <RepoSrcPath>$(RepoRoot)src/SDKs</RepoSrcPath>
+    <IsDataPlaneProject Condition="$(MSBuildProjectDirectory.Contains('data-plane'))">true</IsDataPlaneProject>
+  </PropertyGroup>
+
+  <Import Project="$(RepoEngPath)\Directory.Build.Mgmt.props" Condition="'$(IsDataPlaneProject)' != 'true'" />
+  <Import Project="$(RepoEngPath)\Directory.Build.Data.props" Condition="'$(IsDataPlaneProject)' == 'true'" />
 </Project>

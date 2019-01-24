@@ -15,7 +15,13 @@ namespace Microsoft.Azure.Services.AppAuthentication
     {
         private const string TokenResponseFormatExceptionMessage = "Token response is not in the expected format.";
 
-        // Managed Service Identity returns access_token
+        internal enum DateFormat
+        {
+            Unix,
+            DateTimeString
+        };
+
+        // VS token service and MSI endpoint return access_token
         [DataMember(Name = "access_token", IsRequired = false)]
         public string AccessToken { get; private set; }
 
@@ -23,9 +29,29 @@ namespace Microsoft.Azure.Services.AppAuthentication
         [DataMember(Name = "accessToken", IsRequired = false)]
         public string AccessToken2 { get; private set; }
 
+        // VS token service and MSI endpoint return expires_on
+        [DataMember(Name = "expires_on", IsRequired = false)]
+        public string ExpiresOn { get; private set; }
+
+        // Azure CLI returns expiresOn
+        [DataMember(Name = "expiresOn", IsRequired = false)]
+        public string ExpiresOn2 { get; private set; }
+
         [DataMember(Name = "error_description", IsRequired = false)]
         public string ErrorDescription { get; private set; }
-        
+
+        // VS token service returns resource
+        [DataMember(Name = "resource", IsRequired = false)]
+        public string Resource { get; private set; }
+
+        // VS token service and MSI endpoint return token_type
+        [DataMember(Name = "token_type", IsRequired = false)]
+        public string TokenType { get; private set; }
+
+        // Azure CLI returns tokenType
+        [DataMember(Name = "tokenType", IsRequired = false)]
+        public string TokenType2 { get; private set; }
+
         /// <summary>
         /// Parse token response returned from OAuth provider.
         /// While more fields are returned, we only need the access token. 

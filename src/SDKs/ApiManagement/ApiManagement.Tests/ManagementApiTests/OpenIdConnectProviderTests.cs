@@ -32,7 +32,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     // create a openId connect provider
                     string openIdProviderName = TestUtilities.GenerateName("openIdName");
-                    string metadataEndpoint = GetHttpsUrl();
+                    string metadataEndpoint = testBase.GetOpenIdMetadataEndpointUrl();
                     string clientId = TestUtilities.GenerateName("clientId");
                     var openIdConnectCreateParameters = new OpenidConnectProviderContract(openIdProviderName,
                         metadataEndpoint, clientId);
@@ -64,7 +64,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     // create a Secret property
                     string openIdProviderName2 = TestUtilities.GenerateName("openIdName");
-                    string metadataEndpoint2 = GetHttpsUrl();
+                    string metadataEndpoint2 = testBase.GetOpenIdMetadataEndpointUrl();
                     string clientId2 = TestUtilities.GenerateName("clientId");
                     string clientSecret = TestUtilities.GenerateName("clientSecret");
                     var openIdConnectCreateParameters2 = new OpenidConnectProviderContract(openIdProviderName2,
@@ -148,7 +148,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(openIdConnectProviderTag.ETag);
 
                     // patch the openId Connect Provider
-                    string updateMetadataEndpoint = GetHttpsUrl();
+                    string updateMetadataEndpoint = testBase.GetOpenIdMetadataEndpointUrl();
                     string updatedClientId = TestUtilities.GenerateName("updatedClient");
                     testBase.client.OpenIdConnectProvider.Update(
                         testBase.rgName,
@@ -210,11 +210,6 @@ namespace ApiManagement.Tests.ManagementApiTests
                         "*");
                 }
             }
-        }
-
-        static string GetHttpsUrl()
-        {
-            return "https://" + TestUtilities.GenerateName("provider") + "." + TestUtilities.GenerateName("endpoint");
         }
     }
 }

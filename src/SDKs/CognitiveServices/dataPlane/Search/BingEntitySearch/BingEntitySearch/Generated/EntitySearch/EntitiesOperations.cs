@@ -21,7 +21,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
     /// <summary>
     /// EntitiesOperations operations.
     /// </summary>
-    public partial class EntitiesOperations : IServiceOperations<EntitySearchAPI>, IEntitiesOperations
+    public partial class EntitiesOperations : IServiceOperations<EntitySearchClient>, IEntitiesOperations
     {
         /// <summary>
         /// Initializes a new instance of the EntitiesOperations class.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public EntitiesOperations(EntitySearchAPI client)
+        public EntitiesOperations(EntitySearchClient client)
         {
             if (client == null)
             {
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
         }
 
         /// <summary>
-        /// Gets a reference to the EntitySearchAPI
+        /// Gets a reference to the EntitySearchClient
         /// </summary>
-        public EntitySearchAPI Client { get; private set; }
+        public EntitySearchClient Client { get; private set; }
 
         /// <summary>
         /// The Entity Search API lets you send a search query to Bing and get back
@@ -248,6 +248,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
         /// </return>
         public async Task<HttpOperationResponse<SearchResponse>> SearchWithHttpMessagesAsync(string query, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), string market = "en-us", IList<string> responseFilter = default(IList<string>), IList<string> responseFormat = default(IList<string>), string safeSearch = default(string), string setLang = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (query == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "query");
@@ -278,8 +282,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
                 ServiceClientTracing.Enter(_invocationId, this, "Search", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "entities").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "entities";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (countryCode != null)
             {

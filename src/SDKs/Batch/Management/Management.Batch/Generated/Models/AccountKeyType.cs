@@ -21,8 +21,14 @@ namespace Microsoft.Azure.Management.Batch.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum AccountKeyType
     {
+        /// <summary>
+        /// The primary account key.
+        /// </summary>
         [EnumMember(Value = "Primary")]
         Primary,
+        /// <summary>
+        /// The secondary account key.
+        /// </summary>
         [EnumMember(Value = "Secondary")]
         Secondary
     }

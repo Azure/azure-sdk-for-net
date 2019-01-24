@@ -104,6 +104,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IAzureFirewallFqdnTagsOperations AzureFirewallFqdnTags { get; private set; }
 
         /// <summary>
+        /// Gets the IDdosCustomPoliciesOperations.
+        /// </summary>
+        public virtual IDdosCustomPoliciesOperations DdosCustomPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IDdosProtectionPlansOperations.
         /// </summary>
         public virtual IDdosProtectionPlansOperations DdosProtectionPlans { get; private set; }
@@ -159,6 +164,21 @@ namespace Microsoft.Azure.Management.Network
         public virtual IExpressRouteConnectionsOperations ExpressRouteConnections { get; private set; }
 
         /// <summary>
+        /// Gets the IExpressRoutePortsLocationsOperations.
+        /// </summary>
+        public virtual IExpressRoutePortsLocationsOperations ExpressRoutePortsLocations { get; private set; }
+
+        /// <summary>
+        /// Gets the IExpressRoutePortsOperations.
+        /// </summary>
+        public virtual IExpressRoutePortsOperations ExpressRoutePorts { get; private set; }
+
+        /// <summary>
+        /// Gets the IExpressRouteLinksOperations.
+        /// </summary>
+        public virtual IExpressRouteLinksOperations ExpressRouteLinks { get; private set; }
+
+        /// <summary>
         /// Gets the IInterfaceEndpointsOperations.
         /// </summary>
         public virtual IInterfaceEndpointsOperations InterfaceEndpoints { get; private set; }
@@ -187,6 +207,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ILoadBalancerLoadBalancingRulesOperations.
         /// </summary>
         public virtual ILoadBalancerLoadBalancingRulesOperations LoadBalancerLoadBalancingRules { get; private set; }
+
+        /// <summary>
+        /// Gets the ILoadBalancerOutboundRulesOperations.
+        /// </summary>
+        public virtual ILoadBalancerOutboundRulesOperations LoadBalancerOutboundRules { get; private set; }
 
         /// <summary>
         /// Gets the ILoadBalancerNetworkInterfacesOperations.
@@ -324,11 +349,6 @@ namespace Microsoft.Azure.Management.Network
         public virtual IVirtualNetworkPeeringsOperations VirtualNetworkPeerings { get; private set; }
 
         /// <summary>
-        /// Gets the IVirtualNetworkTapsOperations.
-        /// </summary>
-        public virtual IVirtualNetworkTapsOperations VirtualNetworkTaps { get; private set; }
-
-        /// <summary>
         /// Gets the IVirtualNetworkGatewaysOperations.
         /// </summary>
         public virtual IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; private set; }
@@ -342,6 +362,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ILocalNetworkGatewaysOperations.
         /// </summary>
         public virtual ILocalNetworkGatewaysOperations LocalNetworkGateways { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkTapsOperations.
+        /// </summary>
+        public virtual IVirtualNetworkTapsOperations VirtualNetworkTaps { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualWansOperations.
@@ -635,6 +660,7 @@ namespace Microsoft.Azure.Management.Network
             AvailableResourceGroupDelegations = new AvailableResourceGroupDelegationsOperations(this);
             AzureFirewalls = new AzureFirewallsOperations(this);
             AzureFirewallFqdnTags = new AzureFirewallFqdnTagsOperations(this);
+            DdosCustomPolicies = new DdosCustomPoliciesOperations(this);
             DdosProtectionPlans = new DdosProtectionPlansOperations(this);
             AvailableEndpointServices = new AvailableEndpointServicesOperations(this);
             ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
@@ -646,12 +672,16 @@ namespace Microsoft.Azure.Management.Network
             ExpressRouteCrossConnectionPeerings = new ExpressRouteCrossConnectionPeeringsOperations(this);
             ExpressRouteGateways = new ExpressRouteGatewaysOperations(this);
             ExpressRouteConnections = new ExpressRouteConnectionsOperations(this);
+            ExpressRoutePortsLocations = new ExpressRoutePortsLocationsOperations(this);
+            ExpressRoutePorts = new ExpressRoutePortsOperations(this);
+            ExpressRouteLinks = new ExpressRouteLinksOperations(this);
             InterfaceEndpoints = new InterfaceEndpointsOperations(this);
             LoadBalancers = new LoadBalancersOperations(this);
             LoadBalancerBackendAddressPools = new LoadBalancerBackendAddressPoolsOperations(this);
             LoadBalancerFrontendIPConfigurations = new LoadBalancerFrontendIPConfigurationsOperations(this);
             InboundNatRules = new InboundNatRulesOperations(this);
             LoadBalancerLoadBalancingRules = new LoadBalancerLoadBalancingRulesOperations(this);
+            LoadBalancerOutboundRules = new LoadBalancerOutboundRulesOperations(this);
             LoadBalancerNetworkInterfaces = new LoadBalancerNetworkInterfacesOperations(this);
             LoadBalancerProbes = new LoadBalancerProbesOperations(this);
             NetworkInterfaces = new NetworkInterfacesOperations(this);
@@ -679,10 +709,10 @@ namespace Microsoft.Azure.Management.Network
             VirtualNetworks = new VirtualNetworksOperations(this);
             Subnets = new SubnetsOperations(this);
             VirtualNetworkPeerings = new VirtualNetworkPeeringsOperations(this);
-            VirtualNetworkTaps = new VirtualNetworkTapsOperations(this);
             VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
             VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
             LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
+            VirtualNetworkTaps = new VirtualNetworkTapsOperations(this);
             VirtualWans = new VirtualWansOperations(this);
             VpnSites = new VpnSitesOperations(this);
             VpnSitesConfiguration = new VpnSitesConfigurationOperations(this);
@@ -772,7 +802,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-08-01";
+            string apiVersion = "2018-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -970,7 +1000,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "virtualWANName");
             }
-            string apiVersion = "2018-08-01";
+            string apiVersion = "2018-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

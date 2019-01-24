@@ -344,11 +344,6 @@ namespace Microsoft.Azure.Batch.Common
         /// </summary>
         public const string NodeAlreadyInTargetSchedulingState = "NodeAlreadyInTargetSchedulingState";
 
-        /// <summary>
-        /// The pool is already upgrading to a different operating system version.
-        /// </summary>
-        public const string UpgradePoolVersionConflict = "UpgradePoolVersionConflict";
-
         // TODO: unweasel
         /// <summary>
         /// A requested job or task constraint is not supported.

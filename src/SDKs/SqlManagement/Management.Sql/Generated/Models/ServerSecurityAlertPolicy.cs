@@ -55,7 +55,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// of the Threat Detection audit storage account.</param>
         /// <param name="retentionDays">Specifies the number of days to keep in
         /// the Threat Detection audit logs.</param>
-        public ServerSecurityAlertPolicy(SecurityAlertPolicyState state, string id = default(string), string name = default(string), string type = default(string), IList<string> disabledAlerts = default(IList<string>), IList<string> emailAddresses = default(IList<string>), bool? emailAccountAdmins = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?))
+        /// <param name="creationTime">Specifies the UTC creation time of the
+        /// policy.</param>
+        public ServerSecurityAlertPolicy(SecurityAlertPolicyState state, string id = default(string), string name = default(string), string type = default(string), IList<string> disabledAlerts = default(IList<string>), IList<string> emailAddresses = default(IList<string>), bool? emailAccountAdmins = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), System.DateTime? creationTime = default(System.DateTime?))
             : base(id, name, type)
         {
             State = state;
@@ -65,6 +67,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
             RetentionDays = retentionDays;
+            CreationTime = creationTime;
             CustomInit();
         }
 
@@ -124,6 +127,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.retentionDays")]
         public int? RetentionDays { get; set; }
+
+        /// <summary>
+        /// Gets specifies the UTC creation time of the policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.creationTime")]
+        public System.DateTime? CreationTime { get; private set; }
 
         /// <summary>
         /// Validate the object.

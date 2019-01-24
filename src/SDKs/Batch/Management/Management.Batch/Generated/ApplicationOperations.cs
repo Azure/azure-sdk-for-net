@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='accountName'>
         /// The name of the Batch account.
         /// </param>
-        /// <param name='applicationId'>
-        /// The ID of the application.
+        /// <param name='applicationName'>
+        /// The name of the application. This must be unique within the account.
         /// </param>
         /// <param name='parameters'>
         /// The parameters for the request.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Application>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, ApplicationCreateParameters parameters = default(ApplicationCreateParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Application>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationName, Application parameters = default(Application), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -111,9 +111,24 @@ namespace Microsoft.Azure.Management.Batch
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[-\\w\\._]+$");
                 }
             }
-            if (applicationId == null)
+            if (applicationName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "applicationId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "applicationName");
+            }
+            if (applicationName != null)
+            {
+                if (applicationName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "applicationName", 64);
+                }
+                if (applicationName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "applicationName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(applicationName, "^[a-zA-Z0-9_-]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "applicationName", "^[a-zA-Z0-9_-]+$");
+                }
             }
             if (Client.ApiVersion == null)
             {
@@ -132,17 +147,17 @@ namespace Microsoft.Azure.Management.Batch
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("applicationId", applicationId);
+                tracingParameters.Add("applicationName", applicationName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
-            _url = _url.Replace("{applicationId}", System.Uri.EscapeDataString(applicationId));
+            _url = _url.Replace("{applicationName}", System.Uri.EscapeDataString(applicationName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -213,7 +228,7 @@ namespace Microsoft.Azure.Management.Batch
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 201)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -256,7 +271,7 @@ namespace Microsoft.Azure.Management.Batch
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)_statusCode == 201)
+            if ((int)_statusCode == 200)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -289,8 +304,8 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='accountName'>
         /// The name of the Batch account.
         /// </param>
-        /// <param name='applicationId'>
-        /// The ID of the application.
+        /// <param name='applicationName'>
+        /// The name of the application. This must be unique within the account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -310,7 +325,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -335,9 +350,24 @@ namespace Microsoft.Azure.Management.Batch
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[-\\w\\._]+$");
                 }
             }
-            if (applicationId == null)
+            if (applicationName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "applicationId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "applicationName");
+            }
+            if (applicationName != null)
+            {
+                if (applicationName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "applicationName", 64);
+                }
+                if (applicationName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "applicationName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(applicationName, "^[a-zA-Z0-9_-]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "applicationName", "^[a-zA-Z0-9_-]+$");
+                }
             }
             if (Client.ApiVersion == null)
             {
@@ -356,16 +386,16 @@ namespace Microsoft.Azure.Management.Batch
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("applicationId", applicationId);
+                tracingParameters.Add("applicationName", applicationName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
-            _url = _url.Replace("{applicationId}", System.Uri.EscapeDataString(applicationId));
+            _url = _url.Replace("{applicationName}", System.Uri.EscapeDataString(applicationName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -430,7 +460,7 @@ namespace Microsoft.Azure.Management.Batch
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -488,8 +518,8 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='accountName'>
         /// The name of the Batch account.
         /// </param>
-        /// <param name='applicationId'>
-        /// The ID of the application.
+        /// <param name='applicationName'>
+        /// The name of the application. This must be unique within the account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -512,7 +542,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Application>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Application>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -537,9 +567,24 @@ namespace Microsoft.Azure.Management.Batch
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[-\\w\\._]+$");
                 }
             }
-            if (applicationId == null)
+            if (applicationName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "applicationId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "applicationName");
+            }
+            if (applicationName != null)
+            {
+                if (applicationName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "applicationName", 64);
+                }
+                if (applicationName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "applicationName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(applicationName, "^[a-zA-Z0-9_-]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "applicationName", "^[a-zA-Z0-9_-]+$");
+                }
             }
             if (Client.ApiVersion == null)
             {
@@ -558,16 +603,16 @@ namespace Microsoft.Azure.Management.Batch
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("applicationId", applicationId);
+                tracingParameters.Add("applicationName", applicationName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
-            _url = _url.Replace("{applicationId}", System.Uri.EscapeDataString(applicationId));
+            _url = _url.Replace("{applicationName}", System.Uri.EscapeDataString(applicationName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -708,8 +753,8 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='accountName'>
         /// The name of the Batch account.
         /// </param>
-        /// <param name='applicationId'>
-        /// The ID of the application.
+        /// <param name='applicationName'>
+        /// The name of the application. This must be unique within the account.
         /// </param>
         /// <param name='parameters'>
         /// The parameters for the request.
@@ -723,6 +768,9 @@ namespace Microsoft.Azure.Management.Batch
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -732,7 +780,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, ApplicationUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Application>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationName, Application parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -757,9 +805,24 @@ namespace Microsoft.Azure.Management.Batch
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[-\\w\\._]+$");
                 }
             }
-            if (applicationId == null)
+            if (applicationName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "applicationId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "applicationName");
+            }
+            if (applicationName != null)
+            {
+                if (applicationName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "applicationName", 64);
+                }
+                if (applicationName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "applicationName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(applicationName, "^[a-zA-Z0-9_-]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "applicationName", "^[a-zA-Z0-9_-]+$");
+                }
             }
             if (parameters == null)
             {
@@ -782,17 +845,17 @@ namespace Microsoft.Azure.Management.Batch
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("applicationId", applicationId);
+                tracingParameters.Add("applicationName", applicationName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
-            _url = _url.Replace("{applicationId}", System.Uri.EscapeDataString(applicationId));
+            _url = _url.Replace("{applicationName}", System.Uri.EscapeDataString(applicationName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -863,7 +926,7 @@ namespace Microsoft.Azure.Management.Batch
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -898,12 +961,30 @@ namespace Microsoft.Azure.Management.Batch
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<Application>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Application>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {

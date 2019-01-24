@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ApiEntityReference class.
         /// </summary>
         /// <param name="id">The ARM resource id in the form of
-        /// /subscriptions/{SubcriptionId}/resourceGroups/{ResourceGroupName}/...</param>
+        /// /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...</param>
         public ApiEntityReference(string id = default(string))
         {
             Id = id;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the ARM resource id in the form of
-        /// /subscriptions/{SubcriptionId}/resourceGroups/{ResourceGroupName}/...
+        /// /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

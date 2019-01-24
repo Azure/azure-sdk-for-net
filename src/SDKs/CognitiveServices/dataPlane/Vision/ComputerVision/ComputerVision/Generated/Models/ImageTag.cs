@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// An image caption, i.e. a brief description of what the image depicts.
+    /// An entity observation in the image, along with the confidence score.
     /// </summary>
     public partial class ImageTag
     {
@@ -29,10 +29,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Initializes a new instance of the ImageTag class.
         /// </summary>
-        /// <param name="name">The tag value</param>
-        /// <param name="confidence">The level of confidence the service has in
-        /// the caption</param>
-        /// <param name="hint">Optional categorization for the tag</param>
+        /// <param name="name">Name of the entity.</param>
+        /// <param name="confidence">The level of confidence that the entity
+        /// was observed.</param>
+        /// <param name="hint">Optional hint/details for this tag.</param>
         public ImageTag(string name = default(string), double confidence = default(double), string hint = default(string))
         {
             Name = name;
@@ -47,19 +47,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the tag value
+        /// Gets or sets name of the entity.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the level of confidence the service has in the caption
+        /// Gets or sets the level of confidence that the entity was observed.
         /// </summary>
         [JsonProperty(PropertyName = "confidence")]
         public double Confidence { get; set; }
 
         /// <summary>
-        /// Gets or sets optional categorization for the tag
+        /// Gets or sets optional hint/details for this tag.
         /// </summary>
         [JsonProperty(PropertyName = "hint")]
         public string Hint { get; set; }

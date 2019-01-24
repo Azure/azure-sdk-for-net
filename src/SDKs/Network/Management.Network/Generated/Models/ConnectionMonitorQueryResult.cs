@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// List of connection states snaphots.
+    /// List of connection states snapshots.
     /// </summary>
     public partial class ConnectionMonitorQueryResult
     {

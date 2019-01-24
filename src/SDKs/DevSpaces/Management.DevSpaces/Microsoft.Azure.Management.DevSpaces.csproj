@@ -6,14 +6,18 @@
     <PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DevSpaces</PackageId>
 		<Description>Provides management operations support for Azure Dev Spaces.</Description>
-		<Version>0.10.0-preview</Version>
+		<Version>0.11.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.DevSpaces</AssemblyName>
 		<PackageTags>Microsoft Azure Dev Spaces;Dev Spaces;</PackageTags>
-        <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+        <PackageReleaseNotes>
+			<![CDATA[
+        1) Added support for API version 2019-01-01-preview.
+      ]]>
+		</PackageReleaseNotes>
     </PropertyGroup>
     
     <PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup>
 
     <!-- Please do not move/edit code below this line -->

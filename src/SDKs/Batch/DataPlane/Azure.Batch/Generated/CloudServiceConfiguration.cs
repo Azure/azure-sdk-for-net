@@ -24,30 +24,24 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
-            public readonly PropertyAccessor<string> CurrentOSVersionProperty;
             public readonly PropertyAccessor<string> OSFamilyProperty;
-            public readonly PropertyAccessor<string> TargetOSVersionProperty;
+            public readonly PropertyAccessor<string> OSVersionProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.CurrentOSVersionProperty = this.CreatePropertyAccessor<string>(nameof(CurrentOSVersion), BindingAccess.None);
                 this.OSFamilyProperty = this.CreatePropertyAccessor<string>(nameof(OSFamily), BindingAccess.Read | BindingAccess.Write);
-                this.TargetOSVersionProperty = this.CreatePropertyAccessor<string>(nameof(TargetOSVersion), BindingAccess.Read | BindingAccess.Write);
+                this.OSVersionProperty = this.CreatePropertyAccessor<string>(nameof(OSVersion), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.CloudServiceConfiguration protocolObject) : base(BindingState.Bound)
             {
-                this.CurrentOSVersionProperty = this.CreatePropertyAccessor(
-                    protocolObject.CurrentOSVersion,
-                    nameof(CurrentOSVersion),
-                    BindingAccess.Read);
                 this.OSFamilyProperty = this.CreatePropertyAccessor(
                     protocolObject.OsFamily,
                     nameof(OSFamily),
                     BindingAccess.Read | BindingAccess.Write);
-                this.TargetOSVersionProperty = this.CreatePropertyAccessor(
-                    protocolObject.TargetOSVersion,
-                    nameof(TargetOSVersion),
+                this.OSVersionProperty = this.CreatePropertyAccessor(
+                    protocolObject.OsVersion,
+                    nameof(OSVersion),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }
@@ -60,15 +54,15 @@ namespace Microsoft.Azure.Batch
         /// Initializes a new instance of the <see cref="CloudServiceConfiguration"/> class.
         /// </summary>
         /// <param name='osFamily'>The Azure Guest OS family to be installed on the virtual machines in the pool.</param>
-        /// <param name='targetOSVersion'>The Azure Guest OS version to be installed on the virtual machines in the pool. If no value is provided, the 
+        /// <param name='osVersion'>The Azure Guest OS version to be installed on the virtual machines in the pool. If no value is provided, the 
         /// Batch service will default to "'*", which specifies the latest operating system version for the <see cref="OSFamily"/>.</param>
         public CloudServiceConfiguration(
             string osFamily,
-            string targetOSVersion = default(string))
+            string osVersion = default(string))
         {
             this.propertyContainer = new PropertyContainer();
             this.OSFamily = osFamily;
-            this.TargetOSVersion = targetOSVersion;
+            this.OSVersion = osVersion;
         }
 
         internal CloudServiceConfiguration(Models.CloudServiceConfiguration protocolObject)
@@ -79,15 +73,6 @@ namespace Microsoft.Azure.Batch
         #endregion Constructors
 
         #region CloudServiceConfiguration
-
-        /// <summary>
-        /// Gets the Azure Guest OS version currently installed on the virtual machines in the pool. This may differ from 
-        /// <see cref="TargetOSVersion"/> if the pool state is <see cref="Common.PoolState.Upgrading"/>.
-        /// </summary>
-        public string CurrentOSVersion
-        {
-            get { return this.propertyContainer.CurrentOSVersionProperty.Value; }
-        }
 
         /// <summary>
         /// Gets or sets the Azure Guest OS family to be installed on the virtual machines in the pool.
@@ -105,10 +90,10 @@ namespace Microsoft.Azure.Batch
         /// Gets or sets the Azure Guest OS version to be installed on the virtual machines in the pool. If no value is provided, 
         /// the Batch service will default to "'*", which specifies the latest operating system version for the <see cref="OSFamily"/>.
         /// </summary>
-        public string TargetOSVersion
+        public string OSVersion
         {
-            get { return this.propertyContainer.TargetOSVersionProperty.Value; }
-            set { this.propertyContainer.TargetOSVersionProperty.Value = value; }
+            get { return this.propertyContainer.OSVersionProperty.Value; }
+            set { this.propertyContainer.OSVersionProperty.Value = value; }
         }
 
         #endregion // CloudServiceConfiguration
@@ -138,7 +123,7 @@ namespace Microsoft.Azure.Batch
             Models.CloudServiceConfiguration result = new Models.CloudServiceConfiguration()
             {
                 OsFamily = this.OSFamily,
-                TargetOSVersion = this.TargetOSVersion,
+                OsVersion = this.OSVersion,
             };
 
             return result;

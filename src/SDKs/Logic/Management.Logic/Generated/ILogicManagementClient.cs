@@ -110,6 +110,16 @@ namespace Microsoft.Azure.Management.Logic
         IWorkflowRunActionRepetitionsOperations WorkflowRunActionRepetitions { get; }
 
         /// <summary>
+        /// Gets the IWorkflowRunActionRepetitionsRequestHistoriesOperations.
+        /// </summary>
+        IWorkflowRunActionRepetitionsRequestHistoriesOperations WorkflowRunActionRepetitionsRequestHistories { get; }
+
+        /// <summary>
+        /// Gets the IWorkflowRunActionRequestHistoriesOperations.
+        /// </summary>
+        IWorkflowRunActionRequestHistoriesOperations WorkflowRunActionRequestHistories { get; }
+
+        /// <summary>
         /// Gets the IWorkflowRunActionScopeRepetitionsOperations.
         /// </summary>
         IWorkflowRunActionScopeRepetitionsOperations WorkflowRunActionScopeRepetitions { get; }

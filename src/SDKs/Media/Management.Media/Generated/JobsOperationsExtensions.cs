@@ -261,7 +261,9 @@ namespace Microsoft.Azure.Management.Media
             /// Update Job
             /// </summary>
             /// <remarks>
-            /// Updates a Job.
+            /// Update is only supported for description and priority. Updating Priority
+            /// will take effect when the Job state is Queued or Scheduled and depending on
+            /// the timing the priority update may be ignored.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -290,7 +292,9 @@ namespace Microsoft.Azure.Management.Media
             /// Update Job
             /// </summary>
             /// <remarks>
-            /// Updates a Job.
+            /// Update is only supported for description and priority. Updating Priority
+            /// will take effect when the Job state is Queued or Scheduled and depending on
+            /// the timing the priority update may be ignored.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

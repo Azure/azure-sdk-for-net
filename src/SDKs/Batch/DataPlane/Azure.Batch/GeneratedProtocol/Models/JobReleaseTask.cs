@@ -188,8 +188,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// service may delete the task directory and all its contents.
         /// </summary>
         /// <remarks>
-        /// The default is infinite, i.e. the task directory will be retained
-        /// until the compute node is removed or reimaged.
+        /// The default is 7 days, i.e. the task directory will be retained for
+        /// 7 days unless the compute node is removed or the job is deleted.
         /// </remarks>
         [JsonProperty(PropertyName = "retentionTime")]
         public System.TimeSpan? RetentionTime { get; set; }

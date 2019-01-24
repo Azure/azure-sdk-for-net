@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Shopify Serivce source.
+    /// A copy activity Shopify Service source.
     /// </summary>
     public partial class ShopifySource : CopySource
     {

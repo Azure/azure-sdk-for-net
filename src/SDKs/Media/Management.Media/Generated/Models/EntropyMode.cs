@@ -11,56 +11,101 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for EntropyMode.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum EntropyMode
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(EntropyModeConverter))]
+    public struct EntropyMode : System.IEquatable<EntropyMode>
     {
+        private EntropyMode(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// Context Adaptive Binary Arithmetic Coder (CABAC) entropy encoding.
         /// </summary>
-        [EnumMember(Value = "Cabac")]
-        Cabac,
+        public static readonly EntropyMode Cabac = "Cabac";
+
         /// <summary>
         /// Context Adaptive Variable Length Coder (CAVLC) entropy encoding.
         /// </summary>
-        [EnumMember(Value = "Cavlc")]
-        Cavlc
-    }
-    internal static class EntropyModeEnumExtension
-    {
-        internal static string ToSerializedValue(this EntropyMode? value)
+        public static readonly EntropyMode Cavlc = "Cavlc";
+
+
+        /// <summary>
+        /// Underlying value of enum EntropyMode
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for EntropyMode
+        /// </summary>
+        public override string ToString()
         {
-            return value == null ? null : ((EntropyMode)value).ToSerializedValue();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static string ToSerializedValue(this EntropyMode value)
+        /// <summary>
+        /// Compares enums of type EntropyMode
+        /// </summary>
+        public bool Equals(EntropyMode e)
         {
-            switch( value )
-            {
-                case EntropyMode.Cabac:
-                    return "Cabac";
-                case EntropyMode.Cavlc:
-                    return "Cavlc";
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
-        internal static EntropyMode? ParseEntropyMode(this string value)
+        /// <summary>
+        /// Implicit operator to convert string to EntropyMode
+        /// </summary>
+        public static implicit operator EntropyMode(string value)
         {
-            switch( value )
-            {
-                case "Cabac":
-                    return EntropyMode.Cabac;
-                case "Cavlc":
-                    return EntropyMode.Cavlc;
-            }
-            return null;
+            return new EntropyMode(value);
         }
+
+        /// <summary>
+        /// Implicit operator to convert EntropyMode to string
+        /// </summary>
+        public static implicit operator string(EntropyMode e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum EntropyMode
+        /// </summary>
+        public static bool operator == (EntropyMode e1, EntropyMode e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum EntropyMode
+        /// </summary>
+        public static bool operator != (EntropyMode e1, EntropyMode e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for EntropyMode
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is EntropyMode && Equals((EntropyMode)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode EntropyMode
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

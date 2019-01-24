@@ -10,7 +10,7 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <PackageId>Microsoft.Azure.Batch</PackageId>
     <Description>This client library provides access to the Microsoft Azure Batch service.</Description>
-    <Version>9.0.0</Version>
+    <Version>10.0.0</Version>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>Microsoft.Azure.Batch</AssemblyName>
@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-dataplane-changelog</PackageReleaseNotes>
     <Authors>Microsoft</Authors>

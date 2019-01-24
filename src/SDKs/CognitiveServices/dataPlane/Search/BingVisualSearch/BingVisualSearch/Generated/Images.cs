@@ -22,7 +22,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
     /// <summary>
     /// Images operations.
     /// </summary>
-    public partial class Images : IServiceOperations<VisualSearchAPI>, IImages
+    public partial class Images : IServiceOperations<VisualSearchClient>, IImages
     {
         /// <summary>
         /// Initializes a new instance of the Images class.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public Images(VisualSearchAPI client)
+        public Images(VisualSearchClient client)
         {
             if (client == null)
             {
@@ -43,9 +43,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         }
 
         /// <summary>
-        /// Gets a reference to the VisualSearchAPI
+        /// Gets a reference to the VisualSearchClient
         /// </summary>
-        public VisualSearchAPI Client { get; private set; }
+        public VisualSearchClient Client { get; private set; }
 
         /// <summary>
         /// Visual Search API lets you discover insights about an image such as
@@ -255,11 +255,21 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<HttpOperationResponse<ImageKnowledge>> VisualSearchMethodWithHttpMessagesAsync(string acceptLanguage = default(string), string contentType = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string market = default(string), string safeSearch = default(string), string setLang = default(string), string knowledgeRequest = default(string), Stream image = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             string xBingApisSDK = "true";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -284,8 +294,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
                 ServiceClientTracing.Enter(_invocationId, this, "VisualSearchMethod", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "images/visualsearch").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "images/visualsearch";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (market != null)
             {

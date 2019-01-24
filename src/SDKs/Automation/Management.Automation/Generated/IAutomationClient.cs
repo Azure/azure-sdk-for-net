@@ -158,26 +158,6 @@ namespace Microsoft.Azure.Management.Automation
         IFieldsOperations Fields { get; }
 
         /// <summary>
-        /// Gets the IRunbookDraftOperations.
-        /// </summary>
-        IRunbookDraftOperations RunbookDraft { get; }
-
-        /// <summary>
-        /// Gets the IRunbookOperations.
-        /// </summary>
-        IRunbookOperations Runbook { get; }
-
-        /// <summary>
-        /// Gets the ITestJobStreamsOperations.
-        /// </summary>
-        ITestJobStreamsOperations TestJobStreams { get; }
-
-        /// <summary>
-        /// Gets the ITestJobOperations.
-        /// </summary>
-        ITestJobOperations TestJob { get; }
-
-        /// <summary>
         /// Gets the IScheduleOperations.
         /// </summary>
         IScheduleOperations Schedule { get; }
@@ -271,6 +251,31 @@ namespace Microsoft.Azure.Management.Automation
         /// Gets the INodeCountInformationOperations.
         /// </summary>
         INodeCountInformationOperations NodeCountInformation { get; }
+
+        /// <summary>
+        /// Gets the IRunbookDraftOperations.
+        /// </summary>
+        IRunbookDraftOperations RunbookDraft { get; }
+
+        /// <summary>
+        /// Gets the IRunbookOperations.
+        /// </summary>
+        IRunbookOperations Runbook { get; }
+
+        /// <summary>
+        /// Gets the ITestJobStreamsOperations.
+        /// </summary>
+        ITestJobStreamsOperations TestJobStreams { get; }
+
+        /// <summary>
+        /// Gets the ITestJobOperations.
+        /// </summary>
+        ITestJobOperations TestJob { get; }
+
+        /// <summary>
+        /// Gets the IPython2PackageOperations.
+        /// </summary>
+        IPython2PackageOperations Python2Package { get; }
 
     }
 }

@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/33855c90-c8cf-44a0-a266-9b548fb8e7b0/providers/Microsoft.DevTestLab/labs?api-version=2016-05-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM4NTVjOTAtYzhjZi00NGEwLWEyNjYtOWI1NDhmYjhlN2IwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2VGVzdExhYi9sYWJzP2FwaS12ZXJzaW9uPTIwMTYtMDUtMTU=",
+      "RequestUri": "/subscriptions/33855c90-c8cf-44a0-a266-9b548fb8e7b0/providers/Microsoft.DevTestLab/labs?api-version=2018-09-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzM4NTVjOTAtYzhjZi00NGEwLWEyNjYtOWI1NDhmYjhlN2IwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2VGVzdExhYi9sYWJzP2FwaS12ZXJzaW9uPTIwMTgtMDktMTU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

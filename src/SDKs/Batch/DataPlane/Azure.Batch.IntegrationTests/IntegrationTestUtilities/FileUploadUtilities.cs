@@ -500,7 +500,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             string nodeFileName = stageThisFile.NodeFileName;
 
             // create a new ResourceFile and populate it.  This file is now staged!
-            stageThisFile.StagedFiles = new ResourceFile[] { new ResourceFile(blobSAS, nodeFileName) };
+            stageThisFile.StagedFiles = new ResourceFile[] { ResourceFile.FromUrl(blobSAS, nodeFileName) };
         }
 
         #endregion internal/private

@@ -24,6 +24,20 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
+        },
+        {
+          "Key": {
+            "Type": "Common.DynamicVNetAssignmentScope?",
+            "Name": "DynamicVNetAssignmentScope",
+            "SummaryComment": "The scope of the dynamic VNet assignment.",
+            "RemarksComment": "This property can only be specified for pools created with a <see cref=\"CloudPool.VirtualMachineConfiguration\"/>.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "Models.DynamicVNetAssignmentScope?",
+            "Name": "DynamicVNetAssignmentScope"
+          }
         }
       ]
     }

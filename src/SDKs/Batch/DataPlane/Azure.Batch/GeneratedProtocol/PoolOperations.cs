@@ -89,6 +89,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<IPage<PoolUsageMetrics>,PoolListUsageMetricsHeaders>> ListUsageMetricsWithHttpMessagesAsync(PoolListUsageMetricsOptions poolListUsageMetricsOptions = default(PoolListUsageMetricsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -152,8 +156,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "ListUsageMetrics", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "poolusagemetrics").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "poolusagemetrics";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -372,6 +377,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<PoolStatistics,PoolGetAllLifetimeStatisticsHeaders>> GetAllLifetimeStatisticsWithHttpMessagesAsync(PoolGetAllLifetimeStatisticsOptions poolGetAllLifetimeStatisticsOptions = default(PoolGetAllLifetimeStatisticsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -411,8 +420,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "GetAllLifetimeStatistics", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "lifetimepoolstats").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "lifetimepoolstats";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -613,6 +623,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<PoolAddHeaders>> AddWithHttpMessagesAsync(PoolAddParameter pool, PoolAddOptions poolAddOptions = default(PoolAddOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (pool == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "pool");
@@ -657,8 +671,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "Add", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -842,6 +857,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<IPage<CloudPool>,PoolListHeaders>> ListWithHttpMessagesAsync(PoolListOptions poolListOptions = default(PoolListOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -905,8 +924,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1132,6 +1152,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<PoolDeleteHeaders>> DeleteWithHttpMessagesAsync(string poolId, PoolDeleteOptions poolDeleteOptions = default(PoolDeleteOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -1200,8 +1224,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -1412,6 +1437,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<bool,PoolExistsHeaders>> ExistsWithHttpMessagesAsync(string poolId, PoolExistsOptions poolExistsOptions = default(PoolExistsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -1480,8 +1509,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "Exists", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -1696,6 +1726,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<CloudPool,PoolGetHeaders>> GetWithHttpMessagesAsync(string poolId, PoolGetOptions poolGetOptions = default(PoolGetOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -1776,8 +1810,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -2023,6 +2058,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<PoolPatchHeaders>> PatchWithHttpMessagesAsync(string poolId, PoolPatchParameter poolPatchParameter, PoolPatchOptions poolPatchOptions = default(PoolPatchOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -2096,8 +2135,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "Patch", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -2314,6 +2354,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<PoolDisableAutoScaleHeaders>> DisableAutoScaleWithHttpMessagesAsync(string poolId, PoolDisableAutoScaleOptions poolDisableAutoScaleOptions = default(PoolDisableAutoScaleOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -2358,8 +2402,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "DisableAutoScale", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/disableautoscale").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/disableautoscale";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -2549,6 +2594,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<PoolEnableAutoScaleHeaders>> EnableAutoScaleWithHttpMessagesAsync(string poolId, PoolEnableAutoScaleParameter poolEnableAutoScaleParameter, PoolEnableAutoScaleOptions poolEnableAutoScaleOptions = default(PoolEnableAutoScaleOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -2622,8 +2671,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "EnableAutoScale", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/enableautoscale").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/enableautoscale";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -2856,6 +2906,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<AutoScaleRun,PoolEvaluateAutoScaleHeaders>> EvaluateAutoScaleWithHttpMessagesAsync(string poolId, string autoScaleFormula, PoolEvaluateAutoScaleOptions poolEvaluateAutoScaleOptions = default(PoolEvaluateAutoScaleOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -2910,8 +2964,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "EvaluateAutoScale", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/evaluateautoscale").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/evaluateautoscale";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -3126,6 +3181,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<PoolResizeHeaders>> ResizeWithHttpMessagesAsync(string poolId, PoolResizeParameter poolResizeParameter, PoolResizeOptions poolResizeOptions = default(PoolResizeOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -3199,8 +3258,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "Resize", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/resize").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/resize";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -3427,6 +3487,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<PoolStopResizeHeaders>> StopResizeWithHttpMessagesAsync(string poolId, PoolStopResizeOptions poolStopResizeOptions = default(PoolStopResizeOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -3495,8 +3559,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "StopResize", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/stopresize").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/stopresize";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -3682,7 +3747,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Updates the properties of the specified pool.
         /// </summary>
         /// <remarks>
-        /// This fully replaces all the updateable properties of the pool. For example,
+        /// This fully replaces all the updatable properties of the pool. For example,
         /// if the pool has a start task associated with it and if start task is not
         /// specified with this request, then the Batch service will remove the
         /// existing start task.
@@ -3716,6 +3781,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<PoolUpdatePropertiesHeaders>> UpdatePropertiesWithHttpMessagesAsync(string poolId, PoolUpdatePropertiesParameter poolUpdatePropertiesParameter, PoolUpdatePropertiesOptions poolUpdatePropertiesOptions = default(PoolUpdatePropertiesOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -3765,8 +3834,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateProperties", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/updateproperties").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/updateproperties";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -3923,324 +3993,6 @@ namespace Microsoft.Azure.Batch.Protocol
         }
 
         /// <summary>
-        /// Upgrades the operating system of the specified pool.
-        /// </summary>
-        /// <remarks>
-        /// During an upgrade, the Batch service upgrades each compute node in the
-        /// pool. When a compute node is chosen for upgrade, any tasks running on that
-        /// node are removed from the node and returned to the queue to be rerun later
-        /// (or on a different compute node). The node will be unavailable until the
-        /// upgrade is complete. This operation results in temporarily reduced pool
-        /// capacity as nodes are taken out of service to be upgraded. Although the
-        /// Batch service tries to avoid upgrading all compute nodes at the same time,
-        /// it does not guarantee to do this (particularly on small pools); therefore,
-        /// the pool may be temporarily unavailable to run tasks. When this operation
-        /// runs, the pool state changes to upgrading. When all compute nodes have
-        /// finished upgrading, the pool state returns to active. While the upgrade is
-        /// in progress, the pool's currentOSVersion reflects the OS version that nodes
-        /// are upgrading from, and targetOSVersion reflects the OS version that nodes
-        /// are upgrading to. Once the upgrade is complete, currentOSVersion is updated
-        /// to reflect the OS version now running on all nodes. This operation can only
-        /// be invoked on pools created with the cloudServiceConfiguration property.
-        /// </remarks>
-        /// <param name='poolId'>
-        /// The ID of the pool to upgrade.
-        /// </param>
-        /// <param name='targetOSVersion'>
-        /// The Azure Guest OS version to be installed on the virtual machines in the
-        /// pool.
-        /// </param>
-        /// <param name='poolUpgradeOSOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="BatchErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationHeaderResponse<PoolUpgradeOSHeaders>> UpgradeOSWithHttpMessagesAsync(string poolId, string targetOSVersion, PoolUpgradeOSOptions poolUpgradeOSOptions = default(PoolUpgradeOSOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (poolId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (targetOSVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "targetOSVersion");
-            }
-            int? timeout = default(int?);
-            if (poolUpgradeOSOptions != null)
-            {
-                timeout = poolUpgradeOSOptions.Timeout;
-            }
-            System.Guid? clientRequestId = default(System.Guid?);
-            if (poolUpgradeOSOptions != null)
-            {
-                clientRequestId = poolUpgradeOSOptions.ClientRequestId;
-            }
-            bool? returnClientRequestId = default(bool?);
-            if (poolUpgradeOSOptions != null)
-            {
-                returnClientRequestId = poolUpgradeOSOptions.ReturnClientRequestId;
-            }
-            System.DateTime? ocpDate = default(System.DateTime?);
-            if (poolUpgradeOSOptions != null)
-            {
-                ocpDate = poolUpgradeOSOptions.OcpDate;
-            }
-            string ifMatch = default(string);
-            if (poolUpgradeOSOptions != null)
-            {
-                ifMatch = poolUpgradeOSOptions.IfMatch;
-            }
-            string ifNoneMatch = default(string);
-            if (poolUpgradeOSOptions != null)
-            {
-                ifNoneMatch = poolUpgradeOSOptions.IfNoneMatch;
-            }
-            System.DateTime? ifModifiedSince = default(System.DateTime?);
-            if (poolUpgradeOSOptions != null)
-            {
-                ifModifiedSince = poolUpgradeOSOptions.IfModifiedSince;
-            }
-            System.DateTime? ifUnmodifiedSince = default(System.DateTime?);
-            if (poolUpgradeOSOptions != null)
-            {
-                ifUnmodifiedSince = poolUpgradeOSOptions.IfUnmodifiedSince;
-            }
-            PoolUpgradeOSParameter poolUpgradeOSParameter = new PoolUpgradeOSParameter();
-            if (targetOSVersion != null)
-            {
-                poolUpgradeOSParameter.TargetOSVersion = targetOSVersion;
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("poolId", poolId);
-                tracingParameters.Add("timeout", timeout);
-                tracingParameters.Add("clientRequestId", clientRequestId);
-                tracingParameters.Add("returnClientRequestId", returnClientRequestId);
-                tracingParameters.Add("ocpDate", ocpDate);
-                tracingParameters.Add("ifMatch", ifMatch);
-                tracingParameters.Add("ifNoneMatch", ifNoneMatch);
-                tracingParameters.Add("ifModifiedSince", ifModifiedSince);
-                tracingParameters.Add("ifUnmodifiedSince", ifUnmodifiedSince);
-                tracingParameters.Add("poolUpgradeOSParameter", poolUpgradeOSParameter);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UpgradeOS", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/upgradeos").ToString();
-            _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
-            List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (timeout != null)
-            {
-                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timeout, Client.SerializationSettings).Trim('"'))));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-            if (clientRequestId != null)
-            {
-                if (_httpRequest.Headers.Contains("client-request-id"))
-                {
-                    _httpRequest.Headers.Remove("client-request-id");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, Client.SerializationSettings).Trim('"'));
-            }
-            if (returnClientRequestId != null)
-            {
-                if (_httpRequest.Headers.Contains("return-client-request-id"))
-                {
-                    _httpRequest.Headers.Remove("return-client-request-id");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", SafeJsonConvert.SerializeObject(returnClientRequestId, Client.SerializationSettings).Trim('"'));
-            }
-            if (ocpDate != null)
-            {
-                if (_httpRequest.Headers.Contains("ocp-date"))
-                {
-                    _httpRequest.Headers.Remove("ocp-date");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", SafeJsonConvert.SerializeObject(ocpDate, new DateTimeRfc1123JsonConverter()).Trim('"'));
-            }
-            if (ifMatch != null)
-            {
-                if (_httpRequest.Headers.Contains("If-Match"))
-                {
-                    _httpRequest.Headers.Remove("If-Match");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
-            }
-            if (ifNoneMatch != null)
-            {
-                if (_httpRequest.Headers.Contains("If-None-Match"))
-                {
-                    _httpRequest.Headers.Remove("If-None-Match");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("If-None-Match", ifNoneMatch);
-            }
-            if (ifModifiedSince != null)
-            {
-                if (_httpRequest.Headers.Contains("If-Modified-Since"))
-                {
-                    _httpRequest.Headers.Remove("If-Modified-Since");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("If-Modified-Since", SafeJsonConvert.SerializeObject(ifModifiedSince, new DateTimeRfc1123JsonConverter()).Trim('"'));
-            }
-            if (ifUnmodifiedSince != null)
-            {
-                if (_httpRequest.Headers.Contains("If-Unmodified-Since"))
-                {
-                    _httpRequest.Headers.Remove("If-Unmodified-Since");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("If-Unmodified-Since", SafeJsonConvert.SerializeObject(ifUnmodifiedSince, new DateTimeRfc1123JsonConverter()).Trim('"'));
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            if(poolUpgradeOSParameter != null)
-            {
-                _requestContent = SafeJsonConvert.SerializeObject(poolUpgradeOSParameter, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; odata=minimalmetadata; charset=utf-8");
-            }
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 202)
-            {
-                var ex = new BatchErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    BatchError _errorBody =  SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationHeaderResponse<PoolUpgradeOSHeaders>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("request-id").FirstOrDefault();
-            }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<PoolUpgradeOSHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
         /// Removes compute nodes from the specified pool.
         /// </summary>
         /// <remarks>
@@ -4277,6 +4029,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<PoolRemoveNodesHeaders>> RemoveNodesWithHttpMessagesAsync(string poolId, NodeRemoveParameter nodeRemoveParameter, PoolRemoveNodesOptions poolRemoveNodesOptions = default(PoolRemoveNodesOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -4350,8 +4106,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "RemoveNodes", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/removenodes").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/removenodes";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)

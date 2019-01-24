@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="lastWorkflowId">CloudEndpoint lastWorkflowId</param>
         /// <param name="lastOperationName">Resource Last Operation
         /// Name</param>
-        public CloudEndpoint(string id = default(string), string name = default(string), string type = default(string), string storageAccountResourceId = default(string), string storageAccountShareName = default(string), string storageAccountTenantId = default(string), string partnershipId = default(string), string friendlyName = default(string), bool? backupEnabled = default(bool?), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string))
+        public CloudEndpoint(string id = default(string), string name = default(string), string type = default(string), string storageAccountResourceId = default(string), string storageAccountShareName = default(string), string storageAccountTenantId = default(string), string partnershipId = default(string), string friendlyName = default(string), string backupEnabled = default(string), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string))
             : base(id, name, type)
         {
             StorageAccountResourceId = storageAccountResourceId;
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// Gets backup Enabled
         /// </summary>
         [JsonProperty(PropertyName = "properties.backupEnabled")]
-        public bool? BackupEnabled { get; private set; }
+        public string BackupEnabled { get; private set; }
 
         /// <summary>
         /// Gets or sets cloudEndpoint Provisioning State

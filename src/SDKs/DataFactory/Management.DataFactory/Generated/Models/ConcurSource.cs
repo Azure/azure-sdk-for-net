@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Concur Serivce source.
+    /// A copy activity Concur Service source.
     /// </summary>
     public partial class ConcurSource : CopySource
     {

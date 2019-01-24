@@ -30,8 +30,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Initializes a new instance of the CelebritiesModel class.
         /// </summary>
         /// <param name="name">Name of the celebrity.</param>
-        /// <param name="confidence">Level of confidence ranging from 0 to
-        /// 1.</param>
+        /// <param name="confidence">Confidence level for the celebrity
+        /// recognition as a value ranging from 0 to 1.</param>
+        /// <param name="faceRectangle">Location of the identified face in the
+        /// image.</param>
         public CelebritiesModel(string name = default(string), double confidence = default(double), FaceRectangle faceRectangle = default(FaceRectangle))
         {
             Name = name;
@@ -52,12 +54,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets level of confidence ranging from 0 to 1.
+        /// Gets or sets confidence level for the celebrity recognition as a
+        /// value ranging from 0 to 1.
         /// </summary>
         [JsonProperty(PropertyName = "confidence")]
         public double Confidence { get; set; }
 
         /// <summary>
+        /// Gets or sets location of the identified face in the image.
         /// </summary>
         [JsonProperty(PropertyName = "faceRectangle")]
         public FaceRectangle FaceRectangle { get; set; }

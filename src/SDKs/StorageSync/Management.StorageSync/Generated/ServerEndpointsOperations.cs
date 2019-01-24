@@ -634,7 +634,7 @@ namespace Microsoft.Azure.Management.StorageSync
         }
 
         /// <summary>
-        /// Recall a serverendpoint.
+        /// Recall a server endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -1425,7 +1425,7 @@ namespace Microsoft.Azure.Management.StorageSync
         }
 
         /// <summary>
-        /// Recall a serverendpoint.
+        /// Recall a server endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.

@@ -76,11 +76,11 @@ namespace IotHub.Tests.ScenarioTests
                 Assert.Equal(4, endpointHealth.Count());
                 Assert.Contains(endpointHealth, q => q.EndpointId.Equals("events", StringComparison.OrdinalIgnoreCase));
 
-                TestAllRoutesInput testAllRoutesInput = new TestAllRoutesInput(RoutingSource.DeviceMessages, new RoutingMessage());
+                TestAllRoutesInput testAllRoutesInput = new TestAllRoutesInput(RoutingSource.DeviceMessages, new RoutingMessage(), new RoutingTwin());
                 TestAllRoutesResult testAllRoutesResult = this.iotHubClient.IotHubResource.TestAllRoutes(testAllRoutesInput, IotHubTestUtilities.DefaultIotHubName, IotHubTestUtilities.DefaultResourceGroupName);
                 Assert.Equal(4, testAllRoutesResult.Routes.Count);
 
-                TestRouteInput testRouteInput = new TestRouteInput(properties.Routing.Routes[0], new RoutingMessage());
+                TestRouteInput testRouteInput = new TestRouteInput(properties.Routing.Routes[0], new RoutingMessage(), new RoutingTwin());
                 TestRouteResult testRouteResult = this.iotHubClient.IotHubResource.TestRoute(testRouteInput, IotHubTestUtilities.DefaultIotHubName, IotHubTestUtilities.DefaultResourceGroupName);
                 Assert.Equal("true", testRouteResult.Result);
 

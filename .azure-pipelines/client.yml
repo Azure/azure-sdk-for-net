@@ -1,0 +1,68 @@
+trigger:
+- master
+
+# variables:
+# ProjectFile - The project to build and test. This variable is defined in pipeline web ui because we want to be able to provide it at queue time and that isn't supported in yaml yet.
+
+jobs:
+  - job: 'Build_Packages'
+
+    pool:
+      vmImage: 'vs2017-win2016'
+
+    steps:
+      - task: DotNetCoreInstaller@0
+        displayName: 'Use .NET Core sdk 2.1.503'
+        inputs:
+          version: 2.1.503
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Build and Package'
+        inputs:
+          command: pack
+          packagesToPack: '$(ProjectFile)'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifacts'
+        inputs:
+          ArtifactName: packages
+
+  - job: 'Test_Windows'
+
+    pool:
+      vmImage: 'vs2017-win2016'
+
+    steps:
+      - task: DotNetCoreInstaller@0
+        displayName: 'Use .NET Core sdk 2.1.503'
+        inputs:
+          version: 2.1.503
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Build & Test'
+        inputs:
+          command: test
+          projects: '$(ProjectFile)'
+
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Detection'
+        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
+        # scheduled builds should be good enough.
+        condition: and(succeeded(), eq(variables['Build.Reason'], 'Schedule'))
+
+  - job: 'Test_Linux'
+
+    pool:
+      vmImage: 'ubuntu-16.04'
+
+    steps:
+      - task: DotNetCoreInstaller@0
+        displayName: 'Use .NET Core sdk 2.1.503'
+        inputs:
+          version: 2.1.503
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Build & Test'
+        inputs:
+          command: test
+          projects: '$(ProjectFile)'

@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// 'ExpectationFailed', 'UpgradeRequired', 'InternalServerError',
         /// 'NotImplemented', 'BadGateway', 'ServiceUnavailable',
         /// 'GatewayTimeout', 'HttpVersionNotSupported'</param>
-        public RunbookDraftUndoEditResult(HttpStatusCode? statusCode = default(HttpStatusCode?), string requestId = default(string))
+        public RunbookDraftUndoEditResult(string statusCode = default(string), string requestId = default(string))
         {
             StatusCode = statusCode;
             RequestId = requestId;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// 'GatewayTimeout', 'HttpVersionNotSupported'
         /// </summary>
         [JsonProperty(PropertyName = "statusCode")]
-        public HttpStatusCode? StatusCode { get; set; }
+        public string StatusCode { get; set; }
 
         /// <summary>
         /// </summary>

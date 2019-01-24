@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             Assert.NotNull(visualStudioTokenProviderFile);
             Assert.NotNull(visualStudioTokenProviderFile.TokenProviders);
-            Assert.Equal(1, visualStudioTokenProviderFile.TokenProviders.Count);
+            Assert.Single(visualStudioTokenProviderFile.TokenProviders);
 
             Assert.Equal(Constants.TokenProviderPath, visualStudioTokenProviderFile.TokenProviders[0].Path);
             Assert.NotNull(visualStudioTokenProviderFile.TokenProviders[0].Arguments);

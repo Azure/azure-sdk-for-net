@@ -4,14 +4,14 @@
 
 namespace Test.Azure.Management.Logic
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Newtonsoft.Json.Linq;
+    using System.Collections.Generic;
+    using System.Linq;
     using Xunit;
 
     [Collection("WorkflowsScenarioTests")]
@@ -113,10 +113,50 @@ namespace Test.Azure.Management.Logic
                 var updatesToBeMade = new Workflow
                 {
                     Tags = new Dictionary<string, string>
-                {
-                    { "abc", "def" }
-                }
+                    {
+                        { "abc", "def" }
+                    }
                 };
+                var updatedWorkflow = client.Workflows.Update(Constants.DefaultResourceGroup, workflowName, updatesToBeMade);
+
+                Assert.Equal("def", updatedWorkflow.Tags["abc"]);
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+            }
+        }
+
+        [Fact]
+        public void Workflows_UpdateWithIntegrationAccount_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = this.CreateIntegrationAccount(integrationAccountName);
+                var createdIntegrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    integrationAccount);
+
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                workflow.IntegrationAccount = new ResourceReference
+                {
+                    Id = createdIntegrationAccount.Id
+                };
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
+
+                var updatesToBeMade = new Workflow
+                {
+                    Tags = new Dictionary<string, string>
+                    {
+                        { "abc", "def" }
+                    }
+                };
+
                 var updatedWorkflow = client.Workflows.Update(Constants.DefaultResourceGroup, workflowName, updatesToBeMade);
 
                 Assert.Equal("def", updatedWorkflow.Tags["abc"]);
@@ -209,7 +249,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void Workflows_Validate_Exception()
         {
-            
+
             using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
@@ -294,7 +334,7 @@ namespace Test.Azure.Management.Logic
         private void ValidateWorkflow(Workflow expected, Workflow actual)
         {
             // Freshly created workflows don't have a state yet
-            if(expected.State != null)
+            if (expected.State != null)
             {
                 Assert.Equal(expected.State, actual.State);
             }

@@ -7,14 +7,14 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"exclude\": false,\r\n    \"low_cpu_threshold\": \"20\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "541dad4f-afe4-479e-a8f7-3a7bd71fc70a"
+          "dc49839c-e417-4952-bcb3-3d3e4bc0a02b"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.Advisor.AdvisorManagementClient/0.20.0-preview"
+          "Microsoft.Azure.Management.Advisor.AdvisorManagementClient/0.9.0-preview"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 11 Oct 2018 18:07:04 GMT"
+          "Fri, 12 Oct 2018 21:09:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -43,16 +43,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "541dad4f-afe4-479e-a8f7-3a7bd71fc70a"
+          "dc49839c-e417-4952-bcb3-3d3e4bc0a02b"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
           "199"
         ],
         "x-ms-correlation-request-id": [
-          "420d6d0e-0031-498e-8186-eb9145b8be82"
+          "9a2743c3-d8a6-414f-8fa0-39d636d932a4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181011T180704Z:420d6d0e-0031-498e-8186-eb9145b8be82"
+          "WESTUS2:20181012T210914Z:9a2743c3-d8a6-414f-8fa0-39d636d932a4"
         ],
         "Expires": [
           "-1"
@@ -68,14 +68,14 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"exclude\": false,\r\n    \"low_cpu_threshold\": \"5\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "05647e2a-9c80-4792-a70d-2009eb572285"
+          "a57fc0b5-341e-4526-83c1-045f989887f9"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.Advisor.AdvisorManagementClient/0.20.0-preview"
+          "Microsoft.Azure.Management.Advisor.AdvisorManagementClient/0.9.0-preview"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -89,7 +89,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 11 Oct 2018 18:07:04 GMT"
+          "Fri, 12 Oct 2018 21:09:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -104,16 +104,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "05647e2a-9c80-4792-a70d-2009eb572285"
+          "a57fc0b5-341e-4526-83c1-045f989887f9"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
           "198"
         ],
         "x-ms-correlation-request-id": [
-          "f8f72246-489c-45eb-a777-28c97c2d03a6"
+          "cb67e5d5-40a6-4104-8ea5-5319edcb87ca"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181011T180704Z:f8f72246-489c-45eb-a777-28c97c2d03a6"
+          "WESTUS2:20181012T210914Z:cb67e5d5-40a6-4104-8ea5-5319edcb87ca"
         ],
         "Expires": [
           "-1"
@@ -129,14 +129,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b58dbd3e-f7fb-4e62-b36d-fd40c24477cf"
+          "36aec49c-1e54-4e04-b1c8-5a052027c6d7"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.Advisor.AdvisorManagementClient/0.20.0-preview"
+          "Microsoft.Azure.Management.Advisor.AdvisorManagementClient/0.9.0-preview"
         ]
       },
       "ResponseHeaders": {
@@ -144,7 +144,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 11 Oct 2018 18:07:04 GMT"
+          "Fri, 12 Oct 2018 21:09:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -159,16 +159,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "b58dbd3e-f7fb-4e62-b36d-fd40c24477cf"
+          "36aec49c-1e54-4e04-b1c8-5a052027c6d7"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
           "599"
         ],
         "x-ms-correlation-request-id": [
-          "fb850d02-2890-4a2d-a418-5a1a961570a6"
+          "37efedaf-81ed-4f30-bfa2-c66fd88fbcd3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181011T180704Z:fb850d02-2890-4a2d-a418-5a1a961570a6"
+          "WESTUS2:20181012T210914Z:37efedaf-81ed-4f30-bfa2-c66fd88fbcd3"
         ],
         "Content-Length": [
           "296"
@@ -190,14 +190,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "084a0f10-8239-4e8b-8d1b-64b05b612ef4"
+          "4e6e3857-cf12-4b9b-884d-108edacf1447"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.Advisor.AdvisorManagementClient/0.20.0-preview"
+          "Microsoft.Azure.Management.Advisor.AdvisorManagementClient/0.9.0-preview"
         ]
       },
       "ResponseHeaders": {
@@ -205,7 +205,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 11 Oct 2018 18:07:04 GMT"
+          "Fri, 12 Oct 2018 21:09:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -220,16 +220,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "084a0f10-8239-4e8b-8d1b-64b05b612ef4"
+          "4e6e3857-cf12-4b9b-884d-108edacf1447"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
           "598"
         ],
         "x-ms-correlation-request-id": [
-          "10389c87-c68d-492a-87dd-1875ced2f408"
+          "5b8ec717-9a2c-4a2b-904d-e535bf7cce74"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181011T180704Z:10389c87-c68d-492a-87dd-1875ced2f408"
+          "WESTUS2:20181012T210914Z:5b8ec717-9a2c-4a2b-904d-e535bf7cce74"
         ],
         "Content-Length": [
           "295"

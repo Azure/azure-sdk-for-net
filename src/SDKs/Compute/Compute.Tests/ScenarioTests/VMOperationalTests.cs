@@ -87,7 +87,6 @@ namespace Compute.Tests
                     var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
 
                     VirtualMachine vm1 = CreateVM(rg1Name, as1Name, storageAccountOutput, imageRef, out inputVM1);
-
                     m_CrpClient.VirtualMachines.Start(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Redeploy(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Restart(rg1Name, vm1.Name);
@@ -116,6 +115,11 @@ namespace Compute.Tests
                     m_CrpClient.VirtualMachines.Deallocate(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Generalize(rg1Name, vm1.Name);
 
+                    VirtualMachine ephemeralVM;
+                    string as2Name = as1Name + "_ephemeral";
+                    CreateVM(rg1Name, as2Name, storageAccountName, imageRef, out ephemeralVM, hasManagedDisks: true, hasDiffDisks: true, vmSize: VirtualMachineSizeTypes.StandardDS1V2,
+                        osDiskStorageAccountType: StorageAccountTypes.StandardLRS, dataDiskStorageAccountType: StorageAccountTypes.StandardLRS);
+                    m_CrpClient.VirtualMachines.Reimage(rg1Name, ephemeralVM.Name, tempDisk: true);
                     var captureParams = new VirtualMachineCaptureParameters
                     {
                         DestinationContainerName = ComputeManagementTestUtilities.GenerateName(TestPrefix),
@@ -135,11 +139,11 @@ namespace Compute.Tests
                     string imageUri = template.Properties.StorageProfile.OSDisk.Image.Uri;
                     Assert.False(string.IsNullOrEmpty(imageUri));
 
-                    // Create 2nd VM from the captured image
+                    // Create 3rd VM from the captured image
                     // TODO : Provisioning Time-out Issues
                     VirtualMachine inputVM2;
-                    string as2Name = as1Name + "b";
-                    VirtualMachine vm2 = CreateVM(rg1Name, as2Name, storageAccountOutput, imageRef, out inputVM2,
+                    string as3Name = as1Name + "b";
+                    VirtualMachine vm3 = CreateVM(rg1Name, as3Name, storageAccountOutput, imageRef, out inputVM2,
                         vm =>
                         {
                             vm.StorageProfile.ImageReference = null;
@@ -147,7 +151,7 @@ namespace Compute.Tests
                             vm.StorageProfile.OsDisk.Vhd.Uri = vm.StorageProfile.OsDisk.Vhd.Uri.Replace(".vhd", "copy.vhd");
                             vm.StorageProfile.OsDisk.OsType = OperatingSystemTypes.Windows;
                         }, false, false);
-                    Assert.True(vm2.StorageProfile.OsDisk.Image.Uri == imageUri);
+                    Assert.True(vm3.StorageProfile.OsDisk.Image.Uri == imageUri);
                 }
                 finally
                 {
