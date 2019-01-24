@@ -5,6 +5,7 @@
 using Azure.Core;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -148,7 +149,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
-            
+
             try
             {
                 Response<ConfigurationSetting> response = await service.SetAsync(s_testSetting, CancellationToken.None);
@@ -178,7 +179,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
-            
+
             try
             {
                 Response<ConfigurationSetting> response = await service.AddAsync(s_testSetting, CancellationToken.None);
@@ -322,10 +323,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
                 int resultsReturned = 0;
                 SettingBatch batch = response.Result;
-                for(int i=0; i<batch.Count; i++)
+                for (int i = 0; i < batch.Count; i++)
                 {
                     var value = batch[i];
-                    if(value.Label.Contains("update"))
+                    if (value.Label.Contains("update"))
                     {
                         AssertEqual(value, testSettingUpdate);
                     }
@@ -349,7 +350,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 }
             }
         }
-        
+
         [Test]
         public async Task Get()
         {
@@ -393,7 +394,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
-            
+
             // Test
             Response<ConfigurationSetting> response = await service.GetAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
 
@@ -440,6 +441,85 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 if (responseDelete.Status != 200 || responseDeleteDiff.Status != 200)
                 {
                     throw new Exception($"could not delete setting");
+                }
+            }
+        }
+
+        [Test]
+        //Missing pagination.
+        public async Task GetBatch()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            const int expectedEvents = 5;
+            var addedSettings = new List<ConfigurationSetting>(expectedEvents);
+
+            try
+            {
+                string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
+                for (int i = 0; i < expectedEvents; i++)
+                {
+                    var reponse = await service.AddAsync(new ConfigurationSetting(key, "test_value", $"{i.ToString()}"));
+                    Assert.AreEqual(200, reponse.Status);
+                    addedSettings.Add(reponse.Result);
+                }
+
+                SettingBatchFilter filter = new SettingBatchFilter() { Key = key };
+                Response<SettingBatch> response = await service.GetBatchAsync(filter, CancellationToken.None);
+
+                SettingBatch batch = response.Result;
+                int resultsReturned;
+                for (resultsReturned = 0; resultsReturned < batch.Count; resultsReturned++)
+                {
+                    var value = batch[resultsReturned];
+                    AssertEqual(addedSettings[resultsReturned], value);
+                }
+
+                Assert.AreEqual(expectedEvents, resultsReturned);
+            }
+            finally
+            {
+                foreach (var setting in addedSettings)
+                {
+                    var responseDelete = await service.DeleteAsync(key: setting.Key, filter: setting.Label, CancellationToken.None);
+                    if (responseDelete.Status != 200)
+                    {
+                        throw new Exception($"could not delete setting {setting.Key}");
+                    }
+                }
+            }
+        }
+
+        [Test]
+        public async Task GetList()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            // Prepare environment
+            Response<ConfigurationSetting> responseSet = await service.SetAsync(s_testSetting, CancellationToken.None);
+            Assert.AreEqual(200, responseSet.Status);
+            try
+            {
+                Response<SettingBatch> response = await service.GetListAsync(CancellationToken.None);
+                Assert.AreEqual(200, response.Status);
+
+                SettingBatch batch = response.Result;
+
+                int resultsReturned = batch.Count;
+                //At least there should be one key available
+                Assert.GreaterOrEqual(resultsReturned, 1);
+                response.Dispose();
+            }
+            finally
+            {
+                var responseDelete = await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
+                if (responseDelete.Status != 200)
+                {
+                    throw new Exception($"could not delete setting {s_testSetting.Key}");
                 }
             }
         }

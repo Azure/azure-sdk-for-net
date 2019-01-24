@@ -156,6 +156,13 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
+        Uri BuildUriForList()
+        {
+            var builder = new UriBuilder(_baseUri);
+            builder.Path = KvRoute;
+            return builder.Uri;
+        }
+
         Uri BuildUriForGetBatch(SettingBatchFilter options)
         {
             var builder = new UriBuilder(_baseUri);

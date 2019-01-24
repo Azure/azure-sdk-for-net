@@ -227,13 +227,35 @@ namespace Azure.ApplicationModel.Configuration
                     message.AddHeader(AcceptDatetimeHeader, filter.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat));
                 }
 
+                AddAuthenticationHeaders(message, uri, PipelineMethod.Get, content: default, _secret, _credential);
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
 
                 PipelineResponse response = message.Response;
-                if (!response.TryGetHeader(HttpHeader.Constants.ContentLength, out long contentLength))
+                
+                if (response.Status != 200)
                 {
-                    throw new Exception("bad response: no content length header");
+                    return new Response<SettingBatch>(response);
                 }
+
+                var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellation);
+                return new Response<SettingBatch>(response, batch);
+            }
+        }
+
+        public async Task<Response<SettingBatch>> GetListAsync(CancellationToken cancellation = default)
+        {
+            var uri = BuildUriForList();
+
+            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation))
+            {
+                message.SetRequestLine(PipelineMethod.Get, uri);
+
+                message.AddHeader("Host", uri.Host);
+                message.AddHeader(MediaTypeKeyValueApplicationHeader);
+                AddAuthenticationHeaders(message, uri, PipelineMethod.Get, content: default, _secret, _credential);
+                await Pipeline.ProcessAsync(message).ConfigureAwait(false);
+
+                PipelineResponse response = message.Response;
 
                 if (response.Status != 200)
                 {
