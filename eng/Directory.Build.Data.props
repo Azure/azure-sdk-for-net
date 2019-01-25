@@ -46,6 +46,11 @@
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <Authors>Microsoft</Authors>
     <Product>Azure .NET SDK</Product>
+    <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</PackageIconUrl>
+    <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>
+    <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 </Project>
