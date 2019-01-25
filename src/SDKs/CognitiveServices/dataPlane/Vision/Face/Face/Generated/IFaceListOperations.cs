@@ -138,7 +138,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         Task<HttpOperationResponse<IList<FaceList>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an existing face from a face list (given by a
-        /// persisitedFaceId and a faceListId). Persisted image related to the
+        /// persistedFaceId and a faceListId). Persisted image related to the
         /// face will also be deleted.
         /// </summary>
         /// <param name='faceListId'>

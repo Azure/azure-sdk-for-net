@@ -1165,7 +1165,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Delete an existing face from a large face list (given by a persisitedFaceId
+        /// Delete an existing face from a large face list (given by a persistedFaceId
         /// and a largeFaceListId). Persisted image related to the face will also be
         /// deleted.
         /// </summary>
