@@ -428,6 +428,11 @@ namespace Microsoft.Azure.Management.Sql
         IManagedInstanceEncryptionProtectorsOperations ManagedInstanceEncryptionProtectors { get; }
 
         /// <summary>
+        /// Gets the IRecoverableManagedDatabasesOperations.
+        /// </summary>
+        IRecoverableManagedDatabasesOperations RecoverableManagedDatabases { get; }
+
+        /// <summary>
         /// Gets the IManagedInstanceVulnerabilityAssessmentsOperations.
         /// </summary>
         IManagedInstanceVulnerabilityAssessmentsOperations ManagedInstanceVulnerabilityAssessments { get; }
