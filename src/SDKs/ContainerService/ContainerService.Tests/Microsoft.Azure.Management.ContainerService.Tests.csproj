@@ -8,7 +8,6 @@
     <AssemblyName>Microsoft.Azure.Management.ContainerService.Tests</AssemblyName>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Management.ContainerService\Microsoft.Azure.Management.ContainerService.csproj" />
   </ItemGroup>

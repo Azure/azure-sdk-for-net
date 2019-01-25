@@ -16,26 +16,28 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     using System.Linq;
 
     /// <summary>
-    /// The list of credential result response.
+    /// Defines all possible authentication profiles for the OpenShift cluster.
     /// </summary>
-    public partial class CredentialResults
+    public partial class OpenShiftManagedClusterAuthProfile
     {
         /// <summary>
-        /// Initializes a new instance of the CredentialResults class.
+        /// Initializes a new instance of the
+        /// OpenShiftManagedClusterAuthProfile class.
         /// </summary>
-        public CredentialResults()
+        public OpenShiftManagedClusterAuthProfile()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CredentialResults class.
+        /// Initializes a new instance of the
+        /// OpenShiftManagedClusterAuthProfile class.
         /// </summary>
-        /// <param name="kubeconfigs">Base64-encoded Kubernetes configuration
-        /// file.</param>
-        public CredentialResults(IList<CredentialResult> kubeconfigs = default(IList<CredentialResult>))
+        /// <param name="identityProviders">Type of authentication profile to
+        /// use.</param>
+        public OpenShiftManagedClusterAuthProfile(IList<OpenShiftManagedClusterIdentityProvider> identityProviders = default(IList<OpenShiftManagedClusterIdentityProvider>))
         {
-            Kubeconfigs = kubeconfigs;
+            IdentityProviders = identityProviders;
             CustomInit();
         }
 
@@ -45,10 +47,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets base64-encoded Kubernetes configuration file.
+        /// Gets or sets type of authentication profile to use.
         /// </summary>
-        [JsonProperty(PropertyName = "kubeconfigs")]
-        public IList<CredentialResult> Kubeconfigs { get; private set; }
+        [JsonProperty(PropertyName = "identityProviders")]
+        public IList<OpenShiftManagedClusterIdentityProvider> IdentityProviders { get; set; }
 
     }
 }

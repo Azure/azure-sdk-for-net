@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </return>
         public async Task<AzureOperationResponse<IEnumerable<OperationValue>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2018-03-31";
+            string apiVersion = "2018-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.ContainerService
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<OperationValue>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<OperationValue>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

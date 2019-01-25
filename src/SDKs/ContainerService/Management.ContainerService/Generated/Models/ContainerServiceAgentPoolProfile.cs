@@ -12,31 +12,30 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Profile for the container service agent pool.
     /// </summary>
-    public partial class ManagedClusterAgentPoolProfile
+    public partial class ContainerServiceAgentPoolProfile
     {
         /// <summary>
-        /// Initializes a new instance of the ManagedClusterAgentPoolProfile
+        /// Initializes a new instance of the ContainerServiceAgentPoolProfile
         /// class.
         /// </summary>
-        public ManagedClusterAgentPoolProfile()
+        public ContainerServiceAgentPoolProfile()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ManagedClusterAgentPoolProfile
+        /// Initializes a new instance of the ContainerServiceAgentPoolProfile
         /// class.
         /// </summary>
         /// <param name="name">Unique name of the agent pool profile in the
         /// context of the subscription and resource group.</param>
-        /// <param name="count">Number of agents (VMs) to host docker
-        /// containers. Allowed values must be in the range of 1 to 100
-        /// (inclusive). The default value is 1. </param>
         /// <param name="vmSize">Size of agent VMs. Possible values include:
         /// 'Standard_A1', 'Standard_A10', 'Standard_A11', 'Standard_A1_v2',
         /// 'Standard_A2', 'Standard_A2_v2', 'Standard_A2m_v2', 'Standard_A3',
@@ -92,39 +91,40 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// 'Standard_NC6s_v2', 'Standard_NC6s_v3', 'Standard_ND12s',
         /// 'Standard_ND24rs', 'Standard_ND24s', 'Standard_ND6s',
         /// 'Standard_NV12', 'Standard_NV24', 'Standard_NV6'</param>
+        /// <param name="count">Number of agents (VMs) to host docker
+        /// containers. Allowed values must be in the range of 1 to 100
+        /// (inclusive). The default value is 1. </param>
         /// <param name="osDiskSizeGB">OS Disk Size in GB to be used to specify
         /// the disk size for every machine in this master/agent pool. If you
         /// specify 0, it will apply the default osDisk size according to the
         /// vmSize specified.</param>
+        /// <param name="dnsPrefix">DNS prefix to be used to create the FQDN
+        /// for the agent pool.</param>
+        /// <param name="fqdn">FQDN for the agent pool.</param>
+        /// <param name="ports">Ports number array used to expose on this agent
+        /// pool. The default opened ports are different based on your choice
+        /// of orchestrator.</param>
+        /// <param name="storageProfile">Storage profile specifies what kind of
+        /// storage used. Choose from StorageAccount and ManagedDisks. Leave it
+        /// empty, we will choose for you based on the orchestrator choice.
+        /// Possible values include: 'StorageAccount', 'ManagedDisks'</param>
         /// <param name="vnetSubnetID">VNet SubnetID specifies the VNet's
         /// subnet identifier.</param>
-        /// <param name="maxPods">Maximum number of pods that can run on a
-        /// node.</param>
         /// <param name="osType">OsType to be used to specify os type. Choose
         /// from Linux and Windows. Default to Linux. Possible values include:
         /// 'Linux', 'Windows'</param>
-        /// <param name="maxCount">Maximum number of nodes for
-        /// auto-scaling</param>
-        /// <param name="minCount">Minimum number of nodes for
-        /// auto-scaling</param>
-        /// <param name="enableAutoScaling">Whether to enable
-        /// auto-scaler</param>
-        /// <param name="type">AgentPoolType represents types of an agent pool.
-        /// Possible values include: 'VirtualMachineScaleSets',
-        /// 'AvailabilitySet'</param>
-        public ManagedClusterAgentPoolProfile(string name, int count, string vmSize, int? osDiskSizeGB = default(int?), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string type = default(string))
+        public ContainerServiceAgentPoolProfile(string name, string vmSize, int? count = default(int?), int? osDiskSizeGB = default(int?), string dnsPrefix = default(string), string fqdn = default(string), IList<int?> ports = default(IList<int?>), string storageProfile = default(string), string vnetSubnetID = default(string), string osType = default(string))
         {
             Name = name;
             Count = count;
             VmSize = vmSize;
             OsDiskSizeGB = osDiskSizeGB;
+            DnsPrefix = dnsPrefix;
+            Fqdn = fqdn;
+            Ports = ports;
+            StorageProfile = storageProfile;
             VnetSubnetID = vnetSubnetID;
-            MaxPods = maxPods;
             OsType = osType;
-            MaxCount = maxCount;
-            MinCount = minCount;
-            EnableAutoScaling = enableAutoScaling;
-            Type = type;
             CustomInit();
         }
 
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// default value is 1.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
-        public int Count { get; set; }
+        public int? Count { get; set; }
 
         /// <summary>
         /// Gets or sets size of agent VMs. Possible values include:
@@ -218,16 +218,40 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public int? OsDiskSizeGB { get; set; }
 
         /// <summary>
+        /// Gets or sets DNS prefix to be used to create the FQDN for the agent
+        /// pool.
+        /// </summary>
+        [JsonProperty(PropertyName = "dnsPrefix")]
+        public string DnsPrefix { get; set; }
+
+        /// <summary>
+        /// Gets FQDN for the agent pool.
+        /// </summary>
+        [JsonProperty(PropertyName = "fqdn")]
+        public string Fqdn { get; private set; }
+
+        /// <summary>
+        /// Gets or sets ports number array used to expose on this agent pool.
+        /// The default opened ports are different based on your choice of
+        /// orchestrator.
+        /// </summary>
+        [JsonProperty(PropertyName = "ports")]
+        public IList<int?> Ports { get; set; }
+
+        /// <summary>
+        /// Gets or sets storage profile specifies what kind of storage used.
+        /// Choose from StorageAccount and ManagedDisks. Leave it empty, we
+        /// will choose for you based on the orchestrator choice. Possible
+        /// values include: 'StorageAccount', 'ManagedDisks'
+        /// </summary>
+        [JsonProperty(PropertyName = "storageProfile")]
+        public string StorageProfile { get; set; }
+
+        /// <summary>
         /// Gets or sets vNet SubnetID specifies the VNet's subnet identifier.
         /// </summary>
         [JsonProperty(PropertyName = "vnetSubnetID")]
         public string VnetSubnetID { get; set; }
-
-        /// <summary>
-        /// Gets or sets maximum number of pods that can run on a node.
-        /// </summary>
-        [JsonProperty(PropertyName = "maxPods")]
-        public int? MaxPods { get; set; }
 
         /// <summary>
         /// Gets or sets osType to be used to specify os type. Choose from
@@ -236,32 +260,6 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
         public string OsType { get; set; }
-
-        /// <summary>
-        /// Gets or sets maximum number of nodes for auto-scaling
-        /// </summary>
-        [JsonProperty(PropertyName = "maxCount")]
-        public int? MaxCount { get; set; }
-
-        /// <summary>
-        /// Gets or sets minimum number of nodes for auto-scaling
-        /// </summary>
-        [JsonProperty(PropertyName = "minCount")]
-        public int? MinCount { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether to enable auto-scaler
-        /// </summary>
-        [JsonProperty(PropertyName = "enableAutoScaling")]
-        public bool? EnableAutoScaling { get; set; }
-
-        /// <summary>
-        /// Gets or sets agentPoolType represents types of an agent pool.
-        /// Possible values include: 'VirtualMachineScaleSets',
-        /// 'AvailabilitySet'
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
 
         /// <summary>
         /// Validate the object.
