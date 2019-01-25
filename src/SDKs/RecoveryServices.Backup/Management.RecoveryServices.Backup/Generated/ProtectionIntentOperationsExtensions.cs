@@ -68,6 +68,64 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
 
             /// <summary>
+            /// Provides the details of the protection intent up item. This is an
+            /// asynchronous operation. To know the status of the operation,
+            /// call the GetItemOperationResult API.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name associated with the backed up item.
+            /// </param>
+            /// <param name='intentObjectName'>
+            /// Backed up item name whose details are to be fetched.
+            /// </param>
+            public static ProtectionIntentResource Get(this IProtectionIntentOperations operations, string vaultName, string resourceGroupName, string fabricName, string intentObjectName)
+            {
+                return operations.GetAsync(vaultName, resourceGroupName, fabricName, intentObjectName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Provides the details of the protection intent up item. This is an
+            /// asynchronous operation. To know the status of the operation,
+            /// call the GetItemOperationResult API.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name associated with the backed up item.
+            /// </param>
+            /// <param name='intentObjectName'>
+            /// Backed up item name whose details are to be fetched.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ProtectionIntentResource> GetAsync(this IProtectionIntentOperations operations, string vaultName, string resourceGroupName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(vaultName, resourceGroupName, fabricName, intentObjectName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create Intent for Enabling backup of an item. This is a synchronous
             /// operation.
             /// </summary>
@@ -127,6 +185,57 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Used to remove intent from an item
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name associated with the intent.
+            /// </param>
+            /// <param name='intentObjectName'>
+            /// Intent to be deleted.
+            /// </param>
+            public static void Delete(this IProtectionIntentOperations operations, string vaultName, string resourceGroupName, string fabricName, string intentObjectName)
+            {
+                operations.DeleteAsync(vaultName, resourceGroupName, fabricName, intentObjectName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Used to remove intent from an item
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name associated with the intent.
+            /// </param>
+            /// <param name='intentObjectName'>
+            /// Intent to be deleted.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IProtectionIntentOperations operations, string vaultName, string resourceGroupName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(vaultName, resourceGroupName, fabricName, intentObjectName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public partial interface IJobDetailsOperations
     {
         /// <summary>
-        /// Gets exteded information associated with the job.
+        /// Gets extended information associated with the job.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.

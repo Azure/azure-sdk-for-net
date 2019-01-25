@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// BEK is bitlocker key.
     /// KEK is encryption key for BEK
-    /// If the VM was encrypted then we will store follwing details :
+    /// If the VM was encrypted then we will store following details :
     /// 1. Secret(BEK) - Url + Backup Data + vaultId.
     /// 2. Key(KEK) - Url + Backup Data + vaultId.
     /// 3. EncryptionMechanism
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the KeyAndSecretDetails class.
         /// </summary>
         /// <param name="kekDetails">KEK is encryption key for BEK.</param>
-        /// <param name="bekDetails">BEK is bitlocker encrpytion key.</param>
+        /// <param name="bekDetails">BEK is bitlocker encryption key.</param>
         /// <param name="encryptionMechanism">Encryption mechanism: None/
         /// SinglePass/ DoublePass</param>
         public KeyAndSecretDetails(KEKDetails kekDetails = default(KEKDetails), BEKDetails bekDetails = default(BEKDetails), string encryptionMechanism = default(string))
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public KEKDetails KekDetails { get; set; }
 
         /// <summary>
-        /// Gets or sets BEK is bitlocker encrpytion key.
+        /// Gets or sets BEK is bitlocker encryption key.
         /// </summary>
         [JsonProperty(PropertyName = "bekDetails")]
         public BEKDetails BekDetails { get; set; }

@@ -13,6 +13,7 @@
 			<![CDATA[
 New features:
 - Backup Validate Operation API
+- Updating as we added re-registration flow.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

@@ -79,9 +79,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='parameters'>
             /// Vault storage config request
             /// </param>
-            public static void Update(this IBackupResourceStorageConfigsOperations operations, string vaultName, string resourceGroupName, BackupResourceConfigResource parameters)
+            public static BackupResourceConfigResource Update(this IBackupResourceStorageConfigsOperations operations, string vaultName, string resourceGroupName, BackupResourceConfigResource parameters)
             {
-                operations.UpdateAsync(vaultName, resourceGroupName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(vaultName, resourceGroupName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -103,9 +103,57 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IBackupResourceStorageConfigsOperations operations, string vaultName, string resourceGroupName, BackupResourceConfigResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupResourceConfigResource> UpdateAsync(this IBackupResourceStorageConfigsOperations operations, string vaultName, string resourceGroupName, BackupResourceConfigResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates vault storage model type.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='parameters'>
+            /// Vault storage config request
+            /// </param>
+            public static void Patch(this IBackupResourceStorageConfigsOperations operations, string vaultName, string resourceGroupName, BackupResourceConfigResource parameters)
+            {
+                operations.PatchAsync(vaultName, resourceGroupName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates vault storage model type.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='parameters'>
+            /// Vault storage config request
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task PatchAsync(this IBackupResourceStorageConfigsOperations operations, string vaultName, string resourceGroupName, BackupResourceConfigResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.PatchWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

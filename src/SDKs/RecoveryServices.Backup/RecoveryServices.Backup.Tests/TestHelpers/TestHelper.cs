@@ -8,6 +8,7 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Management.RecoveryServices.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
+using Microsoft.Rest;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.Azure.OData;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -235,7 +236,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             while (DateTime.Now < timedOut && !validator());
         }
 
-        private void ValidateOperationResponse(AzureOperationResponse response)
+        private void ValidateOperationResponse(HttpOperationResponse response)
         {
             Assert.NotNull(response);
             Assert.Equal(System.Net.HttpStatusCode.Accepted, response.Response.StatusCode);
@@ -243,7 +244,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             Assert.True(response.Response.Headers.Contains("Azure-AsyncOperation"));
             Assert.True(response.Response.Headers.Contains("Retry-After"));
         }
-        
+
         public List<ProtectedItemResource> ListProtectedItems()
         {
             return GetPagedList(
@@ -358,7 +359,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             return (T)(opStatusResponse.Body.Properties);
         }
 
-        private S GetOperationResponse<T, S>(string containerName, string protectedItemName, AzureOperationResponse response,
+        private S GetOperationResponse<T, S>(string containerName, string protectedItemName, HttpOperationResponse response,
             Func<string, AzureOperationResponse<T>> getOpResult,
             Func<string, AzureOperationResponse<OperationStatus>> getOpStatus)
             where T : class

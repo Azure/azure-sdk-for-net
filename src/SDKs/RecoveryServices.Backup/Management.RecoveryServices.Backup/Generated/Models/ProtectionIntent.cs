@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <summary>
         /// Initializes a new instance of the ProtectionIntent class.
         /// </summary>
-        /// <param name="backupManagementType">Type of backup managemenent for
+        /// <param name="backupManagementType">Type of backup management for
         /// the backed up item. Possible values include: 'Invalid',
         /// 'AzureIaasVM', 'MAB', 'DPM', 'AzureBackupServer', 'AzureSql',
         /// 'AzureStorage', 'AzureWorkload', 'DefaultBackup'</param>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of backup managemenent for the backed up item.
+        /// Gets or sets type of backup management for the backed up item.
         /// Possible values include: 'Invalid', 'AzureIaasVM', 'MAB', 'DPM',
         /// 'AzureBackupServer', 'AzureSql', 'AzureStorage', 'AzureWorkload',
         /// 'DefaultBackup'

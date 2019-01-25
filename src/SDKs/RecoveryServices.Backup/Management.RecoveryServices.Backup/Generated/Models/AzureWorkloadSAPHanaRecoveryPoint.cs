@@ -10,14 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// SAPHana specific recoverypoint, specifcally encaspulates full/diff
+    /// SAPHana specific recoverypoint, specifically encapsulates full/diff
     /// recoverypoints
     /// </summary>
-    public partial class AzureWorkloadSAPHanaRecoveryPoint : RecoveryPoint
+    public partial class AzureWorkloadSAPHanaRecoveryPoint : AzureWorkloadRecoveryPoint
     {
         /// <summary>
         /// Initializes a new instance of the AzureWorkloadSAPHanaRecoveryPoint
@@ -37,9 +36,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="type">Type of restore point. Possible values include:
         /// 'Invalid', 'Full', 'Log', 'Differential'</param>
         public AzureWorkloadSAPHanaRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), string type = default(string))
+            : base(recoveryPointTimeInUTC, type)
         {
-            RecoveryPointTimeInUTC = recoveryPointTimeInUTC;
-            Type = type;
             CustomInit();
         }
 
@@ -47,19 +45,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets UTC time at which recoverypoint was created
-        /// </summary>
-        [JsonProperty(PropertyName = "recoveryPointTimeInUTC")]
-        public System.DateTime? RecoveryPointTimeInUTC { get; set; }
-
-        /// <summary>
-        /// Gets or sets type of restore point. Possible values include:
-        /// 'Invalid', 'Full', 'Log', 'Differential'
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
 
     }
 }

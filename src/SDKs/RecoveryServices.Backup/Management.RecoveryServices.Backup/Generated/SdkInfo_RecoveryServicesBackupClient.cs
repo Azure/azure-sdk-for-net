@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 new Tuple<string, string, string>("RecoveryServices", "BackupProtectableItems", "2016-12-01"),
                 new Tuple<string, string, string>("RecoveryServices", "BackupProtectedItems", "2017-07-01"),
                 new Tuple<string, string, string>("RecoveryServices", "BackupProtectionContainers", "2016-12-01"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupProtectionIntent", "2017-07-01"),
                 new Tuple<string, string, string>("RecoveryServices", "BackupResourceStorageConfigs", "2016-12-01"),
                 new Tuple<string, string, string>("RecoveryServices", "BackupResourceVaultConfigs", "2016-12-01"),
                 new Tuple<string, string, string>("RecoveryServices", "BackupStatus", "2017-07-01"),
@@ -59,5 +60,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/recoveryservicesbackup/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\sdk_publish\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "17b815413d93945f0248bfdb678432a80037cefa";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

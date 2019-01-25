@@ -33,8 +33,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// registered or not. Possible values include: 'Invalid',
         /// 'NotProtected', 'Protecting', 'Protected',
         /// 'ProtectionFailed'</param>
-        /// <param name="vaultId">Specifies the arm resource id of the
-        /// vault</param>
         /// <param name="fabricName">Specifies the fabric name - Azure or AD.
         /// Possible values include: 'Invalid', 'Azure'</param>
         /// <param name="containerName">Specifies the product specific
@@ -49,10 +47,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// for protection</param>
         /// <param name="registrationStatus">Container registration
         /// status</param>
-        public BackupStatusResponse(string protectionStatus = default(string), string vaultId = default(string), string fabricName = default(string), string containerName = default(string), string protectedItemName = default(string), string errorCode = default(string), string errorMessage = default(string), string policyName = default(string), string registrationStatus = default(string))
+        public BackupStatusResponse(string protectionStatus = default(string), string fabricName = default(string), string containerName = default(string), string protectedItemName = default(string), string errorCode = default(string), string errorMessage = default(string), string policyName = default(string), string registrationStatus = default(string))
         {
             ProtectionStatus = protectionStatus;
-            VaultId = vaultId;
             FabricName = fabricName;
             ContainerName = containerName;
             ProtectedItemName = protectedItemName;
@@ -75,12 +72,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "protectionStatus")]
         public string ProtectionStatus { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies the arm resource id of the vault
-        /// </summary>
-        [JsonProperty(PropertyName = "vaultId")]
-        public string VaultId { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the fabric name - Azure or AD. Possible

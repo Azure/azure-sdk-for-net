@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure VM workload-specific workload item representing SAP Hana
+    /// Azure VM workload-specific workload item representing SAP HANA
     /// Database.
     /// </summary>
     [Newtonsoft.Json.JsonObject("SAPHanaDatabase")]
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the
         /// AzureVmWorkloadSAPHanaDatabaseWorkloadItem class.
         /// </summary>
-        /// <param name="backupManagementType">Type of backup managemenent to
+        /// <param name="backupManagementType">Type of backup management to
         /// backup an item.</param>
         /// <param name="workloadType">Type of workload for the backup
         /// management</param>

@@ -35,7 +35,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="protectedItemsCount">Number of items associated with
         /// this policy.</param>
         /// <param name="workLoadType">Type of workload for the backup
-        /// management</param>
+        /// management. Possible values include: 'Invalid', 'VM', 'FileFolder',
+        /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
+        /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
+        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase'</param>
         /// <param name="schedulePolicy">Backup schedule specified as part of
         /// backup policy.</param>
         /// <param name="retentionPolicy">Retention policy with the details on
@@ -58,7 +61,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of workload for the backup management
+        /// Gets or sets type of workload for the backup management. Possible
+        /// values include: 'Invalid', 'VM', 'FileFolder', 'AzureSqlDb',
+        /// 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM', 'SystemState',
+        /// 'Client', 'GenericDataSource', 'SQLDataBase', 'AzureFileShare',
+        /// 'SAPHanaDatabase', 'SAPAseDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "workLoadType")]
         public string WorkLoadType { get; set; }

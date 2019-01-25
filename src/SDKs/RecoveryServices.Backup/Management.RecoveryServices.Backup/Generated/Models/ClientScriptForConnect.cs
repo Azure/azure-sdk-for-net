@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="url">URL of Executable from where to source the
         /// content. If this is not null then ScriptContent should not be
         /// used</param>
-        /// <param name="scriptNameSuffix">Mandator suffix that should be added
-        /// to the name of script that is given for download to user.
+        /// <param name="scriptNameSuffix">Mandatory suffix that should be
+        /// added to the name of script that is given for download to user.
         /// If its null or empty then , ignore it.</param>
         public ClientScriptForConnect(string scriptContent = default(string), string scriptExtension = default(string), string osType = default(string), string url = default(string), string scriptNameSuffix = default(string))
         {
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public string Url { get; set; }
 
         /// <summary>
-        /// Gets or sets mandator suffix that should be added to the name of
+        /// Gets or sets mandatory suffix that should be added to the name of
         /// script that is given for download to user.
         /// If its null or empty then , ignore it.
         /// </summary>

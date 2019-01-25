@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class JobDetailsOperationsExtensions
     {
             /// <summary>
-            /// Gets exteded information associated with the job.
+            /// Gets extended information associated with the job.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
 
             /// <summary>
-            /// Gets exteded information associated with the job.
+            /// Gets extended information associated with the job.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

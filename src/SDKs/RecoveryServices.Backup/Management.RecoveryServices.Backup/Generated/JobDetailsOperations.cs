@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public RecoveryServicesBackupClient Client { get; private set; }
 
         /// <summary>
-        /// Gets exteded information associated with the job.
+        /// Gets extended information associated with the job.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
