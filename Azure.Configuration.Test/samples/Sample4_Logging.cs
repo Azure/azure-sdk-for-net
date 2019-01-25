@@ -34,7 +34,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             }
 
             // Delete the setting when you don't need it anymore.
-            Response<ConfigurationSetting> deleteResponse = await client.DeleteAsync("some_key");
+            await client.DeleteAsync("some_key");
         }
     }
 

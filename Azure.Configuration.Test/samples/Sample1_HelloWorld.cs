@@ -4,8 +4,8 @@
 
 using NUnit.Framework;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Azure.ApplicationModel.Configuration.Samples
 {
@@ -28,22 +28,14 @@ namespace Azure.ApplicationModel.Configuration.Samples
             // SetAsyc adds a new setting to the store or overrides an existing setting.
             // Alternativelly you can call AddAsync which only succeeds if the setting does not already exist in the store.
             // Or you can call UpdateAsync to update a setting that is already present in the store.
-            Response<ConfigurationSetting> setResponse = await client.SetAsync(setting);
-            if (setResponse.Status != 200)
-            {
-                throw new Exception("could not set configuration setting");
-            }
+            await client.SetAsync(setting);
 
             // Retrieve a previously stored setting by calling GetAsync.
-            var (retrieved, response) = await client.GetAsync("some_key");
-            if (response.Status != 200)
-            {
-                throw new Exception("could not set configuration setting");
-            }
-            string retrievedValue = retrieved.Value;
+            ConfigurationSetting gotSetting = await client.GetAsync("some_key");
+            Debug.WriteLine(gotSetting.Value);
 
             // Delete the setting when you don't need it anymore.
-            Response<ConfigurationSetting> deleteResponse = await client.DeleteAsync("some_key");
+            await client.DeleteAsync("some_key");
         }
     }
 }

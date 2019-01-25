@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.ApplicationModel.Configuration
@@ -47,16 +48,9 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        static async Task<Response<ConfigurationSetting>> CreateResponse(HttpMessage message)
+        static async Task<Response<ConfigurationSetting>> CreateResponse(Response response, CancellationToken cancellation)
         {
-            PipelineResponse response = message.Response;
-
-            if (response.Status != 200) {
-                return new Response<ConfigurationSetting>(response);
-            }
-
-            var result = await ConfigurationServiceSerializer.ParseSettingAsync(response.ContentStream, message.Cancellation);
-
+            ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation);
             return new Response<ConfigurationSetting>(response, result);
         }
 

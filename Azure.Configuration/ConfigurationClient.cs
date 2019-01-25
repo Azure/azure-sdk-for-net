@@ -5,6 +5,7 @@
 using Azure.Core;
 using Azure.Core.Http;
 using System;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -44,6 +45,10 @@ namespace Azure.ApplicationModel.Configuration
             ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
         }
 
+        [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]
+        [HttpError(typeof(ResponseFailedException), 412, Message = "matching item is already in the store")]
+        [HttpError(typeof(ResponseFailedException), 429, Message = "too many requests")]
+        [UsageErrors(typeof(ResponseFailedException), 401, 403, 408, 500, 502, 503, 504)]
         public async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
@@ -69,7 +74,11 @@ namespace Azure.ApplicationModel.Configuration
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
 
-                return await CreateResponse(message);
+                var response = message.Response;
+                if (response.Status == 200) {
+                    return await CreateResponse(response, cancellation);
+                }
+                else throw new ResponseFailedException(response);
             }
         }
 
@@ -96,7 +105,12 @@ namespace Azure.ApplicationModel.Configuration
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
 
-                return await CreateResponse(message);
+                var response = message.Response;
+                if (response.Status == 200) {
+                    return await CreateResponse(response, cancellation);
+                }
+                if (response.Status == 403) throw new ResponseFailedException(response, "the item is locked");
+                else throw new ResponseFailedException(response);
             }
         }
 
@@ -125,11 +139,15 @@ namespace Azure.ApplicationModel.Configuration
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
 
-                return await CreateResponse(message);
+                var response = message.Response;
+                if (response.Status == 200) {
+                    return await CreateResponse(response, cancellation);
+                }
+                else throw new ResponseFailedException(response);
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> DeleteAsync(string key, SettingFilter filter = null, CancellationToken cancellation = default)
+        public async Task<Response> DeleteAsync(string key, SettingFilter filter = null, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
@@ -145,7 +163,11 @@ namespace Azure.ApplicationModel.Configuration
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
 
-                return await CreateResponse(message);
+                var response = message.Response;
+                if (response.Status == 200 || response.Status == 204) {
+                    return response;
+                }
+                else throw new ResponseFailedException(response);
             }
         }
 
@@ -165,7 +187,11 @@ namespace Azure.ApplicationModel.Configuration
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
 
-                return await CreateResponse(message);
+                var response = message.Response;
+                if (response.Status == 200) {
+                    return await CreateResponse(response, cancellation);
+                }
+                else throw new ResponseFailedException(response);
             }
         }
 
@@ -185,7 +211,11 @@ namespace Azure.ApplicationModel.Configuration
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
 
-                return await CreateResponse(message);
+                var response = message.Response;
+                if (response.Status == 200) {
+                    return await CreateResponse(response, cancellation);
+                }
+                else throw new ResponseFailedException(response);
             }
         }
 
@@ -208,7 +238,11 @@ namespace Azure.ApplicationModel.Configuration
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
 
-                return await CreateResponse(message);
+                var response = message.Response;
+                if (response.Status == 200) {
+                    return await CreateResponse(response, cancellation);
+                }
+                else throw new ResponseFailedException(response);
             }
         }
 
@@ -230,15 +264,13 @@ namespace Azure.ApplicationModel.Configuration
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Get, content: default, _secret, _credential);
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
 
-                PipelineResponse response = message.Response;
-                
-                if (response.Status != 200)
-                {
-                    return new Response<SettingBatch>(response);
-                }
 
-                var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellation);
-                return new Response<SettingBatch>(response, batch);
+                Response response = message.Response;
+                if (response.Status == 200 || response.Status == 206 /* partial */) {
+                    var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellation);
+                    return new Response<SettingBatch>(response, batch);
+                }
+                else throw new ResponseFailedException(response);
             }
         }
 
@@ -255,15 +287,12 @@ namespace Azure.ApplicationModel.Configuration
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Get, content: default, _secret, _credential);
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
 
-                PipelineResponse response = message.Response;
-
-                if (response.Status != 200)
-                {
-                    return new Response<SettingBatch>(response);
+                Response response = message.Response;
+                if (response.Status == 200) {
+                    var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellation);
+                    return new Response<SettingBatch>(response, batch);
                 }
-
-                var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellation);
-                return new Response<SettingBatch>(response, batch);
+                else throw new ResponseFailedException(response);
             }
         }
 
@@ -286,15 +315,12 @@ namespace Azure.ApplicationModel.Configuration
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
 
-                PipelineResponse response = message.Response;
-                
-                if (response.Status != 200)
-                {
-                    return new Response<SettingBatch>(response);
+                Response response = message.Response;
+                if (response.Status == 200 || response.Status == 206 /* partial */) {
+                    var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellation);
+                    return new Response<SettingBatch>(response, batch);
                 }
-
-                var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellation);
-                return new Response<SettingBatch>(response, batch);
+                else throw new ResponseFailedException(response);
             }
         }
     }

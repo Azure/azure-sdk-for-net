@@ -40,12 +40,9 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
 
-            // Prepare environment
-            Response<ConfigurationSetting> response = await service.DeleteAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
+            var response = await service.DeleteAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
 
             Assert.AreEqual(204, response.Status);
-            Assert.IsNull(response.Result);
-
             response.Dispose();
         }
 
@@ -68,13 +65,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
             try
             {
                 // Test
-                Response<ConfigurationSetting> response = await service.DeleteAsync(key: testSettingDiff.Key, filter: testSettingDiff.Label, CancellationToken.None);
-
+                var response = await service.DeleteAsync(key: testSettingDiff.Key, filter: testSettingDiff.Label, CancellationToken.None);
                 Assert.AreEqual(200, response.Status);
-
-                ConfigurationSetting setting = response.Result;
-                AssertEqual(testSettingDiff, setting);
-
                 response.Dispose();
             }
             finally
@@ -99,13 +91,9 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreEqual(200, responseSet.Status);
 
             // Test
-            Response<ConfigurationSetting> response = await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
+            var response = await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
 
             Assert.AreEqual(200, response.Status);
-
-            ConfigurationSetting setting = response.Result;
-            AssertEqual(s_testSetting, setting);
-
             response.Dispose();
             responseSet.Dispose();
         }
@@ -131,12 +119,9 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Label = settting.Label
             };
 
-            Response<ConfigurationSetting> response = await service.DeleteAsync(key: s_testSetting.Key, filter: filter, CancellationToken.None);
+            Response response = await service.DeleteAsync(key: s_testSetting.Key, filter: filter, CancellationToken.None);
 
             Assert.AreEqual(200, response.Status);
-
-            ConfigurationSetting setting = response.Result;
-            AssertEqual(s_testSetting, setting);
 
             response.Dispose();
             responseSet.Dispose();
@@ -389,20 +374,21 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
-        public async Task GetNotFound()
+        public void GetNotFound()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
 
             // Test
-            Response<ConfigurationSetting> response = await service.GetAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
+            var e = Assert.ThrowsAsync<ResponseFailedException>(async () =>
+            {
+                await service.GetAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
+            });
 
+            var response = e.Response;
             Assert.AreEqual(404, response.Status);
-            Assert.IsNull(response.Result);
-
             response.Dispose();
-
         }
 
         [Test]
@@ -550,10 +536,16 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 //Test update
                 var testSettingUpdate = s_testSetting.Clone();
                 testSettingUpdate.Value = "test_value_update";
-                
-                Response<ConfigurationSetting> responseUpdate = await service.UpdateAsync(testSettingUpdate, default, CancellationToken.None);
-                Assert.AreEqual(403, responseUpdate.Status);
-                responseUpdate.Dispose();
+                testSettingUpdate.ETag = "*";
+
+                var e = Assert.ThrowsAsync<ResponseFailedException>(async () =>
+                {
+                    await service.UpdateAsync(testSettingUpdate);
+                });
+                var response = e.Response;
+                Assert.AreEqual(403, response.Status);
+                response.Dispose();
+
 
                 // Test Unlock
                 Response<ConfigurationSetting> responseUnlock = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
