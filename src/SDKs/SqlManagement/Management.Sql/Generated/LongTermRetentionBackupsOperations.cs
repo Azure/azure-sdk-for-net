@@ -57,8 +57,10 @@ namespace Microsoft.Azure.Management.Sql
         /// The location of the database.
         /// </param>
         /// <param name='longTermRetentionServerName'>
+        /// The name of the server
         /// </param>
         /// <param name='longTermRetentionDatabaseName'>
+        /// The name of the database
         /// </param>
         /// <param name='backupName'>
         /// The backup name.
@@ -267,8 +269,10 @@ namespace Microsoft.Azure.Management.Sql
         /// The location of the database
         /// </param>
         /// <param name='longTermRetentionServerName'>
+        /// The name of the server
         /// </param>
         /// <param name='longTermRetentionDatabaseName'>
+        /// The name of the database
         /// </param>
         /// <param name='backupName'>
         /// The backup name.
@@ -293,8 +297,10 @@ namespace Microsoft.Azure.Management.Sql
         /// The location of the database
         /// </param>
         /// <param name='longTermRetentionServerName'>
+        /// The name of the server
         /// </param>
         /// <param name='longTermRetentionDatabaseName'>
+        /// The name of the database
         /// </param>
         /// <param name='onlyLatestPerDatabase'>
         /// Whether or not to only get the latest backup for each database.
@@ -713,6 +719,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The location of the database
         /// </param>
         /// <param name='longTermRetentionServerName'>
+        /// The name of the server
         /// </param>
         /// <param name='onlyLatestPerDatabase'>
         /// Whether or not to only get the latest backup for each database.
@@ -923,8 +930,10 @@ namespace Microsoft.Azure.Management.Sql
         /// The location of the database
         /// </param>
         /// <param name='longTermRetentionServerName'>
+        /// The name of the server
         /// </param>
         /// <param name='longTermRetentionDatabaseName'>
+        /// The name of the database
         /// </param>
         /// <param name='backupName'>
         /// The backup name.

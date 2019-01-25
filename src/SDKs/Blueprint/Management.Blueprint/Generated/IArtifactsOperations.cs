@@ -26,8 +26,11 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <summary>
         /// Create or update Blueprint artifact.
         /// </summary>
-        /// <param name='managementGroupName'>
-        /// ManagementGroup where blueprint stores.
+        /// <param name='scope'>
+        /// The scope of the resource. Valid scopes are: management group
+        /// (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
         /// name of the blueprint.
@@ -53,12 +56,15 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Artifact>> CreateOrUpdateWithHttpMessagesAsync(string managementGroupName, string blueprintName, string artifactName, Artifact artifact, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Artifact>> CreateOrUpdateWithHttpMessagesAsync(string scope, string blueprintName, string artifactName, Artifact artifact, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a Blueprint artifact.
         /// </summary>
-        /// <param name='managementGroupName'>
-        /// ManagementGroup where blueprint stores.
+        /// <param name='scope'>
+        /// The scope of the resource. Valid scopes are: management group
+        /// (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
         /// name of the blueprint.
@@ -81,12 +87,15 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Artifact>> GetWithHttpMessagesAsync(string managementGroupName, string blueprintName, string artifactName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Artifact>> GetWithHttpMessagesAsync(string scope, string blueprintName, string artifactName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a Blueprint artifact.
         /// </summary>
-        /// <param name='managementGroupName'>
-        /// ManagementGroup where blueprint stores.
+        /// <param name='scope'>
+        /// The scope of the resource. Valid scopes are: management group
+        /// (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
         /// name of the blueprint.
@@ -109,12 +118,15 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Artifact>> DeleteWithHttpMessagesAsync(string managementGroupName, string blueprintName, string artifactName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Artifact>> DeleteWithHttpMessagesAsync(string scope, string blueprintName, string artifactName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List artifacts for a given Blueprint.
         /// </summary>
-        /// <param name='managementGroupName'>
-        /// ManagementGroup where blueprint stores.
+        /// <param name='scope'>
+        /// The scope of the resource. Valid scopes are: management group
+        /// (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
         /// name of the blueprint.
@@ -134,7 +146,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Artifact>>> ListWithHttpMessagesAsync(string managementGroupName, string blueprintName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Artifact>>> ListWithHttpMessagesAsync(string scope, string blueprintName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List artifacts for a given Blueprint.
         /// </summary>

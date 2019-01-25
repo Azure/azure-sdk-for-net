@@ -335,7 +335,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration
             GuestConfigurationAssignmentReports = new GuestConfigurationAssignmentReportsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-06-30-preview";
+            ApiVersion = "2018-11-20";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

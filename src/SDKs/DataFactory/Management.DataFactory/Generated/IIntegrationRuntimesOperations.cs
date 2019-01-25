@@ -404,7 +404,7 @@ namespace Microsoft.Azure.Management.DataFactory
         Task<AzureOperationResponse<IntegrationRuntimeMonitoringData>> GetMonitoringDataWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Upgrade self-hosted integration runtime to latest version if
-        /// availably.
+        /// availability.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.

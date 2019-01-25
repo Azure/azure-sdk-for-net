@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Concur Serivce linked service.
+    /// Concur Service linked service.
     /// </summary>
     [Newtonsoft.Json.JsonObject("Concur")]
     [Rest.Serialization.JsonTransformation]

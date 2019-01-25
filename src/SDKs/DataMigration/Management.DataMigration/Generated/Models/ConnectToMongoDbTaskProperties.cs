@@ -42,10 +42,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Canceled', 'Succeeded', 'Failed', 'FailedInputValidation',
         /// 'Faulted'</param>
         /// <param name="commands">Array of command properties.</param>
+        /// <param name="clientData">Key value pairs of client data to attach
+        /// meta data information to task</param>
         /// <param name="output">An array containing a single
         /// MongoDbClusterInfo object</param>
-        public ConnectToMongoDbTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), IList<CommandProperties> commands = default(IList<CommandProperties>), MongoDbConnectionInfo input = default(MongoDbConnectionInfo), IList<MongoDbClusterInfo> output = default(IList<MongoDbClusterInfo>))
-            : base(errors, state, commands)
+        public ConnectToMongoDbTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), IList<CommandProperties> commands = default(IList<CommandProperties>), IDictionary<string, string> clientData = default(IDictionary<string, string>), MongoDbConnectionInfo input = default(MongoDbConnectionInfo), IList<MongoDbClusterInfo> output = default(IList<MongoDbClusterInfo>))
+            : base(errors, state, commands, clientData)
         {
             Input = input;
             Output = output;

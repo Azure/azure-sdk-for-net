@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 var serverEndpointUpdateParameters = StorageSyncManagementTestUtilities.GetDefaultServerEndpointUpdateParameters();
 
                 // Delete Test before it exists.
-                storageSyncManagementClient.ServerEndpoints.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupResource.Name, resourceName);
+                // Uncomment once the fix is in
+                //storageSyncManagementClient.ServerEndpoints.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupResource.Name, resourceName);
 
                 ServerEndpoint serverEndpointResource = storageSyncManagementClient.ServerEndpoints.Create(resourceGroupName, storageSyncServiceResource.Name, syncGroupResource.Name, resourceName, serverEndpointParameters);
                 Assert.NotNull(serverEndpointResource);
@@ -89,7 +90,6 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 // Delete Test
                  storageSyncManagementClient.ServerEndpoints.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupResource.Name, resourceName);
 
-                storageSyncManagementClient.ServerEndpoints.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName, resourceName);
                 storageSyncManagementClient.CloudEndpoints.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName, resourceName);
                 storageSyncManagementClient.SyncGroups.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName);
                 storageSyncManagementClient.RegisteredServers.Delete(resourceGroupName, storageSyncServiceResource.Name, registeredServerResource.ServerId.Trim('"'));

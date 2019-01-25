@@ -10,15 +10,63 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ServerLevelPermissionsGroup.
     /// </summary>
-    public static class ServerLevelPermissionsGroup
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ServerLevelPermissionsGroup
     {
-        public const string Default = "Default";
-        public const string MigrationFromSqlServerToAzureDB = "MigrationFromSqlServerToAzureDB";
-        public const string MigrationFromSqlServerToAzureMI = "MigrationFromSqlServerToAzureMI";
-        public const string MigrationFromMySQLToAzureDBForMySQL = "MigrationFromMySQLToAzureDBForMySQL";
+        [EnumMember(Value = "Default")]
+        Default,
+        [EnumMember(Value = "MigrationFromSqlServerToAzureDB")]
+        MigrationFromSqlServerToAzureDB,
+        [EnumMember(Value = "MigrationFromSqlServerToAzureMI")]
+        MigrationFromSqlServerToAzureMI,
+        [EnumMember(Value = "MigrationFromMySQLToAzureDBForMySQL")]
+        MigrationFromMySQLToAzureDBForMySQL
+    }
+    internal static class ServerLevelPermissionsGroupEnumExtension
+    {
+        internal static string ToSerializedValue(this ServerLevelPermissionsGroup? value)
+        {
+            return value == null ? null : ((ServerLevelPermissionsGroup)value).ToSerializedValue();
+        }
+
+        internal static string ToSerializedValue(this ServerLevelPermissionsGroup value)
+        {
+            switch( value )
+            {
+                case ServerLevelPermissionsGroup.Default:
+                    return "Default";
+                case ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureDB:
+                    return "MigrationFromSqlServerToAzureDB";
+                case ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureMI:
+                    return "MigrationFromSqlServerToAzureMI";
+                case ServerLevelPermissionsGroup.MigrationFromMySQLToAzureDBForMySQL:
+                    return "MigrationFromMySQLToAzureDBForMySQL";
+            }
+            return null;
+        }
+
+        internal static ServerLevelPermissionsGroup? ParseServerLevelPermissionsGroup(this string value)
+        {
+            switch( value )
+            {
+                case "Default":
+                    return ServerLevelPermissionsGroup.Default;
+                case "MigrationFromSqlServerToAzureDB":
+                    return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureDB;
+                case "MigrationFromSqlServerToAzureMI":
+                    return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureMI;
+                case "MigrationFromMySQLToAzureDBForMySQL":
+                    return ServerLevelPermissionsGroup.MigrationFromMySQLToAzureDBForMySQL;
+            }
+            return null;
+        }
     }
 }

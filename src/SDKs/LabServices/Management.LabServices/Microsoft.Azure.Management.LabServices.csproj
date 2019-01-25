@@ -13,7 +13,7 @@
         <ProjectGuid>{B2143F8C-A1B8-4042-ACAB-CB7797E24C9F}</ProjectGuid>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->
