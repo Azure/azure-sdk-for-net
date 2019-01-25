@@ -12,6 +12,10 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// Base class for types that supply values used to connect to container
+    /// orchestrators
+    /// </summary>
     public partial class OrchestratorSpecificConnectionDetails
     {
         /// <summary>

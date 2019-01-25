@@ -26,7 +26,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        public System.Uri BaseUri { get; set; }
+        internal string BaseUri {get; set;}
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -39,9 +39,29 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// "https://westus.api.cognitive.microsoft.com",
+        /// "https://api.cognitive.microsoft.com").
+        /// </summary>
+        public string Endpoint { get; set; }
+
+        /// <summary>
         /// Subscription credentials which uniquely identify client subscription.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the SpellCheckClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling SpellCheckClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected SpellCheckClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the SpellCheckClient class.
@@ -71,51 +91,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         /// <summary>
         /// Initializes a new instance of the SpellCheckClient class.
         /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        protected SpellCheckClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            BaseUri = baseUri;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the SpellCheckClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        protected SpellCheckClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            BaseUri = baseUri;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the SpellCheckClient class.
-        /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
         /// </param>
@@ -126,6 +101,33 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         /// Thrown when a required parameter is null
         /// </exception>
         public SpellCheckClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SpellCheckClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling SpellCheckClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public SpellCheckClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -167,75 +169,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         }
 
         /// <summary>
-        /// Initializes a new instance of the SpellCheckClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify client subscription.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public SpellCheckClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            BaseUri = baseUri;
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the SpellCheckClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify client subscription.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public SpellCheckClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            BaseUri = baseUri;
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
         /// An optional partial-method to perform custom initialization.
         ///</summary>
         partial void CustomInitialize();
@@ -244,7 +177,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         /// </summary>
         private void Initialize()
         {
-            BaseUri = new System.Uri("https://api.cognitive.microsoft.com/bing/v7.0");
+            BaseUri = "{Endpoint}/bing/v7.0";
+            Endpoint = "https://api.cognitive.microsoft.com";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -515,6 +449,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         /// </return>
         public async Task<HttpOperationResponse<SpellCheckModel>> SpellCheckerWithHttpMessagesAsync(string text, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string actionType = default(string), string appName = default(string), string countryCode = default(string), string clientMachineName = default(string), string docId = default(string), string market = default(string), string sessionId = default(string), string setLang = default(string), string userId = default(string), string mode = default(string), string preContextText = default(string), string postContextText = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (text == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "text");
@@ -551,8 +489,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
                 ServiceClientTracing.Enter(_invocationId, this, "SpellChecker", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "spellcheck").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "spellcheck";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             List<string> _queryParameters = new List<string>();
             if (actionType != null)
             {

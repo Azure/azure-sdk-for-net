@@ -162,6 +162,7 @@ namespace Microsoft.Rest
 
         private string GetOsNameBackup()
         {
+            //Using a way posted on this thread http://aka.ms/OSNameCR
             string osName = string.Empty;
             try
             {

@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="containerNetworkInterfaceConfiguration">Container
         /// network interface configuration from which this container network
         /// interface is created.</param>
-        /// <param name="container">Reference to the conatinaer to which this
+        /// <param name="container">Reference to the container to which this
         /// container network interface is attached.</param>
         /// <param name="ipConfigurations">Reference to the ip configuration on
         /// this container nic.</param>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public ContainerNetworkInterfaceConfiguration ContainerNetworkInterfaceConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets reference to the conatinaer to which this container
+        /// Gets or sets reference to the container to which this container
         /// network interface is attached.
         /// </summary>
         [JsonProperty(PropertyName = "properties.container")]

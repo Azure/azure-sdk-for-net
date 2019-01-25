@@ -101,7 +101,7 @@ namespace Azure.Batch.Unit.Tests
                                                             }
                                                     },
                                 CreationTime = dateTimeMinusAnHour,
-                                CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily: "4", targetOSVersion: "*", currentOSVersion: "*"),
+                                CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily: "4", osVersion: "*"),
                                 CurrentDedicatedNodes = 3,
                                 ETag = "eTag=0x8D250D98B5D78AA",
                                 EnableAutoScale = false,
@@ -127,7 +127,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(AllocationState.Steady, pool.AllocationState);
                 Assert.Equal(dateTimeMinusAnHour, pool.AllocationStateTransitionTime);
                 Assert.Equal(dateTimeMinusAnHour, pool.CreationTime);
-                Assert.Equal("*", pool.CloudServiceConfiguration.CurrentOSVersion);
+                Assert.Equal("*", pool.CloudServiceConfiguration.OSVersion);
                 Assert.Equal(3, pool.CurrentDedicatedComputeNodes);
                 Assert.Equal(false, pool.AutoScaleEnabled);
                 Assert.Equal(currentDateTime, pool.LastModified);
@@ -137,7 +137,6 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(currentDateTime, pool.StateTransitionTime);
                 Assert.Equal(ComputeNodeFillType.Pack, pool.TaskSchedulingPolicy.ComputeNodeFillType);
                 Assert.Equal(3, pool.TargetDedicatedComputeNodes);
-                Assert.Equal("*", pool.CloudServiceConfiguration.TargetOSVersion);
                 Assert.Equal("testbatch://batch-test.windows-int.net/pools/batch-test", pool.Url);
 
                 var certs = pool.CertificateReferences;

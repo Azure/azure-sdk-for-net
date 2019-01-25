@@ -41,31 +41,32 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Possible values are: 'Allow' and 'Deny'. Possible values include:
         /// 'Allow', 'Deny'</param>
         /// <param name="direction">The direction of the rule. The direction
-        /// specifies if rule will be evaluated on incoming or outcoming
+        /// specifies if rule will be evaluated on incoming or outgoing
         /// traffic. Possible values are: 'Inbound' and 'Outbound'. Possible
         /// values include: 'Inbound', 'Outbound'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="description">A description for this rule. Restricted
         /// to 140 chars.</param>
         /// <param name="sourcePortRange">The source port or range. Integer or
-        /// range between 0 and 65535. Asterix '*' can also be used to match
+        /// range between 0 and 65535. Asterisks '*' can also be used to match
         /// all ports.</param>
         /// <param name="destinationPortRange">The destination port or range.
-        /// Integer or range between 0 and 65535. Asterix '*' can also be used
-        /// to match all ports.</param>
+        /// Integer or range between 0 and 65535. Asterisks '*' can also be
+        /// used to match all ports.</param>
         /// <param name="sourceAddressPrefix">The CIDR or source IP range.
-        /// Asterix '*' can also be used to match all source IPs. Default tags
-        /// such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can
-        /// also be used. If this is an ingress rule, specifies where network
-        /// traffic originates from. </param>
+        /// Asterisks '*' can also be used to match all source IPs. Default
+        /// tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet'
+        /// can also be used. If this is an ingress rule, specifies where
+        /// network traffic originates from. </param>
         /// <param name="sourceAddressPrefixes">The CIDR or source IP
         /// ranges.</param>
         /// <param name="sourceApplicationSecurityGroups">The application
         /// security group specified as source.</param>
         /// <param name="destinationAddressPrefix">The destination address
-        /// prefix. CIDR or destination IP range. Asterix '*' can also be used
-        /// to match all source IPs. Default tags such as 'VirtualNetwork',
-        /// 'AzureLoadBalancer' and 'Internet' can also be used.</param>
+        /// prefix. CIDR or destination IP range. Asterisks '*' can also be
+        /// used to match all source IPs. Default tags such as
+        /// 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be
+        /// used.</param>
         /// <param name="destinationAddressPrefixes">The destination address
         /// prefixes. CIDR or destination IP ranges.</param>
         /// <param name="destinationApplicationSecurityGroups">The application
@@ -130,21 +131,21 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the source port or range. Integer or range between 0
-        /// and 65535. Asterix '*' can also be used to match all ports.
+        /// and 65535. Asterisks '*' can also be used to match all ports.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourcePortRange")]
         public string SourcePortRange { get; set; }
 
         /// <summary>
         /// Gets or sets the destination port or range. Integer or range
-        /// between 0 and 65535. Asterix '*' can also be used to match all
+        /// between 0 and 65535. Asterisks '*' can also be used to match all
         /// ports.
         /// </summary>
         [JsonProperty(PropertyName = "properties.destinationPortRange")]
         public string DestinationPortRange { get; set; }
 
         /// <summary>
-        /// Gets or sets the CIDR or source IP range. Asterix '*' can also be
+        /// Gets or sets the CIDR or source IP range. Asterisks '*' can also be
         /// used to match all source IPs. Default tags such as
         /// 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be
         /// used. If this is an ingress rule, specifies where network traffic
@@ -167,7 +168,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the destination address prefix. CIDR or destination IP
-        /// range. Asterix '*' can also be used to match all source IPs.
+        /// range. Asterisks '*' can also be used to match all source IPs.
         /// Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and
         /// 'Internet' can also be used.
         /// </summary>
@@ -219,7 +220,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the direction of the rule. The direction specifies if
-        /// rule will be evaluated on incoming or outcoming traffic. Possible
+        /// rule will be evaluated on incoming or outgoing traffic. Possible
         /// values are: 'Inbound' and 'Outbound'. Possible values include:
         /// 'Inbound', 'Outbound'
         /// </summary>

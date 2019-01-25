@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<ServerEndpoint>,ServerEndpointsListBySyncGroupHeaders>> ListBySyncGroupWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Recall a serverendpoint.
+        /// Recall a server endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// </exception>
         Task<AzureOperationHeaderResponse<ServerEndpointsDeleteHeaders>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Recall a serverendpoint.
+        /// Recall a server endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.

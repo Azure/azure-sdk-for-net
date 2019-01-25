@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the ListServiceSasResponse class.
         /// </summary>
         /// <param name="serviceSasToken">List service SAS credentials of
-        /// speicific resource.</param>
+        /// specific resource.</param>
         public ListServiceSasResponse(string serviceSasToken = default(string))
         {
             ServiceSasToken = serviceSasToken;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets list service SAS credentials of speicific resource.
+        /// Gets list service SAS credentials of specific resource.
         /// </summary>
         [JsonProperty(PropertyName = "serviceSasToken")]
         public string ServiceSasToken { get; private set; }

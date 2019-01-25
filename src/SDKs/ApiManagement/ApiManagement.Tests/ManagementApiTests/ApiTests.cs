@@ -67,6 +67,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                 // create autorization server
                 string newApiAuthorizationServerId = TestUtilities.GenerateName("authorizationServerId");
                 string newApiId = TestUtilities.GenerateName("apiid");
+                string newOpenApiId = TestUtilities.GenerateName("openApiid");
+                string openIdNoSecret = TestUtilities.GenerateName("openId");
 
                 try
                 {
@@ -102,7 +104,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         {
                             AuthorizationServerId = newApiAuthorizationServerId,
                             Scope = newApiAuthorizationScope
-                        }
+                        }                        
                     };
 
                     var createdApiContract = testBase.client.Api.CreateOrUpdate(
@@ -121,7 +123,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                                 Header = subscriptionKeyParametersHeader,
                                 Query = subscriptionKeyQueryStringParamName
                             },
-                            AuthenticationSettings = newApiAuthenticationSettings
+                            AuthenticationSettings = newApiAuthenticationSettings                            
                         });
                     
                     // get new api to check it was added
@@ -187,6 +189,73 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.True(apiGetResponse.Protocols.Contains(Protocol.Http));
                     Assert.True(apiGetResponse.Protocols.Contains(Protocol.Https));
 
+                    // add an api with OpenId authentication settings
+                    // create a openId connect provider
+                    string openIdProviderName = TestUtilities.GenerateName("openIdName");
+                    string metadataEndpoint = testBase.GetOpenIdMetadataEndpointUrl();
+                    string clientId = TestUtilities.GenerateName("clientId");
+                    var openIdConnectCreateParameters = new OpenidConnectProviderContract(openIdProviderName,
+                        metadataEndpoint, clientId);
+
+                    var openIdCreateResponse = testBase.client.OpenIdConnectProvider.CreateOrUpdate(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        openIdNoSecret,
+                        openIdConnectCreateParameters);
+
+                    Assert.NotNull(openIdCreateResponse);
+                    Assert.Equal(openIdProviderName, openIdCreateResponse.DisplayName);
+                    Assert.Equal(openIdNoSecret, openIdCreateResponse.Name);
+
+                    string newOpenIdApiName = TestUtilities.GenerateName("apiname");
+                    string newOpenIdApiDescription = TestUtilities.GenerateName("apidescription");
+                    string newOpenIdApiPath = "newOpenapiPath";
+                    string newOpenIdApiServiceUrl = "http://newechoapi2.cloudapp.net/api";                    
+                    string newOpenIdAuthorizationScope = TestUtilities.GenerateName("oauth2scope");
+                    var newnewOpenIdAuthenticationSettings = new AuthenticationSettingsContract
+                    {
+                        Openid = new OpenIdAuthenticationSettingsContract
+                        {
+                            OpenidProviderId = openIdCreateResponse.Name,
+                            BearerTokenSendingMethods = new[] { BearerTokenSendingMethods.AuthorizationHeader }
+                        }
+                    };
+
+                    var createdOpenApiIdContract = testBase.client.Api.CreateOrUpdate(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newOpenApiId,
+                        new ApiCreateOrUpdateParameter
+                        {
+                            DisplayName = newOpenIdApiName,
+                            Description = newOpenIdApiDescription,
+                            Path = newOpenIdApiPath,
+                            ServiceUrl = newOpenIdApiServiceUrl,
+                            Protocols = new List<Protocol?> { Protocol.Https, Protocol.Http },
+                            SubscriptionKeyParameterNames = new SubscriptionKeyParameterNamesContract
+                            {
+                                Header = subscriptionKeyParametersHeader,
+                                Query = subscriptionKeyQueryStringParamName
+                            },
+                            AuthenticationSettings = newnewOpenIdAuthenticationSettings
+                        });
+
+                    // get new api to check it was added
+                    var openApiGetResponse = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, newOpenApiId);
+                    Assert.NotNull(openApiGetResponse);
+                    Assert.Equal(newOpenApiId, openApiGetResponse.Name);
+                    Assert.Equal(newOpenIdApiName, openApiGetResponse.DisplayName);
+                    Assert.Equal(newOpenIdApiDescription, openApiGetResponse.Description);
+                    Assert.Equal(newOpenIdApiPath, openApiGetResponse.Path);
+                    Assert.Equal(newOpenIdApiServiceUrl, openApiGetResponse.ServiceUrl);
+                    Assert.Equal(subscriptionKeyParametersHeader, openApiGetResponse.SubscriptionKeyParameterNames.Header);
+                    Assert.Equal(subscriptionKeyQueryStringParamName, openApiGetResponse.SubscriptionKeyParameterNames.Query);
+                    Assert.Equal(2, openApiGetResponse.Protocols.Count);
+                    Assert.True(openApiGetResponse.Protocols.Contains(Protocol.Http));
+                    Assert.True(openApiGetResponse.Protocols.Contains(Protocol.Https));
+                    Assert.NotNull(openApiGetResponse.AuthenticationSettings.Openid);
+                    Assert.Equal(openIdCreateResponse.Name, openApiGetResponse.AuthenticationSettings.Openid.OpenidProviderId);
+
                     // list with paging
                     listResponse = testBase.client.Api.ListByService(
                         testBase.rgName,
@@ -201,7 +270,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.NotNull(listResponse);
                     Assert.Single(listResponse);
-                    Assert.Empty(listResponse.NextPageLink);
+                    Assert.NotNull(listResponse.NextPageLink);
 
                     // delete the api
                     testBase.client.Api.Delete(
@@ -220,10 +289,28 @@ namespace ApiManagement.Tests.ManagementApiTests
                     {
                         Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
                     }
+
+                    // delete the api
+                    testBase.client.Api.Delete(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newOpenApiId,
+                        "*");
+
+                    // get the deleted api to make sure it was deleted
+                    try
+                    {
+                        testBase.client.Api.Get(testBase.rgName, testBase.serviceName, newOpenApiId);
+                        throw new Exception("This code should not have been executed.");
+                    }
+                    catch (ErrorResponseException ex)
+                    {
+                        Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                    }
                 }
                 finally
                 {
-                    // delete authorization server
+                    // delete api server
                     testBase.client.Api.Delete(
                         testBase.rgName,
                         testBase.serviceName,
@@ -234,6 +321,19 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         newApiAuthorizationServerId,
+                        "*");
+
+                    // delete api server
+                    testBase.client.Api.Delete(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newOpenApiId,
+                        "*");
+
+                    testBase.client.OpenIdConnectProvider.Delete(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        openIdNoSecret,
                         "*");
                 }
             }

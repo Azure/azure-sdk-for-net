@@ -1,0 +1,17 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.18, 4.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.18, 3.0.0)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
+    <PackageReference Include="System.Net.Http" Version="4.3.0"/>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
+  </ItemGroup>
+</Project>

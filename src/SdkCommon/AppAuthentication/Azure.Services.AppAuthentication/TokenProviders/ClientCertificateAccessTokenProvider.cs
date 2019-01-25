@@ -18,11 +18,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
         // AppId of the application.
         private readonly string _clientId;
 
-        // Certificate subject or thumbprint
-        private readonly string _certificateSubjectNameOrThumbprint;
+        // Certificate identifier: subject, thumbprint, or Key Vault secret identifier
+        private readonly string _certificateIdentifier;
 
-        // Flag which tells if subject or thumbprint is being used
-        private readonly bool _isThumbprint;
+        // Enum which tells if subject, thumbprint, or Key Vault secret identifier is being used as identifier
+        private readonly CertificateIdentifierType _certificateIdentifierType;
 
         private readonly string _tenantId;
 
@@ -30,58 +30,74 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         private readonly IAuthenticationContext _authenticationContext;
 
+        private readonly KeyVaultClient _keyVaultClient;
+
         // Store where certificate is deployed. 
         private readonly StoreLocation _storeLocation;
+
+        internal enum CertificateIdentifierType
+        {
+            SubjectName,
+            Thumbprint,
+            KeyVaultSecretIdentifier
+        };
 
         /// <summary>
         /// Creates instance of ClientCertificateAzureServiceTokenProvider class.
         /// </summary>
         /// <param name="clientId"></param>
-        /// <param name="certificateSubjectNameOrThumbprint"></param>
-        /// <param name="isThumbprint"></param>
+        /// <param name="certificateIdentifier"></param>
+        /// <param name="certificateIdentifierType"></param>
         /// <param name="storeLocation"></param>
         /// <param name="azureAdInstance"></param>
         /// <param name="authenticationContext"></param>
         /// <param name="tenantId"></param>
         internal ClientCertificateAzureServiceTokenProvider(string clientId,
-            string certificateSubjectNameOrThumbprint, bool isThumbprint,
-            string storeLocation, string tenantId, string azureAdInstance, IAuthenticationContext authenticationContext)
+            string certificateIdentifier, CertificateIdentifierType certificateIdentifierType,
+            string storeLocation, string tenantId, string azureAdInstance,
+            IAuthenticationContext authenticationContext = null, KeyVaultClient keyVaultClient = null)
         {
             if (string.IsNullOrWhiteSpace(clientId))
             {
                 throw new ArgumentNullException(nameof(clientId));
             }
 
-            if (string.IsNullOrWhiteSpace(storeLocation))
+            if (string.IsNullOrWhiteSpace(certificateIdentifier))
             {
-                throw new ArgumentNullException(nameof(storeLocation));
+                throw new ArgumentNullException(nameof(certificateIdentifier));
             }
 
-            if (string.IsNullOrWhiteSpace(certificateSubjectNameOrThumbprint))
+            // require storeLocation if using subject name or thumbprint identifier
+            if (certificateIdentifierType == CertificateIdentifierType.SubjectName
+                || certificateIdentifierType == CertificateIdentifierType.Thumbprint)
             {
-                throw new ArgumentNullException(nameof(certificateSubjectNameOrThumbprint));
+                if (string.IsNullOrWhiteSpace(storeLocation))
+                {
+                    throw new ArgumentNullException(nameof(storeLocation));
+                }
+
+                // Parse store location specified in connection string. 
+                StoreLocation location;
+                if (Enum.TryParse(storeLocation, true, out location))
+                {
+                    _storeLocation = location;
+                }
+                else
+                {
+                    throw new ArgumentException(
+                        $"StoreLocation {storeLocation} is not valid. Valid values are CurrentUser and LocalMachine.");
+                }
             }
 
             _clientId = clientId;
 
-            _isThumbprint = isThumbprint;
+            _certificateIdentifierType = certificateIdentifierType;
             _tenantId = tenantId;
             _azureAdInstance = azureAdInstance;
-            _authenticationContext = authenticationContext;
+            _authenticationContext = authenticationContext ?? new AdalAuthenticationContext();
+            _keyVaultClient = keyVaultClient ?? new KeyVaultClient();
 
-            _certificateSubjectNameOrThumbprint = certificateSubjectNameOrThumbprint;
-
-            // Parse store location specified in connection string. 
-            StoreLocation location;
-            if (Enum.TryParse(storeLocation, true, out location))
-            {
-                _storeLocation = location;
-            }
-            else
-            {
-                throw new ArgumentException(
-                    $"StoreLocation {storeLocation} is not valid. Valid values are CurrentUser and LocalMachine.");
-            }
+            _certificateIdentifier = certificateIdentifier;
 
             PrincipalUsed = new Principal
             {
@@ -97,22 +113,43 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="resource">Resource to access.</param>
         /// <param name="authority">Authority where resource is.</param>
         /// <returns></returns>
-        public override async Task<string> GetTokenAsync(string resource, string authority)
+        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
         {
-            // If authority is not specified, create it using azureAdInstance and tenant Id. Tenant ID comes from the connection string. 
+            // If authority is not specified, create it using azureAdInstance and tenantId. Tenant ID comes from the connection string. 
             if (string.IsNullOrWhiteSpace(authority))
             {
                 authority = $"{_azureAdInstance}{_tenantId}";
             }
 
-            // Get certificates for the given thumbprint or subject name. 
-            var certs = CertificateHelper.GetCertificates(_certificateSubjectNameOrThumbprint, _isThumbprint,
-                _storeLocation);
-
-            if (certs == null || certs.Count == 0)
+            List<X509Certificate2> certs = null;
+            switch (_certificateIdentifierType)
             {
-                throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
-                    AzureServiceTokenProviderException.CertificateNotFound);
+                case CertificateIdentifierType.KeyVaultSecretIdentifier:
+                    // Get certificate for the given Key Vault secret identifier
+                    try
+                    {
+                        var keyVaultCert = await _keyVaultClient.GetCertificateAsync(_certificateIdentifier);
+                        certs = new List<X509Certificate2>() { keyVaultCert };
+                    }
+                    catch (Exception exp)
+                    {
+                        throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
+                            $"{AzureServiceTokenProviderException.KeyVaultCertificateRetrievalError} {exp.Message}");
+                    }
+                    break;
+                case CertificateIdentifierType.SubjectName:
+                case CertificateIdentifierType.Thumbprint:
+                    // Get certificates for the given thumbprint or subject name. 
+                    bool isThumbprint = _certificateIdentifierType == CertificateIdentifierType.Thumbprint;
+                    certs = CertificateHelper.GetCertificates(_certificateIdentifier, isThumbprint,
+                        _storeLocation);
+
+                    if (certs == null || certs.Count == 0)
+                    {
+                        throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
+                            AzureServiceTokenProviderException.LocalCertificateNotFound);
+                    }
+                    break;
             }
 
             // If multiple certs were found, use in order of most recently created.
@@ -130,8 +167,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     {
                         ClientAssertionCertificate certCred = new ClientAssertionCertificate(_clientId, cert);
 
-                        string accessToken =
+                        var authResult =
                             await _authenticationContext.AcquireTokenAsync(authority, resource, certCred).ConfigureAwait(false);
+
+                        var accessToken = authResult?.AccessToken;
 
                         if (accessToken != null)
                         {
@@ -139,7 +178,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                             PrincipalUsed.IsAuthenticated = true;
                             PrincipalUsed.TenantId = AccessToken.Parse(accessToken).TenantId;
 
-                            return accessToken;
+                            return authResult;
                         }
                     }
                     catch (Exception exp)

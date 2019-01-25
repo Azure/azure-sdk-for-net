@@ -2,10 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.Azure.Services.AppAuthentication.TestCommon;
 using Xunit;
+using CertificateIdentifierType = Microsoft.Azure.Services.AppAuthentication.ClientCertificateAzureServiceTokenProvider.CertificateIdentifierType;
 
 namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 {
@@ -35,16 +37,16 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateSuccess);
 
             // Create ClientCertificateAzureServiceTokenProvider instance
-            ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId, 
-                cert.Thumbprint, true, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
+            ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
+                cert.Thumbprint, CertificateIdentifierType.Thumbprint, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
 
             // Get the token. This will test that ClientCertificateAzureServiceTokenProvider could fetch the cert from CurrentUser store based on thumbprint in the connection string. 
-            string token = await provider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
-            
+            var authResult = await provider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
+
             // Delete the cert, since testing is done. 
             CertUtil.DeleteCertificate(cert.Thumbprint);
 
-            Validator.ValidateToken(token, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint);
+            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint, expiresOn: authResult.ExpiresOn);
         }
 
         /// <summary>
@@ -62,10 +64,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Create ClientCertificateAzureServiceTokenProvider instance
             ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
-                cert.Thumbprint, true, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
+                cert.Thumbprint, CertificateIdentifierType.Thumbprint, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
 
             // Ensure exception is thrown when getting the token
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => provider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => provider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId));
 
             Assert.Contains(AzureServiceTokenProviderException.GenericErrorMessage, exception.ToString());
             // Delete the cert, since testing is done. 
@@ -87,12 +89,12 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Create ClientCertificateAzureServiceTokenProvider instance
             var exception = Assert.Throws<ArgumentNullException>(() => new ClientCertificateAzureServiceTokenProvider(null,
-                cert.Thumbprint, true, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+                cert.Thumbprint, CertificateIdentifierType.Thumbprint, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
 
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
 
             exception = Assert.Throws<ArgumentNullException>(() => new ClientCertificateAzureServiceTokenProvider(string.Empty,
-                cert.Thumbprint, true, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+                cert.Thumbprint, CertificateIdentifierType.Thumbprint, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
 
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
         }
@@ -112,12 +114,12 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Create ClientCertificateAzureServiceTokenProvider instance
             var exception = Assert.Throws<ArgumentNullException>(() => new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
-                cert.Thumbprint, true, null, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+                cert.Thumbprint, CertificateIdentifierType.Thumbprint, null, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
 
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
 
             exception = Assert.Throws<ArgumentNullException>(() => new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
-                cert.Thumbprint, true, string.Empty, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+                cert.Thumbprint, CertificateIdentifierType.Thumbprint, string.Empty, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
 
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
         }
@@ -133,12 +135,12 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Create ClientCertificateAzureServiceTokenProvider instance
             var exception = Assert.Throws<ArgumentNullException>(() => new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
-                null, true, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+                null, CertificateIdentifierType.Thumbprint, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
 
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
 
             exception = Assert.Throws<ArgumentNullException>(() => new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
-                string.Empty, true, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+                string.Empty, CertificateIdentifierType.Thumbprint, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
 
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
         }
@@ -158,7 +160,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Create ClientCertificateAzureServiceTokenProvider instance
             var exception = Assert.Throws<ArgumentException>(() => new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
-                cert.Thumbprint, true, Constants.InvalidString, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+                cert.Thumbprint, CertificateIdentifierType.Thumbprint, Constants.InvalidString, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
 
             Assert.Contains(Constants.InvalidCertLocationError, exception.ToString());
         }
@@ -175,15 +177,15 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Create ClientCertificateAzureServiceTokenProvider instance with a subject name
             ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
-                cert.Subject, false, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
+                cert.Subject, CertificateIdentifierType.SubjectName, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
 
             // Get the token. This will test that ClientCertificateAzureServiceTokenProvider could fetch the cert from CurrentUser store based on subject name in the connection string. 
-            string token = await provider.GetTokenAsync(Constants.KeyVaultResourceId, string.Empty).ConfigureAwait(false);
+            var authResult = await provider.GetAuthResultAsync(Constants.KeyVaultResourceId, string.Empty).ConfigureAwait(false);
 
             // Delete the cert, since testing is done. 
             CertUtil.DeleteCertificate(cert.Thumbprint);
 
-            Validator.ValidateToken(token, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint);
+            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint, expiresOn: authResult.ExpiresOn);
         }
 
         /// <summary>
@@ -202,10 +204,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Create ClientCertificateAzureServiceTokenProvider instance with a subject name
             ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
-                cert.Subject, false, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
+                cert.Subject, CertificateIdentifierType.SubjectName, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
 
             // Get the token. This will test that ClientCertificateAzureServiceTokenProvider could fetch the cert from CurrentUser store based on subject name in the connection string. 
-            var exception = Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => provider.GetTokenAsync(Constants.KeyVaultResourceId, string.Empty));
+            var exception = Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => provider.GetAuthResultAsync(Constants.KeyVaultResourceId, string.Empty));
 
             // Delete the cert, since testing is done. 
             CertUtil.DeleteCertificate(cert.Thumbprint);
@@ -224,14 +226,68 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateSuccess);
 
             ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
-                Guid.NewGuid().ToString(), false, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
+                Guid.NewGuid().ToString(), CertificateIdentifierType.SubjectName, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
 
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => provider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => provider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
             Assert.Contains(Constants.KeyVaultResourceId, exception.Message);
             Assert.Contains(Constants.TenantId, exception.Message);
-            Assert.Contains(Constants.CertificateNotFoundError, exception.Message);
+            Assert.Contains(Constants.LocalCertificateNotFoundError, exception.Message);
         }
 
+        [Fact]
+        public async Task KeyVaultSecretIdentifierSuccessTest()
+        {
+            X509Certificate2 cert = new X509Certificate2(Convert.FromBase64String(Constants.TestCert), string.Empty);
+
+            MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Success);
+            AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
+
+            // Create KeyVaultClient with MockKeyVault to mock successful calls to KeyVault
+            MockKeyVault mockKeyVault = new MockKeyVault(MockKeyVault.KeyVaultClientTestType.CertificateSecretIdentifierSuccess);
+            HttpClient httpClient = new HttpClient(mockKeyVault);
+            KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient, azureCliAccessTokenProvider);
+
+            // MockAuthenticationContext is being asked to act like client cert auth suceeded. 
+            MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateSuccess);
+
+            // Create ClientCertificateAzureServiceTokenProvider instance with a subject name
+            ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
+                Constants.TestKeyVaultSecretIdentifier, CertificateIdentifierType.KeyVaultSecretIdentifier, null, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext, keyVaultClient);
+
+            // Get the token. This will test that ClientCertificateAzureServiceTokenProvider could fetch the cert from CurrentUser store based on subject name in the connection string. 
+            var authResult = await provider.GetAuthResultAsync(Constants.ArmResourceId, string.Empty).ConfigureAwait(false);
+
+            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint, expiresOn: authResult.ExpiresOn);
+        }
+
+        /// <summary>
+        /// Test that exception when cert is not found is as expected. 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task KeyVaultCertificateNotFoundTest()
+        {
+            MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateSuccess);
+
+            MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Success);
+            AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
+
+            MockKeyVault mockKeyVault = new MockKeyVault(MockKeyVault.KeyVaultClientTestType.SecretNotFound);
+            HttpClient httpClient = new HttpClient(mockKeyVault);
+            KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient, azureCliAccessTokenProvider);
+
+            string SecretIdentifier = "https://testbedkeyvault.vault.azure.net/secrets/secret/";
+            ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
+               SecretIdentifier, CertificateIdentifierType.KeyVaultSecretIdentifier, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext, keyVaultClient);
+
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => provider.GetAuthResultAsync(Constants.ArmResourceId, Constants.TenantId)));
+
+            Assert.Contains(Constants.ArmResourceId, exception.Message);
+            Assert.Contains(Constants.TenantId, exception.Message);
+            Assert.Contains(AzureServiceTokenProviderException.KeyVaultCertificateRetrievalError, exception.Message);
+            Assert.Contains(KeyVaultClient.KeyVaultResponseError, exception.Message);
+            Assert.Contains(MockKeyVault.SecretNotFoundErrorMessage, exception.Message);
+        }
     }
 }

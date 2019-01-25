@@ -11,57 +11,102 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for AssetStorageEncryptionFormat.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AssetStorageEncryptionFormat
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(AssetStorageEncryptionFormatConverter))]
+    public struct AssetStorageEncryptionFormat : System.IEquatable<AssetStorageEncryptionFormat>
     {
+        private AssetStorageEncryptionFormat(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// The Asset does not use client-side storage encryption (this is the
         /// only allowed value for new Assets).
         /// </summary>
-        [EnumMember(Value = "None")]
-        None,
+        public static readonly AssetStorageEncryptionFormat None = "None";
+
         /// <summary>
         /// The Asset is encrypted with Media Services client-side encryption.
         /// </summary>
-        [EnumMember(Value = "MediaStorageClientEncryption")]
-        MediaStorageClientEncryption
-    }
-    internal static class AssetStorageEncryptionFormatEnumExtension
-    {
-        internal static string ToSerializedValue(this AssetStorageEncryptionFormat? value)
+        public static readonly AssetStorageEncryptionFormat MediaStorageClientEncryption = "MediaStorageClientEncryption";
+
+
+        /// <summary>
+        /// Underlying value of enum AssetStorageEncryptionFormat
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for AssetStorageEncryptionFormat
+        /// </summary>
+        public override string ToString()
         {
-            return value == null ? null : ((AssetStorageEncryptionFormat)value).ToSerializedValue();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static string ToSerializedValue(this AssetStorageEncryptionFormat value)
+        /// <summary>
+        /// Compares enums of type AssetStorageEncryptionFormat
+        /// </summary>
+        public bool Equals(AssetStorageEncryptionFormat e)
         {
-            switch( value )
-            {
-                case AssetStorageEncryptionFormat.None:
-                    return "None";
-                case AssetStorageEncryptionFormat.MediaStorageClientEncryption:
-                    return "MediaStorageClientEncryption";
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
-        internal static AssetStorageEncryptionFormat? ParseAssetStorageEncryptionFormat(this string value)
+        /// <summary>
+        /// Implicit operator to convert string to AssetStorageEncryptionFormat
+        /// </summary>
+        public static implicit operator AssetStorageEncryptionFormat(string value)
         {
-            switch( value )
-            {
-                case "None":
-                    return AssetStorageEncryptionFormat.None;
-                case "MediaStorageClientEncryption":
-                    return AssetStorageEncryptionFormat.MediaStorageClientEncryption;
-            }
-            return null;
+            return new AssetStorageEncryptionFormat(value);
         }
+
+        /// <summary>
+        /// Implicit operator to convert AssetStorageEncryptionFormat to string
+        /// </summary>
+        public static implicit operator string(AssetStorageEncryptionFormat e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum AssetStorageEncryptionFormat
+        /// </summary>
+        public static bool operator == (AssetStorageEncryptionFormat e1, AssetStorageEncryptionFormat e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum AssetStorageEncryptionFormat
+        /// </summary>
+        public static bool operator != (AssetStorageEncryptionFormat e1, AssetStorageEncryptionFormat e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for AssetStorageEncryptionFormat
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is AssetStorageEncryptionFormat && Equals((AssetStorageEncryptionFormat)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode AssetStorageEncryptionFormat
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

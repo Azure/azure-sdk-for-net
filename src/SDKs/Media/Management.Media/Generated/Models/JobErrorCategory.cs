@@ -11,83 +11,116 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for JobErrorCategory.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum JobErrorCategory
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(JobErrorCategoryConverter))]
+    public struct JobErrorCategory : System.IEquatable<JobErrorCategory>
     {
+        private JobErrorCategory(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// The error is service related.
         /// </summary>
-        [EnumMember(Value = "Service")]
-        Service,
+        public static readonly JobErrorCategory Service = "Service";
+
         /// <summary>
         /// The error is download related.
         /// </summary>
-        [EnumMember(Value = "Download")]
-        Download,
+        public static readonly JobErrorCategory Download = "Download";
+
         /// <summary>
         /// The error is upload related.
         /// </summary>
-        [EnumMember(Value = "Upload")]
-        Upload,
+        public static readonly JobErrorCategory Upload = "Upload";
+
         /// <summary>
         /// The error is configuration related.
         /// </summary>
-        [EnumMember(Value = "Configuration")]
-        Configuration,
+        public static readonly JobErrorCategory Configuration = "Configuration";
+
         /// <summary>
         /// The error is related to data in the input files.
         /// </summary>
-        [EnumMember(Value = "Content")]
-        Content
-    }
-    internal static class JobErrorCategoryEnumExtension
-    {
-        internal static string ToSerializedValue(this JobErrorCategory? value)
+        public static readonly JobErrorCategory Content = "Content";
+
+
+        /// <summary>
+        /// Underlying value of enum JobErrorCategory
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for JobErrorCategory
+        /// </summary>
+        public override string ToString()
         {
-            return value == null ? null : ((JobErrorCategory)value).ToSerializedValue();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static string ToSerializedValue(this JobErrorCategory value)
+        /// <summary>
+        /// Compares enums of type JobErrorCategory
+        /// </summary>
+        public bool Equals(JobErrorCategory e)
         {
-            switch( value )
-            {
-                case JobErrorCategory.Service:
-                    return "Service";
-                case JobErrorCategory.Download:
-                    return "Download";
-                case JobErrorCategory.Upload:
-                    return "Upload";
-                case JobErrorCategory.Configuration:
-                    return "Configuration";
-                case JobErrorCategory.Content:
-                    return "Content";
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
-        internal static JobErrorCategory? ParseJobErrorCategory(this string value)
+        /// <summary>
+        /// Implicit operator to convert string to JobErrorCategory
+        /// </summary>
+        public static implicit operator JobErrorCategory(string value)
         {
-            switch( value )
-            {
-                case "Service":
-                    return JobErrorCategory.Service;
-                case "Download":
-                    return JobErrorCategory.Download;
-                case "Upload":
-                    return JobErrorCategory.Upload;
-                case "Configuration":
-                    return JobErrorCategory.Configuration;
-                case "Content":
-                    return JobErrorCategory.Content;
-            }
-            return null;
+            return new JobErrorCategory(value);
         }
+
+        /// <summary>
+        /// Implicit operator to convert JobErrorCategory to string
+        /// </summary>
+        public static implicit operator string(JobErrorCategory e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum JobErrorCategory
+        /// </summary>
+        public static bool operator == (JobErrorCategory e1, JobErrorCategory e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum JobErrorCategory
+        /// </summary>
+        public static bool operator != (JobErrorCategory e1, JobErrorCategory e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for JobErrorCategory
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is JobErrorCategory && Equals((JobErrorCategory)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode JobErrorCategory
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

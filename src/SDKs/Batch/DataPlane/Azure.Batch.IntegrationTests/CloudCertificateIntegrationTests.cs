@@ -275,7 +275,7 @@
                     await boundPool.CommitAsync().ConfigureAwait(false);
                     await boundPool.RefreshAsync().ConfigureAwait(false);
 
-                    Assert.Null(boundPool.CertificateReferences);
+                    Assert.Empty(boundPool.CertificateReferences);
                 }
             }
             finally

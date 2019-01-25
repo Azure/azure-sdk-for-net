@@ -170,6 +170,11 @@ namespace Microsoft.Azure.Batch
         /// Gets or sets a list of files that the Batch service will download to the compute node before running the command 
         /// line.
         /// </summary>
+        /// <remarks>
+        /// There is a maximum size for the list of resource files. When the max size is exceeded, the request will fail 
+        /// and the response error code will be RequestEntityTooLarge. If this occurs, the collection of resource files must 
+        /// be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers.
+        /// </remarks>
         public IList<ResourceFile> ResourceFiles
         {
             get { return this.propertyContainer.ResourceFilesProperty.Value; }
@@ -183,6 +188,10 @@ namespace Microsoft.Azure.Batch
         /// Gets or sets the duration of time for which files in the task's working directory are retained, from the time 
         /// it completes execution. After this duration, the task's working directory is reclaimed.
         /// </summary>
+        /// <remarks>
+        /// The default is 7 days, i.e. the task directory will be retained for 7 days unless the compute node is removed 
+        /// or the job is deleted.
+        /// </remarks>
         public TimeSpan? RetentionTime
         {
             get { return this.propertyContainer.RetentionTimeProperty.Value; }

@@ -11,8 +11,8 @@
         protected const string AutomationAccountName = "fbs-aa-01";
         protected const string updateConfigurationName_01 = "test-suc-001";
         protected const string updateConfigurationName_02 = "test-suc-002";
-        protected const string VM_01 = "/subscriptions/05fd3142-4b8e-4b16-8da9-98b4bbfd722d/resourceGroups/compute-01/providers/Microsoft.Compute/virtualMachines/vm-arm-01";
-        protected const string VM_02 = "/subscriptions/05fd3142-4b8e-4b16-8da9-98b4bbfd722d/resourceGroups/to-delete/providers/Microsoft.Compute/virtualMachines/mo-arm-02";
+        protected const string VM_01 = "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01";
+        protected const string VM_02 = "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-02";
 
         protected AutomationClient automationClient;
 

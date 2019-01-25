@@ -63,10 +63,12 @@
         private static Protocol.BatchServiceClient CreateBatchRestClientThatAlwaysRespondsWithStream(Stream stream)
         {
             Protocol.BatchServiceClient protoClient = new Protocol.BatchServiceClient(
-                new Uri(@"https://foo.microsoft.test"),
                 new Protocol.BatchSharedKeyCredential(
                 ClientUnitTestCommon.DummyAccountName,
-                ClientUnitTestCommon.DummyAccountKey));
+                ClientUnitTestCommon.DummyAccountKey))
+            {
+                BatchUrl = @"https://foo.microsoft.test",
+            };
             
             AlwaysRespondWithStreamHandler handler = new AlwaysRespondWithStreamHandler(stream);
             DelegatingHandler lastHandler = protoClient.HttpMessageHandlers.First() as DelegatingHandler;

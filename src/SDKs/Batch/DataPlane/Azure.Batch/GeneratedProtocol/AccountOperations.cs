@@ -80,6 +80,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>> ListNodeAgentSkusWithHttpMessagesAsync(AccountListNodeAgentSkusOptions accountListNodeAgentSkusOptions = default(AccountListNodeAgentSkusOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -131,8 +135,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "ListNodeAgentSkus", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "nodeagentskus").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "nodeagentskus";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -336,6 +341,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<IPage<PoolNodeCounts>,AccountListPoolNodeCountsHeaders>> ListPoolNodeCountsWithHttpMessagesAsync(AccountListPoolNodeCountsOptions accountListPoolNodeCountsOptions = default(AccountListPoolNodeCountsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -387,8 +396,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "ListPoolNodeCounts", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "nodecounts").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "nodecounts";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

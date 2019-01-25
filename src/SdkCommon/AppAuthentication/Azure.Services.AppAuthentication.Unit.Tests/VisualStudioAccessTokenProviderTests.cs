@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             VisualStudioAccessTokenProvider visualStudioAccessTokenProvider = new VisualStudioAccessTokenProvider(mockProcessManager, _visualStudioTokenProviderFile);
 
             // Get token and validate it
-            var token = await visualStudioAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
+            var authResult = await visualStudioAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
 
-            Validator.ValidateToken(token, visualStudioAccessTokenProvider.PrincipalUsed, Constants.UserType, Constants.TenantId);
+            Validator.ValidateToken(authResult.AccessToken, visualStudioAccessTokenProvider.PrincipalUsed, Constants.UserType, Constants.TenantId, expiresOn: authResult.ExpiresOn);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             string path = Guid.NewGuid().ToString();
             Environment.SetEnvironmentVariable(Constants.LocalAppDataEnv, path);
 
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => visualStudioAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => visualStudioAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
             Assert.Contains(path, exception.Message);
             Assert.Contains(Constants.FailedToGetTokenError, exception.Message);
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // VisualStudioAccessTokenProvider has in internal only constructor to allow for unit testing. 
             VisualStudioAccessTokenProvider visualStudioAccessTokenProvider = new VisualStudioAccessTokenProvider(mockProcessManager, _visualStudioTokenProviderFile);
             
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => visualStudioAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => visualStudioAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
             Assert.Contains(Constants.FailedToGetTokenError, exception.Message);
             Assert.Contains(Constants.DeveloperToolError, exception.Message);
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // VisualStudioAccessTokenProvider has in internal only constructor to allow for unit testing. 
             VisualStudioAccessTokenProvider visualStudioAccessTokenProvider = new VisualStudioAccessTokenProvider(mockProcessManager, _visualStudioTokenProviderFile);
 
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => visualStudioAccessTokenProvider.GetTokenAsync("https://test^", Constants.TenantId)));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => visualStudioAccessTokenProvider.GetAuthResultAsync("https://test^", Constants.TenantId)));
 
             Assert.Contains(Constants.NotInExpectedFormatError, exception.Message);
         }

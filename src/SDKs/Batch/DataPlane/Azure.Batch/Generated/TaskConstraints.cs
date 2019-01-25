@@ -114,6 +114,10 @@ namespace Microsoft.Azure.Batch
         /// from the time it completes execution. After this time, the Batch service may delete the working directory and 
         /// all its contents.
         /// </summary>
+        /// <remarks>
+        /// The default is 7 days, i.e. the task directory will be retained for 7 days unless the compute node is removed 
+        /// or the job is deleted.
+        /// </remarks>
         public TimeSpan? RetentionTime
         {
             get { return this.propertyContainer.RetentionTimeProperty.Value; }

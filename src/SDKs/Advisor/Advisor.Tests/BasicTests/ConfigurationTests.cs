@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Microsoft.Azure.Management.Advisor;
 using Microsoft.Azure.Management.Advisor.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -16,7 +14,6 @@ namespace Advisor.Tests.BasicTests
         const string ResourceGroupName = "DefaultResourceGroup-EUS";
         const string DefaultThreshold = "5";
         const string TestThreshold = "20";
-
 
         [Fact]
         public void ConfigureSubscriptionTest()

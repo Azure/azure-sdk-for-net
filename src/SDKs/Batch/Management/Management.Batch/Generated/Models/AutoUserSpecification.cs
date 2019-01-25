@@ -49,10 +49,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Gets or sets the scope for the auto user
         /// </summary>
         /// <remarks>
-        /// pool - specifies that the task runs as the common auto user account
-        /// which is created on every node in a pool. task - specifies that the
-        /// service should create a new user for the task. The default value is
-        /// task. Possible values include: 'Task', 'Pool'
+        /// The default value is task. Possible values include: 'Task', 'Pool'
         /// </remarks>
         [JsonProperty(PropertyName = "scope")]
         public AutoUserScope? Scope { get; set; }

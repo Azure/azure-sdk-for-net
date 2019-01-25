@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+    <ProjectReference Include="..\TestCommon\ClientRuntime.Test.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">

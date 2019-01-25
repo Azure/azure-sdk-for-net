@@ -67,11 +67,11 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Firewall Internal Load Balancer IP to be used as
-        /// the next hop in User Defined Routes.
+        /// Gets the Firewall Internal Load Balancer IP to be used as the next
+        /// hop in User Defined Routes.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAddress")]
-        public string PrivateIPAddress { get; set; }
+        public string PrivateIPAddress { get; private set; }
 
         /// <summary>
         /// Gets or sets reference of the subnet resource. This resource must

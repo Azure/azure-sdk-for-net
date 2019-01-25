@@ -1,5 +1,26 @@
 ## Microsoft.Azure.Management.Batch release notes
 
+### Changes in 7.0.0
+#### REST API version
+- This version targets REST API version 2018-12-01.
+
+#### Features
+- **[Breaking]** ResourceFile improvements
+  - Added the ability specify an entire Azure Storage container in `ResourceFile`.
+  - A new property `HttpUrl` replaces `BlobSource`. This can be any HTTP URL. Previously, this had to be an Azure Blob Storage URL.
+  - When constructing a `ResourceFile` you can now choose from one of the following options:
+    - `HttpUrl`: Specify an HTTP URL pointing to a specific file to download.
+    - `StorageContainerUrl`: Specify an Azure Storage container URL. All blobs matching the `BlobPrefix` in the Storage container will be downloaded.
+    - `AutoStorageContainerName`: Specify the name of a container in the Batch registered auto-storage account. All blobs matching the `BlobPrefix` in the Storage container will be downloaded.
+- **[Breaking]** Removed `OSDisk` property from `VirtualMachineConfiguration`. This property is no longer supported.
+- **[Breaking]** `Application` no longer has a `Packages` property, instead the packages can be retrieved via the new  `ApplicationPackage.List` API.
+- **[Breaking]** `TargetOsVersion` is now `OsVersion`, and `CurrentOsVersion` is no longer supported on `CloudServiceConfiguration`.
+- Added support on Windows pools for creating users with a specific login mode (either `Batch` or `Interactive`) via `WindowsUserConfiguration.LoginMode`.
+- Added support for `ContainerConfiguration` when creating a pool.
+
+#### Bug fixes
+- Deleting an account will no longer return `NotFound` at the end of the operation
+
 ### Changes in 6.0.0
 #### REST API version
 - This version targets REST API version 2017-09-01.

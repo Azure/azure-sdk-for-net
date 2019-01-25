@@ -5,6 +5,13 @@ namespace Microsoft.Azure.Management.Blueprint
 {
     public static class Constants
     {
+        public static class ResourceScopes
+        {
+            public const string SubscriptionScope = "/subscriptions/{0}";
+            public const string ManagementGroupScope = "/providers/Microsoft.Management/managementGroups/{0}";
+
+        }
+
         /// <summary>
         /// Allowed target scope of blueprint.
         /// </summary>
@@ -49,7 +56,8 @@ namespace Microsoft.Azure.Management.Blueprint
         public static class AssignmentLockMode
         {
             public const string None = "none";
-            public const string AllResources = "allResources";
+            public const string AllResourcesReadOnly = "allResourcesReadOnly";
+            public const string AllResourcesDoNotDelete = "allResourcesDoNotDelete";
         }
     }
 }

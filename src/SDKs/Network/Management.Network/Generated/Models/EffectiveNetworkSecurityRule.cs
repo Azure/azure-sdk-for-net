@@ -43,10 +43,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// range.</param>
         /// <param name="sourcePortRanges">The source port ranges. Expected
         /// values include a single integer between 0 and 65535, a range using
-        /// '-' as seperator (e.g. 100-400), or an asterix (*)</param>
+        /// '-' as separator (e.g. 100-400), or an asterisk (*)</param>
         /// <param name="destinationPortRanges">The destination port ranges.
         /// Expected values include a single integer between 0 and 65535, a
-        /// range using '-' as seperator (e.g. 100-400), or an asterix
+        /// range using '-' as separator (e.g. 100-400), or an asterisk
         /// (*)</param>
         /// <param name="sourceAddressPrefix">The source address
         /// prefix.</param>
@@ -54,12 +54,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// prefix.</param>
         /// <param name="sourceAddressPrefixes">The source address prefixes.
         /// Expected values include CIDR IP ranges, Default Tags
-        /// (VirtualNetwork, AureLoadBalancer, Internet), System Tags, and the
-        /// asterix (*).</param>
+        /// (VirtualNetwork, AzureLoadBalancer, Internet), System Tags, and the
+        /// asterisk (*).</param>
         /// <param name="destinationAddressPrefixes">The destination address
         /// prefixes. Expected values include CIDR IP ranges, Default Tags
-        /// (VirtualNetwork, AureLoadBalancer, Internet), System Tags, and the
-        /// asterix (*).</param>
+        /// (VirtualNetwork, AzureLoadBalancer, Internet), System Tags, and the
+        /// asterisk (*).</param>
         /// <param name="expandedSourceAddressPrefix">The expanded source
         /// address prefix.</param>
         /// <param name="expandedDestinationAddressPrefix">Expanded destination
@@ -125,16 +125,16 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the source port ranges. Expected values include a
-        /// single integer between 0 and 65535, a range using '-' as seperator
-        /// (e.g. 100-400), or an asterix (*)
+        /// single integer between 0 and 65535, a range using '-' as separator
+        /// (e.g. 100-400), or an asterisk (*)
         /// </summary>
         [JsonProperty(PropertyName = "sourcePortRanges")]
         public IList<string> SourcePortRanges { get; set; }
 
         /// <summary>
         /// Gets or sets the destination port ranges. Expected values include a
-        /// single integer between 0 and 65535, a range using '-' as seperator
-        /// (e.g. 100-400), or an asterix (*)
+        /// single integer between 0 and 65535, a range using '-' as separator
+        /// (e.g. 100-400), or an asterisk (*)
         /// </summary>
         [JsonProperty(PropertyName = "destinationPortRanges")]
         public IList<string> DestinationPortRanges { get; set; }
@@ -153,8 +153,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the source address prefixes. Expected values include
-        /// CIDR IP ranges, Default Tags (VirtualNetwork, AureLoadBalancer,
-        /// Internet), System Tags, and the asterix (*).
+        /// CIDR IP ranges, Default Tags (VirtualNetwork, AzureLoadBalancer,
+        /// Internet), System Tags, and the asterisk (*).
         /// </summary>
         [JsonProperty(PropertyName = "sourceAddressPrefixes")]
         public IList<string> SourceAddressPrefixes { get; set; }
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the destination address prefixes. Expected values
         /// include CIDR IP ranges, Default Tags (VirtualNetwork,
-        /// AureLoadBalancer, Internet), System Tags, and the asterix (*).
+        /// AzureLoadBalancer, Internet), System Tags, and the asterisk (*).
         /// </summary>
         [JsonProperty(PropertyName = "destinationAddressPrefixes")]
         public IList<string> DestinationAddressPrefixes { get; set; }

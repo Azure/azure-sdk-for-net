@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// property of the P2SVpnServerConfiguration resource for point to
         /// site client connection.</param>
         /// <param name="radiusServerSecret">The radius secret property of the
-        /// P2SVpnServerConfiguration resource for for point to site client
+        /// P2SVpnServerConfiguration resource for point to site client
         /// connection.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// P2SVpnServerConfiguration resource. Possible values are:
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the radius secret property of the
-        /// P2SVpnServerConfiguration resource for for point to site client
+        /// P2SVpnServerConfiguration resource for point to site client
         /// connection.
         /// </summary>
         [JsonProperty(PropertyName = "properties.radiusServerSecret")]

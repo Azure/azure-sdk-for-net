@@ -11,56 +11,104 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for FilterTrackPropertyCompareOperation.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum FilterTrackPropertyCompareOperation
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(FilterTrackPropertyCompareOperationConverter))]
+    public struct FilterTrackPropertyCompareOperation : System.IEquatable<FilterTrackPropertyCompareOperation>
     {
+        private FilterTrackPropertyCompareOperation(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// The equal operation.
         /// </summary>
-        [EnumMember(Value = "Equal")]
-        Equal,
+        public static readonly FilterTrackPropertyCompareOperation Equal = "Equal";
+
         /// <summary>
         /// The not equal operation.
         /// </summary>
-        [EnumMember(Value = "NotEqual")]
-        NotEqual
-    }
-    internal static class FilterTrackPropertyCompareOperationEnumExtension
-    {
-        internal static string ToSerializedValue(this FilterTrackPropertyCompareOperation? value)
+        public static readonly FilterTrackPropertyCompareOperation NotEqual = "NotEqual";
+
+
+        /// <summary>
+        /// Underlying value of enum FilterTrackPropertyCompareOperation
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for
+        /// FilterTrackPropertyCompareOperation
+        /// </summary>
+        public override string ToString()
         {
-            return value == null ? null : ((FilterTrackPropertyCompareOperation)value).ToSerializedValue();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static string ToSerializedValue(this FilterTrackPropertyCompareOperation value)
+        /// <summary>
+        /// Compares enums of type FilterTrackPropertyCompareOperation
+        /// </summary>
+        public bool Equals(FilterTrackPropertyCompareOperation e)
         {
-            switch( value )
-            {
-                case FilterTrackPropertyCompareOperation.Equal:
-                    return "Equal";
-                case FilterTrackPropertyCompareOperation.NotEqual:
-                    return "NotEqual";
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
-        internal static FilterTrackPropertyCompareOperation? ParseFilterTrackPropertyCompareOperation(this string value)
+        /// <summary>
+        /// Implicit operator to convert string to
+        /// FilterTrackPropertyCompareOperation
+        /// </summary>
+        public static implicit operator FilterTrackPropertyCompareOperation(string value)
         {
-            switch( value )
-            {
-                case "Equal":
-                    return FilterTrackPropertyCompareOperation.Equal;
-                case "NotEqual":
-                    return FilterTrackPropertyCompareOperation.NotEqual;
-            }
-            return null;
+            return new FilterTrackPropertyCompareOperation(value);
         }
+
+        /// <summary>
+        /// Implicit operator to convert FilterTrackPropertyCompareOperation to
+        /// string
+        /// </summary>
+        public static implicit operator string(FilterTrackPropertyCompareOperation e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum FilterTrackPropertyCompareOperation
+        /// </summary>
+        public static bool operator == (FilterTrackPropertyCompareOperation e1, FilterTrackPropertyCompareOperation e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum FilterTrackPropertyCompareOperation
+        /// </summary>
+        public static bool operator != (FilterTrackPropertyCompareOperation e1, FilterTrackPropertyCompareOperation e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for FilterTrackPropertyCompareOperation
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is FilterTrackPropertyCompareOperation && Equals((FilterTrackPropertyCompareOperation)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode FilterTrackPropertyCompareOperation
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

@@ -43,6 +43,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
         /// itemType: DatasetDataElement.</param>
+        /// <param name="schema">Columns that define the physical type schema
+        /// of the dataset. Type: array (or Expression with resultType array),
+        /// itemType: DatasetSchemaDataElement.</param>
         /// <param name="parameters">Parameters for dataset.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Dataset.</param>
@@ -57,8 +60,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="format">The format of the Azure Blob storage.</param>
         /// <param name="compression">The data compression method used for the
         /// blob storage.</param>
-        public AzureBlobDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object folderPath = default(object), object tableRootLocation = default(object), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
-            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations, folder)
+        public AzureBlobDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object folderPath = default(object), object tableRootLocation = default(object), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
+            : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             FolderPath = folderPath;
             TableRootLocation = tableRootLocation;

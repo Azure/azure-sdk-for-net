@@ -22,5 +22,6 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         public const string Updating = "Updating";
         public const string Creating = "Creating";
         public const string Deleting = "Deleting";
+        public const string Deleted = "Deleted";
     }
 }

@@ -6,72 +6,71 @@
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"CentralUS\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  }\r\n}",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "289"
-        ],
         "x-ms-client-request-id": [
-          "b1d3a514-e86f-48a4-9223-1a9c98ce77e6"
+          "1d5b70bf-3910-4e54-8dfb-1a8082aa4785"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAADe5eo=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.77.113\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": null,\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
-      "ResponseHeaders": {
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
-        "Expires": [
-          "-1"
-        ],
+        "Content-Length": [
+          "289"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:50:08 GMT"
+          "Wed, 21 Nov 2018 18:42:14 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "ETag": [
-          "\"AAAAAADe5eo=\""
+          "\"AAAAAAE5C/M=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "4a239c4e-f513-42a6-af3e-d9e99096b4e9",
-          "275ce397-848d-4cf7-9eeb-08f57140fa50"
+          "67f4c7c2-fb76-4622-8d00-e1f10f6c85dd",
+          "c72cc7ac-d01b-49e0-a682-4f1692ae65f7"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "d3dd2faa-7e58-45d4-a377-362fb60d541d"
+          "283193e6-fee3-4ef3-b2c6-6b6e7aeaf920"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195009Z:d3dd2faa-7e58-45d4-a377-362fb60d541d"
+          "WESTUS2:20181121T184214Z:283193e6-fee3-4ef3-b2c6-6b6e7aeaf920"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "1755"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAE5C/M=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.33.36\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "StatusCode": 200
     },
     {
@@ -81,64 +80,63 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0cb0d518-8cb7-4379-98fc-f9edc4e093b3"
+          "ea33ae3b-b9e3-4d9a-b173-24d68fae66a9"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAADe5eo=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.77.113\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": null,\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:50:08 GMT"
+          "Wed, 21 Nov 2018 18:42:14 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "ETag": [
-          "\"AAAAAADe5eo=\""
+          "\"AAAAAAE5C/M=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f8df8045-c57e-45db-899c-75c0f529de2e"
+          "5843c0ec-2f1a-4307-b556-84cc9b94f928"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "970007f3-81a3-490e-84bf-f25b3ac9d9c0"
+          "716bdd12-dfee-43c9-af5b-bbc1f3149e58"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195009Z:970007f3-81a3-490e-84bf-f25b3ac9d9c0"
+          "WESTUS2:20181121T184214Z:716bdd12-dfee-43c9-af5b-bbc1f3149e58"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "1755"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAE5C/M=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.33.36\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "StatusCode": 200
     },
     {
@@ -148,61 +146,60 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "68b9a34a-d3c9-428d-b461-dfbe05aa35bc"
+          "784c18af-15bc-4ec1-8b07-db150073fbe7"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/RequestPublisherNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"RequestPublisherNotificationMessage\",\r\n      \"properties\": {\r\n        \"title\": \"Subscription requests (requiring approval)\",\r\n        \"description\": \"The following email recipients and users will receive email notifications about subscription requests for API products requiring approval.\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/PurchasePublisherNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"PurchasePublisherNotificationMessage\",\r\n      \"properties\": {\r\n        \"title\": \"New subscriptions\",\r\n        \"description\": \"The following email recipients and users will receive email notifications about new API product subscriptions.\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/NewApplicationNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"NewApplicationNotificationMessage\",\r\n      \"properties\": {\r\n        \"title\": \"Application gallery requests\",\r\n        \"description\": \"The following email recipients and users will receive email notifications when new applications are submitted to the application gallery.\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/BCC\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"BCC\",\r\n      \"properties\": {\r\n        \"title\": \"BCC\",\r\n        \"description\": \"The following recipients will receive blind carbon copies of all emails sent to developers.\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/NewIssuePublisherNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"NewIssuePublisherNotificationMessage\",\r\n      \"properties\": {\r\n        \"title\": \"New issue or comment\",\r\n        \"description\": \"The following email recipients and users will receive email notifications when a new issue or comment is submitted on the developer portal.\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/AccountClosedPublisher\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"AccountClosedPublisher\",\r\n      \"properties\": {\r\n        \"title\": \"Close account message\",\r\n        \"description\": \"The following email recipients and users will receive email notifications when developer closes his account\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/QuotaLimitApproachingPublisherNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"QuotaLimitApproachingPublisherNotificationMessage\",\r\n      \"properties\": {\r\n        \"title\": \"Approaching subscription quota limit\",\r\n        \"description\": \"The following email recipients and users will receive email notifications when subscription usage gets close to usage quota.\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:50:08 GMT"
+          "Wed, 21 Nov 2018 18:42:14 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "4801ba81-2946-4ef1-b24f-c41cc7eecc19"
+          "f84fcad0-3d6b-4bfb-b9fb-949fdb8b9e8f"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "11998"
         ],
         "x-ms-correlation-request-id": [
-          "ae624104-75a0-40ef-a86d-5ce928e4553f"
+          "d0e7ab12-5179-41ae-a8a5-0fdd5b68b813"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195009Z:ae624104-75a0-40ef-a86d-5ce928e4553f"
+          "WESTUS2:20181121T184214Z:d0e7ab12-5179-41ae-a8a5-0fdd5b68b813"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "4569"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/RequestPublisherNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"RequestPublisherNotificationMessage\",\r\n      \"properties\": {\r\n        \"title\": \"Subscription requests (requiring approval)\",\r\n        \"description\": \"The following email recipients and users will receive email notifications about subscription requests for API products requiring approval.\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/PurchasePublisherNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"PurchasePublisherNotificationMessage\",\r\n      \"properties\": {\r\n        \"title\": \"New subscriptions\",\r\n        \"description\": \"The following email recipients and users will receive email notifications about new API product subscriptions.\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/NewApplicationNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"NewApplicationNotificationMessage\",\r\n      \"properties\": {\r\n        \"title\": \"Application gallery requests\",\r\n        \"description\": \"The following email recipients and users will receive email notifications when new applications are submitted to the application gallery.\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/BCC\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"BCC\",\r\n      \"properties\": {\r\n        \"title\": \"BCC\",\r\n        \"description\": \"The following recipients will receive blind carbon copies of all emails sent to developers.\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/NewIssuePublisherNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"NewIssuePublisherNotificationMessage\",\r\n      \"properties\": {\r\n        \"title\": \"New issue or comment\",\r\n        \"description\": \"The following email recipients and users will receive email notifications when a new issue or comment is submitted on the developer portal.\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/AccountClosedPublisher\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"AccountClosedPublisher\",\r\n      \"properties\": {\r\n        \"title\": \"Close account message\",\r\n        \"description\": \"The following email recipients and users will receive email notifications when developer closes his account\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/QuotaLimitApproachingPublisherNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n      \"name\": \"QuotaLimitApproachingPublisherNotificationMessage\",\r\n      \"properties\": {\r\n        \"title\": \"Approaching subscription quota limit\",\r\n        \"description\": \"The following email recipients and users will receive email notifications when subscription usage gets close to usage quota.\",\r\n        \"recipients\": {\r\n          \"emails\": [],\r\n          \"users\": []\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -212,32 +209,24 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d259205a-9eab-4f80-9188-e6f5c94cac1f"
+          "310ac292-7a34-4dd9-a1aa-e9fdccb336bf"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/RequestPublisherNotificationMessage/recipientEmails/contoso@microsoft.com\",\r\n  \"type\": \"Microsoft.ApiManagement/service/notifications/recipientEmails\",\r\n  \"name\": \"contoso@microsoft.com\",\r\n  \"properties\": {\r\n    \"email\": \"contoso@microsoft.com\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "424"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:50:09 GMT"
+          "Wed, 21 Nov 2018 18:42:15 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -249,21 +238,31 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "1cc5cfdd-53b7-4928-87a1-1787897c2b10"
+          "81763544-3475-4776-a90a-79a78454a76d"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "091795d8-e5f3-48d9-8e15-d5bf24beac46"
+          "92ff807c-1b97-40fa-98d6-beb8d9664ecd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195010Z:091795d8-e5f3-48d9-8e15-d5bf24beac46"
+          "WESTUS2:20181121T184215Z:92ff807c-1b97-40fa-98d6-beb8d9664ecd"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "424"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/RequestPublisherNotificationMessage/recipientEmails/contoso@microsoft.com\",\r\n  \"type\": \"Microsoft.ApiManagement/service/notifications/recipientEmails\",\r\n  \"name\": \"contoso@microsoft.com\",\r\n  \"properties\": {\r\n    \"email\": \"contoso@microsoft.com\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -273,29 +272,24 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7b9a780c-2adc-460f-a101-7293c224b6c1"
+          "051f352f-f028-4e3a-bcf0-2a37fa445dcc"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:50:09 GMT"
+          "Wed, 21 Nov 2018 18:42:15 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -307,21 +301,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "8c70374b-5471-49c5-997f-a15b95372bfc"
+          "f93eab93-4170-4330-a501-6bf891ae68af"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
+          "11997"
         ],
         "x-ms-correlation-request-id": [
-          "490ad1fc-1e32-4908-8f7c-66e2032a3c16"
+          "88466604-5ff1-48ea-a074-f0a5f07d4794"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195010Z:490ad1fc-1e32-4908-8f7c-66e2032a3c16"
+          "WESTUS2:20181121T184215Z:88466604-5ff1-48ea-a074-f0a5f07d4794"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 204
     },
     {
@@ -331,29 +332,24 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "12ecc097-5408-4e92-81ca-79d04d4aadc3"
+          "7d398eb3-7ffd-4900-9763-7a5fdffd09a2"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:50:10 GMT"
+          "Wed, 21 Nov 2018 18:42:16 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -365,21 +361,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "4573ab0d-5525-47bd-8f35-c71689c16e3e"
+          "8b284450-415d-40b1-b34a-d31e00153eba"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "11995"
         ],
         "x-ms-correlation-request-id": [
-          "45b30121-10df-4bd6-81b0-73d3232c42cb"
+          "26c7af5a-4a3c-40b2-8a6e-09094730f65a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195011Z:45b30121-10df-4bd6-81b0-73d3232c42cb"
+          "WESTUS2:20181121T184216Z:26c7af5a-4a3c-40b2-8a6e-09094730f65a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 404
     },
     {
@@ -389,61 +392,60 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b7f2b0f6-2131-4527-a4a0-b2946c4c969a"
+          "09377a48-794b-498a-af72-701a5618de06"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/RequestPublisherNotificationMessage\",\r\n  \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n  \"name\": \"RequestPublisherNotificationMessage\",\r\n  \"properties\": {\r\n    \"title\": \"Subscription requests (requiring approval)\",\r\n    \"description\": \"The following email recipients and users will receive email notifications about subscription requests for API products requiring approval.\",\r\n    \"recipients\": {\r\n      \"emails\": [\r\n        \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/recipientEmails/contoso@microsoft.com\"\r\n      ],\r\n      \"users\": []\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:50:09 GMT"
+          "Wed, 21 Nov 2018 18:42:15 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "11287cc1-88a6-44c8-a357-7dfa86bc00d6"
+          "86756c09-b733-457b-9cd2-f8f04ddf559f"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "11996"
         ],
         "x-ms-correlation-request-id": [
-          "f733b0d0-4728-4516-96df-b3d0eca70328"
+          "626a5c76-c64f-4f63-9946-0b07c4422d33"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195010Z:f733b0d0-4728-4516-96df-b3d0eca70328"
+          "WESTUS2:20181121T184215Z:626a5c76-c64f-4f63-9946-0b07c4422d33"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "839"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/notifications/RequestPublisherNotificationMessage\",\r\n  \"type\": \"Microsoft.ApiManagement/service/notifications\",\r\n  \"name\": \"RequestPublisherNotificationMessage\",\r\n  \"properties\": {\r\n    \"title\": \"Subscription requests (requiring approval)\",\r\n    \"description\": \"The following email recipients and users will receive email notifications about subscription requests for API products requiring approval.\",\r\n    \"recipients\": {\r\n      \"emails\": [\r\n        \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/recipientEmails/contoso@microsoft.com\"\r\n      ],\r\n      \"users\": []\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -453,29 +455,24 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e90682a3-b858-4b6f-b6e5-d0975dc8af29"
+          "99e5acfe-a220-4e66-a07c-94632b39df2c"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:50:10 GMT"
+          "Wed, 21 Nov 2018 18:42:16 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -487,21 +484,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "2bd26ab9-6302-4d67-96a7-ea77b2dfd881"
+          "97c2fa62-b647-4d45-973d-665b7af593b3"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "6d6aeb6c-25d3-4d44-8ccb-9f24f4980b63"
+          "56e8892d-8e8a-42aa-b9ec-4ce76aeb3c08"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195011Z:6d6aeb6c-25d3-4d44-8ccb-9f24f4980b63"
+          "WESTUS2:20181121T184216Z:56e8892d-8e8a-42aa-b9ec-4ce76aeb3c08"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 200
     }
   ],

@@ -1,18 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
     <Description>Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests Class Library</Description>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests</AssemblyName>
-    <Version>1.0.0</Version>    
+    <Version>1.0.0</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
-    <PackageReference Include="xunit.runner.console" Version="2.4.0-beta.1.build3958" />
     <ProjectReference Include="..\Prediction\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -27,5 +24,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>

@@ -177,9 +177,14 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            public static StorageAccount GetProperties(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
+            /// <param name='expand'>
+            /// May be used to expand the properties within account's properties. By
+            /// default, data is not included when fetching properties. Currently we only
+            /// support geoReplicationStats. Possible values include: 'geoReplicationStats'
+            /// </param>
+            public static StorageAccount GetProperties(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountExpand? expand = default(StorageAccountExpand?))
             {
-                return operations.GetPropertiesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+                return operations.GetPropertiesAsync(resourceGroupName, accountName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -199,12 +204,17 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
+            /// <param name='expand'>
+            /// May be used to expand the properties within account's properties. By
+            /// default, data is not included when fetching properties. Currently we only
+            /// support geoReplicationStats. Possible values include: 'geoReplicationStats'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageAccount> GetPropertiesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageAccount> GetPropertiesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountExpand? expand = default(StorageAccountExpand?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPropertiesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPropertiesWithHttpMessagesAsync(resourceGroupName, accountName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -412,7 +422,7 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='keyName'>
-            /// The name of storage keys that want to be regenerated, possible vaules are
+            /// The name of storage keys that want to be regenerated, possible values are
             /// key1, key2.
             /// </param>
             public static StorageAccountListKeysResult RegenerateKey(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string keyName)
@@ -436,7 +446,7 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='keyName'>
-            /// The name of storage keys that want to be regenerated, possible vaules are
+            /// The name of storage keys that want to be regenerated, possible values are
             /// key1, key2.
             /// </param>
             /// <param name='cancellationToken'>
@@ -555,6 +565,55 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
+            /// Failover request can be triggered for a storage account in case of
+            /// availability issues. The failover occurs from the storage account's primary
+            /// cluster to secondary cluster for RA-GRS accounts. The secondary cluster
+            /// will become primary after failover.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            public static void Failover(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
+            {
+                operations.FailoverAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Failover request can be triggered for a storage account in case of
+            /// availability issues. The failover occurs from the storage account's primary
+            /// cluster to secondary cluster for RA-GRS accounts. The secondary cluster
+            /// will become primary after failover.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task FailoverAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.FailoverWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Asynchronously creates a new storage account with the specified parameters.
             /// If an account is already created and a subsequent create request is issued
             /// with different properties, the account properties will be updated. If an
@@ -612,6 +671,55 @@ namespace Microsoft.Azure.Management.Storage
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Failover request can be triggered for a storage account in case of
+            /// availability issues. The failover occurs from the storage account's primary
+            /// cluster to secondary cluster for RA-GRS accounts. The secondary cluster
+            /// will become primary after failover.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            public static void BeginFailover(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
+            {
+                operations.BeginFailoverAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Failover request can be triggered for a storage account in case of
+            /// availability issues. The failover occurs from the storage account's primary
+            /// cluster to secondary cluster for RA-GRS accounts. The secondary cluster
+            /// will become primary after failover.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginFailoverAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginFailoverWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

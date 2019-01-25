@@ -86,9 +86,19 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual IFactoriesOperations Factories { get; private set; }
 
         /// <summary>
+        /// Gets the IExposureControlOperations.
+        /// </summary>
+        public virtual IExposureControlOperations ExposureControl { get; private set; }
+
+        /// <summary>
         /// Gets the IIntegrationRuntimesOperations.
         /// </summary>
         public virtual IIntegrationRuntimesOperations IntegrationRuntimes { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
+        /// </summary>
+        public virtual IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; private set; }
 
         /// <summary>
         /// Gets the IIntegrationRuntimeNodesOperations.
@@ -378,7 +388,9 @@ namespace Microsoft.Azure.Management.DataFactory
         {
             Operations = new Operations(this);
             Factories = new FactoriesOperations(this);
+            ExposureControl = new ExposureControlOperations(this);
             IntegrationRuntimes = new IntegrationRuntimesOperations(this);
+            IntegrationRuntimeObjectMetadata = new IntegrationRuntimeObjectMetadataOperations(this);
             IntegrationRuntimeNodes = new IntegrationRuntimeNodesOperations(this);
             LinkedServices = new LinkedServicesOperations(this);
             Datasets = new DatasetsOperations(this);
@@ -451,6 +463,8 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySink>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<LinkedIntegrationRuntimeType>("authorizationType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<LinkedIntegrationRuntimeType>("authorizationType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SsisObjectMetadata>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SsisObjectMetadata>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

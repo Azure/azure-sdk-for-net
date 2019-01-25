@@ -179,7 +179,7 @@
           },
           "Value": {
             "Type": "Models.OnAllTasksComplete?",
-            "Name": "OnAllTasksComplete",
+            "Name": "OnAllTasksComplete"
           }
         },
         {
@@ -193,7 +193,7 @@
           },
           "Value": {
             "Type": "Models.OnTaskFailure?",
-            "Name": "OnTaskFailure",
+            "Name": "OnTaskFailure"
           }
         },
         {
@@ -274,6 +274,17 @@
             "Name": "UsesTaskDependencies",
             "SummaryComment": "Whether tasks in the job can define dependencies on each other.",
             "RemarksComment": "The default value is false.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "JobNetworkConfiguration",
+            "Name": "NetworkConfiguration",
+            "SummaryComment": "The network configuration for the job.",
+            "RemarksComment": null,
             "BoundAccess": "read",
             "UnboundAccess": "read,write"
           },

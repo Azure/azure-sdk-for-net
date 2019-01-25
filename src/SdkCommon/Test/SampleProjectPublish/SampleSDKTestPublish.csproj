@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.props'))" />
+  <PropertyGroup>
+    <Description>Sample Project for testing project publishing.</Description>
+    <AssemblyName>Microsoft.Azure.Management.SampleProjectPublish</AssemblyName>
+    <AssemblyTitle>Client Runtime Library for Microsoft AutoRest Generated Clients</AssemblyTitle>
+    <Version>0.9.0-Preview</Version>
+    <PackageId>Microsoft.Azure.Management.SampleProjectPublish</PackageId>
+    <PackageTags>SampleProjectPublish $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
+    <PackageReleaseNotes><![CDATA[
+        1) Sample project to test project publishing to nuget
+      ]]></PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>

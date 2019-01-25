@@ -14,7 +14,7 @@
 
         static BaseTests()
         {
-            ProjectId = Guid.Parse("1896e6d9-5090-4733-882f-4f14632fec37");
+            ProjectId = Guid.Parse("32cb8dd6-19f8-4f08-afef-360b2e46274e");
 
 #if RECORD_MODE
             PredictionKey = "";
@@ -22,16 +22,17 @@
             RecorderMode = HttpRecorderMode.Record;
             HttpMockServer.FileSystemUtilsObject = new FileSystemUtils();
 
-            string executingAssemblyPath = typeof(BaseTests).GetTypeInfo().Assembly.Location;
-            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), @"..\..\..\SessionRecords");
+            var executingAssemblyPath = new Uri(typeof(BaseTests).GetTypeInfo().Assembly.CodeBase);
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath.AbsolutePath), @"..\..\..\SessionRecords");
 #endif
         }
 
-        protected IPredictionEndpoint GetPredictionClientClient()
+        protected ICustomVisionPredictionClient GetPredictionClientClient()
         {
-            IPredictionEndpoint client = new PredictionEndpoint(handlers: HttpMockServer.CreateInstance())
+            ICustomVisionPredictionClient client = new CustomVisionPredictionClient(handlers: HttpMockServer.CreateInstance())
             {
-                ApiKey = PredictionKey
+                ApiKey = PredictionKey,
+                Endpoint = "https://southcentralus.api.cognitive.microsoft.com"
             };
 
             return client;

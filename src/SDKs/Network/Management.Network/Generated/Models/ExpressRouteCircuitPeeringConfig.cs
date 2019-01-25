@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="advertisedPublicPrefixes">The reference of
         /// AdvertisedPublicPrefixes.</param>
         /// <param name="advertisedCommunities">The communities of bgp peering.
-        /// Spepcified for microsoft peering</param>
+        /// Specified for microsoft peering</param>
         /// <param
         /// name="advertisedPublicPrefixesState">AdvertisedPublicPrefixState of
         /// the Peering resource. Possible values are 'NotConfigured',
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> AdvertisedPublicPrefixes { get; set; }
 
         /// <summary>
-        /// Gets or sets the communities of bgp peering. Spepcified for
+        /// Gets or sets the communities of bgp peering. Specified for
         /// microsoft peering
         /// </summary>
         [JsonProperty(PropertyName = "advertisedCommunities")]

@@ -1,47 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<!-- Please do not move/edit code below this line -->
-	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-	<!-- Please do not move/edit code above this line -->
+    <!-- Please do not move/edit code below this line -->
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+    <!-- Please do not move/edit code above this line -->
 
-	<PropertyGroup>
-		<PackageId>Microsoft.Azure.Management.Media</PackageId>
-		<Description>Provides developers with libraries for managing Azure Media Services using the Azure Resource Manager API.</Description>
-		<Version>2.0.0</Version>
-		<AssemblyName>Microsoft.Azure.Management.Media</AssemblyName>
-		<PackageTags>Microsoft Azure Media management;Media;Media management;</PackageTags>
-                <PackageReleaseNotes>
-                        <![CDATA[
-        This release adds support for the General Availability of the V3 API of Azure Media Services, including:
+    <PropertyGroup>
+        <PackageId>Microsoft.Azure.Management.Media</PackageId>
+        <Description>Provides developers with libraries for managing Azure Media Services using the Azure Resource Manager API.</Description>
+        <Version>2.0.1</Version>
+        <AssemblyName>Microsoft.Azure.Management.Media</AssemblyName>
+        <PackageTags>Microsoft Azure Media management;Media;Media management;</PackageTags>
+        <PackageReleaseNotes>
+            <![CDATA[
+        Updates from the GA release of the V3 API include:
+        
+        * The PresentationTimeRange properties are no longer 'required' for AssetFilters and AccountFilters. 
+        * The $top and $skip query options for Jobs and Transforms have been removed and $orderby was added. As part of adding the new ordering functionality, it was discovered that the $top and $skip options had accidentally been exposed previously even though they are not implemented.
+        * Enumeration extensibility was re-enabled. This feature was enabled in the preview versions of the SDK and got accidentally disabled in the GA version.
+        * Two predefined streaming policies have been renamed. SecureStreaming is now MultiDrmCencStreaming. SecureStreamingWithFairPlay is now Predefined_MultiDrmStreaming.
+            ]]>
+    </PackageReleaseNotes>
+    </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+    </PropertyGroup>
 
-        1. Transforms and Jobs to encode or analyze media content.
-        2. StreamingLocators for publishing and streaming content to end user devices
-        3. StreamingPolicies and ContentKeyPolicies to configure key delivery and content protection (DRM)
-           when delivering content.
-        4. LiveEvents and LiveOutputs to configure the ingest and archiving of live streaming content.
-        5. Assets to store and publish media content in Azure Storage. 
-        6. StreamingEndpoints to configure and scale dynamic packaging, encryption and streaming for
-           both live and on demand media content.
-
-        Updates from the 2nd Preview of the V3 API include:
-
-        * Support for Account and Asset level filters to allow a subset of a multi-bitrate streaming presentation to be
-          exposed to end users.
-        * The ListStreamingLocators method was added to Assets to allow the Locators associated with an Asset to be 
-          quickly enumerated.
-        * Jobs now support Update to allow changing the priority of a Job before processing begins.
-
-        Note that the VideoAnalyzerPreset.AudioInsightsOnly was renamed to VideoAnalyzerPreset.InsightsToExtract and converted
-        from a boolean to an enum to give three options (AudioInsightsOnly, VideoInsightsOnly, and AllInsights).  The default
-        is AllInsights.
-
-                        ]]>
-                </PackageReleaseNotes>
-	</PropertyGroup>
-	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-	</PropertyGroup>
-
-	<!-- Please do not move/edit code below this line -->
-	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
-	<!-- Please do not move/edit code above this line -->
+    <!-- Please do not move/edit code below this line -->
+    <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+    <!-- Please do not move/edit code above this line -->
 </Project>

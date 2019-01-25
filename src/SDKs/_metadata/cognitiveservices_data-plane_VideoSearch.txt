@@ -1,11 +1,14 @@
-2017-11-16 19:20:20 UTC
-
-1) azure-rest-api-specs repository information
-GitHub user: Azure
-Branch:      current
-Commit:      61ac6a8fb6573f478f7e7b614fbcde0109bc82d9
-
-2) AutoRest information
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/VideoSearch/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\Github\azure-sdk-for-net\src\SDKs
+2018-11-16 20:12:33 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      master
+Commit:      fa24c3ee2969ff29bca73f4b646045fb2a93ed07
+AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\baon\AppData\Roaming\npm `-- autorest@2.0.4166  
-Latest installed version:    2.0.4168
+Bootstrapper version:    autorest@2.0.4283

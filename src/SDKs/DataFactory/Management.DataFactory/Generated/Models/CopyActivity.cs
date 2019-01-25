@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
         /// <param name="translator">Copy activity translator. If not
-        /// specificed, tabular translator is used.</param>
+        /// specified, tabular translator is used.</param>
         /// <param name="enableStaging">Specifies whether to copy data via an
         /// interim staging. Default value is false. Type: boolean (or
         /// Expression with resultType boolean).</param>
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public CopySink Sink { get; set; }
 
         /// <summary>
-        /// Gets or sets copy activity translator. If not specificed, tabular
+        /// Gets or sets copy activity translator. If not specified, tabular
         /// translator is used.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.translator")]

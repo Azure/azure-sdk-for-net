@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="description">The description of this Shared Image
-        /// Gallery resource. This property is updateable.</param>
+        /// Gallery resource. This property is updatable.</param>
         /// <param name="provisioningState">The current state of the
         /// gallery.</param>
         public Gallery(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), GalleryIdentifier identifier = default(GalleryIdentifier), string provisioningState = default(string))
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the description of this Shared Image Gallery resource.
-        /// This property is updateable.
+        /// This property is updatable.
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }

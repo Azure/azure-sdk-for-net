@@ -6,13 +6,19 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Search.VideoSearch</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Video Search API.</Description>
-    <VersionPrefix>1.2.0</VersionPrefix>
+    <Version>2.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Search.VideoSearch</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;VideoSearch API;BingVideoSearch API;REST HTTPclient;VideoSearchSDK;BingVideoSearchSDK;netcore451511</PackageTags>
-    <PackageReleaseNotes>This is a public release of the Cognitive Services Search SDK. Included with this release is support for Video Search API.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+    <![CDATA[
+    Changes in this release:
+    1. Support overriding the default endpoint.
+    2. Change client class name to `VideoSearchClient`.
+    ]]>
+	</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
   </PropertyGroup>
   
   <!-- Please do not move/edit code below this line -->
