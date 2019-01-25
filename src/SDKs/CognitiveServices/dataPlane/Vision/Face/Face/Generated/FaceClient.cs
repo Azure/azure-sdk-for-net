@@ -86,11 +86,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         public virtual ILargeFaceListOperations LargeFaceList { get; private set; }
 
         /// <summary>
-        /// Gets the ISnapshotOperations.
-        /// </summary>
-        public virtual ISnapshotOperations Snapshot { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the FaceClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -184,7 +179,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             LargePersonGroupPerson = new LargePersonGroupPerson(this);
             LargePersonGroup = new LargePersonGroupOperations(this);
             LargeFaceList = new LargeFaceListOperations(this);
-            Snapshot = new SnapshotOperations(this);
             BaseUri = "{Endpoint}/face/v1.0";
             SerializationSettings = new JsonSerializerSettings
             {

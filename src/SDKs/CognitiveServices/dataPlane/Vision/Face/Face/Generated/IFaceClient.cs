@@ -81,10 +81,5 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </summary>
         ILargeFaceListOperations LargeFaceList { get; }
 
-        /// <summary>
-        /// Gets the ISnapshotOperations.
-        /// </summary>
-        ISnapshotOperations Snapshot { get; }
-
     }
 }
