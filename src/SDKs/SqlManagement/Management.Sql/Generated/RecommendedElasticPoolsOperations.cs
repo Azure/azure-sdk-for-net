@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Sql
         public SqlManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a recommended elastic pool.
+        /// Gets a recommented elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -450,7 +450,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns recommended elastic pool metrics.
+        /// Returns recommented elastic pool metrics.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain

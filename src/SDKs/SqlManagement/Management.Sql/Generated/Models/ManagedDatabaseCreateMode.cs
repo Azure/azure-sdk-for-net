@@ -19,6 +19,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public const string Default = "Default";
         public const string RestoreExternalBackup = "RestoreExternalBackup";
         public const string PointInTimeRestore = "PointInTimeRestore";
-        public const string Recovery = "Recovery";
     }
 }

@@ -21,6 +21,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public const string Shutdown = "Shutdown";
         public const string Creating = "Creating";
         public const string Inaccessible = "Inaccessible";
-        public const string Updating = "Updating";
     }
 }

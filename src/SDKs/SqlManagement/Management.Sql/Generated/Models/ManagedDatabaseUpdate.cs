@@ -35,9 +35,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the ManagedDatabaseUpdate class.
         /// </summary>
         /// <param name="collation">Collation of the managed database.</param>
-        /// <param name="status">Status of the database. Possible values
+        /// <param name="status">Status for the database. Possible values
         /// include: 'Online', 'Offline', 'Shutdown', 'Creating',
-        /// 'Inaccessible', 'Updating'</param>
+        /// 'Inaccessible'</param>
         /// <param name="creationDate">Creation date of the database.</param>
         /// <param name="earliestRestorePoint">Earliest restore point in time
         /// for point in time restore.</param>
@@ -55,11 +55,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// SourceManagedInstanceName and PointInTime must be specified.
         /// RestoreExternalBackup: Create a database by restoring from external
         /// backup files. Collation, StorageContainerUri and
-        /// StorageContainerSasToken must be specified. Recovery: Creates a
-        /// database by restoring a geo-replicated backup.
-        /// RecoverableDatabaseId must be specified as the recoverable database
-        /// resource ID to restore. Possible values include: 'Default',
-        /// 'RestoreExternalBackup', 'PointInTimeRestore', 'Recovery'</param>
+        /// StorageContainerSasToken must be specified. Possible values
+        /// include: 'Default', 'RestoreExternalBackup',
+        /// 'PointInTimeRestore'</param>
         /// <param name="storageContainerUri">Conditional. If createMode is
         /// RestoreExternalBackup, this value is required. Specifies the uri of
         /// the storage container where backups for this restore are
@@ -67,19 +65,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="sourceDatabaseId">The resource identifier of the
         /// source database associated with create operation of this
         /// database.</param>
-        /// <param name="restorableDroppedDatabaseId">The restorable dropped
-        /// database resource id to restore when creating this
-        /// database.</param>
         /// <param name="storageContainerSasToken">Conditional. If createMode
         /// is RestoreExternalBackup, this value is required. Specifies the
         /// storage container sas token.</param>
         /// <param name="failoverGroupId">Instance Failover Group resource
         /// identifier that this managed database belongs to.</param>
-        /// <param name="recoverableDatabaseId">The resource identifier of the
-        /// recoverable database associated with create operation of this
-        /// database.</param>
         /// <param name="tags">Resource tags.</param>
-        public ManagedDatabaseUpdate(string collation = default(string), string status = default(string), System.DateTime? creationDate = default(System.DateTime?), System.DateTime? earliestRestorePoint = default(System.DateTime?), System.DateTime? restorePointInTime = default(System.DateTime?), string defaultSecondaryLocation = default(string), string catalogCollation = default(string), string createMode = default(string), string storageContainerUri = default(string), string sourceDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string storageContainerSasToken = default(string), string failoverGroupId = default(string), string recoverableDatabaseId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedDatabaseUpdate(string collation = default(string), string status = default(string), System.DateTime? creationDate = default(System.DateTime?), System.DateTime? earliestRestorePoint = default(System.DateTime?), System.DateTime? restorePointInTime = default(System.DateTime?), string defaultSecondaryLocation = default(string), string catalogCollation = default(string), string createMode = default(string), string storageContainerUri = default(string), string sourceDatabaseId = default(string), string storageContainerSasToken = default(string), string failoverGroupId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Collation = collation;
             Status = status;
@@ -91,10 +83,8 @@ namespace Microsoft.Azure.Management.Sql.Models
             CreateMode = createMode;
             StorageContainerUri = storageContainerUri;
             SourceDatabaseId = sourceDatabaseId;
-            RestorableDroppedDatabaseId = restorableDroppedDatabaseId;
             StorageContainerSasToken = storageContainerSasToken;
             FailoverGroupId = failoverGroupId;
-            RecoverableDatabaseId = recoverableDatabaseId;
             Tags = tags;
             CustomInit();
         }
@@ -111,8 +101,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string Collation { get; set; }
 
         /// <summary>
-        /// Gets status of the database. Possible values include: 'Online',
-        /// 'Offline', 'Shutdown', 'Creating', 'Inaccessible', 'Updating'
+        /// Gets status for the database. Possible values include: 'Online',
+        /// 'Offline', 'Shutdown', 'Creating', 'Inaccessible'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
@@ -158,10 +148,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// and PointInTime must be specified. RestoreExternalBackup: Create a
         /// database by restoring from external backup files. Collation,
         /// StorageContainerUri and StorageContainerSasToken must be specified.
-        /// Recovery: Creates a database by restoring a geo-replicated backup.
-        /// RecoverableDatabaseId must be specified as the recoverable database
-        /// resource ID to restore. Possible values include: 'Default',
-        /// 'RestoreExternalBackup', 'PointInTimeRestore', 'Recovery'
+        /// Possible values include: 'Default', 'RestoreExternalBackup',
+        /// 'PointInTimeRestore'
         /// </summary>
         [JsonProperty(PropertyName = "properties.createMode")]
         public string CreateMode { get; set; }
@@ -182,13 +170,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string SourceDatabaseId { get; set; }
 
         /// <summary>
-        /// Gets or sets the restorable dropped database resource id to restore
-        /// when creating this database.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.restorableDroppedDatabaseId")]
-        public string RestorableDroppedDatabaseId { get; set; }
-
-        /// <summary>
         /// Gets or sets conditional. If createMode is RestoreExternalBackup,
         /// this value is required. Specifies the storage container sas token.
         /// </summary>
@@ -201,13 +182,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.failoverGroupId")]
         public string FailoverGroupId { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the resource identifier of the recoverable database
-        /// associated with create operation of this database.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.recoverableDatabaseId")]
-        public string RecoverableDatabaseId { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

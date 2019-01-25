@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a recommended elastic pool.
+    /// Represents a recommented elastic pool.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class RecommendedElasticPool : ProxyResource

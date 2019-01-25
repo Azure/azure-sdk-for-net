@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class RecommendedElasticPoolsOperationsExtensions
     {
             /// <summary>
-            /// Gets a recommended elastic pool.
+            /// Gets a recommented elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a recommended elastic pool.
+            /// Gets a recommented elastic pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns recommended elastic pool metrics.
+            /// Returns recommented elastic pool metrics.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns recommended elastic pool metrics.
+            /// Returns recommented elastic pool metrics.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
