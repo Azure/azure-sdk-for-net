@@ -77,12 +77,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 if (connectionSettings.ContainsKey(AppId))
                 {
                     ValidateAttribute(connectionSettings, AppId, connectionString);
-                    ValidateAttribute(connectionSettings, TenantId, connectionString);
 
                     if (connectionSettings.ContainsKey(CertificateStoreLocation))
                     {
                         ValidateAttributes(connectionSettings, new List<string> { CertificateSubjectName, CertificateThumbprint }, connectionString);
-                        ValidateAttribute(connectionSettings, CertificateStoreLocation, connectionString);
+                        ValidateAttribute(connectionSettings, CertificateStoreLocation, connectionString); 
+                        ValidateAttribute(connectionSettings, TenantId, connectionString);
                         ValidateStoreLocation(connectionSettings, connectionString);
 
                         azureServiceTokenProvider =
@@ -106,7 +106,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
                                                     $"when using '{CertificateThumbprint}' and '{CertificateSubjectName}' attributes");
                     }
                     else if (connectionSettings.ContainsKey(KeyVaultSecretIdentifier))
-                    {
+                    { 
+                        ValidateAttribute(connectionSettings, TenantId, connectionString);
+
                         azureServiceTokenProvider =
                             new ClientCertificateAzureServiceTokenProvider(
                                 connectionSettings[AppId],
@@ -118,7 +120,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     }
                     else if (connectionSettings.ContainsKey(AppKey))
                     {
-                        ValidateAttribute(connectionSettings, AppKey, connectionString);
+                        ValidateAttribute(connectionSettings, AppKey, connectionString); 
+                        ValidateAttribute(connectionSettings, TenantId, connectionString);
 
                         azureServiceTokenProvider =
                             new ClientSecretAccessTokenProvider(

@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MsiUserAssignedIdentityAzureVmSuccess,
             MsiAppJsonParseFailure,
             MsiMissingToken,
-            MsiAppServicesIncorrectRequest
+            MsiAppServicesIncorrectRequest,
+            MsiUserAssignedIdentityAppServicesSuccess
         }
 
         private readonly MsiTestType _msiTestType;
@@ -118,6 +119,15 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         Content = new StringContent(Constants.IncorrectFormatError,
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+
+                case MsiTestType.MsiUserAssignedIdentityAppServicesSuccess:
+                    responseMessage = new HttpResponseMessage
+                    {
+                        Content = new StringContent(TokenHelper.GetManagedIdentityAppServicesTokenResponse(),
                             Encoding.UTF8,
                             Constants.JsonContentType)
                     };
