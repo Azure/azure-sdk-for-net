@@ -164,11 +164,11 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
         }
 
         /// <summary>
-        /// Test the fetching up update profiles for an AKS cluster
+        /// Test the fetching of cluster admin credentials
         /// </summary>
         /// <returns></returns>
         [Fact]
-        public async Task ContainerServiceGetUpgradeProfileTest()
+        public async Task ContainerListClusterAdminCredentialsTest()
         {
             using (MockContext context = MockContext.Start(GetType().FullName))
             {
@@ -186,21 +186,21 @@ namespace Microsoft.Azure.Management.ContainerService.Tests
                 string clusterName = TestUtilities.GenerateName();
 
                 // Create a managed AKS cluster
-                ManagedCluster managedClusterResult = await ContainerServiceTestUtilities.CreateManagedCluster(
+                ManagedCluster managedClusterResult = ContainerServiceTestUtilities.CreateManagedCluster(
                     context,
                     ResourceManagementClient,
                     ContainerServiceClient,
                     location,
                     clusterName,
-                    resourceGroup);
+                    resourceGroup).Result;
 
                 // Wait for 10 seconds a sanity check
                 TestUtilities.Wait(10000);
 
-                var upgradeProfiles = await containerServiceClient.ManagedClusters.GetUpgradeProfileAsync(resourceGroup, clusterName);
+                CredentialResults adminCredentials = await containerServiceClient.ManagedClusters.ListClusterAdminCredentialsAsync(resourceGroup, clusterName);
 
-                Assert.True(upgradeProfiles.AgentPoolProfiles.Count > 0);
-                Assert.True(upgradeProfiles.ControlPlaneProfile.Upgrades.Count > 0);
+                Assert.True(adminCredentials.Kubeconfigs.Count > 0);
+                Assert.True(!string.IsNullOrWhiteSpace(adminCredentials.Kubeconfigs[0].Name));
 
                 // Clean up our Azure resources
                 ResourceManagementClient.ResourceGroups.DeleteAsync(resourceGroup).Wait();
