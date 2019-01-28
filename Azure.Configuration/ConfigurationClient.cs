@@ -57,8 +57,7 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForKvRoute(setting);
 
-            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation))
-            {
+            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation)) {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
                 message.SetRequestLine(PipelineMethod.Put, uri);
@@ -89,8 +88,7 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForKvRoute(setting);
 
-            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation))
-            {
+            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation)) {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
                 message.SetRequestLine(PipelineMethod.Put, uri);
@@ -118,11 +116,10 @@ namespace Azure.ApplicationModel.Configuration
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
-            
+
             Uri uri = BuildUriForKvRoute(setting);
 
-            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation))
-            {
+            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation)) {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
                 message.SetRequestLine(PipelineMethod.Put, uri);
@@ -134,7 +131,7 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
                 AddFilterHeaders(filter, message);
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Put, content, _secret, _credential);
-                                
+
                 message.SetContent(PipelineContent.Create(content));
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
@@ -153,8 +150,7 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForKvRoute(key, filter);
 
-            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation))
-            {
+            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation)) {
                 message.SetRequestLine(PipelineMethod.Delete, uri);
 
                 message.AddHeader("Host", uri.Host);
@@ -177,8 +173,7 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForLocksRoute(key, filter);
 
-            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation))
-            {
+            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation)) {
                 message.SetRequestLine(PipelineMethod.Put, uri);
 
                 message.AddHeader("Host", uri.Host);
@@ -201,8 +196,7 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForLocksRoute(key, filter);
 
-            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation))
-            {
+            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation)) {
                 message.SetRequestLine(PipelineMethod.Delete, uri);
 
                 message.AddHeader("Host", uri.Host);
@@ -225,8 +219,7 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForKvRoute(key, filter);
 
-            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation))
-            {
+            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation)) {
                 message.SetRequestLine(PipelineMethod.Get, uri);
 
                 message.AddHeader("Host", uri.Host);
@@ -250,20 +243,18 @@ namespace Azure.ApplicationModel.Configuration
         {
             var uri = BuildUriForGetBatch(filter);
 
-            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation))
-            {
+            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation)) {
                 message.SetRequestLine(PipelineMethod.Get, uri);
 
                 message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
-                if (filter.Revision != null)
-                {
+                if (filter.Revision != null) {
                     message.AddHeader(AcceptDatetimeHeader, filter.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat));
                 }
 
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Get, content: default, _secret, _credential);
-                await Pipeline.ProcessAsync(message).ConfigureAwait(false);
 
+                await Pipeline.ProcessAsync(message).ConfigureAwait(false);
 
                 Response response = message.Response;
                 if (response.Status == 200 || response.Status == 206 /* partial */) {
@@ -278,8 +269,7 @@ namespace Azure.ApplicationModel.Configuration
         {
             var uri = BuildUriForList();
 
-            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation))
-            {
+            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation)) {
                 message.SetRequestLine(PipelineMethod.Get, uri);
 
                 message.AddHeader("Host", uri.Host);
@@ -300,14 +290,12 @@ namespace Azure.ApplicationModel.Configuration
         {
             var uri = BuildUriForRevisions(filter);
 
-            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation))
-            {
+            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation)) {
                 message.SetRequestLine(PipelineMethod.Get, uri);
 
                 message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
-                if (filter.Revision != null)
-                {
+                if (filter.Revision != null) {
                     message.AddHeader(AcceptDatetimeHeader, filter.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat));
                 }
 

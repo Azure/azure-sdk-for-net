@@ -227,7 +227,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             options.ApplicationId = "test_application";
             options.Pool = ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4);
             options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
-            options.RetryPolicy = RetryPolicy.CreateFixed(5, default, 404);
+            options.RetryPolicy = RetryPolicy.CreateFixed(5, TimeSpan.FromMilliseconds(100), 404);
 
             var client = new ConfigurationClient(connectionString, options);
 

@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Memory" Version="4.5.1" />
-    <PackageReference Include="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview.19073.1">
+    <PackageReference Include="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview.19078.2">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
