@@ -211,9 +211,9 @@ namespace Azure.ApplicationModel.Configuration.Tests
                         Assert.AreEqual("key" + keyIndex.ToString(), value.Key);
                         keyIndex++;
                     }
-                    query.StartIndex = batch.NextIndex;
+                    query.BatchLink = batch.Link;
 
-                    if (query.StartIndex == 0) break;
+                    if (string.IsNullOrEmpty(query.BatchLink)) break;
                 }
             }
 

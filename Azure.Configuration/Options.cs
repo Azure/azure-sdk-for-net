@@ -66,6 +66,6 @@ namespace Azure.ApplicationModel.Configuration
         /// <remarks>See the documentation for this SDK for details on the format of filter expressions</remarks>
         public string Key { get; set; } = "*";
 
-        public int StartIndex { get; set; }
+        public string BatchLink { get; set; }
     }
 }

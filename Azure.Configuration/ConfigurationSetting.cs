@@ -128,15 +128,15 @@ namespace Azure.ApplicationModel.Configuration
     public class SettingBatch
     {
         readonly ConfigurationSetting[] _settings;
-        readonly int _nextIndex;
+        readonly string _link;
 
-        public SettingBatch(ConfigurationSetting[] settings, int next)
+        public SettingBatch(ConfigurationSetting[] settings, string link)
         {
             _settings = settings;
-            _nextIndex = next;
+            _link = link;
         }
 
-        public int NextIndex => _nextIndex;
+        public string Link => _link;
 
         public ConfigurationSetting this[int index] => _settings[index];
         public int Count => _settings.Length;

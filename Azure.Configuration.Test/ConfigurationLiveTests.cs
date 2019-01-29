@@ -6,6 +6,8 @@ using Azure.Core;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,6 +33,35 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreEqual(expected.Label, actual.Label);
             Assert.AreEqual(expected.ContentType, actual.ContentType);
             Assert.AreEqual(expected.Locked, actual.Locked);
+        }
+
+        private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents)
+        {
+            string key = string.Concat("key-", Guid.NewGuid().ToString("N")); ;
+            
+            /*
+             * The configuration store contains a KV with the Key
+             * that represents {expectedEvents} data points.
+             * If not set, create the {expectedEvents} data points and the "BatchKey"
+            */
+            const string batchKey = "BatchKey";
+            
+            try
+            {
+                var responseGet = await service.GetAsync(batchKey);
+                key = responseGet.Result.Value;
+                responseGet.Dispose();
+            }
+            catch
+            {
+                for (int i = 0; i < expectedEvents; i++)
+                {
+                    await service.AddAsync(new ConfigurationSetting(key, "test_value", $"{i.ToString()}"));
+                }
+
+                await service.SetAsync(new ConfigurationSetting(batchKey, key));
+            }
+            return key;
         }
 
         [Test]
@@ -249,7 +280,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var testSettingDiff = responseGet.Result.Clone();
             testSettingDiff.Value = "test_value_diff";
-            
+
             try
             {
                 // Test
@@ -276,7 +307,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 }
             }
         }
-        
+
         [Test]
         public async Task Revisions()
         {
@@ -432,50 +463,29 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
-        //Missing pagination.
         public async Task GetBatch()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
 
-            const int expectedEvents = 5;
-            var addedSettings = new List<ConfigurationSetting>(expectedEvents);
-
-            try
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+            
+            int resultsReturned = 0;
+            SettingBatchFilter filter = new SettingBatchFilter() { Key = key };
+            while (true)
             {
-                string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
-                for (int i = 0; i < expectedEvents; i++)
+                using (Response<SettingBatch> response = await service.GetBatchAsync(filter, CancellationToken.None))
                 {
-                    var reponse = await service.AddAsync(new ConfigurationSetting(key, "test_value", $"{i.ToString()}"));
-                    Assert.AreEqual(200, reponse.Status);
-                    addedSettings.Add(reponse.Result);
-                }
+                    SettingBatch batch = response.Result;
+                    resultsReturned += batch.Count;
+                    filter.BatchLink = batch.Link;
 
-                SettingBatchFilter filter = new SettingBatchFilter() { Key = key };
-                Response<SettingBatch> response = await service.GetBatchAsync(filter, CancellationToken.None);
-
-                SettingBatch batch = response.Result;
-                int resultsReturned;
-                for (resultsReturned = 0; resultsReturned < batch.Count; resultsReturned++)
-                {
-                    var value = batch[resultsReturned];
-                    AssertEqual(addedSettings[resultsReturned], value);
-                }
-
-                Assert.AreEqual(expectedEvents, resultsReturned);
-            }
-            finally
-            {
-                foreach (var setting in addedSettings)
-                {
-                    var responseDelete = await service.DeleteAsync(key: setting.Key, filter: setting.Label, CancellationToken.None);
-                    if (responseDelete.Status != 200)
-                    {
-                        throw new Exception($"could not delete setting {setting.Key}");
-                    }
+                    if (string.IsNullOrEmpty(filter.BatchLink)) break;
                 }
             }
+            Assert.AreEqual(expectedEvents, resultsReturned);
         }
 
         [Test]
@@ -536,7 +546,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 //Test update
                 var testSettingUpdate = s_testSetting.Clone();
                 testSettingUpdate.Value = "test_value_update";
-                testSettingUpdate.ETag = "*";
 
                 var e = Assert.ThrowsAsync<ResponseFailedException>(async () =>
                 {

@@ -63,7 +63,7 @@ namespace Azure.ApplicationModel.Configuration
 
         public static async Task<SettingBatch> ParseBatchAsync(Response response, CancellationToken cancellation)
         {
-            TryGetNextAfterValue(ref response, out int next);
+            TryGetNextAfterValue(ref response, out string token);
 
             Stream content = response.ContentStream;
             using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellation).ConfigureAwait(false))
@@ -78,25 +78,28 @@ namespace Azure.ApplicationModel.Configuration
                     settings[i++] = ReadSetting(item);
                 }
 
-                var batch = new SettingBatch(settings, next);
+                var batch = new SettingBatch(settings, token);
                 return batch;
             }
         }
 
-        static readonly byte[] s_link = Encoding.ASCII.GetBytes("Link");
-        static readonly byte[] s_after = Encoding.ASCII.GetBytes("?after=");
-        static bool TryGetNextAfterValue(ref Response response, out int afterValue)
+        static readonly string s_link = "Link";
+        static readonly string s_after = "after=";
+        static bool TryGetNextAfterValue(ref Response response, out string afterValue)
         {
             afterValue = default;
-            ReadOnlySpan<byte> headerValue = default;
+            string headerValue = string.Empty;
             if (!response.TryGetHeader(s_link, out headerValue)) return false;
 
-            // the headers value is something like this: "</kv?after=10>;rel=\"next\""
+            // the headers value is something like this: "</kv?after={token}>; rel=\"next\""
             var afterIndex = headerValue.IndexOf(s_after);
             if (afterIndex < 0) return false;
 
-            ReadOnlySpan<byte> urlBytes = headerValue.Slice(afterIndex + s_after.Length);
-            return Utf8Parser.TryParse(urlBytes, out afterValue, out _);
+            int beginingToken = afterIndex + s_after.Length;
+            int endToken = headerValue.IndexOf(">");
+            int tokenLenght = endToken - beginingToken;
+            afterValue = headerValue.Substring(beginingToken, tokenLenght);
+            return true;
         }
     }
 

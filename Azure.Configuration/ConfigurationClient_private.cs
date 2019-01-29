@@ -124,16 +124,16 @@ namespace Azure.ApplicationModel.Configuration
 
         void BuildBatchQuery(UriBuilder builder, SettingBatchFilter options)
         {
-            if (options.StartIndex != 0)
-            {
-                builder.AppendQuery("after", options.StartIndex);
-            }
-
             if (!string.IsNullOrEmpty(options.Key))
             {
                 builder.AppendQuery(KeyQueryFilter, options.Key);
             }
 
+            if (!string.IsNullOrEmpty(options.BatchLink))
+            {
+                builder.AppendQuery("after", options.BatchLink);
+            }
+            
             if (options.Label != null)
             {
                 if (options.Label == string.Empty)
