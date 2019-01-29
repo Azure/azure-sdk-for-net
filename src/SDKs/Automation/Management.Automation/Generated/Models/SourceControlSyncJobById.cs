@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="startTime">The start time of the job.</param>
         /// <param name="endTime">The end time of the job.</param>
         /// <param name="syncType">The sync type. Possible values include:
-        /// 'IncrementalSync', 'FullSync'</param>
-        /// <param name="exception">The exceptions that occured while running
+        /// 'PartialSync', 'FullSync'</param>
+        /// <param name="exception">The exceptions that occurred while running
         /// the sync job.</param>
         public SourceControlSyncJobById(string id = default(string), string sourceControlSyncJobId = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string provisioningState = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string syncType = default(string), string exception = default(string))
         {
@@ -100,14 +100,14 @@ namespace Microsoft.Azure.Management.Automation.Models
         public System.DateTimeOffset? EndTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the sync type. Possible values include:
-        /// 'IncrementalSync', 'FullSync'
+        /// Gets or sets the sync type. Possible values include: 'PartialSync',
+        /// 'FullSync'
         /// </summary>
         [JsonProperty(PropertyName = "properties.syncType")]
         public string SyncType { get; set; }
 
         /// <summary>
-        /// Gets or sets the exceptions that occured while running the sync
+        /// Gets or sets the exceptions that occurred while running the sync
         /// job.
         /// </summary>
         [JsonProperty(PropertyName = "properties.exception")]
