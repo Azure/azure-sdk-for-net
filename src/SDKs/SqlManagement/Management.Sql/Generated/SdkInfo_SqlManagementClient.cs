@@ -72,6 +72,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "Operations", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "RecommendedElasticPools", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "RecoverableDatabases", "2014-04-01"),
+                new Tuple<string, string, string>("Sql", "RecoverableManagedDatabases", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ReplicationLinks", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "RestorableDroppedDatabases", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "RestorableDroppedManagedDatabases", "2017-03-01-preview"),
@@ -111,6 +112,6 @@ namespace Microsoft.Azure.Management.Sql
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
-  }
+    }
 }
 
