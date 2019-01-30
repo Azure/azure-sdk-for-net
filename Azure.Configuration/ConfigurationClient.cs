@@ -63,7 +63,7 @@ namespace Azure.ApplicationModel.Configuration
                 message.SetRequestLine(PipelineMethod.Put, uri);
 
                 message.AddHeader("Host", uri.Host);
-                message.AddHeader(IfNoneMatchWildcard);
+                message.AddHeader(IfNoneMatch, "*");
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
                 message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
@@ -125,7 +125,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.SetRequestLine(PipelineMethod.Put, uri);
 
                 message.AddHeader("Host", uri.Host);
-                message.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
                 message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));

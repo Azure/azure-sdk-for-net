@@ -26,7 +26,7 @@ namespace Azure.ApplicationModel.Configuration
         const string LabelQueryFilter = "label";
         const string FieldsQueryFilter = "fields";
         const string IfMatchName = "If-Match";
-        HttpHeader IfNoneMatchWildcard = new HttpHeader("If-None-Match", "*");
+        const string IfNoneMatch = "If-None-Match";
 
         static readonly HttpHeader MediaTypeKeyValueApplicationHeader = new HttpHeader(
             HttpHeader.Constants.Accept,
@@ -40,6 +40,11 @@ namespace Azure.ApplicationModel.Configuration
 
             if (filter.ETag.IfMatch != default) {
                 message.AddHeader(IfMatchName, $"\"{filter.ETag.IfMatch}\"");
+            }
+
+            if (filter.ETag.IfNoneMatch != default)
+            {
+                message.AddHeader(IfNoneMatch, $"\"{filter.ETag.IfNoneMatch}\"");
             }
 
             if (filter.Revision.HasValue) {

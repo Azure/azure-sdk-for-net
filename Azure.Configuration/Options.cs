@@ -68,4 +68,11 @@ namespace Azure.ApplicationModel.Configuration
 
         public string BatchLink { get; set; }
     }
+
+    public static class LabelFilters
+    {
+        public static readonly string Null = "\0";
+
+        public static readonly string Any = "*";
+    }
 }
