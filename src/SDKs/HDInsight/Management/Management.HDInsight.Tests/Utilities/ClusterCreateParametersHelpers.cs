@@ -35,6 +35,9 @@ namespace Management.HDInsight.Tests
         private const string KeyName = "";
         private const string KeyVersion = "";
         private const string MsiResourceId = "";
+        private const string AdlsGen2DefaultStorageAccountName = "MyStorageAccount.dfs.core.windows.net";
+        private const string AdlsGen2AccountResourceId = "";
+        private const string AdlsGen2MsiResourceId = MsiResourceId;
 
         // These can be set to anything but all created clusters should be deleted after usage so these aren't secret.
         private const string DefaultContainer = "default";
@@ -45,14 +48,26 @@ namespace Management.HDInsight.Tests
         private const string AdlStorageRootPath = "/clusters/hdi";
         private const string Location = "North Central US";
 
-        public static ClusterCreateParameters GetCustomCreateParametersIaas(string testName, bool adlStorage = false)
+        public static ClusterCreateParameters GetCustomCreateParametersIaas(string testName)
+        {
+            var storageInfo = GetDefaultAzureStorageInfo(testName.ToLowerInvariant());
+            return GetCustomCreateParametersIaas(storageInfo);
+        }
+
+        private static ClusterCreateParameters GetCustomCreateParametersIaasWithAdlsGen1(string testName)
+        {
+            var storageInfo = GetDefaultDataLakeStorageInfo();
+            return GetCustomCreateParametersIaas(storageInfo);
+        }
+
+        public static ClusterCreateParameters GetCustomCreateParametersIaas(StorageInfo storageInfo)
         {
             ClusterCreateParameters clusterparams = new ClusterCreateParameters
             {
                 ClusterSizeInNodes = 3,
                 ClusterType = "Hadoop",
                 WorkerNodeSize = "Large",
-                DefaultStorageInfo = adlStorage ? GetDefaultDataLakeStorageInfo() : GetDefaultAzureStorageInfo(testName.ToLowerInvariant()),
+                DefaultStorageInfo = storageInfo,
                 UserName = HttpUser,
                 Password = HttpPassword,
                 Location = Location,
@@ -65,7 +80,19 @@ namespace Management.HDInsight.Tests
 
         public static ClusterCreateParameters GetCustomCreateParametersForAdl(string clusterName)
         {
-            ClusterCreateParameters createParams = GetCustomCreateParametersIaas(clusterName, true);
+            var storageInfo = GetDefaultDataLakeStorageInfo();
+            return GetCustomCreateParametersForAdl(clusterName, storageInfo);
+        }
+
+        public static ClusterCreateParameters GetCustomCreateParametersForAdlGen2(string clusterName)
+        {
+            var storageInfo = GetDefaultDataLakeGen2StorageInfo();
+            return GetCustomCreateParametersIaas(storageInfo);
+        }
+
+        public static ClusterCreateParameters GetCustomCreateParametersForAdl(string clusterName, StorageInfo storageInfo)
+        {
+            ClusterCreateParameters createParams = GetCustomCreateParametersIaas(storageInfo);
 
             Guid appId = string.IsNullOrEmpty(ApplicationId) ? Guid.NewGuid() : new Guid(ApplicationId);
             Guid tenantId = string.IsNullOrEmpty(AadTenantId) ? Guid.NewGuid(): new Guid(AadTenantId);
@@ -102,6 +129,13 @@ namespace Management.HDInsight.Tests
             string storageAccountName = HDInsightManagementTestUtilities.IsRecordMode() ? AdlDefaultStorageAccountName : "tmp.azuredatalakestore.net";
 
             return new AzureDataLakeStoreInfo(storageAccountName, AdlStorageRootPath);
+        }
+
+        private static StorageInfo GetDefaultDataLakeGen2StorageInfo()
+        {
+            string storageAccountName = HDInsightManagementTestUtilities.IsRecordMode() ? AdlsGen2DefaultStorageAccountName : "tmp.azuredatalakestore.net";
+            string fileSystem = DefaultContainer;
+            return new AzureDataLakeStoreGen2Info(storageAccountName, fileSystem, AdlsGen2AccountResourceId, AdlsGen2MsiResourceId);
         }
 
         private static Dictionary<string, string> GetCoreConfigsForStorageInfo(StorageInfo storageInfo)

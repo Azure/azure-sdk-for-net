@@ -57,8 +57,9 @@ namespace Management.HDInsight.Tests.UnitTests
                 Assert.NotEmpty(convertedStorageProfile.Storageaccounts);
                 StorageAccount defaultStorageAccount = convertedStorageProfile.Storageaccounts.Single(storageAccount => storageAccount.IsDefault.Value);
                 Assert.Equal(adlsGen2Info.StorageAccountName, defaultStorageAccount.Name);
-                Assert.Equal(adlsGen2Info.StorageAccountKey, defaultStorageAccount.Key);
                 Assert.Equal(adlsGen2Info.StorageFileSystem, defaultStorageAccount.FileSystem);
+                Assert.Equal(adlsGen2Info.StorageResourceId, defaultStorageAccount.ResourceId);
+                Assert.Equal(adlsGen2Info.StorageMsiResourceId, defaultStorageAccount.MsiResourceId);
             }
         }
 
