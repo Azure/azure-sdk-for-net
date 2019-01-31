@@ -24,7 +24,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Label = "test_label",
             ContentType = "test_content_type",
             LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
-            Locked = false
+            Locked = false,
+            Tags = new Dictionary<string, string>
+            {
+                { "tag1", "value1" },
+                { "tag2", "value2" }
+            }
         };
 
         private static void AssertEqual(ConfigurationSetting expected, ConfigurationSetting actual)
@@ -33,6 +38,19 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreEqual(expected.Label, actual.Label);
             Assert.AreEqual(expected.ContentType, actual.ContentType);
             Assert.AreEqual(expected.Locked, actual.Locked);
+            Assert.IsTrue(TagsEqual(expected.Tags, actual.Tags));
+        }
+
+        private static bool TagsEqual(IDictionary<string, string> expected, IDictionary<string, string> actual)
+        {
+            if (expected == null && actual == null) return true;
+            if (expected?.Count != actual?.Count) return false;
+            foreach (var pair in expected)
+            {
+                if (!actual.TryGetValue(pair.Key, out string value)) return false;
+                if (!string.Equals(value, pair.Value, StringComparison.Ordinal)) return false;
+            }
+            return true;
         }
 
         private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents)
@@ -633,7 +651,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 ContentType = setting.ContentType,
                 LastModified = setting.LastModified,
                 Locked = setting.Locked,
-                ETag = setting.ETag
+                ETag = setting.ETag,
+                Tags = setting.Tags
             };
         }
     }

@@ -13,6 +13,7 @@ using Azure.Core.Http;
 using System.Buffers;
 using Azure.Core.Http.Pipeline;
 using Azure.ApplicationModel.Configuration.Test;
+using System.Collections.Generic;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
@@ -24,7 +25,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Label = "test_label",
             ContentType = "test_content_type",
             LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
-            Locked = false
+            Locked = false,
+            Tags = new Dictionary<string, string>
+            {
+                { "tag1", "value1" },
+                { "tag2", "value2" }
+            }
         };
 
         private static (ConfigurationClient service, TestPool<byte> pool) CreateTestService(MockHttpClientTransport transport)

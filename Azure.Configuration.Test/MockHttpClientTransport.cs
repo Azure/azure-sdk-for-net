@@ -24,7 +24,7 @@ namespace Azure.ApplicationModel.Configuration.Test
         {
             _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedMethod = HttpMethod.Put;
-            _expectedRequestContent = $"{{\"value\":\"{responseContent.Value}\",\"content_type\":\"{responseContent.ContentType}\"}}";
+            _expectedRequestContent = GenerateExpectedRequestContent(responseContent);
 
             string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
             json = json.Replace("contenttype", "content_type");
@@ -38,7 +38,7 @@ namespace Azure.ApplicationModel.Configuration.Test
         {
             _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedMethod = HttpMethod.Put;
-            _expectedRequestContent = $"{{\"value\":\"{responseContent.Value}\",\"content_type\":\"{responseContent.ContentType}\"}}";
+            _expectedRequestContent = GenerateExpectedRequestContent(responseContent);
 
             string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
             json = json.Replace("contenttype", "content_type");
@@ -52,7 +52,7 @@ namespace Azure.ApplicationModel.Configuration.Test
         {
             _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedMethod = HttpMethod.Put;
-            _expectedRequestContent = $"{{\"value\":\"{responseContent.Value}\",\"content_type\":\"{responseContent.ContentType}\"}}";
+            _expectedRequestContent = GenerateExpectedRequestContent(responseContent);
 
             string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
             json = json.Replace("contenttype", "content_type");
@@ -299,6 +299,28 @@ namespace Azure.ApplicationModel.Configuration.Test
             var mockResponse = Responses[_nextResponse++];
             response.StatusCode = mockResponse.ResponseCode;
             return response.StatusCode == HttpStatusCode.OK;
+        }
+
+        protected string GenerateExpectedRequestContent(ConfigurationSetting content)
+        {
+            StringBuilder requestContent = new StringBuilder();
+            requestContent.AppendFormat("{{\"value\":\"{0}\",\"content_type\":\"{1}\",\"tags\":{{", content.Value, content.ContentType);
+
+            bool first = true;
+            foreach (var tag in content.Tags)
+            {
+                if (first)
+                {
+                    requestContent.AppendFormat("\"{0}\":\"{1}\"", tag.Key, tag.Value);
+                    first = false;
+                }
+                else
+                {
+                    requestContent.AppendFormat(",\"{0}\":\"{1}\"", tag.Key, tag.Value);
+                }
+            }
+            requestContent.Append("}}");
+            return requestContent.ToString();
         }
 
         public class Response

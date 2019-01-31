@@ -25,6 +25,15 @@ namespace Azure.ApplicationModel.Configuration
                 json.WriteStartObject();
                 json.WriteString("value", setting.Value);
                 json.WriteString("content_type", setting.ContentType);
+                if(setting.Tags != null)
+                {
+                    json.WriteStartObject("tags");
+                    foreach (var tag in setting.Tags)
+                    {
+                        json.WriteString(tag.Key, tag.Value);
+                    }
+                    json.WriteEndObject();
+                }
                 json.WriteEndObject();
                 json.Flush();
                 written = (int)json.BytesWritten;
@@ -48,7 +57,11 @@ namespace Azure.ApplicationModel.Configuration
             setting.Locked = root.GetProperty("locked").GetBoolean();
             setting.ETag = root.GetProperty("etag").GetString();
             setting.LastModified = DateTimeOffset.Parse(root.GetProperty("last_modified").GetString());
-
+            foreach (var element in root.GetProperty("tags").EnumerateObject())
+            {
+                setting.Tags.Add(element.Name, element.Value.GetString());
+            }
+            
             return setting;
         }
 
