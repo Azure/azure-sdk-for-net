@@ -349,6 +349,46 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
+        public async Task UpdateTags()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            await service.SetAsync(s_testSetting, CancellationToken.None);
+            ConfigurationSetting responseGet = await service.GetAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
+
+            SettingFilter filter = new SettingFilter()
+            {
+                ETag = new ETagFilter() { IfMatch = new ETag("*") }
+            };
+            
+            try
+            {
+                // Different tags
+                var testSettingDiff = responseGet.Clone();
+                var settingTags = testSettingDiff.Tags;
+                if (settingTags.ContainsKey("tag1")) settingTags["tag1"] = "value-updated";
+                settingTags.Add("tag3", "test_value3");
+                testSettingDiff.Tags = settingTags;
+                
+                ConfigurationSetting responseSetting = await service.UpdateAsync(testSettingDiff, filter, CancellationToken.None);
+                AssertEqual(testSettingDiff, responseSetting);
+
+                // No tags
+                var testSettingNoTags = responseGet.Clone();
+                testSettingNoTags.Tags = null;
+
+                responseSetting = await service.UpdateAsync(testSettingNoTags, filter, CancellationToken.None);
+                AssertEqual(testSettingNoTags, responseSetting);
+            }
+            finally
+            {
+                await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label, CancellationToken.None);
+            }
+        }
+
+        [Test]
         public async Task GetIfNoMatch()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
