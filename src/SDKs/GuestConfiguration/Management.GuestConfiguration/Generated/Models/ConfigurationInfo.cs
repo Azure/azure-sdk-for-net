@@ -30,9 +30,10 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// Initializes a new instance of the ConfigurationInfo class.
         /// </summary>
         /// <param name="name">Name of the configuration.</param>
-        public ConfigurationInfo(string name = default(string))
+        public ConfigurationInfo(string name = default(string), string version = default(string))
         {
             Name = name;
+            Version = version;
             CustomInit();
         }
 
@@ -46,6 +47,12 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the version of the configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "version")]
+        public string Version { get; private set; }
 
     }
 }
