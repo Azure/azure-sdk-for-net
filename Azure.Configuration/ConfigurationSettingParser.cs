@@ -61,7 +61,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public static async Task<SettingBatch> ParseBatchAsync(Response response, CancellationToken cancellation)
+        public static async Task<SettingBatch> ParseBatchAsync(Response response, SettingBatchFilter filter, CancellationToken cancellation)
         {
             TryGetNextAfterValue(ref response, out string token);
 
@@ -78,7 +78,7 @@ namespace Azure.ApplicationModel.Configuration
                     settings[i++] = ReadSetting(item);
                 }
 
-                var batch = new SettingBatch(settings, token);
+                var batch = new SettingBatch(settings, token, filter);
                 return batch;
             }
         }
