@@ -33,9 +33,12 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         /// <param name="azureQueries">List of Azure queries in the software
         /// update configuration.</param>
-        public TargetProperties(IList<AzureQueryProperties> azureQueries = default(IList<AzureQueryProperties>))
+        /// <param name="nonAzureQueries">List of non Azure queries in the
+        /// software update configuration.</param>
+        public TargetProperties(IList<AzureQueryProperties> azureQueries = default(IList<AzureQueryProperties>), IList<NonAzureQueryProperties> nonAzureQueries = default(IList<NonAzureQueryProperties>))
         {
             AzureQueries = azureQueries;
+            NonAzureQueries = nonAzureQueries;
             CustomInit();
         }
 
@@ -50,6 +53,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "azureQueries")]
         public IList<AzureQueryProperties> AzureQueries { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of non Azure queries in the software update
+        /// configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "nonAzureQueries")]
+        public IList<NonAzureQueryProperties> NonAzureQueries { get; set; }
 
     }
 }

@@ -59,15 +59,15 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// software update configuration run.</param>
         /// <param name="job">Job associated with the software update
         /// configuration machine run</param>
-        /// <param name="creationTime">Creation time of theresource, which only
-        /// appears in the response.</param>
+        /// <param name="creationTime">Creation time of the resource, which
+        /// only appears in the response.</param>
         /// <param name="createdBy">createdBy property, which only appears in
         /// the response.</param>
         /// <param name="lastModifiedTime">Last time resource was modified,
         /// which only appears in the response.</param>
         /// <param name="lastModifiedBy">lastModifiedBy property, which only
         /// appears in the response.</param>
-        /// <param name="error">detailes of provisioning error</param>
+        /// <param name="error">Details of provisioning error</param>
         public SoftwareUpdateConfigurationMachineRun(string name = default(string), string id = default(string), string targetComputer = default(string), string targetComputerType = default(string), UpdateConfigurationNavigation softwareUpdateConfiguration = default(UpdateConfigurationNavigation), string status = default(string), string osType = default(string), System.Guid? correlationId = default(System.Guid?), System.Guid? sourceComputerId = default(System.Guid?), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string configuredDuration = default(string), JobNavigation job = default(JobNavigation), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string), ErrorResponse error = default(ErrorResponse))
         {
             Name = name;
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public JobNavigation Job { get; set; }
 
         /// <summary>
-        /// Gets creation time of theresource, which only appears in the
+        /// Gets creation time of the resource, which only appears in the
         /// response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string LastModifiedBy { get; private set; }
 
         /// <summary>
-        /// Gets or sets detailes of provisioning error
+        /// Gets or sets details of provisioning error
         /// </summary>
         [JsonProperty(PropertyName = "properties.error")]
         public ErrorResponse Error { get; set; }
