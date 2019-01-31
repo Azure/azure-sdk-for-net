@@ -56,8 +56,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="dnsZonePartner">The resource id of another managed
         /// instance whose DNS zone this managed instance will share after
         /// creation.</param>
+        /// <param name="publicDataEndpointEnabled">Whether or not the public
+        /// data endpoint is enabled.</param>
+        /// <param name="proxyOverride">Proxy override of the managed
+        /// instance.</param>
         /// <param name="tags">Resource tags.</param>
-        public ManagedInstanceUpdate(Sku sku = default(Sku), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedInstanceUpdate(Sku sku = default(Sku), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string proxyOverride = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
@@ -71,6 +75,8 @@ namespace Microsoft.Azure.Management.Sql.Models
             Collation = collation;
             DnsZone = dnsZone;
             DnsZonePartner = dnsZonePartner;
+            PublicDataEndpointEnabled = publicDataEndpointEnabled;
+            ProxyOverride = proxyOverride;
             Tags = tags;
             CustomInit();
         }
@@ -156,6 +162,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.dnsZonePartner")]
         public string DnsZonePartner { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not the public data endpoint is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicDataEndpointEnabled")]
+        public bool? PublicDataEndpointEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets proxy override of the managed instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.proxyOverride")]
+        public string ProxyOverride { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.
