@@ -1,2 +1,0 @@
-     1>E:\azure-sdk-for-net\tools\SdkBuildTools\targets\common.targets(444,5): warning : The SDK 'Microsoft.NET.Sdk' specified could not be found.  E:\azure-sdk-for-net\src\SDKs\SqlManagement\Management.Sql\Microsoft.Azure.Management.Sql.csproj [E:\azure-sdk-for-net\build.proj]
-     1>E:\azure-sdk-for-net\tools\SdkBuildTools\targets\common.targets(444,5): warning : The SDK 'Microsoft.NET.Sdk' specified could not be found.  E:\azure-sdk-for-net\src\SDKs\SqlManagement\Sql.Tests\Sql.Tests.csproj [E:\azure-sdk-for-net\build.proj]
