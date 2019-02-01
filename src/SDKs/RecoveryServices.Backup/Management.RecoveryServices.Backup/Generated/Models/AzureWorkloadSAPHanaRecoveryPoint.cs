@@ -13,8 +13,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Linq;
 
     /// <summary>
-    /// SAPHana specific recoverypoint, specifically encapsulates full/diff
-    /// recoverypoints
+    /// SAPHana specific recovery point, specifically encapsulates full/diff
+    /// recovery points
     /// </summary>
     public partial class AzureWorkloadSAPHanaRecoveryPoint : AzureWorkloadRecoveryPoint
     {
@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the AzureWorkloadSAPHanaRecoveryPoint
         /// class.
         /// </summary>
-        /// <param name="recoveryPointTimeInUTC">UTC time at which
-        /// recoverypoint was created</param>
+        /// <param name="recoveryPointTimeInUTC">UTC time at which recovery
+        /// point was created</param>
         /// <param name="type">Type of restore point. Possible values include:
         /// 'Invalid', 'Full', 'Log', 'Differential'</param>
         public AzureWorkloadSAPHanaRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), string type = default(string))
