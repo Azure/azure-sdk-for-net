@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <param name="createdAt">Exact time the message was created.</param>
         /// <param name="updatedAt">The exact time the message was
         /// updated.</param>
-        /// <param name="userMetadata">Usermetadata is a placeholder to store
+        /// <param name="userMetadata">User Metadata is a placeholder to store
         /// user-defined string data with maximum length 1024. e.g. it can be
         /// used to store descriptive data, such as list of teams and their
         /// contact information also user-defined configuration settings can be
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public System.DateTime? UpdatedAt { get; private set; }
 
         /// <summary>
-        /// Gets or sets usermetadata is a placeholder to store user-defined
+        /// Gets or sets user Metadata is a placeholder to store user-defined
         /// string data with maximum length 1024. e.g. it can be used to store
         /// descriptive data, such as list of teams and their contact
         /// information also user-defined configuration settings can be stored.

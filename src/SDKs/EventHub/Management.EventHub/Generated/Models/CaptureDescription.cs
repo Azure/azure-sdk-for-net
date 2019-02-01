@@ -44,13 +44,16 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// value should be between 10485760 to 524288000 bytes</param>
         /// <param name="destination">Properties of Destination where capture
         /// will be stored. (Storage Account, Blob Names)</param>
-        public CaptureDescription(bool? enabled = default(bool?), EncodingCaptureDescription? encoding = default(EncodingCaptureDescription?), int? intervalInSeconds = default(int?), int? sizeLimitInBytes = default(int?), Destination destination = default(Destination))
+        /// <param name="skipEmptyArchives">A value that indicates whether to
+        /// Skip Empty Archives</param>
+        public CaptureDescription(bool? enabled = default(bool?), EncodingCaptureDescription? encoding = default(EncodingCaptureDescription?), int? intervalInSeconds = default(int?), int? sizeLimitInBytes = default(int?), Destination destination = default(Destination), bool? skipEmptyArchives = default(bool?))
         {
             Enabled = enabled;
             Encoding = encoding;
             IntervalInSeconds = intervalInSeconds;
             SizeLimitInBytes = sizeLimitInBytes;
             Destination = destination;
+            SkipEmptyArchives = skipEmptyArchives;
             CustomInit();
         }
 
@@ -96,6 +99,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "destination")]
         public Destination Destination { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether to Skip Empty Archives
+        /// </summary>
+        [JsonProperty(PropertyName = "skipEmptyArchives")]
+        public bool? SkipEmptyArchives { get; set; }
 
         /// <summary>
         /// Validate the object.
