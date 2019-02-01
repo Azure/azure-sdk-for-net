@@ -28,5 +28,16 @@ namespace Microsoft.Azure.Search
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/arv100kri/azure-rest-api-specs/blob/skillset-configuration/specification/search/data-plane/Microsoft.Azure.Search.Service/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\src\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "arv100kri";
+      public static readonly String GithubBranchName = "skillset-configuration";
+      public static readonly String GithubCommidId = "d659b65504c18859b1046299a83787ff60040c78";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

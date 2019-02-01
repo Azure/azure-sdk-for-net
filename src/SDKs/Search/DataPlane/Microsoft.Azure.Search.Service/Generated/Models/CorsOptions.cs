@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Search.Models
         /// '*' to allow all origins (not recommended).</param>
         /// <param name="maxAgeInSeconds">The duration for which browsers
         /// should cache CORS preflight responses. Defaults to 5
-        /// mintues.</param>
+        /// minutes.</param>
         public CorsOptions(IList<string> allowedOrigins, long? maxAgeInSeconds = default(long?))
         {
             AllowedOrigins = allowedOrigins;
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the duration for which browsers should cache CORS
-        /// preflight responses. Defaults to 5 mintues.
+        /// preflight responses. Defaults to 5 minutes.
         /// </summary>
         [JsonProperty(PropertyName = "maxAgeInSeconds")]
         public long? MaxAgeInSeconds { get; set; }
