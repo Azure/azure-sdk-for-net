@@ -58,9 +58,19 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Pt, SentimentSkillLanguage.PtPt));
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Fi, SentimentSkillLanguage.Fi));
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.En, SentimentSkillLanguage.En));
+            });
+        }
+
+        [Fact]
+        public void CreateSkillsetThrowsExceptionWithInvalidLanguageSelection()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                Skillset skillset = CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Fi, SentimentSkillLanguage.Fi);
+                CloudException exception = Assert.Throws<CloudException>(() => searchClient.Skillsets.Create(skillset));
+                Assert.Contains("When 'textExtractionAlgorithm' parameter is set to 'handwritten' the only supported value for 'defaultLanguageCode' parameter is 'en'", exception.Message);
             });
         }
 
