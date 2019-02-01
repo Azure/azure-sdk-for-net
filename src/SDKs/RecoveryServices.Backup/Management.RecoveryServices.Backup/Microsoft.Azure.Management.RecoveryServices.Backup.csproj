@@ -12,9 +12,8 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Backup Validate Operation API
-- Updating as we added re-registration flow.
-      ]]>
+- Adding back the VaultId property to Backup status related classes
+       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
