@@ -58,8 +58,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// creation.</param>
         /// <param name="publicDataEndpointEnabled">Whether or not the public
         /// data endpoint is enabled.</param>
-        /// <param name="proxyOverride">Proxy override of the managed
-        /// instance.</param>
+        /// <param name="proxyOverride">Connection type used for connecting to
+        /// the instance. Possible values include: 'Proxy', 'Redirect',
+        /// 'Default'</param>
         /// <param name="tags">Resource tags.</param>
         public ManagedInstanceUpdate(Sku sku = default(Sku), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string proxyOverride = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
@@ -170,7 +171,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         public bool? PublicDataEndpointEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets proxy override of the managed instance.
+        /// Gets or sets connection type used for connecting to the instance.
+        /// Possible values include: 'Proxy', 'Redirect', 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "properties.proxyOverride")]
         public string ProxyOverride { get; set; }

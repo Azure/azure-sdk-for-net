@@ -3,12 +3,12 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\git\azure-sdk-for-net\src\SDKs
-2019-01-29 06:40:43 UTC
+cmd.exe /c autorest.cmd https://github.com/stefanb995/azure-rest-api-specs/blob/Add-publicDataEndpointEnabled-and-proxyOverride-to-swagger/specification/sql/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\azure-sdk-for-net\src\SDKs
+2019-02-01 18:53:30 UTC
 Azure-rest-api-specs repository information
-GitHub fork: Azure
-Branch:      master
-Commit:      31fa6a10ba86e3f777e63a4c5cd0d2cbd135227b
+GitHub fork: stefanb995
+Branch:      Add-publicDataEndpointEnabled-and-proxyOverride-to-swagger
+Commit:      397e372b335b8b28c566beae751fa5d83e008345
 AutoRest information
 Requested version: latest
 Bootstrapper version:    autorest@2.0.4283
