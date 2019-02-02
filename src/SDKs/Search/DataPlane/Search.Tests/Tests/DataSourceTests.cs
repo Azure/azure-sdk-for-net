@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Search.Tests
                 SearchAssert.ThrowsCloudException(
                     () => searchClient.DataSources.Create(dataSource),
                     HttpStatusCode.BadRequest,
-                    "Unsupported data source type 'thistypedoesnotexist'");
+                    "Data source type 'thistypedoesnotexist' is not supported");
             });
         }
 
@@ -435,9 +435,9 @@ namespace Microsoft.Azure.Search.Tests
         {
             return DataSource.DocumentDb(
                 name: SearchTestUtilities.GenerateName(),
-                documentDbConnectionString: "fake",
+                documentDbConnectionString: "AccountEndpoint=https://myCosmosDbEndpoint.documents.azure.com;AccountKey=myCosmosDbAuthKey;Database=myCosmosDbDatabaseId",
                 collectionName: "faketable",
-                query: "fake query",
+                query: "SELECT ... FROM x where x._ts > @HighWaterMark",
                 useChangeDetection: useChangeDetection,
                 deletionDetectionPolicy: deletionDetectionPolicy,
                 description: FakeDescription);
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             return DataSource.AzureBlobStorage(
                 name: SearchTestUtilities.GenerateName(),
-                storageConnectionString: "fake",
+                storageConnectionString: "DefaultEndpointsProtocol=https;AccountName=test;AccountKey=test;",
                 containerName: "fakecontainer",
                 pathPrefix: "/fakefolder/",
                 deletionDetectionPolicy: deletionDetectionPolicy,
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             return DataSource.AzureTableStorage(
                 name: SearchTestUtilities.GenerateName(),
-                storageConnectionString: "fake",
+                storageConnectionString: "DefaultEndpointsProtocol=https;AccountName=test;AccountKey=test;",
                 tableName: "faketable",
                 query: "fake query",
                 deletionDetectionPolicy: deletionDetectionPolicy,
