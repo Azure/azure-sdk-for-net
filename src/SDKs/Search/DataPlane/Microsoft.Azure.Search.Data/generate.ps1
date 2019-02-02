@@ -40,7 +40,4 @@ Remove-Item "$generateFolder\Models\SearchRequestOptions.cs"
 # Delete extra files we don't need.
 Remove-Item "$generateFolder\DocumentsProxyOperationsExtensions.cs"
 
-# Make any necessary modifications
-powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File .\Fix-GeneratedCode.ps1
-
 Write-Output "Finished cleanup."
