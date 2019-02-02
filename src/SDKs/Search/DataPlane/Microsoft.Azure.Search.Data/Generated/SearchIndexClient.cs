@@ -87,9 +87,9 @@ namespace Microsoft.Azure.Search
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IDocumentsOperations.
+        /// Gets the IDocumentsProxyOperations.
         /// </summary>
-        public virtual IDocumentsOperations Documents { get; private set; }
+        internal IDocumentsProxyOperations DocumentsProxy { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SearchIndexClient class.
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Search
         /// </summary>
         private void Initialize()
         {
-            Documents = new DocumentsOperations(this);
+            DocumentsProxy = new DocumentsProxyOperations(this);
             BaseUri = "https://{searchServiceName}.{searchDnsSuffix}/indexes('{indexName}')";
             ApiVersion = "2017-11-11-Preview";
             SearchDnsSuffix = "search.windows.net";

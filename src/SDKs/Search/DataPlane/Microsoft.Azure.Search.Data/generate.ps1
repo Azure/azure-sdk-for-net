@@ -38,6 +38,6 @@ Write-Output "Deleting extra files and cleaning up..."
 Remove-Item "$generateFolder\Models\SearchRequestOptions.cs"
 
 # Delete extra files we don't need.
-Remove-Item "$generateFolder\DocumentsProxyOperationsExtensions.cs"
+Remove-Item "$generateFolder\DocumentsOperationsExtensions.cs"
 
 Write-Output "Finished cleanup."

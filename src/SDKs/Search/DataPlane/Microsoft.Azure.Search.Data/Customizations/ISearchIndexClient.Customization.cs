@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Search
         SearchCredentials SearchCredentials { get; }
 
         /// <summary>
-        /// Indicates whether the index client should use HTTP GET for making Search and Suggest requests to the
+        /// Indicates whether the index client should use HTTP GET for making Search, Suggest, and Autocomplete requests to the
         /// Azure Search REST API. The default is <c>false</c>, which indicates that HTTP POST will be used.
         /// </summary>
         bool UseHttpGetForQueries { get; set; }
