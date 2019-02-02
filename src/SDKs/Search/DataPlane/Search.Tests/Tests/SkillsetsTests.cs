@@ -58,7 +58,9 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.En, SentimentSkillLanguage.En));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Pt, SentimentSkillLanguage.PtPt, TextExtractionAlgorithm.Printed));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Fi, SentimentSkillLanguage.Fi, TextExtractionAlgorithm.Printed));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.En, SentimentSkillLanguage.En, TextExtractionAlgorithm.Handwritten));
             });
         }
 
@@ -68,7 +70,7 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                Skillset skillset = CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Fi, SentimentSkillLanguage.Fi);
+                Skillset skillset = CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Fi, SentimentSkillLanguage.Fi, TextExtractionAlgorithm.Handwritten);
                 CloudException exception = Assert.Throws<CloudException>(() => searchClient.Skillsets.Create(skillset));
                 Assert.Contains("When 'textExtractionAlgorithm' parameter is set to 'handwritten' the only supported value for 'defaultLanguageCode' parameter is 'en'", exception.Message);
             });
@@ -606,7 +608,7 @@ namespace Microsoft.Azure.Search.Tests
             return new Skillset("testskillset", "Skillset for testing", skills);
         }
 
-        private static Skillset CreateTestSkillsetOcrSentiment(OcrSkillLanguage ocrLanguageCode, SentimentSkillLanguage sentimentLanguageCode)
+        private static Skillset CreateTestSkillsetOcrSentiment(OcrSkillLanguage ocrLanguageCode, SentimentSkillLanguage sentimentLanguageCode, TextExtractionAlgorithm algorithm)
         {
             List<Skill> skills = new List<Skill>();
 
@@ -623,7 +625,7 @@ namespace Microsoft.Azure.Search.Tests
 
             skills.Add(new OcrSkill("Tested OCR skill", RootPathString, inputs, outputs)
             {
-                TextExtractionAlgorithm = TextExtractionAlgorithm.Handwritten,
+                TextExtractionAlgorithm = algorithm,
                 DefaultLanguageCode = ocrLanguageCode,
 
             });
