@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="ip">Gets or sets the ip of the node.</param>
         /// <param name="accountId">Gets or sets the account id of the
         /// node.</param>
-        /// <param name="dscNodeName">Gets or sets the name of the dsc
-        /// nodeconfiguration.</param>
+        /// <param name="dscNodeName">Gets or sets the name of the dsc node
+        /// configuration.</param>
         /// <param name="status">Gets or sets the status of the node.</param>
         /// <param name="nodeId">Gets or sets the node id.</param>
         /// <param name="etag">Gets or sets the etag of the resource.</param>
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string AccountId { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the dsc nodeconfiguration.
+        /// Gets or sets the name of the dsc node configuration.
         /// </summary>
         [JsonProperty(PropertyName = "properties.nodeConfiguration.name")]
         public string DscNodeName { get; set; }
