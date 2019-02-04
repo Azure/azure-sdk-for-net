@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.HybridData.Models
+namespace Microsoft.Azure.Management.HybridData.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;

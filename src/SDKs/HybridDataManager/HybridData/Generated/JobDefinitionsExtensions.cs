@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.HybridData
+namespace Microsoft.Azure.Management.HybridData
 {
     using Models;
     using System.Collections;
