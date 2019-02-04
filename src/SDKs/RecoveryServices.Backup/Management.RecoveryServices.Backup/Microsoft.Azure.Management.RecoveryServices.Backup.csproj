@@ -1,5 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<!-- Please do not move/edit code below this line -->
+﻿	<!-- Please do not move/edit code below this line -->
 	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
 	<!-- Please do not move/edit code below this line -->
 
@@ -12,7 +11,7 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Adding back the VaultId property to Backup status related classes
+- Adding back the VaultId property to Backup status related classes.
        ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
