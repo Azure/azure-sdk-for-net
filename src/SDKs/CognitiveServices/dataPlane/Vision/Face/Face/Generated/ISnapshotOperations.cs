@@ -26,7 +26,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Submit an operation to take a snapshot of face list, large face
         /// list, person group or large person group, with user-specified
         /// snapshot type, source object id, apply scope and an optional user
-        /// data.
+        /// data.&lt;br /&gt;
         /// The snapshot interfaces are for users to backup and restore their
         /// face data from one face subscription to another, inside same region
         /// or across regions. The workflow contains two phases, user first
@@ -34,20 +34,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// store it as a snapshot, then calls Snapshot - Apply to paste the
         /// snapshot to target subscription. The snapshots are stored in a
         /// centralized location (per Azure instance), so that they can be
-        /// applied cross accounts and regions.
+        /// applied cross accounts and regions.&lt;br /&gt;
         /// Taking snapshot is an asynchronous operation. An operation id can
         /// be obtained from the "Operation-Location" field in response header,
         /// to be used in OperationStatus - Get for tracking the progress of
         /// creating the snapshot. The snapshot id will be included in the
         /// "resourceLocation" field in OperationStatus - Get response when the
-        /// operation status is "succeeded".
+        /// operation status is "succeeded".&lt;br /&gt;
         /// Snapshot taking time depends on the number of person and face
         /// entries in the source object. It could be in seconds, or up to
-        /// several hours for 1,000,000 persons with multiple faces.
+        /// several hours for 1,000,000 persons with multiple faces.&lt;br
+        /// /&gt;
         /// Snapshots will be automatically expired and cleaned in 48 hours
         /// after it is created by Snapshot - Take. User can delete the
         /// snapshot using Snapshot - Delete by themselves any time before
-        /// expiration.
+        /// expiration.&lt;br /&gt;
         /// Taking snapshot for a certain object will not block any other
         /// operations against the object. All read-only operations (Get/List
         /// and Identify/FindSimilar/Verify) can be conducted as usual. For all
@@ -58,7 +59,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// readable and writable operations can work as normal. Snapshot will
         /// also include the training results of the source object, which means
         /// target subscription the snapshot applied to does not need re-train
-        /// the target object before calling Identify/FindSimilar.
+        /// the target object before calling Identify/FindSimilar.&lt;br /&gt;
+        /// * Free-tier subscription quota: 100 take operations per month.
+        /// * S0-tier subscription quota: 100 take operations per day.
         /// </summary>
         /// <param name='type'>
         /// User specified type for the source object to take snapshot from.
@@ -203,7 +206,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <summary>
         /// Submit an operation to apply a snapshot to current subscription.
         /// For each snapshot, only subscriptions included in the applyScope of
-        /// Snapshot - Take can apply it.
+        /// Snapshot - Take can apply it.&lt;br /&gt;
         /// The snapshot interfaces are for users to backup and restore their
         /// face data from one face subscription to another, inside same region
         /// or across regions. The workflow contains two phases, user first
@@ -211,19 +214,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// store it as a snapshot, then calls Snapshot - Apply to paste the
         /// snapshot to target subscription. The snapshots are stored in a
         /// centralized location (per Azure instance), so that they can be
-        /// applied cross accounts and regions.
+        /// applied cross accounts and regions.&lt;br /&gt;
         /// Applying snapshot is an asynchronous operation. An operation id can
         /// be obtained from the "Operation-Location" field in response header,
         /// to be used in OperationStatus - Get for tracking the progress of
         /// applying the snapshot. The target object id will be included in the
         /// "resourceLocation" field in OperationStatus - Get response when the
-        /// operation status is "succeeded".
+        /// operation status is "succeeded".&lt;br /&gt;
         /// Snapshot applying time depends on the number of person and face
         /// entries in the snapshot object. It could be in seconds, or up to 1
-        /// hour for 1,000,000 persons with multiple faces.
+        /// hour for 1,000,000 persons with multiple faces.&lt;br /&gt;
         /// Snapshots will be automatically expired and cleaned in 48 hours
         /// after it is created by Snapshot - Take. So the target subscription
-        /// is required to apply the snapshot in 48 hours since its creation.
+        /// is required to apply the snapshot in 48 hours since its
+        /// creation.&lt;br /&gt;
         /// Applying a snapshot will not block any other operations against the
         /// target object, however it is not recommended because the
         /// correctness cannot be guaranteed during snapshot applying. After
@@ -231,12 +235,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// object can work as normal. Snapshot also includes the training
         /// results of the source object, which means target subscription the
         /// snapshot applied to does not need re-train the target object before
-        /// calling Identify/FindSimilar.
+        /// calling Identify/FindSimilar.&lt;br /&gt;
         /// One snapshot can be applied multiple times in parallel, while
         /// currently only CreateNew apply mode is supported, which means the
         /// apply operation will fail if target subscription already contains
         /// an object of same type and using the same objectId. Users can
-        /// specify the "objectId" in request body to avoid such conflicts.
+        /// specify the "objectId" in request body to avoid such
+        /// conflicts.&lt;br /&gt;
+        /// * Free-tier subscription quota: 100 apply operations per month.
+        /// * S0-tier subscription quota: 100 apply operations per day.
         /// </summary>
         /// <param name='snapshotId'>
         /// Id referencing a particular snapshot.

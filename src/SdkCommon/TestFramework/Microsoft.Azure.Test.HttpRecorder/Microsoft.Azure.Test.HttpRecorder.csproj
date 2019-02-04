@@ -2,14 +2,14 @@
   <PropertyGroup>
     <Description>Microsoft.Azure.Test.HttpRecorder</Description>
     <AssemblyTitle>HttpRecorder Library for recording Clinet/Server communication in Azure</AssemblyTitle>
-    <Version>1.13.2</Version>
+    <Version>1.13.3</Version>
     <AssemblyName>Microsoft.Azure.Test.HttpRecorder</AssemblyName>
     <PackageId>Microsoft.Azure.Test.HttpRecorder</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime HttpRecorder REST;$(CommonNugetPackageTags)</PackageTags>
     <DefaultItemExcludes>$(DefaultItemExcludes);HttpRecorder.csproj</DefaultItemExcludes>
     <PackageReleaseNotes>
       <![CDATA[
-        1) Adding support to target .NET 461 and .NET Standard 2.0 framework
+        1) Accomodate Newtonsoft.Json breaking change for .NET 4.5.2 and above
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
