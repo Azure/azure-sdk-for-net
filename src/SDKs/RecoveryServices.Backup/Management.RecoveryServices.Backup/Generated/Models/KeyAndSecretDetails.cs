@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// 1. Secret(BEK) - Url + Backup Data + vaultId.
     /// 2. Key(KEK) - Url + Backup Data + vaultId.
     /// 3. EncryptionMechanism
-    /// BEK and KEK can potentiallty have different vault ids.
+    /// BEK and KEK can potentially have different vault ids.
     /// </summary>
     public partial class KeyAndSecretDetails
     {

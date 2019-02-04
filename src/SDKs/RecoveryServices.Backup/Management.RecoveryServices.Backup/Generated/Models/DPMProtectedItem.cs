@@ -54,9 +54,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// item</param>
         /// <param name="backupEngineName">Backup Management server protecting
         /// this backup item</param>
-        /// <param name="protectionState">Protection state of the backupengine.
-        /// Possible values include: 'Invalid', 'IRPending', 'Protected',
-        /// 'ProtectionError', 'ProtectionStopped', 'ProtectionPaused'</param>
+        /// <param name="protectionState">Protection state of the backup
+        /// engine. Possible values include: 'Invalid', 'IRPending',
+        /// 'Protected', 'ProtectionError', 'ProtectionStopped',
+        /// 'ProtectionPaused'</param>
         /// <param name="isScheduledForDeferredDelete">To check if backup item
         /// is scheduled for deferred delete</param>
         /// <param name="extendedInfo">Extended info of the backup
@@ -90,7 +91,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public string BackupEngineName { get; set; }
 
         /// <summary>
-        /// Gets or sets protection state of the backupengine. Possible values
+        /// Gets or sets protection state of the backup engine. Possible values
         /// include: 'Invalid', 'IRPending', 'Protected', 'ProtectionError',
         /// 'ProtectionStopped', 'ProtectionPaused'
         /// </summary>
