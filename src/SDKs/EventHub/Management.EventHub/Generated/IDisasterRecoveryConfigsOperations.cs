@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// </exception>
         Task<AzureOperationResponse> BreakPairingWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// envokes GEO DR failover and reconfigure the alias to point to the
+        /// Invokes GEO DR failover and reconfigure the alias to point to the
         /// secondary namespace
         /// </summary>
         /// <param name='resourceGroupName'>

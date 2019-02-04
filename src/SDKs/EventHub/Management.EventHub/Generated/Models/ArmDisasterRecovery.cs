@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// or 'Succeeded' or 'Failed'. Possible values include: 'Accepted',
         /// 'Succeeded', 'Failed'</param>
         /// <param name="partnerNamespace">ARM Id of the Primary/Secondary
-        /// eventhub namespace name, which is part of GEO DR pairning</param>
+        /// eventhub namespace name, which is part of GEO DR pairing</param>
         /// <param name="alternateName">Alternate name specified when alias and
         /// namespace names are same.</param>
         /// <param name="role">role of namespace in GEO DR - possible values
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
 
         /// <summary>
         /// Gets or sets ARM Id of the Primary/Secondary eventhub namespace
-        /// name, which is part of GEO DR pairning
+        /// name, which is part of GEO DR pairing
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerNamespace")]
         public string PartnerNamespace { get; set; }
