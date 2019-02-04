@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Search.Tests
                 SearchAssert.ThrowsCloudException(
                     () => searchClient.DataSources.Create(dataSource),
                     HttpStatusCode.BadRequest,
-                    "Unsupported data source type 'thistypedoesnotexist'");
+                    "Data source type 'thistypedoesnotexist' is not supported");
             });
         }
 
@@ -435,9 +435,9 @@ namespace Microsoft.Azure.Search.Tests
         {
             return DataSource.DocumentDb(
                 name: SearchTestUtilities.GenerateName(),
-                documentDbConnectionString: "fake",
+                documentDbConnectionString: "AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is not a real secret")]
                 collectionName: "faketable",
-                query: "fake query",
+                query: "SELECT ... FROM x where x._ts > @HighWaterMark",
                 useChangeDetection: useChangeDetection,
                 deletionDetectionPolicy: deletionDetectionPolicy,
                 description: FakeDescription);
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             return DataSource.AzureBlobStorage(
                 name: SearchTestUtilities.GenerateName(),
-                storageConnectionString: "fake",
+                storageConnectionString: "DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is not a real secret")]
                 containerName: "fakecontainer",
                 pathPrefix: "/fakefolder/",
                 deletionDetectionPolicy: deletionDetectionPolicy,
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             return DataSource.AzureTableStorage(
                 name: SearchTestUtilities.GenerateName(),
-                storageConnectionString: "fake",
+                storageConnectionString: "DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is not a real secret")]
                 tableName: "faketable",
                 query: "fake query",
                 deletionDetectionPolicy: deletionDetectionPolicy,

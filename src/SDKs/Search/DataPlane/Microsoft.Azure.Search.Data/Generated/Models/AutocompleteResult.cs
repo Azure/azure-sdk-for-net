@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// The result of Autocomlete query.
+    /// The result of Autocomplete query.
     /// </summary>
     public partial class AutocompleteResult
     {

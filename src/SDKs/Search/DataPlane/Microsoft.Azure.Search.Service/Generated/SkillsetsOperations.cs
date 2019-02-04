@@ -85,11 +85,11 @@ namespace Microsoft.Azure.Search
         {
             if (Client.SearchServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SearchServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
             }
             if (Client.SearchDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SearchDnsSuffix");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
             }
             if (skillsetName == null)
             {
@@ -299,11 +299,11 @@ namespace Microsoft.Azure.Search
         {
             if (Client.SearchServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SearchServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
             }
             if (Client.SearchDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SearchDnsSuffix");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
             }
             if (skillsetName == null)
             {
@@ -549,11 +549,11 @@ namespace Microsoft.Azure.Search
         {
             if (Client.SearchServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SearchServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
             }
             if (Client.SearchDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SearchDnsSuffix");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
             }
             if (skillsetName == null)
             {
@@ -738,11 +738,11 @@ namespace Microsoft.Azure.Search
         {
             if (Client.SearchServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SearchServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
             }
             if (Client.SearchDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SearchDnsSuffix");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
             }
             if (Client.ApiVersion == null)
             {
@@ -943,11 +943,11 @@ namespace Microsoft.Azure.Search
         {
             if (Client.SearchServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SearchServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
             }
             if (Client.SearchDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SearchDnsSuffix");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
             }
             if (skillset == null)
             {
