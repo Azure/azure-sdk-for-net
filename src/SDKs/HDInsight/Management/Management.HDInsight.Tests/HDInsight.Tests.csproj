@@ -11,7 +11,15 @@
 
   <ItemGroup>
     <PackageReference Include="WindowsAzure.Storage" Version="8.1.4" />
+    <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.2" />
+    <PackageReference Include="Microsoft.Azure.Management.Authorization" Version="2.11.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.KeyVault" Version="2.4.3" />
+    <PackageReference Include="Microsoft.Azure.Management.ManagedServiceIdentity" Version="0.10.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Storage" Version="9.2.0-preview" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="1.1.2" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
@@ -25,10 +33,10 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Update="SessionRecords\**\*.json">
+    <None Update="*settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\FailingScriptAction.sh">
+    <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

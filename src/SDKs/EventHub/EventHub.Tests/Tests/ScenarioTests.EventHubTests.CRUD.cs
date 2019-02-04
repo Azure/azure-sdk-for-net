@@ -70,13 +70,15 @@ namespace EventHub.Tests.ScenarioTests
                             Name = "EventHubArchive.AzureBlockBlob",
                             BlobContainer = "container",
                             ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
-                            StorageAccountResourceId = "/subscriptions/"+ResourceManagementClient.SubscriptionId.ToString()+"/resourcegroups/v-ajnavtest/providers/Microsoft.Storage/storageAccounts/testingsdkeventhub"
-                        }
+                            StorageAccountResourceId = "/subscriptions/"+ResourceManagementClient.SubscriptionId.ToString()+"/resourcegroups/v-ajnavtest/providers/Microsoft.Storage/storageAccounts/testingsdkeventhub11"
+                        },
+                        SkipEmptyArchives = true
                     }
                 });
 
                 Assert.NotNull(createEventHubResponse);
                 Assert.Equal(createEventHubResponse.Name, eventhubName);
+                Assert.True(createEventHubResponse.CaptureDescription.SkipEmptyArchives);
 
                 // Get the created EventHub
                 var getEventResponse = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
