@@ -264,27 +264,6 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetListAsync(CancellationToken cancellation = default)
-        {
-            var uri = BuildUriForList();
-
-            using (HttpMessage message = Pipeline.CreateMessage(_options, cancellation)) {
-                message.SetRequestLine(PipelineMethod.Get, uri);
-
-                message.AddHeader("Host", uri.Host);
-                message.AddHeader(MediaTypeKeyValueApplicationHeader);
-                AddAuthenticationHeaders(message, uri, PipelineMethod.Get, content: default, _secret, _credential);
-                await Pipeline.ProcessAsync(message).ConfigureAwait(false);
-
-                Response response = message.Response;
-                if (response.Status == 200) {
-                    var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, null, cancellation);
-                    return new Response<SettingBatch>(response, batch);
-                }
-                else throw new ResponseFailedException(response);
-            }
-        }
-
         public async Task<Response<SettingBatch>> GetRevisionsAsync(SettingBatchFilter filter, CancellationToken cancellation = default)
         {
             var uri = BuildUriForRevisions(filter);

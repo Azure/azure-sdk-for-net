@@ -464,7 +464,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
             try
             {
                 await service.SetAsync(testSettingNoLabel, CancellationToken.None);
-
                 // Test
                 Response<ConfigurationSetting> response = await service.GetAsync(key: testSettingNoLabel.Key, filter: default, CancellationToken.None);
 
@@ -530,7 +529,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
-        public async Task GetBatch()
+        public async Task GetBatchPagination()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
@@ -557,7 +556,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
 
         [Test]
-        public async Task GetList()
+        public async Task GetBatchWithFields()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
@@ -567,7 +566,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 await service.SetAsync(s_testSetting, CancellationToken.None);
 
-                SettingBatch batch = await service.GetListAsync(CancellationToken.None);
+                SettingBatchFilter filter = new SettingBatchFilter()
+                {
+                    Fields = SettingFields.Key | SettingFields.Label | SettingFields.Value
+                };
+
+                SettingBatch batch = await service.GetBatchAsync(filter, CancellationToken.None);
                 int resultsReturned = batch.Count;
 
                 //At least there should be one key available
