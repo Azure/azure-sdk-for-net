@@ -32,9 +32,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// Initializes a new instance of the ExampleLabelObject class.
         /// </summary>
         /// <param name="text">The sample's utterance.</param>
-        /// <param name="entityLabels">The idenfied entities within the
+        /// <param name="entityLabels">The identified entities within the
         /// utterance.</param>
-        /// <param name="intentName">The idenfitied intent representing the
+        /// <param name="intentName">The identified intent representing the
         /// utterance.</param>
         public ExampleLabelObject(string text = default(string), IList<EntityLabelObject> entityLabels = default(IList<EntityLabelObject>), string intentName = default(string))
         {
@@ -56,13 +56,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         public string Text { get; set; }
 
         /// <summary>
-        /// Gets or sets the idenfied entities within the utterance.
+        /// Gets or sets the identified entities within the utterance.
         /// </summary>
         [JsonProperty(PropertyName = "entityLabels")]
         public IList<EntityLabelObject> EntityLabels { get; set; }
 
         /// <summary>
-        /// Gets or sets the idenfitied intent representing the utterance.
+        /// Gets or sets the identified intent representing the utterance.
         /// </summary>
         [JsonProperty(PropertyName = "intentName")]
         public string IntentName { get; set; }

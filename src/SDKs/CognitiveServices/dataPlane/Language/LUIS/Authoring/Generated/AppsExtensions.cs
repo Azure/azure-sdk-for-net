@@ -70,7 +70,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
 
             /// <summary>
             /// Imports an application to LUIS, the application's structure should be
-            /// included in in the request body.
+            /// included in the request body.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -232,12 +232,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='appId'>
             /// The application ID.
             /// </param>
+            /// <param name='force'>
+            /// A flag to indicate whether to force an operation.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> DeleteAsync(this IApps operations, System.Guid appId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteAsync(this IApps operations, System.Guid appId, bool? force = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(appId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(appId, force, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -429,6 +432,58 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// package - Gets published LUIS application package in binary stream GZip
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Packages published LUIS application as GZip.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='slotName'>
+            /// The publishing slot name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Stream> PackagePublishedApplicationAsGzipAsync(this IApps operations, System.Guid appId, System.Guid slotName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.PackagePublishedApplicationAsGzipWithHttpMessagesAsync(appId, slotName, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
+            }
+
+            /// <summary>
+            /// package - Gets trained LUIS application package in binary stream GZip
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Packages trained LUIS application as GZip.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Stream> PackageTrainedApplicationAsGzipAsync(this IApps operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.PackageTrainedApplicationAsGzipWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
             }
 
     }

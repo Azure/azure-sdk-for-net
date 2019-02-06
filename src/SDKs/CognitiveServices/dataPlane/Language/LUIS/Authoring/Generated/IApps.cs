@@ -76,7 +76,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         Task<HttpOperationResponse<IList<ApplicationInfoResponse>>> ListWithHttpMessagesAsync(int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Imports an application to LUIS, the application's structure should
-        /// be included in in the request body.
+        /// be included in the request body.
         /// </summary>
         /// <param name='luisApp'>
         /// A LUIS application structure.
@@ -252,6 +252,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='appId'>
         /// The application ID.
         /// </param>
+        /// <param name='force'>
+        /// A flag to indicate whether to force an operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -267,7 +270,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteWithHttpMessagesAsync(System.Guid appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteWithHttpMessagesAsync(System.Guid appId, bool? force = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Publishes a specific version of the application.
         /// </summary>
@@ -475,5 +478,63 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Thrown when a required parameter is null
         /// </exception>
         Task<HttpOperationResponse<IList<PrebuiltDomain>>> ListAvailableCustomPrebuiltDomainsForCultureWithHttpMessagesAsync(string culture, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// package - Gets published LUIS application package in binary stream
+        /// GZip format
+        /// </summary>
+        /// <remarks>
+        /// Packages published LUIS application as GZip.
+        /// </remarks>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='slotName'>
+        /// The publishing slot name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<Stream>> PackagePublishedApplicationAsGzipWithHttpMessagesAsync(System.Guid appId, System.Guid slotName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// package - Gets trained LUIS application package in binary stream
+        /// GZip format
+        /// </summary>
+        /// <remarks>
+        /// Packages trained LUIS application as GZip.
+        /// </remarks>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<Stream>> PackageTrainedApplicationAsGzipWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

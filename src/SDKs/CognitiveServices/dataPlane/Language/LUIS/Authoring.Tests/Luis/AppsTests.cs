@@ -180,7 +180,6 @@
                 var result = await client.Apps.PublishAsync(appId, new ApplicationPublishObject
                 {
                     IsStaging = false,
-                    Region = "westus",
                     VersionId = "0.1"
                 });
 
