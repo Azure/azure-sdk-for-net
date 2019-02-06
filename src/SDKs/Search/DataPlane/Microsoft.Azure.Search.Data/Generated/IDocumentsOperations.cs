@@ -49,6 +49,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and
         /// matching terms in the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete" />
         /// </summary>
         /// <param name='searchText'>
         /// The incomplete term which should be auto-completed.
@@ -82,6 +83,7 @@ namespace Microsoft.Azure.Search
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and
         /// matching terms in the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete" />
         /// </summary>
         /// <param name='autocompleteRequest'>
         /// The definition of the Autocomplete request.
