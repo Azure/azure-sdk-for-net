@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     using System.Linq;
 
     /// <summary>
-    /// Definition of the varible.
+    /// Definition of the variable.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Variable : ProxyResource
