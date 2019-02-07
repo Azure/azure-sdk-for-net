@@ -179,23 +179,26 @@ namespace Microsoft.Azure.Search
                 DeserializeForSearch<T>);
         }
 
-        public Task<AzureOperationResponse<Document>> GetWithHttpMessagesAsync(
+        public async Task<AzureOperationResponse<Document>> GetWithHttpMessagesAsync(
             string key,
             IEnumerable<string> selectedFields,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            return DoGetWithHttpMessagesAsync<Document>(
+            JsonSerializerSettings jsonSerializerSettings =
+                JsonUtility.CreateDocumentDeserializerSettings(Client.DeserializationSettings);
+
+            return await Client.DocumentsProxy.GetWithHttpMessagesAsync<Document>(
                 key,
-                selectedFields,
+                selectedFields.ToList(),
                 searchRequestOptions,
-                customHeaders,
+                EnsureCustomHeaders(customHeaders),
                 cancellationToken,
-                JsonUtility.CreateDocumentDeserializerSettings(this.Client.DeserializationSettings));
+                responseDeserializerSettings: jsonSerializerSettings);
         }
 
-        public Task<AzureOperationResponse<T>> GetWithHttpMessagesAsync<T>(
+        public async Task<AzureOperationResponse<T>> GetWithHttpMessagesAsync<T>(
             string key,
             IEnumerable<string> selectedFields,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
@@ -203,14 +206,15 @@ namespace Microsoft.Azure.Search
             CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             JsonSerializerSettings jsonSerializerSettings = 
-                JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings);
-            return DoGetWithHttpMessagesAsync<T>(
+                JsonUtility.CreateTypedDeserializerSettings<T>(Client.DeserializationSettings);
+
+            return await Client.DocumentsProxy.GetWithHttpMessagesAsync<T>(
                 key,
-                selectedFields,
+                selectedFields.ToList(),
                 searchRequestOptions,
-                customHeaders,
+                EnsureCustomHeaders(customHeaders),
                 cancellationToken,
-                jsonSerializerSettings);
+                responseDeserializerSettings: jsonSerializerSettings);
         }
 
         public Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync(
@@ -315,6 +319,21 @@ namespace Microsoft.Azure.Search
                 customHeaders,
                 cancellationToken,
                 DeserializeForSuggest<T>);
+        }
+
+        private static Dictionary<string, List<string>> EnsureCustomHeaders(Dictionary<string, List<string>> customHeaders)
+        {
+            const string Accept = nameof(Accept);
+            const string AcceptValue = "application/json;odata.metadata=none";
+
+            customHeaders = customHeaders ?? new Dictionary<string, List<string>>();
+
+            if (!customHeaders.ContainsKey(Accept))
+            {
+                customHeaders[Accept] = new List<string>() { AcceptValue };
+            }
+
+            return customHeaders;
         }
 
         private DocumentSearchResponsePayload<SearchResult<T>, T> DeserializeForSearch<T>(string payload)
@@ -513,213 +532,6 @@ namespace Microsoft.Azure.Search
                 ServiceClientTracing.Exit(invocationId, result);
             }
 
-            return result;
-        }
-
-        private async Task<AzureOperationResponse<T>> DoGetWithHttpMessagesAsync<T>(
-            string key,
-            IEnumerable<string> selectedFields,
-            SearchRequestOptions searchRequestOptions,
-            Dictionary<string, List<string>> customHeaders,
-            CancellationToken cancellationToken,
-            JsonSerializerSettings jsonSerializerSettings) where T : class
-        {
-            if (Client.SearchServiceName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
-            }
-            if (Client.SearchDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
-            }
-            if (Client.IndexName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.IndexName");
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-
-            if (key == null)
-            {
-                throw new ArgumentNullException("key");
-            }
-
-            if (selectedFields == null)
-            {
-                throw new ArgumentNullException("selectedFields");
-            }
-
-            Guid? clientRequestId = default(Guid?);
-            if (searchRequestOptions != null)
-            {
-                clientRequestId = searchRequestOptions.ClientRequestId;
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("key", key);
-                tracingParameters.Add("selectedFields", selectedFields);
-                tracingParameters.Add("clientRequestId", clientRequestId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Get", tracingParameters);
-            }
-
-            // Construct URL
-            if (!selectedFields.Any())
-            {
-                selectedFields = SelectAll;
-            }
-
-            string selectClause = selectedFields.ToCommaSeparatedString();
-
-            var baseUrl = Client.BaseUri;
-            var url = baseUrl + (baseUrl.EndsWith("/") ? "" : "/") + "docs('{key}')";
-            url = url.Replace("{searchServiceName}", Client.SearchServiceName);
-            url = url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
-            url = url.Replace("{indexName}", Client.IndexName);
-            url = url.Replace("{key}", Uri.EscapeDataString(key));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            queryParameters.Add(string.Format("$select={0}", Uri.EscapeDataString(selectClause)));
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            HttpResponseMessage httpResponse = null;
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
-
-            // Set Headers
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (clientRequestId != null)
-            {
-                if (httpRequest.Headers.Contains("client-request-id"))
-                {
-                    httpRequest.Headers.Remove("client-request-id");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
-            }
-            if (customHeaders != null)
-            {
-                foreach (var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-            httpRequest.Headers.TryAddWithoutValidation("Accept", "application/json;odata.metadata=none");
-
-            // Serialize Request
-            string requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string responseContent = null;
-            if (statusCode != HttpStatusCode.OK)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                try
-                {
-                    responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = SafeJsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
-                    {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(httpRequest, requestContent);
-                ex.Response = new HttpResponseMessageWrapper(httpResponse, responseContent);
-                if (httpResponse.Headers.Contains("request-id"))
-                {
-                    ex.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
-                }
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                httpRequest.Dispose();
-                if (httpResponse != null)
-                {
-                    httpResponse.Dispose();
-                }
-                throw ex;
-            }
-
-            // Create Result
-            var result = new AzureOperationResponse<T>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
-            }
-
-            // Deserialize Response
-            if (statusCode == HttpStatusCode.OK)
-            {
-                responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    result.Body = SafeJsonConvert.DeserializeObject<T>(responseContent, jsonSerializerSettings);
-                }
-                catch (JsonException ex)
-                {
-                    httpRequest.Dispose();
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", responseContent, ex);
-                }
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
             return result;
         }
 
