@@ -12,7 +12,7 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
     <PackageReference Include="System.Memory" Version="4.5.1" />
-    <PackageReference Include="System.Text.Primitives" Version="0.1.0-preview2-181127-3" />
+    <PackageReference Include="System.Text.Primitives" Version="0.1.0-preview1-180216-4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Azure.Core\Azure.Core.csproj">
