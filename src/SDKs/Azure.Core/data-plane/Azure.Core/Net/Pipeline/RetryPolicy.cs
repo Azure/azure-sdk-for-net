@@ -25,28 +25,4 @@ namespace Azure.Core.Http.Pipeline
 
         protected abstract bool ShouldRetry(HttpMessage message, int attempted, out TimeSpan delay);
     }
-
-    class FixedPolicy : RetryPolicy {
-        int _maxRetries;
-        TimeSpan _delay;
-        int[] _retriableCodes;
-
-        public FixedPolicy(int[] retriableCodes, int maxRetries, TimeSpan delay)
-        {
-            if (retriableCodes == null) throw new ArgumentNullException(nameof(retriableCodes));
-
-            _maxRetries = maxRetries;
-            _delay = delay;
-            _retriableCodes = retriableCodes;
-            Array.Sort(_retriableCodes);
-        }
-
-        protected override bool ShouldRetry(HttpMessage message, int attempted, out TimeSpan delay)
-        {
-            delay = _delay;
-            if (attempted > _maxRetries) return false;
-            if(Array.BinarySearch(_retriableCodes, message.Response.Status) < 0) return false;
-            return true;
-        }
-    }
 }
