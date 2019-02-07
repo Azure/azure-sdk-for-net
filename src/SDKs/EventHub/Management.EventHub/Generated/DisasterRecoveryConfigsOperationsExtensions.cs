@@ -296,7 +296,7 @@ namespace Microsoft.Azure.Management.EventHub
             }
 
             /// <summary>
-            /// envokes GEO DR failover and reconfigure the alias to point to the secondary
+            /// Invokes GEO DR failover and reconfigure the alias to point to the secondary
             /// namespace
             /// </summary>
             /// <param name='operations'>
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.EventHub
             }
 
             /// <summary>
-            /// envokes GEO DR failover and reconfigure the alias to point to the secondary
+            /// Invokes GEO DR failover and reconfigure the alias to point to the secondary
             /// namespace
             /// </summary>
             /// <param name='operations'>
