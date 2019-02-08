@@ -10,7 +10,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.Buffers.Text.Encodings;
 
 namespace Azure.Core.Http.Pipeline
 {
@@ -63,8 +62,8 @@ namespace Azure.Core.Http.Pipeline
 
             public override void AddHeader(HttpHeader header)
             {
-                var valueString = Utf8.ToString(header.Value);
-                var nameString = Utf8.ToString(header.Name);
+                var valueString = header.Value.AsciiToString();
+                var nameString = header.Name.AsciiToString();
                 AddHeader(nameString, valueString);
             }
 
@@ -118,7 +117,7 @@ namespace Azure.Core.Http.Pipeline
 
             protected internal override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
             {
-                string nameString = Utf8.ToString(name);
+                string nameString = name.AsciiToString();
                 if (!_responseMessage.Headers.TryGetValues(nameString, out var values)) {
                     if (!_responseMessage.Content.Headers.TryGetValues(nameString, out values)) {
                         value = default;

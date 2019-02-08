@@ -8,7 +8,6 @@ using System.Buffers.Text;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
-using static System.Buffers.Text.Encodings;
 
 namespace Azure.Core
 {

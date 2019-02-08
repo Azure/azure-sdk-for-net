@@ -5,7 +5,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using static System.Buffers.Text.Encodings;
 using System.Buffers;
 using System.ComponentModel;
 
@@ -37,7 +36,7 @@ namespace Azure.Core.Http
             _utf8[name.Length] = (byte)':';
 
             utf8 = utf8.Slice(name.Length + 1);
-            if (Utf8.FromUtf16(MemoryMarshal.AsBytes(value.AsSpan()), utf8, out var consumed, out int written) != OperationStatus.Done)
+            if (!Transcoder.TryUtf16ToAscii(value.AsSpan(), utf8, out _))
             {
                 throw new Exception("value is not ASCII");
             }
@@ -51,13 +50,13 @@ namespace Azure.Core.Http
             _utf8 = new byte[length];
             var utf8 = _utf8.AsSpan();
 
-            if (Utf8.FromUtf16(MemoryMarshal.AsBytes(name.AsSpan()), utf8, out var consumed, out int written) != OperationStatus.Done)
+            if (!Transcoder.TryUtf16ToAscii(name.AsSpan(), utf8, out int written))
             {
                 throw new Exception("name is not ASCII");
             }
             _utf8[written] = (byte)':';
             utf8 = utf8.Slice(written + 1);
-            if (Utf8.FromUtf16(MemoryMarshal.AsBytes(value.AsSpan()), utf8, out consumed, out written) != OperationStatus.Done)
+            if (!Transcoder.TryUtf16ToAscii(value.AsSpan(), utf8, out written))
             {
                 throw new Exception("name or value is not ASCII");
             }
@@ -69,7 +68,8 @@ namespace Azure.Core.Http
 
         public ReadOnlySpan<byte> Value
         {
-            get {
+            get
+            {
                 var span = _utf8.AsSpan();
                 var index = span.IndexOf((byte)':');
                 while (span[index] == ' ') index++;
@@ -79,7 +79,8 @@ namespace Azure.Core.Http
 
         public ReadOnlySpan<byte> Name
         {
-            get {
+            get
+            {
                 var span = _utf8.AsSpan();
                 var index = span.IndexOf((byte)':');
                 while (span[index] == ' ') index--;
@@ -87,7 +88,7 @@ namespace Azure.Core.Http
             }
         }
 
-        public override string ToString() => Utf8.ToString(_utf8.AsSpan(0, _utf8.Length - 2));
+        public override string ToString() => Transcoder.AsciiToString(_utf8.AsSpan(0, _utf8.Length - 2));
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool TryWrite(Span<byte> buffer, out int written, StandardFormat format = default)
@@ -106,7 +107,8 @@ namespace Azure.Core.Http
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
-            if(obj is HttpHeader header) {
+            if (obj is HttpHeader header)
+            {
                 return Equals(header);
             }
             return false;
@@ -119,7 +121,7 @@ namespace Azure.Core.Http
         {
             static readonly byte[] s_host = Encoding.ASCII.GetBytes("Host");
             public static ReadOnlySpan<byte> Host => s_host;
-           
+
             static readonly byte[] s_transferEncoding = Encoding.ASCII.GetBytes("Transfer-Encoding");
             public static ReadOnlySpan<byte> TransferEncoding => s_transferEncoding;
 

@@ -8,7 +8,6 @@ using System.Buffers.Text;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
-using static System.Buffers.Text.Encodings;
 
 namespace Azure.Core
 {
@@ -38,7 +37,7 @@ namespace Azure.Core
         public bool TryGetHeader(ReadOnlySpan<byte> name, out string value)
         {
             if (TryGetHeader(name, out ReadOnlySpan<byte> span)) {
-                value = Utf8.ToString(span);
+                value = span.AsciiToString();
                 return true;
             }
             value = default;
