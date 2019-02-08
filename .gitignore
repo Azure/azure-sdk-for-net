@@ -143,4 +143,3 @@ build.out
 csx/
 *.GhostDoc.xml
 pingme.txt
-/src/SDKs/Monitor/Monitor.Tests/Properties/launchSettings.json
