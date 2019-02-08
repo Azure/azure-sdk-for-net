@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Azure.Core
 {
-    public struct ETag : IEquatable<ETag>
+    public readonly struct ETag : IEquatable<ETag>
     {
-        byte[] _ascii;
+        readonly byte[] _ascii;
 
         public ETag(string etag) => _ascii = Encoding.ASCII.GetBytes(etag);
 
@@ -18,7 +18,7 @@ namespace Azure.Core
             return this._ascii == other._ascii;
         }
 
-        public override int GetHashCode() => 0;
+        public override int GetHashCode() => _ascii.GetHashCode();
 
         public static bool operator ==(ETag left, ETag rigth)
             => left.Equals(rigth);
