@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     using System.Linq;
 
     /// <summary>
-    /// The parameters supplied to the create or update dratft runbook
+    /// The parameters supplied to the create or update draft runbook
     /// properties.
     /// </summary>
     public partial class RunbookCreateOrUpdateDraftProperties
