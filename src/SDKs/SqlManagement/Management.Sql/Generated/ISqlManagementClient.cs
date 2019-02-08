@@ -373,6 +373,11 @@ namespace Microsoft.Azure.Management.Sql
         IManagedServerSecurityAlertPoliciesOperations ManagedServerSecurityAlertPolicies { get; }
 
         /// <summary>
+        /// Gets the ISensitivityLabelsOperations.
+        /// </summary>
+        ISensitivityLabelsOperations SensitivityLabels { get; }
+
+        /// <summary>
         /// Gets the IDatabaseOperations.
         /// </summary>
         IDatabaseOperations DatabaseOperations { get; }
@@ -451,6 +456,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerVulnerabilityAssessmentsOperations.
         /// </summary>
         IServerVulnerabilityAssessmentsOperations ServerVulnerabilityAssessments { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseSensitivityLabelsOperations.
+        /// </summary>
+        IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; }
 
     }
 }
