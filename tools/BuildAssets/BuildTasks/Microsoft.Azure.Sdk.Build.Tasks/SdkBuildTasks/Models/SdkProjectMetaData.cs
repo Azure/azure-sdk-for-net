@@ -260,6 +260,10 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                 case TargetFrameworkMoniker.net462:
                     monikerString = "net462";
                     break;
+
+                case TargetFrameworkMoniker.net472:
+                    monikerString = "net472";
+                    break;
             }
 
             return monikerString;
@@ -274,6 +278,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                 case TargetFrameworkMoniker.net46:
                 case TargetFrameworkMoniker.net461:
                 case TargetFrameworkMoniker.net462:
+                case TargetFrameworkMoniker.net472:
                     expectedFxCat = (expectedFxCategory == TargetFxCategory.FullDesktop);
                     break;
 
@@ -366,6 +371,11 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                     fxSupported = false;
                     break;
 
+                case "net472":
+                    validMoniker = TargetFrameworkMoniker.net472;
+                    fxSupported = true;
+                    break;
+
                 default:
                     validMoniker = TargetFrameworkMoniker.UnSupported;
                     fxSupported = false;
@@ -422,6 +432,10 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                     validMoniker = TargetFrameworkMoniker.net462;
                     break;
 
+                case "net472":
+                    validMoniker = TargetFrameworkMoniker.net472;
+                    break;
+
                 default:
                     validMoniker = TargetFrameworkMoniker.UnSupported;
                     break;
@@ -439,6 +453,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
         net46,
         net461,
         net462,
+        net472,
         netcoreapp11,
         netcoreapp20,
         netstandard13,

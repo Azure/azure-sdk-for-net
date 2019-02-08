@@ -6,16 +6,24 @@
     <SdkSampleAssemblyName>SdkInfoSample</SdkSampleAssemblyName>
     <PackageTags>TestPackage;$(AdditionalVersionTags)</PackageTags>
   </PropertyGroup>
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <!--<GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyFileInformationalAttribute>false</GenerateAssemblyFileInformationalAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>-->
+  </PropertyGroup>
 
   <PropertyGroup Condition=" '$(AfterBuild)' != 'true' ">
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
-  
-   <PropertyGroup>
-  	<TargetFrameworks>net46</TargetFrameworks>
-  </PropertyGroup> 
-
   <ItemGroup Condition=" '$(AfterBuild)' != 'true' ">
     <PackageReference Include="Microsoft.Build" Version="15.7.179" />
     <PackageReference Include="Microsoft.Build.Framework" Version="15.7.179" />

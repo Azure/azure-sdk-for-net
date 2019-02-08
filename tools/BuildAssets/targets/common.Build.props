@@ -60,8 +60,13 @@
 		<OutputPath>bin\$(Configuration)\</OutputPath>
 	</PropertyGroup>
 
-		<PropertyGroup Condition=" '$(TargetFramework)'=='net461' ">
+	<PropertyGroup Condition=" '$(TargetFramework)'=='net461' ">
 		<DefineConstants>net461;FullNetFx</DefineConstants>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(TargetFramework)'=='net472' ">
+		<DefineConstants>net472;FullNetFx</DefineConstants>
 		<OutputPath>bin\$(Configuration)\</OutputPath>
 	</PropertyGroup>
 
