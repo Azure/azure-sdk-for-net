@@ -10,8 +10,10 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Defines the format of NamedEntityRecognitionSkill supported language codes.
+    /// This is deprecated. Use <see cref="EntityRecognitionSkillLanguage"/> instead
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<NamedEntityRecognitionSkillLanguage>))]
+    [Obsolete("NamedEntityRecognitionSkillLanguage is deprecated. Use EntityRecognitionSkillLanguage instead.")]
     public sealed class NamedEntityRecognitionSkillLanguage : ExtensibleEnum<NamedEntityRecognitionSkillLanguage>
     {
         /// <summary>

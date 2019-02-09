@@ -11,12 +11,13 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Text analytics named entity recognition.
+    /// Text analytics named entity recognition. This skill is deprecated in favor of <see cref="EntityRecognitionSkill"/>
     /// <see
     /// href="https://docs.microsoft.com/azure/search/cognitive-search-skill-named-entity-recognition"
     /// />
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Skills.Text.NamedEntityRecognitionSkill")]
+    [Obsolete("NamedEntityRecognitionSkill is deprecated. Use EntityRecognitionSkill instead")]
     public partial class NamedEntityRecognitionSkill : Skill
     {
         /// <summary>

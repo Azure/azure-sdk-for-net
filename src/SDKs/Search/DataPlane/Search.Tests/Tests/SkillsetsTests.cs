@@ -4,6 +4,7 @@
 
 namespace Microsoft.Azure.Search.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -119,6 +120,7 @@ namespace Microsoft.Azure.Search.Tests
 
         // Purely to test the still existing, but obsolete NamedEntityRecognitionSkill
         [Fact]
+        [Obsolete]
         public void CreateSkillsetReturnsCorrectDefinitionNamedEntity()
         {
             Run(() =>
@@ -199,6 +201,7 @@ namespace Microsoft.Azure.Search.Tests
         // Explicit test to show that a skillset can be updated with the same number of skills,
         // simply moving from the Obsolete NamedEntityRecognitionSkill to the EntityRecognitionSkill
         [Fact]
+        [Obsolete]
         public void CanUpdateSkillsetFromNamedEntityRecognitionSkillToEntityRecognitionSkill()
         {
             Run(() =>
@@ -874,6 +877,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         // Helper method that will create functionally equivalent NamedEntityRecognitionSkill vs EntityRecognitionSkill
+        [Obsolete]
         private static Skillset CreateTestSkillsetNamedEntityOrEntityRecognition(bool createEntitySkill)
         {
             List<Skill> skills = new List<Skill>();

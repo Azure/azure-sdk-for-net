@@ -10,9 +10,10 @@ namespace Microsoft.Azure.Search.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for NamedEntityCategory.
+    /// Defines values for NamedEntityCategory. This is deprecated, use <see cref="EntityCategory"/> instead
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
+    [Obsolete("NamedEntityCategory is deprecated. Use EntityCategory instead.")]
     public enum NamedEntityCategory
     {
         [EnumMember(Value = "location")]
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.Search.Models
             return null;
         }
 
+        [Obsolete]
         internal static NamedEntityCategory? ParseNamedEntityCategory(this string value)
         {
             switch (value)
