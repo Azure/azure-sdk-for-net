@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -28,7 +29,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the ImageUrlCreateEntry class.
         /// </summary>
-        public ImageUrlCreateEntry(string url = default(string), IList<System.Guid> tagIds = default(IList<System.Guid>), IList<Region> regions = default(IList<Region>))
+        /// <param name="url">Url of the image.</param>
+        public ImageUrlCreateEntry(string url, IList<System.Guid> tagIds = default(IList<System.Guid>), IList<Region> regions = default(IList<Region>))
         {
             Url = url;
             TagIds = tagIds;
@@ -42,6 +44,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets url of the image.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
@@ -56,5 +59,28 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         [JsonProperty(PropertyName = "regions")]
         public IList<Region> Regions { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Url == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Url");
+            }
+            if (Regions != null)
+            {
+                foreach (var element in Regions)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

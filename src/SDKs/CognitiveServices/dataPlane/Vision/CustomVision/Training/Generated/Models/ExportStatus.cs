@@ -12,13 +12,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
 
     /// <summary>
-    /// Defines values for ExportFlavorModel.
+    /// Defines values for ExportStatus.
     /// </summary>
-    public static class ExportFlavorModel
+    public static class ExportStatus
     {
-        public const string Linux = "Linux";
-        public const string Windows = "Windows";
-        public const string ONNX10 = "ONNX10";
-        public const string ONNX12 = "ONNX12";
+        public const string Exporting = "Exporting";
+        public const string Failed = "Failed";
+        public const string Done = "Done";
     }
 }

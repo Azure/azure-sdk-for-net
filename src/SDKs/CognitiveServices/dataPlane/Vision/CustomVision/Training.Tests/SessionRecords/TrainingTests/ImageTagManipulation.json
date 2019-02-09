@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v2.2/Training/projects/6a060743-ff41-42d7-ab5e-04a32e93c223/images/untagged?take=50&skip=0",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4yL1RyYWluaW5nL3Byb2plY3RzLzZhMDYwNzQzLWZmNDEtNDJkNy1hYjVlLTA0YTMyZTkzYzIyMy9pbWFnZXMvdW50YWdnZWQ/dGFrZT01MCZza2lwPTA=",
+      "RequestUri": "/customvision/v3.0/training/projects/b3f0a928-5609-4e90-9b2f-aa0823819ad8/images/untagged?take=50&skip=0",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2IzZjBhOTI4LTU2MDktNGU5MC05YjJmLWFhMDgyMzgxOWFkOC9pbWFnZXMvdW50YWdnZWQ/dGFrZT01MCZza2lwPTA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,24 +10,24 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.7.2671.0",
-          "OSName/WindowsServer2016Datacenter",
-          "OSVersion/6.3.14393",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/0.12.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Date": [
+          "Fri, 15 Mar 2019 04:38:01 GMT"
+        ],
         "apim-request-id": [
-          "99ac58c2-6d36-499e-8b67-e62cb46c51f8"
+          "d5978774-8513-4f47-a219-22297481a516"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
         "x-content-type-options": [
           "nosniff"
-        ],
-        "Date": [
-          "Thu, 18 Oct 2018 17:08:35 GMT"
         ],
         "Content-Length": [
           "2"
@@ -40,8 +40,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v2.2/Training/projects/6a060743-ff41-42d7-ab5e-04a32e93c223/images/untagged?take=50&skip=0",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4yL1RyYWluaW5nL3Byb2plY3RzLzZhMDYwNzQzLWZmNDEtNDJkNy1hYjVlLTA0YTMyZTkzYzIyMy9pbWFnZXMvdW50YWdnZWQ/dGFrZT01MCZza2lwPTA=",
+      "RequestUri": "/customvision/v3.0/training/projects/b3f0a928-5609-4e90-9b2f-aa0823819ad8/images/untagged?take=50&skip=0",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2IzZjBhOTI4LTU2MDktNGU5MC05YjJmLWFhMDgyMzgxOWFkOC9pbWFnZXMvdW50YWdnZWQ/dGFrZT01MCZza2lwPTA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -49,15 +49,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.7.2671.0",
-          "OSName/WindowsServer2016Datacenter",
-          "OSVersion/6.3.14393",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/0.12.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Date": [
+          "Fri, 15 Mar 2019 04:38:01 GMT"
+        ],
         "apim-request-id": [
-          "7623cc06-6cbb-4378-966c-baedbd19a4de"
+          "33ef1c43-cdab-47ea-91af-e479d5592bc3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -65,22 +68,19 @@
         "x-content-type-options": [
           "nosniff"
         ],
-        "Date": [
-          "Thu, 18 Oct 2018 17:08:35 GMT"
-        ],
         "Content-Length": [
-          "837"
+          "849"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"4e1bd435-9e7a-4f42-a30e-7472049b0a17\",\r\n    \"created\": \"2018-10-18T17:08:16.0656142\",\r\n    \"width\": 900,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-4e1bd4359e7a4f42a30e7472049b0a17?sv=2017-04-17&sr=b&sig=MThuXOq%2FjREvWPdlhvbvNdaxDOos3UvifoyzLYHbLkc%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/t-4e1bd4359e7a4f42a30e7472049b0a17?sv=2017-04-17&sr=b&sig=%2B3DerezpIzf28yGvoDDCl14ZmrTK5ysYL7zs6hyvY4o%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-4e1bd4359e7a4f42a30e7472049b0a17?sv=2017-04-17&sr=b&sig=MThuXOq%2FjREvWPdlhvbvNdaxDOos3UvifoyzLYHbLkc%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"030af9f4-5e23-4f45-9f22-5830edb592f1\",\r\n    \"created\": \"2019-03-15T04:37:47.3528212\",\r\n    \"width\": 900,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-030af9f45e234f459f225830edb592f1?sv=2017-04-17&sr=b&sig=5X3yFv2xyPrNVQEXfs%2BE%2FEWVLkQEMXpXI2fQGlHj454%3D&se=2019-03-16T04%3A38%3A02Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/t-030af9f45e234f459f225830edb592f1?sv=2017-04-17&sr=b&sig=W9bV2T6Fi5sJ90oT0rCaekvH%2F2J6hY%2Fize4NDttbmnU%3D&se=2019-03-16T04%3A38%3A02Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-030af9f45e234f459f225830edb592f1?sv=2017-04-17&sr=b&sig=5X3yFv2xyPrNVQEXfs%2BE%2FEWVLkQEMXpXI2fQGlHj454%3D&se=2019-03-16T04%3A38%3A02Z&sp=r\"\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v2.2/Training/projects/6a060743-ff41-42d7-ab5e-04a32e93c223/images/tagged?take=50&skip=0",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4yL1RyYWluaW5nL3Byb2plY3RzLzZhMDYwNzQzLWZmNDEtNDJkNy1hYjVlLTA0YTMyZTkzYzIyMy9pbWFnZXMvdGFnZ2VkP3Rha2U9NTAmc2tpcD0w",
+      "RequestUri": "/customvision/v3.0/training/projects/b3f0a928-5609-4e90-9b2f-aa0823819ad8/images/tagged?take=50&skip=0",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2IzZjBhOTI4LTU2MDktNGU5MC05YjJmLWFhMDgyMzgxOWFkOC9pbWFnZXMvdGFnZ2VkP3Rha2U9NTAmc2tpcD0w",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -88,15 +88,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.7.2671.0",
-          "OSName/WindowsServer2016Datacenter",
-          "OSVersion/6.3.14393",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/0.12.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Date": [
+          "Fri, 15 Mar 2019 04:38:01 GMT"
+        ],
         "apim-request-id": [
-          "e66458ee-012a-481d-9a3c-36565780b47a"
+          "964f0a98-7137-42ef-bfc2-6a2d5651c95a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -104,22 +107,19 @@
         "x-content-type-options": [
           "nosniff"
         ],
-        "Date": [
-          "Thu, 18 Oct 2018 17:08:35 GMT"
-        ],
         "Content-Length": [
-          "9506"
+          "9591"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"4e1bd435-9e7a-4f42-a30e-7472049b0a17\",\r\n    \"created\": \"2018-10-18T17:08:16.0656142\",\r\n    \"width\": 900,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-4e1bd4359e7a4f42a30e7472049b0a17?sv=2017-04-17&sr=b&sig=MThuXOq%2FjREvWPdlhvbvNdaxDOos3UvifoyzLYHbLkc%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/t-4e1bd4359e7a4f42a30e7472049b0a17?sv=2017-04-17&sr=b&sig=%2B3DerezpIzf28yGvoDDCl14ZmrTK5ysYL7zs6hyvY4o%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-4e1bd4359e7a4f42a30e7472049b0a17?sv=2017-04-17&sr=b&sig=MThuXOq%2FjREvWPdlhvbvNdaxDOos3UvifoyzLYHbLkc%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"817b0749-0f64-4aa7-b08f-39b2a1301856\",\r\n        \"tagName\": \"Tag2\",\r\n        \"created\": \"2018-10-18T17:08:16.0777901\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"852950f6-84a2-4fc8-86c5-e9c15bdcc982\",\r\n    \"created\": \"2018-10-18T17:08:16.0343617\",\r\n    \"width\": 900,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-852950f684a24fc886c5e9c15bdcc982?sv=2017-04-17&sr=b&sig=PtFHyf6SoD%2BV38MmdHZ3Eqau2iM%2Bn%2BxKnFyioBAhdJE%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/t-852950f684a24fc886c5e9c15bdcc982?sv=2017-04-17&sr=b&sig=7yAoVBSlCoSzvNGeAlHFwhjFpQNElF0peCNmQLPvbcI%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-852950f684a24fc886c5e9c15bdcc982?sv=2017-04-17&sr=b&sig=PtFHyf6SoD%2BV38MmdHZ3Eqau2iM%2Bn%2BxKnFyioBAhdJE%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"817b0749-0f64-4aa7-b08f-39b2a1301856\",\r\n        \"tagName\": \"Tag2\",\r\n        \"created\": \"2018-10-18T17:08:16.046543\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"e49e7125-a9ed-4c8c-87f6-7b32576f1121\",\r\n    \"created\": \"2018-10-18T17:08:15.9406126\",\r\n    \"width\": 1600,\r\n    \"height\": 900,\r\n    \"resizedImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-e49e7125a9ed4c8c87f67b32576f1121?sv=2017-04-17&sr=b&sig=MRSPKO8%2BSVKrmP53Bwf268DYkbyngtEyPkdz%2FEjV1Dk%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/t-e49e7125a9ed4c8c87f67b32576f1121?sv=2017-04-17&sr=b&sig=Rpjs%2FKU%2B%2FMPb6fdvcLOwcru5Mt9D7BYREGSprSknKxg%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-e49e7125a9ed4c8c87f67b32576f1121?sv=2017-04-17&sr=b&sig=MRSPKO8%2BSVKrmP53Bwf268DYkbyngtEyPkdz%2FEjV1Dk%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"817b0749-0f64-4aa7-b08f-39b2a1301856\",\r\n        \"tagName\": \"Tag2\",\r\n        \"created\": \"2018-10-18T17:08:15.9527934\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"932892a3-2f9d-4eba-9b5b-d47e2877ca66\",\r\n    \"created\": \"2018-10-18T17:08:15.9259972\",\r\n    \"width\": 900,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-932892a32f9d4eba9b5bd47e2877ca66?sv=2017-04-17&sr=b&sig=LwzpeYTfKYwU0DftGW4HHwNnilDwZrEvnNmeAPODH34%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/t-932892a32f9d4eba9b5bd47e2877ca66?sv=2017-04-17&sr=b&sig=%2FajAnw1zetD92ZvG2BrRbQnkX9YqhzvQ7MPkAX9cVfI%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-932892a32f9d4eba9b5bd47e2877ca66?sv=2017-04-17&sr=b&sig=LwzpeYTfKYwU0DftGW4HHwNnilDwZrEvnNmeAPODH34%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"817b0749-0f64-4aa7-b08f-39b2a1301856\",\r\n        \"tagName\": \"Tag2\",\r\n        \"created\": \"2018-10-18T17:08:15.9371663\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"0dafa520-d92b-46bb-8790-a4e254642111\",\r\n    \"created\": \"2018-10-18T17:08:15.7687328\",\r\n    \"width\": 900,\r\n    \"height\": 900,\r\n    \"resizedImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-0dafa520d92b46bb8790a4e254642111?sv=2017-04-17&sr=b&sig=%2BsNHDdGCD6kXHaEhuC4Gq2opo2IFL7F3Spg7IefnxR8%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/t-0dafa520d92b46bb8790a4e254642111?sv=2017-04-17&sr=b&sig=uCdQclc5MnWRskY1%2F%2FnDpVFW8SVohiRHxq3ImjFjQlM%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-0dafa520d92b46bb8790a4e254642111?sv=2017-04-17&sr=b&sig=%2BsNHDdGCD6kXHaEhuC4Gq2opo2IFL7F3Spg7IefnxR8%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"817b0749-0f64-4aa7-b08f-39b2a1301856\",\r\n        \"tagName\": \"Tag2\",\r\n        \"created\": \"2018-10-18T17:08:15.7652897\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"bc6f82d7-d4e7-40a7-9d45-f6dddbdc9902\",\r\n    \"created\": \"2018-10-18T17:08:15.5343535\",\r\n    \"width\": 900,\r\n    \"height\": 1206,\r\n    \"resizedImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-bc6f82d7d4e740a79d45f6dddbdc9902?sv=2017-04-17&sr=b&sig=qPZxVVsOV2RTFbu4SkFu5XujfusEhVcsQjFO8YrDuP8%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/t-bc6f82d7d4e740a79d45f6dddbdc9902?sv=2017-04-17&sr=b&sig=RrGDABKV2bULXcZBGJ7bdK1qwFeGzaC4nokjpINpNUs%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-bc6f82d7d4e740a79d45f6dddbdc9902?sv=2017-04-17&sr=b&sig=qPZxVVsOV2RTFbu4SkFu5XujfusEhVcsQjFO8YrDuP8%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"8b069422-4843-4268-b32e-70f503952c0f\",\r\n        \"tagName\": \"Tag1\",\r\n        \"created\": \"2018-10-18T17:08:15.5465536\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"537fc005-6877-45c3-9574-7ad5ea2eac12\",\r\n    \"created\": \"2018-10-18T17:08:15.4093488\",\r\n    \"width\": 839,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-537fc005687745c395747ad5ea2eac12?sv=2017-04-17&sr=b&sig=wLeJh11mmt8TgxUYo7yWFc3AAfLdAHHsExoZBeNsKKs%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/t-537fc005687745c395747ad5ea2eac12?sv=2017-04-17&sr=b&sig=yQEtYHxbbH5qq0hMxagNeHF9KKwsSMEBbnjX2TiJ6tc%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-537fc005687745c395747ad5ea2eac12?sv=2017-04-17&sr=b&sig=wLeJh11mmt8TgxUYo7yWFc3AAfLdAHHsExoZBeNsKKs%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"8b069422-4843-4268-b32e-70f503952c0f\",\r\n        \"tagName\": \"Tag1\",\r\n        \"created\": \"2018-10-18T17:08:15.4059126\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"54c1fa16-7d80-4fe5-8342-3b459bc9e08c\",\r\n    \"created\": \"2018-10-18T17:08:15.3937217\",\r\n    \"width\": 900,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-54c1fa167d804fe583423b459bc9e08c?sv=2017-04-17&sr=b&sig=dyOhLDVo37SStYU5oFNa%2BHmJetSFZzneTDYUshvUh5M%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/t-54c1fa167d804fe583423b459bc9e08c?sv=2017-04-17&sr=b&sig=LYXX8ytxPI6rNslnAEDkr59TMZbK6Vb2BeaYUImulxM%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-54c1fa167d804fe583423b459bc9e08c?sv=2017-04-17&sr=b&sig=dyOhLDVo37SStYU5oFNa%2BHmJetSFZzneTDYUshvUh5M%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"8b069422-4843-4268-b32e-70f503952c0f\",\r\n        \"tagName\": \"Tag1\",\r\n        \"created\": \"2018-10-18T17:08:15.4059126\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"f16a64e2-b3e2-4902-b2cc-e184efe9ada9\",\r\n    \"created\": \"2018-10-18T17:08:15.3937217\",\r\n    \"width\": 1600,\r\n    \"height\": 900,\r\n    \"resizedImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-f16a64e2b3e24902b2cce184efe9ada9?sv=2017-04-17&sr=b&sig=kEOOagONu9vVEs6XgzMHwl1lDalFvLG1SW2pW27b1N4%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/t-f16a64e2b3e24902b2cce184efe9ada9?sv=2017-04-17&sr=b&sig=pZJ9Urs54Eric4Zihw%2B%2BbNMco6ks7ka6PGzcmiAoVkY%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-f16a64e2b3e24902b2cce184efe9ada9?sv=2017-04-17&sr=b&sig=kEOOagONu9vVEs6XgzMHwl1lDalFvLG1SW2pW27b1N4%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"8b069422-4843-4268-b32e-70f503952c0f\",\r\n        \"tagName\": \"Tag1\",\r\n        \"created\": \"2018-10-18T17:08:15.4059126\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"fa16f5b0-95ad-44e9-9f38-7d54183f9c86\",\r\n    \"created\": \"2018-10-18T17:08:15.2218423\",\r\n    \"width\": 900,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-fa16f5b095ad44e99f387d54183f9c86?sv=2017-04-17&sr=b&sig=lx0UMuPB1oVuXdMbdAVY2Ue5MW2ZRile0FL7h1elgyY%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/t-fa16f5b095ad44e99f387d54183f9c86?sv=2017-04-17&sr=b&sig=1rlWcD6u2%2Fuf487Esk%2BrrBNnFAJnR63TXnOf%2Fv%2FcFH8%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisscuprodstore.blob.core.windows.net/i-6a060743ff4142d7ab5e04a32e93c223/i-fa16f5b095ad44e99f387d54183f9c86?sv=2017-04-17&sr=b&sig=lx0UMuPB1oVuXdMbdAVY2Ue5MW2ZRile0FL7h1elgyY%3D&se=2018-10-19T17%3A08%3A35Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"8b069422-4843-4268-b32e-70f503952c0f\",\r\n        \"tagName\": \"Tag1\",\r\n        \"created\": \"2018-10-18T17:08:15.234029\"\r\n      }\r\n    ]\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"030af9f4-5e23-4f45-9f22-5830edb592f1\",\r\n    \"created\": \"2019-03-15T04:37:47.3528212\",\r\n    \"width\": 900,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-030af9f45e234f459f225830edb592f1?sv=2017-04-17&sr=b&sig=S2%2BiIZ6nq9z1OLwKZ%2FbSuBK%2BpAUJs%2B3u1tTHohiwrOE%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/t-030af9f45e234f459f225830edb592f1?sv=2017-04-17&sr=b&sig=dcXuj%2FkaIGiIHx85MRp8DD1p7%2BbdTu5XxMO07XkQGEE%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-030af9f45e234f459f225830edb592f1?sv=2017-04-17&sr=b&sig=S2%2BiIZ6nq9z1OLwKZ%2FbSuBK%2BpAUJs%2B3u1tTHohiwrOE%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"d331a9f4-9ec1-413d-b855-3b72b3ab4ecb\",\r\n        \"tagName\": \"Tag2\",\r\n        \"created\": \"2019-03-15T04:37:47.3519006\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"3ec1d470-2b45-4150-ad88-3c9c4084fb60\",\r\n    \"created\": \"2019-03-15T04:37:47.2883512\",\r\n    \"width\": 900,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-3ec1d4702b454150ad883c9c4084fb60?sv=2017-04-17&sr=b&sig=0OWPEiX9W0d9i7Yb0k%2FM6JKVsBmmrS07w5v7zUwZeLM%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/t-3ec1d4702b454150ad883c9c4084fb60?sv=2017-04-17&sr=b&sig=GGT%2F%2FLhQsQ55RKOXgLfFldoWkl2siYvXSF9mc5ywACU%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-3ec1d4702b454150ad883c9c4084fb60?sv=2017-04-17&sr=b&sig=0OWPEiX9W0d9i7Yb0k%2FM6JKVsBmmrS07w5v7zUwZeLM%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"d331a9f4-9ec1-413d-b855-3b72b3ab4ecb\",\r\n        \"tagName\": \"Tag2\",\r\n        \"created\": \"2019-03-15T04:37:47.3050403\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"c483e9cd-1576-4b0a-a2ff-ccf389430fd4\",\r\n    \"created\": \"2019-03-15T04:37:47.2258503\",\r\n    \"width\": 900,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-c483e9cd15764b0aa2ffccf389430fd4?sv=2017-04-17&sr=b&sig=EvEy%2Bqi7xW2JE093ZLmd2TrnsYUJC3iIrdGgCTe1rtQ%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/t-c483e9cd15764b0aa2ffccf389430fd4?sv=2017-04-17&sr=b&sig=TRdAlJwOiOYzF4p2mejDNO63K6CHha%2FyPrhCGK2ZNi4%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-c483e9cd15764b0aa2ffccf389430fd4?sv=2017-04-17&sr=b&sig=EvEy%2Bqi7xW2JE093ZLmd2TrnsYUJC3iIrdGgCTe1rtQ%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"d331a9f4-9ec1-413d-b855-3b72b3ab4ecb\",\r\n        \"tagName\": \"Tag2\",\r\n        \"created\": \"2019-03-15T04:37:47.2268911\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"2a6c3978-c02f-47be-bce2-d1c2548d19fd\",\r\n    \"created\": \"2019-03-15T04:37:47.2258503\",\r\n    \"width\": 1600,\r\n    \"height\": 900,\r\n    \"resizedImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-2a6c3978c02f47bebce2d1c2548d19fd?sv=2017-04-17&sr=b&sig=H2TUrWV9w36IB%2FC2RsNM2ilBNQscYkgo52O8j1oAFWc%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/t-2a6c3978c02f47bebce2d1c2548d19fd?sv=2017-04-17&sr=b&sig=StvVhwZ7I0LNtI9D3qZ2JqO1ZRmkfeP0EXeAfU%2F5%2Byg%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-2a6c3978c02f47bebce2d1c2548d19fd?sv=2017-04-17&sr=b&sig=H2TUrWV9w36IB%2FC2RsNM2ilBNQscYkgo52O8j1oAFWc%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"d331a9f4-9ec1-413d-b855-3b72b3ab4ecb\",\r\n        \"tagName\": \"Tag2\",\r\n        \"created\": \"2019-03-15T04:37:47.2268911\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"744d31ad-d260-4b1b-92aa-e970b1f5b376\",\r\n    \"created\": \"2019-03-15T04:37:47.0696139\",\r\n    \"width\": 900,\r\n    \"height\": 900,\r\n    \"resizedImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-744d31add2604b1b92aae970b1f5b376?sv=2017-04-17&sr=b&sig=Zrwai4qoADiR6TU2spa8E7xtZakuvwsqh%2FPUfPqXETc%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/t-744d31add2604b1b92aae970b1f5b376?sv=2017-04-17&sr=b&sig=7LQA3OQFdx2raaxcqo0kiTN70%2B72D8iD8gyCkMOFbHQ%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-744d31add2604b1b92aae970b1f5b376?sv=2017-04-17&sr=b&sig=Zrwai4qoADiR6TU2spa8E7xtZakuvwsqh%2FPUfPqXETc%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"d331a9f4-9ec1-413d-b855-3b72b3ab4ecb\",\r\n        \"tagName\": \"Tag2\",\r\n        \"created\": \"2019-03-15T04:37:47.0862738\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"d9548b58-ba0a-4bc5-beeb-c7be5305a662\",\r\n    \"created\": \"2019-03-15T04:37:45.2096657\",\r\n    \"width\": 900,\r\n    \"height\": 1206,\r\n    \"resizedImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-d9548b58ba0a4bc5beebc7be5305a662?sv=2017-04-17&sr=b&sig=aF1nHNdgtXWik6OmButOAZ2NqbxsjqHw%2BxenygJQXa4%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/t-d9548b58ba0a4bc5beebc7be5305a662?sv=2017-04-17&sr=b&sig=Q43zMqUdtDIWlnyfbkPCjUkyPwrY2iwm5BhBHjlW7OA%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-d9548b58ba0a4bc5beebc7be5305a662?sv=2017-04-17&sr=b&sig=aF1nHNdgtXWik6OmButOAZ2NqbxsjqHw%2BxenygJQXa4%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"931d1bf9-582b-4d3b-a713-8f6ec9962e8f\",\r\n        \"tagName\": \"Tag1\",\r\n        \"created\": \"2019-03-15T04:37:45.2112749\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"5d397341-3d00-4bac-ad89-3c2956c2959a\",\r\n    \"created\": \"2019-03-15T04:37:45.1784082\",\r\n    \"width\": 839,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-5d3973413d004bacad893c2956c2959a?sv=2017-04-17&sr=b&sig=mJgz%2FXQgFagsePw6XFMb4wcNrUM7vwCzgfXO%2BALNgZc%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/t-5d3973413d004bacad893c2956c2959a?sv=2017-04-17&sr=b&sig=eCIrg7V2KFnijIFQ5HjKeD9U3%2F2SUNt4QBZFtEfTOhA%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-5d3973413d004bacad893c2956c2959a?sv=2017-04-17&sr=b&sig=mJgz%2FXQgFagsePw6XFMb4wcNrUM7vwCzgfXO%2BALNgZc%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"931d1bf9-582b-4d3b-a713-8f6ec9962e8f\",\r\n        \"tagName\": \"Tag1\",\r\n        \"created\": \"2019-03-15T04:37:45.180023\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"2f0be255-3648-498d-aa8d-e00318c4de85\",\r\n    \"created\": \"2019-03-15T04:37:45.1315305\",\r\n    \"width\": 900,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-2f0be2553648498daa8de00318c4de85?sv=2017-04-17&sr=b&sig=7TbJ5FLc8%2BMlDFlZcq6w8kpZNIoj54AqvEKgCgwbZ3o%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/t-2f0be2553648498daa8de00318c4de85?sv=2017-04-17&sr=b&sig=K4cxu1vfPjt3bDYqlUCVUbZAX1AaJJWCDvdfavKRsEU%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-2f0be2553648498daa8de00318c4de85?sv=2017-04-17&sr=b&sig=7TbJ5FLc8%2BMlDFlZcq6w8kpZNIoj54AqvEKgCgwbZ3o%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"931d1bf9-582b-4d3b-a713-8f6ec9962e8f\",\r\n        \"tagName\": \"Tag1\",\r\n        \"created\": \"2019-03-15T04:37:45.1643866\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"532155e5-0e3e-43be-bc75-ce4647d29f47\",\r\n    \"created\": \"2019-03-15T04:37:45.1002805\",\r\n    \"width\": 1600,\r\n    \"height\": 900,\r\n    \"resizedImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-532155e50e3e43bebc75ce4647d29f47?sv=2017-04-17&sr=b&sig=Unk77Jj6CvKb77wXuY3qwon%2F6%2FbfHZeu%2FksMfhC3LOA%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/t-532155e50e3e43bebc75ce4647d29f47?sv=2017-04-17&sr=b&sig=UffCqE9ZJa2IXiX%2BzK5Jt%2BjFMEhuvhpx39lKmiw0Ag4%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-532155e50e3e43bebc75ce4647d29f47?sv=2017-04-17&sr=b&sig=Unk77Jj6CvKb77wXuY3qwon%2F6%2FbfHZeu%2FksMfhC3LOA%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"931d1bf9-582b-4d3b-a713-8f6ec9962e8f\",\r\n        \"tagName\": \"Tag1\",\r\n        \"created\": \"2019-03-15T04:37:45.1019233\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"2da23f3a-97e1-4196-b8fa-7c90e748ca1d\",\r\n    \"created\": \"2019-03-15T04:37:44.9596567\",\r\n    \"width\": 900,\r\n    \"height\": 1600,\r\n    \"resizedImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-2da23f3a97e14196b8fa7c90e748ca1d?sv=2017-04-17&sr=b&sig=w0pKrb2GYsiAtzzxMRZjaYJRIyxH9jWVXpc9b49L2i8%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"thumbnailUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/t-2da23f3a97e14196b8fa7c90e748ca1d?sv=2017-04-17&sr=b&sig=PMFcQBp0DL558VPXUr8Lx1aEKhYsQxnyKiQOh6S0u0I%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"originalImageUri\": \"https://irisppewu2training.blob.core.windows.net/i-b3f0a92856094e909b2faa0823819ad8/i-2da23f3a97e14196b8fa7c90e748ca1d?sv=2017-04-17&sr=b&sig=w0pKrb2GYsiAtzzxMRZjaYJRIyxH9jWVXpc9b49L2i8%3D&se=2019-03-16T04%3A38%3A01Z&sp=r\",\r\n    \"tags\": [\r\n      {\r\n        \"tagId\": \"931d1bf9-582b-4d3b-a713-8f6ec9962e8f\",\r\n        \"tagName\": \"Tag1\",\r\n        \"created\": \"2019-03-15T04:37:44.9613193\"\r\n      }\r\n    ]\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v2.2/Training/projects/6a060743-ff41-42d7-ab5e-04a32e93c223/images/tags?imageIds=4e1bd435-9e7a-4f42-a30e-7472049b0a17&tagIds=817b0749-0f64-4aa7-b08f-39b2a1301856",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4yL1RyYWluaW5nL3Byb2plY3RzLzZhMDYwNzQzLWZmNDEtNDJkNy1hYjVlLTA0YTMyZTkzYzIyMy9pbWFnZXMvdGFncz9pbWFnZUlkcz00ZTFiZDQzNS05ZTdhLTRmNDItYTMwZS03NDcyMDQ5YjBhMTcmdGFnSWRzPTgxN2IwNzQ5LTBmNjQtNGFhNy1iMDhmLTM5YjJhMTMwMTg1Ng==",
+      "RequestUri": "/customvision/v3.0/training/projects/b3f0a928-5609-4e90-9b2f-aa0823819ad8/images/tags?imageIds=030af9f4-5e23-4f45-9f22-5830edb592f1&tagIds=d331a9f4-9ec1-413d-b855-3b72b3ab4ecb",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2IzZjBhOTI4LTU2MDktNGU5MC05YjJmLWFhMDgyMzgxOWFkOC9pbWFnZXMvdGFncz9pbWFnZUlkcz0wMzBhZjlmNC01ZTIzLTRmNDUtOWYyMi01ODMwZWRiNTkyZjEmdGFnSWRzPWQzMzFhOWY0LTllYzEtNDEzZC1iODU1LTNiNzJiM2FiNGVjYg==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -127,24 +127,24 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.7.2671.0",
-          "OSName/WindowsServer2016Datacenter",
-          "OSVersion/6.3.14393",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/0.12.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Date": [
+          "Fri, 15 Mar 2019 04:38:01 GMT"
+        ],
         "apim-request-id": [
-          "e31c1929-6cd1-4884-9356-575bb5836b0b"
+          "fbfb8e1c-8d49-490f-8379-1f479c593c76"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
         "x-content-type-options": [
           "nosniff"
-        ],
-        "Date": [
-          "Thu, 18 Oct 2018 17:08:35 GMT"
         ],
         "Content-Length": [
           "0"
@@ -154,19 +154,19 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/customvision/v2.2/Training/projects/6a060743-ff41-42d7-ab5e-04a32e93c223/images/tags",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4yL1RyYWluaW5nL3Byb2plY3RzLzZhMDYwNzQzLWZmNDEtNDJkNy1hYjVlLTA0YTMyZTkzYzIyMy9pbWFnZXMvdGFncw==",
+      "RequestUri": "/customvision/v3.0/training/projects/b3f0a928-5609-4e90-9b2f-aa0823819ad8/images/tags",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2IzZjBhOTI4LTU2MDktNGU5MC05YjJmLWFhMDgyMzgxOWFkOC9pbWFnZXMvdGFncw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"tags\": [\r\n    {\r\n      \"imageId\": \"4e1bd435-9e7a-4f42-a30e-7472049b0a17\",\r\n      \"tagId\": \"817b0749-0f64-4aa7-b08f-39b2a1301856\"\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"tags\": [\r\n    {\r\n      \"imageId\": \"030af9f4-5e23-4f45-9f22-5830edb592f1\",\r\n      \"tagId\": \"d331a9f4-9ec1-413d-b855-3b72b3ab4ecb\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "Training-Key": [
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.7.2671.0",
-          "OSName/WindowsServer2016Datacenter",
-          "OSVersion/6.3.14393",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/0.12.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -176,17 +176,17 @@
         ]
       },
       "ResponseHeaders": {
+        "Date": [
+          "Fri, 15 Mar 2019 04:38:01 GMT"
+        ],
         "apim-request-id": [
-          "5092b801-582b-4d4f-8318-a96b27118736"
+          "ae8c0db2-84f5-41ed-8d83-eebd45ed0fb5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
         "x-content-type-options": [
           "nosniff"
-        ],
-        "Date": [
-          "Thu, 18 Oct 2018 17:08:35 GMT"
         ],
         "Content-Length": [
           "141"
@@ -195,44 +195,8 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"created\": [\r\n    {\r\n      \"imageId\": \"4e1bd435-9e7a-4f42-a30e-7472049b0a17\",\r\n      \"tagId\": \"817b0749-0f64-4aa7-b08f-39b2a1301856\"\r\n    }\r\n  ],\r\n  \"duplicated\": [],\r\n  \"exceeded\": []\r\n}",
+      "ResponseBody": "{\r\n  \"created\": [\r\n    {\r\n      \"imageId\": \"030af9f4-5e23-4f45-9f22-5830edb592f1\",\r\n      \"tagId\": \"d331a9f4-9ec1-413d-b855-3b72b3ab4ecb\"\r\n    }\r\n  ],\r\n  \"duplicated\": [],\r\n  \"exceeded\": []\r\n}",
       "StatusCode": 200
-    },
-    {
-      "RequestUri": "/customvision/v2.2/Training/projects/6a060743-ff41-42d7-ab5e-04a32e93c223",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4yL1RyYWluaW5nL3Byb2plY3RzLzZhMDYwNzQzLWZmNDEtNDJkNy1hYjVlLTA0YTMyZTkzYzIyMw==",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Training-Key": [
-          ""
-        ],
-        "User-Agent": [
-          "FxVersion/4.7.2671.0",
-          "OSName/WindowsServer2016Datacenter",
-          "OSVersion/6.3.14393",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/0.12.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "apim-request-id": [
-          "ca134f7f-40ab-4a2d-971e-8ecad53f3eed"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
-        ],
-        "x-content-type-options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Thu, 18 Oct 2018 17:08:35 GMT"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 204
     }
   ],
   "Names": {},

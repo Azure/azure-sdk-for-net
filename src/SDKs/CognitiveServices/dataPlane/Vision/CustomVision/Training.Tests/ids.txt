@@ -1,14 +1,16 @@
-1c4c5578-cf45-4e90-9f65-b4a71e27b084
-ImageCounts, cc0e0c34-3e2c-4f70-b97d-961be44ef86a
-GetIterations, 26650aaf-d04d-459a-8578-e7d89505ceb7
-QuickTests, def97a32-033e-42e1-8527-b54c998d661e
-GetIterationPerformance, baae76ee-fbf1-4fc8-8ac5-ef0f85a48224
-QueryPredictionResults, 7af411d6-c831-42de-b36a-5935b28e6ba4
-ImageTagManipulation, 6a060743-ff41-42d7-ab5e-04a32e93c223
-CreateImagesFromPredictions, dcde5be9-c006-4c6b-91ba-e9c322473a1f
-GetImagesByIds, e715901c-9c64-4d00-96f6-8f738a8f6e46
-TrainProject, 7d2ce149-d189-49d7-a768-f2ed2ab658b7
-DeletePrediction, 3bb34f56-1f6f-40be-904d-737fd7b90c42
-GetUntaggedImages, 89edfdab-f6e7-441d-b015-1f276d228b76
-GetTaggedImages, 4dfc2efd-ea07-46a4-b46e-618dbbea5c4a
-ExportTests, 5b4fd98e-507d-49e1-abfa-6b1868b7981f
+ObjDetectionPrediction, 32d1b797-f462-4f90-bf71-f8d7729f5405, 32cb90e8-68a2-45b5-ac6a-0ce1b011c6e3
+TrainAndPublishProject, f6c976c5-a5f9-4920-9cc5-7ed8fe2aaacf, 0e0d7e51-2b49-4713-ba7f-c1bef057284f
+ImageCounts, 49fc224f-f4de-4fc8-bed2-8afdc2f0c9c4, c097311c-9b0a-44b4-90f8-541d1e66f5f7
+GetTaggedImages, 8ad17aeb-a314-4142-8cc1-6dcc9a3f6a24, 434b93b9-c2fb-4272-bea0-a7373d57a5ca
+GetIterations, 12f64a4c-1ed6-48f4-969e-83f565251bf9, 2a5033e1-89d0-4aaf-a374-be3cc19d833b
+QuickTests, 277b2d08-6171-4b67-86c9-adfd715c9c7b, caf4d24f-9556-4ee2-96d4-e1369d582eaf
+GetIterationPerformance, 4c13a02a-2425-4c66-8f88-b490e7400cd8, 08ef6dd9-e296-4abf-8594-d577ea641f70
+QueryPredictionResults, 326f4cc7-1a20-44c0-8f46-32ea1de5d004, b040c266-9671-4d4d-8700-b99085425a1e
+GetUntaggedImages, a95e2da8-7368-4c40-911d-562080c12b5e, 70574809-31b0-44b7-83ad-605ec078ed40
+DownloadRegions, 73cb54f1-b13e-42f6-ae4b-512641cf1cee, c2e8ac48-4808-409c-9910-de9704f3d9d0
+ExportTests, 754d889e-7f88-48d1-a7a5-358e48e2358b, 3e3dd6e4-8397-41f6-8af8-9696c30593c4
+RegionManipulation, 089113a5-dc04-4c5a-99db-e55715366685, ad2748c4-755a-4d5e-a10d-a1f39ec7b568
+ImageTagManipulation, b3f0a928-5609-4e90-9b2f-aa0823819ad8, b3f0a928-5609-4e90-9b2f-aa0823819ad8
+CreateImagesFromPredictions, c24e2e6f-f697-4bfc-a671-6453787f3f4b, 65b37349-d0a0-471a-aafc-bcd520b15b93
+GetImagesByIds, 16422634-2188-4f67-b0ad-dcd6dfc32d4f, 16422634-2188-4f67-b0ad-dcd6dfc32d4f
+DeletePrediction, 0b19d326-f236-4167-855e-a3abba30e85c, 0b19d326-f236-4167-855e-a3abba30e85c

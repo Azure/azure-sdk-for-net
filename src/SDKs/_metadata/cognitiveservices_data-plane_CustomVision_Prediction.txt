@@ -3,12 +3,12 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/CustomVision/Prediction/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\git\forked\azure-sdk-for-net\src\SDKs
-2018-10-19 04:30:42 UTC
+cmd.exe /c autorest.cmd https://github.com/areddish/azure-rest-api-specs/blob/cv-add-3.0/specification/cognitiveservices/data-plane/CustomVision/Prediction/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\github\azure-sdk-for-net\src\SDKs
+2019-03-14 16:54:23 UTC
 Azure-rest-api-specs repository information
-GitHub fork: Azure
-Branch:      master
-Commit:      835770d81d8601c36966f1041bdcae1882341739
+GitHub fork: areddish
+Branch:      cv-add-3.0
+Commit:      36a22093d4037ff1f8aa4325da8146be1d45d6ee
 AutoRest information
 Requested version: latest
 Bootstrapper version:    autorest@2.0.4283

@@ -27,12 +27,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// Initializes a new instance of the Export class.
         /// </summary>
         /// <param name="platform">Platform of the export. Possible values
-        /// include: 'CoreML', 'TensorFlow', 'DockerFile', 'ONNX'</param>
+        /// include: 'CoreML', 'TensorFlow', 'DockerFile', 'ONNX',
+        /// 'VAIDK'</param>
         /// <param name="status">Status of the export. Possible values include:
         /// 'Exporting', 'Failed', 'Done'</param>
         /// <param name="downloadUri">URI used to download the model.</param>
         /// <param name="flavor">Flavor of the export. Possible values include:
-        /// 'Linux', 'Windows', 'ONNX10', 'ONNX12'</param>
+        /// 'Linux', 'Windows', 'ONNX10', 'ONNX12', 'ARM'</param>
         /// <param name="newerVersionAvailable">Indicates an updated version of
         /// the export package is available and should be re-exported for the
         /// latest changes.</param>
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// Gets platform of the export. Possible values include: 'CoreML',
-        /// 'TensorFlow', 'DockerFile', 'ONNX'
+        /// 'TensorFlow', 'DockerFile', 'ONNX', 'VAIDK'
         /// </summary>
         [JsonProperty(PropertyName = "platform")]
         public string Platform { get; private set; }
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// Gets flavor of the export. Possible values include: 'Linux',
-        /// 'Windows', 'ONNX10', 'ONNX12'
+        /// 'Windows', 'ONNX10', 'ONNX12', 'ARM'
         /// </summary>
         [JsonProperty(PropertyName = "flavor")]
         public string Flavor { get; private set; }
