@@ -112,7 +112,8 @@ namespace Microsoft.Azure.Search.Models
         private static Dictionary<string, T> CreateNameMap()
         {
             IEnumerable<FieldInfo> allPublicStaticFields =
-                typeof(T).GetTypeInfo().DeclaredFields.Where(f => f.IsStatic && f.IsPublic);
+                typeof(T).GetTypeInfo().DeclaredFields
+                .Where(f => f.IsStatic && f.IsPublic && f.GetCustomAttribute(typeof(ObsoleteAttribute), false) != null);
 
             IEnumerable<T> allKnownValues =
                 allPublicStaticFields
