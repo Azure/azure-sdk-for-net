@@ -2,6 +2,7 @@
   <PropertyGroup>
     <NetFx452>net452</NetFx452>
 	  <NetFx461>net461</NetFx461>
+    <NetFx472>net472</NetFx472>
     <NetStd14>netstandard1.4</NetStd14>
     <NetStd20>netstandard2.0</NetStd20>
     <NetCore11>netcoreapp1.1</NetCore11>
@@ -218,6 +219,15 @@
              ContinueOnError="ErrorAndStop">
       <Output TaskParameter="TargetOutputs" ItemName="net461Assemblies" />
     </MSBuild>
+    
+    <Message Text="Building SDK Projects ..... @(net472SDKProj) for $(NetFx472)" Condition=" '@(net472SDKProj)' != '' " />
+    <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+             Projects="@(net472SDKProj)"
+             Properties="TargetFramework=$(NetFx472)"
+             BuildInParallel="$(BuildInParallel)"
+             ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="net472Assemblies" />
+    </MSBuild>
 
     <Message Text="Building SDK Projects ..... @(netStd14SDKProj) for $(NetStd14)" Condition=" '@(netStd14SDKProj)' != '' " />
     <MSBuild Targets="Build"
@@ -289,6 +299,14 @@
               ContinueOnError="ErrorAndStop">
     </MSBuild>
 
+	  <Message Text="Building SDK Projects ..... @(net472TestProj) for $(net472TestProj)"  Condition=" '@(net472TestProj)' != '' " />
+    <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+              Projects="@(net472TestProj)"
+              Properties="TargetFramework=$(NetFx472)"
+              BuildInParallel="$(BuildInParallel)"
+              ContinueOnError="ErrorAndStop">
+    </MSBuild>
+
     <!--UnSupported Projects-->
 
     <Message Text="Building UnSupported projects ..... @(unsupportedProj)" Condition=" '@(unsupportedProj)' != '' " />
@@ -311,7 +329,7 @@
     <!--
       <FilesToSign Include="@(supportedSdkAssemblies);@(supportedTestAssemblies);@(nonSdkAssemblies)" />
     -->
-      <FilesToSign Include="@(net452Assemblies);@(net461Assemblies);@(netStd14Assemblies);@(netStd20Assemblies);@(netCore11Assemblies);@(nonSdkAssemblies)" />
+      <FilesToSign Include="@(net452Assemblies);@(net461Assemblies);@(net472Assemblies);@(netStd14Assemblies);@(netStd20Assemblies);@(netCore11Assemblies);@(nonSdkAssemblies)" />
 
     </ItemGroup>
 
@@ -326,14 +344,22 @@
           Condition="@(FilteredSupportedTestProjects) != ''" ContinueOnError="false" WorkingDirectory="%(FilteredSupportedTestProjects.RootDir)%(FilteredSupportedTestProjects.Directory)" />
     -->
     <Message Text="Running .NET Core 2.0 Tests .... @(netCore20TestProj)" Condition=" '@(netCore20TestProj)' != '' " />
-    <Exec Command="dotnet test -f $(NetCore20) %(netCore20TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetCore20)\%(netCore20TestProj.Filename).trx /nodeReuse:false" Condition="@(netCore20TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore20TestProj.RootDir)%(netCore20TestProj.Directory)" />
+    <Exec Command="dotnet test -f $(NetCore20) %(netCore20TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetCore20)\%(netCore20TestProj.Filename).trx /nodeReuse:false" 
+        Condition="@(netCore20TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore20TestProj.RootDir)%(netCore20TestProj.Directory)" />
 
     <Message Text="Running .NET 4.5.2 Tests .... @(net452TestProj)" Condition=" '@(net452TestProj)' != '' " />
-    <Exec Command="dotnet test -f $(NetFx452) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetFx452)\%(net452TestProj.Filename).trx /nodeReuse:false" Condition="@(net452TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net452TestProj.RootDir)%(net452TestProj.Directory)" />
+    <Exec Command="dotnet test -f $(NetFx452) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetFx452)\%(net452TestProj.Filename).trx /nodeReuse:false" 
+        Condition="@(net452TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net452TestProj.RootDir)%(net452TestProj.Directory)" />
 	
 	  <Message Text="Running .NET 4.6.1 Tests .... @(net461TestProj)" Condition=" '@(net461TestProj)' != '' " />
-    <Exec Command="dotnet test -f $(NetFx461) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetFx461)\%(net452TestProj.Filename).trx /nodeReuse:false" Condition="@(net461TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net461TestProj.RootDir)%(net461TestProj.Directory)" />
+    <Exec Command="dotnet test -f $(NetFx461) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetFx461)\%(net461TestProj.Filename).trx /nodeReuse:false" 
+        Condition="@(net461TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net461TestProj.RootDir)%(net461TestProj.Directory)" />
     
+    <Message Text="Running .NET 4.7.2 Tests .... @(net472TestProj)" Condition=" '@(net472TestProj)' != '' " />
+    <Exec Command="dotnet test -f $(NetFx472) %(net472TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetFx472)\%(net472TestProj.Filename).trx /nodeReuse:false" 
+          Condition="@(net472TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net472TestProj.RootDir)%(net472TestProj.Directory)" />
+    
+
   </Target>
 
   <!--
@@ -345,7 +371,7 @@
   <Target Name="PackageNoBuild" DependsOnTargets="CategorizeProjects;Package" />
   
   <Target Name="Package">
-    <Message Text="Packaging..... @(net452SDKProj);@(net461SDKProj);@(netStd14SDKProj);@(netStd20SDKProj);@(nonSdkProject)" />
+    <Message Text="Packaging..... @(net452SDKProj);@(net461SDKProj);@(net472SDKProj);@(netStd14SDKProj);@(netStd20SDKProj);@(nonSdkProject)" />
     <Message Text="PackageOutputDir....... $(BuiltPackageOutputDir)" />
     <PropertyGroup>
       <!-- <SkipPublishingForNonSdkPackages Condition=" '@(nonSdkProj)' != '' ">true</SkipPublishingForNonSdkPackages> -->
@@ -449,6 +475,7 @@
       >
       <Output TaskParameter="net452SdkProjectsToBuild" ItemName="net452SDKProj" />
 	    <Output TaskParameter="net461SdkProjectsToBuild" ItemName="net461SDKProj" />
+      <Output TaskParameter="net472SdkProjectsToBuild" ItemName="net472SDKProj" />
       <Output TaskParameter="netStd14SdkProjectsToBuild" ItemName="netStd14SDKProj" />
       <Output TaskParameter="netStd20SdkProjectsToBuild" ItemName="netStd20SDKProj" />
       <Output TaskParameter="netCore11SdkProjectsToBuild" ItemName="netCore11SDKProj" />
@@ -457,6 +484,7 @@
       <Output TaskParameter="netCore20TestProjectsToBuild" ItemName="netCore20TestProj" />
       <Output TaskParameter="net452TestProjectsToBuild" ItemName="net452TestProj" />
 	    <Output TaskParameter="net461TestProjectsToBuild" ItemName="net461TestProj" />
+      <Output TaskParameter="net472TestProjectsToBuild" ItemName="net472TestProj" />
       <Output TaskParameter="unSupportedProjectsToBuild" ItemName="unsupportedProj" />
       <Output TaskParameter="nonSdkProjectToBuild" ItemName="nonSdkProj" />
       <Output TaskParameter="ProjectRootDir" PropertyName="ProjRootDir" />
@@ -473,8 +501,8 @@
 
     <Message Text="Categorizing Projects....."/>
     <ItemGroup>
-      <TotalSdkProjects Include="@(net452SDKProj);@(net461SDKProj);@(netStd14SDKProj);@(netStd20SDKProj);@(netCore11SDKProj);@(netCore20SDKProj)"/>
-      <TotalTestProjects Include="@(netCore11TestProj);@(netCore20TestProj);@(net452TestProj);@(net461TestProj)"/>
+      <TotalSdkProjects Include="@(net452SDKProj);@(net461SDKProj);@(net472SDKProj);@(netStd14SDKProj);@(netStd20SDKProj);@(netCore11SDKProj);@(netCore20SDKProj)"/>
+      <TotalTestProjects Include="@(netCore11TestProj);@(netCore20TestProj);@(net452TestProj);@(net461TestProj);@(net472TestProj)"/>
       <!--
       <TotalSupportedSdkProjects Include="@(supportedSdkProj)" />
       <TotalSupportedTestProjects Include="@(supportedTestProj)" />
@@ -496,11 +524,11 @@
     </RemoveDuplicates>
 
 	  <!-- Output List -->
-	  <Message Text="Supported SDKProjects ....... @(FilteredSupportedSdkProjects->Count())"/>
+	  <Message Text="Supported SDKProjects ....... @(FilteredSupportedSdkProjects->Count())" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text="%(FilteredSupportedSdkProjects.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text=" "/>
 	
-	  <Message Text="Supported TestProjects ....... @(FilteredSupportedTestProjects->Count())"/>
+	  <Message Text="Supported TestProjects ....... @(FilteredSupportedTestProjects->Count())" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text="%(FilteredSupportedTestProjects.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text=" "/>
 		  
@@ -523,6 +551,7 @@
     <ItemGroup>
       <net452SDKProjects Include="@(net452SDKProj)"/>
 	    <net461SDKProjects Include="@(net461SDKProj)"/>
+      <net472SDKProjects Include="@(net472SDKProj)"/>
       <netStd14SDKProjects Include="@(netStd14SDKProj)"/>
       <netStd20SDKProjects Include="@(netStd20SDKProj)"/>
       <netCore11SDKProjects Include="@(netCore11SDKProj)"/>
@@ -531,6 +560,7 @@
       <netCore20TestProjects Include="@(netCore20TestProj)"/>
       <net452TestProjects Include="@(net452TestProj)"/>
 	    <net461TestProjects Include="@(net461TestProj)"/>
+      <net472TestProjects Include="@(net472TestProj)"/>
       <unSupportedProject Include="@(unsupportedProj)"/>
       <nonSdkProject Include="@(nonSdkProj)"/>
       <SdkProjPackageList Include="@(SdkProjPkgList)" />

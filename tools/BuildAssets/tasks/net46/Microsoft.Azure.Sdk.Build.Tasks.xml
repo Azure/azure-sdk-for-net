@@ -428,6 +428,11 @@
             List of projects that needs to be built
             </summary>
         </member>
+        <member name="P:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.net472SdkProjectsToBuild">
+            <summary>
+            List of projects that needs to be built
+            </summary>
+        </member>
         <member name="P:Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects.netStd14SdkProjectsToBuild">
             <summary>
             List of Test Projects that needs to be build
