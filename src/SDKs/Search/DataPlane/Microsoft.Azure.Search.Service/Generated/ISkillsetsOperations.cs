@@ -24,33 +24,8 @@ namespace Microsoft.Azure.Search
     public partial interface ISkillsetsOperations
     {
         /// <summary>
-        /// Retrieves a cognitive skillset in an Azure Search service.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/get-skillset" />
-        /// </summary>
-        /// <param name='skillsetName'>
-        /// The name of the skillset to retrieve.
-        /// </param>
-        /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<Skillset>> GetWithHttpMessagesAsync(string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates a new cognitive skillset in an Azure Search service.
+        /// Creates a new cognitive skillset in an Azure Search service or
+        /// updates the skillset if it already exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/update-skillset" />
         /// </summary>
         /// <param name='skillsetName'>
@@ -102,6 +77,32 @@ namespace Microsoft.Azure.Search
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves a cognitive skillset in an Azure Search service.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/get-skillset" />
+        /// </summary>
+        /// <param name='skillsetName'>
+        /// The name of the skillset to retrieve.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Skillset>> GetWithHttpMessagesAsync(string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all cognitive skillsets in an Azure Search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/list-skillset" />

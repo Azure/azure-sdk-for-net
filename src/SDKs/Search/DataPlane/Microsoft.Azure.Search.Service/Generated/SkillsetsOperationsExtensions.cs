@@ -22,49 +22,8 @@ namespace Microsoft.Azure.Search
     public static partial class SkillsetsOperationsExtensions
     {
             /// <summary>
-            /// Retrieves a cognitive skillset in an Azure Search service.
-            /// <see href="https://docs.microsoft.com/rest/api/searchservice/get-skillset" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='skillsetName'>
-            /// The name of the skillset to retrieve.
-            /// </param>
-            /// <param name='searchRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            public static Skillset Get(this ISkillsetsOperations operations, string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
-            {
-                return operations.GetAsync(skillsetName, searchRequestOptions).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieves a cognitive skillset in an Azure Search service.
-            /// <see href="https://docs.microsoft.com/rest/api/searchservice/get-skillset" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='skillsetName'>
-            /// The name of the skillset to retrieve.
-            /// </param>
-            /// <param name='searchRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Skillset> GetAsync(this ISkillsetsOperations operations, string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(skillsetName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates a new cognitive skillset in an Azure Search service.
+            /// Creates a new cognitive skillset in an Azure Search service or updates the
+            /// skillset if it already exists.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/update-skillset" />
             /// </summary>
             /// <param name='operations'>
@@ -86,7 +45,8 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new cognitive skillset in an Azure Search service.
+            /// Creates a new cognitive skillset in an Azure Search service or updates the
+            /// skillset if it already exists.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/update-skillset" />
             /// </summary>
             /// <param name='operations'>
@@ -150,6 +110,48 @@ namespace Microsoft.Azure.Search
             public static async Task DeleteAsync(this ISkillsetsOperations operations, string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(skillsetName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Retrieves a cognitive skillset in an Azure Search service.
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/get-skillset" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='skillsetName'>
+            /// The name of the skillset to retrieve.
+            /// </param>
+            /// <param name='searchRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static Skillset Get(this ISkillsetsOperations operations, string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            {
+                return operations.GetAsync(skillsetName, searchRequestOptions).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves a cognitive skillset in an Azure Search service.
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/get-skillset" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='skillsetName'>
+            /// The name of the skillset to retrieve.
+            /// </param>
+            /// <param name='searchRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Skillset> GetAsync(this ISkillsetsOperations operations, string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(skillsetName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

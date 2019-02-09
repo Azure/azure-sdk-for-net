@@ -16,26 +16,24 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Text analytics named entity recognition.
+    /// Text analytics entity recognition.
     /// <see
-    /// href="https://docs.microsoft.com/azure/search/cognitive-search-skill-named-entity-recognition"
+    /// href="https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-recognition"
     /// />
     /// </summary>
-    [Newtonsoft.Json.JsonObject("#Microsoft.Skills.Text.NamedEntityRecognitionSkill")]
-    public partial class NamedEntityRecognitionSkill : Skill
+    [Newtonsoft.Json.JsonObject("#Microsoft.Skills.Text.EntityRecognitionSkill")]
+    public partial class EntityRecognitionSkill : Skill
     {
         /// <summary>
-        /// Initializes a new instance of the NamedEntityRecognitionSkill
-        /// class.
+        /// Initializes a new instance of the EntityRecognitionSkill class.
         /// </summary>
-        public NamedEntityRecognitionSkill()
+        public EntityRecognitionSkill()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NamedEntityRecognitionSkill
-        /// class.
+        /// Initializes a new instance of the EntityRecognitionSkill class.
         /// </summary>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
@@ -47,17 +45,21 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="outputs">The output of a skill is either a field in an
         /// Azure Search index, or a value that can be consumed as an input by
         /// another skill.</param>
-        /// <param name="categories">A list of named entity categories.</param>
+        /// <param name="categories">A list of entity categories that should be
+        /// extracted.</param>
         /// <param name="defaultLanguageCode">A value indicating which language
         /// code to use. Default is en.</param>
-        /// <param name="minimumPrecision">A value between 0 and 1 to indicate
-        /// the confidence of the results.</param>
-        public NamedEntityRecognitionSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IList<NamedEntityCategory> categories = default(IList<NamedEntityCategory>), NamedEntityRecognitionSkillLanguage defaultLanguageCode = default(NamedEntityRecognitionSkillLanguage), double? minimumPrecision = default(double?))
+        /// <param name="includeTypelessEntities">Determines whether or not to
+        /// include entities which are well known but don't conform to a type.
+        /// If this configuration is not set (default), set to null or set to
+        /// false, entities which don't have a type will not be
+        /// surfaced.</param>
+        public EntityRecognitionSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IList<EntityCategory> categories = default(IList<EntityCategory>), EntityRecognitionSkillLanguage defaultLanguageCode = default(EntityRecognitionSkillLanguage), bool? includeTypelessEntities = default(bool?))
             : base(description, context, inputs, outputs)
         {
             Categories = categories;
             DefaultLanguageCode = defaultLanguageCode;
-            MinimumPrecision = minimumPrecision;
+            IncludeTypelessEntities = includeTypelessEntities;
             CustomInit();
         }
 
@@ -67,24 +69,26 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a list of named entity categories.
+        /// Gets or sets a list of entity categories that should be extracted.
         /// </summary>
         [JsonProperty(PropertyName = "categories")]
-        public IList<NamedEntityCategory> Categories { get; set; }
+        public IList<EntityCategory> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating which language code to use. Default
         /// is en.
         /// </summary>
         [JsonProperty(PropertyName = "defaultLanguageCode")]
-        public NamedEntityRecognitionSkillLanguage DefaultLanguageCode { get; set; }
+        public EntityRecognitionSkillLanguage DefaultLanguageCode { get; set; }
 
         /// <summary>
-        /// Gets or sets a value between 0 and 1 to indicate the confidence of
-        /// the results.
+        /// Gets or sets determines whether or not to include entities which
+        /// are well known but don't conform to a type. If this configuration
+        /// is not set (default), set to null or set to false, entities which
+        /// don't have a type will not be surfaced.
         /// </summary>
-        [JsonProperty(PropertyName = "minimumPrecision")]
-        public double? MinimumPrecision { get; set; }
+        [JsonProperty(PropertyName = "includeTypelessEntities")]
+        public bool? IncludeTypelessEntities { get; set; }
 
         /// <summary>
         /// Validate the object.
