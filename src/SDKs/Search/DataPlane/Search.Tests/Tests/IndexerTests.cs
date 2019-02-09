@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
-                Skillset skillset = SkillsetsTests.CreateTestSkillsetOcrNamedEntity(null, null);
+                Skillset skillset = SkillsetsTests.CreateTestSkillsetOcrEntity(null, null);
 
                 AzureOperationResponse<Skillset> response =
                         searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, skillset).Result;

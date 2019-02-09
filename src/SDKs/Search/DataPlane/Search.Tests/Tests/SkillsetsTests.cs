@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Search.Tests
                 CreateAndValidateSkillset(searchClient, CreateSkillsetWithImageAnalysisDefaultSettings());
                 CreateAndValidateSkillset(searchClient, CreateSkillsetWithKeyPhraseExtractionDefaultSettings());
                 CreateAndValidateSkillset(searchClient, CreateSkillsetWithMergeDefaultSettings());
-                CreateAndValidateSkillset(searchClient, CreateSkillsetWithNamedEntityRecognitionDefaultSettings());
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithEntityRecognitionDefaultSettings());
                 CreateAndValidateSkillset(searchClient, CreateSkillsetWithSentimentDefaultSettings());
                 CreateAndValidateSkillset(searchClient, CreateSkillsetWithSplitDefaultSettings());
             });
@@ -112,8 +112,19 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrNamedEntity(null, null));
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrNamedEntity(TextExtractionAlgorithm.Printed, new List<NamedEntityCategory> { NamedEntityCategory.Location, NamedEntityCategory.Organization, NamedEntityCategory.Person } ));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrEntity(null, null));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrEntity(TextExtractionAlgorithm.Printed, new List<EntityCategory> { EntityCategory.Location, EntityCategory.Organization, EntityCategory.Person }));
+            });
+        }
+
+        // Purely to test the still existing, but obsolete NamedEntityRecognitionSkill
+        [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionNamedEntity()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetNamedEntityOrEntityRecognition(createEntitySkill: false));
             });
         }
 
@@ -156,6 +167,16 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionWithCognitiveServicesDefault()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithCognitiveServicesKey());
+            });
+        }
+
+        [Fact]
         public void CreateOrUpdateUpdatesWhenSkillsetExists()
         {
             Run(() =>
@@ -172,6 +193,29 @@ namespace Microsoft.Azure.Search.Tests
                 response =
                     searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, skillset).Result;
                 Assert.Equal(HttpStatusCode.OK, response.Response.StatusCode);
+            });
+        }
+
+        // Explicit test to show that a skillset can be updated with the same number of skills,
+        // simply moving from the Obsolete NamedEntityRecognitionSkill to the EntityRecognitionSkill
+        [Fact]
+        public void CanUpdateSkillsetFromNamedEntityRecognitionSkillToEntityRecognitionSkill()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                Skillset skillset = CreateTestSkillsetNamedEntityOrEntityRecognition(createEntitySkill: false);
+
+                AzureOperationResponse<Skillset> response =
+                   searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, skillset).Result;
+
+
+                Skillset entityRecognitionSkillset = CreateTestSkillsetNamedEntityOrEntityRecognition(createEntitySkill: true);
+
+                AzureOperationResponse<Skillset> updateResponse =
+                   searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, entityRecognitionSkillset).Result;
+
+                Assert.Equal(HttpStatusCode.OK, updateResponse.Response.StatusCode);
             });
         }
 
@@ -263,7 +307,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        public static Skillset CreateTestSkillsetOcrNamedEntity(TextExtractionAlgorithm? algorithm, List<NamedEntityCategory> categories)
+        public static Skillset CreateTestSkillsetOcrEntity(TextExtractionAlgorithm? algorithm, List<EntityCategory> categories)
         {
             List<Skill> skills = new List<Skill>();
 
@@ -302,7 +346,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new NamedEntityRecognitionSkill("Tested Named Entity Recognition skill", RootPathString, inputs1, outputs1)
+            skills.Add(new EntityRecognitionSkill("Tested Named Entity Recognition skill", RootPathString, inputs1, outputs1)
             {
                 Categories = categories,
                 DefaultLanguageCode = "en"
@@ -429,7 +473,7 @@ namespace Microsoft.Azure.Search.Tests
             return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
         }
 
-        private static Skillset CreateSkillsetWithNamedEntityRecognitionDefaultSettings()
+        private static Skillset CreateSkillsetWithEntityRecognitionDefaultSettings()
         {
             List<Skill> skills = new List<Skill>();
 
@@ -451,7 +495,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new NamedEntityRecognitionSkill("Tested Named Entity Recognition skill", RootPathString, inputs, outputs));
+            skills.Add(new EntityRecognitionSkill("Tested Entity Recognition skill", RootPathString, inputs, outputs));
 
             return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
         }
@@ -827,6 +871,73 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new ShaperSkill("Tested Shaper skill", RootPathString, inputs1, outputs1));
 
             return new Skillset("testskillset", "Skillset for testing", skills);
+        }
+
+        // Helper method that will create functionally equivalent NamedEntityRecognitionSkill vs EntityRecognitionSkill
+        private static Skillset CreateTestSkillsetNamedEntityOrEntityRecognition(bool createEntitySkill)
+        {
+            List<Skill> skills = new List<Skill>();
+
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/mytext"
+                }
+            };
+
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "entities",
+                    TargetName = "myEntities"
+                }
+            };
+
+            if (!createEntitySkill)
+            {
+                skills.Add(new NamedEntityRecognitionSkill("Tested (Obsolete) Named Entity Recognition skill", RootPathString, inputs, outputs)
+                {
+                    Categories = new NamedEntityCategory[] { NamedEntityCategory.Person },
+                    DefaultLanguageCode = "en"
+                });
+            }
+            else
+            {
+                skills.Add(new EntityRecognitionSkill("Tested (Obsolete) Named Entity Recognition skill", RootPathString, inputs, outputs)
+                {
+                    Categories = new EntityCategory[] { EntityCategory.Person },
+                    DefaultLanguageCode = "en"
+                });
+            }
+
+            return new Skillset("testskillset", "Skillset for testing", skills);
+        }
+
+        private static Skillset CreateSkillsetWithCognitiveServicesKey()
+        {
+            List<Skill> skills = new List<Skill>();
+
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry { Name = "url", Source = "/document/url" },
+                new InputFieldMappingEntry { Name = "queryString", Source = "/document/queryString" }
+            };
+
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
+            };
+
+            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, inputs, outputs)
+            {
+                TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
+                DefaultLanguageCode = "en"
+            });
+
+            return new Skillset("testskillset", "Skillset for testing", skills, new DefaultCognitiveServices());
         }
 
         private static Skillset CreateTestSkillsetOcrSplitText(OcrSkillLanguage ocrLanguageCode, SplitSkillLanguage splitLanguageCode, TextSplitMode textSplitMode)
