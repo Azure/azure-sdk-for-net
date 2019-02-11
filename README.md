@@ -1,33 +1,22 @@
-
-
-## All PRs should be opened against master branch. This branch is being retired and will be deleted.
-
-### Microsoft Azure SDK for .NET
+# Microsoft Azure SDK for .NET
  ----------
-The Microsoft Azure SDK for .NET allows you to build applications
-that take advantage of scalable cloud computing resources.
+Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. It’s the freedom to build, manage, and deploy applications on a massive, global network using your favorite tools and frameworks.
 
-### Download Packages
+This repo contains the libraries to allow you to easily leverage Azure from your applications and tools.
 
-For a full list of packages available for download in this repository, please see our [list of .NET SDK packages](https://github.com/Azure/azure-sdk-for-net/tree/psSdkJson6/Documentation/sdk-for-net-packages.md).
+## Package List
+
+For a full list of packages built from this repository, please see our [list of .NET SDK packages](https://github.com/Azure/azure-sdk-for-net/tree/master/Documentation/sdk-for-net-packages.md).
 
 ### Target Frameworks:
 
-* .NET Framework 4.5.2
-* Netstandard 1.4, based on the NetCore framework
+* .NET Framework 4.6.1
+* Netstandard 2.0
+
+## Contributing
 
 ### Prerequisites:
-  Install VS 2017 (Professional or higher) + VS2017 Update 1
-  (https://www.visualstudio.com/).
-  To know more about VS 2017 and its project system (https://docs.microsoft.com/en-us/visualstudio/#pivot=workloads&panel=windows)
-
-### Directory Restructure
-Directory structure has been simplified and consolidated in fewer directories
-All Management and Data plane SDKs are now under
-src\SDKs
-e.g.
-src\SDKs\AnalysisService
-src\SDKs\Compute
+  Install VS 2017 (Professional or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
 
 ### To build:
 =======
@@ -77,23 +66,15 @@ dotnet test SDKs\Compute\Compute.Tests\Compute.Tests.csproj
 
 ### Project Structure
 
-In "SDKs\< RPName >", you will find projects for services that have already been implemented
+In "SDKs\< Service Name >", you will find projects for services that have already been implemented
 
-  - Each SDK project needs to target .NET 4.5.2 and .NET Standard 1.4
-	  - Test project needs to target NetCoreApp 1.1
+  - Each SDK project needs to target .NET 4.6.1 and .NET Standard 2.0
+	  - Test project needs to target NetCoreApp 2.0
   - Each service contains a project for their generated/customized code
     - The folder 'Generated' contains the generated code
     - The folder 'Customizations' contains additions to the generated code - this can include additions to the generated partial classes, or additional classes that augment the SDK or call the generated code
     - The file 'generate.cmd', used to generate library code for the given service, can also be found in this project
   - Services also contain a project for their tests
-
-### Branches: psSdkJson6 vs. master
-
-The **psSdkJson6** branch contains the code generated from AutoRest tool.
-
-The **master** branch contains the code generated from Hydra/Hyak.
-  - Hydra/Hyak is Azure's legacy code generation technology.
-  - This can still be used to generate client libraries, but the project is not being advanced in favor of AutoRest. Your team should move to AutoRest and Swagger as soon as possible.
 
 ### Standard Process
 
