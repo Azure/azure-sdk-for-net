@@ -423,7 +423,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 // Test
                 var filter = new SettingBatchFilter();
                 filter.Key = setting.Key;
-                filter.Revision = DateTimeOffset.Now;
+                filter.Revision = DateTimeOffset.MaxValue;
                 SettingBatch batch = await service.GetRevisionsAsync(filter, CancellationToken.None);
 
                 int resultsReturned = 0;
