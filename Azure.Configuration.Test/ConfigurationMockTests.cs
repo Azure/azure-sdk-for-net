@@ -60,7 +60,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            ConfigurationSetting setting = await service.GetAsync(key: s_testSetting.Key, filter : default, CancellationToken.None);
+            ConfigurationSetting setting = await service.GetAsync(key: s_testSetting.Key, options : default, CancellationToken.None);
 
             AssertEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
@@ -74,7 +74,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var e = Assert.ThrowsAsync<ResponseFailedException>(async () =>
             {
-                await service.GetAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
+                await service.GetAsync(key: s_testSetting.Key, options: default, CancellationToken.None);
             });
             var response = e.Response;
             Assert.AreEqual(404, response.Status);
@@ -89,7 +89,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var transport = new AddMockTransport(s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            ConfigurationSetting setting = await service.AddAsync(setting: s_testSetting, CancellationToken.None);
+            ConfigurationSetting setting = await service.AddAsync(setting: s_testSetting);
 
             AssertEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
@@ -101,7 +101,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var transport = new SetMockTransport(s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            ConfigurationSetting setting = await service.SetAsync(s_testSetting, CancellationToken.None);
+            ConfigurationSetting setting = await service.SetAsync(s_testSetting);
 
             AssertEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
@@ -113,12 +113,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var transport = new UpdateMockTransport(s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            SettingFilter filter = new SettingFilter()
+            RequestOptions options = new RequestOptions()
             {
                 ETag = new ETagFilter() { IfMatch = new ETag("*") }
             };
 
-            ConfigurationSetting setting = await service.UpdateAsync(s_testSetting, filter, CancellationToken.None);
+            ConfigurationSetting setting = await service.UpdateAsync(s_testSetting, options, CancellationToken.None);
 
             AssertEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
@@ -127,10 +127,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task Delete()
         {
-            var transport = new DeleteMockTransport(s_testSetting.Key, new SettingFilter() {Label = s_testSetting.Label }, s_testSetting);
+            var transport = new DeleteMockTransport(s_testSetting.Key, new RequestOptions() {Label = s_testSetting.Label }, s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            await service.DeleteAsync(key: s_testSetting.Key, filter: s_testSetting.Label);
+            await service.DeleteAsync(key: s_testSetting.Key, options: s_testSetting.Label);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var e = Assert.ThrowsAsync<ResponseFailedException>(async () =>
             {
-                await service.DeleteAsync(key: s_testSetting.Key, filter: default, CancellationToken.None);
+                await service.DeleteAsync(key: s_testSetting.Key, options: default, CancellationToken.None);
             });
             var response = e.Response;
             Assert.AreEqual(404, response.Status);
@@ -182,7 +182,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var (service, pool) = CreateTestService(transport);
 
-            var query = new SettingBatchFilter();
+            var query = new BatchRequestOptions();
             int keyIndex = 0;
             while (true)
             {
@@ -217,7 +217,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var e = Assert.ThrowsAsync<ResponseFailedException>(async () =>
             {
-                await client.GetAsync(key: s_testSetting.Key, filter: null, CancellationToken.None);
+                await client.GetAsync(key: s_testSetting.Key, options: null, CancellationToken.None);
             });
             var response = e.Response;
             response.Dispose();

@@ -19,6 +19,8 @@ namespace Azure.ApplicationModel.Configuration
         const string MediaTypeProblemApplication = "application/problem+json";
         const string AcceptDateTimeFormat = "ddd, dd MMM yyy HH:mm:ss 'GMT'";
         const string AcceptDatetimeHeader = "Accept-Datetime";
+        const string ClientRequestIdHeader = "x-ms-client-request-id";
+        const string EchoClientRequestId = "x-ms-return-client-request-id";
         const string KvRoute = "/kv/";
         const string LocksRoute = "/locks/";
         const string RevisionsRoute = "/revisions/";
@@ -34,23 +36,33 @@ namespace Azure.ApplicationModel.Configuration
         );
 
         // TODO (pri 3): do all the methods that call this accept revisions?
-        static void AddFilterHeaders(SettingFilter filter, HttpMessage message)
+        static void AddOptionsHeaders(RequestOptions options, HttpMessage message)
         {
-            if (filter == null) return;
-
-            if (filter.ETag.IfMatch != default) {
-                message.AddHeader(IfMatchName, $"\"{filter.ETag.IfMatch}\"");
-            }
-
-            if (filter.ETag.IfNoneMatch != default)
+            var requestId = Guid.NewGuid().ToString();
+            if (options != null)
             {
-                message.AddHeader(IfNoneMatch, $"\"{filter.ETag.IfNoneMatch}\"");
-            }
+                if (options.ETag.IfMatch != default)
+                {
+                    message.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
+                }
 
-            if (filter.Revision.HasValue) {
-                var dateTime = filter.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                message.AddHeader(AcceptDatetimeHeader, dateTime);
+                if (options.ETag.IfNoneMatch != default)
+                {
+                    message.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
+                }
+
+                if (options.Revision.HasValue)
+                {
+                    var dateTime = options.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
+                    message.AddHeader(AcceptDatetimeHeader, dateTime);
+                }
+                if (options.RequestId != default)
+                {
+                    requestId = options.RequestId.ToString();
+                }
             }
+            message.AddHeader(ClientRequestIdHeader, requestId);
+            message.AddHeader(EchoClientRequestId, "true");
         }
 
         static async Task<Response<ConfigurationSetting>> CreateResponse(Response response, CancellationToken cancellation)
@@ -101,33 +113,33 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         Uri BuildUriForKvRoute(ConfigurationSetting keyValue)
-            => BuildUriForKvRoute(keyValue.Key, new SettingFilter() { Label = keyValue.Label }); // TODO (pri 2) : does this need to filter ETag?
+            => BuildUriForKvRoute(keyValue.Key, new RequestOptions() { Label = keyValue.Label }); // TODO (pri 2) : does this need to filter ETag?
 
-        Uri BuildUriForKvRoute(string key, SettingFilter filter)
+        Uri BuildUriForKvRoute(string key, RequestOptions options)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = KvRoute + key;
 
-            if (filter != null && filter.Label != null) {
-                builder.AppendQuery(LabelQueryFilter, filter.Label);                 
+            if (options != null && options.Label != null) {
+                builder.AppendQuery(LabelQueryFilter, options.Label);                 
             }
 
             return builder.Uri;
         }
 
-        Uri BuildUriForLocksRoute(string key, SettingFilter filter)
+        Uri BuildUriForLocksRoute(string key, RequestOptions options)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = LocksRoute + key;
 
-            if (filter != null && filter.Label != null) {
-                builder.AppendQuery(LabelQueryFilter, filter.Label);
+            if (options != null && options.Label != null) {
+                builder.AppendQuery(LabelQueryFilter, options.Label);
             }
 
             return builder.Uri;
         }
 
-        void BuildBatchQuery(UriBuilder builder, SettingBatchFilter options)
+        void BuildBatchQuery(UriBuilder builder, BatchRequestOptions options)
         {
             if (!string.IsNullOrEmpty(options.Key))
             {
@@ -162,7 +174,7 @@ namespace Azure.ApplicationModel.Configuration
             return builder.Uri;
         }
 
-        Uri BuildUriForGetBatch(SettingBatchFilter options)
+        Uri BuildUriForGetBatch(BatchRequestOptions options)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = KvRoute;
@@ -171,7 +183,7 @@ namespace Azure.ApplicationModel.Configuration
             return builder.Uri;
         }
 
-        Uri BuildUriForRevisions(SettingBatchFilter options)
+        Uri BuildUriForRevisions(BatchRequestOptions options)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = RevisionsRoute;

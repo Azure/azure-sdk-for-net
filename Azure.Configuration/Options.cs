@@ -24,7 +24,7 @@ namespace Azure.ApplicationModel.Configuration
         All = uint.MaxValue
     }
 
-    public class SettingFilter
+    public class RequestOptions
     {
         /// <summary>
         /// Specific label of the key.
@@ -43,7 +43,9 @@ namespace Azure.ApplicationModel.Configuration
         /// </summary>
         public SettingFields Fields { get; set; } = SettingFields.All;
 
-        public static implicit operator SettingFilter(string label) => new SettingFilter() { Label = label };
+        public Guid RequestId { get; set; }
+
+        public static implicit operator RequestOptions(string label) => new RequestOptions() { Label = label };
 
         #region nobody wants to see these
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -58,7 +60,7 @@ namespace Azure.ApplicationModel.Configuration
         #endregion
     }
 
-    public class SettingBatchFilter : SettingFilter
+    public class BatchRequestOptions : RequestOptions
     {
         /// <summary>
         /// Keys that will be used to filter.
@@ -68,9 +70,9 @@ namespace Azure.ApplicationModel.Configuration
 
         public string BatchLink { get; set; }
 
-        internal SettingBatchFilter Clone()
+        internal BatchRequestOptions Clone()
         {
-            return new SettingBatchFilter()
+            return new BatchRequestOptions()
             {
                 Key = Key,
                 BatchLink = BatchLink

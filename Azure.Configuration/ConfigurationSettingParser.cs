@@ -76,7 +76,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public static async Task<SettingBatch> ParseBatchAsync(Response response, SettingBatchFilter filter, CancellationToken cancellation)
+        public static async Task<SettingBatch> ParseBatchAsync(Response response, BatchRequestOptions filter, CancellationToken cancellation)
         {
             TryGetNextAfterValue(ref response, out string token);
 

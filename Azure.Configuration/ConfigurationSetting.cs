@@ -145,10 +145,10 @@ namespace Azure.ApplicationModel.Configuration
     public class SettingBatch
     {
         readonly ConfigurationSetting[] _settings;
-        readonly SettingBatchFilter _filter;
+        readonly BatchRequestOptions _filter;
         readonly string _link;
 
-        internal SettingBatch(ConfigurationSetting[] settings, string link, SettingBatchFilter filter)
+        internal SettingBatch(ConfigurationSetting[] settings, string link, BatchRequestOptions filter)
         {
             _settings = settings;
             _link = link;
@@ -159,7 +159,7 @@ namespace Azure.ApplicationModel.Configuration
 
         public int Count => _settings.Length;
 
-        public SettingBatchFilter NextBatch
+        public BatchRequestOptions NextBatch
         {
             get
             {

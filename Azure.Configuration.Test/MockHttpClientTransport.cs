@@ -67,7 +67,7 @@ namespace Azure.ApplicationModel.Configuration.Test
 
     class DeleteMockTransport : MockHttpClientTransport
     {
-        public DeleteMockTransport(string key, SettingFilter filter, ConfigurationSetting result)
+        public DeleteMockTransport(string key, RequestOptions filter, ConfigurationSetting result)
         {
             _expectedUri = $"https://contoso.azconfig.io/kv/{key}{GetExtraUriParameters(filter)}";
             _expectedRequestContent = null;
@@ -78,7 +78,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _responseContent = json.Replace("lastmodified", "last_modified");
         }
 
-        public DeleteMockTransport(string key, SettingFilter filter, HttpStatusCode statusCode)
+        public DeleteMockTransport(string key, RequestOptions filter, HttpStatusCode statusCode)
             : this(key, filter, result: null)
         {
             Responses.Clear();
@@ -89,7 +89,7 @@ namespace Azure.ApplicationModel.Configuration.Test
     // TODO (pri 3): this should emit the etag response header
     class GetMockTransport : MockHttpClientTransport
     {
-        public GetMockTransport(string queryKey, SettingFilter filter, ConfigurationSetting result)
+        public GetMockTransport(string queryKey, RequestOptions filter, ConfigurationSetting result)
         {
             _expectedMethod = HttpMethod.Get;
             _expectedUri = $"https://contoso.azconfig.io/kv/{queryKey}{GetExtraUriParameters(filter)}";
@@ -100,7 +100,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _responseContent = json.Replace("lastmodified", "last_modified");
         }
 
-        public GetMockTransport(string queryKey, SettingFilter filter, params HttpStatusCode[] statusCodes)
+        public GetMockTransport(string queryKey, RequestOptions filter, params HttpStatusCode[] statusCodes)
             : this(queryKey, filter, result: null)
         {
             Responses.Clear();
@@ -227,7 +227,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             response.Content.Headers.TryAddWithoutValidation("Content-Type", "application/vnd.microsoft.appconfig.kv+json; charset=utf-8;");
         }
 
-        protected string GetExtraUriParameters(SettingFilter filter)
+        protected string GetExtraUriParameters(RequestOptions filter)
         {
             if (filter != null && filter.Label != null)
             {
