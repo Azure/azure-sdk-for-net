@@ -13,7 +13,7 @@ namespace Azure.Core.Http
     {
         static readonly PipelineTransport s_defaultTransport = new HttpPipelineTransport();
         static readonly PipelinePolicy s_defaultLoggingPolicy = new LoggingPolicy();
-        // TODO (pri 2): what are the default status codes to retry?
+        // TODO (pri 1): I am not sure this should be here. Maybe we need retry policy per service
         static readonly PipelinePolicy s_defaultRetryPolicy = RetryPolicy.CreateFixed(3, TimeSpan.Zero,
             500, // Internal Server Error 
             504  // Gateway Timeout
@@ -27,7 +27,7 @@ namespace Azure.Core.Http
             get => (PipelineTransport)_pipeline[_pipeline.Length - 1];
         }
 
-        // TODO (pri 3): I am not sure this should be here. Maybe we need one per service, as they have different retry policies
+        // TODO (pri 1): I am not sure this should be here. Maybe we need one per service, as they have different retry policies
         public static HttpPipeline Create(PipelineOptions options, string sdkName, string sdkVersion)
         {
             var ua = HttpHeader.Common.CreateUserAgent(sdkName, sdkVersion, options.ApplicationId);

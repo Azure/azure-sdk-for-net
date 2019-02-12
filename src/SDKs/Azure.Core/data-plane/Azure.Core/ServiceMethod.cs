@@ -8,6 +8,7 @@ namespace Azure.Core.Http
         Get,
         Post,
         Put,
+        Patch,
         Delete
     }
 }

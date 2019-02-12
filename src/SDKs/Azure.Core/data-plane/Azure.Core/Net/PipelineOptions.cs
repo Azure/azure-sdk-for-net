@@ -51,7 +51,7 @@ namespace Azure.Core.Http
         internal static bool IsDefault(PipelinePolicy policy)
          => policy == s_default;
         
-        // TODO (pri 3): I am not happy with the design that needs a semtinel policy. 
+        // TODO (pri 3): I am not happy with the design that needs a sentinel policy. 
         sealed class Default : PipelinePolicy
         {
             public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<PipelinePolicy> pipeline)
