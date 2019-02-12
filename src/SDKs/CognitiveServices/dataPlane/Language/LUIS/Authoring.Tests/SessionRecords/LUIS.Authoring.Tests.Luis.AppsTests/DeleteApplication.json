@@ -68,7 +68,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/99daaa48-7e7e-49ec-93ab-73ffd5808218?force=false",
+      "RequestUri": "/luis/api/v2.0/apps/99daaa48-7e7e-49ec-93ab-73ffd5808218",
       "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy85OWRhYWE0OC03ZTdlLTQ5ZWMtOTNhYi03M2ZmZDU4MDgyMTg=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
