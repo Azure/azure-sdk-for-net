@@ -639,7 +639,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         {
             var nsInfo = await client.GetNamespaceInfoAsync();
             Assert.NotNull(nsInfo);
-            Assert.Equal(MessagingSku.Standard, nsInfo.MessagingSku);   // Most CI systems generally use standard, hence this check just to ensure the API is working.
+            Assert.Equal(MessagingSku.Standard, nsInfo.MessagingSku);    // Most CI systems generally use standard, hence this check just to ensure the API is working.
+            Assert.Equal(NamespaceType.ServiceBus, nsInfo.NamespaceType); // Common namespace type used for testing is messaging.
         }
 
         public void Dispose()
