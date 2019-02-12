@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <param name="isAutoInflateEnabled">Value that indicates whether
         /// AutoInflate is enabled for eventhub namespace.</param>
         /// <param name="maximumThroughputUnits">Upper limit of throughput
-        /// units when AutoInflate is enabled, vaule should be within 0 to 20
+        /// units when AutoInflate is enabled, value should be within 0 to 20
         /// throughput units. ( '0' if AutoInflateEnabled = true)</param>
         /// <param name="kafkaEnabled">Value that indicates whether Kafka is
         /// enabled for eventhub namespace.</param>
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
 
         /// <summary>
         /// Gets or sets upper limit of throughput units when AutoInflate is
-        /// enabled, vaule should be within 0 to 20 throughput units. ( '0' if
+        /// enabled, value should be within 0 to 20 throughput units. ( '0' if
         /// AutoInflateEnabled = true)
         /// </summary>
         [JsonProperty(PropertyName = "properties.maximumThroughputUnits")]

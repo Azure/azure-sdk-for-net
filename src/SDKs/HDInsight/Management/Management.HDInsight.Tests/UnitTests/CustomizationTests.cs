@@ -10,9 +10,11 @@ namespace Management.HDInsight.Tests.UnitTests
 {
     using Microsoft.Azure.Management.HDInsight;
     using Microsoft.Azure.Management.HDInsight.Models;
+    using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
@@ -26,14 +28,24 @@ namespace Management.HDInsight.Tests.UnitTests
         [Fact]
         public void TestCreateCustomization()
         {
-            string testName = "TestCreateCustomization";
-            TestDelegatingHandler handler = new TestDelegatingHandler();
-            HDInsightManagementClient client = GetHDInsightUnitTestingClient(handler);
+            var currentMode = HttpMockServer.Mode;
+            HttpMockServer.Mode = HttpRecorderMode.None;
 
-            client.Clusters.BeginCreating(ResourceGroupName, ClusterName, ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName));
-            client.Clusters.BeginCreate(ResourceGroupName, ClusterName, ClusterCreateParametersHelpers.GetIaasClusterSpec(testName.ToLowerInvariant()));
-            
-            Assert.Equal(handler.Requests[0], handler.Requests[1]);
+            try
+            {
+                var commonData = new CommonTestFixture();
+                TestDelegatingHandler handler = new TestDelegatingHandler();
+                HDInsightManagementClient client = GetHDInsightUnitTestingClient(handler);
+
+                client.Clusters.BeginCreate(ResourceGroupName, ClusterName, PrepareClusterCreateParamsForWasb(commonData));
+                client.Clusters.BeginCreating(ResourceGroupName, ClusterName, PrepareCustomClusterCreateParamsForWasb(commonData));
+
+                Assert.Equal(handler.Requests[0], handler.Requests[1]);
+            }
+            finally
+            {
+                HttpMockServer.Mode = currentMode;
+            }
         }
 
         [Fact]
@@ -123,6 +135,64 @@ namespace Management.HDInsight.Tests.UnitTests
             };
 
             return client;
+        }
+
+        private static Dictionary<string, string> GetCoreConfigsForWasb(StorageAccount storageAccount)
+        {
+            string blobEndpoint = $"{storageAccount.Name.ToLowerInvariant()}.blob.core.windows.net";
+            return new Dictionary<string, string>
+            {
+                { Constants.StorageConfigurations.DefaultFsKey, string.Format("wasb://{0}@{1}", storageAccount.Container, blobEndpoint)},
+                { string.Format(Constants.StorageConfigurations.WasbStorageAccountKeyFormat, blobEndpoint), storageAccount.Key}
+            };
+        }
+
+        private static ClusterCreateParameters PrepareCustomClusterCreateParamsForWasb(CommonTestFixture commonData)
+        {
+            ClusterCreateParameters clusterparams = new ClusterCreateParameters
+            {
+                ClusterSizeInNodes = 3,
+                ClusterType = "Hadoop",
+                WorkerNodeSize = "Large",
+                DefaultStorageInfo = new AzureStorageInfo(commonData.StorageAccountName, commonData.StorageAccountKey, commonData.ContainerName),
+                UserName = commonData.ClusterUserName,
+                Password = commonData.ClusterPassword,
+                Location = commonData.Location,
+                SshUserName = commonData.SshUsername,
+                SshPassword = commonData.SshPassword,
+                Version = "3.6"
+            };
+            return clusterparams;
+        }
+
+        private static ClusterCreateParametersExtended PrepareClusterCreateParamsForWasb(CommonTestFixture commonData)
+        {
+            var createParams = commonData.PrepareClusterCreateParamsForWasb();
+
+            // Tags
+            createParams.Tags = new Dictionary<string, string>();
+
+            // Cluster Definition
+            createParams.Properties.ClusterDefinition.ComponentVersion = new Dictionary<string, string>();
+
+            // Storage
+            var storageAccount = createParams.Properties.StorageProfile.Storageaccounts.First();
+            createParams.Properties.StorageProfile = null;
+
+            // Configurations
+            var configurations = (Dictionary<string, Dictionary<string, string>>)createParams.Properties.ClusterDefinition.Configurations;
+            createParams.Properties.ClusterDefinition.Configurations = new Dictionary<string, Dictionary<string, string>>
+            {
+                { ConfigurationKey.CoreSite, GetCoreConfigsForWasb(storageAccount) },
+                { ConfigurationKey.Gateway, configurations[ConfigurationKey.Gateway] }
+            };
+
+            // Roles
+            var headNode = createParams.Properties.ComputeProfile.Roles.First(role => role.Name == "headnode");
+            var clusterType = createParams.Properties.ClusterDefinition.Kind;
+            headNode.HardwareProfile.VmSize = DefaultVmSizes.HeadNode.GetSize(clusterType);
+
+            return createParams;
         }
 
         private class TestDelegatingHandler : DelegatingHandler
