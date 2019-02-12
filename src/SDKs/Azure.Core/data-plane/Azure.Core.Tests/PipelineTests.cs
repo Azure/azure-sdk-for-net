@@ -4,9 +4,9 @@
 using Azure.Core.Http;
 using Azure.Core.Http.Pipeline;
 using Azure.Core.Testing;
-using NUnit.Framework;
 using System;
 using System.Diagnostics.Tracing;
+using Xunit;
 
 namespace Azure.Core.Tests
 {
@@ -15,7 +15,7 @@ namespace Azure.Core.Tests
     {
         string expected = @"ProcessingRequest : Get https://contoso.a.io/ # ErrorResponse : 500 # ProcessingResponse : Get https://contoso.a.io/ # ProcessingRequest : Get https://contoso.a.io/ # ProcessingResponse : Get https://contoso.a.io/";
 
-        [Test]
+        [Fact]
         public void Basics() {
 
             var options = new PipelineOptions();
@@ -32,9 +32,9 @@ namespace Azure.Core.Tests
                 message.SetRequestLine(PipelineMethod.Get, new Uri("https://contoso.a.io"));
                 pipeline.ProcessAsync(message).Wait();
 
-                Assert.AreEqual(1, message.Response.Status);
+                Assert.Equal(1, message.Response.Status);
                 var result = listener.ToString();
-                Assert.AreEqual(expected, result);
+                Assert.Equal(expected, result);
             }
         }
 
