@@ -4,7 +4,7 @@
       "RequestUri": "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourcegroups/sqlcrudtest-6843?api-version=2017-05-10",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYThjOWE5MjQtMDZjMC00YmRlLTk3ODgtZTdiMTM3MDk2OWUxL3Jlc291cmNlZ3JvdXBzL3NxbGNydWR0ZXN0LTY4NDM/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-6843\": \"2018-09-26 23:34:05Z\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-6843\": \"2019-02-06 23:34:05Z\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "6e37eab0-2567-4ec3-b316-f72fa8eac193"
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:34:05 GMT"
+          "Wed, 06 Feb 2019 23:34:05 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -61,14 +61,14 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843\",\r\n  \"name\": \"sqlcrudtest-6843\",\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-6843\": \"2018-09-26 23:34:05Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843\",\r\n  \"name\": \"sqlcrudtest-6843\",\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-6843\": \"2019-02-06 23:34:05Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk1?api-version=2015-05-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYThjOWE5MjQtMDZjMC00YmRlLTk3ODgtZTdiMTM3MDk2OWUxL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTY4NDMvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbWFuYWdlZEluc3RhbmNlcy9zcWxjbC1jcnVkdGVzdHN3aXRoZG5zem9uZS1kb3RuZXRzZGsxP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"MIGP8G4\",\r\n    \"tier\": \"GeneralPurpose\"\r\n  },\r\n  \"properties\": {\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\",\r\n    \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\"\r\n  },\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"MIGP8G4\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen4\"\r\n  },\r\n  \"properties\": {\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\",\r\n    \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\"\r\n  },\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "6fe9599c-4a58-4891-ac41-00e46378de10"
@@ -92,7 +92,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:34:06 GMT"
+          "Wed, 06 Feb 2019 23:34:06 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -137,7 +137,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"UpsertManagedServer\",\r\n  \"startTime\": \"2018-09-26T23:34:07.21Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"operation\": \"UpsertManagedServer\",\r\n  \"startTime\": \"2019-02-06T23:34:07.21Z\"\r\n}",
       "StatusCode": 202
     },
     {
@@ -156,7 +156,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:35:07 GMT"
+          "Wed, 06 Feb 2019 23:35:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -195,7 +195,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"80ce63de-6ef4-4bb0-9a90-a22ad0318c54\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-09-26T23:34:07.21Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"80ce63de-6ef4-4bb0-9a90-a22ad0318c54\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2019-02-06T23:34:07.21Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -214,7 +214,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:36:07 GMT"
+          "Wed, 06 Feb 2019 23:36:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -253,7 +253,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"80ce63de-6ef4-4bb0-9a90-a22ad0318c54\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-09-26T23:34:07.21Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"80ce63de-6ef4-4bb0-9a90-a22ad0318c54\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2019-02-06T23:34:07.21Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -272,7 +272,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:37:08 GMT"
+          "Wed, 06 Feb 2019 23:37:08 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -311,7 +311,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"80ce63de-6ef4-4bb0-9a90-a22ad0318c54\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-09-26T23:34:07.21Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"80ce63de-6ef4-4bb0-9a90-a22ad0318c54\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2019-02-06T23:34:07.21Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -330,7 +330,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:38:08 GMT"
+          "Wed, 06 Feb 2019 23:38:08 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -369,7 +369,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"80ce63de-6ef4-4bb0-9a90-a22ad0318c54\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-09-26T23:34:07.21Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"80ce63de-6ef4-4bb0-9a90-a22ad0318c54\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2019-02-06T23:34:07.21Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -388,7 +388,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:39:08 GMT"
+          "Wed, 06 Feb 2019 23:39:08 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -427,7 +427,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"80ce63de-6ef4-4bb0-9a90-a22ad0318c54\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-09-26T23:34:07.21Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"80ce63de-6ef4-4bb0-9a90-a22ad0318c54\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-02-06T23:34:07.21Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -446,7 +446,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:39:08 GMT"
+          "Wed, 06 Feb 2019 23:39:08 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -507,7 +507,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:43:10 GMT"
+          "Wed, 06 Feb 2019 23:43:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -562,7 +562,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:44:12 GMT"
+          "Wed, 06 Feb 2019 23:44:12 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -605,7 +605,7 @@
       "RequestUri": "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk2?api-version=2015-05-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYThjOWE5MjQtMDZjMC00YmRlLTk3ODgtZTdiMTM3MDk2OWUxL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTY4NDMvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvbWFuYWdlZEluc3RhbmNlcy9zcWxjbC1jcnVkdGVzdHN3aXRoZG5zem9uZS1kb3RuZXRzZGsyP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"MIGP8G4\",\r\n    \"tier\": \"GeneralPurpose\"\r\n  },\r\n  \"properties\": {\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\",\r\n    \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\",\r\n    \"dnsZonePartner\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk1\"\r\n  },\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"MIGP8G4\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen4\"\r\n  },\r\n  \"properties\": {\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\",\r\n    \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\",\r\n    \"dnsZonePartner\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk1\",\r\n    \"publicDataEndpointEnabled\": true,\r\n    \"proxyOverride\": \"Proxy\"\r\n  },\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "c702c816-38a6-4946-84bb-767cb7cf9908"
@@ -629,7 +629,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:39:09 GMT"
+          "Wed, 06 Feb 2019 23:39:09 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -674,7 +674,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"UpsertManagedServer\",\r\n  \"startTime\": \"2018-09-26T23:39:09.757Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"operation\": \"UpsertManagedServer\",\r\n  \"startTime\": \"2019-02-06T23:39:09.757Z\"\r\n}",
       "StatusCode": 202
     },
     {
@@ -693,7 +693,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:40:10 GMT"
+          "Wed, 06 Feb 2019 23:40:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -732,7 +732,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"b781fd68-cefe-4ebe-a38d-eefc8a593ab5\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-09-26T23:39:09.757Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"b781fd68-cefe-4ebe-a38d-eefc8a593ab5\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2019-02-06T23:39:09.757Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -751,7 +751,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:41:09 GMT"
+          "Wed, 06 Feb 2019 23:41:09 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -790,7 +790,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"b781fd68-cefe-4ebe-a38d-eefc8a593ab5\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-09-26T23:39:09.757Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"b781fd68-cefe-4ebe-a38d-eefc8a593ab5\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2019-02-06T23:39:09.757Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -809,7 +809,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:42:09 GMT"
+          "Wed, 06 Feb 2019 23:42:09 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -848,7 +848,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"b781fd68-cefe-4ebe-a38d-eefc8a593ab5\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2018-09-26T23:39:09.757Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"b781fd68-cefe-4ebe-a38d-eefc8a593ab5\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2019-02-06T23:39:09.757Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -867,7 +867,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:43:10 GMT"
+          "Wed, 06 Feb 2019 23:43:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -906,7 +906,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"b781fd68-cefe-4ebe-a38d-eefc8a593ab5\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-09-26T23:39:09.757Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"b781fd68-cefe-4ebe-a38d-eefc8a593ab5\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-02-06T23:39:09.757Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -925,7 +925,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:43:10 GMT"
+          "Wed, 06 Feb 2019 23:43:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -961,7 +961,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen4\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen4\",\r\n    \"capacity\": 16\r\n  },\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"sqlcl-crudtestswithdnszone-dotnetsdk2.710c2a823568.database.windows.net\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\",\r\n    \"state\": \"Ready\",\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"vCores\": 16,\r\n    \"storageSizeInGB\": 32,\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\"\r\n  },\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"id\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n  \"name\": \"sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n  \"type\": \"Microsoft.Sql/managedInstances\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen4\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen4\",\r\n    \"capacity\": 16\r\n  },\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"sqlcl-crudtestswithdnszone-dotnetsdk2.710c2a823568.database.windows.net\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\",\r\n    \"state\": \"Ready\",\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"vCores\": 16,\r\n    \"storageSizeInGB\": 32,\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"publicDataEndpointEnabled\": true,\r\n    \"proxyOverride\": \"Proxy\"\r\n  },\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"id\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n  \"name\": \"sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n  \"type\": \"Microsoft.Sql/managedInstances\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -986,7 +986,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:43:10 GMT"
+          "Wed, 06 Feb 2019 23:43:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1022,7 +1022,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen4\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen4\",\r\n    \"capacity\": 16\r\n  },\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"sqlcl-crudtestswithdnszone-dotnetsdk2.710c2a823568.database.windows.net\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\",\r\n    \"state\": \"Ready\",\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"vCores\": 16,\r\n    \"storageSizeInGB\": 32,\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\"\r\n  },\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"id\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n  \"name\": \"sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n  \"type\": \"Microsoft.Sql/managedInstances\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"GP_Gen4\",\r\n    \"tier\": \"GeneralPurpose\",\r\n    \"family\": \"Gen4\",\r\n    \"capacity\": 16\r\n  },\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"sqlcl-crudtestswithdnszone-dotnetsdk2.710c2a823568.database.windows.net\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\",\r\n    \"state\": \"Ready\",\r\n    \"licenseType\": \"LicenseIncluded\",\r\n    \"vCores\": 16,\r\n    \"storageSizeInGB\": 32,\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"publicDataEndpointEnabled\": true,\r\n    \"proxyOverride\": \"Proxy\"\r\n  },\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"id\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n  \"name\": \"sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n  \"type\": \"Microsoft.Sql/managedInstances\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1047,7 +1047,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:43:10 GMT"
+          "Wed, 06 Feb 2019 23:43:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1083,7 +1083,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen4\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen4\",\r\n        \"capacity\": 16\r\n      },\r\n      \"properties\": {\r\n        \"fullyQualifiedDomainName\": \"sqlcl-crudtestswithdnszone-dotnetsdk2.710c2a823568.database.windows.net\",\r\n        \"administratorLogin\": \"dummylogin\",\r\n        \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\",\r\n        \"state\": \"Ready\",\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"vCores\": 16,\r\n        \"storageSizeInGB\": 32,\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"tagKey1\": \"TagValue1\"\r\n      },\r\n      \"id\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n      \"name\": \"sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n      \"type\": \"Microsoft.Sql/managedInstances\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen4\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen4\",\r\n        \"capacity\": 16\r\n      },\r\n      \"properties\": {\r\n        \"fullyQualifiedDomainName\": \"sqlcl-crudtestswithdnszone-dotnetsdk1.710c2a823568.database.windows.net\",\r\n        \"administratorLogin\": \"dummylogin\",\r\n        \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\",\r\n        \"state\": \"Ready\",\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"vCores\": 16,\r\n        \"storageSizeInGB\": 32,\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"tagKey1\": \"TagValue1\"\r\n      },\r\n      \"id\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk1\",\r\n      \"name\": \"sqlcl-crudtestswithdnszone-dotnetsdk1\",\r\n      \"type\": \"Microsoft.Sql/managedInstances\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen4\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen4\",\r\n        \"capacity\": 16\r\n      },\r\n      \"properties\": {\r\n        \"fullyQualifiedDomainName\": \"sqlcl-crudtestswithdnszone-dotnetsdk2.710c2a823568.database.windows.net\",\r\n        \"administratorLogin\": \"dummylogin\",\r\n        \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\",\r\n        \"state\": \"Ready\",\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"vCores\": 16,\r\n        \"storageSizeInGB\": 32,\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"publicDataEndpointEnabled\": true,\r\n    \"proxyOverride\": \"Proxy\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"tagKey1\": \"TagValue1\"\r\n      },\r\n      \"id\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n      \"name\": \"sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n      \"type\": \"Microsoft.Sql/managedInstances\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen4\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen4\",\r\n        \"capacity\": 16\r\n      },\r\n      \"properties\": {\r\n        \"fullyQualifiedDomainName\": \"sqlcl-crudtestswithdnszone-dotnetsdk1.710c2a823568.database.windows.net\",\r\n        \"administratorLogin\": \"dummylogin\",\r\n        \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\",\r\n        \"state\": \"Ready\",\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"vCores\": 16,\r\n        \"storageSizeInGB\": 32,\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"tagKey1\": \"TagValue1\"\r\n      },\r\n      \"id\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk1\",\r\n      \"name\": \"sqlcl-crudtestswithdnszone-dotnetsdk1\",\r\n      \"type\": \"Microsoft.Sql/managedInstances\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -1144,7 +1144,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen4\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen4\",\r\n        \"capacity\": 16\r\n      },\r\n      \"properties\": {\r\n        \"fullyQualifiedDomainName\": \"sqlcl-crudtestswithdnszone-dotnetsdk2.710c2a823568.database.windows.net\",\r\n        \"administratorLogin\": \"dummylogin\",\r\n        \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\",\r\n        \"state\": \"Ready\",\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"vCores\": 16,\r\n        \"storageSizeInGB\": 32,\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"tagKey1\": \"TagValue1\"\r\n      },\r\n      \"id\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n      \"name\": \"sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n      \"type\": \"Microsoft.Sql/managedInstances\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"GP_Gen4\",\r\n        \"tier\": \"GeneralPurpose\",\r\n        \"family\": \"Gen4\",\r\n        \"capacity\": 16\r\n      },\r\n      \"properties\": {\r\n        \"fullyQualifiedDomainName\": \"sqlcl-crudtestswithdnszone-dotnetsdk2.710c2a823568.database.windows.net\",\r\n        \"administratorLogin\": \"dummylogin\",\r\n        \"subnetId\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default\",\r\n        \"state\": \"Ready\",\r\n        \"licenseType\": \"LicenseIncluded\",\r\n        \"vCores\": 16,\r\n        \"storageSizeInGB\": 32,\r\n        \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"publicDataEndpointEnabled\": true,\r\n    \"proxyOverride\": \"Proxy\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"tagKey1\": \"TagValue1\"\r\n      },\r\n      \"id\": \"/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/sqlcrudtest-6843/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n      \"name\": \"sqlcl-crudtestswithdnszone-dotnetsdk2\",\r\n      \"type\": \"Microsoft.Sql/managedInstances\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -1236,7 +1236,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:43:11 GMT"
+          "Wed, 06 Feb 2019 23:43:11 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1281,7 +1281,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"UpsertManagedServer\",\r\n  \"startTime\": \"2018-09-26T23:43:12.2Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"operation\": \"UpsertManagedServer\",\r\n  \"startTime\": \"2019-02-06T23:43:12.2Z\"\r\n}",
       "StatusCode": 202
     },
     {
@@ -1300,7 +1300,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Sep 2018 23:44:12 GMT"
+          "Wed, 06 Feb 2019 23:44:12 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1339,7 +1339,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"34af2565-ea5e-4a35-b2c8-ca4081582109\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-09-26T23:43:12.2Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"34af2565-ea5e-4a35-b2c8-ca4081582109\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-02-06T23:43:12.2Z\"\r\n}",
       "StatusCode": 200
     },
     {
