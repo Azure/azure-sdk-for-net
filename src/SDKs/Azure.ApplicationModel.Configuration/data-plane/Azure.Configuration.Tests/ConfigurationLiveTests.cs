@@ -634,7 +634,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     await service.UpdateAsync(testSettingUpdate);
                 });
                 var response = e.Response;
-                Assert.AreEqual(403, response.Status);
+                Assert.AreEqual(409, response.Status);
                 response.Dispose();
                 
                 // Test Unlock
