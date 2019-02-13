@@ -45,12 +45,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// from, formatted as a DateTime string.
         /// If unspecified, default value is the time that the app was
         /// deleted.</param>
-        public DeletedAppRestoreRequest(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string deletedSiteId = default(string), bool? recoverConfiguration = default(bool?), string snapshotTime = default(string))
+        /// <param name="useDRSecondary">If true, the snapshot is retrieved
+        /// from DRSecondary endpoint.</param>
+        public DeletedAppRestoreRequest(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string deletedSiteId = default(string), bool? recoverConfiguration = default(bool?), string snapshotTime = default(string), bool? useDRSecondary = default(bool?))
             : base(id, name, kind, type)
         {
             DeletedSiteId = deletedSiteId;
             RecoverConfiguration = recoverConfiguration;
             SnapshotTime = snapshotTime;
+            UseDRSecondary = useDRSecondary;
             CustomInit();
         }
 
@@ -80,6 +83,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.snapshotTime")]
         public string SnapshotTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets if true, the snapshot is retrieved from DRSecondary
+        /// endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.useDRSecondary")]
+        public bool? UseDRSecondary { get; set; }
 
     }
 }

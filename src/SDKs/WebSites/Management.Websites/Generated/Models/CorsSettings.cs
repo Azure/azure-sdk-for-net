@@ -35,9 +35,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// should be allowed to make cross-origin
         /// calls (for example: http://example.com:12345). Use "*" to allow
         /// all.</param>
-        public CorsSettings(IList<string> allowedOrigins = default(IList<string>))
+        /// <param name="supportCredentials">Gets or sets whether CORS requests
+        /// with credentials are allowed. See
+        /// https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Requests_with_credentials
+        /// for more details.</param>
+        public CorsSettings(IList<string> allowedOrigins = default(IList<string>), bool? supportCredentials = default(bool?))
         {
             AllowedOrigins = allowedOrigins;
+            SupportCredentials = supportCredentials;
             CustomInit();
         }
 
@@ -54,6 +59,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "allowedOrigins")]
         public IList<string> AllowedOrigins { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether CORS requests with credentials are allowed.
+        /// See
+        /// https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Requests_with_credentials
+        /// for more details.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportCredentials")]
+        public bool? SupportCredentials { get; set; }
 
     }
 }

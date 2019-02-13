@@ -186,7 +186,6 @@ namespace WebSites.Tests.ScenarioTests
                     ServerFarmId = serverFarmId
                 });
 
-                serverFarm.AdminSiteName = webSiteName;
                 webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, webHostingPlanName, serverFarm);
 
                 var webHostingPlanResponse = webSitesClient.AppServicePlans.Get(resourceGroupName, webHostingPlanName);
@@ -195,7 +194,6 @@ namespace WebSites.Tests.ScenarioTests
                 Assert.Equal(1, webHostingPlanResponse.Sku.Capacity);
                 Assert.Equal("S1", webHostingPlanResponse.Sku.Name);
                 Assert.Equal("Standard", webHostingPlanResponse.Sku.Tier);
-                Assert.Equal(webSiteName, webHostingPlanResponse.AdminSiteName);
             }
         }
 
