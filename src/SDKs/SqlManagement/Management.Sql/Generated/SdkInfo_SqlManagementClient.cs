@@ -107,10 +107,10 @@ namespace Microsoft.Azure.Management.Sql
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\Code\\azure-sdk-for-net\\src\\SDKs";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "be751b27058624ecde8be51d7327443ce3c86264";
+      public static readonly String GithubCommidId = "db312deaed90e5fb397fa5a1456d35b9ed4bfc19";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
