@@ -48,7 +48,7 @@ namespace Azure.ApplicationModel.Configuration
         [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]
         [HttpError(typeof(ResponseFailedException), 412, Message = "matching item is already in the store")]
         [HttpError(typeof(ResponseFailedException), 429, Message = "too many requests")]
-        [UsageErrors(typeof(ResponseFailedException), 401, 403, 408, 500, 502, 503, 504)]
+        [UsageErrors(typeof(ResponseFailedException), 401, 409, 408, 500, 502, 503, 504)]
         public async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, RequestOptions options = null, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
@@ -109,7 +109,7 @@ namespace Azure.ApplicationModel.Configuration
                 if (response.Status == 200) {
                     return await CreateResponse(response, cancellation);
                 }
-                if (response.Status == 403) throw new ResponseFailedException(response, "the item is locked");
+                if (response.Status == 409) throw new ResponseFailedException(response, "the item is locked");
                 else throw new ResponseFailedException(response);
             }
         }

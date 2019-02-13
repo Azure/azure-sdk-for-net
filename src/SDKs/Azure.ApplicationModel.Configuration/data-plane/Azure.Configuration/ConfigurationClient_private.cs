@@ -26,7 +26,7 @@ namespace Azure.ApplicationModel.Configuration
         const string RevisionsRoute = "/revisions/";
         const string KeyQueryFilter = "key";
         const string LabelQueryFilter = "label";
-        const string FieldsQueryFilter = "fields";
+        const string FieldsQueryFilter = "$select";
         const string IfMatchName = "If-Match";
         const string IfNoneMatch = "If-None-Match";
 
