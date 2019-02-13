@@ -1,6 +1,11 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
 ## Current version
+## Version 3.0.1
+
+###  Feature Additions
+    - Fixed AzureFunctionActivity
+
 ## Version 3.0.0
 
 ###  Feature Additions
