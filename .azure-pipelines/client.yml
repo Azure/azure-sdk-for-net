@@ -50,14 +50,12 @@ jobs:
     strategy:
       matrix:
         Linux:
-          os.name: 'Linux'
-          os.vmImage: 'ubuntu-16.04'
+          OSVmImage: 'ubuntu-16.04'
         Windows:
-          os.name: 'Windows'
-          os.vmImage: 'vs2017-win2016'
+          OSVmImage: 'vs2017-win2016'
 
     pool:
-      vmImage: '$(os.vmImage)'
+      vmImage: '$(OSVmImage)'
 
     steps:
       - task: DotNetCoreInstaller@0
