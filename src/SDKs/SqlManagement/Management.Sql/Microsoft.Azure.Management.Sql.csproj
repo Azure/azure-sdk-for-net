@@ -13,7 +13,6 @@
 			<![CDATA[
 New features:
 - Support database sensitivity labels.
-- Added support for restoring managed instance database from geo-replicated backup
 - Added two new properties (PublicDataEndpointEnabled and ProxyOverride) to managed instance.
       ]]>
 		</PackageReleaseNotes>
