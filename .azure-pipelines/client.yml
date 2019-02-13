@@ -8,7 +8,7 @@ variables:
   DotNetCoreVersion: '2.1.503'
 
 jobs:
-  - job: 'Build_Packages'
+  - job: 'Build'
 
     pool:
       vmImage: 'vs2017-win2016'
@@ -33,7 +33,7 @@ jobs:
   - job: 'Analyze'
 
     dependsOn:
-      'Build_Packages'
+      'Build'
 
     pool:
       vmImage: 'vs2017-win2016'
@@ -53,6 +53,8 @@ jobs:
           OSVmImage: 'ubuntu-16.04'
         Windows:
           OSVmImage: 'vs2017-win2016'
+        MacOs:
+          OSVmImage : 'macOS-10.13'
 
     pool:
       vmImage: '$(OSVmImage)'
