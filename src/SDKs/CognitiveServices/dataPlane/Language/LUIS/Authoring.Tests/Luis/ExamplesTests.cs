@@ -16,7 +16,7 @@
         {
             UseClientFor(async client =>
             {
-                var examples = await client.Examples.ListAsync(appId, versionId);
+                var examples = await client.Examples.ListAsync(GlobalAppId, versionId);
 
                 Assert.NotEmpty(examples);
             });
@@ -226,9 +226,29 @@
         {
             UseClientFor(async client =>
             {
-                var exampleId = -5313926;
+                var appId = await client.Apps.AddAsync(new ApplicationCreateObject
+                {
+                    Name = "Examples Test App",
+                    Description = "New LUIS App",
+                    Culture = "en-us",
+                    Domain = "Comics",
+                    UsageScenario = "IoT"
+                });
+
+                var example = new ExampleLabelObject
+                {
+                    Text = "Amir is awesome",
+                    IntentName = "None",
+                    EntityLabels = new List<EntityLabelObject>()
+                };
+
+                var result = await client.Examples.AddAsync(appId, versionId, example);
+
+                var exampleId = result.ExampleId.Value;
                 await client.Examples.DeleteAsync(appId, versionId, exampleId);
                 var examples = await client.Examples.ListAsync(appId, versionId);
+
+                await client.Apps.DeleteAsync(appId);
 
                 Assert.DoesNotContain(examples, o => o.Id == exampleId);
             });
