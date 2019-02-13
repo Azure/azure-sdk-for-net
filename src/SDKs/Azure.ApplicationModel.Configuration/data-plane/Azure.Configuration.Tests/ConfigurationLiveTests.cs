@@ -34,8 +34,14 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private static void AssertEqual(ConfigurationSetting expected, ConfigurationSetting actual)
         {
+            if (expected.ETag != null && actual.ETag != null)
+            {
+                Assert.AreEqual(expected.ETag, actual.ETag);
+                Assert.AreEqual(expected.LastModified, actual.LastModified);
+            }
             Assert.AreEqual(expected.Key, actual.Key);
             Assert.AreEqual(expected.Label, actual.Label);
+            Assert.AreEqual(expected.Value, actual.Value);
             Assert.AreEqual(expected.ContentType, actual.ContentType);
             Assert.AreEqual(expected.Locked, actual.Locked);
             Assert.IsTrue(TagsEqual(expected.Tags, actual.Tags));
@@ -251,7 +257,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 RequestOptions options = new RequestOptions()
                 {
-                    ETag = new ETagFilter() { IfMatch = new ETag(testSettingDiff.ETag) }
+                    ETag = new ETagFilter() { IfMatch = new ETag(responseGet.ETag) }
                 };
 
                 ConfigurationSetting responseSetting = await service.UpdateAsync(testSettingDiff, options, CancellationToken.None);
@@ -685,7 +691,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 ContentType = setting.ContentType,
                 LastModified = setting.LastModified,
                 Locked = setting.Locked,
-                ETag = setting.ETag,
+                ETag = null,
                 Tags = setting.Tags
             };
         }

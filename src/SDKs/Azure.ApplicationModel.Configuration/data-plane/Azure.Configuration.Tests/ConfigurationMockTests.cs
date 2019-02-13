@@ -48,10 +48,29 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private static void AssertEqual(ConfigurationSetting expected, ConfigurationSetting actual)
         {
-            Assert.AreEqual(s_testSetting.Key, actual.Key);
-            Assert.AreEqual(s_testSetting.Label, actual.Label);
-            Assert.AreEqual(s_testSetting.ContentType, actual.ContentType);
-            Assert.AreEqual(s_testSetting.Locked, actual.Locked);
+            if (expected.ETag != null && actual.ETag != null)
+            {
+                Assert.AreEqual(expected.ETag, actual.ETag);
+                Assert.AreEqual(expected.LastModified, actual.LastModified);
+            }
+            Assert.AreEqual(expected.Key, actual.Key);
+            Assert.AreEqual(expected.Label, actual.Label);
+            Assert.AreEqual(expected.Value, actual.Value);
+            Assert.AreEqual(expected.ContentType, actual.ContentType);
+            Assert.AreEqual(expected.Locked, actual.Locked);
+            Assert.IsTrue(TagsEqual(expected.Tags, actual.Tags));
+        }
+
+        private static bool TagsEqual(IDictionary<string, string> expected, IDictionary<string, string> actual)
+        {
+            if (expected == null && actual == null) return true;
+            if (expected?.Count != actual?.Count) return false;
+            foreach (var pair in expected)
+            {
+                if (!actual.TryGetValue(pair.Key, out string value)) return false;
+                if (!string.Equals(value, pair.Value, StringComparison.Ordinal)) return false;
+            }
+            return true;
         }
 
         [Test]
