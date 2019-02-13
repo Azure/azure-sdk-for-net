@@ -13,21 +13,24 @@ namespace Azure.Core
 
         public ETag(string etag) => _ascii = Encoding.ASCII.GetBytes(etag);
 
-        public bool Equals(ETag other)
+        public bool Equals(ETag other) => _ascii.AsSpan().SequenceEqual(other._ascii);
+
+        public static bool operator ==(ETag left, ETag rigth) => left.Equals(rigth);
+
+        public static bool operator !=(ETag left, ETag rigth) => !left.Equals(rigth);
+
+        public override string ToString() => Encoding.ASCII.GetString(_ascii);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode()
         {
-            return this._ascii == other._ascii;
+            int hash = 17;
+            for (int i = 0; i < _ascii.Length; i+=2)
+            {
+                hash = hash * 23 + _ascii[i];
+            }
+            return hash;
         }
-
-        public override int GetHashCode() => _ascii.GetHashCode();
-
-        public static bool operator ==(ETag left, ETag rigth)
-            => left.Equals(rigth);
-
-        public static bool operator !=(ETag left, ETag rigth)
-            => !left.Equals(rigth);
-
-        public override string ToString()
-            => Encoding.ASCII.GetString(_ascii);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)

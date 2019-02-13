@@ -16,12 +16,8 @@ namespace Azure.Core.Http
 
         public PipelineMessageOptions Options => new PipelineMessageOptions(this);
 
-        protected HttpMessage(CancellationToken cancellation)
-        {
-            Cancellation = cancellation;
-        }
+        protected HttpMessage(CancellationToken cancellation) => Cancellation = cancellation;
 
-        // TODO (pri 1): what happens if this is called after AddHeader? Especially for SocketTransport
         public abstract void SetRequestLine(PipelineMethod method, Uri uri);
 
         public abstract void AddHeader(HttpHeader header);
@@ -50,8 +46,5 @@ namespace Azure.Core.Http
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
     }
 }

@@ -149,10 +149,8 @@ namespace Azure.Core.Http
             public static readonly HttpHeader JsonContentType = new HttpHeader(Constants.ContentType, Constants.ApplicationJson);
             public static readonly HttpHeader OctetStreamContentType = new HttpHeader(Constants.ContentType, Constants.ApplicationOctetStream);
 
-            // TODO (pri 3): eliminate this allocations
             static readonly string PlatfromInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
 
-            // TODO (pri 3): eliminate this allocations
             public static HttpHeader CreateUserAgent(string sdkName, string sdkVersion, string applicationId = default)
             {
                 byte[] utf8 = null;
@@ -161,14 +159,12 @@ namespace Azure.Core.Http
                 return new HttpHeader(utf8);
             }
 
-            // TODO (pri 3): eliminate this allocations
             public static HttpHeader CreateContentLength(long length)
             {
                 byte[] utf8 = Encoding.ASCII.GetBytes($"Content-Length:{length}\r\n");
                 return new HttpHeader(utf8);
             }
 
-            // TODO (pri 3): eliminate this allocations
             public static HttpHeader CreateHost(ReadOnlySpan<byte> hostName)
             {
                 var buffer = new byte[Constants.Host.Length + hostName.Length + 3];

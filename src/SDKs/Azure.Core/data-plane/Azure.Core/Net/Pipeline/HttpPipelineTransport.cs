@@ -12,12 +12,11 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Http.Pipeline
 {
-    // TODO (pri 2): implement chunked encoding
     public class HttpPipelineTransport : PipelineTransport
     {
         static readonly HttpClient s_defaultClient = new HttpClient();
 
-        HttpClient _client;
+        readonly HttpClient _client;
 
         public HttpPipelineTransport(HttpClient client = null)
             => _client = client == null ? s_defaultClient : client;
@@ -144,6 +143,7 @@ namespace Azure.Core.Http.Pipeline
             public override string ToString() =>
                 _responseMessage!=null? _responseMessage.ToString() : _requestMessage.ToString();
 
+            readonly static HttpMethod s_patch = new HttpMethod("PATCH");
             public static HttpMethod ToHttpClientMethod(PipelineMethod method)
             {
                 switch (method) {
@@ -151,6 +151,7 @@ namespace Azure.Core.Http.Pipeline
                     case PipelineMethod.Post: return HttpMethod.Post;
                     case PipelineMethod.Put: return HttpMethod.Put;
                     case PipelineMethod.Delete: return HttpMethod.Delete;
+                    case PipelineMethod.Patch: return s_patch;
 
                     default: throw new NotImplementedException();
                 }
@@ -158,14 +159,15 @@ namespace Azure.Core.Http.Pipeline
 
             public static PipelineMethod ToPipelineMethod(HttpMethod method)
             {
-                var methodStr = method.Method.ToLowerInvariant();
-                switch (methodStr) {
-                    case "get": return PipelineMethod.Get;
-                    case "post": return PipelineMethod.Post;
-                    case "put": return PipelineMethod.Put;
-                    case "delete": return PipelineMethod.Delete;
+                switch (method.Method) {
+                    case "GET": return PipelineMethod.Get;
+                    case "POST": return PipelineMethod.Post;
+                    case "PUT": return PipelineMethod.Put;
+                    case "DELETE": return PipelineMethod.Delete;
+                    case "PATCH": return PipelineMethod.Patch;
 
-                    default: throw new NotImplementedException();
+                    // method argument is not a REST verb
+                    default: throw new ArgumentOutOfRangeException(nameof(method));
                 }
             }
 

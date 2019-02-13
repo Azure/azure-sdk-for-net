@@ -14,15 +14,16 @@ namespace Azure.Core
         public bool Equals(ETagFilter other)
             => IfMatch.Equals(other.IfMatch) && IfNoneMatch.Equals(other.IfNoneMatch);
 
-        public override int GetHashCode()
-            => IfMatch.GetHashCode() ^ IfNoneMatch.GetHashCode();
-
         public static bool operator ==(ETagFilter left, ETagFilter rigth)
             => left.Equals(rigth);
 
         public static bool operator !=(ETagFilter left, ETagFilter rigth)
             => !left.Equals(rigth);
-               
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode()
+            => IfMatch.GetHashCode() ^ IfNoneMatch.GetHashCode();
+
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
