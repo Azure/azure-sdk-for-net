@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for AzureFirewallRCActionType.
+    /// Defines values for AzureFirewallThreatIntelMode.
     /// </summary>
-    public static class AzureFirewallRCActionType
+    public static class AzureFirewallThreatIntelMode
     {
-        public const string Allow = "Allow";
-        public const string Deny = "Deny";
         public const string Alert = "Alert";
+        public const string Deny = "Deny";
+        public const string Off = "Off";
     }
 }
