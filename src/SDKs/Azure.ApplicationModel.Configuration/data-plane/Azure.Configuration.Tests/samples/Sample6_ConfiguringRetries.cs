@@ -13,7 +13,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
     [Category("Live")]
     public partial class ConfigurationSamples
     {
-        //[Test]
+        [Test]
         public async Task ConfiguringRetries()
         {
             // specify retry policy options

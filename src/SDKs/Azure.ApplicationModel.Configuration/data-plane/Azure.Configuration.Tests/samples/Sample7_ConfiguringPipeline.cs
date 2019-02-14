@@ -16,7 +16,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
     {
         HttpClient s_client = new HttpClient();
 
-        //[Test]
+        [Test]
         public async Task ConfiguringPipeline()
         {
             // this instance will hold pipeline creation options

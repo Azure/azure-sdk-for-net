@@ -15,7 +15,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
     [Category("Live")]
     public class ConfigurationWatcherTests
     {
-        //[Test]
+        [Test]
         public async Task Helpers()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");

@@ -1,5 +1,6 @@
 # External variables:
 # ProjectFile - The project to build and test. This variable is defined in pipeline web ui because we want to be able to provide it at queue time and that isn't supported in yaml yet.
+# AzConfigConnectionString - The connection string used for testing the AzConfig service. This is set in the pipeline web ui as it needs different values for public vs internal.
 
 trigger:
 - master
@@ -66,7 +67,18 @@ jobs:
           version: '$(DotNetCoreVersion)'
 
       - task: DotNetCoreCLI@2
-        displayName: 'Build & Test'
+        displayName: 'Build & Test (no live tests)'
+        condition: eq(variables['System.TeamProject'], 'public')
+        inputs:
+          command: test
+          projects: '$(ProjectFile)'
+          arguments: --filter TestCategory!=Live
+        
+      - task: DotNetCoreCLI@2
+        displayName: 'Build & Test (with live tests)'
+        condition: ne(variables['System.TeamProject'], 'public')
+        env:
+          AZ_CONFIG_CONNECTION: $(AzConfigConnectionString)
         inputs:
           command: test
           projects: '$(ProjectFile)'

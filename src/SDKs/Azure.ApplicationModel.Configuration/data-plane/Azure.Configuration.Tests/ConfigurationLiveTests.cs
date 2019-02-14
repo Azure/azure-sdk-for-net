@@ -82,7 +82,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             return key;
         }
 
-        //[Test]
+        [Test]
         public async Task DeleteNotFound()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -95,7 +95,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             response.Dispose();
         }
 
-        //[Test]
+        [Test]
         public async Task Delete()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -119,7 +119,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task DeleteWithLabel()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -133,7 +133,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             await service.DeleteAsync(key: s_testSetting.Key, options: s_testSetting.Label, CancellationToken.None);
         }
 
-        //[Test]
+        [Test]
         public async Task DeleteWithETag()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -154,7 +154,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             await service.DeleteAsync(key: s_testSetting.Key, options: options, CancellationToken.None);
         }
 
-        //[Test]
+        [Test]
         public async Task Set()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -177,7 +177,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task Add()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -200,7 +200,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task UpdateIfAny()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -234,7 +234,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task UpdateIfETag()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -264,7 +264,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task UpdateIfNoMatch()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -295,7 +295,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task UpdateWrongETag()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -329,7 +329,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task UpdateTags()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -369,7 +369,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task GetIfNoMatch()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -401,7 +401,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task Revisions()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -450,7 +450,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task Get()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -479,7 +479,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public void GetNotFound()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -496,7 +496,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             response.Dispose();
         }
 
-        //[Test]
+        [Test]
         public async Task GetWithLabel()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -528,7 +528,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task GetBatchPagination()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -555,7 +555,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
 
-        //[Test]
+        [Test]
         public async Task GetBatchWithFields()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -583,7 +583,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task GetWithNullLabel()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -607,7 +607,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task LockUnlock()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -649,7 +649,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public async Task GetWithRequestId()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
