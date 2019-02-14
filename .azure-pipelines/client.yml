@@ -54,7 +54,7 @@ jobs:
         Windows:
           OSVmImage: 'vs2017-win2016'
         MacOs:
-          OSVmImage : 'macOS-10.13'
+          OSVmImage: 'macOS-10.13'
 
     pool:
       vmImage: '$(OSVmImage)'
