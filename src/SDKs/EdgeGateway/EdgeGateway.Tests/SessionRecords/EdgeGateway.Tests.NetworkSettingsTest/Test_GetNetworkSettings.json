@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/networkSettings/default?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9uZXR3b3JrU2V0dGluZ3MvZGVmYXVsdD9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9a1568f5-1235-4c11-a738-4fbf7822a043"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 14 Feb 2019 09:30:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "06e961cf-1499-4b2f-8cd5-e5ca1c2f92c3"
+        ],
+        "x-ms-client-request-id": [
+          "9a1568f5-1235-4c11-a738-4fbf7822a043"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11956"
+        ],
+        "x-ms-correlation-request-id": [
+          "79fe824c-f919-4366-b45c-131473674fc7"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20190214T093001Z:79fe824c-f919-4366-b45c-131473674fc7"
+        ],
+        "Content-Length": [
+          "1292"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"networkAdapters\": [\r\n      {\r\n        \"adapterId\": \"{2881A023-766A-4001-9860-075FAEE4E765}\",\r\n        \"index\": 1,\r\n        \"nodeId\": \"86e799ec-02e7-4836-a310-3a6e8695ee86\",\r\n        \"networkAdapterName\": \"Ethernet\",\r\n        \"label\": \"Ethernet (00-15-5D-4E-26-83)\",\r\n        \"macAddress\": \"00155D4E2683\",\r\n        \"linkSpeed\": 10000000000,\r\n        \"isActive\": true,\r\n        \"status\": \"Active\",\r\n        \"rdmaCapable\": true,\r\n        \"rdmaStatus\": \"Capable\",\r\n        \"dhcpEnabled\": true,\r\n        \"dhcpStatus\": \"Enabled\",\r\n        \"ipv4Configuration\": {\r\n          \"ipAddress\": \"10.150.76.81\",\r\n          \"subnet\": \"255.255.252.0\",\r\n          \"gateway\": \"10.150.76.1\"\r\n        },\r\n        \"ipv6Configuration\": {\r\n          \"ipAddress\": \"2404:f801:4800:1e:5550:a8e3:df90:719a\",\r\n          \"prefixLength\": 64,\r\n          \"gateway\": \"fe80::12f3:11ff:fe36:994b%4\"\r\n        },\r\n        \"dnsServers\": [\r\n          \"10.50.50.50\",\r\n          \"10.50.10.50\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/networkSettings/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/networkSettings\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "db4e2fdb-6d80-4e6e-b7cd-736098270664",
+    "SubId": "db4e2fdb-6d80-4e6e-b7cd-736098270664"
+  }
+}
