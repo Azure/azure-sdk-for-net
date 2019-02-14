@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void CanConvertToPostPayload()
+        public void CanConvertToPostRequestPayload()
         {
             var parameters =
                 new SuggestParameters()
@@ -86,41 +86,41 @@ namespace Microsoft.Azure.Search.Tests
                     UseFuzzyMatching = true
                 };
 
-            SuggestParametersPayload payload = parameters.ToPayload("find me", "mySuggester");
+            SuggestRequest request = parameters.ToRequest("find me", "mySuggester");
 
-            Assert.Equal(parameters.Filter, payload.Filter);
-            Assert.Equal(parameters.HighlightPostTag, payload.HighlightPostTag);
-            Assert.Equal(parameters.HighlightPreTag, payload.HighlightPreTag);
-            Assert.Equal(parameters.MinimumCoverage, payload.MinimumCoverage);
-            Assert.Equal(parameters.OrderBy.ToCommaSeparatedString(), payload.OrderBy);
-            Assert.Equal("find me", payload.Search);
-            Assert.Equal(parameters.SearchFields.ToCommaSeparatedString(), payload.SearchFields);
-            Assert.Equal(parameters.Select.ToCommaSeparatedString(), payload.Select);
-            Assert.Equal("mySuggester", payload.SuggesterName);
-            Assert.Equal(parameters.Top, payload.Top);
-            Assert.Equal(parameters.UseFuzzyMatching, payload.Fuzzy);
+            Assert.Equal(parameters.Filter, request.Filter);
+            Assert.Equal(parameters.HighlightPostTag, request.HighlightPostTag);
+            Assert.Equal(parameters.HighlightPreTag, request.HighlightPreTag);
+            Assert.Equal(parameters.MinimumCoverage, request.MinimumCoverage);
+            Assert.Equal(parameters.OrderBy.ToCommaSeparatedString(), request.OrderBy);
+            Assert.Equal("find me", request.Search);
+            Assert.Equal(parameters.SearchFields.ToCommaSeparatedString(), request.SearchFields);
+            Assert.Equal(parameters.Select.ToCommaSeparatedString(), request.Select);
+            Assert.Equal("mySuggester", request.SuggesterName);
+            Assert.Equal(parameters.Top, request.Top);
+            Assert.Equal(parameters.UseFuzzyMatching, request.Fuzzy);
         }
 
         [Fact]
-        public void MissingParametersAreMissingInThePayload()
+        public void MissingParametersAreMissingInTheRequest()
         {
             var parameters = new SuggestParameters();
 
             // Search text and suggester name can never be null.
-            SuggestParametersPayload payload = parameters.ToPayload("find me", "mySuggester");
+            SuggestRequest request = parameters.ToRequest("find me", "mySuggester");
 
-            Assert.Null(payload.Filter);
-            Assert.Null(payload.HighlightPostTag);
-            Assert.Null(payload.HighlightPreTag);
-            Assert.Null(payload.MinimumCoverage);
-            Assert.Null(payload.OrderBy);
-            Assert.Equal("find me", payload.Search);
-            Assert.Null(payload.SearchFields);
-            Assert.Equal("*", payload.Select);  // Nothing selected for Suggest means select everything.
-            Assert.Equal("mySuggester", payload.SuggesterName);
-            Assert.Null(payload.Top);
-            Assert.True(payload.Fuzzy.HasValue);
-            Assert.False(payload.Fuzzy.Value);  // Fuzzy is non-nullable in the client-side contract.
+            Assert.Null(request.Filter);
+            Assert.Null(request.HighlightPostTag);
+            Assert.Null(request.HighlightPreTag);
+            Assert.Null(request.MinimumCoverage);
+            Assert.Null(request.OrderBy);
+            Assert.Equal("find me", request.Search);
+            Assert.Null(request.SearchFields);
+            Assert.Equal("*", request.Select);  // Nothing selected for Suggest means select everything.
+            Assert.Equal("mySuggester", request.SuggesterName);
+            Assert.Null(request.Top);
+            Assert.True(request.Fuzzy.HasValue);
+            Assert.False(request.Fuzzy.Value);  // Fuzzy is non-nullable in the client-side contract.
         }
     }
 }

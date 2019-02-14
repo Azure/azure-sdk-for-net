@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Search.Models
     [JsonConverter(typeof(SearchContinuationTokenConverter))]
     public class SearchContinuationToken
     {
-        internal SearchContinuationToken(string nextLink, SearchParametersPayload nextPageParameters)
+        internal SearchContinuationToken(string nextLink, SearchRequest nextPageParameters)
         {
             Throw.IfArgumentNullOrEmpty(nextLink, "nextLink");
 
@@ -25,6 +25,6 @@ namespace Microsoft.Azure.Search.Models
 
         internal string NextLink { get; private set; }
 
-        internal SearchParametersPayload NextPageParameters { get; private set; }
+        internal SearchRequest NextPageParameters { get; private set; }
     }
 }

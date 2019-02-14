@@ -368,7 +368,7 @@ namespace Microsoft.Azure.Search
 
         private async Task<AzureOperationResponse<TSearchResult>> DoContinueSearchWithHttpMessagesAsync<TSearchResult, TDocResult, TDoc>(
             string url,
-            SearchParametersPayload searchParameters,
+            SearchRequest searchRequest,
             Guid? clientRequestId,
             Dictionary<string, List<string>> customHeaders,
             bool useGet,
@@ -427,9 +427,9 @@ namespace Microsoft.Azure.Search
             string requestContent = null;
             if (!useGet)
             {
-                if (searchParameters != null)
+                if (searchRequest != null)
                 {
-                    requestContent = SafeJsonConvert.SerializeObject(searchParameters, this.Client.SerializationSettings);
+                    requestContent = SafeJsonConvert.SerializeObject(searchRequest, this.Client.SerializationSettings);
                     httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                     httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 }
@@ -834,7 +834,7 @@ namespace Microsoft.Azure.Search
 
             return DoContinueSearchWithHttpMessagesAsync<TSearchResult, TDocResult, TDoc>(
                 url,
-                searchParameters.ToPayload(searchText),
+                searchParameters.ToRequest(searchText),
                 clientRequestId,
                 customHeaders,
                 useGet,
@@ -979,10 +979,10 @@ namespace Microsoft.Azure.Search
             string requestContent = null;
             if (!useGet)
             {
-                SuggestParametersPayload payload = suggestParameters.ToPayload(searchText, suggesterName);
-                if (payload != null)
+                SuggestRequest request = suggestParameters.ToRequest(searchText, suggesterName);
+                if (request != null)
                 {
-                    requestContent = SafeJsonConvert.SerializeObject(payload, this.Client.SerializationSettings);
+                    requestContent = SafeJsonConvert.SerializeObject(request, this.Client.SerializationSettings);
                     httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                     httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 }

@@ -12,6 +12,6 @@ namespace Microsoft.Azure.Search.Models
         public string NextLink { get; set; }
 
         [JsonProperty("@search.nextPageParameters")]
-        public SearchParametersPayload NextPageParameters { get; set; }
+        public SearchRequest NextPageParameters { get; set; }
     }
 }

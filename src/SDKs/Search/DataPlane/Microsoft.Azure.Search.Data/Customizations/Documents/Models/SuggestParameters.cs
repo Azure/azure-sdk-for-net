@@ -98,8 +98,8 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A URL query string containing all the suggestion parameters.</returns>
         public override string ToString() => String.Join("&", GetAllOptions());
 
-        internal SuggestParametersPayload ToPayload(string searchText, string suggesterName) =>
-            new SuggestParametersPayload()
+        internal SuggestRequest ToRequest(string searchText, string suggesterName) =>
+            new SuggestRequest()
             {
                 Filter = Filter,
                 Fuzzy = UseFuzzyMatching,
