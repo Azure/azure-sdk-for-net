@@ -16,21 +16,22 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using System.Linq;
 
     /// <summary>
-    /// Class representing an update to event hub connection.
+    /// Class representing an event hub data connection.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("EventHub")]
     [Rest.Serialization.JsonTransformation]
-    public partial class EventHubConnectionUpdate : ProxyResource
+    public partial class EventHubDataConnection : DataConnection
     {
         /// <summary>
-        /// Initializes a new instance of the EventHubConnectionUpdate class.
+        /// Initializes a new instance of the EventHubDataConnection class.
         /// </summary>
-        public EventHubConnectionUpdate()
+        public EventHubDataConnection()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventHubConnectionUpdate class.
+        /// Initializes a new instance of the EventHubDataConnection class.
         /// </summary>
         /// <param name="eventHubResourceId">The resource ID of the event hub
         /// to be used to create a data connection.</param>
@@ -50,11 +51,11 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// message.</param>
         /// <param name="dataFormat">The data format of the message. Optionally
         /// the data format can be added to each message. Possible values
-        /// include: 'MULTIJSON', 'JSON', 'CSV'</param>
-        public EventHubConnectionUpdate(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string))
-            : base(id, name, type)
+        /// include: 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
+        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO'</param>
+        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string))
+            : base(id, name, type, location)
         {
-            Location = location;
             EventHubResourceId = eventHubResourceId;
             ConsumerGroup = consumerGroup;
             TableName = tableName;
@@ -67,12 +68,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets resource location.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets the resource ID of the event hub to be used to create
@@ -104,7 +99,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Gets or sets the data format of the message. Optionally the data
         /// format can be added to each message. Possible values include:
-        /// 'MULTIJSON', 'JSON', 'CSV'
+        /// 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', 'TXT',
+        /// 'RAW', 'SINGLEJSON', 'AVRO'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataFormat")]
         public string DataFormat { get; set; }

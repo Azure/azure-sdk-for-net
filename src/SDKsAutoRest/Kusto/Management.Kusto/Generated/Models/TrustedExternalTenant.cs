@@ -11,31 +11,26 @@
 namespace Microsoft.Azure.Management.Kusto.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The list Kusto event hub connection validation result.
+    /// Represents a tenant ID that is trusted by the cluster.
     /// </summary>
-    public partial class EventHubConnectionValidationListResult
+    public partial class TrustedExternalTenant
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// EventHubConnectionValidationListResult class.
+        /// Initializes a new instance of the TrustedExternalTenant class.
         /// </summary>
-        public EventHubConnectionValidationListResult()
+        public TrustedExternalTenant()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// EventHubConnectionValidationListResult class.
+        /// Initializes a new instance of the TrustedExternalTenant class.
         /// </summary>
-        /// <param name="value">The list of Kusto event hub connection
-        /// validation errors.</param>
-        public EventHubConnectionValidationListResult(IList<EventHubConnectionValidationResult> value = default(IList<EventHubConnectionValidationResult>))
+        /// <param name="value">GUID representing an external tenant.</param>
+        public TrustedExternalTenant(string value = default(string))
         {
             Value = value;
             CustomInit();
@@ -47,11 +42,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of Kusto event hub connection validation
-        /// errors.
+        /// Gets or sets GUID representing an external tenant.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<EventHubConnectionValidationResult> Value { get; set; }
+        public string Value { get; set; }
 
     }
 }

@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Kusto
     using System.Threading.Tasks;
 
     /// <summary>
-    /// EventHubConnectionsOperations operations.
+    /// DataConnectionsOperations operations.
     /// </summary>
-    internal partial class EventHubConnectionsOperations : IServiceOperations<KustoManagementClient>, IEventHubConnectionsOperations
+    internal partial class DataConnectionsOperations : IServiceOperations<KustoManagementClient>, IDataConnectionsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the EventHubConnectionsOperations class.
+        /// Initializes a new instance of the DataConnectionsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal EventHubConnectionsOperations(KustoManagementClient client)
+        internal DataConnectionsOperations(KustoManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Kusto
         public KustoManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Returns the list of Event Hub connections of the given Kusto database.
+        /// Returns the list of data connections of the given Kusto database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<EventHubConnection>>> ListByDatabaseWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<DataConnection>>> ListByDatabaseWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Kusto
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/eventhubconnections").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.Kusto
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<EventHubConnection>>();
+            var _result = new AzureOperationResponse<IEnumerable<DataConnection>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.Kusto
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<EventHubConnection>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<DataConnection>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Kusto
         }
 
         /// <summary>
-        /// Checks that the Event Hub data connection parameters are valid.
+        /// Checks that the data connection parameters are valid.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -268,8 +268,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// The name of the database in the Kusto cluster.
         /// </param>
         /// <param name='parameters'>
-        /// The Event Hub connection parameters supplied to the CreateOrUpdate
-        /// operation.
+        /// The data connection parameters supplied to the CreateOrUpdate operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -292,7 +291,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<EventHubConnectionValidationListResult>> EventhubConnectionValidationWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, EventHubConnectionValidation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataConnectionValidationListResult>> DataConnectionValidationMethodWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, DataConnectionValidation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -318,10 +317,6 @@ namespace Microsoft.Azure.Management.Kusto
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -334,11 +329,11 @@ namespace Microsoft.Azure.Management.Kusto
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "EventhubConnectionValidation", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DataConnectionValidationMethod", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/eventhubConnectionValidation").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnectionValidation").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
@@ -447,7 +442,7 @@ namespace Microsoft.Azure.Management.Kusto
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<EventHubConnectionValidationListResult>();
+            var _result = new AzureOperationResponse<DataConnectionValidationListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -460,7 +455,7 @@ namespace Microsoft.Azure.Management.Kusto
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EventHubConnectionValidationListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DataConnectionValidationListResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -480,7 +475,7 @@ namespace Microsoft.Azure.Management.Kusto
         }
 
         /// <summary>
-        /// Returns an Event Hub connection.
+        /// Returns a data connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -491,8 +486,8 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='databaseName'>
         /// The name of the database in the Kusto cluster.
         /// </param>
-        /// <param name='eventHubConnectionName'>
-        /// The name of the event hub connection.
+        /// <param name='dataConnectionName'>
+        /// The name of the data connection.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -515,7 +510,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<EventHubConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -529,9 +524,9 @@ namespace Microsoft.Azure.Management.Kusto
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
             }
-            if (eventHubConnectionName == null)
+            if (dataConnectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "eventHubConnectionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "dataConnectionName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -551,17 +546,17 @@ namespace Microsoft.Azure.Management.Kusto
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("eventHubConnectionName", eventHubConnectionName);
+                tracingParameters.Add("dataConnectionName", dataConnectionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/eventhubconnections/{eventHubConnectionName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{eventHubConnectionName}", System.Uri.EscapeDataString(eventHubConnectionName));
+            _url = _url.Replace("{dataConnectionName}", System.Uri.EscapeDataString(dataConnectionName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -661,7 +656,7 @@ namespace Microsoft.Azure.Management.Kusto
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<EventHubConnection>();
+            var _result = new AzureOperationResponse<DataConnection>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -674,7 +669,7 @@ namespace Microsoft.Azure.Management.Kusto
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EventHubConnection>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DataConnection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -694,7 +689,7 @@ namespace Microsoft.Azure.Management.Kusto
         }
 
         /// <summary>
-        /// Creates or updates a Event Hub connection.
+        /// Creates or updates a data connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -705,12 +700,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='databaseName'>
         /// The name of the database in the Kusto cluster.
         /// </param>
-        /// <param name='eventHubConnectionName'>
-        /// The name of the event hub connection.
+        /// <param name='dataConnectionName'>
+        /// The name of the data connection.
         /// </param>
         /// <param name='parameters'>
-        /// The Event Hub connection parameters supplied to the CreateOrUpdate
-        /// operation.
+        /// The data connection parameters supplied to the CreateOrUpdate operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -718,15 +712,15 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<EventHubConnection>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataConnection>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<EventHubConnection> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<DataConnection> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Updates a Event Hub connection.
+        /// Updates a data connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -737,11 +731,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='databaseName'>
         /// The name of the database in the Kusto cluster.
         /// </param>
-        /// <param name='eventHubConnectionName'>
-        /// The name of the event hub connection.
+        /// <param name='dataConnectionName'>
+        /// The name of the data connection.
         /// </param>
         /// <param name='parameters'>
-        /// The Event Hub connection parameters supplied to the Update operation.
+        /// The data connection parameters supplied to the Update operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -749,15 +743,15 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<EventHubConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnectionUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<EventHubConnection> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<DataConnection> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Deletes the Event Hub connection with the given name.
+        /// Deletes the data connection with the given name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -768,8 +762,8 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='databaseName'>
         /// The name of the database in the Kusto cluster.
         /// </param>
-        /// <param name='eventHubConnectionName'>
-        /// The name of the event hub connection.
+        /// <param name='dataConnectionName'>
+        /// The name of the data connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -777,15 +771,15 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Creates or updates a Event Hub connection.
+        /// Creates or updates a data connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -796,12 +790,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='databaseName'>
         /// The name of the database in the Kusto cluster.
         /// </param>
-        /// <param name='eventHubConnectionName'>
-        /// The name of the event hub connection.
+        /// <param name='dataConnectionName'>
+        /// The name of the data connection.
         /// </param>
         /// <param name='parameters'>
-        /// The Event Hub connection parameters supplied to the CreateOrUpdate
-        /// operation.
+        /// The data connection parameters supplied to the CreateOrUpdate operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -824,7 +817,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<EventHubConnection>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataConnection>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -838,17 +831,13 @@ namespace Microsoft.Azure.Management.Kusto
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
             }
-            if (eventHubConnectionName == null)
+            if (dataConnectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "eventHubConnectionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "dataConnectionName");
             }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
-            if (parameters != null)
-            {
-                parameters.Validate();
             }
             if (Client.SubscriptionId == null)
             {
@@ -868,18 +857,18 @@ namespace Microsoft.Azure.Management.Kusto
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("eventHubConnectionName", eventHubConnectionName);
+                tracingParameters.Add("dataConnectionName", dataConnectionName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/eventhubconnections/{eventHubConnectionName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{eventHubConnectionName}", System.Uri.EscapeDataString(eventHubConnectionName));
+            _url = _url.Replace("{dataConnectionName}", System.Uri.EscapeDataString(dataConnectionName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -985,7 +974,7 @@ namespace Microsoft.Azure.Management.Kusto
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<EventHubConnection>();
+            var _result = new AzureOperationResponse<DataConnection>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -998,7 +987,7 @@ namespace Microsoft.Azure.Management.Kusto
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EventHubConnection>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DataConnection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1016,7 +1005,7 @@ namespace Microsoft.Azure.Management.Kusto
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EventHubConnection>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DataConnection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1036,7 +1025,7 @@ namespace Microsoft.Azure.Management.Kusto
         }
 
         /// <summary>
-        /// Updates a Event Hub connection.
+        /// Updates a data connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -1047,11 +1036,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='databaseName'>
         /// The name of the database in the Kusto cluster.
         /// </param>
-        /// <param name='eventHubConnectionName'>
-        /// The name of the event hub connection.
+        /// <param name='dataConnectionName'>
+        /// The name of the data connection.
         /// </param>
         /// <param name='parameters'>
-        /// The Event Hub connection parameters supplied to the Update operation.
+        /// The data connection parameters supplied to the Update operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1074,7 +1063,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<EventHubConnection>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnectionUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataConnection>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1088,9 +1077,9 @@ namespace Microsoft.Azure.Management.Kusto
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
             }
-            if (eventHubConnectionName == null)
+            if (dataConnectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "eventHubConnectionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "dataConnectionName");
             }
             if (parameters == null)
             {
@@ -1114,18 +1103,18 @@ namespace Microsoft.Azure.Management.Kusto
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("eventHubConnectionName", eventHubConnectionName);
+                tracingParameters.Add("dataConnectionName", dataConnectionName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/eventhubconnections/{eventHubConnectionName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{eventHubConnectionName}", System.Uri.EscapeDataString(eventHubConnectionName));
+            _url = _url.Replace("{dataConnectionName}", System.Uri.EscapeDataString(dataConnectionName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -1231,7 +1220,7 @@ namespace Microsoft.Azure.Management.Kusto
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<EventHubConnection>();
+            var _result = new AzureOperationResponse<DataConnection>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1244,7 +1233,7 @@ namespace Microsoft.Azure.Management.Kusto
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EventHubConnection>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DataConnection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1262,7 +1251,7 @@ namespace Microsoft.Azure.Management.Kusto
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EventHubConnection>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DataConnection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1282,7 +1271,7 @@ namespace Microsoft.Azure.Management.Kusto
         }
 
         /// <summary>
-        /// Deletes the Event Hub connection with the given name.
+        /// Deletes the data connection with the given name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -1293,8 +1282,8 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='databaseName'>
         /// The name of the database in the Kusto cluster.
         /// </param>
-        /// <param name='eventHubConnectionName'>
-        /// The name of the event hub connection.
+        /// <param name='dataConnectionName'>
+        /// The name of the data connection.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1314,7 +1303,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1328,9 +1317,9 @@ namespace Microsoft.Azure.Management.Kusto
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
             }
-            if (eventHubConnectionName == null)
+            if (dataConnectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "eventHubConnectionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "dataConnectionName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -1350,17 +1339,17 @@ namespace Microsoft.Azure.Management.Kusto
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("eventHubConnectionName", eventHubConnectionName);
+                tracingParameters.Add("dataConnectionName", dataConnectionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/eventhubconnections/{eventHubConnectionName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
-            _url = _url.Replace("{eventHubConnectionName}", System.Uri.EscapeDataString(eventHubConnectionName));
+            _url = _url.Replace("{dataConnectionName}", System.Uri.EscapeDataString(dataConnectionName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)

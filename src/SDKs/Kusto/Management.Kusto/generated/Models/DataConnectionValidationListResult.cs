@@ -11,28 +11,33 @@
 namespace Microsoft.Azure.Management.Kusto.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class EventHubConnectionValidationResult
+    /// <summary>
+    /// The list Kusto data connection validation result.
+    /// </summary>
+    public partial class DataConnectionValidationListResult
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// EventHubConnectionValidationResult class.
+        /// DataConnectionValidationListResult class.
         /// </summary>
-        public EventHubConnectionValidationResult()
+        public DataConnectionValidationListResult()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// EventHubConnectionValidationResult class.
+        /// DataConnectionValidationListResult class.
         /// </summary>
-        /// <param name="errorMessage">A message which indicates a problem in
-        /// event hub connection validation.</param>
-        public EventHubConnectionValidationResult(string errorMessage = default(string))
+        /// <param name="value">The list of Kusto data connection validation
+        /// errors.</param>
+        public DataConnectionValidationListResult(IList<DataConnectionValidationResult> value = default(IList<DataConnectionValidationResult>))
         {
-            ErrorMessage = errorMessage;
+            Value = value;
             CustomInit();
         }
 
@@ -42,11 +47,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a message which indicates a problem in event hub
-        /// connection validation.
+        /// Gets or sets the list of Kusto data connection validation errors.
         /// </summary>
-        [JsonProperty(PropertyName = "errorMessage")]
-        public string ErrorMessage { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<DataConnectionValidationResult> Value { get; set; }
 
     }
 }
