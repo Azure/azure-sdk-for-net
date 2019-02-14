@@ -249,7 +249,7 @@ namespace Azure.ApplicationModel.Configuration.Test
         {
             Assert.AreEqual(_expectedMethod, request.Method);
             _expectedUri.Verify(request.RequestUri.ToString());
-            //Assert.AreEqual(new Version(2, 0), request.Version);
+            Assert.AreEqual(new Version(2, 0), request.Version);
         }
 
         void VerifyRequestContent(HttpRequestMessage request)
