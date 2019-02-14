@@ -19,18 +19,18 @@ namespace Microsoft.Azure.Search.Models
     /// Parameters for filtering, sorting, faceting, paging, and other search
     /// query behaviors.
     /// </summary>
-    public partial class SearchParametersPayload
+    internal partial class SearchRequest
     {
         /// <summary>
-        /// Initializes a new instance of the SearchParametersPayload class.
+        /// Initializes a new instance of the SearchRequest class.
         /// </summary>
-        public SearchParametersPayload()
+        public SearchRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SearchParametersPayload class.
+        /// Initializes a new instance of the SearchRequest class.
         /// </summary>
         /// <param name="count">A value that specifies whether to fetch the
         /// total count of results. Default is false. Setting this value to
@@ -46,10 +46,10 @@ namespace Microsoft.Azure.Search.Models
         /// use for hit highlights. Only searchable fields can be used for hit
         /// highlighting.</param>
         /// <param name="highlightPostTag">A string tag that is appended to hit
-        /// highlights. Must be set with HighlightPreTag. Default is
+        /// highlights. Must be set with highlightPreTag. Default is
         /// &amp;lt;/em&amp;gt;.</param>
         /// <param name="highlightPreTag">A string tag that is prepended to hit
-        /// highlights. Must be set with HighlightPostTag. Default is
+        /// highlights. Must be set with highlightPostTag. Default is
         /// &amp;lt;em&amp;gt;.</param>
         /// <param name="minimumCoverage">A number between 0 and 100 indicating
         /// the percentage of the index that must be covered by a search query
@@ -60,11 +60,11 @@ namespace Microsoft.Azure.Search.Models
         /// expressions by which to sort the results. Each expression can be
         /// either a field name or a call to either the geo.distance() or the
         /// search.score() functions. Each expression can be followed by asc to
-        /// indicate ascending, and desc to indicate descending. The default is
+        /// indicate ascending, or desc to indicate descending. The default is
         /// ascending order. Ties will be broken by the match scores of
-        /// documents. If no OrderBy is specified, the default sort order is
-        /// descending by document match score. There can be at most 32 Orderby
-        /// clauses.</param>
+        /// documents. If no $orderby is specified, the default sort order is
+        /// descending by document match score. There can be at most 32
+        /// $orderby clauses.</param>
         /// <param name="queryType">Gets or sets a value that specifies the
         /// syntax of the search query. The default is 'simple'. Use 'full' if
         /// your query uses the Lucene query syntax. Possible values include:
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="skip">The number of search results to skip. This value
         /// cannot be greater than 100,000. If you need to scan documents in
         /// sequence, but cannot use Skip due to this limitation, consider
-        /// using OrderBy on a totally-ordered key and Filter with a range
+        /// using $orderby on a totally-ordered key and Filter with a range
         /// query instead.</param>
         /// <param name="top">The number of search results to retrieve. This
         /// can be used in conjunction with Skip to implement client-side
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Search.Models
         /// that can be passed to ContinueSearch to retrieve the next page of
         /// results. See DocumentSearchResponse.ContinuationToken for more
         /// information.</param>
-        public SearchParametersPayload(bool? count = default(bool?), IList<string> facets = default(IList<string>), string filter = default(string), string highlight = default(string), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string orderBy = default(string), QueryType? queryType = default(QueryType?), IList<string> scoringParameters = default(IList<string>), string scoringProfile = default(string), string search = default(string), string searchFields = default(string), SearchMode? searchMode = default(SearchMode?), string select = default(string), int? skip = default(int?), int? top = default(int?))
+        public SearchRequest(bool? count = default(bool?), IList<string> facets = default(IList<string>), string filter = default(string), string highlight = default(string), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string orderBy = default(string), QueryType? queryType = default(QueryType?), IList<string> scoringParameters = default(IList<string>), string scoringProfile = default(string), string search = default(string), string searchFields = default(string), SearchMode? searchMode = default(SearchMode?), string select = default(string), int? skip = default(int?), int? top = default(int?))
         {
             Count = count;
             Facets = facets;
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a string tag that is appended to hit highlights. Must
-        /// be set with HighlightPreTag. Default is
+        /// be set with highlightPreTag. Default is
         /// &amp;amp;lt;/em&amp;amp;gt;.
         /// </summary>
         [JsonProperty(PropertyName = "highlightPostTag")]
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a string tag that is prepended to hit highlights. Must
-        /// be set with HighlightPostTag. Default is
+        /// be set with highlightPostTag. Default is
         /// &amp;amp;lt;em&amp;amp;gt;.
         /// </summary>
         [JsonProperty(PropertyName = "highlightPreTag")]
@@ -190,11 +190,10 @@ namespace Microsoft.Azure.Search.Models
         /// by which to sort the results. Each expression can be either a field
         /// name or a call to either the geo.distance() or the search.score()
         /// functions. Each expression can be followed by asc to indicate
-        /// ascending, and desc to indicate descending. The default is
-        /// ascending order. Ties will be broken by the match scores of
-        /// documents. If no OrderBy is specified, the default sort order is
-        /// descending by document match score. There can be at most 32 Orderby
-        /// clauses.
+        /// ascending, or desc to indicate descending. The default is ascending
+        /// order. Ties will be broken by the match scores of documents. If no
+        /// $orderby is specified, the default sort order is descending by
+        /// document match score. There can be at most 32 $orderby clauses.
         /// </summary>
         [JsonProperty(PropertyName = "orderby")]
         public string OrderBy { get; set; }
@@ -258,7 +257,7 @@ namespace Microsoft.Azure.Search.Models
         /// Gets or sets the number of search results to skip. This value
         /// cannot be greater than 100,000. If you need to scan documents in
         /// sequence, but cannot use Skip due to this limitation, consider
-        /// using OrderBy on a totally-ordered key and Filter with a range
+        /// using $orderby on a totally-ordered key and Filter with a range
         /// query instead.
         /// </summary>
         [JsonProperty(PropertyName = "skip")]

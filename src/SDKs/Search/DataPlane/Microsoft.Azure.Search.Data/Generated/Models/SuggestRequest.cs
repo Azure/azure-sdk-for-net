@@ -17,33 +17,33 @@ namespace Microsoft.Azure.Search.Models
     /// Parameters for filtering, sorting, fuzzy matching, and other
     /// suggestions query behaviors.
     /// </summary>
-    public partial class SuggestParametersPayload
+    internal partial class SuggestRequest
     {
         /// <summary>
-        /// Initializes a new instance of the SuggestParametersPayload class.
+        /// Initializes a new instance of the SuggestRequest class.
         /// </summary>
-        public SuggestParametersPayload()
+        public SuggestRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SuggestParametersPayload class.
+        /// Initializes a new instance of the SuggestRequest class.
         /// </summary>
-        /// <param name="filter">The OData $filter expression to apply to the
-        /// suggestions query.</param>
+        /// <param name="filter">An OData expression that filters the documents
+        /// considered for suggestions.</param>
         /// <param name="fuzzy">A value indicating whether to use fuzzy
         /// matching for the suggestion query. Default is false. When set to
         /// true, the query will find suggestions even if there's a substituted
         /// or missing character in the search text. While this provides a
-        /// better experience in some scenarios it comes at a performance cost
+        /// better experience in some scenarios, it comes at a performance cost
         /// as fuzzy suggestion searches are slower and consume more
         /// resources.</param>
         /// <param name="highlightPostTag">A string tag that is appended to hit
-        /// highlights. Must be set with HighlightPreTag. If omitted, hit
+        /// highlights. Must be set with highlightPreTag. If omitted, hit
         /// highlighting of suggestions is disabled.</param>
         /// <param name="highlightPreTag">A string tag that is prepended to hit
-        /// highlights. Must be set with HighlightPostTag. If omitted, hit
+        /// highlights. Must be set with highlightPostTag. If omitted, hit
         /// highlighting of suggestions is disabled.</param>
         /// <param name="minimumCoverage">A number between 0 and 100 indicating
         /// the percentage of the index that must be covered by a suggestion
@@ -54,24 +54,26 @@ namespace Microsoft.Azure.Search.Models
         /// expressions by which to sort the results. Each expression can be
         /// either a field name or a call to either the geo.distance() or the
         /// search.score() functions. Each expression can be followed by asc to
-        /// indicate ascending, and desc to indicate descending. The default is
+        /// indicate ascending, or desc to indicate descending. The default is
         /// ascending order. Ties will be broken by the match scores of
-        /// documents. If no OrderBy is specified, the default sort order is
-        /// descending by document match score. There can be at most 32 Orderby
-        /// clauses.</param>
-        /// <param name="search">The search text on which to base
-        /// suggestions.</param>
-        /// <param name="searchFields">The comma-separated list of field names
-        /// to consider when querying for suggestions.</param>
+        /// documents. If no $orderby is specified, the default sort order is
+        /// descending by document match score. There can be at most 32
+        /// $orderby clauses.</param>
+        /// <param name="search">The search text to use to suggest documents.
+        /// Must be at least 1 character, and no more than 100
+        /// characters.</param>
+        /// <param name="searchFields">The list of comma-separated field names
+        /// to search for the specified search text. Target fields must be
+        /// included in the specified suggester.</param>
         /// <param name="select">The comma-separated list of fields to
-        /// retrieve. If unspecified, all fields marked as retrievable in the
-        /// schema are included.</param>
+        /// retrieve. If unspecified, only the key field will be included in
+        /// the results.</param>
         /// <param name="suggesterName">The name of the suggester as specified
         /// in the suggesters collection that's part of the index
         /// definition.</param>
         /// <param name="top">The number of suggestions to retrieve. This must
-        /// be a value between 1 and 100. The default is to 5.</param>
-        public SuggestParametersPayload(string filter = default(string), bool? fuzzy = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string orderBy = default(string), string search = default(string), string searchFields = default(string), string select = default(string), string suggesterName = default(string), int? top = default(int?))
+        /// be a value between 1 and 100. The default is 5.</param>
+        public SuggestRequest(string filter = default(string), bool? fuzzy = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string orderBy = default(string), string search = default(string), string searchFields = default(string), string select = default(string), string suggesterName = default(string), int? top = default(int?))
         {
             Filter = filter;
             Fuzzy = fuzzy;
@@ -93,8 +95,8 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the OData $filter expression to apply to the
-        /// suggestions query.
+        /// Gets or sets an OData expression that filters the documents
+        /// considered for suggestions.
         /// </summary>
         [JsonProperty(PropertyName = "filter")]
         public string Filter { get; set; }
@@ -104,7 +106,7 @@ namespace Microsoft.Azure.Search.Models
         /// the suggestion query. Default is false. When set to true, the query
         /// will find suggestions even if there's a substituted or missing
         /// character in the search text. While this provides a better
-        /// experience in some scenarios it comes at a performance cost as
+        /// experience in some scenarios, it comes at a performance cost as
         /// fuzzy suggestion searches are slower and consume more resources.
         /// </summary>
         [JsonProperty(PropertyName = "fuzzy")]
@@ -112,7 +114,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a string tag that is appended to hit highlights. Must
-        /// be set with HighlightPreTag. If omitted, hit highlighting of
+        /// be set with highlightPreTag. If omitted, hit highlighting of
         /// suggestions is disabled.
         /// </summary>
         [JsonProperty(PropertyName = "highlightPostTag")]
@@ -120,7 +122,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a string tag that is prepended to hit highlights. Must
-        /// be set with HighlightPostTag. If omitted, hit highlighting of
+        /// be set with highlightPostTag. If omitted, hit highlighting of
         /// suggestions is disabled.
         /// </summary>
         [JsonProperty(PropertyName = "highlightPreTag")]
@@ -141,32 +143,32 @@ namespace Microsoft.Azure.Search.Models
         /// by which to sort the results. Each expression can be either a field
         /// name or a call to either the geo.distance() or the search.score()
         /// functions. Each expression can be followed by asc to indicate
-        /// ascending, and desc to indicate descending. The default is
-        /// ascending order. Ties will be broken by the match scores of
-        /// documents. If no OrderBy is specified, the default sort order is
-        /// descending by document match score. There can be at most 32 Orderby
-        /// clauses.
+        /// ascending, or desc to indicate descending. The default is ascending
+        /// order. Ties will be broken by the match scores of documents. If no
+        /// $orderby is specified, the default sort order is descending by
+        /// document match score. There can be at most 32 $orderby clauses.
         /// </summary>
         [JsonProperty(PropertyName = "orderby")]
         public string OrderBy { get; set; }
 
         /// <summary>
-        /// Gets or sets the search text on which to base suggestions.
+        /// Gets or sets the search text to use to suggest documents. Must be
+        /// at least 1 character, and no more than 100 characters.
         /// </summary>
         [JsonProperty(PropertyName = "search")]
         public string Search { get; set; }
 
         /// <summary>
-        /// Gets or sets the comma-separated list of field names to consider
-        /// when querying for suggestions.
+        /// Gets or sets the list of comma-separated field names to search for
+        /// the specified search text. Target fields must be included in the
+        /// specified suggester.
         /// </summary>
         [JsonProperty(PropertyName = "searchFields")]
         public string SearchFields { get; set; }
 
         /// <summary>
         /// Gets or sets the comma-separated list of fields to retrieve. If
-        /// unspecified, all fields marked as retrievable in the schema are
-        /// included.
+        /// unspecified, only the key field will be included in the results.
         /// </summary>
         [JsonProperty(PropertyName = "select")]
         public string Select { get; set; }
@@ -180,7 +182,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the number of suggestions to retrieve. This must be a
-        /// value between 1 and 100. The default is to 5.
+        /// value between 1 and 100. The default is 5.
         /// </summary>
         [JsonProperty(PropertyName = "top")]
         public int? Top { get; set; }
