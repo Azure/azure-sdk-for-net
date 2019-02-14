@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Network.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,11 +35,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="name">Name of the rewrite rule that is unique within
         /// an Application Gateway.</param>
+        /// <param name="ruleSequence">Rule Sequence of the rewrite rule that
+        /// determines the order of execution of a particular rule in a
+        /// RewriteRuleSet.</param>
+        /// <param name="conditions">Conditions based on which the action set
+        /// execution will be evaluated.</param>
         /// <param name="actionSet">Set of actions to be done as part of the
         /// rewrite Rule.</param>
-        public ApplicationGatewayRewriteRule(string name = default(string), ApplicationGatewayRewriteRuleActionSet actionSet = default(ApplicationGatewayRewriteRuleActionSet))
+        public ApplicationGatewayRewriteRule(string name = default(string), int? ruleSequence = default(int?), IList<ApplicationGatewayRewriteRuleCondition> conditions = default(IList<ApplicationGatewayRewriteRuleCondition>), ApplicationGatewayRewriteRuleActionSet actionSet = default(ApplicationGatewayRewriteRuleActionSet))
         {
             Name = name;
+            RuleSequence = ruleSequence;
+            Conditions = conditions;
             ActionSet = actionSet;
             CustomInit();
         }
@@ -53,6 +62,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets rule Sequence of the rewrite rule that determines the
+        /// order of execution of a particular rule in a RewriteRuleSet.
+        /// </summary>
+        [JsonProperty(PropertyName = "ruleSequence")]
+        public int? RuleSequence { get; set; }
+
+        /// <summary>
+        /// Gets or sets conditions based on which the action set execution
+        /// will be evaluated.
+        /// </summary>
+        [JsonProperty(PropertyName = "conditions")]
+        public IList<ApplicationGatewayRewriteRuleCondition> Conditions { get; set; }
 
         /// <summary>
         /// Gets or sets set of actions to be done as part of the rewrite Rule.
