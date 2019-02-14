@@ -108,25 +108,13 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void CreateSkillsetReturnsCorrectDefinitionOcrNamedEntity()
+        public void CreateSkillsetReturnsCorrectDefinitionOcrEntity()
         {
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrEntity(null, null));
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrEntity(TextExtractionAlgorithm.Printed, new List<EntityCategory> { EntityCategory.Location, EntityCategory.Organization, EntityCategory.Person }));
-            });
-        }
-
-        // Purely to test the still existing, but obsolete NamedEntityRecognitionSkill
-        [Fact]
-        [Obsolete]
-        public void CreateSkillsetReturnsCorrectDefinitionNamedEntity()
-        {
-            Run(() =>
-            {
-                SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetNamedEntityOrEntityRecognition(createEntitySkill: false));
             });
         }
 
@@ -195,30 +183,6 @@ namespace Microsoft.Azure.Search.Tests
                 response =
                     searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, skillset).Result;
                 Assert.Equal(HttpStatusCode.OK, response.Response.StatusCode);
-            });
-        }
-
-        // Explicit test to show that a skillset can be updated with the same number of skills,
-        // simply moving from the Obsolete NamedEntityRecognitionSkill to the EntityRecognitionSkill
-        [Fact]
-        [Obsolete]
-        public void CanUpdateSkillsetFromNamedEntityRecognitionSkillToEntityRecognitionSkill()
-        {
-            Run(() =>
-            {
-                SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                Skillset skillset = CreateTestSkillsetNamedEntityOrEntityRecognition(createEntitySkill: false);
-
-                AzureOperationResponse<Skillset> response =
-                   searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, skillset).Result;
-
-
-                Skillset entityRecognitionSkillset = CreateTestSkillsetNamedEntityOrEntityRecognition(createEntitySkill: true);
-
-                AzureOperationResponse<Skillset> updateResponse =
-                   searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, entityRecognitionSkillset).Result;
-
-                Assert.Equal(HttpStatusCode.OK, updateResponse.Response.StatusCode);
             });
         }
 
@@ -349,7 +313,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new EntityRecognitionSkill("Tested Named Entity Recognition skill", RootPathString, inputs1, outputs1)
+            skills.Add(new EntityRecognitionSkill("Tested Entity Recognition skill", RootPathString, inputs1, outputs1)
             {
                 Categories = categories,
                 DefaultLanguageCode = "en"
@@ -872,50 +836,6 @@ namespace Microsoft.Azure.Search.Tests
             };
 
             skills.Add(new ShaperSkill("Tested Shaper skill", RootPathString, inputs1, outputs1));
-
-            return new Skillset("testskillset", "Skillset for testing", skills);
-        }
-
-        // Helper method that will create functionally equivalent NamedEntityRecognitionSkill vs EntityRecognitionSkill
-        [Obsolete]
-        private static Skillset CreateTestSkillsetNamedEntityOrEntityRecognition(bool createEntitySkill)
-        {
-            List<Skill> skills = new List<Skill>();
-
-            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
-            {
-                new InputFieldMappingEntry
-                {
-                    Name = "text",
-                    Source = "/document/mytext"
-                }
-            };
-
-            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
-            {
-                new OutputFieldMappingEntry
-                {
-                    Name = "entities",
-                    TargetName = "myEntities"
-                }
-            };
-
-            if (!createEntitySkill)
-            {
-                skills.Add(new NamedEntityRecognitionSkill("Tested (Obsolete) Named Entity Recognition skill", RootPathString, inputs, outputs)
-                {
-                    Categories = new NamedEntityCategory[] { NamedEntityCategory.Person },
-                    DefaultLanguageCode = "en"
-                });
-            }
-            else
-            {
-                skills.Add(new EntityRecognitionSkill("Tested (Obsolete) Named Entity Recognition skill", RootPathString, inputs, outputs)
-                {
-                    Categories = new EntityCategory[] { EntityCategory.Person },
-                    DefaultLanguageCode = "en"
-                });
-            }
 
             return new Skillset("testskillset", "Skillset for testing", skills);
         }
