@@ -1,5 +1,10 @@
 # Microsoft Azure SDK for .NET
- ----------
+
+| Component | Build Status |
+| --------- | ------------ |
+| Management Libraries | [![Build Status](https://travis-ci.org/Azure/azure-sdk-for-net.svg?branch=master)](https://travis-ci.org/Azure/azure-sdk-for-net) |
+| Client Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/azure-sdk-for-net%20-%20client?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=41&branchName=master) |
+
 Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. It’s the freedom to build, manage, and deploy applications on a massive, global network using your favorite tools and frameworks.
 
 This repo contains the libraries to allow you to easily leverage Azure from your applications and tools.
