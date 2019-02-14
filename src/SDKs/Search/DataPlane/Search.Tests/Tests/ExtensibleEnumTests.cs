@@ -5,6 +5,9 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using Microsoft.Azure.Search.Models;
+    using System;
+    using System.Linq;
+    using System.Reflection;
     using Xunit;
 
     public class ExtensibleEnumTests
@@ -69,6 +72,23 @@ namespace Microsoft.Azure.Search.Tests
             Assert.False(TestEnum.A.Equals((object)TestEnum2.A));
         }
 
+        [Fact]
+        public void CanCreateNonObsoleteTypeFromValue()
+        {
+            TestEnumWithObsolete notObsolete = TestEnumWithObsolete.Create("NotObsolete");
+            Assert.Same(TestEnumWithObsolete.NotObsolete, notObsolete);
+        }
+
+        [Fact]
+        public void CannotCreateObsoleteTypeFromValue()
+        {
+            // this should result in a new TestEnumWithObsolete instance being created
+            TestEnumWithObsolete obsolete = TestEnumWithObsolete.Create("Obsolete");
+#pragma warning disable CS0612 // Type or member is obsolete
+            Assert.NotSame(TestEnumWithObsolete.Obsolete, obsolete);
+#pragma warning restore CS0612 // Type or member is obsolete
+        }
+
         private class TestEnum : ExtensibleEnum<TestEnum>
         {
             public static readonly TestEnum A = new TestEnum("a");
@@ -89,6 +109,21 @@ namespace Microsoft.Azure.Search.Tests
             private TestEnum2(string name) : base(name) { }
 
             public static TestEnum2 Create(string name) => Lookup(name) ?? new TestEnum2(name);
+        }
+
+        private class TestEnumWithObsolete : ExtensibleEnum<TestEnumWithObsolete>
+        {
+            public static readonly TestEnumWithObsolete NotObsolete = new TestEnumWithObsolete("NotObsolete");
+
+            [Obsolete]
+            public static readonly TestEnumWithObsolete Obsolete = new TestEnumWithObsolete("NotObsolete");
+
+            [Obsolete]
+            public static readonly TestEnumWithObsolete Obsolete2 = new TestEnumWithObsolete("Obsolete");
+
+            private TestEnumWithObsolete(string name) : base(name) { }
+
+            public static TestEnumWithObsolete Create(string name) => Lookup(name) ?? new TestEnumWithObsolete(name);
         }
     }
 }
