@@ -13,7 +13,7 @@
         {
             UseClientFor(async client =>
             {
-                var results = await client.Versions.ListAsync(appId);
+                var results = await client.Versions.ListAsync(GlobalAppId);
 
                 Assert.True(results.Count > 0);
                 foreach (var version in results)
@@ -28,10 +28,10 @@
         {
             UseClientFor(async client =>
             {
-                var versions = await client.Versions.ListAsync(appId);
+                var versions = await client.Versions.ListAsync(GlobalAppId);
                 foreach (var version in versions)
                 {
-                    var result = await client.Versions.GetAsync(appId, version.Version);
+                    var result = await client.Versions.GetAsync(GlobalAppId, version.Version);
                     Assert.Equal(version.Version, result.Version);
                     Assert.Equal(version.TrainingStatus, result.TrainingStatus);
                 }
@@ -43,20 +43,20 @@
         {
             UseClientFor(async client =>
             {
-                var versions = await client.Versions.ListAsync(appId);
+                var versions = await client.Versions.ListAsync(GlobalAppId);
                 var first = versions.FirstOrDefault();
                 var versionToUpdate = new TaskUpdateObject
                 {
                     Version = "test"
                 };
 
-                await client.Versions.UpdateAsync(appId, first.Version, versionToUpdate);
-                var versionsWithUpdate = await client.Versions.ListAsync(appId);
+                await client.Versions.UpdateAsync(GlobalAppId, first.Version, versionToUpdate);
+                var versionsWithUpdate = await client.Versions.ListAsync(GlobalAppId);
 
                 Assert.Contains(versionsWithUpdate, v => v.Version.Equals(versionToUpdate.Version));
                 Assert.DoesNotContain(versionsWithUpdate, v => v.Version.Equals(first.Version));
 
-                await client.Versions.UpdateAsync(appId, versionToUpdate.Version, new TaskUpdateObject
+                await client.Versions.UpdateAsync(GlobalAppId, versionToUpdate.Version, new TaskUpdateObject
                 {
                     Version = first.Version
                 });
@@ -68,22 +68,22 @@
         {
             UseClientFor(async client =>
             {
-                var versions = await client.Versions.ListAsync(appId);
+                var versions = await client.Versions.ListAsync(GlobalAppId);
                 var first = versions.FirstOrDefault();
                 var testVersion = new TaskUpdateObject
                 {
                     Version = "test"
                 };
 
-                var newVersion = await client.Versions.CloneAsync(appId, first.Version, testVersion);
+                var newVersion = await client.Versions.CloneAsync(GlobalAppId, first.Version, testVersion);
 
-                var versionsWithTest = await client.Versions.ListAsync(appId);
+                var versionsWithTest = await client.Versions.ListAsync(GlobalAppId);
 
                 Assert.Contains(versionsWithTest, v => v.Version.Equals(newVersion));
 
-                await client.Versions.DeleteAsync(appId, newVersion);
+                await client.Versions.DeleteAsync(GlobalAppId, newVersion);
 
-                var versionsWithoutTest = await client.Versions.ListAsync(appId);
+                var versionsWithoutTest = await client.Versions.ListAsync(GlobalAppId);
 
                 Assert.DoesNotContain(versionsWithoutTest, v => v.Version.Equals(newVersion));
             });
@@ -94,7 +94,7 @@
         {
             UseClientFor(async client =>
             {
-                var versions = await client.Versions.ListAsync(appId);
+                var versions = await client.Versions.ListAsync(GlobalAppId);
                 var first = versions.FirstOrDefault();
                 var testVersion = new TaskUpdateObject
                 {
@@ -103,35 +103,13 @@
 
                 Assert.DoesNotContain(versions, v => v.Version.Equals(testVersion.Version));
 
-                var newVersion = await client.Versions.CloneAsync(appId, first.Version, testVersion);
+                var newVersion = await client.Versions.CloneAsync(GlobalAppId, first.Version, testVersion);
 
-                var versionsWithTest = await client.Versions.ListAsync(appId);
+                var versionsWithTest = await client.Versions.ListAsync(GlobalAppId);
 
                 Assert.Contains(versionsWithTest, v => v.Version.Equals(newVersion));
 
-                await client.Versions.DeleteAsync(appId, newVersion);
-            });
-        }
-
-        [Fact]
-        public void DeleteUnlabelledUtterance()
-        {
-            UseClientFor(async client =>
-            {
-                var versions = await client.Versions.ListAsync(appId);
-                var versionId = versions.FirstOrDefault().Version;
-                var intents = await client.Model.ListIntentsAsync(appId, versionId);
-                var intentId = intents.FirstOrDefault().Id;
-
-                var suggestions = await client.Model.GetIntentSuggestionsAsync(appId, versionId, intentId);
-
-                var utteranceToDelete = suggestions.FirstOrDefault().Text;
-
-                await client.Versions.DeleteUnlabelledUtteranceAsync(appId, versionId, utteranceToDelete);
-
-                var suggestionsWithoutDeleted = await client.Model.GetIntentSuggestionsAsync(appId, versionId, intentId);
-
-                Assert.DoesNotContain(suggestionsWithoutDeleted, v => v.Text.Equals(utteranceToDelete));
+                await client.Versions.DeleteAsync(GlobalAppId, newVersion);
             });
         }
 
@@ -145,11 +123,10 @@
             var errorCode = "401";
             UseClientFor(async client =>
             {
-                var exception = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Versions.ListWithHttpMessagesAsync(appId, customHeaders: headers));
+                var exception = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Versions.ListWithHttpMessagesAsync(GlobalAppId, customHeaders: headers));
                 var error = exception.Body;
 
                 Assert.Equal(errorCode, error.Code);
-                Assert.Contains("subscription key", error.Message);
             });
         }
 
@@ -159,11 +136,10 @@
             var errorCode = "BadArgument";
             UseClientFor(async client =>
             {
-                var exception = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Versions.ListAsync(appId_error));
+                var exception = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Versions.ListAsync(GlobalAppIdError));
                 var error = exception.Body;
 
                 Assert.Equal(errorCode, error.Code);
-                Assert.Contains("application", error.Message);
             });
         }
 
@@ -173,13 +149,12 @@
             var errorCode = "BadArgument";
             UseClientFor(async client =>
             {
-                var versions = await client.Versions.ListAsync(appId);
+                var versions = await client.Versions.ListAsync(GlobalAppId);
                 var errorVersion = versions.FirstOrDefault().Version + "_";
-                var exeption = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Versions.GetAsync(appId, errorVersion));
+                var exeption = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Versions.GetAsync(GlobalAppId, errorVersion));
                 var error = exeption.Body;
 
                 Assert.Equal(errorCode, error.Code);
-                Assert.Contains("task", error.Message);
             });
         }
 
@@ -189,18 +164,17 @@
             var errorCode = "BadArgument";
             UseClientFor(async client =>
             {
-                var versions = await client.Versions.ListAsync(appId);
+                var versions = await client.Versions.ListAsync(GlobalAppId);
                 var first = versions.FirstOrDefault();
                 var versionToUpdate = new TaskUpdateObject
                 {
                     Version = ""
                 };
 
-                var exeption = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Versions.UpdateAsync(appId, first.Version, versionToUpdate));
+                var exeption = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Versions.UpdateAsync(GlobalAppId, first.Version, versionToUpdate));
                 var error = exeption.Body;
 
                 Assert.Equal(errorCode, error.Code);
-                Assert.Contains("Version Id", error.Message);
             });
         }
 
@@ -210,14 +184,13 @@
             var errorCode = "BadArgument";
             UseClientFor(async client =>
             {
-                var versions = await client.Versions.ListAsync(appId);
+                var versions = await client.Versions.ListAsync(GlobalAppId);
                 var first = versions.FirstOrDefault();
 
-                var exeption = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Versions.DeleteAsync(appId, first.Version + "0"));
+                var exeption = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Versions.DeleteAsync(GlobalAppId, first.Version + "0"));
                 var error = exeption.Body;
 
                 Assert.Equal(errorCode, error.Code);
-                Assert.Contains("task", error.Message);
             });
         }
 
@@ -227,7 +200,7 @@
             var errorCode = "BadArgument";
             UseClientFor(async client =>
             {
-                var versions = await client.Versions.ListAsync(appId);
+                var versions = await client.Versions.ListAsync(GlobalAppId);
                 var first = versions.FirstOrDefault();
                 var testVersion = new TaskUpdateObject
                 {
@@ -236,11 +209,10 @@
 
                 Assert.DoesNotContain(versions, v => v.Version.Equals(testVersion.Version));
 
-                var exeption = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Versions.CloneAsync(appId, first.Version, testVersion));
+                var exeption = await Assert.ThrowsAsync<ErrorResponseException>(async () => await client.Versions.CloneAsync(GlobalAppId, first.Version, testVersion));
                 var error = exeption.Body;
 
                 Assert.Equal(errorCode, error.Code);
-                Assert.Contains("Version Id", error.Message);
             });
         }
     }
