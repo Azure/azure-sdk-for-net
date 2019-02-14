@@ -1,0 +1,85 @@
+﻿using ClientRuntime.Tests.Common.Fakes;
+using Microsoft.Rest;
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace ClientRuntime.NetCore.Tests
+{
+    public class RetryAfterDelegatingHandlerTests
+    {
+        /// <summary>
+        /// Ensure that when the request is canceled due to a timeout from the HttpClient, the last error response is returned
+        /// and a TaskCanceledException is not surfaced to the caller.
+        /// </summary>
+        [Fact]
+        public void HttpClientTimeoutReturnsErrorResponse()
+        {
+            // Setup to always return 429.
+            var fakeHttpHandler = new FakeHttpHandler();
+            fakeHttpHandler.StatusCodeToReturn = (HttpStatusCode) 429;
+            fakeHttpHandler.TweakResponse = (response) =>
+            {
+                response.Headers.Add("Retry-After", "1");
+            };
+
+            var retryHandler = new RetryAfterDelegatingHandler(fakeHttpHandler);
+
+            // Setup HttpClient to timeout after 500 milliseconds.
+            var httpClient = new HttpClient(retryHandler, false)
+            {
+                Timeout = TimeSpan.FromMilliseconds(500)
+            };
+
+            // Make a request using the HttpClient.
+            var fakeClient = new FakeServiceClient(httpClient);
+            var responseMessage = fakeClient.DoStuffSync();
+
+            Assert.NotNull(responseMessage);
+            Assert.True(fakeHttpHandler.NumberOfTimesFailedSoFar > 1);
+            Assert.Equal((HttpStatusCode)429, responseMessage.StatusCode);
+        }
+
+        /// <summary>
+        /// Ensure that when a TaskCanceledException occurs while calling down stream DelegatingHandlers, the last error response is returned
+        /// and a TaskCanceledException is not surfaced to the caller.
+        /// </summary>
+        [Fact]
+        public void TaskCanceledCallingBaseSendAsyncCausesErrorResponse()
+        {
+            // Setup to always return 429.
+            var fakeHttpHandler = new FakeHttpHandler();
+            fakeHttpHandler.StatusCodeToReturn = (HttpStatusCode) 429;
+
+            int callCount = 0;
+            fakeHttpHandler.TweakResponse = (response) =>
+            {
+                // After 3 calls returning 429, cause TaskCanceledException to be thrown.
+                if (callCount++ > 3)
+                {
+                    throw new TaskCanceledException();
+                }
+
+                response.Headers.Add("Retry-After", "1");
+            };
+
+            var retryHandler = new RetryAfterDelegatingHandler(fakeHttpHandler);
+
+            // Setup HttpClient to timeout after 500 milliseconds.
+            var httpClient = new HttpClient(retryHandler, false)
+            {
+                Timeout = TimeSpan.FromMilliseconds(500)
+            };
+
+            // Make a request using the HttpClient.
+            var fakeClient = new FakeServiceClient(httpClient);
+            var responseMessage = fakeClient.DoStuffSync();
+
+            Assert.NotNull(responseMessage);
+            Assert.True(fakeHttpHandler.NumberOfTimesFailedSoFar > 1);
+            Assert.Equal((HttpStatusCode)429, responseMessage.StatusCode);
+        }
+    }
+}
