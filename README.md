@@ -10,8 +10,8 @@ For a full list of packages built from this repository, please see our [list of 
 
 ### Target Frameworks:
 
-* .NET Framework 4.6.1
-* Netstandard 2.0
+* .NET Framework 4.5.2
+* Netstandard 1.4
 
 ## Contributing
 
@@ -68,8 +68,8 @@ dotnet test SDKs\Compute\Compute.Tests\Compute.Tests.csproj
 
 In "SDKs\< Service Name >", you will find projects for services that have already been implemented
 
-  - Each SDK project needs to target .NET 4.6.1 and .NET Standard 2.0
-	  - Test project needs to target NetCoreApp 2.0
+  - Each SDK project needs to target .NET 4.5.2 and .NET Standard 1.4
+	  - Test project needs to target NetCoreApp 1.1
   - Each service contains a project for their generated/customized code
     - The folder 'Generated' contains the generated code
     - The folder 'Customizations' contains additions to the generated code - this can include additions to the generated partial classes, or additional classes that augment the SDK or call the generated code
