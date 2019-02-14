@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource-123/getExtendedInformation?api-version=2018-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS0xMjMvZ2V0RXh0ZW5kZWRJbmZvcm1hdGlvbj9hcGktdmVyc2lvbj0yMDE4LTA3LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "06c08df2-fa7d-41f0-9c80-438806e4495b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 13 Feb 2019 05:47:33 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "9dc624df-7fc2-4359-99aa-cdc99a197cb9"
+        ],
+        "x-ms-client-request-id": [
+          "06c08df2-fa7d-41f0-9c80-438806e4495b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "14327eb6-803d-4910-af65-62880d33ea62"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20190213T054733Z:14327eb6-803d-4910-af65-62880d33ea62"
+        ],
+        "Content-Length": [
+          "1979"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"encryptionKeyThumbprint\": \"E0D67F0318B870AD370DF5DDC95ACE79EE3CA31B\",\r\n    \"encryptionKey\": \"EAAAAJ4GpPiERTTx9TNR7W0ls8TeiuS+Pgo1qaUdgff9Kv3k9hxI6e5pDsHKnE+4EKIaeJXDtNdu+GJ21g7mIwy63+xgwUHPL7nAFXjgk8lRq9FM1CCP1P+GyfNz0Htv/KF0NLHKAFkyM6T6Loe60Wjo93c1lVudpNt2/cVuTRX1G4x2QPHcEd3TQT1ld5ZMvIgKnKeJWFUZGh1KggeVODhUlZGth3DcZrQBtQR5m74RqtnpK76hlQZdU5TLtlBrkk2R9H181pQHkkXkknp2+YfaZU7rjwnKpnCA6VYl3T2tRh6mdjesogSQrDgct18ktVDrRcQFxPJ46Gz+qzVy5QK7p7oSzZvRR1+cY0SZBBjdqEwjPlPEXCb8Qf58A8HchoP4vC/rG30NAA6S+QZm+u8bEJGGo5hwF5wAh7vUk2EI68Yvaz0fEpG9cWSlVutfMazrqa8hqWqCOj1304n+9Jo/5DOasCHiEknigjU7Xld1RN4N5+7NZbyDvWsSBmT769XJVT3TGYrTkIDzBMTWfc2QJBctK9nLz0+/SFQCK1HJenB/MeaTj/KcqyvDKh3YLDtEFHgmkc4znvOSjCdrMU7h7MJPWgvrBnGbCPLi2LNAZrdNMuMNiRU6ob+azIIw6b9qihiN7EX0KZBMs+0NanG+9GcJf2DI4t/7oEnMSwynPsyn/6hpvEm5kuxziQb4uGbzOtIHznABlU0WNw3Vm8W7dVHBSHiSUVzkZEDIyBMX07PHLUZvCE+eeRDiZAn4jYIlhXKz+upRx2/bW68HhrMEW/KZZs/FgZgiww4PzvTq2liQgM+AgHDgagBstsKeIRkuVK95FzhbrZFSaeZYSRz+vBNzJiaLcFBjMwTbg3XELFz1m+2AwZwldDseC3AawEv7+rrA5piw/f+3dblN8dPzyoj3oucykJC9WkLU6ipMdtIREteUKE5PhRLdyp6Tt0bEJERwt2/4RVHRvmxqWyNFx6epVp4Xdy2ty+i17CL1M6+YpzDx8CRQic1fpmKcF99E+Kt3O6FH/JC/8pTdpaxkRn7OPal9vkRAGLMCtILnVZM0qzPlwmnp98RGRTc+IOm5GiwiPC3Pk51xihNldu2Mb4DwVh+D4HIuzafhPmVMv1FVPnNCJgC6TlwfiUnYG5rl/rkzyWhfwIp6TAuxeEVXCrrZV8/wrxqmi/5SNoyrJB68nItCd8xrU4TPzLfDcle7gW3ceYBvfqnoivSDgMOwh/515xVN4+zglf5JnkO2DrHH64eVM8zW1qwdqdP2kP3+qFLbAPaQTDnivcaDN2WvYAvvVIw87bGygEMJiR7C09FTqDFbsnIibyAIgMPOZOfepzvEtpLGngkXEFXBO+d/+OQEdus+wgtY2ipaqwJ9Q9NBuEKxJ9Yp69nNk4ygGtI4YZy4Q9OmV90bc21qObYEneG7svdgtOa0vHGi36TOuvqvaT6QB5aAz/H2hLwlJBYUDT/LI8BUEjRBP9sZh/4iSiHqIxjvkqZwSP+7wBnawpQKB0JzWRLinGGskdXoZKtRtQ==\",\r\n    \"resourceKey\": \"3823022134612912394\"\r\n  },\r\n  \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource-123\",\r\n  \"name\": \"test-gateway-resource-123\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "db4e2fdb-6d80-4e6e-b7cd-736098270664",
+    "SubId": "db4e2fdb-6d80-4e6e-b7cd-736098270664"
+  }
+}

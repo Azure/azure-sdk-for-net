@@ -7,6 +7,7 @@
     <PackageTags />
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Version>1.0.0</Version>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="ScenarioTests\WorkflowRunActionRepetitionsRequestHistories.ScenarioTests.cs" />

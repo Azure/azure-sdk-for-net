@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code above this line -->
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.EdgeGateway</PackageId>
+    <Description>Microsoft Azure Management EdgeGateway library</Description>
+    <AssemblyName>Microsoft.Azure.Management.EdgeGateway</AssemblyName>
+    <Version>1.0.0</Version>
+    <PackageTags>Microsoft Azure EdgeGateway management;EdgeGateway;EdgeGateway management;</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+        This is a public release of the Azure EdgeGateway SDK. 
+      ]]>
+    </PackageReleaseNotes>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <RootNamespace>Microsoft.Azure.Management.EdgeGateway</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <ItemGroup>
+    <Reference Update="System">
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <!-- Please do not move/edit code above this line -->
+
+</Project>

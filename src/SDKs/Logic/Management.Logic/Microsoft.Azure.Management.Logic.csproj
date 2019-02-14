@@ -13,6 +13,7 @@
 	  - Bug fix for updating Logic Apps that have an attached Integration Account
 	  - Added WorkflowRunActionRequestHistories, WorkflowRunActionRepetitionsRequestHistories
 		]]></PackageReleaseNotes>
+		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
