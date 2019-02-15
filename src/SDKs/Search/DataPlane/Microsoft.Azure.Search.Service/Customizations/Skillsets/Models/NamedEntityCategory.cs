@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Search.Models
         Person
     }
 
-    [Obsolete("Use EntityCategoryEnumExtension instead")]
+    [Obsolete("Use EntityCategoryEnumExtension instead.")]
     internal static class NamedEntityCategoryEnumExtension
     {
         internal static string ToSerializedValue(this NamedEntityCategory? value)

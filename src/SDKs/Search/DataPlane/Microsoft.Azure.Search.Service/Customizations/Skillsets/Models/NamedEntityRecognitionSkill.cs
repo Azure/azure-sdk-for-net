@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Search.Models
     /// />
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Skills.Text.NamedEntityRecognitionSkill")]
-    [Obsolete("Use EntityRecognitionSkill instead")]
+    [Obsolete("Use EntityRecognitionSkill instead.")]
     public partial class NamedEntityRecognitionSkill : Skill
     {
         /// <summary>
