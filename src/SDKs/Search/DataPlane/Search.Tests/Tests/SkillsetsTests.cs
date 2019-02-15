@@ -4,6 +4,7 @@
 
 namespace Microsoft.Azure.Search.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.Search.Tests
                 CreateAndValidateSkillset(searchClient, CreateSkillsetWithImageAnalysisDefaultSettings());
                 CreateAndValidateSkillset(searchClient, CreateSkillsetWithKeyPhraseExtractionDefaultSettings());
                 CreateAndValidateSkillset(searchClient, CreateSkillsetWithMergeDefaultSettings());
-                CreateAndValidateSkillset(searchClient, CreateSkillsetWithNamedEntityRecognitionDefaultSettings());
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithEntityRecognitionDefaultSettings());
                 CreateAndValidateSkillset(searchClient, CreateSkillsetWithSentimentDefaultSettings());
                 CreateAndValidateSkillset(searchClient, CreateSkillsetWithSplitDefaultSettings());
             });
@@ -107,13 +108,13 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void CreateSkillsetReturnsCorrectDefinitionOcrNamedEntity()
+        public void CreateSkillsetReturnsCorrectDefinitionOcrEntity()
         {
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrNamedEntity(null, null));
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrNamedEntity(TextExtractionAlgorithm.Printed, new List<NamedEntityCategory> { NamedEntityCategory.Location, NamedEntityCategory.Organization, NamedEntityCategory.Person } ));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrEntity(null, null));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrEntity(TextExtractionAlgorithm.Printed, new List<EntityCategory> { EntityCategory.Location, EntityCategory.Organization, EntityCategory.Person }));
             });
         }
 
@@ -152,6 +153,16 @@ namespace Microsoft.Azure.Search.Tests
                 AzureOperationResponse<Skillset> response =
                     searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, skillset).Result;
                 Assert.Equal(HttpStatusCode.Created, response.Response.StatusCode);
+            });
+        }
+
+        [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionWithCognitiveServicesDefault()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithCognitiveServicesKey());
             });
         }
 
@@ -263,7 +274,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        public static Skillset CreateTestSkillsetOcrNamedEntity(TextExtractionAlgorithm? algorithm, List<NamedEntityCategory> categories)
+        public static Skillset CreateTestSkillsetOcrEntity(TextExtractionAlgorithm? algorithm, List<EntityCategory> categories)
         {
             List<Skill> skills = new List<Skill>();
 
@@ -302,7 +313,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new NamedEntityRecognitionSkill("Tested Named Entity Recognition skill", RootPathString, inputs1, outputs1)
+            skills.Add(new EntityRecognitionSkill("Tested Entity Recognition skill", RootPathString, inputs1, outputs1)
             {
                 Categories = categories,
                 DefaultLanguageCode = "en"
@@ -429,7 +440,7 @@ namespace Microsoft.Azure.Search.Tests
             return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
         }
 
-        private static Skillset CreateSkillsetWithNamedEntityRecognitionDefaultSettings()
+        private static Skillset CreateSkillsetWithEntityRecognitionDefaultSettings()
         {
             List<Skill> skills = new List<Skill>();
 
@@ -451,7 +462,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new NamedEntityRecognitionSkill("Tested Named Entity Recognition skill", RootPathString, inputs, outputs));
+            skills.Add(new EntityRecognitionSkill("Tested Entity Recognition skill", RootPathString, inputs, outputs));
 
             return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
         }
@@ -827,6 +838,30 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new ShaperSkill("Tested Shaper skill", RootPathString, inputs1, outputs1));
 
             return new Skillset("testskillset", "Skillset for testing", skills);
+        }
+
+        private static Skillset CreateSkillsetWithCognitiveServicesKey()
+        {
+            List<Skill> skills = new List<Skill>();
+
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry { Name = "url", Source = "/document/url" },
+                new InputFieldMappingEntry { Name = "queryString", Source = "/document/queryString" }
+            };
+
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
+            };
+
+            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, inputs, outputs)
+            {
+                TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
+                DefaultLanguageCode = "en"
+            });
+
+            return new Skillset("testskillset", "Skillset for testing", skills, new DefaultCognitiveServices());
         }
 
         private static Skillset CreateTestSkillsetOcrSplitText(OcrSkillLanguage ocrLanguageCode, SplitSkillLanguage splitLanguageCode, TextSplitMode textSplitMode)

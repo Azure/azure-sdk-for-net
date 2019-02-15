@@ -4,6 +4,7 @@
 
 using Microsoft.Azure.Search.Serialization;
 using Newtonsoft.Json;
+using System;
 
 namespace Microsoft.Azure.Search.Models
 {
@@ -21,7 +22,13 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Indicates a DocumentDB datasource.
         /// </summary>
+        [Obsolete("This member is deprecated. Use CosmosDb instead")]
         public static readonly DataSourceType DocumentDb = new DataSourceType("documentdb");
+
+        /// <summary>
+        /// Indicates a CosmosDB datasource.
+        /// </summary>
+        public static readonly DataSourceType CosmosDb = new DataSourceType("documentdb");
 
         /// <summary>
         /// Indicates a Azure Blob datasource.

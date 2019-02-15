@@ -6,11 +6,13 @@ namespace Microsoft.Azure.Search.Models
 {
     using Newtonsoft.Json;
     using Serialization;
+    using System;
 
     /// <summary>
     /// Defines the format of NamedEntityRecognitionSkill supported language codes.
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<NamedEntityRecognitionSkillLanguage>))]
+    [Obsolete("Use EntityRecognitionSkillLanguage instead.")]
     public sealed class NamedEntityRecognitionSkillLanguage : ExtensibleEnum<NamedEntityRecognitionSkillLanguage>
     {
         /// <summary>
@@ -103,4 +105,3 @@ namespace Microsoft.Azure.Search.Models
         public static implicit operator NamedEntityRecognitionSkillLanguage(string name) => Create(name);
     }
 }
-

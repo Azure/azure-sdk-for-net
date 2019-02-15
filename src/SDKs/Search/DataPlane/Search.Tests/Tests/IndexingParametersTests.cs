@@ -22,6 +22,13 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void ParseJsonLinesSetCorrectly()
+        {
+            var parameters = new IndexingParameters().ParseJsonLines();
+            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "jsonLines");
+        }
+
+        [Fact]
         public void IndexFileNameExtensionsSetCorrectly()
         {
             var parameters = new IndexingParameters().IndexFileNameExtensions(".pdf", "docx"); // . should be prefixed automatically 

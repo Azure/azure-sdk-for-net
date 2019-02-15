@@ -38,12 +38,15 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="name">The name of the skillset.</param>
         /// <param name="description">The description of the skillset.</param>
         /// <param name="skills">A list of skills in the skillset.</param>
+        /// <param name="cognitiveServices">Details about cognitive services to
+        /// be used when running skills.</param>
         /// <param name="eTag">The ETag of the skillset.</param>
-        public Skillset(string name, string description, IList<Skill> skills, string eTag = default(string))
+        public Skillset(string name, string description, IList<Skill> skills, CognitiveServices cognitiveServices = default(CognitiveServices), string eTag = default(string))
         {
             Name = name;
             Description = description;
             Skills = skills;
+            CognitiveServices = cognitiveServices;
             ETag = eTag;
             CustomInit();
         }
@@ -70,6 +73,13 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "skills")]
         public IList<Skill> Skills { get; set; }
+
+        /// <summary>
+        /// Gets or sets details about cognitive services to be used when
+        /// running skills.
+        /// </summary>
+        [JsonProperty(PropertyName = "cognitiveServices")]
+        public CognitiveServices CognitiveServices { get; set; }
 
         /// <summary>
         /// Gets or sets the ETag of the skillset.
