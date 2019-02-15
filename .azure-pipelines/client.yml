@@ -69,6 +69,10 @@ jobs:
       - task: DotNetCoreCLI@2
         displayName: 'Build & Test (no live tests)'
         condition: eq(variables['System.TeamProject'], 'public')
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
         inputs:
           command: test
           projects: '$(ProjectFile)'
@@ -78,6 +82,9 @@ jobs:
         displayName: 'Build & Test (with live tests)'
         condition: ne(variables['System.TeamProject'], 'public')
         env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
           AZ_CONFIG_CONNECTION: $(AzConfigConnectionString)
         inputs:
           command: test
