@@ -376,7 +376,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 var recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
                 Assert.True(Encoding.UTF8.GetString(recivedMessage.Body) == Encoding.UTF8.GetString(messageBody));
-            
+
                 var connection = sender.ServiceBusConnection;
                 Assert.Throws<ObjectDisposedException>(() => new MessageSender(connection, TestConstants.PartitionedQueueName));
             }
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 messageBody = Encoding.UTF8.GetBytes("Message 2");
                 message = new Message(messageBody);
-                await sender.SendAsync(message); 
+                await sender.SendAsync(message);
 
                 recivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
                 Assert.True(Encoding.UTF8.GetString(recivedMessage.Body) == Encoding.UTF8.GetString(messageBody));
@@ -459,5 +459,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await receiver.CloseAsync().ConfigureAwait(false);
             }
         }
+
+        [Theory]
+        [InlineData(TestConstants.NonPartitionedQueueName)]
+        [DisplayTestMethodName]
+        async Task MessageSenderShouldNotThrowWhenSendingEmptyCollection(string queueName)
+        {
+            var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+            var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+
+            try
+            {
+                await sender.SendAsync(new List<Message>());
+                var message = await receiver.ReceiveAsync(TimeSpan.FromSeconds(3));
+                Assert.True(message == null, "Expected not to find any messages, but a message was received.");
+            }
+            finally
+            {
+                await sender.CloseAsync();
+                await receiver.CloseAsync();
+            }
+        }
+
     }
 }
