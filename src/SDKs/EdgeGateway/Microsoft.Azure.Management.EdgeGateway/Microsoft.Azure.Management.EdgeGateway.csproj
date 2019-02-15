@@ -18,16 +18,10 @@
 
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-    <RootNamespace>Microsoft.Azure.Management.EdgeGateway</RootNamespace>
   </PropertyGroup>
 
   <!-- Please do not move/edit code below this line -->
   <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
-  <ItemGroup>
-    <Reference Update="System">
-      <Private>false</Private>
-    </Reference>
-  </ItemGroup>
   <!-- Please do not move/edit code above this line -->
 
 </Project>
