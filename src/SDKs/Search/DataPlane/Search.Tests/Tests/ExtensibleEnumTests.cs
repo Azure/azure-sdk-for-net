@@ -73,19 +73,18 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void CanCreateNonObsoleteTypeFromValue()
+        public void CreateFromValueReturnsNonObsoleteProperty()
         {
             TestEnumWithObsolete value = TestEnumWithObsolete.Create("Value");
             Assert.Same(TestEnumWithObsolete.RecommendedPropertyValue, value);
         }
 
         [Fact]
-        public void CannotCreateObsoleteTypeFromValue()
+        public void CreateFromObsoleteValueReturnsNewInstance()
         {
-            // this should result in a new TestEnumWithObsolete instance being created
             TestEnumWithObsolete obsolete = TestEnumWithObsolete.Create("Obsolete");
 #pragma warning disable CS0612 // Type or member is obsolete
-            Assert.NotSame(TestEnumWithObsolete.DeprecatedPropertyValue, obsolete);
+            Assert.NotSame(TestEnumWithObsolete.Obsolete, obsolete);
 #pragma warning restore CS0612 // Type or member is obsolete
         }
 
@@ -119,7 +118,7 @@ namespace Microsoft.Azure.Search.Tests
             public static readonly TestEnumWithObsolete DeprecatedPropertyValue = new TestEnumWithObsolete("Value");
 
             [Obsolete]
-            public static readonly TestEnumWithObsolete Obsolete2 = new TestEnumWithObsolete("Obsolete");
+            public static readonly TestEnumWithObsolete Obsolete = new TestEnumWithObsolete("Obsolete");
 
             private TestEnumWithObsolete(string name) : base(name) { }
 
