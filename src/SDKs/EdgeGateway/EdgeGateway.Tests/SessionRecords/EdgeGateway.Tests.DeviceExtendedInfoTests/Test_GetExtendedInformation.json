@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource-123/getExtendedInformation?api-version=2018-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS0xMjMvZ2V0RXh0ZW5kZWRJbmZvcm1hdGlvbj9hcGktdmVyc2lvbj0yMDE4LTA3LTAx",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/getExtendedInformation?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9nZXRFeHRlbmRlZEluZm9ybWF0aW9uP2FwaS12ZXJzaW9uPTIwMTktMDMtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "06c08df2-fa7d-41f0-9c80-438806e4495b"
+          "f358a9a1-8c8c-4fcf-92d1-4a61a591b615"
         ],
         "accept-language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 13 Feb 2019 05:47:33 GMT"
+          "Fri, 15 Feb 2019 09:50:28 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,10 +33,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "9dc624df-7fc2-4359-99aa-cdc99a197cb9"
+          "b91a3a4d-4741-4384-a387-37be4c2517cc"
         ],
         "x-ms-client-request-id": [
-          "06c08df2-fa7d-41f0-9c80-438806e4495b"
+          "f358a9a1-8c8c-4fcf-92d1-4a61a591b615"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -48,13 +48,13 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "14327eb6-803d-4910-af65-62880d33ea62"
+          "2e9156ff-2dcb-4e13-a58e-95ac8cf1f8ee"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190213T054733Z:14327eb6-803d-4910-af65-62880d33ea62"
+          "SOUTHINDIA:20190215T095029Z:2e9156ff-2dcb-4e13-a58e-95ac8cf1f8ee"
         ],
         "Content-Length": [
-          "1979"
+          "1971"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,7 +63,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"encryptionKeyThumbprint\": \"E0D67F0318B870AD370DF5DDC95ACE79EE3CA31B\",\r\n    \"encryptionKey\": \"EAAAAJ4GpPiERTTx9TNR7W0ls8TeiuS+Pgo1qaUdgff9Kv3k9hxI6e5pDsHKnE+4EKIaeJXDtNdu+GJ21g7mIwy63+xgwUHPL7nAFXjgk8lRq9FM1CCP1P+GyfNz0Htv/KF0NLHKAFkyM6T6Loe60Wjo93c1lVudpNt2/cVuTRX1G4x2QPHcEd3TQT1ld5ZMvIgKnKeJWFUZGh1KggeVODhUlZGth3DcZrQBtQR5m74RqtnpK76hlQZdU5TLtlBrkk2R9H181pQHkkXkknp2+YfaZU7rjwnKpnCA6VYl3T2tRh6mdjesogSQrDgct18ktVDrRcQFxPJ46Gz+qzVy5QK7p7oSzZvRR1+cY0SZBBjdqEwjPlPEXCb8Qf58A8HchoP4vC/rG30NAA6S+QZm+u8bEJGGo5hwF5wAh7vUk2EI68Yvaz0fEpG9cWSlVutfMazrqa8hqWqCOj1304n+9Jo/5DOasCHiEknigjU7Xld1RN4N5+7NZbyDvWsSBmT769XJVT3TGYrTkIDzBMTWfc2QJBctK9nLz0+/SFQCK1HJenB/MeaTj/KcqyvDKh3YLDtEFHgmkc4znvOSjCdrMU7h7MJPWgvrBnGbCPLi2LNAZrdNMuMNiRU6ob+azIIw6b9qihiN7EX0KZBMs+0NanG+9GcJf2DI4t/7oEnMSwynPsyn/6hpvEm5kuxziQb4uGbzOtIHznABlU0WNw3Vm8W7dVHBSHiSUVzkZEDIyBMX07PHLUZvCE+eeRDiZAn4jYIlhXKz+upRx2/bW68HhrMEW/KZZs/FgZgiww4PzvTq2liQgM+AgHDgagBstsKeIRkuVK95FzhbrZFSaeZYSRz+vBNzJiaLcFBjMwTbg3XELFz1m+2AwZwldDseC3AawEv7+rrA5piw/f+3dblN8dPzyoj3oucykJC9WkLU6ipMdtIREteUKE5PhRLdyp6Tt0bEJERwt2/4RVHRvmxqWyNFx6epVp4Xdy2ty+i17CL1M6+YpzDx8CRQic1fpmKcF99E+Kt3O6FH/JC/8pTdpaxkRn7OPal9vkRAGLMCtILnVZM0qzPlwmnp98RGRTc+IOm5GiwiPC3Pk51xihNldu2Mb4DwVh+D4HIuzafhPmVMv1FVPnNCJgC6TlwfiUnYG5rl/rkzyWhfwIp6TAuxeEVXCrrZV8/wrxqmi/5SNoyrJB68nItCd8xrU4TPzLfDcle7gW3ceYBvfqnoivSDgMOwh/515xVN4+zglf5JnkO2DrHH64eVM8zW1qwdqdP2kP3+qFLbAPaQTDnivcaDN2WvYAvvVIw87bGygEMJiR7C09FTqDFbsnIibyAIgMPOZOfepzvEtpLGngkXEFXBO+d/+OQEdus+wgtY2ipaqwJ9Q9NBuEKxJ9Yp69nNk4ygGtI4YZy4Q9OmV90bc21qObYEneG7svdgtOa0vHGi36TOuvqvaT6QB5aAz/H2hLwlJBYUDT/LI8BUEjRBP9sZh/4iSiHqIxjvkqZwSP+7wBnawpQKB0JzWRLinGGskdXoZKtRtQ==\",\r\n    \"resourceKey\": \"3823022134612912394\"\r\n  },\r\n  \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource-123\",\r\n  \"name\": \"test-gateway-resource-123\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"encryptionKeyThumbprint\": \"A0513F6B72C2D4786D269893FB149216DF7C2325\",\r\n    \"encryptionKey\": \"EAAAADGNE8RxTsGyBb6oX5VMVrrglw0Ay+u5jPtC89veQPtk7C9oD/hsuJFxsihVsrwhSOT7f6v/ZbSDMGhhET6IaMBhj6rFrjQVTkKculhscSaKdMqzipuGhp0oV9OccJiGsHgm8/NQgN9QOlOLFTbedHfEKt/jBraYL2F4s6zGZlNoaAkG3bzWlLpJGuJ5U8MBWP2jScaAEcrcCMYHLY9hGYNSSxXaf9n+QA2nmktP2fGmnQA9nSCRl7oO7XNHj7hy3rtx9RHKDkxrQpCGz1OwUQg42b2qb8JYSRNa9GeLVgbhz3EUGIATp4biIzhytUUcVp4xOaXAxxXFW6fo1iWw7zx7WpEto4YPwW0gJagr+w64qcInaLlPVqBLngEK4Hu0Tgf+dKuIm5LmBxEnR/3A8xONFpsLjT2E7wXz1EujsSYUqE1tb3ioVoqWTrFK5Pl9KUh2MGRf7xQYNDxIWOvVyflhxXRhHqz763Pw0MJwOMXeLFtAin/z1vegBqWrBbbEBkEYuNosofRL2+WcEmWxeu74ETrR5ETLrdj9lOn3RPldVIjE74qDdhVjEQq8c2ixYUh96QT7ftMOwZjtjohV5D+ljHzKx+MjzP5DD9xM8iljg92odERaEgW8eynhs8I4OUPPMe57VHYxzxkmT6IGFV8/X81IAxrk5hPn6ryoPHDjY3C/4tbJkjEhWarV99wnRdAbFNGvxpgow/uMWCiWJor1bLZhesuiJwiH//2yiSH49twCzoRLQbSWRvWRZMqld1AkeLFZBtYOvR/sh/pq4RFi30o1MaI952aMttbvybWK9GsiIVtfn5D+mll15yMIpOCr1UEeKKaZlckNdc+K3Bz4aE3HVSgjqEtx9H/vhgW48rBNdySwKFBvFMpReuCJsBVAc2cDEZH72gBcVadtEZvkZViq11DXWFR5t6BDASUQ6BJJZREQm0MCztwzSqeB5jjEDTAmv11savN4GBbeh71fV1NyBg3MhFc9oHCSogQp51T9AA+6VWCMKTwM9HhK2g886tTXO8n4L17PJHLR0qUTmqByNTjn6QNMLN9/OoNU3BSamY5HLg7tS4TQxIczXwWPhC2A73T73HVMzAK1K0/mSuAaZM5k3BJzTY0Mwqf2d6cCHa7L4H/py00VNHmTv/qi2jt3cCVQX0xCXRNs0HSJ6cI55V5LHBWftayRqmCEpuuZVawAemiLTvM7aA6mLjEQTCpXtvXaFxGcECGwMWxdpCVSthHzGC2BeDPnP6bxZ5qEduLVJejw8kCoP7CBlLGwJrBmY869Ko0LPpPxEtP/c4HMdFV2k8l33qw4DohGmygl5bnd40dYQIzagOXHSySOGYY++WxuTkBmtze6RrW0r9GqsxX8GUsKzR5x9RUixOWlvM9Tj8VYZ4ftnZBDyrto0Z32Vkxl/D7UfsolIm5hRJGOLV6wblV3zZC2v+4lToSp+gR65ABVN982yBc3SfrOypOJBTE5JZGI+JnR3lZgcNxoMjsvDXHFeW37tI1jEY2MVb8Vc9bPt1MubZ63dQ==\",\r\n    \"resourceKey\": \"7377267766726393722\"\r\n  },\r\n  \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourcegroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource\",\r\n  \"name\": \"test-gateway-resource\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices\"\r\n}",
       "StatusCode": 200
     }
   ],

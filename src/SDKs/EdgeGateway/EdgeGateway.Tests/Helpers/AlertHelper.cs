@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace EdgeGateway.Tests
 {
+    /// <summary>
+    /// Contains the test helper methods
+    /// </summary>
     public static partial class TestUtilities
     {
         /// <summary>

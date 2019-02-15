@@ -6,15 +6,24 @@
     using Microsoft.Azure.Management.EdgeGateway;
     using System.Linq;
 
+    /// <summary>
+    /// Contains the tests for device operations
+    /// </summary>
     public class DeviceTests : EdgeGatewayTestBase
     {
         #region Constructor
+        /// <summary>
+        /// Initializes an instance to test device operations
+        /// </summary>
         public DeviceTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
         #endregion Constructor
 
         #region Test Methods
 
+        /// <summary>
+        /// Tests create, update, get, list and delete device APIs
+        /// </summary>
         [Fact]
         public void Test_GatewayDeviceOperations()
         {
@@ -55,8 +64,7 @@
             var tags = device.GetTags();
 
             // Update tags in the resource
-            DataBoxEdgeDevicePatch dataBoxEdgeDevicePatch = new DataBoxEdgeDevicePatch(tags);
-            Client.Devices.Update(TestConstants.GatewayResourceName, dataBoxEdgeDevicePatch, TestConstants.DefaultResourceGroupName);
+            Client.Devices.Update(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName, tags);
 
             // Delete a gateway resource
             Client.Devices.Delete(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName);
@@ -72,17 +80,18 @@
 
         }
 
+        /// <summary>
+        /// Tests device admin password change
+        /// </summary>
         [Fact]
         public void Test_DevicePasswordUpdate()
         {
-
-            var asymmetricEncryptedSecret = Client.Devices.GetAsymmetricEncryptedSecret(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName, "Password3", TestConstants.ActivationKey);
-            SecuritySettings securitySettings = new SecuritySettings(asymmetricEncryptedSecret);
+            var asymmetricEncryptedSecret = Client.Devices.GetAsymmetricEncryptedSecret(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName, "Password3", TestConstants.GatewayActivationKey);
             // Update the device admin password
-            Client.Devices.CreateOrUpdateSecuritySettings(TestConstants.GatewayResourceName, securitySettings, TestConstants.DefaultResourceGroupName);
+            Client.Devices.CreateOrUpdateSecuritySettings(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName, asymmetricEncryptedSecret);
         }
 
-            #endregion Test Methods
+        #endregion Test Methods
 
-        }
+    }
 }

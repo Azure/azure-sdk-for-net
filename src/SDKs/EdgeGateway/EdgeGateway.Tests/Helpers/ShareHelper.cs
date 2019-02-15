@@ -7,6 +7,12 @@ namespace EdgeGateway.Tests
 {
     public static partial class TestUtilities
     {
+        /// <summary>
+        /// Gets an smb share object
+        /// </summary>
+        /// <param name="sacId"></param>
+        /// <param name="userId"></param>
+        /// <returns>Share</returns>
         public static Share GetSMBShareObject(string sacId, string userId)
         {
             Share share = new Share("Online", "Enabled", "SMB", dataPolicy: "Cloud");
@@ -16,6 +22,12 @@ namespace EdgeGateway.Tests
             return share;
         }
 
+        /// <summary>
+        /// Gets an nfs share object
+        /// </summary>
+        /// <param name="sacId"></param>
+        /// <param name="clientId"></param>
+        /// <returns>Share</returns>
         public static Share GetNFSShareObject(string sacId, string clientId)
         {
             Share share = new Share("Online", "Enabled", "NFS", dataPolicy: "Cloud");
@@ -33,7 +45,7 @@ namespace EdgeGateway.Tests
         /// <param name="deviceName"></param>
         /// <param name="resourceGroupName"></param>
         /// <param name="continuationToken"></param>
-        /// <returns></returns>
+        /// <returns>List of shares</returns>
         public static IEnumerable<Share> ListShares(
             DataBoxEdgeManagementClient client,
              string deviceName,
@@ -52,7 +64,7 @@ namespace EdgeGateway.Tests
         /// <param name="client"></param>
         /// <param name="nextLink"></param>
         /// <param name="continuationToken"></param>
-        /// <returns></returns>
+        /// <returns>List of shares</returns>
         public static IEnumerable<Share> ListSharesNext(
             DataBoxEdgeManagementClient client,
             string nextLink,

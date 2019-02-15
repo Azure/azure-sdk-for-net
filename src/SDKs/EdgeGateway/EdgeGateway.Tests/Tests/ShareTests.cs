@@ -7,14 +7,24 @@ using Xunit.Abstractions;
 
 namespace EdgeGateway.Tests
 {
+    /// <summary>
+    /// Contains the tests for share APIs
+    /// </summary>
     public class ShareTests : EdgeGatewayTestBase
     {
         #region Constructor
+        /// <summary>
+        /// Creates an instance to test share APIs
+        /// </summary>
         public ShareTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
         #endregion Constructor
 
         #region Test Methods
+
+        /// <summary>
+        /// Tests share management APIs
+        /// </summary>
         [Fact]
         public void Test_ShareOperations()
         {
@@ -66,6 +76,9 @@ namespace EdgeGateway.Tests
 
         }
 
+        /// <summary>
+        /// Tests share refresh API
+        /// </summary>
         [Fact]
         public void Test_RefreshShare()
         {

@@ -4,14 +4,24 @@ using Xunit.Abstractions;
 
 namespace EdgeGateway.Tests
 {
+    /// <summary>
+    /// Contains the tests for jobs APIs
+    /// </summary>
     public class JobsTests : EdgeGatewayTestBase
     {
         #region Constructor
+        /// <summary>
+        /// Creates an instance to test jobs API
+        /// </summary>
         public JobsTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
         #endregion Constructor
 
         #region Test Methods
+
+        /// <summary>
+        /// Test job get API
+        /// </summary>
         [Fact]
         public void Test_Jobs()
         {

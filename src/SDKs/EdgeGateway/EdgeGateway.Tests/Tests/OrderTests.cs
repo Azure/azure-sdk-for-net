@@ -8,15 +8,24 @@ using Microsoft.Azure.Management.EdgeGateway.Models;
 
 namespace EdgeGateway.Tests
 {
+    /// <summary>
+    /// Contains the tests for order APIs
+    /// </summary>
     public class OrderTests : EdgeGatewayTestBase
     {
         #region Constructor
+        /// <summary>
+        ///Creates an instance to test order API
+        /// </summary>
         public OrderTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
         #endregion Constructor
 
         #region Test Methods
 
+        /// <summary>
+        /// Tests order create, update, get, list and delete APIs
+        /// </summary>
         [Fact]
         public void Test_DeviceOrders()
         {

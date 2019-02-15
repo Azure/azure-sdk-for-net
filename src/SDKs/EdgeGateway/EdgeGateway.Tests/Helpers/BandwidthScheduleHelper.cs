@@ -10,6 +10,10 @@ namespace EdgeGateway.Tests
     public static partial class TestUtilities
     {
 
+        /// <summary>
+        /// Gets a bandwidth schedule object
+        /// </summary>
+        /// <returns>BandwidthSchedule</returns>
         public static BandwidthSchedule GetBWSObject()
         {
 

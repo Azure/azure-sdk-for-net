@@ -9,11 +9,16 @@ namespace EdgeGateway.Tests
 {
     public static partial class TestUtilities
     {
+        /// <summary>
+        /// Gets an order object
+        /// </summary>
+        /// <returns>Order</returns>
         public static Order GetOrderObject()
         {
-            ContactDetails contact = new ContactDetails("John Mcclane", "Microsoft", "8004269400", new List<string>() { "john@microsoft.com" });
+            ContactDetails contactDetails = new ContactDetails("John Mcclane", "Microsoft", "8004269400", new List<string>() { "john@microsoft.com" });
+
             Address shippingAddress = new Address("Microsoft Corporation", "98052", "Redmond", "WA", "USA");
-            Order order = new Order(contact, shippingAddress);
+            Order order = new Order(contactDetails, shippingAddress);
             return order;
         }
 
@@ -24,7 +29,7 @@ namespace EdgeGateway.Tests
         /// <param name="deviceName"></param>
         /// <param name="resourceGroupName"></param>
         /// <param name="continuationToken"></param>
-        /// <returns></returns>
+        /// <returns>List of order</returns>
         public static IEnumerable<Order> ListOrders(
             DataBoxEdgeManagementClient client,
              string deviceName,

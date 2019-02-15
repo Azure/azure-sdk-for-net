@@ -6,22 +6,31 @@ using System.Linq;
 
 namespace EdgeGateway.Tests
 {
+    /// <summary>
+    /// Contains the tests for role APIs
+    /// </summary>
     public class RoleTests : EdgeGatewayTestBase
     {
         #region Constructor
+        /// <summary>
+        /// Creates an instance to thes role APIs
+        /// </summary>
         public RoleTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
         #endregion Constructor
 
         #region Test Methods
 
+        /// <summary>
+        /// Tests IoT role management APIs
+        /// </summary>
         [Fact]
         public void Test_IoTRoles()
         {
             AsymmetricEncryptedSecret iotDevicesecret = Client.Devices.GetAsymmetricEncryptedSecret(TestConstants.EdgeResourceName, TestConstants.DefaultResourceGroupName, "IotDeviceConnectionString", TestConstants.EdgeDeviceActivationKey);
             AsymmetricEncryptedSecret iotEdgeDevicesecret = Client.Devices.GetAsymmetricEncryptedSecret(TestConstants.EdgeResourceName, TestConstants.DefaultResourceGroupName, "IotEdgeDeviceConnectionString", TestConstants.EdgeDeviceActivationKey);
 
-            var iotRole = TestUtilities.GetIoTRole(iotDevicesecret, iotEdgeDevicesecret);
+            var iotRole = TestUtilities.GetIoTRoleObject(iotDevicesecret, iotEdgeDevicesecret);
 
             // Create an iot role
             Client.Roles.CreateOrUpdate(TestConstants.EdgeResourceName, "iot-1", iotRole, TestConstants.DefaultResourceGroupName);

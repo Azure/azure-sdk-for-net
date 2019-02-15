@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource-123/alerts?api-version=2018-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS0xMjMvYWxlcnRzP2FwaS12ZXJzaW9uPTIwMTgtMDctMDE=",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/alerts?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9hbGVydHM/YXBpLXZlcnNpb249MjAxOS0wMy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7825fa96-4e48-4809-99a1-2af0e9f4b1f3"
+          "8426534d-8837-4556-81b7-63b3a55f2641"
         ],
         "accept-language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 13 Feb 2019 05:49:21 GMT"
+          "Fri, 15 Feb 2019 09:44:49 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,10 +33,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "ec1ad713-d9e0-4b69-8888-b283a85753d7"
+          "eadbfa77-ce38-4c67-a68e-76d2785c66c2"
         ],
         "x-ms-client-request-id": [
-          "7825fa96-4e48-4809-99a1-2af0e9f4b1f3"
+          "8426534d-8837-4556-81b7-63b3a55f2641"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,16 +45,16 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11997"
         ],
         "x-ms-correlation-request-id": [
-          "42b4d565-6a7a-4f30-9858-4dbc9d3a8521"
+          "0ddb800a-ae1e-46ed-bd3b-c2c988d65d1f"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190213T054922Z:42b4d565-6a7a-4f30-9858-4dbc9d3a8521"
+          "SOUTHINDIA:20190215T094449Z:0ddb800a-ae1e-46ed-bd3b-c2c988d65d1f"
         ],
         "Content-Length": [
-          "19"
+          "1046"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,7 +63,73 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"title\": \"Device password has changed\",\r\n        \"alertType\": \"PasswordChangedEvent\",\r\n        \"appearedAtTime\": \"2019-02-15T09:44:13.4273549Z\",\r\n        \"appearedAtDateTime\": \"2019-02-15T09:44:13.4273549Z\",\r\n        \"recommendation\": \"The device administrator password has changed. This is a required action as part of the first time device setup or regular password reset. No further action is required.\",\r\n        \"severity\": \"Informational\",\r\n        \"errorDetails\": {\r\n          \"errorCode\": \"\",\r\n          \"errorMessage\": \"\",\r\n          \"occurrences\": 2,\r\n          \"occurences\": 2\r\n        },\r\n        \"detailedInformation\": {}\r\n      },\r\n      \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/alerts/3e633f97-a626-4514-a302-e55368b52a14\",\r\n      \"name\": \"3e633f97-a626-4514-a302-e55368b52a14\",\r\n      \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/alerts\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/alerts/3e633f97-a626-4514-a302-e55368b52a14?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9hbGVydHMvM2U2MzNmOTctYTYyNi00NTE0LWEzMDItZTU1MzY4YjUyYTE0P2FwaS12ZXJzaW9uPTIwMTktMDMtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5d1e158f-e572-4c74-9920-60f5e45b3a7f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 15 Feb 2019 09:44:49 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "1d03f299-4d74-43ac-bef6-1a8c2faecd69"
+        ],
+        "x-ms-client-request-id": [
+          "5d1e158f-e572-4c74-9920-60f5e45b3a7f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-correlation-request-id": [
+          "ff19438e-6afc-4f08-80a8-076cb74d2439"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20190215T094450Z:ff19438e-6afc-4f08-80a8-076cb74d2439"
+        ],
+        "Content-Length": [
+          "941"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"title\": \"Device password has changed\",\r\n    \"alertType\": \"PasswordChangedEvent\",\r\n    \"appearedAtTime\": \"2019-02-15T09:44:13.4273549Z\",\r\n    \"appearedAtDateTime\": \"2019-02-15T09:44:13.4273549Z\",\r\n    \"recommendation\": \"The device administrator password has changed. This is a required action as part of the first time device setup or regular password reset. No further action is required.\",\r\n    \"severity\": \"Informational\",\r\n    \"errorDetails\": {\r\n      \"errorCode\": \"\",\r\n      \"errorMessage\": \"\",\r\n      \"occurrences\": 2,\r\n      \"occurences\": 2\r\n    },\r\n    \"detailedInformation\": {}\r\n  },\r\n  \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/alerts/3e633f97-a626-4514-a302-e55368b52a14\",\r\n  \"name\": \"3e633f97-a626-4514-a302-e55368b52a14\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/alerts\"\r\n}",
       "StatusCode": 200
     }
   ],

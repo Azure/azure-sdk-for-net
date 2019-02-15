@@ -9,7 +9,13 @@ namespace EdgeGateway.Tests
 {
     public static partial class TestUtilities
     {
-        public static IoTRole GetIoTRole(AsymmetricEncryptedSecret iotDeviceSecret, AsymmetricEncryptedSecret iotEdgeDeviceSecret)
+        /// <summary>
+        /// Gets an iot role object
+        /// </summary>
+        /// <param name="iotDeviceSecret"></param>
+        /// <param name="iotEdgeDeviceSecret"></param>
+        /// <returns>IoTRole</returns>
+        public static IoTRole GetIoTRoleObject(AsymmetricEncryptedSecret iotDeviceSecret, AsymmetricEncryptedSecret iotEdgeDeviceSecret)
         {
             Authentication authentication = new Authentication() { SymmetricKey = new SymmetricKey(iotDeviceSecret) };
             IoTDeviceInfo ioTDeviceInfo = new IoTDeviceInfo("iotdevice", "iothub.azure-devices.net", authentication);
@@ -21,8 +27,7 @@ namespace EdgeGateway.Tests
             return ioTRole;
 
         }
-
-
+        
         /// <summary>
         /// Gets roles in the device
         /// </summary>
@@ -30,7 +35,7 @@ namespace EdgeGateway.Tests
         /// <param name="deviceName"></param>
         /// <param name="resourceGroupName"></param>
         /// <param name="continuationToken"></param>
-        /// <returns></returns>
+        /// <returns>List of roles</returns>
         public static IEnumerable<Role> ListRoles(
             DataBoxEdgeManagementClient client,
              string deviceName,

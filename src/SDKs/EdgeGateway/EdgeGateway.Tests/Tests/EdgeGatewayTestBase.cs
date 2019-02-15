@@ -10,24 +10,35 @@
     using Xunit.Abstractions;
     using Xunit.Sdk;
 
-
+    /// <summary>
+    /// Base class for all tests
+    /// </summary>
     public class EdgeGatewayTestBase : TestBase, IDisposable
     {
+        /// <summary>
+        /// The subscription id key
+        /// </summary>
         protected const string SubIdKey = "SubId";
 
-        protected const int DefaultWaitingTimeInMs = 60000;
-
-        public string ResourceGroupName { get; protected set; }
-
-        public string ManagerName { get; protected set; }
-
+        /// <summary>
+        /// The subscription id used for tests
+        /// </summary>
         public string SubscriptionId { get; protected set; }
 
+        /// <summary>
+        /// The context in which the tests run
+        /// </summary>
         protected MockContext Context { get; set; }
 
+        /// <summary>
+        /// The edge gateway client
+        /// </summary>
         public DataBoxEdgeManagementClient Client { get; protected set; }
 
 
+        /// <summary>
+        /// Initializes common properties used across tests
+        /// </summary>
         public EdgeGatewayTestBase(ITestOutputHelper testOutputHelper)
         {
             // Getting test method name here as we are not initializing context from each method
@@ -36,7 +47,6 @@
                                   .GetValue(helper);
             this.Context = MockContext.Start(this.GetType().FullName, test.TestCase.TestMethod.Method.Name);
 
-            this.ResourceGroupName = TestConstants.DefaultResourceGroupName;
             this.Client = this.Context.GetServiceClient<DataBoxEdgeManagementClient>();
             var testEnv = TestEnvironmentFactory.GetTestEnvironment();
             this.SubscriptionId = testEnv.SubscriptionId;
@@ -59,29 +69,41 @@
             }
         }
 
+        /// <summary>
+        /// Disposes the client and context
+        /// </summary>
         public void Dispose()
         {
             this.Client.Dispose();
            this.Context.Dispose();
         }
 
+        /// <summary>
+        /// Disposes the object
+        /// </summary>
         ~EdgeGatewayTestBase()
         {
             Dispose();
         }
 
-        protected static object GetResourceManagementClient(object context, object handler)
-        {
-            throw new NotImplementedException();
-        }
+        ///// <summary>
+        ///// Disposes the object
+        ///// </summary>
+        //protected static object GetResourceManagementClient(object context, object handler)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        protected static Sku GetDefaultSku()
-        {
-            return new Sku
-            {
-                Name = SkuName.Edge
-            };
-        }
+        ///// <summary>
+        ///// Disposes the object
+        ///// </summary>
+        //protected static Sku GetDefaultSku()
+        //{
+        //    return new Sku
+        //    {
+        //        Name = SkuName.Edge
+        //    };
+        //}
 
        
 

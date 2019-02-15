@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2bc6a1e6-12d5-40ef-93c7-2306631091ff"
+          "e24bdec5-c974-4056-a705-81cd174d2e78"
         ],
         "accept-language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 11:01:41 GMT"
+          "Fri, 15 Feb 2019 09:59:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,10 +33,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "835d3499-ca07-49fb-99bc-6b7dde9a7158"
+          "40ff7fac-b8c1-4b60-aadc-4d6a489dcdf4"
         ],
         "x-ms-client-request-id": [
-          "2bc6a1e6-12d5-40ef-93c7-2306631091ff"
+          "e24bdec5-c974-4056-a705-81cd174d2e78"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -48,10 +48,10 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "37e89d7f-d916-4e0f-ab09-5c14462b9dab"
+          "648e69d0-8f46-4076-bc57-2bc3670d606e"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110141Z:37e89d7f-d916-4e0f-ab09-5c14462b9dab"
+          "SOUTHINDIA:20190215T095910Z:648e69d0-8f46-4076-bc57-2bc3670d606e"
         ],
         "Content-Length": [
           "281"
@@ -73,7 +73,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4b5fe69c-9575-4869-a57c-fbb1ac244048"
+          "96b3366f-b44f-4d50-bf87-94fbb6891f32"
         ],
         "accept-language": [
           "en-US"
@@ -82,7 +82,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -90,7 +90,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 11:01:41 GMT"
+          "Fri, 15 Feb 2019 09:59:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -99,10 +99,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "a135b83b-c0fe-41ee-91c1-aa2d61c0a20f"
+          "eab1912c-2f38-4ae6-8da2-3d8fba827073"
         ],
         "x-ms-client-request-id": [
-          "4b5fe69c-9575-4869-a57c-fbb1ac244048"
+          "96b3366f-b44f-4d50-bf87-94fbb6891f32"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -114,10 +114,10 @@
           "11997"
         ],
         "x-ms-correlation-request-id": [
-          "af4ae445-1f56-4c55-a816-eb691341c9e4"
+          "3939c0c5-c35a-4bb8-bb42-13126ffcc3f9"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110141Z:af4ae445-1f56-4c55-a816-eb691341c9e4"
+          "SOUTHINDIA:20190215T095910Z:3939c0c5-c35a-4bb8-bb42-13126ffcc3f9"
         ],
         "Content-Length": [
           "446"
@@ -139,7 +139,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"shareStatus\": \"Online\",\r\n    \"monitoringStatus\": \"Enabled\",\r\n    \"azureContainerInfo\": {\r\n      \"storageAccountCredentialId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/storageAccountCredentials/sac1\",\r\n      \"containerName\": \"testContainersmb\",\r\n      \"dataFormat\": \"BlockBlob\"\r\n    },\r\n    \"accessProtocol\": \"SMB\",\r\n    \"userAccessRights\": [\r\n      {\r\n        \"userId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/users/user1\",\r\n        \"accessType\": \"Change\"\r\n      }\r\n    ],\r\n    \"dataPolicy\": \"Cloud\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dde357de-78df-4d9e-bbb3-de74ebd7636e"
+          "20b9a9de-762d-4884-9432-b8270a54ed02"
         ],
         "accept-language": [
           "en-US"
@@ -148,7 +148,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -162,13 +162,13 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 11:01:42 GMT"
+          "Fri, 15 Feb 2019 09:59:11 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/41b40884-f3e1-4255-b240-bf89ef349eb2?api-version=2019-03-01"
+          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/808b768d-92b6-4fe9-a9ca-94b3bd6eb102?api-version=2019-03-01"
         ],
         "Retry-After": [
           "30"
@@ -177,10 +177,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "0d90aa45-2933-4509-a791-e924d725ed77"
+          "b25a2670-e5d6-4791-ae81-b28e395eaa64"
         ],
         "x-ms-client-request-id": [
-          "dde357de-78df-4d9e-bbb3-de74ebd7636e"
+          "20b9a9de-762d-4884-9432-b8270a54ed02"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -189,13 +189,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "83c75c16-749a-46b0-b077-5dded749aeb7"
+          "bae49788-aed6-41a6-badf-182bdef6e8e3"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110143Z:83c75c16-749a-46b0-b077-5dded749aeb7"
+          "SOUTHINDIA:20190215T095911Z:bae49788-aed6-41a6-badf-182bdef6e8e3"
         ],
         "Content-Length": [
           "0"
@@ -208,8 +208,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/41b40884-f3e1-4255-b240-bf89ef349eb2?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzQxYjQwODg0LWYzZTEtNDI1NS1iMjQwLWJmODllZjM0OWViMj9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/808b768d-92b6-4fe9-a9ca-94b3bd6eb102?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzgwOGI3NjhkLTkyYjYtNGZlOS1hOWNhLTk0YjNiZDZlYjEwMj9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -217,7 +217,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -225,7 +225,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 11:02:12 GMT"
+          "Fri, 15 Feb 2019 09:59:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -237,10 +237,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "0c3b4f4f-3bdd-4f66-9075-383c522fefe6"
+          "cb2b3d55-4266-43ea-896c-79bae94a9c58"
         ],
         "x-ms-client-request-id": [
-          "3de02835-89a0-4a91-8a57-8bc958b3c900"
+          "ea04a0d3-106c-499c-afc0-8bc087ba0f34"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -252,10 +252,10 @@
           "11996"
         ],
         "x-ms-correlation-request-id": [
-          "65523da4-6b3d-4baa-818f-39a7ed078f7e"
+          "ec51f4b9-3a28-4178-9feb-7c0b8f801190"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110213Z:65523da4-6b3d-4baa-818f-39a7ed078f7e"
+          "SOUTHINDIA:20190215T095943Z:ec51f4b9-3a28-4178-9feb-7c0b8f801190"
         ],
         "Content-Length": [
           "0"
@@ -277,7 +277,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -285,7 +285,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 11:02:43 GMT"
+          "Fri, 15 Feb 2019 10:00:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -294,10 +294,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "b38b6c3b-d480-4a4c-9c2c-4fcfd4878d02"
+          "14177517-4890-4c91-9bed-24a22be518c3"
         ],
         "x-ms-client-request-id": [
-          "5a882de6-44f2-422c-9592-b14d575179f3"
+          "da95e570-1209-4529-8e4d-dad41f048203"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -309,10 +309,10 @@
           "11995"
         ],
         "x-ms-correlation-request-id": [
-          "f1d65a9f-74b4-4bbb-b98f-0c19e31c0c60"
+          "ef8f4fca-2a0b-46c5-98f0-f9b2472ea3b6"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110244Z:f1d65a9f-74b4-4bbb-b98f-0c19e31c0c60"
+          "SOUTHINDIA:20190215T100013Z:ef8f4fca-2a0b-46c5-98f0-f9b2472ea3b6"
         ],
         "Content-Length": [
           "1125"
@@ -334,7 +334,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9a0d59f1-8c06-4f07-b7ea-dd5c653949f9"
+          "11689e6b-ab01-405b-8367-e0628d522969"
         ],
         "accept-language": [
           "en-US"
@@ -343,7 +343,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -351,7 +351,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 11:03:47 GMT"
+          "Fri, 15 Feb 2019 10:01:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -360,10 +360,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "4a621735-d9a7-49c7-94c6-4cb7c90d7037"
+          "3653a1ca-9fe6-4931-bab1-4bda49930b51"
         ],
         "x-ms-client-request-id": [
-          "9a0d59f1-8c06-4f07-b7ea-dd5c653949f9"
+          "11689e6b-ab01-405b-8367-e0628d522969"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -375,10 +375,10 @@
           "11992"
         ],
         "x-ms-correlation-request-id": [
-          "576e5165-2287-4790-b2e6-04c5813d25e4"
+          "c46e9bfb-ca8d-49d4-9f13-fa3471930396"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110348Z:576e5165-2287-4790-b2e6-04c5813d25e4"
+          "SOUTHINDIA:20190215T100118Z:c46e9bfb-ca8d-49d4-9f13-fa3471930396"
         ],
         "Content-Length": [
           "1125"
@@ -400,7 +400,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"shareStatus\": \"Online\",\r\n    \"monitoringStatus\": \"Enabled\",\r\n    \"azureContainerInfo\": {\r\n      \"storageAccountCredentialId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/storageAccountCredentials/sac1\",\r\n      \"containerName\": \"testContainernfs\",\r\n      \"dataFormat\": \"BlockBlob\"\r\n    },\r\n    \"accessProtocol\": \"NFS\",\r\n    \"clientAccessRights\": [\r\n      {\r\n        \"client\": \"10.150.76.81\",\r\n        \"accessPermission\": \"ReadWrite\"\r\n      }\r\n    ],\r\n    \"dataPolicy\": \"Cloud\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bf4b5e70-3ac7-4522-a395-fe6f1cffbffc"
+          "9b50a449-7050-47d4-b54c-2998ccfd3aaf"
         ],
         "accept-language": [
           "en-US"
@@ -409,7 +409,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -423,13 +423,13 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 11:02:45 GMT"
+          "Fri, 15 Feb 2019 10:00:14 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/nfs1/operationResults/0c586c47-0ff2-4b69-aae7-0191c52a3f24?api-version=2019-03-01"
+          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/nfs1/operationResults/935455c5-d343-43af-a86e-3bc025cff484?api-version=2019-03-01"
         ],
         "Retry-After": [
           "30"
@@ -438,10 +438,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "c9989bba-45f4-43d2-a1d6-23036f2f6cea"
+          "932ac084-8cfa-4822-8f34-c33c22c9e423"
         ],
         "x-ms-client-request-id": [
-          "bf4b5e70-3ac7-4522-a395-fe6f1cffbffc"
+          "9b50a449-7050-47d4-b54c-2998ccfd3aaf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -450,13 +450,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "14e60f81-5a96-4e7a-83c2-433ef19b480c"
+          "cd437498-edda-4413-8997-e288b69c0aed"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110246Z:14e60f81-5a96-4e7a-83c2-433ef19b480c"
+          "SOUTHINDIA:20190215T100014Z:cd437498-edda-4413-8997-e288b69c0aed"
         ],
         "Content-Length": [
           "0"
@@ -469,8 +469,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/nfs1/operationResults/0c586c47-0ff2-4b69-aae7-0191c52a3f24?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvbmZzMS9vcGVyYXRpb25SZXN1bHRzLzBjNTg2YzQ3LTBmZjItNGI2OS1hYWU3LTAxOTFjNTJhM2YyND9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/nfs1/operationResults/935455c5-d343-43af-a86e-3bc025cff484?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvbmZzMS9vcGVyYXRpb25SZXN1bHRzLzkzNTQ1NWM1LWQzNDMtNDNhZi1hODZlLTNiYzAyNWNmZjQ4ND9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -478,7 +478,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -486,7 +486,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 11:03:16 GMT"
+          "Fri, 15 Feb 2019 10:00:45 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -498,10 +498,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "db559e47-064d-4f5a-89d9-5b68fe00f12e"
+          "fbbf6e95-8c78-4da9-9b53-cb9173976a94"
         ],
         "x-ms-client-request-id": [
-          "97ba0096-c712-4247-a032-d790b458843c"
+          "21c4dc7a-3cfd-48f5-a883-83020edc366f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -513,10 +513,10 @@
           "11994"
         ],
         "x-ms-correlation-request-id": [
-          "1822fc1b-a5dc-49a6-ab40-e86240070215"
+          "bd68fd57-29d7-410d-9793-4b9037654518"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110317Z:1822fc1b-a5dc-49a6-ab40-e86240070215"
+          "SOUTHINDIA:20190215T100046Z:bd68fd57-29d7-410d-9793-4b9037654518"
         ],
         "Content-Length": [
           "0"
@@ -538,7 +538,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -546,7 +546,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 11:03:47 GMT"
+          "Fri, 15 Feb 2019 10:01:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -555,10 +555,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "dcb32deb-642d-4f0c-8b08-5c2d69d32b96"
+          "9e2ff38b-44b8-4e5a-984e-2df86fa1b492"
         ],
         "x-ms-client-request-id": [
-          "e31bdf8d-cf58-4882-b53b-e2bac7190e38"
+          "8e7bca81-d303-4864-b83a-e2f1b24a30d1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -570,10 +570,10 @@
           "11993"
         ],
         "x-ms-correlation-request-id": [
-          "51ece21d-6b01-49d3-b399-e0de6a2bf8e0"
+          "1244ffab-e742-4d9b-89ee-7fa5eea60724"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110347Z:51ece21d-6b01-49d3-b399-e0de6a2bf8e0"
+          "SOUTHINDIA:20190215T100117Z:1244ffab-e742-4d9b-89ee-7fa5eea60724"
         ],
         "Content-Length": [
           "983"
@@ -595,7 +595,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7f07b363-f80a-4f9b-8091-d840a2f2e5ab"
+          "6ae4678c-e79e-4dfe-880d-6e0e0237e353"
         ],
         "accept-language": [
           "en-US"
@@ -604,7 +604,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -612,7 +612,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 11:03:49 GMT"
+          "Fri, 15 Feb 2019 10:01:18 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -621,10 +621,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "df88c292-e9ff-473f-ab15-35367e9b60a5"
+          "142cb2a8-8e2a-408e-86e9-444a5fa2cc78"
         ],
         "x-ms-client-request-id": [
-          "7f07b363-f80a-4f9b-8091-d840a2f2e5ab"
+          "6ae4678c-e79e-4dfe-880d-6e0e0237e353"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -636,13 +636,13 @@
           "11991"
         ],
         "x-ms-correlation-request-id": [
-          "d35ee79d-b78f-49ca-b546-03f38135e813"
+          "c0e9bd90-bbfd-4448-996d-b1dade2f0089"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110349Z:d35ee79d-b78f-49ca-b546-03f38135e813"
+          "SOUTHINDIA:20190215T100118Z:c0e9bd90-bbfd-4448-996d-b1dade2f0089"
         ],
         "Content-Length": [
-          "3311"
+          "2344"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -651,7 +651,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"description\": \"\",\r\n        \"shareStatus\": \"Online\",\r\n        \"monitoringStatus\": \"Disabled\",\r\n        \"azureContainerInfo\": {\r\n          \"storageAccountCredentialId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/storageAccountCredentials/sac1\",\r\n          \"containerName\": \"testContainersmb\",\r\n          \"dataFormat\": \"BlockBlob\"\r\n        },\r\n        \"accessProtocol\": \"SMB\",\r\n        \"userAccessRights\": [\r\n          {\r\n            \"userId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/users/user1\",\r\n            \"accessType\": \"Change\"\r\n          }\r\n        ],\r\n        \"clientAccessRights\": [],\r\n        \"refreshDetails\": {},\r\n        \"shareMappings\": [],\r\n        \"dataPolicy\": \"Cloud\"\r\n      },\r\n      \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1\",\r\n      \"name\": \"smb1\",\r\n      \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"description\": \"\",\r\n        \"shareStatus\": \"Online\",\r\n        \"monitoringStatus\": \"Disabled\",\r\n        \"azureContainerInfo\": {\r\n          \"storageAccountCredentialId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/storageAccountCredentials/sac1\",\r\n          \"containerName\": \"testContainernfs\",\r\n          \"dataFormat\": \"BlockBlob\"\r\n        },\r\n        \"accessProtocol\": \"NFS\",\r\n        \"userAccessRights\": [],\r\n        \"clientAccessRights\": [\r\n          {\r\n            \"client\": \"10.150.76.81\",\r\n            \"accessPermission\": \"ReadWrite\"\r\n          }\r\n        ],\r\n        \"refreshDetails\": {},\r\n        \"shareMappings\": [],\r\n        \"dataPolicy\": \"Cloud\"\r\n      },\r\n      \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/nfs1\",\r\n      \"name\": \"nfs1\",\r\n      \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"description\": \"\",\r\n        \"shareStatus\": \"Online\",\r\n        \"monitoringStatus\": \"Disabled\",\r\n        \"azureContainerInfo\": {\r\n          \"storageAccountCredentialId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/storageAccountCredentials/anponnetwmisc\",\r\n          \"containerName\": \"asgf\",\r\n          \"dataFormat\": \"BlockBlob\"\r\n        },\r\n        \"accessProtocol\": \"SMB\",\r\n        \"userAccessRights\": [],\r\n        \"clientAccessRights\": [],\r\n        \"refreshDetails\": {},\r\n        \"shareMappings\": [],\r\n        \"dataPolicy\": \"Cloud\"\r\n      },\r\n      \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/asgf\",\r\n      \"name\": \"asgf\",\r\n      \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"description\": \"\",\r\n        \"shareStatus\": \"Online\",\r\n        \"monitoringStatus\": \"Disabled\",\r\n        \"azureContainerInfo\": {\r\n          \"storageAccountCredentialId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/storageAccountCredentials/sac1\",\r\n          \"containerName\": \"testContainersmb\",\r\n          \"dataFormat\": \"BlockBlob\"\r\n        },\r\n        \"accessProtocol\": \"SMB\",\r\n        \"userAccessRights\": [\r\n          {\r\n            \"userId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/users/user1\",\r\n            \"accessType\": \"Change\"\r\n          }\r\n        ],\r\n        \"clientAccessRights\": [],\r\n        \"refreshDetails\": {},\r\n        \"shareMappings\": [],\r\n        \"dataPolicy\": \"Cloud\"\r\n      },\r\n      \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1\",\r\n      \"name\": \"smb1\",\r\n      \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"description\": \"\",\r\n        \"shareStatus\": \"Online\",\r\n        \"monitoringStatus\": \"Disabled\",\r\n        \"azureContainerInfo\": {\r\n          \"storageAccountCredentialId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/storageAccountCredentials/sac1\",\r\n          \"containerName\": \"testContainernfs\",\r\n          \"dataFormat\": \"BlockBlob\"\r\n        },\r\n        \"accessProtocol\": \"NFS\",\r\n        \"userAccessRights\": [],\r\n        \"clientAccessRights\": [\r\n          {\r\n            \"client\": \"10.150.76.81\",\r\n            \"accessPermission\": \"ReadWrite\"\r\n          }\r\n        ],\r\n        \"refreshDetails\": {},\r\n        \"shareMappings\": [],\r\n        \"dataPolicy\": \"Cloud\"\r\n      },\r\n      \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/nfs1\",\r\n      \"name\": \"nfs1\",\r\n      \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -661,7 +661,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9b2fa2d6-fe56-4200-91f4-585f210f8c8d"
+          "3714a689-0ba2-4818-896e-6d9e4b856331"
         ],
         "accept-language": [
           "en-US"
@@ -670,7 +670,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -678,13 +678,13 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 11:03:50 GMT"
+          "Fri, 15 Feb 2019 10:01:19 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
+          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/f9eebcef-4ec5-4e0a-923d-8e72552c34de?api-version=2019-03-01"
         ],
         "Retry-After": [
           "30"
@@ -693,10 +693,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "1d4d4c47-2668-429a-a7e4-998a977c8da2"
+          "09ee56a3-bf95-4c9b-9505-2d60e8e4c597"
         ],
         "x-ms-client-request-id": [
-          "9b2fa2d6-fe56-4200-91f4-585f210f8c8d"
+          "3714a689-0ba2-4818-896e-6d9e4b856331"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -708,10 +708,10 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "0e503084-bc79-41aa-8820-7951c07a4236"
+          "43eb1ad4-5ef7-44fe-b5cc-8cc81333ab2b"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110351Z:0e503084-bc79-41aa-8820-7951c07a4236"
+          "SOUTHINDIA:20190215T100119Z:43eb1ad4-5ef7-44fe-b5cc-8cc81333ab2b"
         ],
         "Content-Length": [
           "0"
@@ -724,8 +724,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/f9eebcef-4ec5-4e0a-923d-8e72552c34de?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzL2Y5ZWViY2VmLTRlYzUtNGUwYS05MjNkLThlNzI1NTJjMzRkZT9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -733,7 +733,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -741,25 +741,19 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 11:04:20 GMT"
+          "Fri, 15 Feb 2019 10:01:51 GMT"
         ],
         "Pragma": [
           "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
-        ],
-        "Retry-After": [
-          "10"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-request-id": [
-          "6487741f-c428-4a99-9959-8932b21afced"
+          "35ddd07f-3d28-4c1f-b07d-00e3167b9bd7"
         ],
         "x-ms-client-request-id": [
-          "8be200aa-abf8-4eb4-8a3d-4e8da280f80b"
+          "248918ca-a118-4f01-b872-602d7d26078d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -771,24 +765,21 @@
           "11990"
         ],
         "x-ms-correlation-request-id": [
-          "33f9a355-77d2-4516-a43f-c8d590451d0b"
+          "3bf253d2-12d0-459c-add0-2dd5bcab2c3e"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110421Z:33f9a355-77d2-4516-a43f-c8d590451d0b"
-        ],
-        "Content-Length": [
-          "0"
+          "SOUTHINDIA:20190215T100151Z:3bf253d2-12d0-459c-add0-2dd5bcab2c3e"
         ],
         "Expires": [
           "-1"
         ]
       },
       "ResponseBody": "",
-      "StatusCode": 202
+      "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/f9eebcef-4ec5-4e0a-923d-8e72552c34de?api-version=2019-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzL2Y5ZWViY2VmLTRlYzUtNGUwYS05MjNkLThlNzI1NTJjMzRkZT9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -796,7 +787,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -804,25 +795,19 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 11:04:31 GMT"
+          "Fri, 15 Feb 2019 10:01:51 GMT"
         ],
         "Pragma": [
           "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
-        ],
-        "Retry-After": [
-          "10"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-request-id": [
-          "2063b23a-770d-4bbb-93f6-6386a7e62270"
+          "d02d0298-ca8e-4fae-b99a-b4aec8861500"
         ],
         "x-ms-client-request-id": [
-          "9a7c01ad-d945-4b90-8997-9908f0c4afad"
+          "230c6307-6a5e-4d30-9074-209543c9ab17"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -834,814 +819,10 @@
           "11989"
         ],
         "x-ms-correlation-request-id": [
-          "40131df3-f3ee-4d46-8050-331f65d6de72"
+          "4b7cdb75-8741-4508-b851-c8cbf14a63a4"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110431Z:40131df3-f3ee-4d46-8050-331f65d6de72"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 14 Feb 2019 11:04:41 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "10d2c729-c07c-4112-b8be-a21ca4b749b6"
-        ],
-        "x-ms-client-request-id": [
-          "e574ca00-3a5f-44a1-a53a-d1f91fa59db5"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11988"
-        ],
-        "x-ms-correlation-request-id": [
-          "886605bc-ca97-4849-af26-276d56583ba7"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110442Z:886605bc-ca97-4849-af26-276d56583ba7"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 14 Feb 2019 11:04:51 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "2780b9f1-d968-4e2f-85f6-e7f5af7f633c"
-        ],
-        "x-ms-client-request-id": [
-          "e1ab3226-8780-4d65-9772-1845ef732270"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11987"
-        ],
-        "x-ms-correlation-request-id": [
-          "509814c7-ab5d-4476-b3ce-1c769b844deb"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110452Z:509814c7-ab5d-4476-b3ce-1c769b844deb"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 14 Feb 2019 11:05:04 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "6079f610-adf6-465c-b417-b6dc9f24db73"
-        ],
-        "x-ms-client-request-id": [
-          "54bf26a1-42e7-409d-931c-2858915275cb"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11986"
-        ],
-        "x-ms-correlation-request-id": [
-          "3af63159-4008-4d05-85f0-5eef21bcb6f1"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110504Z:3af63159-4008-4d05-85f0-5eef21bcb6f1"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 14 Feb 2019 11:05:14 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "57eb72c6-5f82-4e1d-b0d3-60db17fd2914"
-        ],
-        "x-ms-client-request-id": [
-          "b56d9495-eaf8-46e8-b571-80db529e8318"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11985"
-        ],
-        "x-ms-correlation-request-id": [
-          "ce593235-c370-44cb-8578-47fe34b1da6a"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110514Z:ce593235-c370-44cb-8578-47fe34b1da6a"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 14 Feb 2019 11:05:24 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "fb790f37-f478-4b8f-bf4d-1e99c5f4550e"
-        ],
-        "x-ms-client-request-id": [
-          "3d3e77cc-aeeb-47c4-9fba-454b57004000"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11984"
-        ],
-        "x-ms-correlation-request-id": [
-          "e6118311-0d76-4056-9aca-cabf2bcf9308"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110525Z:e6118311-0d76-4056-9aca-cabf2bcf9308"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 14 Feb 2019 11:05:34 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "733d5935-7823-4510-99a1-0d00b734d1a4"
-        ],
-        "x-ms-client-request-id": [
-          "9e713b59-acd0-488e-8e12-f8813f80946a"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11983"
-        ],
-        "x-ms-correlation-request-id": [
-          "a3b5ca46-f5d4-4a8a-a29c-6eff1003e862"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110535Z:a3b5ca46-f5d4-4a8a-a29c-6eff1003e862"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 14 Feb 2019 11:05:46 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "644b9f4a-919e-4aa1-9da8-5a33bc73c446"
-        ],
-        "x-ms-client-request-id": [
-          "5f889d84-a550-4142-8a83-7062ee243c50"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11982"
-        ],
-        "x-ms-correlation-request-id": [
-          "fd712ee9-d267-4319-a0d1-1950a7eae179"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110546Z:fd712ee9-d267-4319-a0d1-1950a7eae179"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 14 Feb 2019 11:05:56 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "023ce776-d481-4e86-9955-97ff4f0daa95"
-        ],
-        "x-ms-client-request-id": [
-          "9aeb51c5-2a7c-4feb-8686-f1f66f7578b4"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11981"
-        ],
-        "x-ms-correlation-request-id": [
-          "bc8ed567-8117-493b-b7ce-d8f780374eca"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110556Z:bc8ed567-8117-493b-b7ce-d8f780374eca"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 14 Feb 2019 11:06:06 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "7a6eff91-443b-4777-be21-6161840052b6"
-        ],
-        "x-ms-client-request-id": [
-          "171b1ad7-2b63-4fcc-8b08-ea3978d3bbd2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11980"
-        ],
-        "x-ms-correlation-request-id": [
-          "8b4f457e-4bf2-4792-8385-d5926a1ee6b8"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110606Z:8b4f457e-4bf2-4792-8385-d5926a1ee6b8"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 14 Feb 2019 11:06:18 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "9386fef9-d53c-4834-bb90-456f14f840a8"
-        ],
-        "x-ms-client-request-id": [
-          "d11c30cf-9592-4329-8366-32020080155d"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11979"
-        ],
-        "x-ms-correlation-request-id": [
-          "2dd1dba4-7412-4f8b-9da7-f576b5e14e67"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110618Z:2dd1dba4-7412-4f8b-9da7-f576b5e14e67"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 14 Feb 2019 11:06:28 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01"
-        ],
-        "Retry-After": [
-          "10"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "4c196c87-81c7-438a-8969-7e883e234cd9"
-        ],
-        "x-ms-client-request-id": [
-          "6299c4b4-5293-4697-8d5b-c4d58a58e9b9"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11978"
-        ],
-        "x-ms-correlation-request-id": [
-          "a0fa7de5-639f-4722-b932-757c9e55f3b9"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110629Z:a0fa7de5-639f-4722-b932-757c9e55f3b9"
-        ],
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 14 Feb 2019 11:06:38 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "876ae050-ef75-452f-8a73-954ec8d9deee"
-        ],
-        "x-ms-client-request-id": [
-          "8a4b9e64-8a4d-4561-9dc2-7d892212eca5"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11977"
-        ],
-        "x-ms-correlation-request-id": [
-          "90a395d6-f908-415c-9bb5-bd11d29438c5"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110639Z:90a395d6-f908-415c-9bb5-bd11d29438c5"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 204
-    },
-    {
-      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/anponnet-rg/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/test-gateway-resource/shares/smb1/operationResults/2519f099-3e51-446e-bf74-49bf116e7df7?api-version=2019-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2FucG9ubmV0LXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Rlc3QtZ2F0ZXdheS1yZXNvdXJjZS9zaGFyZXMvc21iMS9vcGVyYXRpb25SZXN1bHRzLzI1MTlmMDk5LTNlNTEtNDQ2ZS1iZjc0LTQ5YmYxMTZlN2RmNz9hcGktdmVyc2lvbj0yMDE5LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 14 Feb 2019 11:06:38 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "675f0fcc-d890-47d5-ab24-b2517efb42cf"
-        ],
-        "x-ms-client-request-id": [
-          "60191fb8-454e-4dd7-8714-8fa5a8606fcf"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11976"
-        ],
-        "x-ms-correlation-request-id": [
-          "ef85402c-1d59-4bbb-8088-58c5fb7b7704"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T110639Z:ef85402c-1d59-4bbb-8088-58c5fb7b7704"
+          "SOUTHINDIA:20190215T100151Z:4b7cdb75-8741-4508-b851-c8cbf14a63a4"
         ],
         "Expires": [
           "-1"

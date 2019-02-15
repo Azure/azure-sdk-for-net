@@ -5,15 +5,24 @@ using Xunit.Abstractions;
 
 namespace EdgeGateway.Tests
 {
+    /// <summary>
+    /// Contains the tests for alerts APIs
+    /// </summary>
     public class AlertTests : EdgeGatewayTestBase
     {
         #region Constructor
+        /// <summary>
+        /// Initializes the instance to test alert APIs
+        /// </summary>
         public AlertTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
         #endregion Constructor
 
         #region Test Methods
 
+        /// <summary>
+        /// Tests alert list and get APIs
+        /// </summary>
         [Fact]
         public void Test_Alerts()
         {

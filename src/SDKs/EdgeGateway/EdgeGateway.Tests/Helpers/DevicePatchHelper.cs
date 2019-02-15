@@ -8,23 +8,6 @@ namespace EdgeGateway.Tests
     public static partial class TestUtilities
     {
         /// <summary>
-        /// Update the tags of the device
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="patch"></param>
-        /// <param name="resourceGroupName"></param>
-        /// <returns></returns>
-
-        public static DataBoxEdgeDevice UpdateTags(string deviceName,
-            DataBoxEdgeManagementClient client,
-            DataBoxEdgeDevicePatch patch,
-            string resourceGroupName)
-        {
-            //Updates the tags in a device
-            return client.Devices.Update(deviceName, patch, resourceGroupName);
-        }
-
-        /// <summary>
         /// Gets the tags.
         /// </summary>
         /// <param name="device"></param>

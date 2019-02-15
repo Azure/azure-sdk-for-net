@@ -5,17 +5,26 @@ using Xunit.Abstractions;
 
 namespace EdgeGateway.Tests
 {
+    /// <summary>
+    /// Contains the tests for device update APIs
+    /// </summary>
     public class DeviceUpdatesTests : EdgeGatewayTestBase
     {
         #region Constructor
+        /// <summary>
+        /// Creates an instance to test device update APIs
+        /// </summary>
         public DeviceUpdatesTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
         #endregion Constructor
 
         #region Test Methods
 
+        /// <summary>
+        /// Tests download  device updates APIs.
+        /// </summary>
         [Fact]
-        public void Test_GetAndInstallUpdates()
+        public void Test_GetAndDownloadUpdates()
         {
             // Get the update summary.
             var updateSummary = Client.Devices.GetUpdateSummary(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName);
@@ -35,6 +44,6 @@ namespace EdgeGateway.Tests
 
         }
 
-        #endregion Test Methods
-    }
+            #endregion Test Methods
+        }
 }

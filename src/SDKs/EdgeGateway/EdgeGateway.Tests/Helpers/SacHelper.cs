@@ -7,6 +7,12 @@ namespace EdgeGateway.Tests
 {
     public static partial class TestUtilities
     {
+        /// <summary>
+        /// Gets a sac object
+        /// </summary>
+        /// <param name="secret"></param>
+        /// <param name="sacName"></param>
+        /// <returns>StorageAccountCredential</returns>
         public static StorageAccountCredential GetSACObject(AsymmetricEncryptedSecret secret,string sacName)
         {
             StorageAccountCredential sac = new StorageAccountCredential(sacName, "Disabled", "BlobStorage", userName: "databoxedgeutdst", accountKey: secret);
@@ -21,7 +27,7 @@ namespace EdgeGateway.Tests
         /// <param name="deviceName"></param>
         /// <param name="resourceGroupName"></param>
         /// <param name="continuationToken"></param>
-        /// <returns></returns>
+        /// <returns>List of SACs</returns>
         public static IEnumerable<StorageAccountCredential> ListStorageAccountCredentials(
             DataBoxEdgeManagementClient client,
              string deviceName,

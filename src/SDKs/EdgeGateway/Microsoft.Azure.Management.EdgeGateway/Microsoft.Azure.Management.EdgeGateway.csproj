@@ -7,14 +7,13 @@
     <PackageId>Microsoft.Azure.Management.EdgeGateway</PackageId>
     <Description>Microsoft Azure Management EdgeGateway library</Description>
     <AssemblyName>Microsoft.Azure.Management.EdgeGateway</AssemblyName>
-    <Version>1.0.0</Version>
+    <Version>0.9.0-preview</Version>
     <PackageTags>Microsoft Azure EdgeGateway management;EdgeGateway;EdgeGateway management;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure EdgeGateway SDK. 
       ]]>
     </PackageReleaseNotes>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>

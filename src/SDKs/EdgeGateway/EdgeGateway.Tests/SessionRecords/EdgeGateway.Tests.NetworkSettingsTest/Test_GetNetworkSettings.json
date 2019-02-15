@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9a1568f5-1235-4c11-a738-4fbf7822a043"
+          "e92b841b-9894-4aff-904e-d1f776c61ac0"
         ],
         "accept-language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0"
+          "Microsoft.Azure.Management.EdgeGateway.DataBoxEdgeManagementClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 09:30:01 GMT"
+          "Fri, 15 Feb 2019 09:50:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,10 +33,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "06e961cf-1499-4b2f-8cd5-e5ca1c2f92c3"
+          "aa1a514b-b2f2-402b-ad47-28866ee12d3c"
         ],
         "x-ms-client-request-id": [
-          "9a1568f5-1235-4c11-a738-4fbf7822a043"
+          "e92b841b-9894-4aff-904e-d1f776c61ac0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,13 +45,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11956"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "79fe824c-f919-4366-b45c-131473674fc7"
+          "945aac95-95f8-461a-8bf2-a70f2962ca22"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190214T093001Z:79fe824c-f919-4366-b45c-131473674fc7"
+          "SOUTHINDIA:20190215T095043Z:945aac95-95f8-461a-8bf2-a70f2962ca22"
         ],
         "Content-Length": [
           "1292"
