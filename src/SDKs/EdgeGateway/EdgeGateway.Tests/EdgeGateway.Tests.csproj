@@ -15,7 +15,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.Management.EdgeGateway\Microsoft.Azure.Management.EdgeGateway.csproj" />
+    <ProjectReference Include="..\Management.EdgeGateway\Microsoft.Azure.Management.EdgeGateway.csproj" />
   </ItemGroup>
   <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
