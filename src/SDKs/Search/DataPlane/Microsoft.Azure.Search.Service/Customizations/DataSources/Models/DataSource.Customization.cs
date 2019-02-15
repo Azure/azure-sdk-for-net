@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="deletionDetectionPolicy">Optional. The data deletion detection policy for the datasource.</param>
         /// <param name="description">Optional. Description of the datasource.</param>
         /// <returns>A new DataSource instance.</returns>
-        [Obsolete("DocumentDb method is deprecated. Use CosmosDb instead")]
+        [Obsolete("Use CosmosDb instead.")]
         public static DataSource DocumentDb(
             string name,
             string documentDbConnectionString,
