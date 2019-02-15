@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// &lt;code&gt;false&lt;/code&gt;.</param>
         /// <param
         /// name="hasConflictAcrossSubscription">&lt;code&gt;true&lt;/code&gt;
-        /// if htere is a conflict across subscriptions; otherwise,
+        /// if there is a conflict across subscriptions; otherwise,
         /// &lt;code&gt;false&lt;/code&gt;.</param>
         /// <param name="conflictingAppResourceId">Name of the conflicting app
         /// on scale unit if it's within the same subscription.</param>
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public bool? HasConflictOnScaleUnit { get; private set; }
 
         /// <summary>
-        /// Gets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if htere is a
+        /// Gets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if there is a
         /// conflict across subscriptions; otherwise,
         /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
         /// </summary>

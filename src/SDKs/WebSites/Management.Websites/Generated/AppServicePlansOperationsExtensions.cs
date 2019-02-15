@@ -24,10 +24,10 @@ namespace Microsoft.Azure.Management.WebSites
     public static partial class AppServicePlansOperationsExtensions
     {
             /// <summary>
-            /// Get all App Service plans for a subcription.
+            /// Get all App Service plans for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all App Service plans for a subcription.
+            /// Get all App Service plans for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,10 +44,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get all App Service plans for a subcription.
+            /// Get all App Service plans for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all App Service plans for a subcription.
+            /// Get all App Service plans for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -724,10 +724,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get metrics for an App Serice plan.
+            /// Get metrics for an App Service plan.
             /// </summary>
             /// <remarks>
-            /// Get metrics for an App Serice plan.
+            /// Get metrics for an App Service plan.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -754,10 +754,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get metrics for an App Serice plan.
+            /// Get metrics for an App Service plan.
             /// </summary>
             /// <remarks>
-            /// Get metrics for an App Serice plan.
+            /// Get metrics for an App Service plan.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -805,7 +805,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the App Service plan.
             /// </param>
             /// <param name='softRestart'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to performa a soft restart, applies
+            /// Specify &lt;code&gt;true&lt;/code&gt; to perform a soft restart, applies
             /// the configuration settings and restarts the apps if necessary. The default
             /// is &lt;code&gt;false&lt;/code&gt;, which always restarts and reprovisions
             /// the apps
@@ -831,7 +831,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the App Service plan.
             /// </param>
             /// <param name='softRestart'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to performa a soft restart, applies
+            /// Specify &lt;code&gt;true&lt;/code&gt; to perform a soft restart, applies
             /// the configuration settings and restarts the apps if necessary. The default
             /// is &lt;code&gt;false&lt;/code&gt;, which always restarts and reprovisions
             /// the apps
@@ -917,10 +917,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Gets all selectable sku's for a given App Service Plan
+            /// Gets all selectable SKUs for a given App Service Plan
             /// </summary>
             /// <remarks>
-            /// Gets all selectable sku's for a given App Service Plan
+            /// Gets all selectable SKUs for a given App Service Plan
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -937,10 +937,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Gets all selectable sku's for a given App Service Plan
+            /// Gets all selectable SKUs for a given App Service Plan
             /// </summary>
             /// <remarks>
-            /// Gets all selectable sku's for a given App Service Plan
+            /// Gets all selectable SKUs for a given App Service Plan
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1637,10 +1637,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get all App Service plans for a subcription.
+            /// Get all App Service plans for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all App Service plans for a subcription.
+            /// Get all App Service plans for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1654,10 +1654,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get all App Service plans for a subcription.
+            /// Get all App Service plans for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all App Service plans for a subcription.
+            /// Get all App Service plans for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1841,10 +1841,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get metrics for an App Serice plan.
+            /// Get metrics for an App Service plan.
             /// </summary>
             /// <remarks>
-            /// Get metrics for an App Serice plan.
+            /// Get metrics for an App Service plan.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1858,10 +1858,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get metrics for an App Serice plan.
+            /// Get metrics for an App Service plan.
             /// </summary>
             /// <remarks>
-            /// Get metrics for an App Serice plan.
+            /// Get metrics for an App Service plan.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
