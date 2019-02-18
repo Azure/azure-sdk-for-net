@@ -517,7 +517,7 @@ namespace Microsoft.Azure.Search
         /// <see cref="IDocumentsOperations.GetWithHttpMessagesAsync(string, System.Collections.Generic.IEnumerable&lt;string&gt;, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)"/>
         /// for more information.
         /// </remarks>
-        Task<AzureOperationResponse<DocumentSuggestResult>> SuggestWithHttpMessagesAsync(
+        Task<AzureOperationResponse<DocumentSuggestResult<Document>>> SuggestWithHttpMessagesAsync(
             string searchText,
             string suggesterName,
             SuggestParameters suggestParameters,
