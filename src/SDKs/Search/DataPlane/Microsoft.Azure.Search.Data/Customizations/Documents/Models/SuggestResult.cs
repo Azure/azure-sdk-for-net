@@ -7,14 +7,19 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Contains a document found by a suggestion query, plus associated metadata.
     /// </summary>
-    public class SuggestResult : SuggestResultBase<Document>
+    /// <typeparam name="T">
+    /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
+    /// </typeparam>
+    public class SuggestResult<T>
     {
         /// <summary>
-        /// Initializes a new instance of the SuggestResult class.
+        /// Gets the text of the suggestion result.
         /// </summary>
-        public SuggestResult()
-        {
-            // Do nothing.
-        }
+        public string Text { get; set; }
+
+        /// <summary>
+        /// Gets the document on which the suggested text is based.
+        /// </summary>
+        public T Document { get; set; }
     }
 }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Search.Serialization
             CreateSerializerSettings<Document>(baseSettings, useCamelCase: false);
 
         public static JsonSerializerSettings CreateDocumentDeserializerSettings(JsonSerializerSettings baseSettings) =>
-            CreateDeserializerSettings<SearchResult, SuggestResult, Document>(baseSettings);
+            CreateDeserializerSettings<SearchResult, SuggestResult<Document>, Document>(baseSettings);
 
         private static JsonSerializerSettings CreateSerializerSettings<T>(
             JsonSerializerSettings baseSettings,
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Search.Serialization
         private static JsonSerializerSettings CreateDeserializerSettings<TSearchResult, TSuggestResult, TDoc>(
             JsonSerializerSettings baseSettings)
             where TSearchResult : SearchResultBase<TDoc>, new()
-            where TSuggestResult : SuggestResultBase<TDoc>, new()
+            where TSuggestResult : SuggestResult<TDoc>, new()
             where TDoc : class
         {
             JsonSerializerSettings settings = CopySettings(baseSettings);
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Search.Serialization
             settings.Converters.Add(new DateTimeConverter());
             settings.Converters.Add(new DoubleConverter());
             settings.Converters.Add(new SearchResultConverter<TSearchResult, TDoc>());
-            settings.Converters.Add(new SuggestResultConverter<TSuggestResult, TDoc>());
+            settings.Converters.Add(new SuggestResultConverter<TDoc>());
             settings.DateParseHandling = DateParseHandling.DateTimeOffset;
 
             // Fail when deserializing null into a non-nullable type. This is to avoid silent data corruption issues.

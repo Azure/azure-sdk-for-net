@@ -13,7 +13,6 @@ namespace Microsoft.Azure.Search
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using Common;
     using Models;
     using Newtonsoft.Json;
     using Rest;
@@ -285,7 +284,7 @@ namespace Microsoft.Azure.Search
                 DeserializeForSearch<T>);
         }
 
-        public Task<AzureOperationResponse<DocumentSuggestResult>> SuggestWithHttpMessagesAsync(
+        public Task<AzureOperationResponse<DocumentSuggestResult<Document>>> SuggestWithHttpMessagesAsync(
             string searchText,
             string suggesterName,
             SuggestParameters suggestParameters,
@@ -293,7 +292,7 @@ namespace Microsoft.Azure.Search
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            return DoSuggestWithHttpMessagesAsync<DocumentSuggestResult, SuggestResult, Document>(
+            return DoSuggestWithHttpMessagesAsync<Document>(
                 searchText,
                 suggesterName,
                 suggestParameters,
@@ -311,7 +310,7 @@ namespace Microsoft.Azure.Search
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
-            return DoSuggestWithHttpMessagesAsync<DocumentSuggestResult<T>, SuggestResult<T>, T>(
+            return DoSuggestWithHttpMessagesAsync<T>(
                 searchText,
                 suggesterName,
                 suggestParameters,
@@ -351,17 +350,16 @@ namespace Microsoft.Azure.Search
                 JsonUtility.CreateDocumentDeserializerSettings(this.Client.DeserializationSettings));
         }
 
-        private DocumentSuggestResponsePayload<SuggestResult<T>, T> DeserializeForSuggest<T>(string payload)
-            where T : class
+        private DocumentSuggestResponsePayload<T> DeserializeForSuggest<T>(string payload) where T : class
         {
-            return SafeJsonConvert.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult<T>, T>>(
+            return SafeJsonConvert.DeserializeObject<DocumentSuggestResponsePayload<T>>(
                 payload,
                 JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings));
         }
 
-        private DocumentSuggestResponsePayload<SuggestResult, Document> DeserializeForSuggest(string payload)
+        private DocumentSuggestResponsePayload<Document> DeserializeForSuggest(string payload)
         {
-            return SafeJsonConvert.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult, Document>>(
+            return SafeJsonConvert.DeserializeObject<DocumentSuggestResponsePayload<Document>>(
                 payload,
                 JsonUtility.CreateDocumentDeserializerSettings(this.Client.DeserializationSettings));
         }
@@ -844,17 +842,14 @@ namespace Microsoft.Azure.Search
                 deserialize);
         }
 
-        private async Task<AzureOperationResponse<TSuggestResult>> DoSuggestWithHttpMessagesAsync<TSuggestResult, TDocResult, TDoc>(
+        private async Task<AzureOperationResponse<DocumentSuggestResult<T>>> DoSuggestWithHttpMessagesAsync<T>(
             string searchText,
             string suggesterName,
             SuggestParameters suggestParameters,
             SearchRequestOptions searchRequestOptions,
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken,
-            Func<string, DocumentSuggestResponsePayload<TDocResult, TDoc>> deserialize)
-            where TSuggestResult : DocumentSuggestResultBase<TDocResult, TDoc>, new()
-            where TDocResult : SuggestResultBase<TDoc>
-            where TDoc : class
+            Func<string, DocumentSuggestResponsePayload<T>> deserialize)
         {
             // Validate
             if (Client.SearchServiceName == null)
@@ -1038,7 +1033,7 @@ namespace Microsoft.Azure.Search
             }
 
             // Create Result
-            var result = new AzureOperationResponse<TSuggestResult>();
+            var result = new AzureOperationResponse<DocumentSuggestResult<T>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("request-id"))
@@ -1050,10 +1045,10 @@ namespace Microsoft.Azure.Search
             if (statusCode == HttpStatusCode.OK)
             {
                 responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = new TSuggestResult();
+                result.Body = new DocumentSuggestResult<T>();
                 if (string.IsNullOrEmpty(responseContent) == false)
                 {
-                    DocumentSuggestResponsePayload<TDocResult, TDoc> deserializedResult;
+                    DocumentSuggestResponsePayload<T> deserializedResult;
                     try
                     {
                         deserializedResult = deserialize(responseContent);
@@ -1136,15 +1131,13 @@ namespace Microsoft.Azure.Search
             public List<TResult> Documents { get; set; }
         }
 
-        private class DocumentSuggestResponsePayload<TResult, TDoc>
-            where TResult : SuggestResultBase<TDoc>
-            where TDoc : class
+        private class DocumentSuggestResponsePayload<T>
         {
             [JsonProperty("@search.coverage")]
             public double? Coverage { get; set; }
 
             [JsonProperty("value")]
-            public List<TResult> Documents { get; set; }
+            public List<SuggestResult<T>> Documents { get; set; }
         }
     }
 }
