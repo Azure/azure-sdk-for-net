@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Search
         /// Response containing the status of operations for all actions in the batch.
         /// </returns>
         Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync(
-            IndexBatch batch,
+            IndexBatch<Document> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken));
