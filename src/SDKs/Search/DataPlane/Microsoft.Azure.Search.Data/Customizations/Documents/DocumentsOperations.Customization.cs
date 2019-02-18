@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Search
         }
 
         public Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync(
-            IndexBatch batch,
+            IndexBatch<Document> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Search
             }
 
             JsonSerializerSettings jsonSettings = 
-                JsonUtility.CreateDocumentSerializerSettings(this.Client.SerializationSettings);
+                JsonUtility.CreateDocumentSerializerSettings(Client.SerializationSettings);
             string payload = SafeJsonConvert.SerializeObject(batch, jsonSettings);
             return DoIndexWithHttpMessagesAsync(payload, searchRequestOptions, customHeaders, cancellationToken);
         }

@@ -502,7 +502,7 @@ namespace Microsoft.Azure.Search
         /// </returns>
         public static DocumentIndexResult Index(
             this IDocumentsOperations operations,
-            IndexBatch batch,
+            IndexBatch<Document> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
         {
             return operations.IndexAsync(batch, searchRequestOptions).GetAwaiter().GetResult();
@@ -543,7 +543,7 @@ namespace Microsoft.Azure.Search
         /// </returns>
         public static async Task<DocumentIndexResult> IndexAsync(
             this IDocumentsOperations operations,
-            IndexBatch batch,
+            IndexBatch<Document> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             CancellationToken cancellationToken = default(CancellationToken))
         {
