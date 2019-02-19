@@ -33,10 +33,8 @@ namespace EdgeGateway.Tests
             Client.Devices.ScanForUpdates(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName);
 
             // Download the updates in the device.
+            // This is a long running operation and may take upto hours. 
             Client.Devices.DownloadUpdates(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName);
-
-            // Install updates in the device.
-            // Client.Devices.InstallUpdates(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName);
 
             // Get the update summary.
             updateSummary = Client.Devices.GetUpdateSummary(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName);
@@ -44,6 +42,21 @@ namespace EdgeGateway.Tests
 
         }
 
-            #endregion Test Methods
+
+        /// <summary>
+        /// Tests install  device updates APIs.
+        /// </summary>
+        [Fact]
+        public void Test_InstallUpdates()
+        {
+            // Install updates in the device.
+            // This is a long running operation and may take upto hours. 
+            Client.Devices.InstallUpdates(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName);
+
+            // Get the update summary.
+            var updateSummary = Client.Devices.GetUpdateSummary(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName);
         }
+
+        #endregion Test Methods
+    }
 }
