@@ -5,8 +5,8 @@
 
 ###  Feature Additions
     - Add support for RestService Source
-	- Add support for SAP BW Open Hub Source
-	- Add support for collectionReference
+    - Add support for SAP BW Open Hub Source
+    - Add support for collectionReference
 
 ## Version 3.0.1
 
