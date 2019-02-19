@@ -7,37 +7,6 @@ namespace Microsoft.Azure.Search.Models
     using Common;
 
     /// <summary>
-    /// Represents an index action that operates on a document.
-    /// </summary>
-    /// <typeparam name="T">
-    /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
-    /// </typeparam>
-    public class IndexAction<T>
-    {
-        /// <summary>
-        /// Initializes a new instance of the IndexAction class with the given action type and document.
-        /// </summary>
-        /// <param name="actionType">The type of action to perform on the document.</param>
-        /// <param name="document">The document on which the action will be performed.</param>
-        internal IndexAction(IndexActionType actionType, T document)
-        {
-            Document = document;
-            ActionType = actionType;
-        }
-
-        /// <summary>
-        /// Gets a value indicating the action to perform on a document in an indexing batch.
-        /// </summary>
-        public IndexActionType ActionType { get; }
-
-        /// <summary>
-        /// Gets the document on which the action will be performed; Fields other than the key are ignored for
-        /// delete actions.
-        /// </summary>
-        public T Document { get; }
-    }
-
-    /// <summary>
     /// Provides factory methods for creating an index action that operates on a document.
     /// </summary>
     public static class IndexAction
@@ -53,7 +22,7 @@ namespace Microsoft.Azure.Search.Models
             Throw.IfArgumentNull(keyName, "keyName");
             Throw.IfArgumentNull(keyValue, "keyValue");
 
-            return new IndexAction<Document>(IndexActionType.Delete, new Document() { [keyName] = keyValue });
+            return new IndexAction<Document>(new Document() { [keyName] = keyValue }, IndexActionType.Delete);
         }
 
         /// <summary>
@@ -66,7 +35,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexAction.</returns>
         public static IndexAction<T> Delete<T>(T document) where T : class
         {
-            return new IndexAction<T>(IndexActionType.Delete, document);
+            return new IndexAction<T>(document, IndexActionType.Delete);
         }
 
         /// <summary>
@@ -87,7 +56,7 @@ namespace Microsoft.Azure.Search.Models
         /// </remarks>
         public static IndexAction<T> Merge<T>(T document) where T : class
         {
-            return new IndexAction<T>(IndexActionType.Merge, document);
+            return new IndexAction<T>(document, IndexActionType.Merge);
         }
 
         /// <summary>
@@ -109,7 +78,7 @@ namespace Microsoft.Azure.Search.Models
         /// </remarks>
         public static IndexAction<T> MergeOrUpload<T>(T document) where T : class
         {
-            return new IndexAction<T>(IndexActionType.MergeOrUpload, document);
+            return new IndexAction<T>(document, IndexActionType.MergeOrUpload);
         }
 
         /// <summary>
@@ -122,7 +91,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexAction.</returns>
         public static IndexAction<T> Upload<T>(T document) where T : class
         {
-            return new IndexAction<T>(IndexActionType.Upload, document);
+            return new IndexAction<T>(document, IndexActionType.Upload);
         }
     }
 }

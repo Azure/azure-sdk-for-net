@@ -7,38 +7,6 @@ namespace Microsoft.Azure.Search.Models
     using System.Collections.Generic;
     using System.Linq;
     using Common;
-    using Newtonsoft.Json;
-
-    /// <summary>
-    /// Contains a batch of document write actions to send to the Azure Search index.
-    /// </summary>
-    /// <typeparam name="T">
-    /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
-    /// </typeparam>
-    public class IndexBatch<T>
-    {
-        /// <summary>
-        /// Initializes a new instance of the IndexBatch class.
-        /// </summary>
-        /// <param name="actions">The index actions to include in the batch.</param>
-        public IndexBatch(IEnumerable<IndexAction<T>> actions)
-        {
-            Throw.IfArgumentNull(actions, "actions");
-
-            Actions = actions;
-        }
-
-        /// <summary>
-        /// Gets the sequence of actions in the batch.
-        /// </summary>
-        [JsonProperty("value")]
-        public IEnumerable<IndexAction<T>> Actions
-        {
-            // NOTE: We use IEnumerable so callers can stream each batch of documents if they want.
-            get;
-            private set;
-        }
-    }
 
     /// <summary>
     /// Provides factory methods for creating a batch of document write operations to send to the Azure Search index.
