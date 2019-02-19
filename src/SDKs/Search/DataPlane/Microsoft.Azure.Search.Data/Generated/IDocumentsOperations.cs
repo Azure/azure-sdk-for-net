@@ -139,6 +139,32 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<DocumentSuggestResult<T>>> SuggestPostWithHttpMessagesAsync<T>(SuggestRequest suggestRequest, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings responseDeserializerSettings = null);
         /// <summary>
+        /// Sends a batch of document write actions to the Azure Search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents" />
+        /// </summary>
+        /// <param name='batch'>
+        /// The batch of index actions.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync<T>(IndexBatch<T> batch, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings responseDeserializerSettings = null);
+        /// <summary>
         /// Autocompletes incomplete query terms based on input text and
         /// matching terms in the Azure Search index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete" />
