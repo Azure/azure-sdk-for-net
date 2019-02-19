@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "edgegateway\resource-manager" -AutoRestVersion "latest" -SpecsRepoFork "anponnet" -SpecsRepoBranch "version20190301"
+Start-AutoRestCodeGeneration -ResourceProvider "edgegateway/resource-manager" -AutoRestVersion "latest"
