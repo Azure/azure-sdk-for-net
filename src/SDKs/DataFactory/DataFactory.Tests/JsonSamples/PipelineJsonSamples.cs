@@ -52,7 +52,7 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
-        [JsonSample]         
+        [JsonSample]
         public const string CopyActivityWithSkipIncompatibleRows = @" 
 { 
   ""name"": ""MyPipeline"", 
@@ -122,7 +122,7 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
-        
+
 
         [JsonSample]
         public const string ChainedActivitiesWithParametersPipeline = @"
@@ -1985,7 +1985,7 @@ namespace DataFactory.Tests.JsonSamples
         ]
     }
 }";
-                
+
         [JsonSample]
         public const string AzureMLBatchExecutionPipeline = @"
 {
@@ -3392,5 +3392,108 @@ namespace DataFactory.Tests.JsonSamples
     }
 }";
 
+        [JsonSample(version: "Copy")]
+        public const string CopySapOpenHubToAdls = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SAP Open Hub to Azure Data Lake Store"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SapOpenHubSource""
+                    },
+                    sink:
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        copyBehavior: ""FlattenHierarchy""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputSapOpenHub"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputAdlsDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyRestToAdls = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from REST to Azure Data Lake Store"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""RestSource"",
+                        ""httpRequestTimeout"": ""00:01:00""
+                    },
+                    sink:
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        copyBehavior: ""FlattenHierarchy""
+                    },
+                    translator:
+                    {
+                        type: ""TabularTranslator"",
+                        collectionReference: ""$.fakekey""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputRest"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputAdlsDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
     }
 }

@@ -1,6 +1,13 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
 ## Current version
+## Version 3.0.2
+
+###  Feature Additions
+    - Add support for RestService Source
+	- Add support for SAP BW Open Hub Source
+	- Add support for collectionReference
+
 ## Version 3.0.1
 
 ###  Feature Additions

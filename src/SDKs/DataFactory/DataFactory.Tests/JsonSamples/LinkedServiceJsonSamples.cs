@@ -1991,5 +1991,42 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string SapOpenHubLinkedService = @"
+{
+    ""name"": ""SapBwOpenHubLinkedService"",
+    ""properties"": {
+        ""type"": ""SapOpenHub"",
+        ""typeProperties"": {
+            ""server"": ""fakeserver"",
+            ""systemNumber"": ""00"",
+            ""clientId"": ""800"",
+            ""userName"": ""fakeusr"",
+            ""password"": {
+                ""type"": ""SecureString"",
+                ""value"": ""fakepsw""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string RestLinkedService = @"
+{
+    ""name"": ""RESTLinkedService"",
+    ""properties"": {
+        ""type"": ""RestService"",
+        ""typeProperties"": {
+            ""authenticationType"": ""Basic"",
+            ""url"" : ""https://fakeurl/"",
+            ""userName"": ""fakeusr"",
+            ""password"": {
+                ""type"": ""SecureString"",
+                ""value"": ""fakepsw""
+            }
+        }
+    }
+}";
     }
 }
