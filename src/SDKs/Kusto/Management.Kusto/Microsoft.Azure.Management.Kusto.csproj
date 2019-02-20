@@ -10,7 +10,7 @@
     <PackageTags>management;kusto;;;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Provides management capabilities for Kusto (Azure Data Explorer) clusters.
+        Provides management capabilities for Kusto (Azure Data Explorer) entities.
       ]]>
 </PackageReleaseNotes>
   </PropertyGroup>
