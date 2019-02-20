@@ -25,7 +25,7 @@
         /// Tests create, update, get, list and delete device APIs
         /// </summary>
         [Fact]
-        public void Test_GatewayDeviceOperations()
+        public void Test_ManageDeviceOperations()
         {
 
             DataBoxEdgeDevice device = new DataBoxEdgeDevice();

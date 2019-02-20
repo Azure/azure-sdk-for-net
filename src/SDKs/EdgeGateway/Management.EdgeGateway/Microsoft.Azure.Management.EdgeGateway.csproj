@@ -11,7 +11,7 @@
     <PackageTags>Microsoft Azure EdgeGateway management;EdgeGateway;EdgeGateway management;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure EdgeGateway SDK. 
+        This is a public preview release of the Azure EdgeGateway SDK. 
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
