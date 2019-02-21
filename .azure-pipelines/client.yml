@@ -104,6 +104,7 @@ jobs:
         inputs:
           command: test
           projects: '$(ProjectFile)'
+          arguments: --logger trx
           publishTestResults: false
 
       - task: PublishTestResults@2
