@@ -3,6 +3,7 @@
 
 namespace Microsoft.Rest
 {
+    using System;
     using System.Globalization;
     using System.Linq;
     using System.Net;
@@ -58,7 +59,7 @@ namespace Microsoft.Rest
                             var retryAfter = int.Parse(retryValue, CultureInfo.InvariantCulture);
                             
                             // wait for that duration
-                            await Task.Delay(retryAfter,cancellationToken);
+                            await Task.Delay(TimeSpan.FromSeconds(retryAfter), cancellationToken);
 
                             // and try again
                             continue;
