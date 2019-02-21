@@ -62,10 +62,13 @@ jobs:
     strategy:
       matrix:
         Linux:
+          OSName: 'Linux'
           OSVmImage: 'ubuntu-16.04'
         Windows:
+          OSName: 'Windows'
           OSVmImage: 'vs2017-win2016'
         MacOs:
+          OSName: 'MacOS'
           OSVmImage: 'macOS-10.13'
 
     pool:
@@ -87,7 +90,8 @@ jobs:
         inputs:
           command: test
           projects: '$(ProjectFile)'
-          arguments: --filter TestCategory!=Live
+          arguments: --filter TestCategory!=Live --logger trx
+          publishTestResults: false
 
       - task: DotNetCoreCLI@2
         displayName: 'Build & Test (with live tests)'
@@ -100,3 +104,13 @@ jobs:
         inputs:
           command: test
           projects: '$(ProjectFile)'
+          arguments: --logger trx
+          publishTestResults: false
+
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: '**/*.trx'
+          testRunTitle: '$(OSName) DotNet $(DotNetCoreVersion)'
+          testResultsFormat: 'VSTest'
+          mergeTestResults: true
