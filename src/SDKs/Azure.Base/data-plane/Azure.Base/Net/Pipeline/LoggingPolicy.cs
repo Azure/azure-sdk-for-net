@@ -6,7 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Http.Pipeline
+namespace Azure.Base.Http.Pipeline
 {
     public class LoggingPolicy : PipelinePolicy
     {

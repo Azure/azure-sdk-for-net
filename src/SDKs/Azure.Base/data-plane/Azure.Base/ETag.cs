@@ -5,7 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Text;
 
-namespace Azure.Core
+namespace Azure.Base
 {
     public readonly struct ETag : IEquatable<ETag>
     {

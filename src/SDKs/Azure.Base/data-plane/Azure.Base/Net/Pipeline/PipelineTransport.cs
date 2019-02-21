@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Http.Pipeline
+namespace Azure.Base.Http.Pipeline
 {
     public abstract class PipelineTransport : PipelinePolicy
     {

@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 using System.Text;
 using System.Text.RegularExpressions;
-using Azure.Core.Http;
+using Azure.Base.Http;
 using NUnit.Framework;
 using static System.Buffers.Text.Encodings;
 
-namespace Azure.Core.Tests
+namespace Azure.Base.Tests
 {
     public class HeadersTests
     {

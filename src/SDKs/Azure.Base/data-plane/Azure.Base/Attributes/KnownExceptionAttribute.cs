@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Core
+namespace Azure.Base
 {
     public class KnownExceptionAttribute : Attribute
     {

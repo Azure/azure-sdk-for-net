@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Http;
+using Azure.Base.Http;
 using System;
 
-namespace Azure.Core
+namespace Azure.Base
 {
     public class ResponseFailedException : Exception
     {

@@ -3,12 +3,12 @@
 
 using System;
 using System.IO;
-using Azure.Core.Buffers;
+using Azure.Base.Buffers;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Buffers;
 
-namespace Azure.Core.Http
+namespace Azure.Base.Http
 {
     public abstract class PipelineContent : IDisposable
     {

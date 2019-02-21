@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading;
 
-namespace Azure.Core.Http
+namespace Azure.Base.Http
 {
     public abstract class HttpMessage  : IDisposable
     {

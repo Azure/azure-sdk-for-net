@@ -4,7 +4,7 @@
 using System.Buffers;
 using System.Collections.Generic;
 
-namespace Azure.Core.Testing
+namespace Azure.Base.Testing
 {
     public class TestPool<T> : ArrayPool<T>
     {

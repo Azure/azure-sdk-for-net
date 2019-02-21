@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Core.Http
+namespace Azure.Base.Http
 {
     public enum PipelineMethod : byte
     {

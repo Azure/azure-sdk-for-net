@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Http;
+using Azure.Base.Http;
 using System;
 using System.Diagnostics.Tracing;
 
 // TODO (pri 2): we should log correction/activity
 // TODO (pri 2): we should log exceptions
-namespace Azure.Core.Diagnostics
+namespace Azure.Base.Diagnostics
 {
     // TODO (pri 2): make the type internal
     [EventSource(Name = SOURCE_NAME)]

@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Azure.Core
+namespace Azure.Base
 {
     struct OptionsStore
     {

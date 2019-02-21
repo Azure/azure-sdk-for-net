@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Diagnostics;
+using Azure.Base.Diagnostics;
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Http.Pipeline
+namespace Azure.Base.Http.Pipeline
 {
     public abstract class PipelinePolicy
     {

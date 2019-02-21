@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Buffers
+namespace Azure.Base.Buffers
 {
     public static class StreamMemoryExtensions
     {

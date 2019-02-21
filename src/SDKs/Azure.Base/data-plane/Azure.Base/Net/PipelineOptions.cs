@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Http.Pipeline;
+using Azure.Base.Http.Pipeline;
 using System;
 using System.Buffers;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Http
+namespace Azure.Base.Http
 {
     public class PipelineOptions
     {

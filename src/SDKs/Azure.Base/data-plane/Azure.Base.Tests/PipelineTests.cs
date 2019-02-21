@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Http;
-using Azure.Core.Http.Pipeline;
-using Azure.Core.Testing;
+using Azure.Base.Http;
+using Azure.Base.Http.Pipeline;
+using Azure.Base.Testing;
 using NUnit.Framework;
 using System;
 using System.Diagnostics.Tracing;
 
-namespace Azure.Core.Tests
+namespace Azure.Base.Tests
 {
     // TODO (pri 2): Do use the EventRegister NuGet package or the standalone eventRegister.exe tool, to run build-time validation of the event source classes defined in your assemblies.
     public class PipelineTests

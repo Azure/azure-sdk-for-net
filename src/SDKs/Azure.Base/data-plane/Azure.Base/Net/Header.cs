@@ -7,7 +7,7 @@ using System.Text;
 using System.Buffers;
 using System.ComponentModel;
 
-namespace Azure.Core.Http
+namespace Azure.Base.Http
 {
     public readonly struct HttpHeader : IEquatable<HttpHeader>
     {

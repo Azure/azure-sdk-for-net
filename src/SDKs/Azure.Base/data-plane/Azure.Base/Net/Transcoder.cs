@@ -4,7 +4,7 @@
 using System;
 using System.Text;
 
-namespace Azure.Core.Http
+namespace Azure.Base.Http
 {
     internal static class Transcoder
     {

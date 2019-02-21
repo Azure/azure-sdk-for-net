@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Core.Http.Pipeline
+namespace Azure.Base.Http.Pipeline
 {
     class FixedPolicy : RetryPolicy {
         int _maxRetries;

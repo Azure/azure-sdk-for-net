@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Http.Pipeline
+namespace Azure.Base.Http.Pipeline
 {
     public class HttpPipelineTransport : PipelineTransport
     {

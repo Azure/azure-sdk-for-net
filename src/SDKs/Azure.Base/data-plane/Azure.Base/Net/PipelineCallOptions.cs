@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace Azure.Core.Http
+namespace Azure.Base.Http
 {
     public readonly struct PipelineMessageOptions
     {

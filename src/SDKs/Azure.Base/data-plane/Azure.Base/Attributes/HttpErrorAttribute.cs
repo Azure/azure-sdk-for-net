@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Core
+namespace Azure.Base
 {
     /// <summary>
     /// Represents errors that the application might handle.
