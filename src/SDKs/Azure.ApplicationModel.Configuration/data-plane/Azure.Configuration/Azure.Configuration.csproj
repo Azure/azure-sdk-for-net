@@ -14,13 +14,14 @@
     <RequiredTargetFrameworks>net461;netstandard2.0</RequiredTargetFrameworks>
     
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>8.0</LangVersion>
     <NoWarn>3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Memory" Version="4.5.1" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.1" />
     <PackageReference Include="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview.19073.11">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>

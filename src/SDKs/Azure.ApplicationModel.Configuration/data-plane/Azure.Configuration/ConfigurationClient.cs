@@ -5,6 +5,7 @@
 using Azure.Core;
 using Azure.Core.Http;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -284,6 +285,54 @@ namespace Azure.ApplicationModel.Configuration
                 }
                 else throw new ResponseFailedException(response);
             }
+        }
+
+        public Enumerator GetAllAsync(BatchRequestOptions batchOptions, CancellationToken cancellation = default)
+            => new Enumerator(this, batchOptions, cancellation);
+
+        public class Enumerator
+        {
+            BatchRequestOptions _options;
+            CancellationToken _cancellation;
+            ConfigurationClient _client;
+
+            SettingBatch _batch;
+            ConfigurationSetting _current;
+            int _currentIndex;
+
+            internal Enumerator(ConfigurationClient client, BatchRequestOptions options, CancellationToken cancellation)
+            {
+                _client = client;
+                _options = options;
+                _cancellation = cancellation;
+            }
+
+            public async ValueTask<bool> MoveNextAsync()
+            {
+                if (_batch == null) {
+                    Response<SettingBatch> response = await _client.GetBatchAsync(_options, _cancellation).ConfigureAwait(false);
+                    _batch = response.Result;
+                    response.Dispose();
+                }
+                if (_currentIndex >= _batch.Count) {
+                    _options = _batch.NextBatch;
+                    if (string.IsNullOrEmpty(_options.BatchLink)) return false;
+                    Response<SettingBatch> response = await _client.GetBatchAsync(_options, _cancellation).ConfigureAwait(false);
+                    _batch = response.Result;
+                    response.Dispose();
+                }
+                if (_currentIndex >= _batch.Count) {
+                    return false;
+                }
+                _current = _batch[_currentIndex++];
+                return true;
+            }
+
+            public ConfigurationSetting Current => _current;
+
+            public ValueTask DisposeAsync() => default;
+
+            public Enumerator GetAsyncEnumerator(CancellationToken cancellationToken = default) => this;
         }
     }
 }

@@ -205,6 +205,26 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
+        public async Task GetAll()
+        {
+            var transport = new GetBatchMockTransport(5);
+            transport.Batches.Add((0, 4));
+            transport.Batches.Add((4, 1));
+
+            var (service, pool) = CreateTestService(transport);
+
+            var query = new BatchRequestOptions();
+
+            int keyIndex = 0;
+            await foreach (var value in service.GetAllAsync(query, default)) {
+                Assert.AreEqual("key" + keyIndex.ToString(), value.Key);
+                keyIndex++;
+            }
+
+            Assert.AreEqual(0, pool.CurrentlyRented);
+        }
+
+        [Test]
         public void ConfiguringTheClient()
         {
             var options = new PipelineOptions();

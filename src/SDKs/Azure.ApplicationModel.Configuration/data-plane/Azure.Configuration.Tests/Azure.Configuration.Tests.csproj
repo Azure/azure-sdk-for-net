@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>8.0</LangVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
