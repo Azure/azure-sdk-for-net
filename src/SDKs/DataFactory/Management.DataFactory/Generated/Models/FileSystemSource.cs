@@ -38,11 +38,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="maxConcurrentConnections">The maximum concurrent
+        /// connection count for the source data store. Type: integer (or
+        /// Expression with resultType integer).</param>
         /// <param name="recursive">If true, files under the folder path will
         /// be read recursively. Default is true. Type: boolean (or Expression
         /// with resultType boolean).</param>
-        public FileSystemSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object recursive = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait)
+        public FileSystemSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object recursive = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             Recursive = recursive;
             CustomInit();

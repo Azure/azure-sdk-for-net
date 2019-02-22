@@ -37,8 +37,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        public WebSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait)
+        /// <param name="maxConcurrentConnections">The maximum concurrent
+        /// connection count for the source data store. Type: integer (or
+        /// Expression with resultType integer).</param>
+        public WebSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             CustomInit();
         }
