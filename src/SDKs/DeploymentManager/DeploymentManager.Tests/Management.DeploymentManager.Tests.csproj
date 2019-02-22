@@ -24,4 +24,8 @@
       <Name>Microsoft.Azure.Management.DeploymentManager</Name>
     </ProjectReference>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+  </ItemGroup>
 </Project>

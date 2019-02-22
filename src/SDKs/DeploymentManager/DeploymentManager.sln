@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.DeploymentManager", "Management.DeploymentManager\Microsoft.Azure.Management.DeploymentManager.csproj", "{81E66A55-F17C-4088-80F6-EF7C01C11E37}"
 EndProject
-Project("{9AA10CC3-A643-4D0A-978E-0FD7311FDFFE}") = "Management.DeploymentManager.Tests", "DeploymentManager.Tests\Management.DeploymentManager.Tests.csproj", "{23CD2878-1A27-4ECD-80F9-8B9BB1539F7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Management.DeploymentManager.Tests", "DeploymentManager.Tests\Management.DeploymentManager.Tests.csproj", "{23CD2878-1A27-4ECD-80F9-8B9BB1539F7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
