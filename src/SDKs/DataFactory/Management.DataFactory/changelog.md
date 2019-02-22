@@ -4,9 +4,10 @@
 ## Version 3.0.2
 
 ###  Feature Additions
-    - Add support for RestService Source
-    - Add support for SAP BW Open Hub Source
-    - Add support for collectionReference
+    - Added support for RestService Source
+    - Added support for SAP BW Open Hub Source
+    - Added support for collectionReference
+    - Added support for recovery mode for pipeline runs
 
 ## Version 3.0.1
 

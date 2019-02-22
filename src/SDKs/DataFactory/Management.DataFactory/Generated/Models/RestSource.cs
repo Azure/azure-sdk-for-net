@@ -38,6 +38,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="maxConcurrentConnections">The maximum concurrent
+        /// connection count for the source data store. Type: integer (or
+        /// Expression with resultType integer).</param>
         /// <param name="httpRequestTimeout">The timeout (TimeSpan) to get an
         /// HTTP response. It is the timeout to get a response, not the timeout
         /// to read response data. Default value: 00:01:40. Type: string (or
@@ -45,8 +48,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="requestInterval">The time to await before sending next
         /// page request. </param>
-        public RestSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object httpRequestTimeout = default(object), object requestInterval = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait)
+        public RestSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object httpRequestTimeout = default(object), object requestInterval = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             HttpRequestTimeout = httpRequestTimeout;
             RequestInterval = requestInterval;

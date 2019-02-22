@@ -55,17 +55,25 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Type: string (or Expression with resultType string).</param>
         /// <param name="fileName">The name of the on-premises file system.
         /// Type: string (or Expression with resultType string).</param>
+        /// <param name="modifiedDatetimeStart">The start of file's modified
+        /// datetime. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="modifiedDatetimeEnd">The end of file's modified
+        /// datetime. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="format">The format of the files.</param>
         /// <param name="fileFilter">Specify a filter to be used to select a
         /// subset of files in the folderPath rather than all files. Type:
         /// string (or Expression with resultType string).</param>
         /// <param name="compression">The data compression method used for the
         /// file system.</param>
-        public FileShareDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object folderPath = default(object), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), object fileFilter = default(object), DatasetCompression compression = default(DatasetCompression))
+        public FileShareDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object folderPath = default(object), object fileName = default(object), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), object fileFilter = default(object), DatasetCompression compression = default(DatasetCompression))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             FolderPath = folderPath;
             FileName = fileName;
+            ModifiedDatetimeStart = modifiedDatetimeStart;
+            ModifiedDatetimeEnd = modifiedDatetimeEnd;
             Format = format;
             FileFilter = fileFilter;
             Compression = compression;
@@ -90,6 +98,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.fileName")]
         public object FileName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the start of file's modified datetime. Type: string
+        /// (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.modifiedDatetimeStart")]
+        public object ModifiedDatetimeStart { get; set; }
+
+        /// <summary>
+        /// Gets or sets the end of file's modified datetime. Type: string (or
+        /// Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.modifiedDatetimeEnd")]
+        public object ModifiedDatetimeEnd { get; set; }
 
         /// <summary>
         /// Gets or sets the format of the files.
