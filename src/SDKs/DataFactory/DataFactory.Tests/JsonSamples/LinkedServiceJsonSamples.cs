@@ -1860,6 +1860,11 @@ namespace DataFactory.Tests.JsonSamples
             newClusterVersion: ""3.4.x-scala2.11"",
             newClusterNumOfWorker: ""1"",
             newClusterNodeType: ""Standard_DS3_v2"",
+            newClusterDriverNodeType: ""Standard_DS3_v2"",
+            newClusterInitScripts: [
+                ""someScript""
+            ],
+            newClusterEnableElasticDisk: true,
             newClusterSparkConf: {
                 ""spark.speculation"": true
             }
