@@ -330,8 +330,6 @@ namespace Azure.ApplicationModel.Configuration
 
             public ConfigurationSetting Current => _current;
 
-            public ValueTask DisposeAsync() => default;
-
             public Enumerator GetAsyncEnumerator(CancellationToken cancellationToken = default) => this;
         }
     }

@@ -215,9 +215,18 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var query = new BatchRequestOptions();
 
+            // if the consumer has C# 8.0
             int keyIndex = 0;
             await foreach (var value in service.GetAllAsync(query, default)) {
                 Assert.AreEqual("key" + keyIndex.ToString(), value.Key);
+                keyIndex++;
+            }
+
+            // if the consumer does not have C# 8.0
+            keyIndex = 0;
+            var enumerator = service.GetAllAsync(query, default);
+            while(await enumerator.MoveNextAsync()) {
+                Assert.AreEqual("key" + keyIndex.ToString(), enumerator.Current.Key);
                 keyIndex++;
             }
 
