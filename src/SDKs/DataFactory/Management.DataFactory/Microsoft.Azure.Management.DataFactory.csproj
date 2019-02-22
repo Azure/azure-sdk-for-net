@@ -10,6 +10,7 @@
 		<AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
 		<PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
 		<PackageReleaseNotes>	<![CDATA[
+    - Fixed AzureFunctionActivity
     - Added support for RestService Source
     - Added support for SAP BW Open Hub Source
     - Added support for collectionReference
