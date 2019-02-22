@@ -7,11 +7,11 @@ using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
-using Azure.Core;
-using Azure.Core.Http;
+using Azure.Base.Testing;
+using Azure.Base;
+using Azure.Base.Http;
 using System.Buffers;
-using Azure.Core.Http.Pipeline;
+using Azure.Base.Http.Pipeline;
 using Azure.ApplicationModel.Configuration.Test;
 using System.Collections.Generic;
 
