@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.Kusto
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for EventHubConnectionsOperations.
+    /// Extension methods for DataConnectionsOperations.
     /// </summary>
-    public static partial class EventHubConnectionsOperationsExtensions
+    public static partial class DataConnectionsOperationsExtensions
     {
             /// <summary>
-            /// Returns the list of Event Hub connections of the given Kusto database.
+            /// Returns the list of data connections of the given Kusto database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,13 +38,13 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            public static IEnumerable<EventHubConnection> ListByDatabase(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName)
+            public static IEnumerable<DataConnection> ListByDatabase(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName)
             {
                 return operations.ListByDatabaseAsync(resourceGroupName, clusterName, databaseName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns the list of Event Hub connections of the given Kusto database.
+            /// Returns the list of data connections of the given Kusto database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<EventHubConnection>> ListByDatabaseAsync(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<DataConnection>> ListByDatabaseAsync(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Kusto
             }
 
             /// <summary>
-            /// Checks that the Event Hub data connection parameters are valid.
+            /// Checks that the data connection parameters are valid.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -85,16 +85,15 @@ namespace Microsoft.Azure.Management.Kusto
             /// The name of the database in the Kusto cluster.
             /// </param>
             /// <param name='parameters'>
-            /// The Event Hub connection parameters supplied to the CreateOrUpdate
-            /// operation.
+            /// The data connection parameters supplied to the CreateOrUpdate operation.
             /// </param>
-            public static EventHubConnectionValidationListResult EventhubConnectionValidation(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, EventHubConnectionValidation parameters)
+            public static DataConnectionValidationListResult DataConnectionValidationMethod(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, DataConnectionValidation parameters)
             {
-                return operations.EventhubConnectionValidationAsync(resourceGroupName, clusterName, databaseName, parameters).GetAwaiter().GetResult();
+                return operations.DataConnectionValidationMethodAsync(resourceGroupName, clusterName, databaseName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Checks that the Event Hub data connection parameters are valid.
+            /// Checks that the data connection parameters are valid.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -109,22 +108,21 @@ namespace Microsoft.Azure.Management.Kusto
             /// The name of the database in the Kusto cluster.
             /// </param>
             /// <param name='parameters'>
-            /// The Event Hub connection parameters supplied to the CreateOrUpdate
-            /// operation.
+            /// The data connection parameters supplied to the CreateOrUpdate operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EventHubConnectionValidationListResult> EventhubConnectionValidationAsync(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, EventHubConnectionValidation parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataConnectionValidationListResult> DataConnectionValidationMethodAsync(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, DataConnectionValidation parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.EventhubConnectionValidationWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DataConnectionValidationMethodWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Returns an Event Hub connection.
+            /// Returns a data connection.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -138,16 +136,16 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
-            public static EventHubConnection Get(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName)
+            public static DataConnection Get(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName)
             {
-                return operations.GetAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, clusterName, databaseName, dataConnectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns an Event Hub connection.
+            /// Returns a data connection.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -161,22 +159,22 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EventHubConnection> GetAsync(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataConnection> GetAsync(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates or updates a Event Hub connection.
+            /// Creates or updates a data connection.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -190,20 +188,19 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
             /// <param name='parameters'>
-            /// The Event Hub connection parameters supplied to the CreateOrUpdate
-            /// operation.
+            /// The data connection parameters supplied to the CreateOrUpdate operation.
             /// </param>
-            public static EventHubConnection CreateOrUpdate(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnection parameters)
+            public static DataConnection CreateOrUpdate(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or updates a Event Hub connection.
+            /// Creates or updates a data connection.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -217,26 +214,25 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
             /// <param name='parameters'>
-            /// The Event Hub connection parameters supplied to the CreateOrUpdate
-            /// operation.
+            /// The data connection parameters supplied to the CreateOrUpdate operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EventHubConnection> CreateOrUpdateAsync(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnection parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataConnection> CreateOrUpdateAsync(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Updates a Event Hub connection.
+            /// Updates a data connection.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -250,19 +246,19 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
             /// <param name='parameters'>
-            /// The Event Hub connection parameters supplied to the Update operation.
+            /// The data connection parameters supplied to the Update operation.
             /// </param>
-            public static EventHubConnection Update(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnectionUpdate parameters)
+            public static DataConnection Update(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters)
             {
-                return operations.UpdateAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates a Event Hub connection.
+            /// Updates a data connection.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -276,25 +272,25 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
             /// <param name='parameters'>
-            /// The Event Hub connection parameters supplied to the Update operation.
+            /// The data connection parameters supplied to the Update operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EventHubConnection> UpdateAsync(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnectionUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataConnection> UpdateAsync(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes the Event Hub connection with the given name.
+            /// Deletes the data connection with the given name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -308,16 +304,16 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
-            public static void Delete(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName)
+            public static void Delete(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName)
             {
-                operations.DeleteAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, clusterName, databaseName, dataConnectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes the Event Hub connection with the given name.
+            /// Deletes the data connection with the given name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -331,19 +327,19 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Creates or updates a Event Hub connection.
+            /// Creates or updates a data connection.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -357,20 +353,19 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
             /// <param name='parameters'>
-            /// The Event Hub connection parameters supplied to the CreateOrUpdate
-            /// operation.
+            /// The data connection parameters supplied to the CreateOrUpdate operation.
             /// </param>
-            public static EventHubConnection BeginCreateOrUpdate(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnection parameters)
+            public static DataConnection BeginCreateOrUpdate(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or updates a Event Hub connection.
+            /// Creates or updates a data connection.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -384,26 +379,25 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
             /// <param name='parameters'>
-            /// The Event Hub connection parameters supplied to the CreateOrUpdate
-            /// operation.
+            /// The data connection parameters supplied to the CreateOrUpdate operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EventHubConnection> BeginCreateOrUpdateAsync(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnection parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataConnection> BeginCreateOrUpdateAsync(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Updates a Event Hub connection.
+            /// Updates a data connection.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -417,19 +411,19 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
             /// <param name='parameters'>
-            /// The Event Hub connection parameters supplied to the Update operation.
+            /// The data connection parameters supplied to the Update operation.
             /// </param>
-            public static EventHubConnection BeginUpdate(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnectionUpdate parameters)
+            public static DataConnection BeginUpdate(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters)
             {
-                return operations.BeginUpdateAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, parameters).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates a Event Hub connection.
+            /// Updates a data connection.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -443,25 +437,25 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
             /// <param name='parameters'>
-            /// The Event Hub connection parameters supplied to the Update operation.
+            /// The data connection parameters supplied to the Update operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EventHubConnection> BeginUpdateAsync(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnectionUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataConnection> BeginUpdateAsync(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes the Event Hub connection with the given name.
+            /// Deletes the data connection with the given name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -475,16 +469,16 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
-            public static void BeginDelete(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName)
+            public static void BeginDelete(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, clusterName, databaseName, dataConnectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes the Event Hub connection with the given name.
+            /// Deletes the data connection with the given name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -498,15 +492,15 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='databaseName'>
             /// The name of the database in the Kusto cluster.
             /// </param>
-            /// <param name='eventHubConnectionName'>
-            /// The name of the event hub connection.
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IEventHubConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, eventHubConnectionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }
