@@ -31,6 +31,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
 
                 Assert.Equal("Windows 10", result.Documents[0].Entities[0].Name);
                 Assert.Equal("5f9fbd03-49c4-39ef-cc95-de83ab897b94", result.Documents[0].Entities[0].BingId);
+                Assert.Equal("Microsoft", result.Documents[0].Entities[0].Matches[0].Text);
+                Assert.Equal(0.12508682244047509, result.Documents[0].Entities[0].Matches[0].WikipediaScore);
+                Assert.Equal(0.99999618530273438, result.Documents[0].Entities[0].Matches[0].EntityTypeScore);
                 context.Stop();
             }
         }

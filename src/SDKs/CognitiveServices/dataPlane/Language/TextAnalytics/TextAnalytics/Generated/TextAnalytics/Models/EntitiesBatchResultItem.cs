@@ -15,27 +15,29 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class EntitiesBatchResultItemV2dot1
+    public partial class EntitiesBatchResultItem
     {
         /// <summary>
-        /// Initializes a new instance of the EntitiesBatchResultItemV2dot1
-        /// class.
+        /// Initializes a new instance of the EntitiesBatchResultItem class.
         /// </summary>
-        public EntitiesBatchResultItemV2dot1()
+        public EntitiesBatchResultItem()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EntitiesBatchResultItemV2dot1
-        /// class.
+        /// Initializes a new instance of the EntitiesBatchResultItem class.
         /// </summary>
-        /// <param name="id">Unique document identifier.</param>
+        /// <param name="id">Unique, non-empty document identifier.</param>
         /// <param name="entities">Recognized entities in the document.</param>
-        public EntitiesBatchResultItemV2dot1(string id = default(string), IList<EntityRecordV2dot1> entities = default(IList<EntityRecordV2dot1>))
+        /// <param name="statistics">(Optional) if showStats=true was specified
+        /// in the request this field will contain information about the
+        /// document payload.</param>
+        public EntitiesBatchResultItem(string id = default(string), IList<EntityRecord> entities = default(IList<EntityRecord>), DocumentStatistics statistics = default(DocumentStatistics))
         {
             Id = id;
             Entities = entities;
+            Statistics = statistics;
             CustomInit();
         }
 
@@ -45,16 +47,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets unique document identifier.
+        /// Gets or sets unique, non-empty document identifier.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Gets recognized entities in the document.
         /// </summary>
         [JsonProperty(PropertyName = "entities")]
-        public IList<EntityRecordV2dot1> Entities { get; private set; }
+        public IList<EntityRecord> Entities { get; private set; }
+
+        /// <summary>
+        /// Gets or sets (Optional) if showStats=true was specified in the
+        /// request this field will contain information about the document
+        /// payload.
+        /// </summary>
+        [JsonProperty(PropertyName = "statistics")]
+        public DocumentStatistics Statistics { get; set; }
 
     }
 }
