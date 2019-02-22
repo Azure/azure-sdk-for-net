@@ -54,7 +54,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// is no restriction on the keys or values that can be used. The user
         /// specified custom activity has the full responsibility to consume
         /// and interpret the content defined.</param>
-        public CustomActivity(string name, object command, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), LinkedServiceReference resourceLinkedService = default(LinkedServiceReference), object folderPath = default(object), CustomActivityReferenceObject referenceObjects = default(CustomActivityReferenceObject), IDictionary<string, object> extendedProperties = default(IDictionary<string, object>))
+        /// <param name="retentionTimeInDays">The retention time for the files
+        /// submitted for custom activity. Type: double (or Expression with
+        /// resultType double).</param>
+        public CustomActivity(string name, object command, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), LinkedServiceReference resourceLinkedService = default(LinkedServiceReference), object folderPath = default(object), CustomActivityReferenceObject referenceObjects = default(CustomActivityReferenceObject), IDictionary<string, object> extendedProperties = default(IDictionary<string, object>), object retentionTimeInDays = default(object))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             Command = command;
@@ -62,6 +65,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             FolderPath = folderPath;
             ReferenceObjects = referenceObjects;
             ExtendedProperties = extendedProperties;
+            RetentionTimeInDays = retentionTimeInDays;
             CustomInit();
         }
 
@@ -104,6 +108,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.extendedProperties")]
         public IDictionary<string, object> ExtendedProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the retention time for the files submitted for custom
+        /// activity. Type: double (or Expression with resultType double).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.retentionTimeInDays")]
+        public object RetentionTimeInDays { get; set; }
 
         /// <summary>
         /// Validate the object.
