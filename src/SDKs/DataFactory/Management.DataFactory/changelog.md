@@ -3,8 +3,9 @@
 ## Current version
 ###  Feature Additions
 
-## Version 3.0.2
+## Version 3.0.1
 ###  Feature Additions
+    - Fixed AzureFunctionActivity
     - Added support for RestService Source
     - Added support for SAP BW Open Hub Source
     - Added support for collectionReference
@@ -29,11 +30,6 @@
     - Added support for ServiceUrl in the existing S3 linked service
     - Added support for AADServicePrincipal authentication in OData linked service
     - Added support for maxConcurrentConnections in copy source and sink
-
-
-## Version 3.0.1
-###  Feature Additions
-    - Fixed AzureFunctionActivity
 
 ## Version 3.0.0
 ###  Feature Additions
