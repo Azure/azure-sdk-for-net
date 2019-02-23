@@ -212,22 +212,44 @@ namespace Azure.ApplicationModel.Configuration.Tests
             transport.Batches.Add((4, 1));
 
             var (service, pool) = CreateTestService(transport);
-
-            var query = new BatchRequestOptions();
+            int keyIndex = 0;
 
             // if the consumer has C# 8.0
-            int keyIndex = 0;
-            await foreach (var value in service.GetAllAsync(query, default)) {
+            keyIndex = 0;
+            await foreach (var value in service.GetAllAsync()) {
                 Assert.AreEqual("key" + keyIndex.ToString(), value.Key);
                 keyIndex++;
             }
 
             // if the consumer does not have C# 8.0
             keyIndex = 0;
-            var enumerator = service.GetAllAsync(query, default);
+            var enumerator = service.GetAllAsync();
             while(await enumerator.MoveNextAsync()) {
                 Assert.AreEqual("key" + keyIndex.ToString(), enumerator.Current.Key);
                 keyIndex++;
+            }
+
+            // get batches with C#8
+            keyIndex = 0;
+            await foreach (var response in service.GetBatchesAsync()) {
+                SettingBatch batch = response;
+                for (int i = 0; i < batch.Count; i++) {
+                    ConfigurationSetting value = batch[i];
+                    Assert.AreEqual("key" + keyIndex.ToString(), value.Key);
+                    keyIndex++;
+                }
+            }
+
+            // get batches without C#8
+            keyIndex = 0;
+            var batchEnumerator = service.GetBatchesAsync();
+            while (await batchEnumerator.MoveNextAsync()) {
+                SettingBatch batch = batchEnumerator.Current;
+                for (int i = 0; i < batch.Count; i++) {
+                    ConfigurationSetting value = batch[i];
+                    Assert.AreEqual("key" + keyIndex.ToString(), value.Key);
+                    keyIndex++;
+                }
             }
 
             Assert.AreEqual(0, pool.CurrentlyRented);

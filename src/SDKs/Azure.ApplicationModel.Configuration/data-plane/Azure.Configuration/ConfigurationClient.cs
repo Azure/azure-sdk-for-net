@@ -287,8 +287,11 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public Enumerator GetAllAsync(BatchRequestOptions batchOptions, CancellationToken cancellation = default)
+        public Enumerator GetAllAsync(BatchRequestOptions batchOptions = default, CancellationToken cancellation = default)
             => new Enumerator(this, batchOptions, cancellation);
+
+        public BatchEnumerator GetBatchesAsync(BatchRequestOptions batchOptions = default, CancellationToken cancellation = default)
+            => new BatchEnumerator(this, batchOptions, cancellation);
 
         public class Enumerator
         {
@@ -302,6 +305,7 @@ namespace Azure.ApplicationModel.Configuration
 
             internal Enumerator(ConfigurationClient client, BatchRequestOptions options, CancellationToken cancellation)
             {
+                if (options == null) options = new BatchRequestOptions();
                 _client = client;
                 _options = options;
                 _cancellation = cancellation;
@@ -331,6 +335,44 @@ namespace Azure.ApplicationModel.Configuration
             public ConfigurationSetting Current => _current;
 
             public Enumerator GetAsyncEnumerator(CancellationToken cancellationToken = default) => this;
+        }
+
+        public class BatchEnumerator
+        {
+            BatchRequestOptions _options;
+            CancellationToken _cancellation;
+            ConfigurationClient _client;
+            Response<SettingBatch>? _current;
+
+            internal BatchEnumerator(ConfigurationClient client, BatchRequestOptions options, CancellationToken cancellation)
+            {
+                if (options == null) options = new BatchRequestOptions();
+                _client = client;
+                _options = options;
+                _cancellation = cancellation;
+            }
+
+            public async ValueTask<bool> MoveNextAsync()
+            {
+                if (_current == null) {
+                    try {
+                        _current = await _client.GetBatchAsync(_options, _cancellation).ConfigureAwait(false);
+                    }
+                    catch(Exception e) {
+                        System.Diagnostics.Debug.WriteLine(e);
+                    }
+                    return true;
+                }
+                _options = _current.Value.Result.NextBatch;
+                if (string.IsNullOrEmpty(_options.BatchLink)) return false;
+                _current.Value.Dispose();
+                _current = await _client.GetBatchAsync(_options, _cancellation).ConfigureAwait(false);
+                return true;
+            }
+
+            public Response<SettingBatch> Current => _current.Value;
+
+            public BatchEnumerator GetAsyncEnumerator(CancellationToken cancellationToken = default) => this;
         }
     }
 }

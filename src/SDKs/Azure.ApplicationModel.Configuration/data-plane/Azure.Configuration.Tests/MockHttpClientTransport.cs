@@ -154,6 +154,8 @@ namespace Azure.ApplicationModel.Configuration.Test
         }
         protected override void WriteResponseCore(HttpResponseMessage response)
         {
+            if (_currentBathIndex >= Batches.Count) _currentBathIndex = 0;
+
             var batch = Batches[_currentBathIndex++];
             var bathItems = new MockBatch();
             int itemIndex = batch.index;
