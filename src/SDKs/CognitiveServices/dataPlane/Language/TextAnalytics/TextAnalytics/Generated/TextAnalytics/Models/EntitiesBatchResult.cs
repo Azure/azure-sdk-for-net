@@ -15,25 +15,25 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class KeyPhraseBatchResult
+    public partial class EntitiesBatchResult
     {
         /// <summary>
-        /// Initializes a new instance of the KeyPhraseBatchResult class.
+        /// Initializes a new instance of the EntitiesBatchResult class.
         /// </summary>
-        public KeyPhraseBatchResult()
+        public EntitiesBatchResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the KeyPhraseBatchResult class.
+        /// Initializes a new instance of the EntitiesBatchResult class.
         /// </summary>
         /// <param name="documents">Response by document</param>
         /// <param name="errors">Errors and Warnings by document</param>
-        /// <param name="statistics">=(Optional) if showStats=true was
-        /// specified in the request this field will contain information about
-        /// the request payload.</param>
-        public KeyPhraseBatchResult(IList<KeyPhraseBatchResultItem> documents = default(IList<KeyPhraseBatchResultItem>), IList<ErrorRecord> errors = default(IList<ErrorRecord>), RequestStatistics statistics = default(RequestStatistics))
+        /// <param name="statistics">(Optional) if showStats=true was specified
+        /// in the request this field will contain information about the
+        /// request payload.</param>
+        public EntitiesBatchResult(IList<EntitiesBatchResultItem> documents = default(IList<EntitiesBatchResultItem>), IList<ErrorRecord> errors = default(IList<ErrorRecord>), RequestStatistics statistics = default(RequestStatistics))
         {
             Documents = documents;
             Errors = errors;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         /// Gets response by document
         /// </summary>
         [JsonProperty(PropertyName = "documents")]
-        public IList<KeyPhraseBatchResultItem> Documents { get; private set; }
+        public IList<EntitiesBatchResultItem> Documents { get; private set; }
 
         /// <summary>
         /// Gets errors and Warnings by document
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         public IList<ErrorRecord> Errors { get; private set; }
 
         /// <summary>
-        /// Gets =(Optional) if showStats=true was specified in the request
-        /// this field will contain information about the request payload.
+        /// Gets (Optional) if showStats=true was specified in the request this
+        /// field will contain information about the request payload.
         /// </summary>
         [JsonProperty(PropertyName = "statistics")]
         public RequestStatistics Statistics { get; private set; }

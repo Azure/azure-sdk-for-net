@@ -11,16 +11,17 @@
     <Version>2.1.0-preview</Version>
     <Version>22.2.0-preview</Version>
     <Version>2.2.0-preview</Version>
+    <Version>2.8.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Language.TextAnalytics</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Text Analytics API;Text Analytics;REST HTTP client;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
     Microsoft Cognitive Services Text Analytics SDK.
     
-    This is a preview package which calls the API version "v2.1-Preview"
+    This is a preview package which calls the API version "v2.1"
 
     Changes in this release:
-    1. Add support for v2.1-Preview API version which includes improvements to the /Entities endpoint.
+    1. Add support for v2.1 API version which includes improvements to the /Entities endpoint.
     
     ]]></PackageReleaseNotes>
   </PropertyGroup>
