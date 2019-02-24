@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Microsoft.Azure.Management.MixedReality.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ResourceProviderEndpoint" Type="System.Uri" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SubscriptionId" Type="System.Guid" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ResourceGroup" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Location" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>
