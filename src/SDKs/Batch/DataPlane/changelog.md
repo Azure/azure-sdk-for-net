@@ -1,5 +1,12 @@
 # Microsoft.Azure.Batch release notes
 
+## Changes in 10.1.0
+- Added `net461` and `netstandard2.0` target frameworks.
+- Updated `Microsoft.AspNetCore.WebUtilities` to `1.1.2` for the `netstandard1.4` target framework.
+
+### REST API version
+This version of the Batch .NET client library targets version 2018-12-01.8.0 of the Azure Batch REST API.
+
 ## Changes in 10.0.0
 ### Features
 - **[Breaking]** Removed support for the `ChangeOSVersion` API on `CloudServiceConfiguration` pools. 
