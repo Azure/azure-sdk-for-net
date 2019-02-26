@@ -13,8 +13,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Azure.Configuration\Azure.Configuration.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\Azure.Base\data-plane\Azure.Base.Tests\Testing\TestPool.cs" Link="TestPool.cs" />
+  </ItemGroup>
+
+  <!-- Project references -->
+  <ItemGroup Condition="'$(UseProjectReferenceToBase)'=='true'">
     <ProjectReference Include="..\..\..\Azure.Base\data-plane\Azure.Base\Azure.Base.csproj" />
-    <ProjectReference Include="..\..\..\Azure.Base\data-plane\Azure.Base.Tests\Azure.Base.Tests.csproj" />
   </ItemGroup>
 
 
@@ -26,6 +33,8 @@
   <!-- Package references -->
   <ItemGroup Condition="'$(UseProjectReferenceToBase)'==''">
     <Compile Include="..\..\..\Azure.Base\data-plane\Azure.Base.Tests\Testing\TestPool.cs" Link="TestPool.cs" />
+  <!-- Package references -->
+  <ItemGroup Condition="'$(UseProjectReferenceToBase)'==''">
     
     <PackageReference Include="Azure.Base" Version="1.0.0-preview.1" />
     <PackageReference Include="System.Text.Primitives" Version="0.1.0-preview1-180216-4" />
