@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Base
+namespace Azure.Base.Diagnostics
 {
     /// <summary>
     /// Represents errors that the application might handle.

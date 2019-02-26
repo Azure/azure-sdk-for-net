@@ -4,7 +4,7 @@
 using Azure.Base.Http;
 using System;
 
-namespace Azure.Base
+namespace Azure
 {
     public class ResponseFailedException : Exception
     {
