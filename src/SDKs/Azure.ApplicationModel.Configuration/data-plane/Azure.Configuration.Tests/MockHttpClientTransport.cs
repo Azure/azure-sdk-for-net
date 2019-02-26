@@ -13,7 +13,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.Buffers.Text.Encodings;
 
 namespace Azure.ApplicationModel.Configuration.Test
 {
@@ -369,5 +368,11 @@ namespace Azure.ApplicationModel.Configuration.Test
                 Custom
             }
         }
+    }
+
+    static class Utf8
+    {
+        public static string ToString(ReadOnlySpan<byte> utf8)
+            => Encoding.UTF8.GetString(utf8.ToArray());
     }
 }
