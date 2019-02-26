@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// class.
         /// </summary>
         /// <param name="name">Resource Name To Verify</param>
-        /// <param name="type">fully qualified resource type which includes
+        /// <param name="type">Fully qualified resource type which includes
         /// provider namespace</param>
         public CheckNameAvailabilityRequest(string name, string type)
         {

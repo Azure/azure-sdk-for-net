@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.MixedReality
     public static partial class SpatialAnchorsAccountsOperationsExtensions
     {
             /// <summary>
-            /// List Spatial Anchors Accounts by Subscrption
+            /// List Spatial Anchors Accounts by Subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// List Spatial Anchors Accounts by Subscrption
+            /// List Spatial Anchors Accounts by Subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// Updating a Resource
+            /// Delete a Spatial Anchors Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// Updating a Resource
+            /// Delete a Spatial Anchors Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// Creating or Updating a Resource
+            /// Retrieve a Spatial Anchors Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// Creating or Updating a Resource
+            /// Retrieve a Spatial Anchors Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// Creating or Updating a Resource
+            /// Creating or Updating a Spatial Anchors Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// Creating or Updating a Resource
+            /// Creating or Updating a Spatial Anchors Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -253,7 +253,93 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// List Spatial Anchors Accounts by Subscrption
+            /// Get Both of the 2 Keys of a Spatial Anchors Account
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure resource group.
+            /// </param>
+            /// <param name='spatialAnchorsAccountName'>
+            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// </param>
+            public static SpatialAnchorsAccountKeys GetKeys(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName)
+            {
+                return operations.GetKeysAsync(resourceGroupName, spatialAnchorsAccountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get Both of the 2 Keys of a Spatial Anchors Account
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure resource group.
+            /// </param>
+            /// <param name='spatialAnchorsAccountName'>
+            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SpatialAnchorsAccountKeys> GetKeysAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetKeysWithHttpMessagesAsync(resourceGroupName, spatialAnchorsAccountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Regenerate 1 Key of a Spatial Anchors Account
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure resource group.
+            /// </param>
+            /// <param name='spatialAnchorsAccountName'>
+            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// </param>
+            /// <param name='serial'>
+            /// serial of key to be regenerated
+            /// </param>
+            public static SpatialAnchorsAccountKeys RegenerateKeys(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName, int? serial = 1)
+            {
+                return operations.RegenerateKeysAsync(resourceGroupName, spatialAnchorsAccountName, serial).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Regenerate 1 Key of a Spatial Anchors Account
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure resource group.
+            /// </param>
+            /// <param name='spatialAnchorsAccountName'>
+            /// Name of an Mixed Reality Spatial Anchors Account.
+            /// </param>
+            /// <param name='serial'>
+            /// serial of key to be regenerated
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SpatialAnchorsAccountKeys> RegenerateKeysAsync(this ISpatialAnchorsAccountsOperations operations, string resourceGroupName, string spatialAnchorsAccountName, int? serial = 1, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, spatialAnchorsAccountName, serial, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List Spatial Anchors Accounts by Subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -267,7 +353,7 @@ namespace Microsoft.Azure.Management.MixedReality
             }
 
             /// <summary>
-            /// List Spatial Anchors Accounts by Subscrption
+            /// List Spatial Anchors Accounts by Subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

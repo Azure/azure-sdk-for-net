@@ -45,8 +45,7 @@ namespace Microsoft.Azure.Management.MixedReality
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Version of the API to be used with the client request. The current
-        /// version is 2018-08-08.
+        /// Version of the API to be used with the client request.
         /// </summary>
         string ApiVersion { get; }
 
@@ -100,43 +99,6 @@ namespace Microsoft.Azure.Management.MixedReality
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<CheckNameAvailabilityResponse>> CheckNameAvailabilityLocalWithHttpMessagesAsync(string location, CheckNameAvailabilityRequest checkNameAvailability, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Get Both of the 2 Keys of a Spatial Anchors Account
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
-        /// </param>
-        /// <param name='spatialAnchorsAccountName'>
-        /// Name of an Mixed Reality Spatial Anchors Account.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<SpatialAnchorsAccountKeys>> GetKeysWithHttpMessagesAsync(string resourceGroupName, string spatialAnchorsAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Regenrate 1 Key of a Spatial Anchors Account
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
-        /// </param>
-        /// <param name='spatialAnchorsAccountName'>
-        /// Name of an Mixed Reality Spatial Anchors Account.
-        /// </param>
-        /// <param name='serial'>
-        /// serial of key to be regenerated
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<SpatialAnchorsAccountKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string spatialAnchorsAccountName, int? serial = 1, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

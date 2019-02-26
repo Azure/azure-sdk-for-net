@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.MixedReality
     public partial interface ISpatialAnchorsAccountsOperations
     {
         /// <summary>
-        /// List Spatial Anchors Accounts by Subscrption
+        /// List Spatial Anchors Accounts by Subscription
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// </exception>
         Task<AzureOperationResponse<IPage<SpatialAnchorsAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updating a Resource
+        /// Delete a Spatial Anchors Account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string spatialAnchorsAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creating or Updating a Resource
+        /// Retrieve a Spatial Anchors Account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// </exception>
         Task<AzureOperationResponse<SpatialAnchorsAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string spatialAnchorsAccountName, SpatialAnchorsAccount spatialAnchorsAccount, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creating or Updating a Resource
+        /// Creating or Updating a Spatial Anchors Account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure resource group.
@@ -168,7 +168,60 @@ namespace Microsoft.Azure.Management.MixedReality
         /// </exception>
         Task<AzureOperationResponse<SpatialAnchorsAccount>> CreateWithHttpMessagesAsync(string resourceGroupName, string spatialAnchorsAccountName, SpatialAnchorsAccount spatialAnchorsAccount, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List Spatial Anchors Accounts by Subscrption
+        /// Get Both of the 2 Keys of a Spatial Anchors Account
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure resource group.
+        /// </param>
+        /// <param name='spatialAnchorsAccountName'>
+        /// Name of an Mixed Reality Spatial Anchors Account.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SpatialAnchorsAccountKeys>> GetKeysWithHttpMessagesAsync(string resourceGroupName, string spatialAnchorsAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Regenerate 1 Key of a Spatial Anchors Account
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure resource group.
+        /// </param>
+        /// <param name='spatialAnchorsAccountName'>
+        /// Name of an Mixed Reality Spatial Anchors Account.
+        /// </param>
+        /// <param name='serial'>
+        /// serial of key to be regenerated
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SpatialAnchorsAccountKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string spatialAnchorsAccountName, int? serial = 1, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List Spatial Anchors Accounts by Subscription
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

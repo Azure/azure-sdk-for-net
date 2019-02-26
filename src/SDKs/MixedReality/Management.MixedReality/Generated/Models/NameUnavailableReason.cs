@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.MixedReality.Models
 {
 
     /// <summary>
-    /// Defines values for NameUnavailabileReason.
+    /// Defines values for NameUnavailableReason.
     /// </summary>
-    public static class NameUnavailabileReason
+    public static class NameUnavailableReason
     {
         public const string Invalid = "Invalid";
         public const string AlreadyExists = "AlreadyExists";

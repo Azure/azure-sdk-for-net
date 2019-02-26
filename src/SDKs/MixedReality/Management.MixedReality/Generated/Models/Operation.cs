@@ -57,5 +57,18 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Display != null)
+            {
+                Display.Validate();
+            }
+        }
     }
 }

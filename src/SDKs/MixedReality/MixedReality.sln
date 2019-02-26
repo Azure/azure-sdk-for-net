@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Management.MixedReality", "Management.MixedReality\Management.MixedReality.csproj", "{2C746004-F036-4B3E-B494-BE9875BF133E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixedReality.Tests", "MixedReality.Tests\MixedReality.Tests.csproj", "{B408506D-E9E7-4D85-A334-F3DF73920A89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MixedReality.Tests", "MixedReality.Tests\MixedReality.Tests.csproj", "{B408506D-E9E7-4D85-A334-F3DF73920A89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,8 +22,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {20B3AAE6-F8B2-4229-9AD9-FEF067956C2A}
 	EndGlobalSection
 EndGlobal

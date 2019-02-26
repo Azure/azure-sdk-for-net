@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.MixedReality.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// <param name="operation">Operation type: Read, write, delete,
         /// etc.</param>
         /// <param name="description">Description of operation</param>
-        public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
+        public OperationDisplay(string provider, string resource, string operation, string description)
         {
             Provider = provider;
             Resource = resource;
@@ -53,27 +54,52 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// <summary>
         /// Gets or sets service provider: Microsoft.ResourceProvider
         /// </summary>
-        [JsonProperty(PropertyName = "Provider")]
+        [JsonProperty(PropertyName = "provider")]
         public string Provider { get; set; }
 
         /// <summary>
         /// Gets or sets resource on which the operation is performed: Profile,
         /// endpoint, etc.
         /// </summary>
-        [JsonProperty(PropertyName = "Resource")]
+        [JsonProperty(PropertyName = "resource")]
         public string Resource { get; set; }
 
         /// <summary>
         /// Gets or sets operation type: Read, write, delete, etc.
         /// </summary>
-        [JsonProperty(PropertyName = "Operation")]
+        [JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }
 
         /// <summary>
         /// Gets or sets description of operation
         /// </summary>
-        [JsonProperty(PropertyName = "Description")]
+        [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Provider == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Provider");
+            }
+            if (Resource == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Resource");
+            }
+            if (Operation == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Operation");
+            }
+            if (Description == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Description");
+            }
+        }
     }
 }
