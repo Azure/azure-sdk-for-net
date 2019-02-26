@@ -2,9 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Diagnostics;
-using System.Net;
 using Microsoft.Azure.Management.MixedReality;
-using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace MixedReality.Tests

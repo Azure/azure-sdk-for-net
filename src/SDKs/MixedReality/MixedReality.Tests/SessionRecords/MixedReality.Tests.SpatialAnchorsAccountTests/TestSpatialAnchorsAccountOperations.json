@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourcegroups/MixedRealityNetSdkTests?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlZ3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourcegroups/MixedRealityNetSdkTests?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlZ3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"MixedRealityNetSdkTests\",\r\n  \"location\": \"EastUs2\"\r\n}",
       "RequestHeaders": {
@@ -679,8 +679,8 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourcegroups/MixedRealityNetSdkTests?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlZ3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/resourcegroups/MixedRealityNetSdkTests?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL3Jlc291cmNlZ3JvdXBzL01peGVkUmVhbGl0eU5ldFNka1Rlc3RzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -708,7 +708,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
@@ -742,8 +742,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -765,7 +765,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
@@ -799,8 +799,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -822,7 +822,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
@@ -856,8 +856,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -907,8 +907,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestUri": "/subscriptions/10438cf7-a794-4c7b-ad4c-5ddc1313ba7d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1NSVhFRFJFQUxJVFlORVRTREtURVNUUy1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTA0MzhjZjctYTc5NC00YzdiLWFkNGMtNWRkYzEzMTNiYTdkL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFOU1ZoRlJGSkZRVXhKVkZsT1JWUlRSRXRVUlZOVVV5MUZRVk5VVlZNeUlpd2lhbTlpVEc5allYUnBiMjRpT2lKbFlYTjBkWE15SW4wP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
