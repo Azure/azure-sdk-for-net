@@ -1,34 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
-    <RootNamespace>Microsoft.Azure.Management.MixedReality</RootNamespace>
+    <PackageId>MixedReality.Tests</PackageId>
+    <Description>MixedReality.Tests Class Library</Description>
+    <AssemblyName>MixedReality.Tests</AssemblyName>
+    <VersionPrefix>0.9.0-preview</VersionPrefix>    
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.18" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
+    <ProjectReference Include="..\Management.MixedReality\Microsoft.Azure.Management.MixedReality.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Management.MixedReality\Management.MixedReality.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
+  
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
 </Project>
