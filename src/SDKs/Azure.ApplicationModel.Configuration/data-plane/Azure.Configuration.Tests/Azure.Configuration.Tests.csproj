@@ -10,6 +10,7 @@
     <PackageReference Include="nunit" Version="3.10.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
     <PackageReference Include="System.Memory" Version="4.5.1" />
+    <PackageReference Include="System.Text.Primitives" Version="0.1.0-preview1-180216-4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Azure.Configuration\Azure.Configuration.csproj" />
@@ -34,10 +35,9 @@
   <ItemGroup Condition="'$(UseProjectReferenceToBase)'==''">
     <Compile Include="..\..\..\Azure.Base\data-plane\Azure.Base.Tests\Testing\TestPool.cs" Link="TestPool.cs" />
   <!-- Package references -->
-  <ItemGroup Condition="'$(UseProjectReferenceToAzureBase)'==''">
+  <ItemGroup Condition="'$(UseProjectReferenceToAzureBase)'!='true'">
     
     <PackageReference Include="Azure.Base" Version="1.0.0-preview.1" />
-    <PackageReference Include="System.Text.Primitives" Version="0.1.0-preview1-180216-4" />
   </ItemGroup>
 
 </Project>
