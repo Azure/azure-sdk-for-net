@@ -13,7 +13,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.Buffers.Text.Encodings;
 
 namespace Azure.ApplicationModel.Configuration.Test
 {
@@ -268,7 +267,7 @@ namespace Azure.ApplicationModel.Configuration.Test
 
         void VerifyUserAgentHeader(HttpRequestMessage request)
         {
-            var expected = Utf8.ToString(HttpHeader.Common.CreateUserAgent("Azure.Configuration", "1.0.0").Value);
+            var expected = Encoding.UTF8.GetString(HttpHeader.Common.CreateUserAgent("Azure.Configuration", "1.0.0").Value.ToArray());
 
             Assert.True(request.Headers.Contains("User-Agent"));
             var userAgentValues = request.Headers.GetValues("User-Agent");
