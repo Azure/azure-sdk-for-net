@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Base
+namespace Azure.Base.Diagnostics
 {
     /// <summary>
     /// Represents errors resulting from misuse of the API. The application code should be changed/fixed.

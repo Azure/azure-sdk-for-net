@@ -5,7 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Text;
 
-namespace Azure.Base
+namespace Azure
 {
     public readonly struct ETag : IEquatable<ETag>
     {
@@ -13,17 +13,27 @@ namespace Azure.Base
 
         public ETag(string etag) => _ascii = Encoding.ASCII.GetBytes(etag);
 
-        public bool Equals(ETag other) => _ascii.AsSpan().SequenceEqual(other._ascii);
+        public bool Equals(ETag other)
+        {
+            if(_ascii == null) {
+                if (other._ascii == null) return true;
+                return false;
+            }
+            if (other._ascii == null) return false;
+            
+            return _ascii.AsSpan().SequenceEqual(other._ascii);
+        }
 
         public static bool operator ==(ETag left, ETag rigth) => left.Equals(rigth);
 
         public static bool operator !=(ETag left, ETag rigth) => !left.Equals(rigth);
 
-        public override string ToString() => Encoding.ASCII.GetString(_ascii);
+        public override string ToString() => _ascii == null ? "<null>" : Encoding.ASCII.GetString(_ascii);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
+            if (_ascii == null) return 0;
             int hash = 17;
             for (int i = 0; i < _ascii.Length; i+=2)
             {

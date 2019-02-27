@@ -5,7 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Text;
 
-namespace Azure.Base
+namespace Azure
 {
     public struct Response<T> : IDisposable
     {

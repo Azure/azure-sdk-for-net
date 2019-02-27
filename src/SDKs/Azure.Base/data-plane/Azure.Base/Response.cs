@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Text;
 
-namespace Azure.Base
+namespace Azure
 {
     public readonly struct Response
     {

@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Base
+namespace Azure
 {
     public struct ETagFilter : IEquatable<ETagFilter>
     {

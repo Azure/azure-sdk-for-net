@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Base
+namespace Azure.Base.Http
 {
     public static class UriExtensions
     {
