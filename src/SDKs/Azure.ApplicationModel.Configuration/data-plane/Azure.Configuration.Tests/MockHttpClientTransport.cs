@@ -267,7 +267,7 @@ namespace Azure.ApplicationModel.Configuration.Test
 
         void VerifyUserAgentHeader(HttpRequestMessage request)
         {
-            var expected = Utf8.ToString(HttpHeader.Common.CreateUserAgent("Azure.Configuration", "1.0.0").Value);
+            var expected = Encoding.UTF8.GetString(HttpHeader.Common.CreateUserAgent("Azure.Configuration", "1.0.0").Value.ToArray());
 
             Assert.True(request.Headers.Contains("User-Agent"));
             var userAgentValues = request.Headers.GetValues("User-Agent");
@@ -368,11 +368,5 @@ namespace Azure.ApplicationModel.Configuration.Test
                 Custom
             }
         }
-    }
-
-    static class Utf8
-    {
-        public static string ToString(ReadOnlySpan<byte> utf8)
-            => Encoding.UTF8.GetString(utf8.ToArray());
     }
 }
