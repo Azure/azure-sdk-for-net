@@ -658,15 +658,14 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             try
             {
-                var options = new RequestOptions() { RequestId = Guid.NewGuid() };
-                Response<ConfigurationSetting> response = await service.SetAsync(s_testSetting, options, CancellationToken.None);
+                Response<ConfigurationSetting> response = await service.SetAsync(s_testSetting);
 
                 Assert.True(response.TryGetHeader("ETag", out string etagHeader));
                 response.TryGetHeader("x-ms-client-request-id", out string requestId);
 
                 ConfigurationSetting setting = response.Result;
                 AssertEqual(s_testSetting, setting);
-                Assert.AreEqual(requestId, options.RequestId.ToString());
+                Assert.IsNotEmpty(requestId);
                 response.Dispose();
             }
             finally

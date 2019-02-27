@@ -49,7 +49,7 @@ namespace Azure.ApplicationModel.Configuration
         [HttpError(typeof(ResponseFailedException), 412, Message = "matching item is already in the store")]
         [HttpError(typeof(ResponseFailedException), 429, Message = "too many requests")]
         [UsageErrors(typeof(ResponseFailedException), 401, 409, 408, 500, 502, 503, 504)]
-        public async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, RequestOptions options = null, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -67,7 +67,7 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
                 message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
-                AddOptionsHeaders(options, message);
+                AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Put, content, _secret, _credential);
 
                 message.SetContent(PipelineContent.Create(content));
@@ -99,6 +99,7 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader(HttpHeader.Common.JsonContentType);
                 message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
                 AddOptionsHeaders(options, message);
+                AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Put, content, _secret, _credential);
 
                 message.SetContent(PipelineContent.Create(content));
@@ -131,6 +132,7 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader(HttpHeader.Common.JsonContentType);
                 message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
                 AddOptionsHeaders(options, message);
+                AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Put, content, _secret, _credential);
 
                 message.SetContent(PipelineContent.Create(content));
@@ -156,6 +158,7 @@ namespace Azure.ApplicationModel.Configuration
 
                 message.AddHeader("Host", uri.Host);
                 AddOptionsHeaders(options, message);
+                AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Delete, content: default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
@@ -179,6 +182,7 @@ namespace Azure.ApplicationModel.Configuration
 
                 message.AddHeader("Host", uri.Host);
                 AddOptionsHeaders(options, message);
+                AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Put, content: default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
@@ -202,6 +206,7 @@ namespace Azure.ApplicationModel.Configuration
 
                 message.AddHeader("Host", uri.Host);
                 AddOptionsHeaders(options, message);
+                AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Delete, content: default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
@@ -226,6 +231,7 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(options, message);
+                AddClientRequestID(message);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
 
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Get, content: default, _secret, _credential);
@@ -250,6 +256,7 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(batchOptions, message);
+                AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Get, content: default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
@@ -273,6 +280,7 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(options, message);
+                AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, PipelineMethod.Get, content: default, _secret, _credential);
 
                 await Pipeline.ProcessAsync(message).ConfigureAwait(false);
