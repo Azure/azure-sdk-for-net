@@ -3,15 +3,16 @@
   <PropertyGroup>
     <PackageId>ServiceBus.Tests</PackageId>
     <Description>ServiceBus.Tests Class Library</Description>
-    <AssemblyName>ServiceBus.Tests</AssemblyName>
+    <AssemblyName>Microsoft.Azure.Management.ServiceBus.Tests</AssemblyName>
     <Version>1.0.0</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RootNamespace>ServiceBus.Tests</RootNamespace>
   </PropertyGroup>
-  
-  <ItemGroup>   
-    <ProjectReference Include="..\Management.ServiceBus\Microsoft.Azure.Management.ServiceBus.csproj" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\Management.ServiceBus\Management.ServiceBus.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

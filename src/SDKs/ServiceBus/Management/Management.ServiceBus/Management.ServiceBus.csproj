@@ -15,6 +15,7 @@
 
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <RootNamespace>Microsoft.Azure.Management.ServiceBus</RootNamespace>
   </PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->
