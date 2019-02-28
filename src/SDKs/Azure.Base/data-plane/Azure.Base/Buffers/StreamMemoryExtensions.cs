@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Base.Buffers
 {
-    public static class StreamMemoryExtensions
+    internal static class AzureBaseBuffersExtensions
     {
         public static async Task WriteAsync(this Stream stream, ReadOnlyMemory<byte> buffer, CancellationToken cancellation = default)
         {

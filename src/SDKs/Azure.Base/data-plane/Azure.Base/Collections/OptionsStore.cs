@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.ComponentModel;
 
-namespace Azure.Base
+namespace Azure.Base.Collections
 {
     struct OptionsStore
     {

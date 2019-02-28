@@ -281,7 +281,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     ETag = new ETagFilter() { IfNoneMatch = new ETag(setting.ETag) }
                 };
 
-                var exception = Assert.ThrowsAsync<ResponseFailedException>(async () =>
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.UpdateAsync(setting, options, CancellationToken.None);
                 });
@@ -315,7 +315,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     ETag = new ETagFilter() { IfMatch = new ETag(eTag) }
                 };
 
-                var exception = Assert.ThrowsAsync<ResponseFailedException>(async () =>
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.UpdateAsync(testSettingDiff, options, CancellationToken.None);
                 });
@@ -387,7 +387,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     ETag = new ETagFilter() { IfNoneMatch = new ETag(setting.ETag) }
                 };
 
-                var exception = Assert.ThrowsAsync<ResponseFailedException>(async () =>
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.GetAsync(setting.Key, options, CancellationToken.None);
                 });
@@ -486,7 +486,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
             
-            var e = Assert.ThrowsAsync<ResponseFailedException>(async () =>
+            var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.GetAsync(key: s_testSetting.Key, options: default, CancellationToken.None);
             });
@@ -629,7 +629,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 var testSettingUpdate = s_testSetting.Clone();
                 testSettingUpdate.Value = "test_value_update";
 
-                var e = Assert.ThrowsAsync<ResponseFailedException>(async () =>
+                var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.UpdateAsync(testSettingUpdate);
                 });

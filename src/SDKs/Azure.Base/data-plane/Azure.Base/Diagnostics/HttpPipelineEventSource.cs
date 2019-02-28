@@ -11,7 +11,7 @@ namespace Azure.Base.Diagnostics
 {
     // TODO (pri 2): make the type internal
     [EventSource(Name = SOURCE_NAME)]
-    public sealed class AzureEventSource : EventSource
+    public sealed class HttpPipelineEventSource : EventSource
     {
         // TODO (pri 3): do we want the same source name for all SDk components?
         const string SOURCE_NAME = "AzureSDK";
@@ -23,9 +23,9 @@ namespace Azure.Base.Diagnostics
         const int LOG_DELAY = 5;
         const int LOG_ERROR_RESPONSE = 6;
                
-        private AzureEventSource() : base(SOURCE_NAME) { }
+        private HttpPipelineEventSource() : base(SOURCE_NAME) { }
 
-        internal static readonly AzureEventSource Singleton = new AzureEventSource();
+        internal static readonly HttpPipelineEventSource Singleton = new HttpPipelineEventSource();
 
         // TODO (pri 2): this logs just the URI. We need more
         [NonEvent]

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Base.Buffers;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -12,16 +13,16 @@ using System.Threading.Tasks;
 
 namespace Azure.Base.Http.Pipeline
 {
-    public class HttpPipelineTransport : PipelineTransport
+    public class HttpClientTransport : HttpPipelineTransport
     {
         static readonly HttpClient s_defaultClient = new HttpClient();
 
         readonly HttpClient _client;
 
-        public HttpPipelineTransport(HttpClient client = null)
+        public HttpClientTransport(HttpClient client = null)
             => _client = client == null ? s_defaultClient : client;
 
-        public sealed override HttpMessage CreateMessage(PipelineOptions options, CancellationToken cancellation)
+        public sealed override HttpMessage CreateMessage(HttpPipeline.Options options, CancellationToken cancellation)
             => new Message(cancellation);
 
         public sealed override async Task ProcessAsync(HttpMessage message)
@@ -42,7 +43,7 @@ namespace Azure.Base.Http.Pipeline
         {
             string _contentTypeHeaderValue;
             string _contentLengthHeaderValue;
-            PipelineContent _requestContent;
+            HttpMessageContent _requestContent;
             HttpRequestMessage _requestMessage;
             HttpResponseMessage _responseMessage;
 
@@ -50,13 +51,13 @@ namespace Azure.Base.Http.Pipeline
                 => _requestMessage = new HttpRequestMessage();
 
             #region Request
-            public override void SetRequestLine(PipelineMethod method, Uri uri)
+            public override void SetRequestLine(HttpVerb method, Uri uri)
             {
                 _requestMessage.Method = ToHttpClientMethod(method);
                 _requestMessage.RequestUri = uri;
             }
 
-            public override PipelineMethod Method => ToPipelineMethod(_requestMessage.Method);
+            public override HttpVerb Method => ToPipelineMethod(_requestMessage.Method);
 
             public override void AddHeader(HttpHeader header)
             {
@@ -81,7 +82,7 @@ namespace Azure.Base.Http.Pipeline
                 }
             }
 
-            public override void SetContent(PipelineContent content)
+            public override void SetContent(HttpMessageContent content)
                 => _requestContent = content;
 
             public HttpRequestMessage BuildRequestMessage()
@@ -144,27 +145,27 @@ namespace Azure.Base.Http.Pipeline
                 _responseMessage!=null? _responseMessage.ToString() : _requestMessage.ToString();
 
             readonly static HttpMethod s_patch = new HttpMethod("PATCH");
-            public static HttpMethod ToHttpClientMethod(PipelineMethod method)
+            public static HttpMethod ToHttpClientMethod(HttpVerb method)
             {
                 switch (method) {
-                    case PipelineMethod.Get: return HttpMethod.Get;
-                    case PipelineMethod.Post: return HttpMethod.Post;
-                    case PipelineMethod.Put: return HttpMethod.Put;
-                    case PipelineMethod.Delete: return HttpMethod.Delete;
-                    case PipelineMethod.Patch: return s_patch;
+                    case HttpVerb.Get: return HttpMethod.Get;
+                    case HttpVerb.Post: return HttpMethod.Post;
+                    case HttpVerb.Put: return HttpMethod.Put;
+                    case HttpVerb.Delete: return HttpMethod.Delete;
+                    case HttpVerb.Patch: return s_patch;
 
                     default: throw new NotImplementedException();
                 }
             }
 
-            public static PipelineMethod ToPipelineMethod(HttpMethod method)
+            public static HttpVerb ToPipelineMethod(HttpMethod method)
             {
                 switch (method.Method) {
-                    case "GET": return PipelineMethod.Get;
-                    case "POST": return PipelineMethod.Post;
-                    case "PUT": return PipelineMethod.Put;
-                    case "DELETE": return PipelineMethod.Delete;
-                    case "PATCH": return PipelineMethod.Patch;
+                    case "GET": return HttpVerb.Get;
+                    case "POST": return HttpVerb.Post;
+                    case "PUT": return HttpVerb.Put;
+                    case "DELETE": return HttpVerb.Delete;
+                    case "PATCH": return HttpVerb.Patch;
 
                     // method argument is not a REST verb
                     default: throw new ArgumentOutOfRangeException(nameof(method));
@@ -173,10 +174,10 @@ namespace Azure.Base.Http.Pipeline
 
             sealed class PipelineContentAdapter : HttpContent
             {
-                PipelineContent _content;
+                HttpMessageContent _content;
                 CancellationToken _cancellation;
 
-                public PipelineContentAdapter(PipelineContent content, CancellationToken cancellation)
+                public PipelineContentAdapter(HttpMessageContent content, CancellationToken cancellation)
                 {
                     Debug.Assert(content != null);
 
