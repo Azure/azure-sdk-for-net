@@ -38,30 +38,28 @@ namespace Azure.ApplicationModel.Configuration
         // TODO (pri 3): do all the methods that call this accept revisions?
         static void AddOptionsHeaders(RequestOptions options, HttpMessage message)
         {
-            var requestId = Guid.NewGuid().ToString();
-            if (options != null)
+            if (options == null) return;
+
+            if (options.ETag.IfMatch != default)
             {
-                if (options.ETag.IfMatch != default)
-                {
-                    message.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
-                }
-
-                if (options.ETag.IfNoneMatch != default)
-                {
-                    message.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
-                }
-
-                if (options.Revision.HasValue)
-                {
-                    var dateTime = options.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                    message.AddHeader(AcceptDatetimeHeader, dateTime);
-                }
-                if (options.RequestId != default)
-                {
-                    requestId = options.RequestId.ToString();
-                }
+                message.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
             }
-            message.AddHeader(ClientRequestIdHeader, requestId);
+
+            if (options.ETag.IfNoneMatch != default)
+            {
+                message.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
+            }
+
+            if (options.Revision.HasValue)
+            {
+                var dateTime = options.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
+                message.AddHeader(AcceptDatetimeHeader, dateTime);
+            }
+        }
+
+        static void AddClientRequestID(HttpMessage message)
+        {
+            message.AddHeader(ClientRequestIdHeader, Guid.NewGuid().ToString());
             message.AddHeader(EchoClientRequestId, "true");
         }
 
