@@ -39,5 +39,10 @@
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
-  <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)')" />
+  <!-- Import default references if this is not set -->
+  <PropertyGroup Condition="'$(ImportDefaultReferences)'==''">
+    <ImportDefaultReferences>true</ImportDefaultReferences>
+  </PropertyGroup>
+
+  <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)') And '$(ImportDefaultReferences)'=='true'" />
 </Project>

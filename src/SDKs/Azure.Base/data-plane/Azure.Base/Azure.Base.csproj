@@ -13,7 +13,7 @@
     <RequiredTargetFrameworks>net461;netstandard2.0</RequiredTargetFrameworks>
 
     <!-- Make sure that we don't pull in additional dependencies during build or package -->
-    <UseExplicitPackageReferences>true</UseExplicitPackageReferences>
+    <ImportDefaultReferences>false</ImportDefaultReferences>
     
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
