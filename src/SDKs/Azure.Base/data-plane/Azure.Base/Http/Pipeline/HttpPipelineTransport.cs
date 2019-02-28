@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Azure.Base.Http.Pipeline
 {
-    public abstract class PipelineTransport : PipelinePolicy
+    public abstract class HttpPipelineTransport : HttpPipelinePolicy
     {
         public abstract Task ProcessAsync(HttpMessage message);
 
-        public abstract HttpMessage CreateMessage(PipelineOptions options, CancellationToken cancellation);
+        public abstract HttpMessage CreateMessage(HttpPipeline.Options options, CancellationToken cancellation);
 
-        public sealed override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<PipelinePolicy> next)
+        public sealed override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> next)
         {
             if (next.Length == 0) await ProcessAsync(message).ConfigureAwait(false);
             else throw new ArgumentOutOfRangeException(nameof(next));

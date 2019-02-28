@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace Azure.Base.Http.Pipeline
 {
-    public abstract class PipelinePolicy
+    public abstract class HttpPipelinePolicy
     {
-        public abstract Task ProcessAsync(HttpMessage message, ReadOnlyMemory<PipelinePolicy> pipeline);
+        public abstract Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected internal static async Task ProcessNextAsync(ReadOnlyMemory<PipelinePolicy> pipeline, HttpMessage message)
+        protected internal static async Task ProcessNextAsync(ReadOnlyMemory<HttpPipelinePolicy> pipeline, HttpMessage message)
         {
             var next = pipeline.Span[0];
             await next.ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
         }
 
-        protected AzureEventSource Log = AzureEventSource.Singleton;
+        protected HttpPipelineEventSource Log = HttpPipelineEventSource.Singleton;
     }
 }

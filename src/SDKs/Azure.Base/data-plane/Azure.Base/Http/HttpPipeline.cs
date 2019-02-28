@@ -9,30 +9,30 @@ using System.Threading.Tasks;
 
 namespace Azure.Base.Http
 {
-    public struct HttpPipeline
+    public partial struct HttpPipeline
     {
-        static readonly PipelineTransport s_defaultTransport = new HttpPipelineTransport();
-        static readonly PipelinePolicy s_defaultLoggingPolicy = new LoggingPolicy();
+        static readonly HttpPipelineTransport s_defaultTransport = new HttpClientTransport();
+        static readonly HttpPipelinePolicy s_defaultLoggingPolicy = new LoggingPolicy();
         // TODO (pri 1): I am not sure this should be here. Maybe we need retry policy per service
-        static readonly PipelinePolicy s_defaultRetryPolicy = RetryPolicy.CreateFixed(3, TimeSpan.Zero,
+        static readonly HttpPipelinePolicy s_defaultRetryPolicy = RetryPolicy.CreateFixed(3, TimeSpan.Zero,
             500, // Internal Server Error 
             504  // Gateway Timeout
         );
 
-        PipelinePolicy[] _pipeline;
+        HttpPipelinePolicy[] _pipeline;
 
-        ReadOnlyMemory<PipelinePolicy> Pipeline => new ReadOnlyMemory<PipelinePolicy>(_pipeline);
+        ReadOnlyMemory<HttpPipelinePolicy> Pipeline => new ReadOnlyMemory<HttpPipelinePolicy>(_pipeline);
 
-        PipelineTransport Transport {
-            get => (PipelineTransport)_pipeline[_pipeline.Length - 1];
+        HttpPipelineTransport Transport {
+            get => (HttpPipelineTransport)_pipeline[_pipeline.Length - 1];
         }
 
         // TODO (pri 1): I am not sure this should be here. Maybe we need one per service, as they have different retry policies
-        public static HttpPipeline Create(PipelineOptions options, string sdkName, string sdkVersion)
+        public static HttpPipeline Create(Options options, string sdkName, string sdkVersion)
         {
             var ua = HttpHeader.Common.CreateUserAgent(sdkName, sdkVersion, options.ApplicationId);
 
-            PipelinePolicy[] policies = new PipelinePolicy[options.PolicyCount + 1];
+            HttpPipelinePolicy[] policies = new HttpPipelinePolicy[options.PolicyCount + 1];
             int index = 0;
 
             if (options.TelemetryPolicy != null) {
@@ -58,16 +58,16 @@ namespace Azure.Base.Http
             return pipeline;
         }
 
-        public HttpMessage CreateMessage(PipelineOptions options, CancellationToken cancellation)
+        public HttpMessage CreateMessage(Options options, CancellationToken cancellation)
             => Transport.CreateMessage(options, cancellation);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async Task ProcessAsync(HttpMessage message)
-            => await PipelinePolicy.ProcessNextAsync(Pipeline, message).ConfigureAwait(false);
+        public async Task SendMessageAsync(HttpMessage message)
+            => await HttpPipelinePolicy.ProcessNextAsync(Pipeline, message).ConfigureAwait(false);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static PipelinePolicy OptionOrDefault(PipelinePolicy policy, PipelinePolicy defaultPolicy)
-            => PipelineOptions.IsDefault(policy) ? defaultPolicy : policy;
+        static HttpPipelinePolicy OptionOrDefault(HttpPipelinePolicy policy, HttpPipelinePolicy defaultPolicy)
+            => Options.IsDefault(policy) ? defaultPolicy : policy;
     }
 }
 

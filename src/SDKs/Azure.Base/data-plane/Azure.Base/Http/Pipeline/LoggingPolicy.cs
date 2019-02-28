@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Base.Http.Pipeline
 {
-    public class LoggingPolicy : PipelinePolicy
+    public class LoggingPolicy : HttpPipelinePolicy
     {
         static readonly long s_delayWarningThreshold = 3000; // 3000ms
         static readonly long s_frequency = Stopwatch.Frequency;
@@ -20,7 +20,7 @@ namespace Azure.Base.Http.Pipeline
             => _excludeErrors = excludeErrors;
 
         // TODO (pri 1): we should remove sensitive information, e.g. keys
-        public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<PipelinePolicy> pipeline)
+        public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             Log.ProcessingRequest(message);
 

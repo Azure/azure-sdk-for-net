@@ -35,7 +35,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private static (ConfigurationClient service, TestPool<byte> pool) CreateTestService(MockHttpClientTransport transport)
         {
-            var options = new PipelineOptions();
+            var options = new HttpPipeline.Options();
             var testPool = new TestPool<byte>();
             options.Pool = testPool;
 
@@ -72,7 +72,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var transport = new GetMockTransport(s_testSetting.Key, default, HttpStatusCode.NotFound);
             var (service, pool) = CreateTestService(transport);
 
-            var e = Assert.ThrowsAsync<ResponseFailedException>(async () =>
+            var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.GetAsync(key: s_testSetting.Key, options: default, CancellationToken.None);
             });
@@ -140,7 +140,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var transport = new DeleteMockTransport(s_testSetting.Key, default, HttpStatusCode.NotFound);
             var (service, pool) = CreateTestService(transport);
 
-            var e = Assert.ThrowsAsync<ResponseFailedException>(async () =>
+            var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.DeleteAsync(key: s_testSetting.Key, options: default, CancellationToken.None);
             });
@@ -207,7 +207,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void ConfiguringTheClient()
         {
-            var options = new PipelineOptions();
+            var options = new HttpPipeline.Options();
             options.ApplicationId = "test_application";
             options.Pool = ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4);
             options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
@@ -215,7 +215,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var client = new ConfigurationClient(connectionString, options);
 
-            var e = Assert.ThrowsAsync<ResponseFailedException>(async () =>
+            var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await client.GetAsync(key: s_testSetting.Key, options: null, CancellationToken.None);
             });

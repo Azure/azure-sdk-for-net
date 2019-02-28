@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Azure.Base.Http.Pipeline
 {
-    public abstract class RetryPolicy : PipelinePolicy
+    public abstract class RetryPolicy : HttpPipelinePolicy
     {
         public static RetryPolicy CreateFixed(int maxRetries, TimeSpan delay, params int[] retriableCodes)
             => new FixedPolicy(retriableCodes, maxRetries, delay);
 
-        public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<PipelinePolicy> pipeline)
+        public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             int attempt = 1;
             while (true)

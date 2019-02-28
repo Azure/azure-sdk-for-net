@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Azure.Base.Testing
 {
-    public class TestLoggingPolicy : PipelinePolicy
+    public class TestLoggingPolicy : HttpPipelinePolicy
     {
         StringBuilder _logged = new StringBuilder();
 
-        public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<PipelinePolicy> pipeline)
+        public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             _logged.Append($"REQUEST: {message.ToString()}\n");
             await ProcessNextAsync(pipeline, message).ConfigureAwait(false);

@@ -175,7 +175,7 @@ namespace Azure.ApplicationModel.Configuration.Test
         }
     }
     
-    abstract class MockHttpClientTransport : HttpPipelineTransport
+    abstract class MockHttpClientTransport : HttpClientTransport
     {
         protected string _responseContent;
         protected HttpMethod _expectedMethod;
