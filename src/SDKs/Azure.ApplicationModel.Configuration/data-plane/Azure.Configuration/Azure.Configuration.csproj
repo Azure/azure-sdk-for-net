@@ -13,6 +13,9 @@
     <!-- This is a workaorund until https://github.com/Azure/azure-sdk-for-net/issues/5214 is addressed -->
     <RequiredTargetFrameworks>net461;netstandard2.0</RequiredTargetFrameworks>
     
+    <!-- Make sure that we don't pull in additional dependencies during build or package -->
+    <UseExplicitPackageReferences>true</UseExplicitPackageReferences>
+
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
     <NoWarn>3021</NoWarn>
