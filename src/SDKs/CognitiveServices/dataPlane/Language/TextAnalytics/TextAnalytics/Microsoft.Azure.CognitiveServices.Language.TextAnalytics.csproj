@@ -18,10 +18,10 @@
     <![CDATA[
     Microsoft Cognitive Services Text Analytics SDK.
     
-    This is a preview package which calls the API version "v2.1"
+    This package calls the API version "v2.1"
 
     Changes in this release:
-    1. Add support for v2.1 API version which includes improvements to the /Entities endpoint.
+    1. Add support for v2.1 API version which includes Entity Type and Wikipedia confidence score to the /Entities endpoint.
     
     ]]></PackageReleaseNotes>
   </PropertyGroup>
