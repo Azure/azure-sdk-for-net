@@ -2,7 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base;
+using Azure;
+using Azure.Base.Diagnostics;
 using Azure.Base.Http;
 using System;
 using System.Net.Http;
