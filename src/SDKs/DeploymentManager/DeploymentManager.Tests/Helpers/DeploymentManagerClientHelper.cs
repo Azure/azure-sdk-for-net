@@ -53,9 +53,16 @@ namespace Management.DeploymentManager.Tests
             ThrowIfTrue(!this.ResourceGroupName.Equals(newlyCreatedGroup.Name), string.Format("resourceGroupName is not equal to {0}", this.ResourceGroupName));
         }
 
-        public void DeleteResourceGroup(string resourceGroupName)
+        public void DeleteResourceGroup(string resourceGroupName = null)
         {
-            _client.ResourceGroups.Delete(resourceGroupName);
+            if (string.IsNullOrEmpty(resourceGroupName))
+            {
+                _client.ResourceGroups.Delete(this.ResourceGroupName);
+            }
+            else
+            {
+                _client.ResourceGroups.Delete(resourceGroupName);
+            }
         }
 
         private void ThrowIfTrue(bool condition, string message)

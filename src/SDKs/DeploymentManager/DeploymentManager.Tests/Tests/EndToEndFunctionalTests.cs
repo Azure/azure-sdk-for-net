@@ -81,6 +81,8 @@ namespace DeploymentManager.Tests
 
                 // Cleanup artifact source
                 this.CleanupArtifactSources(location, deploymentManagerClient, clientHelper);
+
+                clientHelper.DeleteResourceGroup();
             }
         }
 
@@ -92,14 +94,13 @@ namespace DeploymentManager.Tests
             DeploymentManagerClientHelper clientHelper)
         {
             var serviceName = "Contoso_Service";
-            var targetSubscriptionId = Guid.NewGuid().ToString();
             var targetLocation = "East US 2";
 
             var inputService = new ServiceResource(
                 location: location,
                 name: serviceName,
                 targetLocation: targetLocation,
-                targetSubscriptionId: targetSubscriptionId);
+                targetSubscriptionId: subscriptionId);
 
             var createServiceResponse = deploymentManagerClient.Services.CreateOrUpdate(
                 resourceGroupName: clientHelper.ResourceGroupName,
@@ -211,6 +212,8 @@ namespace DeploymentManager.Tests
                 serviceTopologyName: serviceTopologyResource.Name,
                 serviceName: serviceName,
                 serviceUnitName: serviceUnitName);
+
+            clientHelper.DeleteResourceGroup(targetResourceGroup);
 
             var cloudException = Assert.Throws<CloudException>(() => deploymentManagerClient.ServiceUnits.Get(
                 resourceGroupName: clientHelper.ResourceGroupName,

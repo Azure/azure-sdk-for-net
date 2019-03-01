@@ -10,6 +10,7 @@ namespace DeploymentManager.Tests
 {
     public abstract class AdmTestBase : TestBase
     {
+        protected const string subscriptionId = "53012dcb-5039-4e96-8e6c-5d913da1cdb5";
         protected const string artifactSourceName = "sdk-for-net-topologyv1";
         protected const string updatedArtifactSourceName = "sdk-for-net-topologyv2";
         protected const string artifactSourceType = "AzureStorage";

@@ -73,6 +73,8 @@ namespace DeploymentManager.Tests
                     resourceGroupName: clientHelper.ResourceGroupName,
                     stepName: stepName));
                 Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+
+                clientHelper.DeleteResourceGroup();
             }
         }
 
