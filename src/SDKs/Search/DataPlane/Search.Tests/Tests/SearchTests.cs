@@ -11,7 +11,6 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Spatial;
     using Xunit;
 
@@ -44,7 +43,7 @@ namespace Microsoft.Azure.Search.Tests
         protected void TestCanSearchDynamicDocuments()
         {
             SearchIndexClient client = GetClientForQuery();
-            DocumentSearchResult response = client.Documents.Search("*");
+            DocumentSearchResult<Document> response = client.Documents.Search("*");
 
             Assert.Null(response.ContinuationToken);
             Assert.Null(response.Count);
@@ -300,7 +299,7 @@ namespace Microsoft.Azure.Search.Tests
 
             var searchParameters = new SearchParameters() { QueryType = QueryType.Full };
 
-            DocumentSearchResult response =
+            DocumentSearchResult<Document> response =
                 client.Documents.Search(@"/\+\-\&\|\!\(\)\{\}\[\]\^\""\\~\*\?\:\\\//", searchParameters);
 
             Assert.NotNull(response.Results);
@@ -514,7 +513,7 @@ namespace Microsoft.Azure.Search.Tests
             IEnumerable<string> expectedIds =
                 Data.TestDocuments.Select(d => d.HotelId).Concat(hotelIds).OrderBy(id => id);
 
-            DocumentSearchResult response = client.Documents.Search("*", searchParameters);
+            DocumentSearchResult<Document> response = client.Documents.Search("*", searchParameters);
             AssertKeySequenceEqual(response, expectedIds.Take(1000).ToArray());
 
             Assert.NotNull(response.ContinuationToken);
@@ -741,14 +740,13 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestCanSearchWithCustomConverterViaSettings()
         {
-            Action<SearchIndexClient> customizeSettings =
-                client =>
-                {
-                    var converter = new CustomBookConverter<CustomBook>();
-                    converter.Install(client);
-                };
+            void CustomizeSettings(SearchIndexClient client)
+            {
+                var converter = new CustomBookConverter<CustomBook>();
+                converter.Install(client);
+            }
 
-            TestCanSearchWithCustomConverter<CustomBook>(customizeSettings);
+            TestCanSearchWithCustomConverter<CustomBook>(CustomizeSettings);
         }
 
         private void TestCanSearchWithCustomConverter<T>(Action<SearchIndexClient> customizeSettings = null)
@@ -818,7 +816,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expectedKeys, actualKeys);
         }
 
-        private void AssertKeySequenceEqual(DocumentSearchResult response, params string[] expectedKeys)
+        private void AssertKeySequenceEqual(DocumentSearchResult<Document> response, params string[] expectedKeys)
         {
             Assert.NotNull(response.Results);
 
@@ -837,7 +835,7 @@ namespace Microsoft.Azure.Search.Tests
             }
         }
 
-        private void AssertContainsKeys(DocumentSearchResult response, params string[] expectedKeys)
+        private void AssertContainsKeys(DocumentSearchResult<Document> response, params string[] expectedKeys)
         {
             Assert.NotNull(response.Results);
 
@@ -898,26 +896,24 @@ namespace Microsoft.Azure.Search.Tests
 
             public override bool Equals(object obj)
             {
-                NonNullableModel other = obj as NonNullableModel;
-
-                if (other == null)
+                if (!(obj is NonNullableModel other))
                 {
                     return false;
                 }
 
                 return
-                    this.Count == other.Count &&
-                    this.EndDate == other.EndDate &&
-                    this.IsEnabled == other.IsEnabled &&
-                    this.Key == other.Key &&
-                    this.Rating == other.Rating &&
-                    this.Ratio == other.Ratio &&
-                    this.StartDate == other.StartDate;
+                    Count == other.Count &&
+                    EndDate == other.EndDate &&
+                    IsEnabled == other.IsEnabled &&
+                    Key == other.Key &&
+                    Rating == other.Rating &&
+                    Ratio == other.Ratio &&
+                    StartDate == other.StartDate;
             }
 
             public override int GetHashCode()
             {
-                return (this.Key != null) ? this.Key.GetHashCode() : 0;
+                return (Key != null) ? Key.GetHashCode() : 0;
             }
         }
     }

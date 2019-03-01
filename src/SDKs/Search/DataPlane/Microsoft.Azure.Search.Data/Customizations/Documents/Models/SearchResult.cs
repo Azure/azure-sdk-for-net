@@ -7,14 +7,25 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Contains a document found by a search query, plus associated metadata.
     /// </summary>
-    public class SearchResult : SearchResultBase<Document>
+    /// <typeparam name="T">
+    /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
+    /// </typeparam>
+    public class SearchResult<T>
     {
         /// <summary>
-        /// Initializes a new instance of the SearchResult class.
+        /// Gets the relevance score of the document compared to other documents returned by the query.
         /// </summary>
-        public SearchResult()
-        {
-            // Do nothing.
-        }
+        public double Score { get; set; }
+
+        /// <summary>
+        /// Gets text snippets from the document that indicate the matching search terms; null if hit highlighting
+        /// was not enabled for the query.
+        /// </summary>
+        public HitHighlights Highlights { get; set; }
+
+        /// <summary>
+        /// Gets the document found by the search query.
+        /// </summary>
+        public T Document { get; set; }
     }
 }
