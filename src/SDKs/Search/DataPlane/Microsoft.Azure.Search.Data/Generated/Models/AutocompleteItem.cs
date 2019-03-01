@@ -45,16 +45,16 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the completed term.
+        /// Gets the completed term.
         /// </summary>
         [JsonProperty(PropertyName = "text")]
-        public string Text { get; set; }
+        public string Text { get; private set; }
 
         /// <summary>
-        /// Gets or sets the query along with the completed term.
+        /// Gets the query along with the completed term.
         /// </summary>
         [JsonProperty(PropertyName = "queryPlusText")]
-        public string QueryPlusText { get; set; }
+        public string QueryPlusText { get; private set; }
 
     }
 }

@@ -32,11 +32,7 @@ namespace Microsoft.Azure.Search.Serialization
             JToken text = propertyBag["@search.text"];
 
             var docReader = new JTokenReader(propertyBag);
-            return new SuggestResult<T>
-            {
-                Document = serializer.Deserialize<T>(docReader),
-                Text = text.Value<string>()
-            };
+            return new SuggestResult<T>(document: serializer.Deserialize<T>(docReader), text: text.Value<string>());
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotImplementedException();
