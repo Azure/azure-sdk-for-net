@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// <para>
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Search
         /// method.
         /// </para>
         /// </remarks>
-        public static DocumentSearchResult ContinueSearch(
+        public static DocumentSearchResult<Document> ContinueSearch(
             this IDocumentsOperations operations, 
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// <para>
@@ -187,13 +187,13 @@ namespace Microsoft.Azure.Search
         /// method.
         /// </para>
         /// </remarks>
-        public static async Task<DocumentSearchResult> ContinueSearchAsync(
+        public static async Task<DocumentSearchResult<Document>> ContinueSearchAsync(
             this IDocumentsOperations operations,
             SearchContinuationToken continuationToken, 
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            AzureOperationResponse<DocumentSearchResult> result = await operations.ContinueSearchWithHttpMessagesAsync(continuationToken, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<DocumentSearchResult<Document>> result = await operations.ContinueSearchWithHttpMessagesAsync(continuationToken, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
 
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// <para>
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// <para>
@@ -670,11 +670,11 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// </remarks>
-        public static DocumentSearchResult Search(
+        public static DocumentSearchResult<Document> Search(
             this IDocumentsOperations operations,
             string searchText,
             SearchParameters searchParameters = null,
@@ -717,18 +717,18 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// </remarks>
-        public static async Task<DocumentSearchResult> SearchAsync(
+        public static async Task<DocumentSearchResult<Document>> SearchAsync(
             this IDocumentsOperations operations,
             string searchText,
             SearchParameters searchParameters = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            AzureOperationResponse<DocumentSearchResult> result = await operations.SearchWithHttpMessagesAsync(searchText, searchParameters ?? new SearchParameters(), searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<DocumentSearchResult<Document>> result = await operations.SearchWithHttpMessagesAsync(searchText, searchParameters ?? new SearchParameters(), searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
 
@@ -767,7 +767,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// </remarks>
@@ -819,7 +819,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// </remarks>

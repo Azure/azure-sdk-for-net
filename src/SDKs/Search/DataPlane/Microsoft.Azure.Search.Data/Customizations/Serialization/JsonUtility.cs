@@ -29,13 +29,13 @@ namespace Microsoft.Azure.Search.Serialization
 
         public static JsonSerializerSettings CreateTypedDeserializerSettings<T>(JsonSerializerSettings baseSettings)
             where T : class =>
-            CreateDeserializerSettings<SearchResult<T>, SuggestResult<T>, T>(baseSettings);
+            CreateDeserializerSettings<T>(baseSettings);
 
         public static JsonSerializerSettings CreateDocumentSerializerSettings(JsonSerializerSettings baseSettings) =>
             CreateSerializerSettings<Document>(baseSettings, useCamelCase: false);
 
         public static JsonSerializerSettings CreateDocumentDeserializerSettings(JsonSerializerSettings baseSettings) =>
-            CreateDeserializerSettings<SearchResult, SuggestResult<Document>, Document>(baseSettings);
+            CreateDeserializerSettings<Document>(baseSettings);
 
         private static JsonSerializerSettings CreateSerializerSettings<T>(
             JsonSerializerSettings baseSettings,
@@ -60,19 +60,16 @@ namespace Microsoft.Azure.Search.Serialization
             return settings;
         }
 
-        private static JsonSerializerSettings CreateDeserializerSettings<TSearchResult, TSuggestResult, TDoc>(
-            JsonSerializerSettings baseSettings)
-            where TSearchResult : SearchResultBase<TDoc>, new()
-            where TSuggestResult : SuggestResult<TDoc>, new()
-            where TDoc : class
+        private static JsonSerializerSettings CreateDeserializerSettings<T>(JsonSerializerSettings baseSettings)
+            where T : class
         {
             JsonSerializerSettings settings = CopySettings(baseSettings);
             settings.Converters.Add(new GeographyPointConverter());
             settings.Converters.Add(new DocumentConverter());
             settings.Converters.Add(new DateTimeConverter());
             settings.Converters.Add(new DoubleConverter());
-            settings.Converters.Add(new SearchResultConverter<TSearchResult, TDoc>());
-            settings.Converters.Add(new SuggestResultConverter<TDoc>());
+            settings.Converters.Add(new SearchResultConverter<T>());
+            settings.Converters.Add(new SuggestResultConverter<T>());
             settings.DateParseHandling = DateParseHandling.DateTimeOffset;
 
             // Fail when deserializing null into a non-nullable type. This is to avoid silent data corruption issues.

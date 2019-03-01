@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Search
             };
         }
 
-        public Task<AzureOperationResponse<DocumentSearchResult>> ContinueSearchWithHttpMessagesAsync(
+        public Task<AzureOperationResponse<DocumentSearchResult<Document>>> ContinueSearchWithHttpMessagesAsync(
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Search
                     out invocationId,
                     out clientRequestId);
 
-            return DoContinueSearchWithHttpMessagesAsync<DocumentSearchResult, SearchResult, Document>(
+            return DoContinueSearchWithHttpMessagesAsync<Document>(
                 continuationToken.NextLink,
                 continuationToken.NextPageParameters,
                 clientRequestId,
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Search
                     out invocationId,
                     out clientRequestId);
 
-            return DoContinueSearchWithHttpMessagesAsync<DocumentSearchResult<T>, SearchResult<T>, T>(
+            return DoContinueSearchWithHttpMessagesAsync<T>(
                 continuationToken.NextLink,
                 continuationToken.NextPageParameters,
                 clientRequestId,
@@ -252,14 +252,14 @@ namespace Microsoft.Azure.Search
             return result;
         }
 
-        public Task<AzureOperationResponse<DocumentSearchResult>> SearchWithHttpMessagesAsync(
+        public Task<AzureOperationResponse<DocumentSearchResult<Document>>> SearchWithHttpMessagesAsync(
             string searchText,
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            return DoSearchWithHttpMessagesAsync<DocumentSearchResult, SearchResult, Document>(
+            return DoSearchWithHttpMessagesAsync(
                 searchText,
                 searchParameters,
                 searchRequestOptions,
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Search
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
-            return DoSearchWithHttpMessagesAsync<DocumentSearchResult<T>, SearchResult<T>, T>(
+            return DoSearchWithHttpMessagesAsync(
                 searchText,
                 searchParameters,
                 searchRequestOptions,
@@ -363,22 +363,21 @@ namespace Microsoft.Azure.Search
             return customHeaders;
         }
 
-        private DocumentSearchResponsePayload<SearchResult<T>, T> DeserializeForSearch<T>(string payload)
-            where T : class
+        private DocumentSearchResponsePayload<T> DeserializeForSearch<T>(string payload) where T : class
         {
-            return SafeJsonConvert.DeserializeObject<DocumentSearchResponsePayload<SearchResult<T>, T>>(
+            return SafeJsonConvert.DeserializeObject<DocumentSearchResponsePayload<T>>(
                 payload,
-                JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings));
+                JsonUtility.CreateTypedDeserializerSettings<T>(Client.DeserializationSettings));
         }
 
-        private DocumentSearchResponsePayload<SearchResult, Document> DeserializeForSearch(string payload)
+        private DocumentSearchResponsePayload<Document> DeserializeForSearch(string payload)
         {
-            return SafeJsonConvert.DeserializeObject<DocumentSearchResponsePayload<SearchResult, Document>>(
+            return SafeJsonConvert.DeserializeObject<DocumentSearchResponsePayload<Document>>(
                 payload,
-                JsonUtility.CreateDocumentDeserializerSettings(this.Client.DeserializationSettings));
+                JsonUtility.CreateDocumentDeserializerSettings(Client.DeserializationSettings));
         }
 
-        private async Task<AzureOperationResponse<TSearchResult>> DoContinueSearchWithHttpMessagesAsync<TSearchResult, TDocResult, TDoc>(
+        private async Task<AzureOperationResponse<DocumentSearchResult<T>>> DoContinueSearchWithHttpMessagesAsync<T>(
             string url,
             SearchRequest searchRequest,
             Guid? clientRequestId,
@@ -387,10 +386,8 @@ namespace Microsoft.Azure.Search
             bool shouldTrace,
             string invocationId,
             CancellationToken cancellationToken,
-            Func<string, DocumentSearchResponsePayload<TDocResult, TDoc>> deserialize)
-            where TSearchResult : DocumentSearchResultBase<TDocResult, TDoc>, new()
-            where TDocResult : SearchResultBase<TDoc>
-            where TDoc : class
+            Func<string, DocumentSearchResponsePayload<T>> deserialize)
+            where T : class
         {
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
@@ -497,7 +494,7 @@ namespace Microsoft.Azure.Search
             }
 
             // Create Result
-            var result = new AzureOperationResponse<TSearchResult>();
+            var result = new AzureOperationResponse<DocumentSearchResult<T>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("request-id"))
@@ -509,10 +506,10 @@ namespace Microsoft.Azure.Search
             if (statusCode == HttpStatusCode.OK)
             {
                 responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = new TSearchResult();
+                result.Body = new DocumentSearchResult<T>();
                 if (string.IsNullOrEmpty(responseContent) == false)
                 {
-                    DocumentSearchResponsePayload<TDocResult, TDoc> deserializedResult;
+                    DocumentSearchResponsePayload<T> deserializedResult;
                     try
                     {
                         deserializedResult = deserialize(responseContent);
@@ -574,16 +571,14 @@ namespace Microsoft.Azure.Search
             }
         }
 
-        private Task<AzureOperationResponse<TSearchResult>> DoSearchWithHttpMessagesAsync<TSearchResult, TDocResult, TDoc>(
+        private Task<AzureOperationResponse<DocumentSearchResult<T>>> DoSearchWithHttpMessagesAsync<T>(
             string searchText,
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions,
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken,
-            Func<string, DocumentSearchResponsePayload<TDocResult, TDoc>> deserialize)
-            where TSearchResult : DocumentSearchResultBase<TDocResult, TDoc>, new()
-            where TDocResult : SearchResultBase<TDoc>
-            where TDoc : class
+            Func<string, DocumentSearchResponsePayload<T>> deserialize)
+            where T : class
         {
             // Validate
             if (Client.SearchServiceName == null)
@@ -651,7 +646,7 @@ namespace Microsoft.Azure.Search
                 url += "?" + string.Join("&", queryParameters);
             }
 
-            return DoContinueSearchWithHttpMessagesAsync<TSearchResult, TDocResult, TDoc>(
+            return DoContinueSearchWithHttpMessagesAsync<T>(
                 url,
                 searchParameters.ToRequest(searchText),
                 clientRequestId,
@@ -702,9 +697,7 @@ namespace Microsoft.Azure.Search
             return shouldTrace;
         }
 
-        private class DocumentSearchResponsePayload<TResult, TDoc> : SearchContinuationTokenPayload
-            where TResult : SearchResultBase<TDoc>
-            where TDoc : class
+        private class DocumentSearchResponsePayload<T> : SearchContinuationTokenPayload
         {
             [JsonProperty("@odata.count")]
             public long? Count { get; set; }
@@ -716,7 +709,7 @@ namespace Microsoft.Azure.Search
             public FacetResults Facets { get; set; }
 
             [JsonProperty("value")]
-            public List<TResult> Documents { get; set; }
+            public List<SearchResult<T>> Documents { get; set; }
         }
     }
 }

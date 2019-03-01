@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// <para>
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Search
         /// method.
         /// </para>
         /// </remarks>
-        Task<AzureOperationResponse<DocumentSearchResult>> ContinueSearchWithHttpMessagesAsync(
+        Task<AzureOperationResponse<DocumentSearchResult<Document>>> ContinueSearchWithHttpMessagesAsync(
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// <para>
@@ -426,11 +426,11 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// </remarks>
-        Task<AzureOperationResponse<DocumentSearchResult>> SearchWithHttpMessagesAsync(
+        Task<AzureOperationResponse<DocumentSearchResult<Document>>> SearchWithHttpMessagesAsync(
             string searchText,
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
@@ -475,7 +475,7 @@ namespace Microsoft.Azure.Search
         /// <para>
         /// If Azure Search can't include all results in a single response, the response returned will include a
         /// continuation token that can be passed to ContinueSearch to retrieve more results.
-        /// See <c cref="DocumentSearchResultBase&lt;TResult,TDoc&gt;.ContinuationToken">DocumentSearchResultBase.ContinuationToken</c>
+        /// See <c cref="DocumentSearchResult&lt;T&gt;.ContinuationToken">DocumentSearchResult.ContinuationToken</c>
         /// for more information.
         /// </para>
         /// </remarks>
