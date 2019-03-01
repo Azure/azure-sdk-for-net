@@ -122,7 +122,7 @@ namespace DeploymentManager.Tests
             this.ServiceUnitCrudTests(artifactSource, serviceTopologyResource, serviceName, location, deploymentManagerClient, clientHelper);
 
             // Test Update service.
-            service.TargetSubscriptionId = Guid.NewGuid().ToString();
+            service.TargetSubscriptionId = "1e591dc1-b014-4754-b53b-58b67bcab1cd";
             var updatedService = deploymentManagerClient.Services.CreateOrUpdate(
                 resourceGroupName: clientHelper.ResourceGroupName,
                 serviceTopologyName: serviceTopologyResource.Name,

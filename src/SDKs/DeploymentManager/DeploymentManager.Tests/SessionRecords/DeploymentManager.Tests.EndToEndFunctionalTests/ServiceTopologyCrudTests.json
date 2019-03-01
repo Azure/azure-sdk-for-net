@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlZ3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlZ3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjI/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0cf7014b-856c-48ef-aee2-bd5d62b683ee"
+          "722a30c5-3114-4997-9847-063d0fd543ac"
         ],
         "accept-language": [
           "en-US"
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:12:46 GMT"
+          "Fri, 01 Mar 2019 18:31:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -39,13 +39,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "14529455-b367-4f87-b65e-e7bea93e132c"
+          "57ff1d6e-220c-47f8-91e5-afee377dd6c5"
         ],
         "x-ms-correlation-request-id": [
-          "14529455-b367-4f87-b65e-e7bea93e132c"
+          "57ff1d6e-220c-47f8-91e5-afee377dd6c5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031246Z:14529455-b367-4f87-b65e-e7bea93e132c"
+          "WESTUS2:20190301T183114Z:57ff1d6e-220c-47f8-91e5-afee377dd6c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -54,7 +54,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "228"
+          "230"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,17 +63,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309\",\r\n  \"name\": \"deploymentmanager-sdk-net-test-rg309\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262\",\r\n  \"name\": \"deploymentmanager-sdk-net-test-rg6262\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlZ3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlZ3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjI/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3254fb7f-3ba0-4d64-bc99-01414e119e39"
+          "f97884ab-6d2c-4391-b3e8-27667bd9699d"
         ],
         "accept-language": [
           "en-US"
@@ -90,7 +90,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:12:46 GMT"
+          "Fri, 01 Mar 2019 18:31:14 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -99,13 +99,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "26689772-dc11-4b7c-9271-d3577242eaa7"
+          "f6303e8b-c485-4196-9acb-5dfb5bc4d662"
         ],
         "x-ms-correlation-request-id": [
-          "26689772-dc11-4b7c-9271-d3577242eaa7"
+          "f6303e8b-c485-4196-9acb-5dfb5bc4d662"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031247Z:26689772-dc11-4b7c-9271-d3577242eaa7"
+          "WESTUS2:20190301T183114Z:f6303e8b-c485-4196-9acb-5dfb5bc4d662"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -114,7 +114,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "228"
+          "230"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -123,17 +123,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309\",\r\n  \"name\": \"deploymentmanager-sdk-net-test-rg309\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262\",\r\n  \"name\": \"deploymentmanager-sdk-net-test-rg6262\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL2FydGlmYWN0U291cmNlcy9zZGstZm9yLW5ldC10b3BvbG9neXYxP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9hcnRpZmFjdFNvdXJjZXMvc2RrLWZvci1uZXQtdG9wb2xvZ3l2MT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"sourceType\": \"AzureStorage\",\r\n    \"artifactRoot\": \"builds/1.0.0.0\",\r\n    \"authentication\": {\r\n      \"type\": \"Sas\",\r\n      \"properties\": {\r\n        \"sasUri\": \"https://sdktests.blob.core.windows.net/artifacts?st=2019-02-25T21%3A41%3A01Z&se=2025-02-26T21%3A41%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=ikGqTrRIrRB60SwlmGvwxCByQMGERiRGP4cOjFxUdso%3D\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a04979d4-032f-43c4-bfa6-4e8ac9a951da"
+          "fa738c09-1ff7-48ae-8e82-b10627939e2b"
         ],
         "accept-language": [
           "en-US"
@@ -156,19 +156,19 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:12:51 GMT"
+          "Fri, 01 Mar 2019 18:31:14 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-client-request-id": [
-          "a04979d4-032f-43c4-bfa6-4e8ac9a951da"
+          "fa738c09-1ff7-48ae-8e82-b10627939e2b"
         ],
         "x-ms-correlation-request-id": [
-          "e432bebc-738f-4430-b684-a5ef81220dbd"
+          "0daa615f-74cc-4ebd-aea2-377a785378f5"
         ],
         "x-ms-request-id": [
-          "2eebd7de-4713-48f3-83d2-a9cffad7f1f0"
+          "b2966735-8a77-43de-bd64-e16a3027a378"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -183,10 +183,10 @@
           "1199"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031251Z:e432bebc-738f-4430-b684-a5ef81220dbd"
+          "WESTUS2:20190301T183115Z:0daa615f-74cc-4ebd-aea2-377a785378f5"
         ],
         "Content-Length": [
-          "678"
+          "679"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -195,17 +195,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"sourceType\": \"AzureStorage\",\r\n    \"artifactRoot\": \"builds/1.0.0.0\",\r\n    \"authentication\": {\r\n      \"type\": \"Sas\",\r\n      \"properties\": {\r\n        \"sasUri\": \"https://sdktests.blob.core.windows.net/artifacts?st=2019-02-25T21%3A41%3A01Z&se=2025-02-26T21%3A41%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=ikGqTrRIrRB60SwlmGvwxCByQMGERiRGP4cOjFxUdso%3D\"\r\n      }\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/artifactSources\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n  \"name\": \"sdk-for-net-topologyv1\",\r\n  \"location\": \"Central US\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"sourceType\": \"AzureStorage\",\r\n    \"artifactRoot\": \"builds/1.0.0.0\",\r\n    \"authentication\": {\r\n      \"type\": \"Sas\",\r\n      \"properties\": {\r\n        \"sasUri\": \"https://sdktests.blob.core.windows.net/artifacts?st=2019-02-25T21%3A41%3A01Z&se=2025-02-26T21%3A41%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=ikGqTrRIrRB60SwlmGvwxCByQMGERiRGP4cOjFxUdso%3D\"\r\n      }\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/artifactSources\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n  \"name\": \"sdk-for-net-topologyv1\",\r\n  \"location\": \"Central US\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0P2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldD9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3217336f-a59c-4160-96c0-92e57c9504c9"
+          "f8faa67d-558d-4917-bc54-0661396a51e7"
         ],
         "accept-language": [
           "en-US"
@@ -220,7 +220,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "265"
+          "266"
         ]
       },
       "ResponseHeaders": {
@@ -228,361 +228,19 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:12:53 GMT"
+          "Fri, 01 Mar 2019 18:31:19 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-client-request-id": [
-          "3217336f-a59c-4160-96c0-92e57c9504c9"
+          "f8faa67d-558d-4917-bc54-0661396a51e7"
         ],
         "x-ms-correlation-request-id": [
-          "434b3248-05d0-4fb6-b639-02d3edc01beb"
+          "3fae91b3-cf02-4ff6-a26f-e6970ed41cf4"
         ],
         "x-ms-request-id": [
-          "def17f70-c774-40d0-97f7-1a37a9bb1af6"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Frame-Options": [
-          "DENY"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031253Z:434b3248-05d0-4fb6-b639-02d3edc01beb"
-        ],
-        "Content-Length": [
-          "563"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/servicetopologies\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n  \"name\": \"sdk-for-net\",\r\n  \"location\": \"Central US\"\r\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0P2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv2\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "f49646b6-964a-4dd5-a11f-f483f48c6983"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "265"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-store, no-cache"
-        ],
-        "Date": [
-          "Fri, 01 Mar 2019 03:18:33 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-client-request-id": [
-          "f49646b6-964a-4dd5-a11f-f483f48c6983"
-        ],
-        "x-ms-correlation-request-id": [
-          "5b0dd9d3-ff94-4a3f-ba52-804555757205"
-        ],
-        "x-ms-request-id": [
-          "1c0e1e55-aea2-49ec-9ce2-1439947944a6"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Frame-Options": [
-          "DENY"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031833Z:5b0dd9d3-ff94-4a3f-ba52-804555757205"
-        ],
-        "Content-Length": [
-          "563"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv2\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/servicetopologies\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n  \"name\": \"sdk-for-net\",\r\n  \"location\": \"Central US\"\r\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0P2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "5eac8f76-650e-4694-bbac-8412ff3b036c"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-store, no-cache"
-        ],
-        "Date": [
-          "Fri, 01 Mar 2019 03:12:54 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-client-request-id": [
-          "5eac8f76-650e-4694-bbac-8412ff3b036c"
-        ],
-        "x-ms-correlation-request-id": [
-          "a55010e7-ac60-460c-baa0-8a8c89750f89"
-        ],
-        "x-ms-request-id": [
-          "a6a11c76-a899-471f-b18c-4eaef924910c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Frame-Options": [
-          "DENY"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031255Z:a55010e7-ac60-460c-baa0-8a8c89750f89"
-        ],
-        "Content-Length": [
-          "531"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/servicetopologies\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n  \"name\": \"sdk-for-net\",\r\n  \"location\": \"Central US\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0P2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "51e74eba-95ff-43ca-b465-6334aa5b0342"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 01 Mar 2019 03:18:35 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-failure-cause": [
-          "gateway"
-        ],
-        "x-ms-request-id": [
-          "e024479c-3d0b-48a4-8778-6013acb693f9"
-        ],
-        "x-ms-correlation-request-id": [
-          "e024479c-3d0b-48a4-8778-6013acb693f9"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031835Z:e024479c-3d0b-48a4-8778-6013acb693f9"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Content-Length": [
-          "197"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DeploymentManager/serviceTopologies/sdk-for-net' under resource group 'deploymentmanager-sdk-net-test-rg309' was not found.\"\r\n  }\r\n}",
-      "StatusCode": 404
-    },
-    {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0L3NlcnZpY2VzL0NvbnRvc29fU2VydmljZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"targetLocation\": \"East US 2\",\r\n    \"targetSubscriptionId\": \"53012dcb-5039-4e96-8e6c-5d913da1cdb5\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "09dd0899-04ee-43d2-a17a-fdb4aedb46b6"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "161"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-store, no-cache"
-        ],
-        "Date": [
-          "Fri, 01 Mar 2019 03:12:56 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-client-request-id": [
-          "09dd0899-04ee-43d2-a17a-fdb4aedb46b6"
-        ],
-        "x-ms-correlation-request-id": [
-          "4a761d51-7af2-4928-b2d7-4b815ed7f6b8"
-        ],
-        "x-ms-request-id": [
-          "6cdda9ff-b74a-4391-bfc0-ee322f031214"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Frame-Options": [
-          "DENY"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031257Z:4a761d51-7af2-4928-b2d7-4b815ed7f6b8"
-        ],
-        "Content-Length": [
-          "490"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetSubscriptionId\": \"53012dcb-5039-4e96-8e6c-5d913da1cdb5\",\r\n    \"targetLocation\": \"East US 2\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service\",\r\n  \"name\": \"Contoso_Service\",\r\n  \"location\": \"Central US\"\r\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0L3NlcnZpY2VzL0NvbnRvc29fU2VydmljZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"targetLocation\": \"East US 2\",\r\n    \"targetSubscriptionId\": \"1e591dc1-b014-4754-b53b-58b67bcab1cd\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "6b15e52d-ba6b-48f7-b783-77e86f4f6645"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "161"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-store, no-cache"
-        ],
-        "Date": [
-          "Fri, 01 Mar 2019 03:18:26 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-client-request-id": [
-          "6b15e52d-ba6b-48f7-b783-77e86f4f6645"
-        ],
-        "x-ms-correlation-request-id": [
-          "18d5f636-1469-4737-8243-0028acbbbf2d"
-        ],
-        "x-ms-request-id": [
-          "38f87921-e128-4ac5-8f46-eaf1c08d8899"
+          "1c7fdff1-4f9f-4bfb-aaf4-ce640158b7b5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -597,10 +255,10 @@
           "1199"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031827Z:18d5f636-1469-4737-8243-0028acbbbf2d"
+          "WESTUS2:20190301T183120Z:3fae91b3-cf02-4ff6-a26f-e6970ed41cf4"
         ],
         "Content-Length": [
-          "490"
+          "565"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -609,17 +267,89 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetSubscriptionId\": \"1e591dc1-b014-4754-b53b-58b67bcab1cd\",\r\n    \"targetLocation\": \"East US 2\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service\",\r\n  \"name\": \"Contoso_Service\",\r\n  \"location\": \"Central US\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/servicetopologies\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n  \"name\": \"sdk-for-net\",\r\n  \"location\": \"Central US\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0L3NlcnZpY2VzL0NvbnRvc29fU2VydmljZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldD9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv2\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8f661efe-7942-4f87-bc6d-d3cb1f2ce8dc"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "266"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 01 Mar 2019 18:37:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "8f661efe-7942-4f87-bc6d-d3cb1f2ce8dc"
+        ],
+        "x-ms-correlation-request-id": [
+          "2f966381-e7dc-4719-81b9-c7dcec09ad5b"
+        ],
+        "x-ms-request-id": [
+          "59f6604a-6cbb-4f70-ac32-45068a20793d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "DENY"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190301T183727Z:2f966381-e7dc-4719-81b9-c7dcec09ad5b"
+        ],
+        "Content-Length": [
+          "565"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv2\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/servicetopologies\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n  \"name\": \"sdk-for-net\",\r\n  \"location\": \"Central US\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldD9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ce151556-55b0-4669-a4f1-38162594c483"
+          "38fb45c1-6976-4193-8b55-506561221051"
         ],
         "accept-language": [
           "en-US"
@@ -636,19 +366,19 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:12:57 GMT"
+          "Fri, 01 Mar 2019 18:31:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-client-request-id": [
-          "ce151556-55b0-4669-a4f1-38162594c483"
+          "38fb45c1-6976-4193-8b55-506561221051"
         ],
         "x-ms-correlation-request-id": [
-          "5349aa80-4dd1-4edc-928c-7d6de43d64ef"
+          "9fa68dc7-3fb6-4575-8b44-d8a8c7119a60"
         ],
         "x-ms-request-id": [
-          "1daab630-1953-48ab-8425-721323795c43"
+          "033d392e-5646-4ab6-abf5-71a130fc3057"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -663,10 +393,10 @@
           "11998"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031258Z:5349aa80-4dd1-4edc-928c-7d6de43d64ef"
+          "WESTUS2:20190301T183140Z:9fa68dc7-3fb6-4575-8b44-d8a8c7119a60"
         ],
         "Content-Length": [
-          "490"
+          "533"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -675,17 +405,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetSubscriptionId\": \"53012dcb-5039-4e96-8e6c-5d913da1cdb5\",\r\n    \"targetLocation\": \"East US 2\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service\",\r\n  \"name\": \"Contoso_Service\",\r\n  \"location\": \"Central US\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/servicetopologies\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n  \"name\": \"sdk-for-net\",\r\n  \"location\": \"Central US\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0L3NlcnZpY2VzL0NvbnRvc29fU2VydmljZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldD9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5bfd49ad-eeb2-4053-8a43-7ed6f036196e"
+          "522132e1-4ae2-4527-9e59-b3bbe714d8e6"
         ],
         "accept-language": [
           "en-US"
@@ -702,7 +432,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:18:28 GMT"
+          "Fri, 01 Mar 2019 18:37:28 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -711,13 +441,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "6d7f3a10-5095-47f3-bdce-936242e950d8"
+          "6a0f0535-998e-4158-a60b-f6ea379a6fb3"
         ],
         "x-ms-correlation-request-id": [
-          "6d7f3a10-5095-47f3-bdce-936242e950d8"
+          "6a0f0535-998e-4158-a60b-f6ea379a6fb3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031829Z:6d7f3a10-5095-47f3-bdce-936242e950d8"
+          "WESTUS2:20190301T183729Z:6a0f0535-998e-4158-a60b-f6ea379a6fb3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -726,7 +456,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "222"
+          "198"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -735,17 +465,287 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service' under resource group 'deploymentmanager-sdk-net-test-rg309' was not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DeploymentManager/serviceTopologies/sdk-for-net' under resource group 'deploymentmanager-sdk-net-test-rg6262' was not found.\"\r\n  }\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0L3NlcnZpY2VzL0NvbnRvc29fU2VydmljZS9zZXJ2aWNlVW5pdHMvQ29udG9zb19XZWJBcHA/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldC9zZXJ2aWNlcy9Db250b3NvX1NlcnZpY2U/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"targetLocation\": \"East US 2\",\r\n    \"targetSubscriptionId\": \"53012dcb-5039-4e96-8e6c-5d913da1cdb5\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "eaa413ca-45c1-40d7-b2a1-c6b9f3c43a4c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "161"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 01 Mar 2019 18:31:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "eaa413ca-45c1-40d7-b2a1-c6b9f3c43a4c"
+        ],
+        "x-ms-correlation-request-id": [
+          "f6cdf9af-9976-43f6-8711-7623f8fbb111"
+        ],
+        "x-ms-request-id": [
+          "b85dddcf-2c9b-4aef-beff-c20f960ecf9f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "DENY"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190301T183141Z:f6cdf9af-9976-43f6-8711-7623f8fbb111"
+        ],
+        "Content-Length": [
+          "491"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetSubscriptionId\": \"53012dcb-5039-4e96-8e6c-5d913da1cdb5\",\r\n    \"targetLocation\": \"East US 2\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service\",\r\n  \"name\": \"Contoso_Service\",\r\n  \"location\": \"Central US\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldC9zZXJ2aWNlcy9Db250b3NvX1NlcnZpY2U/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"targetLocation\": \"East US 2\",\r\n    \"targetSubscriptionId\": \"1e591dc1-b014-4754-b53b-58b67bcab1cd\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0cb44567-0603-423b-8aad-252fb207f27c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "161"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 01 Mar 2019 18:37:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "0cb44567-0603-423b-8aad-252fb207f27c"
+        ],
+        "x-ms-correlation-request-id": [
+          "e5ac9788-8b11-4f19-a39c-9ae737007576"
+        ],
+        "x-ms-request-id": [
+          "b1d811b8-8e29-41a4-bb52-d96f2c0c00a0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "DENY"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190301T183724Z:e5ac9788-8b11-4f19-a39c-9ae737007576"
+        ],
+        "Content-Length": [
+          "491"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetSubscriptionId\": \"1e591dc1-b014-4754-b53b-58b67bcab1cd\",\r\n    \"targetLocation\": \"East US 2\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service\",\r\n  \"name\": \"Contoso_Service\",\r\n  \"location\": \"Central US\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldC9zZXJ2aWNlcy9Db250b3NvX1NlcnZpY2U/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9c1d88ec-99c4-4ed4-9c9f-5fb080c1c152"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 01 Mar 2019 18:31:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "9c1d88ec-99c4-4ed4-9c9f-5fb080c1c152"
+        ],
+        "x-ms-correlation-request-id": [
+          "04a8ee30-df78-49d3-9a4a-e92471531c8e"
+        ],
+        "x-ms-request-id": [
+          "88843b12-607e-42d6-9b21-fb63cc80da34"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "DENY"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190301T183142Z:04a8ee30-df78-49d3-9a4a-e92471531c8e"
+        ],
+        "Content-Length": [
+          "491"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetSubscriptionId\": \"53012dcb-5039-4e96-8e6c-5d913da1cdb5\",\r\n    \"targetLocation\": \"East US 2\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service\",\r\n  \"name\": \"Contoso_Service\",\r\n  \"location\": \"Central US\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldC9zZXJ2aWNlcy9Db250b3NvX1NlcnZpY2U/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6920aa0a-bec8-4719-88a8-d14c2518ae60"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 01 Mar 2019 18:37:25 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "1ad76133-decb-41d4-977e-1b88b2c23118"
+        ],
+        "x-ms-correlation-request-id": [
+          "1ad76133-decb-41d4-977e-1b88b2c23118"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190301T183725Z:1ad76133-decb-41d4-977e-1b88b2c23118"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "223"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service' under resource group 'deploymentmanager-sdk-net-test-rg6262' was not found.\"\r\n  }\r\n}",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldC9zZXJ2aWNlcy9Db250b3NvX1NlcnZpY2Uvc2VydmljZVVuaXRzL0NvbnRvc29fV2ViQXBwP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n    \"deploymentMode\": \"Incremental\",\r\n    \"artifacts\": {\r\n      \"templateArtifactSourceRelativePath\": \"Templates/WebApp.Template.json\",\r\n      \"parametersArtifactSourceRelativePath\": \"Parameters/WebApp.Parameters.json\"\r\n    }\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7cff3ea2-50c7-43d3-9a74-a7dd74a68adb"
+          "ad73afe5-856f-4b7d-8128-eeaeacc8f63a"
         ],
         "accept-language": [
           "en-US"
@@ -768,28 +768,28 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:13:02 GMT"
+          "Fri, 01 Mar 2019 18:31:46 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/operationResults/39c3c8d1-3879-4997-a486-5dbfcf4f83d3?api-version=2018-09-01-preview"
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/operationResults/411bace7-f21f-41bd-a21a-b25d1056623a?api-version=2018-09-01-preview"
         ],
         "Retry-After": [
-          "35"
+          "57"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/operationResults/39c3c8d1-3879-4997-a486-5dbfcf4f83d3?api-version=2018-09-01-preview"
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/operationResults/411bace7-f21f-41bd-a21a-b25d1056623a?api-version=2018-09-01-preview"
         ],
         "x-ms-client-request-id": [
-          "7cff3ea2-50c7-43d3-9a74-a7dd74a68adb"
+          "ad73afe5-856f-4b7d-8128-eeaeacc8f63a"
         ],
         "x-ms-correlation-request-id": [
-          "363c4e76-5cad-4650-bd1a-490306512565"
+          "96688ec0-ae0f-4adf-9559-a1dd79c620d0"
         ],
         "x-ms-request-id": [
-          "83aa81d3-157a-43f6-9215-bbfe24e99327"
+          "2e4655ba-666f-4036-a3d5-97938098bd32"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -801,13 +801,13 @@
           "DENY"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1199"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031302Z:363c4e76-5cad-4650-bd1a-490306512565"
+          "WESTUS2:20190301T183146Z:96688ec0-ae0f-4adf-9559-a1dd79c620d0"
         ],
         "Content-Length": [
-          "679"
+          "680"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -816,17 +816,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n    \"deploymentMode\": \"Incremental\",\r\n    \"artifacts\": {\r\n      \"templateArtifactSourceRelativePath\": \"Templates/WebApp.Template.json\",\r\n      \"parametersArtifactSourceRelativePath\": \"Parameters/WebApp.Parameters.json\"\r\n    },\r\n    \"provisioningState\": \"Running\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services/serviceUnits\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n  \"name\": \"Contoso_WebApp\",\r\n  \"location\": \"Central US\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n    \"deploymentMode\": \"Incremental\",\r\n    \"artifacts\": {\r\n      \"templateArtifactSourceRelativePath\": \"Templates/WebApp.Template.json\",\r\n      \"parametersArtifactSourceRelativePath\": \"Parameters/WebApp.Parameters.json\"\r\n    },\r\n    \"provisioningState\": \"Running\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services/serviceUnits\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n  \"name\": \"Contoso_WebApp\",\r\n  \"location\": \"Central US\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0L3NlcnZpY2VzL0NvbnRvc29fU2VydmljZS9zZXJ2aWNlVW5pdHMvQ29udG9zb19XZWJBcHA/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldC9zZXJ2aWNlcy9Db250b3NvX1NlcnZpY2Uvc2VydmljZVVuaXRzL0NvbnRvc29fV2ViQXBwP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n    \"deploymentMode\": \"Complete\",\r\n    \"artifacts\": {\r\n      \"templateArtifactSourceRelativePath\": \"Templates/WebApp.Template.Dup.json\",\r\n      \"parametersArtifactSourceRelativePath\": \"Parameters/WebApp.Parameters.Dup.json\"\r\n    }\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "203eb4cf-f6dc-4314-8fde-3525b66e88db"
+          "06878000-2ccd-4933-8554-7df7edcb38d2"
         ],
         "accept-language": [
           "en-US"
@@ -849,28 +849,28 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:15:42 GMT"
+          "Fri, 01 Mar 2019 18:34:36 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/operationResults/4d387769-02eb-41e2-8f90-dd542eb8782e?api-version=2018-09-01-preview"
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/operationResults/6db8163c-2a66-4fde-b679-8f5d0756172a?api-version=2018-09-01-preview"
         ],
         "Retry-After": [
-          "48"
+          "53"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/operationResults/4d387769-02eb-41e2-8f90-dd542eb8782e?api-version=2018-09-01-preview"
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/operationResults/6db8163c-2a66-4fde-b679-8f5d0756172a?api-version=2018-09-01-preview"
         ],
         "x-ms-client-request-id": [
-          "203eb4cf-f6dc-4314-8fde-3525b66e88db"
+          "06878000-2ccd-4933-8554-7df7edcb38d2"
         ],
         "x-ms-correlation-request-id": [
-          "c0609e66-272f-4308-a639-46e2888e5d14"
+          "bac787cc-98fb-4e75-9c6e-18e9c8a85ff0"
         ],
         "x-ms-request-id": [
-          "9a4f381c-373f-4908-bb4f-2ef3617fc10b"
+          "07886322-7216-4afb-a9e5-d9f9fa73cc11"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -882,13 +882,13 @@
           "DENY"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+          "1197"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031543Z:c0609e66-272f-4308-a639-46e2888e5d14"
+          "WESTUS2:20190301T183437Z:bac787cc-98fb-4e75-9c6e-18e9c8a85ff0"
         ],
         "Content-Length": [
-          "684"
+          "685"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -897,12 +897,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n    \"deploymentMode\": \"Complete\",\r\n    \"artifacts\": {\r\n      \"templateArtifactSourceRelativePath\": \"Templates/WebApp.Template.Dup.json\",\r\n      \"parametersArtifactSourceRelativePath\": \"Parameters/WebApp.Parameters.Dup.json\"\r\n    },\r\n    \"provisioningState\": \"Running\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services/serviceUnits\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n  \"name\": \"Contoso_WebApp\",\r\n  \"location\": \"Central US\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n    \"deploymentMode\": \"Complete\",\r\n    \"artifacts\": {\r\n      \"templateArtifactSourceRelativePath\": \"Templates/WebApp.Template.Dup.json\",\r\n      \"parametersArtifactSourceRelativePath\": \"Parameters/WebApp.Parameters.Dup.json\"\r\n    },\r\n    \"provisioningState\": \"Running\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services/serviceUnits\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n  \"name\": \"Contoso_WebApp\",\r\n  \"location\": \"Central US\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/operationResults/39c3c8d1-3879-4997-a486-5dbfcf4f83d3?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlZ3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL29wZXJhdGlvblJlc3VsdHMvMzljM2M4ZDEtMzg3OS00OTk3LWE0ODYtNWRiZmNmNGY4M2QzP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/operationResults/411bace7-f21f-41bd-a21a-b25d1056623a?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlZ3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9vcGVyYXRpb25SZXN1bHRzLzQxMWJhY2U3LWYyMWYtNDFiZC1hMjFhLWIyNWQxMDU2NjIzYT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -918,25 +918,151 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:13:38 GMT"
+          "Fri, 01 Mar 2019 18:32:43 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview"
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview"
         ],
         "Retry-After": [
           "30"
         ],
         "x-ms-client-request-id": [
-          "6abc7fb2-a73c-4d1f-ad8d-1ffdc4874592"
+          "4da77c14-b7cc-4ad3-8ea6-fb61933ee9d5"
         ],
         "x-ms-correlation-request-id": [
-          "488d7a7c-61fc-44d0-b8e7-8cdae9c3660f"
+          "2155e244-b548-43cd-811c-c1215f4eef33"
         ],
         "x-ms-request-id": [
-          "44a0ca5d-dcf8-4ac8-b7f8-4eb6adb0d5c4"
+          "85f64fa3-d9be-48a6-b228-94350224710a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "DENY"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190301T183244Z:2155e244-b548-43cd-811c-c1215f4eef33"
+        ],
+        "Content-Length": [
+          "106"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-03-01T18:31:45.277Z\",\r\n  \"endTime\": \"2019-03-01T18:31:50.566Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldC9zZXJ2aWNlcy9Db250b3NvX1NlcnZpY2Uvc2VydmljZVVuaXRzL0NvbnRvc29fV2ViQXBwP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 01 Mar 2019 18:32:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "99bccb3b-9622-4a6e-9716-aa642c87bacd"
+        ],
+        "x-ms-correlation-request-id": [
+          "3ed0eb3d-b439-4353-8571-03abaec847c3"
+        ],
+        "x-ms-request-id": [
+          "7d4e57e9-f41f-4a2b-b116-c0571b7431d2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "DENY"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190301T183245Z:3ed0eb3d-b439-4353-8571-03abaec847c3"
+        ],
+        "Content-Length": [
+          "682"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n    \"deploymentMode\": \"Incremental\",\r\n    \"artifacts\": {\r\n      \"templateArtifactSourceRelativePath\": \"Templates/WebApp.Template.json\",\r\n      \"parametersArtifactSourceRelativePath\": \"Parameters/WebApp.Parameters.json\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services/serviceUnits\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n  \"name\": \"Contoso_WebApp\",\r\n  \"location\": \"Central US\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldC9zZXJ2aWNlcy9Db250b3NvX1NlcnZpY2Uvc2VydmljZVVuaXRzL0NvbnRvc29fV2ViQXBwP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "627fff81-0a5d-4746-8cc7-6bb31207b085"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 01 Mar 2019 18:32:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-client-request-id": [
+          "627fff81-0a5d-4746-8cc7-6bb31207b085"
+        ],
+        "x-ms-correlation-request-id": [
+          "102106b8-a48e-4d70-ba20-5e46537dad77"
+        ],
+        "x-ms-request-id": [
+          "eba543ed-3266-4fff-8cc0-fadca0b9a3d8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -951,10 +1077,10 @@
           "11997"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031338Z:488d7a7c-61fc-44d0-b8e7-8cdae9c3660f"
+          "WESTUS2:20190301T183245Z:102106b8-a48e-4d70-ba20-5e46537dad77"
         ],
         "Content-Length": [
-          "106"
+          "682"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -963,12 +1089,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-03-01T03:13:00.844Z\",\r\n  \"endTime\": \"2019-03-01T03:13:05.448Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n    \"deploymentMode\": \"Incremental\",\r\n    \"artifacts\": {\r\n      \"templateArtifactSourceRelativePath\": \"Templates/WebApp.Template.json\",\r\n      \"parametersArtifactSourceRelativePath\": \"Parameters/WebApp.Parameters.json\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services/serviceUnits\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n  \"name\": \"Contoso_WebApp\",\r\n  \"location\": \"Central US\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0L3NlcnZpY2VzL0NvbnRvc29fU2VydmljZS9zZXJ2aWNlVW5pdHMvQ29udG9zb19XZWJBcHA/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldC9zZXJ2aWNlcy9Db250b3NvX1NlcnZpY2Uvc2VydmljZVVuaXRzL0NvbnRvc29fV2ViQXBwP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -984,19 +1110,226 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:13:39 GMT"
+          "Fri, 01 Mar 2019 18:35:31 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-client-request-id": [
-          "df02f61a-27d6-486c-af33-b7fd2d48a96a"
+          "521f0c22-6deb-4953-8fd0-15619347bb99"
         ],
         "x-ms-correlation-request-id": [
-          "98d6454b-bac5-4a86-a6c1-4f2fc3b7cea1"
+          "c77c7bcb-4ed9-47d4-9682-0eb7c2c16c8d"
         ],
         "x-ms-request-id": [
-          "a2014789-522c-47fc-92fa-c0dbcaa1883f"
+          "eac4c86b-8582-4575-b549-0177835f6f07"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "DENY"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11990"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190301T183531Z:c77c7bcb-4ed9-47d4-9682-0eb7c2c16c8d"
+        ],
+        "Content-Length": [
+          "687"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n    \"deploymentMode\": \"Complete\",\r\n    \"artifacts\": {\r\n      \"templateArtifactSourceRelativePath\": \"Templates/WebApp.Template.Dup.json\",\r\n      \"parametersArtifactSourceRelativePath\": \"Parameters/WebApp.Parameters.Dup.json\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services/serviceUnits\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n  \"name\": \"Contoso_WebApp\",\r\n  \"location\": \"Central US\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldC9zZXJ2aWNlcy9Db250b3NvX1NlcnZpY2Uvc2VydmljZVVuaXRzL0NvbnRvc29fV2ViQXBwP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e4d9c969-e690-4816-9fc5-7dec9c92da19"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 01 Mar 2019 18:37:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "2a5c9ba2-0a97-4788-a549-6bdcee6f5df9"
+        ],
+        "x-ms-correlation-request-id": [
+          "2a5c9ba2-0a97-4788-a549-6bdcee6f5df9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190301T183723Z:2a5c9ba2-0a97-4788-a549-6bdcee6f5df9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "251"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp' under resource group 'deploymentmanager-sdk-net-test-rg6262' was not found.\"\r\n  }\r\n}",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9yb2xsb3V0cy9yb2xsb3V0MT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"identityIds\": [\r\n      \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/adm-sdk-tests/providers/Microsoft.ManagedIdentity/userassignedidentities/admsdktests\"\r\n    ]\r\n  },\r\n  \"properties\": {\r\n    \"buildVersion\": \"1.0.0.0\",\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"targetServiceTopologyId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n    \"stepGroups\": [\r\n      {\r\n        \"name\": \"First_Region\",\r\n        \"deploymentTargetId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "29688ea4-e537-4df3-945d-68d17ff1a271"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "1087"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 01 Mar 2019 18:32:47 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/operationResults/44ae5481-f4bd-491a-bcd9-82d827507c59?api-version=2018-09-01-preview"
+        ],
+        "Retry-After": [
+          "42"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/operationResults/44ae5481-f4bd-491a-bcd9-82d827507c59?api-version=2018-09-01-preview"
+        ],
+        "x-ms-client-request-id": [
+          "29688ea4-e537-4df3-945d-68d17ff1a271"
+        ],
+        "x-ms-correlation-request-id": [
+          "39325356-c636-4ed8-a699-e8771279f684"
+        ],
+        "x-ms-request-id": [
+          "44ae5481-f4bd-491a-bcd9-82d827507c59"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "DENY"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190301T183248Z:39325356-c636-4ed8-a699-e8771279f684"
+        ],
+        "Content-Length": [
+          "1332"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"identityIds\": [\r\n      \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/adm-sdk-tests/providers/Microsoft.ManagedIdentity/userassignedidentities/admsdktests\"\r\n    ]\r\n  },\r\n  \"properties\": {\r\n    \"buildVersion\": \"1.0.0.0\",\r\n    \"targetServiceTopologyId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"stepGroups\": [\r\n      {\r\n        \"name\": \"First_Region\",\r\n        \"deploymentTargetId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n        \"preDeploymentSteps\": [],\r\n        \"postDeploymentSteps\": [],\r\n        \"dependsOnStepGroups\": []\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Running\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/rollouts\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1\",\r\n  \"name\": \"rollout1\",\r\n  \"location\": \"Central US\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/operationResults/44ae5481-f4bd-491a-bcd9-82d827507c59?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlZ3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9vcGVyYXRpb25SZXN1bHRzLzQ0YWU1NDgxLWY0YmQtNDkxYS1iY2Q5LTgyZDgyNzUwN2M1OT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Fri, 01 Mar 2019 18:33:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "x-ms-client-request-id": [
+          "8619df66-12db-4577-844f-cb1e3e57a814"
+        ],
+        "x-ms-correlation-request-id": [
+          "7acd95a9-2be1-44b5-995e-38df0dfc1b13"
+        ],
+        "x-ms-request-id": [
+          "99ee0644-a47c-4111-a6f4-32d25c814a2f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1011,10 +1344,10 @@
           "11996"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031339Z:98d6454b-bac5-4a86-a6c1-4f2fc3b7cea1"
+          "WESTUS2:20190301T183330Z:7acd95a9-2be1-44b5-995e-38df0dfc1b13"
         ],
         "Content-Length": [
-          "681"
+          "106"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1023,21 +1356,15 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n    \"deploymentMode\": \"Incremental\",\r\n    \"artifacts\": {\r\n      \"templateArtifactSourceRelativePath\": \"Templates/WebApp.Template.json\",\r\n      \"parametersArtifactSourceRelativePath\": \"Parameters/WebApp.Parameters.json\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services/serviceUnits\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n  \"name\": \"Contoso_WebApp\",\r\n  \"location\": \"Central US\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-03-01T18:32:47.814Z\",\r\n  \"endTime\": \"2019-03-01T18:32:52.266Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0L3NlcnZpY2VzL0NvbnRvc29fU2VydmljZS9zZXJ2aWNlVW5pdHMvQ29udG9zb19XZWJBcHA/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9yb2xsb3V0cy9yb2xsb3V0MT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "6b4109d3-5275-4ed5-ae1f-133e10e93c74"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
@@ -1050,19 +1377,25 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:13:40 GMT"
+          "Fri, 01 Mar 2019 18:33:31 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
+        "Location": [
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview"
+        ],
+        "Retry-After": [
+          "120"
+        ],
         "x-ms-client-request-id": [
-          "6b4109d3-5275-4ed5-ae1f-133e10e93c74"
+          "54fef34c-3f0d-4a1a-a336-b82f91f495eb"
         ],
         "x-ms-correlation-request-id": [
-          "cd625a7a-e24e-458d-8f78-a78f8ba35486"
+          "3e764497-776c-4ec9-9031-80af9a4a8dd0"
         ],
         "x-ms-request-id": [
-          "99564d82-8d37-4e9f-b425-78963c7b25b6"
+          "6c14e2a0-bb1a-451c-b787-e6fe2a41ed95"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1077,10 +1410,10 @@
           "11995"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031340Z:cd625a7a-e24e-458d-8f78-a78f8ba35486"
+          "WESTUS2:20190301T183331Z:3e764497-776c-4ec9-9031-80af9a4a8dd0"
         ],
         "Content-Length": [
-          "681"
+          "2102"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1089,77 +1422,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n    \"deploymentMode\": \"Incremental\",\r\n    \"artifacts\": {\r\n      \"templateArtifactSourceRelativePath\": \"Templates/WebApp.Template.json\",\r\n      \"parametersArtifactSourceRelativePath\": \"Parameters/WebApp.Parameters.json\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services/serviceUnits\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n  \"name\": \"Contoso_WebApp\",\r\n  \"location\": \"Central US\"\r\n}",
+      "ResponseBody": "{\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"identityIds\": [\r\n      \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/adm-sdk-tests/providers/Microsoft.ManagedIdentity/userassignedidentities/admsdktests\"\r\n    ]\r\n  },\r\n  \"properties\": {\r\n    \"status\": \"Running\",\r\n    \"totalRetryAttempts\": 0,\r\n    \"operationInfo\": {\r\n      \"retryAttempt\": 0,\r\n      \"skipSucceededOnRetry\": false,\r\n      \"startTime\": \"2019-03-01T18:32:51.751Z\",\r\n      \"lastUpdatedTime\": \"2019-03-01T18:32:51.751Z\"\r\n    },\r\n    \"services\": [\r\n      {\r\n        \"name\": \"Contoso_Service\",\r\n        \"targetSubscriptionId\": \"53012dcb-5039-4e96-8e6c-5d913da1cdb5\",\r\n        \"targetLocation\": \"East US 2\",\r\n        \"serviceUnits\": [\r\n          {\r\n            \"name\": \"Contoso_WebApp\",\r\n            \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n            \"artifacts\": {},\r\n            \"steps\": [\r\n              {\r\n                \"name\": \"Deploy\",\r\n                \"stepGroup\": \"First_Region\",\r\n                \"status\": \"Accepted\",\r\n                \"operationInfo\": {\r\n                  \"correlationId\": \"5e3cc2dd-6484-4f42-aec6-276ddeb7b2bb\",\r\n                  \"deploymentName\": \"AEDF2616ECFF4D5399889B845F5051DD0Contoso_WebApp\",\r\n                  \"startTime\": \"2019-03-01T18:33:02.915Z\",\r\n                  \"lastUpdatedTime\": \"2019-03-01T18:33:02.977Z\"\r\n                },\r\n                \"resourceOperations\": [],\r\n                \"messages\": []\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"buildVersion\": \"1.0.0.0\",\r\n    \"targetServiceTopologyId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"stepGroups\": [\r\n      {\r\n        \"name\": \"First_Region\",\r\n        \"deploymentTargetId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n        \"preDeploymentSteps\": [],\r\n        \"postDeploymentSteps\": [],\r\n        \"dependsOnStepGroups\": []\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/rollouts\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1\",\r\n  \"name\": \"rollout1\",\r\n  \"location\": \"Central US\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0L3NlcnZpY2VzL0NvbnRvc29fU2VydmljZS9zZXJ2aWNlVW5pdHMvQ29udG9zb19XZWJBcHA/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-store, no-cache"
-        ],
-        "Date": [
-          "Fri, 01 Mar 2019 03:16:33 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-client-request-id": [
-          "c4c8823c-980f-48b4-8cd6-9c0cef699248"
-        ],
-        "x-ms-correlation-request-id": [
-          "4d970d82-7841-4ba9-a35f-f00037d3442f"
-        ],
-        "x-ms-request-id": [
-          "0258d9ba-de64-4368-bb35-70e04ec1642f"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Frame-Options": [
-          "DENY"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11988"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031633Z:4d970d82-7841-4ba9-a35f-f00037d3442f"
-        ],
-        "Content-Length": [
-          "686"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n    \"deploymentMode\": \"Complete\",\r\n    \"artifacts\": {\r\n      \"templateArtifactSourceRelativePath\": \"Templates/WebApp.Template.Dup.json\",\r\n      \"parametersArtifactSourceRelativePath\": \"Parameters/WebApp.Parameters.Dup.json\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/serviceTopologies/services/serviceUnits\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n  \"name\": \"Contoso_WebApp\",\r\n  \"location\": \"Central US\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0L3NlcnZpY2VzL0NvbnRvc29fU2VydmljZS9zZXJ2aWNlVW5pdHMvQ29udG9zb19XZWJBcHA/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9yb2xsb3V0cy9yb2xsb3V0MT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1db9440d-dcef-4cca-a20d-5c4caca9c217"
+          "6d7d0e0c-deba-4e53-8e3b-35bbdb696440"
         ],
         "accept-language": [
           "en-US"
@@ -1173,163 +1446,28 @@
       },
       "ResponseHeaders": {
         "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 01 Mar 2019 03:18:24 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-failure-cause": [
-          "gateway"
-        ],
-        "x-ms-request-id": [
-          "a947805f-a8b9-4647-a6aa-66b857e873e8"
-        ],
-        "x-ms-correlation-request-id": [
-          "a947805f-a8b9-4647-a6aa-66b857e873e8"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031824Z:a947805f-a8b9-4647-a6aa-66b857e873e8"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Content-Length": [
-          "250"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp' under resource group 'deploymentmanager-sdk-net-test-rg309' was not found.\"\r\n  }\r\n}",
-      "StatusCode": 404
-    },
-    {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3JvbGxvdXRzL3JvbGxvdXQxP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"identityIds\": [\r\n      \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/adm-sdk-tests/providers/Microsoft.ManagedIdentity/userassignedidentities/admsdktests\"\r\n    ]\r\n  },\r\n  \"properties\": {\r\n    \"buildVersion\": \"1.0.0.0\",\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"targetServiceTopologyId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n    \"stepGroups\": [\r\n      {\r\n        \"name\": \"First_Region\",\r\n        \"deploymentTargetId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "36151ec1-c1b6-471d-b68b-27344d7c3008"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "1084"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:13:44 GMT"
+          "Fri, 01 Mar 2019 18:33:32 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/operationResults/50a8688d-67bd-43db-9048-498942842b0e?api-version=2018-09-01-preview"
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview"
         ],
         "Retry-After": [
-          "45"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/operationResults/50a8688d-67bd-43db-9048-498942842b0e?api-version=2018-09-01-preview"
+          "120"
         ],
         "x-ms-client-request-id": [
-          "36151ec1-c1b6-471d-b68b-27344d7c3008"
+          "6d7d0e0c-deba-4e53-8e3b-35bbdb696440"
         ],
         "x-ms-correlation-request-id": [
-          "33ece48c-708a-4ae3-bd47-1e020dd5eb6f"
+          "4aa79e2f-0798-43e7-9541-2e3eb39a31db"
         ],
         "x-ms-request-id": [
-          "50a8688d-67bd-43db-9048-498942842b0e"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Frame-Options": [
-          "DENY"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031345Z:33ece48c-708a-4ae3-bd47-1e020dd5eb6f"
-        ],
-        "Content-Length": [
-          "1328"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"identityIds\": [\r\n      \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/adm-sdk-tests/providers/Microsoft.ManagedIdentity/userassignedidentities/admsdktests\"\r\n    ]\r\n  },\r\n  \"properties\": {\r\n    \"buildVersion\": \"1.0.0.0\",\r\n    \"targetServiceTopologyId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"stepGroups\": [\r\n      {\r\n        \"name\": \"First_Region\",\r\n        \"deploymentTargetId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n        \"preDeploymentSteps\": [],\r\n        \"postDeploymentSteps\": [],\r\n        \"dependsOnStepGroups\": []\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Running\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/rollouts\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1\",\r\n  \"name\": \"rollout1\",\r\n  \"location\": \"Central US\"\r\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/operationResults/50a8688d-67bd-43db-9048-498942842b0e?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlZ3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL29wZXJhdGlvblJlc3VsdHMvNTBhODY4OGQtNjdiZC00M2RiLTkwNDgtNDk4OTQyODQyYjBlP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-store, no-cache"
-        ],
-        "Date": [
-          "Fri, 01 Mar 2019 03:14:31 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview"
-        ],
-        "Retry-After": [
-          "30"
-        ],
-        "x-ms-client-request-id": [
-          "78a03e84-ec91-4856-8268-e5425e6f6ef2"
-        ],
-        "x-ms-correlation-request-id": [
-          "ecab5513-13a7-4527-9445-ae3b196b331e"
-        ],
-        "x-ms-request-id": [
-          "d85e0a07-df4f-45a6-b34b-484f88ddd147"
+          "33db2124-b023-4f63-b821-cdb9c9ca9868"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1344,10 +1482,10 @@
           "11994"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031431Z:ecab5513-13a7-4527-9445-ae3b196b331e"
+          "WESTUS2:20190301T183332Z:4aa79e2f-0798-43e7-9541-2e3eb39a31db"
         ],
         "Content-Length": [
-          "106"
+          "2102"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1356,15 +1494,21 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-03-01T03:13:43.868Z\",\r\n  \"endTime\": \"2019-03-01T03:13:48.15Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"identityIds\": [\r\n      \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/adm-sdk-tests/providers/Microsoft.ManagedIdentity/userassignedidentities/admsdktests\"\r\n    ]\r\n  },\r\n  \"properties\": {\r\n    \"status\": \"Running\",\r\n    \"totalRetryAttempts\": 0,\r\n    \"operationInfo\": {\r\n      \"retryAttempt\": 0,\r\n      \"skipSucceededOnRetry\": false,\r\n      \"startTime\": \"2019-03-01T18:32:51.751Z\",\r\n      \"lastUpdatedTime\": \"2019-03-01T18:32:51.751Z\"\r\n    },\r\n    \"services\": [\r\n      {\r\n        \"name\": \"Contoso_Service\",\r\n        \"targetSubscriptionId\": \"53012dcb-5039-4e96-8e6c-5d913da1cdb5\",\r\n        \"targetLocation\": \"East US 2\",\r\n        \"serviceUnits\": [\r\n          {\r\n            \"name\": \"Contoso_WebApp\",\r\n            \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n            \"artifacts\": {},\r\n            \"steps\": [\r\n              {\r\n                \"name\": \"Deploy\",\r\n                \"stepGroup\": \"First_Region\",\r\n                \"status\": \"Accepted\",\r\n                \"operationInfo\": {\r\n                  \"correlationId\": \"5e3cc2dd-6484-4f42-aec6-276ddeb7b2bb\",\r\n                  \"deploymentName\": \"AEDF2616ECFF4D5399889B845F5051DD0Contoso_WebApp\",\r\n                  \"startTime\": \"2019-03-01T18:33:02.915Z\",\r\n                  \"lastUpdatedTime\": \"2019-03-01T18:33:02.977Z\"\r\n                },\r\n                \"resourceOperations\": [],\r\n                \"messages\": []\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"buildVersion\": \"1.0.0.0\",\r\n    \"targetServiceTopologyId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"stepGroups\": [\r\n      {\r\n        \"name\": \"First_Region\",\r\n        \"deploymentTargetId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n        \"preDeploymentSteps\": [],\r\n        \"postDeploymentSteps\": [],\r\n        \"dependsOnStepGroups\": []\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/rollouts\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1\",\r\n  \"name\": \"rollout1\",\r\n  \"location\": \"Central US\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3JvbGxvdXRzL3JvbGxvdXQxP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9yb2xsb3V0cy9yb2xsb3V0MT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d883ea4a-a69b-41fe-8992-1fe6b2cf8525"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
@@ -1377,25 +1521,25 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:14:32 GMT"
+          "Fri, 01 Mar 2019 18:34:33 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview"
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview"
         ],
         "Retry-After": [
           "120"
         ],
         "x-ms-client-request-id": [
-          "1b8cb882-ad86-4114-976d-352e547770f9"
+          "d883ea4a-a69b-41fe-8992-1fe6b2cf8525"
         ],
         "x-ms-correlation-request-id": [
-          "2881ac35-fc1e-4f2c-ab95-0208c3b2471b"
+          "14584e0d-916b-40fd-80c7-663059bd86e6"
         ],
         "x-ms-request-id": [
-          "edd5c25f-17c0-4583-bf13-f3cd54b31bf2"
+          "41a7b6b1-6fde-4b18-9f05-149112c6575d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1410,10 +1554,10 @@
           "11993"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031432Z:2881ac35-fc1e-4f2c-ab95-0208c3b2471b"
+          "WESTUS2:20190301T183433Z:14584e0d-916b-40fd-80c7-663059bd86e6"
         ],
         "Content-Length": [
-          "2657"
+          "2394"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1422,161 +1566,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"identityIds\": [\r\n      \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/adm-sdk-tests/providers/Microsoft.ManagedIdentity/userassignedidentities/admsdktests\"\r\n    ]\r\n  },\r\n  \"properties\": {\r\n    \"status\": \"Running\",\r\n    \"totalRetryAttempts\": 0,\r\n    \"operationInfo\": {\r\n      \"retryAttempt\": 0,\r\n      \"skipSucceededOnRetry\": false,\r\n      \"startTime\": \"2019-03-01T03:13:47.556Z\",\r\n      \"lastUpdatedTime\": \"2019-03-01T03:13:47.556Z\"\r\n    },\r\n    \"services\": [\r\n      {\r\n        \"name\": \"Contoso_Service\",\r\n        \"targetSubscriptionId\": \"53012dcb-5039-4e96-8e6c-5d913da1cdb5\",\r\n        \"targetLocation\": \"East US 2\",\r\n        \"serviceUnits\": [\r\n          {\r\n            \"name\": \"Contoso_WebApp\",\r\n            \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n            \"artifacts\": {},\r\n            \"steps\": [\r\n              {\r\n                \"name\": \"Deploy\",\r\n                \"stepGroup\": \"First_Region\",\r\n                \"status\": \"Running\",\r\n                \"operationInfo\": {\r\n                  \"correlationId\": \"8dea22d6-2d6d-4577-b129-a885232a9d87\",\r\n                  \"deploymentName\": \"A1299063F8FC4673A4431446902A7F940Contoso_WebApp\",\r\n                  \"startTime\": \"2019-03-01T03:13:57.403Z\",\r\n                  \"lastUpdatedTime\": \"2019-03-01T03:14:29.442Z\"\r\n                },\r\n                \"resourceOperations\": [\r\n                  {\r\n                    \"ResourceName\": \"AdmSdkNetNodejsApp/MSDeploy\",\r\n                    \"OperationId\": \"5F03756046FE4E72\",\r\n                    \"ResourceType\": \"Microsoft.Web/sites/Extensions\",\r\n                    \"ProvisioningState\": \"Succeeded\",\r\n                    \"StatusMessage\": \"\",\r\n                    \"StatusCode\": \"OK\"\r\n                  },\r\n                  {\r\n                    \"ResourceName\": \"AdmSdkNetNodejsApp\",\r\n                    \"OperationId\": \"5E719B5252CAB746\",\r\n                    \"ResourceType\": \"Microsoft.Web/sites\",\r\n                    \"ProvisioningState\": \"Succeeded\",\r\n                    \"StatusMessage\": \"\",\r\n                    \"StatusCode\": \"OK\"\r\n                  },\r\n                  {\r\n                    \"ResourceName\": \"AdmSdkNetNodejsAppPlan\",\r\n                    \"OperationId\": \"2BD1ABC3B260BF38\",\r\n                    \"ResourceType\": \"Microsoft.Web/serverfarms\",\r\n                    \"ProvisioningState\": \"Succeeded\",\r\n                    \"StatusMessage\": \"\",\r\n                    \"StatusCode\": \"OK\"\r\n                  }\r\n                ],\r\n                \"messages\": []\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"buildVersion\": \"1.0.0.0\",\r\n    \"targetServiceTopologyId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"stepGroups\": [\r\n      {\r\n        \"name\": \"First_Region\",\r\n        \"deploymentTargetId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n        \"preDeploymentSteps\": [],\r\n        \"postDeploymentSteps\": [],\r\n        \"dependsOnStepGroups\": []\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/rollouts\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1\",\r\n  \"name\": \"rollout1\",\r\n  \"location\": \"Central US\"\r\n}",
+      "ResponseBody": "{\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"identityIds\": [\r\n      \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/adm-sdk-tests/providers/Microsoft.ManagedIdentity/userassignedidentities/admsdktests\"\r\n    ]\r\n  },\r\n  \"properties\": {\r\n    \"status\": \"Canceled\",\r\n    \"totalRetryAttempts\": 0,\r\n    \"operationInfo\": {\r\n      \"retryAttempt\": 0,\r\n      \"skipSucceededOnRetry\": false,\r\n      \"startTime\": \"2019-03-01T18:32:51.751Z\",\r\n      \"endTime\": \"2019-03-01T18:33:35.399Z\",\r\n      \"lastUpdatedTime\": \"2019-03-01T18:33:35.399Z\"\r\n    },\r\n    \"services\": [\r\n      {\r\n        \"name\": \"Contoso_Service\",\r\n        \"targetSubscriptionId\": \"53012dcb-5039-4e96-8e6c-5d913da1cdb5\",\r\n        \"targetLocation\": \"East US 2\",\r\n        \"serviceUnits\": [\r\n          {\r\n            \"name\": \"Contoso_WebApp\",\r\n            \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n            \"deploymentMode\": \"Incremental\",\r\n            \"artifacts\": {},\r\n            \"steps\": [\r\n              {\r\n                \"name\": \"Deploy\",\r\n                \"stepGroup\": \"First_Region\",\r\n                \"status\": \"Canceled\",\r\n                \"operationInfo\": {\r\n                  \"correlationId\": \"5e3cc2dd-6484-4f42-aec6-276ddeb7b2bb\",\r\n                  \"deploymentName\": \"AEDF2616ECFF4D5399889B845F5051DD0Contoso_WebApp\",\r\n                  \"startTime\": \"2019-03-01T18:33:02.915Z\",\r\n                  \"endTime\": \"2019-03-01T18:33:34.694Z\",\r\n                  \"lastUpdatedTime\": \"2019-03-01T18:33:34.694Z\"\r\n                },\r\n                \"resourceOperations\": [\r\n                  {\r\n                    \"ResourceName\": \"AdmSdkNetNodejsAppPlan\",\r\n                    \"OperationId\": \"2BD1ABC3B260BF38\",\r\n                    \"ResourceType\": \"Microsoft.Web/serverfarms\",\r\n                    \"ProvisioningState\": \"Succeeded\",\r\n                    \"StatusMessage\": \"\",\r\n                    \"StatusCode\": \"OK\"\r\n                  }\r\n                ],\r\n                \"messages\": []\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"buildVersion\": \"1.0.0.0\",\r\n    \"targetServiceTopologyId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"stepGroups\": [\r\n      {\r\n        \"name\": \"First_Region\",\r\n        \"deploymentTargetId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n        \"preDeploymentSteps\": [],\r\n        \"postDeploymentSteps\": [],\r\n        \"dependsOnStepGroups\": []\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/rollouts\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1\",\r\n  \"name\": \"rollout1\",\r\n  \"location\": \"Central US\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3JvbGxvdXRzL3JvbGxvdXQxP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9yb2xsb3V0cy9yb2xsb3V0MT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2df14d9e-a097-49e3-b6ea-94b9bd83ba31"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-store, no-cache"
-        ],
-        "Date": [
-          "Fri, 01 Mar 2019 03:14:33 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview"
-        ],
-        "Retry-After": [
-          "120"
-        ],
-        "x-ms-client-request-id": [
-          "2df14d9e-a097-49e3-b6ea-94b9bd83ba31"
-        ],
-        "x-ms-correlation-request-id": [
-          "aa9f9fee-ed51-436b-9306-ce3203c839cf"
-        ],
-        "x-ms-request-id": [
-          "173ebe9e-b4bf-4c91-89a7-c1fedaa8d141"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Frame-Options": [
-          "DENY"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11992"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031434Z:aa9f9fee-ed51-436b-9306-ce3203c839cf"
-        ],
-        "Content-Length": [
-          "2657"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"identityIds\": [\r\n      \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/adm-sdk-tests/providers/Microsoft.ManagedIdentity/userassignedidentities/admsdktests\"\r\n    ]\r\n  },\r\n  \"properties\": {\r\n    \"status\": \"Running\",\r\n    \"totalRetryAttempts\": 0,\r\n    \"operationInfo\": {\r\n      \"retryAttempt\": 0,\r\n      \"skipSucceededOnRetry\": false,\r\n      \"startTime\": \"2019-03-01T03:13:47.556Z\",\r\n      \"lastUpdatedTime\": \"2019-03-01T03:13:47.556Z\"\r\n    },\r\n    \"services\": [\r\n      {\r\n        \"name\": \"Contoso_Service\",\r\n        \"targetSubscriptionId\": \"53012dcb-5039-4e96-8e6c-5d913da1cdb5\",\r\n        \"targetLocation\": \"East US 2\",\r\n        \"serviceUnits\": [\r\n          {\r\n            \"name\": \"Contoso_WebApp\",\r\n            \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n            \"artifacts\": {},\r\n            \"steps\": [\r\n              {\r\n                \"name\": \"Deploy\",\r\n                \"stepGroup\": \"First_Region\",\r\n                \"status\": \"Running\",\r\n                \"operationInfo\": {\r\n                  \"correlationId\": \"8dea22d6-2d6d-4577-b129-a885232a9d87\",\r\n                  \"deploymentName\": \"A1299063F8FC4673A4431446902A7F940Contoso_WebApp\",\r\n                  \"startTime\": \"2019-03-01T03:13:57.403Z\",\r\n                  \"lastUpdatedTime\": \"2019-03-01T03:14:29.442Z\"\r\n                },\r\n                \"resourceOperations\": [\r\n                  {\r\n                    \"ResourceName\": \"AdmSdkNetNodejsApp/MSDeploy\",\r\n                    \"OperationId\": \"5F03756046FE4E72\",\r\n                    \"ResourceType\": \"Microsoft.Web/sites/Extensions\",\r\n                    \"ProvisioningState\": \"Succeeded\",\r\n                    \"StatusMessage\": \"\",\r\n                    \"StatusCode\": \"OK\"\r\n                  },\r\n                  {\r\n                    \"ResourceName\": \"AdmSdkNetNodejsApp\",\r\n                    \"OperationId\": \"5E719B5252CAB746\",\r\n                    \"ResourceType\": \"Microsoft.Web/sites\",\r\n                    \"ProvisioningState\": \"Succeeded\",\r\n                    \"StatusMessage\": \"\",\r\n                    \"StatusCode\": \"OK\"\r\n                  },\r\n                  {\r\n                    \"ResourceName\": \"AdmSdkNetNodejsAppPlan\",\r\n                    \"OperationId\": \"2BD1ABC3B260BF38\",\r\n                    \"ResourceType\": \"Microsoft.Web/serverfarms\",\r\n                    \"ProvisioningState\": \"Succeeded\",\r\n                    \"StatusMessage\": \"\",\r\n                    \"StatusCode\": \"OK\"\r\n                  }\r\n                ],\r\n                \"messages\": []\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"buildVersion\": \"1.0.0.0\",\r\n    \"targetServiceTopologyId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"stepGroups\": [\r\n      {\r\n        \"name\": \"First_Region\",\r\n        \"deploymentTargetId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n        \"preDeploymentSteps\": [],\r\n        \"postDeploymentSteps\": [],\r\n        \"dependsOnStepGroups\": []\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/rollouts\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1\",\r\n  \"name\": \"rollout1\",\r\n  \"location\": \"Central US\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3JvbGxvdXRzL3JvbGxvdXQxP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "2358b944-b016-4475-b210-8d7190f4db44"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.DeploymentManager.AzureDeploymentManagerClient/0.9.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-store, no-cache"
-        ],
-        "Date": [
-          "Fri, 01 Mar 2019 03:15:36 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview"
-        ],
-        "Retry-After": [
-          "120"
-        ],
-        "x-ms-client-request-id": [
-          "2358b944-b016-4475-b210-8d7190f4db44"
-        ],
-        "x-ms-correlation-request-id": [
-          "727c5dbd-bd91-46b7-949d-6aa39b7e36e3"
-        ],
-        "x-ms-request-id": [
-          "9bfa91a3-b812-41e1-9f7d-b674d07ed02c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Frame-Options": [
-          "DENY"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11991"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031537Z:727c5dbd-bd91-46b7-949d-6aa39b7e36e3"
-        ],
-        "Content-Length": [
-          "2765"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"identityIds\": [\r\n      \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/adm-sdk-tests/providers/Microsoft.ManagedIdentity/userassignedidentities/admsdktests\"\r\n    ]\r\n  },\r\n  \"properties\": {\r\n    \"status\": \"Canceled\",\r\n    \"totalRetryAttempts\": 0,\r\n    \"operationInfo\": {\r\n      \"retryAttempt\": 0,\r\n      \"skipSucceededOnRetry\": false,\r\n      \"startTime\": \"2019-03-01T03:13:47.556Z\",\r\n      \"endTime\": \"2019-03-01T03:15:01.594Z\",\r\n      \"lastUpdatedTime\": \"2019-03-01T03:15:01.594Z\"\r\n    },\r\n    \"services\": [\r\n      {\r\n        \"name\": \"Contoso_Service\",\r\n        \"targetSubscriptionId\": \"53012dcb-5039-4e96-8e6c-5d913da1cdb5\",\r\n        \"targetLocation\": \"East US 2\",\r\n        \"serviceUnits\": [\r\n          {\r\n            \"name\": \"Contoso_WebApp\",\r\n            \"targetResourceGroup\": \"sdk-net-targetResourceGroup\",\r\n            \"deploymentMode\": \"Incremental\",\r\n            \"artifacts\": {},\r\n            \"steps\": [\r\n              {\r\n                \"name\": \"Deploy\",\r\n                \"stepGroup\": \"First_Region\",\r\n                \"status\": \"Succeeded\",\r\n                \"operationInfo\": {\r\n                  \"correlationId\": \"8dea22d6-2d6d-4577-b129-a885232a9d87\",\r\n                  \"deploymentName\": \"A1299063F8FC4673A4431446902A7F940Contoso_WebApp\",\r\n                  \"startTime\": \"2019-03-01T03:13:57.403Z\",\r\n                  \"endTime\": \"2019-03-01T03:15:00.706Z\",\r\n                  \"lastUpdatedTime\": \"2019-03-01T03:15:00.706Z\"\r\n                },\r\n                \"resourceOperations\": [\r\n                  {\r\n                    \"ResourceName\": \"AdmSdkNetNodejsApp/MSDeploy\",\r\n                    \"OperationId\": \"5F03756046FE4E72\",\r\n                    \"ResourceType\": \"Microsoft.Web/sites/Extensions\",\r\n                    \"ProvisioningState\": \"Succeeded\",\r\n                    \"StatusMessage\": \"\",\r\n                    \"StatusCode\": \"OK\"\r\n                  },\r\n                  {\r\n                    \"ResourceName\": \"AdmSdkNetNodejsApp\",\r\n                    \"OperationId\": \"5E719B5252CAB746\",\r\n                    \"ResourceType\": \"Microsoft.Web/sites\",\r\n                    \"ProvisioningState\": \"Succeeded\",\r\n                    \"StatusMessage\": \"\",\r\n                    \"StatusCode\": \"OK\"\r\n                  },\r\n                  {\r\n                    \"ResourceName\": \"AdmSdkNetNodejsAppPlan\",\r\n                    \"OperationId\": \"2BD1ABC3B260BF38\",\r\n                    \"ResourceType\": \"Microsoft.Web/serverfarms\",\r\n                    \"ProvisioningState\": \"Succeeded\",\r\n                    \"StatusMessage\": \"\",\r\n                    \"StatusCode\": \"OK\"\r\n                  }\r\n                ],\r\n                \"messages\": []\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"buildVersion\": \"1.0.0.0\",\r\n    \"targetServiceTopologyId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"stepGroups\": [\r\n      {\r\n        \"name\": \"First_Region\",\r\n        \"deploymentTargetId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n        \"preDeploymentSteps\": [],\r\n        \"postDeploymentSteps\": [],\r\n        \"dependsOnStepGroups\": []\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/rollouts\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1\",\r\n  \"name\": \"rollout1\",\r\n  \"location\": \"Central US\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3JvbGxvdXRzL3JvbGxvdXQxP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "a96edb59-90e8-4aad-9268-839bf2d61574"
+          "6bd70c0f-a2b4-4b19-89e3-19a75e9a49a7"
         ],
         "accept-language": [
           "en-US"
@@ -1593,7 +1593,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:15:39 GMT"
+          "Fri, 01 Mar 2019 18:34:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1602,13 +1602,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "41bcdcfc-78eb-4db0-8d19-efb2215a1130"
+          "251f7a63-1567-4831-bce1-da9f7431a7ad"
         ],
         "x-ms-correlation-request-id": [
-          "41bcdcfc-78eb-4db0-8d19-efb2215a1130"
+          "251f7a63-1567-4831-bce1-da9f7431a7ad"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031539Z:41bcdcfc-78eb-4db0-8d19-efb2215a1130"
+          "WESTUS2:20190301T183435Z:251f7a63-1567-4831-bce1-da9f7431a7ad"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1617,7 +1617,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "185"
+          "186"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1626,17 +1626,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DeploymentManager/rollouts/rollout1' under resource group 'deploymentmanager-sdk-net-test-rg309' was not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DeploymentManager/rollouts/rollout1' under resource group 'deploymentmanager-sdk-net-test-rg6262' was not found.\"\r\n  }\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1/cancel?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3JvbGxvdXRzL3JvbGxvdXQxL2NhbmNlbD9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1/cancel?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9yb2xsb3V0cy9yb2xsb3V0MS9jYW5jZWw/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ca098620-0f92-4ad7-b634-27ab60bbc2d8"
+          "087dd7bf-9f23-40df-9ca7-7a873b93a73f"
         ],
         "accept-language": [
           "en-US"
@@ -1653,22 +1653,22 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:14:36 GMT"
+          "Fri, 01 Mar 2019 18:33:33 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview"
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview"
         ],
         "x-ms-client-request-id": [
-          "ca098620-0f92-4ad7-b634-27ab60bbc2d8"
+          "087dd7bf-9f23-40df-9ca7-7a873b93a73f"
         ],
         "x-ms-correlation-request-id": [
-          "fa60a730-8498-4e5e-b905-e209d2e6adde"
+          "1041f790-0dab-4b8e-8469-79b457058ad9"
         ],
         "x-ms-request-id": [
-          "94b76054-cdf7-4f49-9862-2f2eb73326ca"
+          "cf9efce5-8ca1-4750-86c5-08d9b0cf1d34"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1683,10 +1683,10 @@
           "1199"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031436Z:fa60a730-8498-4e5e-b905-e209d2e6adde"
+          "WESTUS2:20190301T183333Z:1041f790-0dab-4b8e-8469-79b457058ad9"
         ],
         "Content-Length": [
-          "1499"
+          "1503"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1695,17 +1695,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"identityIds\": [\r\n      \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/adm-sdk-tests/providers/Microsoft.ManagedIdentity/userassignedidentities/admsdktests\"\r\n    ]\r\n  },\r\n  \"properties\": {\r\n    \"status\": \"Canceling\",\r\n    \"operationInfo\": {\r\n      \"retryAttempt\": 0,\r\n      \"skipSucceededOnRetry\": false,\r\n      \"startTime\": \"2019-03-01T03:13:47.556Z\",\r\n      \"lastUpdatedTime\": \"2019-03-01T03:13:47.556Z\"\r\n    },\r\n    \"buildVersion\": \"1.0.0.0\",\r\n    \"targetServiceTopologyId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"stepGroups\": [\r\n      {\r\n        \"name\": \"First_Region\",\r\n        \"deploymentTargetId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n        \"preDeploymentSteps\": [],\r\n        \"postDeploymentSteps\": [],\r\n        \"dependsOnStepGroups\": []\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/rollouts\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1\",\r\n  \"name\": \"rollout1\",\r\n  \"location\": \"Central US\"\r\n}",
+      "ResponseBody": "{\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"identityIds\": [\r\n      \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/adm-sdk-tests/providers/Microsoft.ManagedIdentity/userassignedidentities/admsdktests\"\r\n    ]\r\n  },\r\n  \"properties\": {\r\n    \"status\": \"Canceling\",\r\n    \"operationInfo\": {\r\n      \"retryAttempt\": 0,\r\n      \"skipSucceededOnRetry\": false,\r\n      \"startTime\": \"2019-03-01T18:32:51.751Z\",\r\n      \"lastUpdatedTime\": \"2019-03-01T18:32:51.751Z\"\r\n    },\r\n    \"buildVersion\": \"1.0.0.0\",\r\n    \"targetServiceTopologyId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net\",\r\n    \"artifactSourceId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1\",\r\n    \"stepGroups\": [\r\n      {\r\n        \"name\": \"First_Region\",\r\n        \"deploymentTargetId\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp\",\r\n        \"preDeploymentSteps\": [],\r\n        \"postDeploymentSteps\": [],\r\n        \"dependsOnStepGroups\": []\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/rollouts\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1\",\r\n  \"name\": \"rollout1\",\r\n  \"location\": \"Central US\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3JvbGxvdXRzL3JvbGxvdXQxP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/rollouts/rollout1?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9yb2xsb3V0cy9yb2xsb3V0MT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "04384498-f6f1-4f2d-bddd-5b3f97c7756e"
+          "866cdd3b-18a3-4117-9b0a-5e1f1d55427c"
         ],
         "accept-language": [
           "en-US"
@@ -1722,19 +1722,19 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:15:38 GMT"
+          "Fri, 01 Mar 2019 18:34:34 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-client-request-id": [
-          "04384498-f6f1-4f2d-bddd-5b3f97c7756e"
+          "866cdd3b-18a3-4117-9b0a-5e1f1d55427c"
         ],
         "x-ms-correlation-request-id": [
-          "27ae6c91-1c5c-4b27-b07f-52c9f86daf40"
+          "f0298830-0fc3-409d-aec8-52deaaf49f2f"
         ],
         "x-ms-request-id": [
-          "65bd4144-5bb0-48a9-82b3-2534a8b3c482"
+          "f25586c3-11ab-4e2e-81ea-dfda308d0b20"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1749,7 +1749,7 @@
           "14999"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031539Z:27ae6c91-1c5c-4b27-b07f-52c9f86daf40"
+          "WESTUS2:20190301T183435Z:f0298830-0fc3-409d-aec8-52deaaf49f2f"
         ],
         "Content-Length": [
           "4"
@@ -1765,8 +1765,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/operationResults/4d387769-02eb-41e2-8f90-dd542eb8782e?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlZ3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL29wZXJhdGlvblJlc3VsdHMvNGQzODc3NjktMDJlYi00MWUyLThmOTAtZGQ1NDJlYjg3ODJlP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/operationResults/6db8163c-2a66-4fde-b679-8f5d0756172a?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlZ3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9vcGVyYXRpb25SZXN1bHRzLzZkYjgxNjNjLTJhNjYtNGZkZS1iNjc5LThmNWQwNzU2MTcyYT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1782,25 +1782,25 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:16:32 GMT"
+          "Fri, 01 Mar 2019 18:35:30 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview"
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview"
         ],
         "Retry-After": [
           "30"
         ],
         "x-ms-client-request-id": [
-          "6ffe60b9-7848-4b20-9efd-b7b74b9edbcf"
+          "881398da-611e-4f88-abbc-36fb1628c3b6"
         ],
         "x-ms-correlation-request-id": [
-          "c0e47870-d8e6-4853-8e72-3139d3bec218"
+          "a783021a-c549-4c6b-ae33-fdb4ea4f6493"
         ],
         "x-ms-request-id": [
-          "26dd540b-e737-42ec-a3f1-8b1f61ad1eb1"
+          "68a904a2-e4bf-43a9-8b22-d487d63e29e6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1812,10 +1812,10 @@
           "DENY"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11989"
+          "11991"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031632Z:c0e47870-d8e6-4853-8e72-3139d3bec218"
+          "WESTUS2:20190301T183531Z:a783021a-c549-4c6b-ae33-fdb4ea4f6493"
         ],
         "Content-Length": [
           "106"
@@ -1827,17 +1827,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-03-01T03:15:41.672Z\",\r\n  \"endTime\": \"2019-03-01T03:15:46.548Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-03-01T18:34:36.178Z\",\r\n  \"endTime\": \"2019-03-01T18:34:40.254Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0L3NlcnZpY2VzL0NvbnRvc29fU2VydmljZS9zZXJ2aWNlVW5pdHMvQ29udG9zb19XZWJBcHA/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service/serviceUnits/Contoso_WebApp?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldC9zZXJ2aWNlcy9Db250b3NvX1NlcnZpY2Uvc2VydmljZVVuaXRzL0NvbnRvc29fV2ViQXBwP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8becf671-a792-4a08-82c9-4008bd5a3aa4"
+          "193b484e-ceda-44bf-95d7-7a81230c3851"
         ],
         "accept-language": [
           "en-US"
@@ -1854,19 +1854,19 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:16:35 GMT"
+          "Fri, 01 Mar 2019 18:35:32 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-client-request-id": [
-          "8becf671-a792-4a08-82c9-4008bd5a3aa4"
+          "193b484e-ceda-44bf-95d7-7a81230c3851"
         ],
         "x-ms-correlation-request-id": [
-          "365e3a79-3a45-46f3-915b-ad44c2d217c7"
+          "91df37dc-8092-47fb-855d-9f4823d64e92"
         ],
         "x-ms-request-id": [
-          "ca8a1ed5-ff90-486b-8b30-085398dd564d"
+          "e12ba3f9-62d3-4692-9f52-83da1c6cf6b6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1881,7 +1881,7 @@
           "14998"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031636Z:365e3a79-3a45-46f3-915b-ad44c2d217c7"
+          "WESTUS2:20190301T183533Z:91df37dc-8092-47fb-855d-9f4823d64e92"
         ],
         "Content-Length": [
           "4"
@@ -1903,7 +1903,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2dc11816-67b7-49fc-bc11-d93c1998624b"
+          "25acb6ee-71c9-452e-ad94-bb7302bcef66"
         ],
         "accept-language": [
           "en-US"
@@ -1920,7 +1920,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:16:38 GMT"
+          "Fri, 01 Mar 2019 18:35:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1935,13 +1935,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "1bea0b3e-e93b-4b19-91cb-f61d2b0cca71"
+          "45e20f93-e6df-41f1-91a9-a9f7e5ad2406"
         ],
         "x-ms-correlation-request-id": [
-          "1bea0b3e-e93b-4b19-91cb-f61d2b0cca71"
+          "45e20f93-e6df-41f1-91a9-a9f7e5ad2406"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031638Z:1bea0b3e-e93b-4b19-91cb-f61d2b0cca71"
+          "WESTUS2:20190301T183536Z:45e20f93-e6df-41f1-91a9-a9f7e5ad2406"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1977,7 +1977,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:16:53 GMT"
+          "Fri, 01 Mar 2019 18:35:51 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1992,13 +1992,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "0dddea2e-cd02-4f73-9d45-6f5db81c7605"
+          "3ebc7e2c-b9b2-4542-9e1c-503551580ca6"
         ],
         "x-ms-correlation-request-id": [
-          "0dddea2e-cd02-4f73-9d45-6f5db81c7605"
+          "3ebc7e2c-b9b2-4542-9e1c-503551580ca6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031653Z:0dddea2e-cd02-4f73-9d45-6f5db81c7605"
+          "WESTUS2:20190301T183551Z:3ebc7e2c-b9b2-4542-9e1c-503551580ca6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2034,7 +2034,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:17:07 GMT"
+          "Fri, 01 Mar 2019 18:36:06 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2049,13 +2049,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "6137f209-5f44-4a91-bb11-8f72eeae1faa"
+          "f2942ac7-f122-428d-af59-622cabbe304c"
         ],
         "x-ms-correlation-request-id": [
-          "6137f209-5f44-4a91-bb11-8f72eeae1faa"
+          "f2942ac7-f122-428d-af59-622cabbe304c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031708Z:6137f209-5f44-4a91-bb11-8f72eeae1faa"
+          "WESTUS2:20190301T183606Z:f2942ac7-f122-428d-af59-622cabbe304c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2091,7 +2091,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:17:23 GMT"
+          "Fri, 01 Mar 2019 18:36:21 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2106,13 +2106,13 @@
           "11997"
         ],
         "x-ms-request-id": [
-          "baab444d-dfac-4355-82eb-bf69c8c07ef8"
+          "234d78f9-1d19-4010-be65-c8d5e4b704ce"
         ],
         "x-ms-correlation-request-id": [
-          "baab444d-dfac-4355-82eb-bf69c8c07ef8"
+          "234d78f9-1d19-4010-be65-c8d5e4b704ce"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031723Z:baab444d-dfac-4355-82eb-bf69c8c07ef8"
+          "WESTUS2:20190301T183622Z:234d78f9-1d19-4010-be65-c8d5e4b704ce"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2148,7 +2148,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:17:38 GMT"
+          "Fri, 01 Mar 2019 18:36:37 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2163,13 +2163,13 @@
           "11996"
         ],
         "x-ms-request-id": [
-          "92d72b79-92f8-4204-b047-c3ce58494e3c"
+          "7d22f5a4-e2a6-48f5-a720-b14ba8870f18"
         ],
         "x-ms-correlation-request-id": [
-          "92d72b79-92f8-4204-b047-c3ce58494e3c"
+          "7d22f5a4-e2a6-48f5-a720-b14ba8870f18"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031739Z:92d72b79-92f8-4204-b047-c3ce58494e3c"
+          "WESTUS2:20190301T183637Z:7d22f5a4-e2a6-48f5-a720-b14ba8870f18"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2205,7 +2205,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:17:53 GMT"
+          "Fri, 01 Mar 2019 18:36:52 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2220,13 +2220,13 @@
           "11995"
         ],
         "x-ms-request-id": [
-          "dc398792-5d8e-4c52-8527-c056dee65558"
+          "da265465-5154-40b8-87e7-3d493c29bac5"
         ],
         "x-ms-correlation-request-id": [
-          "dc398792-5d8e-4c52-8527-c056dee65558"
+          "da265465-5154-40b8-87e7-3d493c29bac5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031754Z:dc398792-5d8e-4c52-8527-c056dee65558"
+          "WESTUS2:20190301T183652Z:da265465-5154-40b8-87e7-3d493c29bac5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2262,7 +2262,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:18:08 GMT"
+          "Fri, 01 Mar 2019 18:37:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2277,13 +2277,13 @@
           "11994"
         ],
         "x-ms-request-id": [
-          "4b688869-b86d-46ac-8604-12943abcb938"
+          "f8468d90-2093-4224-a005-d2164755423c"
         ],
         "x-ms-correlation-request-id": [
-          "4b688869-b86d-46ac-8604-12943abcb938"
+          "f8468d90-2093-4224-a005-d2164755423c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031809Z:4b688869-b86d-46ac-8604-12943abcb938"
+          "WESTUS2:20190301T183707Z:f8468d90-2093-4224-a005-d2164755423c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2319,7 +2319,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:18:23 GMT"
+          "Fri, 01 Mar 2019 18:37:22 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2328,13 +2328,13 @@
           "11993"
         ],
         "x-ms-request-id": [
-          "fefd90a5-adf6-47b8-a0a8-4b752c6c97f0"
+          "a75c26a8-a7c3-4890-b743-abe3cba407dd"
         ],
         "x-ms-correlation-request-id": [
-          "fefd90a5-adf6-47b8-a0a8-4b752c6c97f0"
+          "a75c26a8-a7c3-4890-b743-abe3cba407dd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031824Z:fefd90a5-adf6-47b8-a0a8-4b752c6c97f0"
+          "WESTUS2:20190301T183722Z:a75c26a8-a7c3-4890-b743-abe3cba407dd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2370,7 +2370,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:18:23 GMT"
+          "Fri, 01 Mar 2019 18:37:22 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2379,13 +2379,13 @@
           "11992"
         ],
         "x-ms-request-id": [
-          "bd1300b9-6825-40a6-a72c-e459269fb2bc"
+          "a09fe8c9-59c8-4887-8d42-e1fa6b569992"
         ],
         "x-ms-correlation-request-id": [
-          "bd1300b9-6825-40a6-a72c-e459269fb2bc"
+          "a09fe8c9-59c8-4887-8d42-e1fa6b569992"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031824Z:bd1300b9-6825-40a6-a72c-e459269fb2bc"
+          "WESTUS2:20190301T183722Z:a09fe8c9-59c8-4887-8d42-e1fa6b569992"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2404,13 +2404,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0L3NlcnZpY2VzL0NvbnRvc29fU2VydmljZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net/services/Contoso_Service?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldC9zZXJ2aWNlcy9Db250b3NvX1NlcnZpY2U/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "acae6de2-d7f9-4da9-b092-98cff4a08037"
+          "d46496f9-777b-4462-b70d-4898668d58a6"
         ],
         "accept-language": [
           "en-US"
@@ -2427,19 +2427,19 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:18:28 GMT"
+          "Fri, 01 Mar 2019 18:37:24 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-client-request-id": [
-          "acae6de2-d7f9-4da9-b092-98cff4a08037"
+          "d46496f9-777b-4462-b70d-4898668d58a6"
         ],
         "x-ms-correlation-request-id": [
-          "4d6fcca5-9b70-48a8-b43f-8d9fe62f54a6"
+          "7b3a12de-934b-4fd5-9be7-f6e73b0029cb"
         ],
         "x-ms-request-id": [
-          "d9cf56d9-df2c-47b0-93b3-24c4609e92b2"
+          "a1156af0-701d-4817-b33d-83704bb228c4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2454,7 +2454,7 @@
           "14999"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031829Z:4d6fcca5-9b70-48a8-b43f-8d9fe62f54a6"
+          "WESTUS2:20190301T183725Z:7b3a12de-934b-4fd5-9be7-f6e73b0029cb"
         ],
         "Content-Length": [
           "4"
@@ -2470,13 +2470,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv2?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL2FydGlmYWN0U291cmNlcy9zZGstZm9yLW5ldC10b3BvbG9neXYyP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv2?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9hcnRpZmFjdFNvdXJjZXMvc2RrLWZvci1uZXQtdG9wb2xvZ3l2Mj9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"sourceType\": \"AzureStorage\",\r\n    \"artifactRoot\": \"builds/1.0.0.0\",\r\n    \"authentication\": {\r\n      \"type\": \"Sas\",\r\n      \"properties\": {\r\n        \"sasUri\": \"https://sdktests.blob.core.windows.net/artifacts?st=2019-02-25T21%3A41%3A01Z&se=2025-02-26T21%3A41%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=ikGqTrRIrRB60SwlmGvwxCByQMGERiRGP4cOjFxUdso%3D\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "07e2337b-f2fe-448d-b1eb-a8f17d24604a"
+          "0118acaa-e4e8-4b76-9b5f-5ecf097a759a"
         ],
         "accept-language": [
           "en-US"
@@ -2499,19 +2499,19 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:18:31 GMT"
+          "Fri, 01 Mar 2019 18:37:26 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-client-request-id": [
-          "07e2337b-f2fe-448d-b1eb-a8f17d24604a"
+          "0118acaa-e4e8-4b76-9b5f-5ecf097a759a"
         ],
         "x-ms-correlation-request-id": [
-          "cb76c181-fb9e-4593-a065-136bf13201e2"
+          "344325e0-5a12-479d-8938-27f58da090b8"
         ],
         "x-ms-request-id": [
-          "307d328f-0697-4a16-80d0-911e05cb65db"
+          "2e731c80-7ea8-4619-9a62-a8d4e35c02fa"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2526,10 +2526,10 @@
           "1198"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031831Z:cb76c181-fb9e-4593-a065-136bf13201e2"
+          "WESTUS2:20190301T183726Z:344325e0-5a12-479d-8938-27f58da090b8"
         ],
         "Content-Length": [
-          "678"
+          "679"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2538,17 +2538,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"sourceType\": \"AzureStorage\",\r\n    \"artifactRoot\": \"builds/1.0.0.0\",\r\n    \"authentication\": {\r\n      \"type\": \"Sas\",\r\n      \"properties\": {\r\n        \"sasUri\": \"https://sdktests.blob.core.windows.net/artifacts?st=2019-02-25T21%3A41%3A01Z&se=2025-02-26T21%3A41%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=ikGqTrRIrRB60SwlmGvwxCByQMGERiRGP4cOjFxUdso%3D\"\r\n      }\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/artifactSources\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv2\",\r\n  \"name\": \"sdk-for-net-topologyv2\",\r\n  \"location\": \"Central US\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"sourceType\": \"AzureStorage\",\r\n    \"artifactRoot\": \"builds/1.0.0.0\",\r\n    \"authentication\": {\r\n      \"type\": \"Sas\",\r\n      \"properties\": {\r\n        \"sasUri\": \"https://sdktests.blob.core.windows.net/artifacts?st=2019-02-25T21%3A41%3A01Z&se=2025-02-26T21%3A41%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=ikGqTrRIrRB60SwlmGvwxCByQMGERiRGP4cOjFxUdso%3D\"\r\n      }\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/artifactSources\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv2\",\r\n  \"name\": \"sdk-for-net-topologyv2\",\r\n  \"location\": \"Central US\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL3NlcnZpY2VUb3BvbG9naWVzL3Nkay1mb3ItbmV0P2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/serviceTopologies/sdk-for-net?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9zZXJ2aWNlVG9wb2xvZ2llcy9zZGstZm9yLW5ldD9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cac2f5ec-61f1-4133-ad6e-6def03db7e62"
+          "1202ee32-47cb-4038-b3a8-b83abc06393e"
         ],
         "accept-language": [
           "en-US"
@@ -2565,19 +2565,19 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:18:35 GMT"
+          "Fri, 01 Mar 2019 18:37:28 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-client-request-id": [
-          "cac2f5ec-61f1-4133-ad6e-6def03db7e62"
+          "1202ee32-47cb-4038-b3a8-b83abc06393e"
         ],
         "x-ms-correlation-request-id": [
-          "e744f7f9-a237-4e24-b2b4-e0fd638b97a2"
+          "4ec17049-4fa3-40e9-8e0d-0c42e6476c71"
         ],
         "x-ms-request-id": [
-          "c1168e8e-b3f2-497a-bc9a-bae598119023"
+          "95af02ef-b887-4d86-a062-bb1a69f05674"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2592,7 +2592,7 @@
           "14998"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031835Z:e744f7f9-a237-4e24-b2b4-e0fd638b97a2"
+          "WESTUS2:20190301T183728Z:4ec17049-4fa3-40e9-8e0d-0c42e6476c71"
         ],
         "Content-Length": [
           "4"
@@ -2608,13 +2608,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL2FydGlmYWN0U291cmNlcy9zZGstZm9yLW5ldC10b3BvbG9neXYxP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv1?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9hcnRpZmFjdFNvdXJjZXMvc2RrLWZvci1uZXQtdG9wb2xvZ3l2MT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0f7e2ea1-61d7-4ca0-8a93-feb0b402443c"
+          "b83d9333-7de7-44e2-bb16-ed29bcd23a52"
         ],
         "accept-language": [
           "en-US"
@@ -2631,19 +2631,19 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:18:37 GMT"
+          "Fri, 01 Mar 2019 18:37:29 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-client-request-id": [
-          "0f7e2ea1-61d7-4ca0-8a93-feb0b402443c"
+          "b83d9333-7de7-44e2-bb16-ed29bcd23a52"
         ],
         "x-ms-correlation-request-id": [
-          "dbe8db1c-dc6b-4e69-81af-cfc12e1681f5"
+          "87bd1d65-c7d3-4e1b-b25a-9b7b7532edef"
         ],
         "x-ms-request-id": [
-          "bb0e148b-e0cf-4358-9c88-04f6e9bd5829"
+          "3f193399-ba77-435d-974f-d5a4f06e1e90"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2658,7 +2658,7 @@
           "14997"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031837Z:dbe8db1c-dc6b-4e69-81af-cfc12e1681f5"
+          "WESTUS2:20190301T183730Z:87bd1d65-c7d3-4e1b-b25a-9b7b7532edef"
         ],
         "Content-Length": [
           "4"
@@ -2674,13 +2674,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg309/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv2?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOS9wcm92aWRlcnMvTWljcm9zb2Z0LkRlcGxveW1lbnRNYW5hZ2VyL2FydGlmYWN0U291cmNlcy9zZGstZm9yLW5ldC10b3BvbG9neXYyP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/deploymentmanager-sdk-net-test-rg6262/providers/Microsoft.DeploymentManager/artifactSources/sdk-for-net-topologyv2?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjIvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9hcnRpZmFjdFNvdXJjZXMvc2RrLWZvci1uZXQtdG9wb2xvZ3l2Mj9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "23c43cda-b1af-496c-987e-4b0c75edebfb"
+          "09b477a2-491b-4b38-b172-1046087d8340"
         ],
         "accept-language": [
           "en-US"
@@ -2697,19 +2697,19 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:18:39 GMT"
+          "Fri, 01 Mar 2019 18:37:30 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-client-request-id": [
-          "23c43cda-b1af-496c-987e-4b0c75edebfb"
+          "09b477a2-491b-4b38-b172-1046087d8340"
         ],
         "x-ms-correlation-request-id": [
-          "60e5ae58-f8ac-4858-8953-63d60ec4964d"
+          "7c45e857-11ef-46a3-9e31-b77b232ac5cd"
         ],
         "x-ms-request-id": [
-          "9046e6ee-8a45-49a4-be46-0f3ab5bccf35"
+          "072a96ad-3002-4773-b8d5-4b7adbd7092a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2724,7 +2724,7 @@
           "14996"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031839Z:60e5ae58-f8ac-4858-8953-63d60ec4964d"
+          "WESTUS2:20190301T183731Z:7c45e857-11ef-46a3-9e31-b77b232ac5cd"
         ],
         "Content-Length": [
           "4"
@@ -2740,13 +2740,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg309?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlZ3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzMwOT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/deploymentmanager-sdk-net-test-rg6262?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlZ3JvdXBzL2RlcGxveW1lbnRtYW5hZ2VyLXNkay1uZXQtdGVzdC1yZzYyNjI/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6ab4733a-5e47-4e27-92f2-1b13997e8308"
+          "6dfaf73f-c361-45c7-abe9-ced5d3eab6b0"
         ],
         "accept-language": [
           "en-US"
@@ -2763,13 +2763,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:18:39 GMT"
+          "Fri, 01 Mar 2019 18:37:31 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzMwOS1DRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6ImNlbnRyYWx1cyJ9?api-version=2015-11-01"
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzYyNjItQ0VOVFJBTFVTIiwiam9iTG9jYXRpb24iOiJjZW50cmFsdXMifQ?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
@@ -2778,13 +2778,13 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "be5b15b6-2a24-4450-92b4-5ac3530cdbea"
+          "a4d83acc-8b6d-4ff0-ac31-baac92e38df7"
         ],
         "x-ms-correlation-request-id": [
-          "be5b15b6-2a24-4450-92b4-5ac3530cdbea"
+          "a4d83acc-8b6d-4ff0-ac31-baac92e38df7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031839Z:be5b15b6-2a24-4450-92b4-5ac3530cdbea"
+          "WESTUS2:20190301T183732Z:a4d83acc-8b6d-4ff0-ac31-baac92e38df7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2803,8 +2803,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzMwOS1DRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6ImNlbnRyYWx1cyJ9?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFFUlZCTVQxbE5SVTVVVFVGT1FVZEZVam95UkZORVN6b3lSRTVGVkRveVJGUkZVMVE2TWtSU1J6TXdPUzFEUlU1VVVrRk1WVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbU5sYm5SeVlXeDFjeUo5P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzYyNjItQ0VOVFJBTFVTIiwiam9iTG9jYXRpb24iOiJjZW50cmFsdXMifQ?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFFUlZCTVQxbE5SVTVVVFVGT1FVZEZVam95UkZORVN6b3lSRTVGVkRveVJGUkZVMVE2TWtSU1J6WXlOakl0UTBWT1ZGSkJURlZUSWl3aWFtOWlURzlqWVhScGIyNGlPaUpqWlc1MGNtRnNkWE1pZlE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2820,13 +2820,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:18:54 GMT"
+          "Fri, 01 Mar 2019 18:37:46 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzMwOS1DRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6ImNlbnRyYWx1cyJ9?api-version=2015-11-01"
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzYyNjItQ0VOVFJBTFVTIiwiam9iTG9jYXRpb24iOiJjZW50cmFsdXMifQ?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
@@ -2835,13 +2835,13 @@
           "11991"
         ],
         "x-ms-request-id": [
-          "44ec5cf4-4f4a-425c-b771-9ad1b76e21dc"
+          "4a26cf2d-668c-4138-9999-49a425af3620"
         ],
         "x-ms-correlation-request-id": [
-          "44ec5cf4-4f4a-425c-b771-9ad1b76e21dc"
+          "4a26cf2d-668c-4138-9999-49a425af3620"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031855Z:44ec5cf4-4f4a-425c-b771-9ad1b76e21dc"
+          "WESTUS2:20190301T183747Z:4a26cf2d-668c-4138-9999-49a425af3620"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2860,8 +2860,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzMwOS1DRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6ImNlbnRyYWx1cyJ9?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFFUlZCTVQxbE5SVTVVVFVGT1FVZEZVam95UkZORVN6b3lSRTVGVkRveVJGUkZVMVE2TWtSU1J6TXdPUzFEUlU1VVVrRk1WVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbU5sYm5SeVlXeDFjeUo5P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzYyNjItQ0VOVFJBTFVTIiwiam9iTG9jYXRpb24iOiJjZW50cmFsdXMifQ?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFFUlZCTVQxbE5SVTVVVFVGT1FVZEZVam95UkZORVN6b3lSRTVGVkRveVJGUkZVMVE2TWtSU1J6WXlOakl0UTBWT1ZGSkJURlZUSWl3aWFtOWlURzlqWVhScGIyNGlPaUpqWlc1MGNtRnNkWE1pZlE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2877,13 +2877,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:19:10 GMT"
+          "Fri, 01 Mar 2019 18:38:01 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzMwOS1DRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6ImNlbnRyYWx1cyJ9?api-version=2015-11-01"
+          "https://management.azure.com/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzYyNjItQ0VOVFJBTFVTIiwiam9iTG9jYXRpb24iOiJjZW50cmFsdXMifQ?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
@@ -2892,13 +2892,13 @@
           "11990"
         ],
         "x-ms-request-id": [
-          "9ff9923d-4517-49c0-b008-3871866eb7ef"
+          "26a4c02c-d0ca-41fe-bd98-83dc4f068de7"
         ],
         "x-ms-correlation-request-id": [
-          "9ff9923d-4517-49c0-b008-3871866eb7ef"
+          "26a4c02c-d0ca-41fe-bd98-83dc4f068de7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031910Z:9ff9923d-4517-49c0-b008-3871866eb7ef"
+          "WESTUS2:20190301T183802Z:26a4c02c-d0ca-41fe-bd98-83dc4f068de7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2917,8 +2917,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzMwOS1DRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6ImNlbnRyYWx1cyJ9?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFFUlZCTVQxbE5SVTVVVFVGT1FVZEZVam95UkZORVN6b3lSRTVGVkRveVJGUkZVMVE2TWtSU1J6TXdPUzFEUlU1VVVrRk1WVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbU5sYm5SeVlXeDFjeUo5P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzYyNjItQ0VOVFJBTFVTIiwiam9iTG9jYXRpb24iOiJjZW50cmFsdXMifQ?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFFUlZCTVQxbE5SVTVVVFVGT1FVZEZVam95UkZORVN6b3lSRTVGVkRveVJGUkZVMVE2TWtSU1J6WXlOakl0UTBWT1ZGSkJURlZUSWl3aWFtOWlURzlqWVhScGIyNGlPaUpqWlc1MGNtRnNkWE1pZlE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2934,7 +2934,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:19:24 GMT"
+          "Fri, 01 Mar 2019 18:38:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2943,13 +2943,13 @@
           "11989"
         ],
         "x-ms-request-id": [
-          "0461e872-7f6c-436d-a0bb-1fe3262f66d0"
+          "3da2e4e6-74d7-4d4c-8414-23a9fddff2b8"
         ],
         "x-ms-correlation-request-id": [
-          "0461e872-7f6c-436d-a0bb-1fe3262f66d0"
+          "3da2e4e6-74d7-4d4c-8414-23a9fddff2b8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031925Z:0461e872-7f6c-436d-a0bb-1fe3262f66d0"
+          "WESTUS2:20190301T183817Z:3da2e4e6-74d7-4d4c-8414-23a9fddff2b8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2968,8 +2968,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzMwOS1DRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6ImNlbnRyYWx1cyJ9?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFFUlZCTVQxbE5SVTVVVFVGT1FVZEZVam95UkZORVN6b3lSRTVGVkRveVJGUkZVMVE2TWtSU1J6TXdPUzFEUlU1VVVrRk1WVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbU5sYm5SeVlXeDFjeUo5P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERVBMT1lNRU5UTUFOQUdFUjoyRFNESzoyRE5FVDoyRFRFU1Q6MkRSRzYyNjItQ0VOVFJBTFVTIiwiam9iTG9jYXRpb24iOiJjZW50cmFsdXMifQ?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFFUlZCTVQxbE5SVTVVVFVGT1FVZEZVam95UkZORVN6b3lSRTVGVkRveVJGUkZVMVE2TWtSU1J6WXlOakl0UTBWT1ZGSkJURlZUSWl3aWFtOWlURzlqWVhScGIyNGlPaUpqWlc1MGNtRnNkWE1pZlE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2985,7 +2985,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Mar 2019 03:19:25 GMT"
+          "Fri, 01 Mar 2019 18:38:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2994,13 +2994,13 @@
           "11988"
         ],
         "x-ms-request-id": [
-          "9f5b82a3-0916-4fdf-a3f0-7b7a1fa934e5"
+          "d79dc764-2c24-43b9-a53a-c9fc11e12cf5"
         ],
         "x-ms-correlation-request-id": [
-          "9f5b82a3-0916-4fdf-a3f0-7b7a1fa934e5"
+          "d79dc764-2c24-43b9-a53a-c9fc11e12cf5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190301T031925Z:9f5b82a3-0916-4fdf-a3f0-7b7a1fa934e5"
+          "WESTUS2:20190301T183817Z:d79dc764-2c24-43b9-a53a-c9fc11e12cf5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -3021,7 +3021,7 @@
   ],
   "Names": {
     ".ctor": [
-      "deploymentmanager-sdk-net-test-rg309"
+      "deploymentmanager-sdk-net-test-rg6262"
     ]
   },
   "Variables": {
