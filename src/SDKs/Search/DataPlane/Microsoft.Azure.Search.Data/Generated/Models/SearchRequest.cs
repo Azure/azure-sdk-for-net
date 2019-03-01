@@ -65,15 +65,15 @@ namespace Microsoft.Azure.Search.Models
         /// documents. If no $orderby is specified, the default sort order is
         /// descending by document match score. There can be at most 32
         /// $orderby clauses.</param>
-        /// <param name="queryType">Gets or sets a value that specifies the
-        /// syntax of the search query. The default is 'simple'. Use 'full' if
-        /// your query uses the Lucene query syntax. Possible values include:
-        /// 'simple', 'full'</param>
+        /// <param name="queryType">A value that specifies the syntax of the
+        /// search query. The default is 'simple'. Use 'full' if your query
+        /// uses the Lucene query syntax. Possible values include: 'simple',
+        /// 'full'</param>
         /// <param name="scoringParameters">The list of parameter values to be
         /// used in scoring functions (for example, referencePointParameter)
         /// using the format name-values. For example, if the scoring profile
         /// defines a function with a parameter called 'mylocation' the
-        /// parameter string would be "mylocation--122.2,44.8"(without the
+        /// parameter string would be "mylocation--122.2,44.8" (without the
         /// quotes).</param>
         /// <param name="scoringProfile">The name of a scoring profile to
         /// evaluate match scores for matching documents in order to sort the
@@ -90,16 +90,15 @@ namespace Microsoft.Azure.Search.Models
         /// schema are included.</param>
         /// <param name="skip">The number of search results to skip. This value
         /// cannot be greater than 100,000. If you need to scan documents in
-        /// sequence, but cannot use Skip due to this limitation, consider
-        /// using $orderby on a totally-ordered key and Filter with a range
+        /// sequence, but cannot use skip due to this limitation, consider
+        /// using orderby on a totally-ordered key and filter with a range
         /// query instead.</param>
         /// <param name="top">The number of search results to retrieve. This
-        /// can be used in conjunction with Skip to implement client-side
+        /// can be used in conjunction with $skip to implement client-side
         /// paging of search results. If results are truncated due to
         /// server-side paging, the response will include a continuation token
-        /// that can be passed to ContinueSearch to retrieve the next page of
-        /// results. See DocumentSearchResponse.ContinuationToken for more
-        /// information.</param>
+        /// that can be used to issue another Search request for the next page
+        /// of results.</param>
         public SearchRequest(bool? count = default(bool?), IList<string> facets = default(IList<string>), string filter = default(string), string highlight = default(string), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string orderBy = default(string), QueryType? queryType = default(QueryType?), IList<string> scoringParameters = default(IList<string>), string scoringProfile = default(string), string search = default(string), string searchFields = default(string), SearchMode? searchMode = default(SearchMode?), string select = default(string), int? skip = default(int?), int? top = default(int?))
         {
             Count = count;
@@ -211,7 +210,7 @@ namespace Microsoft.Azure.Search.Models
         /// functions (for example, referencePointParameter) using the format
         /// name-values. For example, if the scoring profile defines a function
         /// with a parameter called 'mylocation' the parameter string would be
-        /// "mylocation--122.2,44.8"(without the quotes).
+        /// "mylocation--122.2,44.8" (without the quotes).
         /// </summary>
         [JsonProperty(PropertyName = "scoringParameters")]
         public IList<string> ScoringParameters { get; set; }
@@ -256,8 +255,8 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets the number of search results to skip. This value
         /// cannot be greater than 100,000. If you need to scan documents in
-        /// sequence, but cannot use Skip due to this limitation, consider
-        /// using $orderby on a totally-ordered key and Filter with a range
+        /// sequence, but cannot use skip due to this limitation, consider
+        /// using orderby on a totally-ordered key and filter with a range
         /// query instead.
         /// </summary>
         [JsonProperty(PropertyName = "skip")]
@@ -265,11 +264,10 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the number of search results to retrieve. This can be
-        /// used in conjunction with Skip to implement client-side paging of
+        /// used in conjunction with $skip to implement client-side paging of
         /// search results. If results are truncated due to server-side paging,
-        /// the response will include a continuation token that can be passed
-        /// to ContinueSearch to retrieve the next page of results. See
-        /// DocumentSearchResponse.ContinuationToken for more information.
+        /// the response will include a continuation token that can be used to
+        /// issue another Search request for the next page of results.
         /// </summary>
         [JsonProperty(PropertyName = "top")]
         public int? Top { get; set; }
