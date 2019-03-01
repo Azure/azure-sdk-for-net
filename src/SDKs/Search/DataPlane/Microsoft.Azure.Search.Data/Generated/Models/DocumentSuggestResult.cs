@@ -50,18 +50,18 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the sequence of results returned by the query.
+        /// Gets the sequence of results returned by the query.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<SuggestResult<T>> Results { get; set; }
+        public IList<SuggestResult<T>> Results { get; private set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the percentage of the index that
-        /// was included in the query, or null if minimumCoverage was not set
-        /// in the request.
+        /// Gets a value indicating the percentage of the index that was
+        /// included in the query, or null if minimumCoverage was not set in
+        /// the request.
         /// </summary>
         [JsonProperty(PropertyName = "@search.coverage")]
-        public double? Coverage { get; set; }
+        public double? Coverage { get; private set; }
 
     }
 }

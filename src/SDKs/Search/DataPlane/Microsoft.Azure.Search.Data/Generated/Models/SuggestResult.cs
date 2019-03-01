@@ -49,13 +49,13 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets the document on which the suggested text is based. 
         /// </summary>
-        public T Document { get; set; }
+        public T Document { get; private set; }
 
         /// <summary>
-        /// Gets or sets the text of the suggestion result.
+        /// Gets the text of the suggestion result.
         /// </summary>
         [JsonProperty(PropertyName = "@search.text")]
-        public string Text { get; set; }
+        public string Text { get; private set; }
 
     }
 }

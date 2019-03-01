@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Search
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/brjohnstmsft/azure-rest-api-specs/blob/doc-update/specification/search/data-plane/Microsoft.Azure.Search.Data/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\github\\azure-sdk-for-net\\src\\SDKs";
       public static readonly String GithubForkName = "brjohnstmsft";
       public static readonly String GithubBranchName = "doc-update";
-      public static readonly String GithubCommidId = "96893b9a1d4e60c274c1b87cadadb8e6db34f188";
+      public static readonly String GithubCommidId = "0b6409f47880214b3464f499b864f65f7db5c2f8";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
