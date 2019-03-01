@@ -62,19 +62,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <summary>
         /// Initializes a new instance of the ComputerVisionClient class.
         /// </summary>
-        /// <param name='httpClient'>
-        /// HttpClient to be used
-        /// </param>
-        /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling ComputerVisionClient.Dispose(). False: will not dispose provided httpClient</param>
-        protected ComputerVisionClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
-        {
-            Initialize();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the ComputerVisionClient class.
-        /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
@@ -110,33 +97,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Thrown when a required parameter is null
         /// </exception>
         public ComputerVisionClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the ComputerVisionClient class.
-        /// </summary>
-        /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify client subscription.
-        /// </param>
-        /// <param name='httpClient'>
-        /// HttpClient to be used
-        /// </param>
-        /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling ComputerVisionClient.Dispose(). False: will not dispose provided httpClient</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public ComputerVisionClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -243,7 +203,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// pornographic in nature (depicts nudity or a sex act).  Sexually suggestive
         /// content is also detected. Objects - detects various objects within an
         /// image, including the approximate location. The Objects argument is only
-        /// available in English.
+        /// available in English. Brands - detects various brands within an image,
+        /// including the approximate location. The Brands argument is only available
+        /// in English.
         /// </param>
         /// <param name='details'>
         /// A string indicating which domain-specific details to return. Multiple
@@ -2246,7 +2208,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// pornographic in nature (depicts nudity or a sex act).  Sexually suggestive
         /// content is also detected. Objects - detects various objects within an
         /// image, including the approximate location. The Objects argument is only
-        /// available in English.
+        /// available in English. Brands - detects various brands within an image,
+        /// including the approximate location. The Brands argument is only available
+        /// in English.
         /// </param>
         /// <param name='details'>
         /// A string indicating which domain-specific details to return. Multiple

@@ -52,11 +52,11 @@ namespace ComputerVisionSDK.Tests
                     Assert.NotNull(recognitionResult);
 
                     Assert.Equal(
-                        new string[] { "You must be the change", "you want to see in the world !" },
+                        new string[] { "You must be the change", "you want to see in the world!!" },
                         recognitionResult.Lines.Select(line => line.Text));
                     Assert.Equal(2, recognitionResult.Lines.Count);
                     Assert.Equal(5, recognitionResult.Lines[0].Words.Count);
-                    Assert.Equal(8, recognitionResult.Lines[1].Words.Count);
+                    Assert.Equal(7, recognitionResult.Lines[1].Words.Count);
                 }
             }
         }
