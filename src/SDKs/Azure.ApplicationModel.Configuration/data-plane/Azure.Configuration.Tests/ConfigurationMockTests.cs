@@ -46,21 +46,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
             return (service, testPool);
         }
 
-        private static void AssertEqual(ConfigurationSetting expected, ConfigurationSetting actual)
-        {
-            if (expected.ETag != null && actual.ETag != null)
-            {
-                Assert.AreEqual(expected.ETag, actual.ETag);
-                Assert.AreEqual(expected.LastModified, actual.LastModified);
-            }
-            Assert.AreEqual(expected.Key, actual.Key);
-            Assert.AreEqual(expected.Label, actual.Label);
-            Assert.AreEqual(expected.Value, actual.Value);
-            Assert.AreEqual(expected.ContentType, actual.ContentType);
-            Assert.AreEqual(expected.Locked, actual.Locked);
-            Assert.IsTrue(TagsEqual(expected.Tags, actual.Tags));
-        }
-
         private static bool TagsEqual(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {
             if (expected == null && actual == null) return true;
@@ -81,7 +66,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             ConfigurationSetting setting = await service.GetAsync(key: s_testSetting.Key, options : default, CancellationToken.None);
 
-            AssertEqual(s_testSetting, setting);
+            Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
@@ -110,7 +95,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             ConfigurationSetting setting = await service.AddAsync(setting: s_testSetting);
 
-            AssertEqual(s_testSetting, setting);
+            Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
@@ -122,7 +107,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             ConfigurationSetting setting = await service.SetAsync(s_testSetting);
 
-            AssertEqual(s_testSetting, setting);
+            Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
@@ -139,7 +124,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             ConfigurationSetting setting = await service.UpdateAsync(s_testSetting, options, CancellationToken.None);
 
-            AssertEqual(s_testSetting, setting);
+            Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
         
@@ -177,7 +162,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             ConfigurationSetting setting = await service.LockAsync(s_testSetting.Key, s_testSetting.Label);
 
-            AssertEqual(s_testSetting, setting);
+            Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
@@ -188,7 +173,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             ConfigurationSetting setting = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label);
 
-            AssertEqual(s_testSetting, setting);
+            Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
