@@ -1,12 +1,16 @@
 # Enable Tests against Live Server
 
-1. Get [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
+## Prerequisites
+- Get [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
+- Have an [Azure subscription](https://docs.microsoft.com/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing). More information about create a [free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio).
 
-Run:
+## Usage
+Create or use an existing [Configuration Store](https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-dotnet-core-app#create-an-app-configuration-store).
 
-2. `az login`
-3. `az extension add --source https://azconfigextensions.blob.core.windows.net/azconfigextension/azconfig-0.3.0-py2.py3-none-any.whl`
-4. `az azconfig credential list -n azconfig`
+For users that have access to the `Azure SDK Developer Playground` subscription, run:
+1. `az login`
+2. `az extension add --source https://azconfigextensions.blob.core.windows.net/azconfigextension/azconfig-0.3.0-py2.py3-none-any.whl`
+3. `az azconfig credential list -n azconfig`
 
     **Note**: If you see the error similar to: `InvalidResourceNamespace - The resource namespace 'Microsoft.Azconfig' is invalid.` make sure to add the subscription `Azure SDK Developer Playground` as your active subscription. To do this:
     1. Check your active subscription value by doing `az account show`

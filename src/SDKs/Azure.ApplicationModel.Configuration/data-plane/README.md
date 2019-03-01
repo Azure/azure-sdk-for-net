@@ -1,7 +1,12 @@
 # Overview 
 
 Azure.ApplicationModel.Configuration is a component of the .NET Azure SDK. 
-It provides APIs for storing and retrieving application settings.
+It provides APIs for Microsoft [Azure's App Configuration Service](https://docs.microsoft.com/en-us/azure/azure-app-configuration/).
+
+Developers can use this SDK to interact with their [Configuration Stores](https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-dotnet-core-app#create-an-app-configuration-store) in the following ways:
+- Perform basic reads, writes, updates, and deletes
+- Get key-value history
+- Watch for changes in a specific key-value
 
 # Installing
 
@@ -39,6 +44,8 @@ public async Task HelloWorld()
 1. [How to access diagnostic logs](https://github.com/Azure/azure-sdk-for-net/tree/master/src/SDKs/Azure.ApplicationModel.Configuration/data-plane/Azure.Configuration.Tests/samples/Sample4_Logging.cs)
 2. [How to configure retry policy](https://github.com/Azure/azure-sdk-for-net/tree/master/src/SDKs/Azure.ApplicationModel.Configuration/data-plane/Azure.Configuration.Tests/samples/Sample6_ConfiguringRetries.cs)
 3. [How to configure service requests](https://github.com/Azure/azure-sdk-for-net/tree/master/src/SDKs/Azure.ApplicationModel.Configuration/data-plane/Azure.Configuration.Tests/samples/Sample7_ConfiguringPipeline.cs)
+
+[More...](https://github.com/Azure/azure-sdk-for-net/blob/master/src/SDKs/Azure.ApplicationModel.Configuration/data-plane/Azure.Configuration.Tests/ConfigurationLiveTests.cs)
 
 
 # Contributing
