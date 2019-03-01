@@ -25,6 +25,6 @@
   
   <!-- Package references -->
   <ItemGroup Condition="'$(UseProjectReferenceToAzureBase)'==''">
-    <PackageReference Include="Azure.Base" Version="1.0.0-preview.1" />
+    <PackageReference Include="Azure.Base" Version="1.0.0-preview.2" />
   </ItemGroup>
 </Project>

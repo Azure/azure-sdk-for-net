@@ -29,14 +29,6 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Azure.Base\data-plane\Azure.Base\Azure.Base.csproj" />
-    <ProjectReference Include="..\..\..\Azure.Core\data-plane\Azure.Core\Azure.Core.csproj" />
-  <ItemGroup Condition="'$(UseProjectReferenceToBase)'=='true'">
-    <ProjectReference Include="..\..\..\Azure.Base\data-plane\Azure.Base\Azure.Base.csproj" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(UseProjectReferenceToBase)'==''">
-    <PackageReference Include="Azure.Base" Version="1.0.0-preview.1" />
   <!-- Project references -->
   <ItemGroup Condition="'$(UseProjectReferenceToAzureBase)'=='true'">
     <ProjectReference Include="..\..\..\Azure.Base\data-plane\Azure.Base\Azure.Base.csproj" />
@@ -44,6 +36,6 @@
 
   <!-- Package references -->
   <ItemGroup Condition="'$(UseProjectReferenceToAzureBase)'!='true'">
-    <PackageReference Include="Azure.Base" Version="1.0.0-preview.1" />
+    <PackageReference Include="Azure.Base" Version="1.0.0-preview.2" />
   </ItemGroup>
 </Project>
