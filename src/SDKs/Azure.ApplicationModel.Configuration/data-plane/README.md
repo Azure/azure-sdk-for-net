@@ -3,10 +3,13 @@
 Azure.ApplicationModel.Configuration is a component of the .NET Azure SDK. 
 It provides APIs for Microsoft [Azure's App Configuration Service](https://docs.microsoft.com/en-us/azure/azure-app-configuration/).
 
-Developers can use this SDK to interact with their [Configuration Stores](https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-dotnet-core-app#create-an-app-configuration-store) in the following ways:
-- Perform basic reads, writes, updates, and deletes
-- Get key-value history
-- Watch for changes in a specific key-value
+Developers can use this SDK to interact with the [Configuration Store](https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-dotnet-core-app#create-an-app-configuration-store) where the configuration settings or key-value are stored.
+A configuration setting is a resource identified by a unique combination of key + label, where label is optional. Other properties are value, content type, etc.
+Actions that can be executed:
+
+- Perform basic reads, writes, updates, and deletes of an application configuration settings.
+- Get the history of configuration setting.
+- Watch for changes in a specific configuration setting.
 
 # Installing
 
