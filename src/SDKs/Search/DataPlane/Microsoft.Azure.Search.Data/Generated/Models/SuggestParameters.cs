@@ -51,21 +51,21 @@ namespace Microsoft.Azure.Search.Models
         /// query in order for the query to be reported as a success. This
         /// parameter can be useful for ensuring search availability even for
         /// services with only one replica. The default is 80.</param>
-        /// <param name="orderBy">The comma-separated list of OData $orderby
-        /// expressions by which to sort the results. Each expression can be
-        /// either a field name or a call to either the geo.distance() or the
-        /// search.score() functions. Each expression can be followed by asc to
-        /// indicate ascending, or desc to indicate descending. The default is
-        /// ascending order. Ties will be broken by the match scores of
-        /// documents. If no $orderby is specified, the default sort order is
-        /// descending by document match score. There can be at most 32
-        /// $orderby clauses.</param>
-        /// <param name="searchFields">The list of comma-separated field names
-        /// to search for the specified search text. Target fields must be
-        /// included in the specified suggester.</param>
-        /// <param name="select">The comma-separated list of fields to
-        /// retrieve. If unspecified, only the key field will be included in
-        /// the results.</param>
+        /// <param name="orderBy">The list of OData $orderby expressions by
+        /// which to sort the results. Each expression can be either a field
+        /// name or a call to either the geo.distance() or the search.score()
+        /// functions. Each expression can be followed by asc to indicate
+        /// ascending, or desc to indicate descending. The default is ascending
+        /// order. Ties will be broken by the match scores of documents. If no
+        /// $orderby is specified, the default sort order is descending by
+        /// document match score. There can be at most 32 $orderby
+        /// clauses.</param>
+        /// <param name="searchFields">The list of field names to search for
+        /// the specified search text. Target fields must be included in the
+        /// specified suggester.</param>
+        /// <param name="select">The list of fields to retrieve. If
+        /// unspecified, only the key field will be included in the
+        /// results.</param>
         /// <param name="top">The number of suggestions to retrieve. The value
         /// must be a number between 1 and 100. The default is 5.</param>
         public SuggestParameters(string filter = default(string), bool useFuzzyMatching = default(bool), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), IList<string> orderBy = default(IList<string>), IList<string> searchFields = default(IList<string>), IList<string> select = default(IList<string>), int? top = default(int?))
@@ -132,29 +132,29 @@ namespace Microsoft.Azure.Search.Models
         public double? MinimumCoverage { get; set; }
 
         /// <summary>
-        /// Gets or sets the comma-separated list of OData $orderby expressions
-        /// by which to sort the results. Each expression can be either a field
-        /// name or a call to either the geo.distance() or the search.score()
-        /// functions. Each expression can be followed by asc to indicate
-        /// ascending, or desc to indicate descending. The default is ascending
-        /// order. Ties will be broken by the match scores of documents. If no
-        /// $orderby is specified, the default sort order is descending by
-        /// document match score. There can be at most 32 $orderby clauses.
+        /// Gets or sets the list of OData $orderby expressions by which to
+        /// sort the results. Each expression can be either a field name or a
+        /// call to either the geo.distance() or the search.score() functions.
+        /// Each expression can be followed by asc to indicate ascending, or
+        /// desc to indicate descending. The default is ascending order. Ties
+        /// will be broken by the match scores of documents. If no $orderby is
+        /// specified, the default sort order is descending by document match
+        /// score. There can be at most 32 $orderby clauses.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public IList<string> OrderBy { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of comma-separated field names to search for
-        /// the specified search text. Target fields must be included in the
-        /// specified suggester.
+        /// Gets or sets the list of field names to search for the specified
+        /// search text. Target fields must be included in the specified
+        /// suggester.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public IList<string> SearchFields { get; set; }
 
         /// <summary>
-        /// Gets or sets the comma-separated list of fields to retrieve. If
-        /// unspecified, only the key field will be included in the results.
+        /// Gets or sets the list of fields to retrieve. If unspecified, only
+        /// the key field will be included in the results.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public IList<string> Select { get; set; }

@@ -51,9 +51,9 @@ namespace Microsoft.Azure.Search.Models
         /// query in order for the query to be reported as a success. This
         /// parameter can be useful for ensuring search availability even for
         /// services with only one replica. The default is 80.</param>
-        /// <param name="searchFields">The comma-separated list of field names
-        /// to consider when querying for auto-completed terms. Target fields
-        /// must be included in the specified suggester.</param>
+        /// <param name="searchFields">The list of field names to consider when
+        /// querying for auto-completed terms. Target fields must be included
+        /// in the specified suggester.</param>
         /// <param name="top">The number of auto-completed terms to retrieve.
         /// This must be a value between 1 and 100. The default is 5.</param>
         public AutocompleteParameters(AutocompleteMode? autocompleteMode = default(AutocompleteMode?), bool? useFuzzyMatching = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), IList<string> searchFields = default(IList<string>), int? top = default(int?))
@@ -118,9 +118,9 @@ namespace Microsoft.Azure.Search.Models
         public double? MinimumCoverage { get; set; }
 
         /// <summary>
-        /// Gets or sets the comma-separated list of field names to consider
-        /// when querying for auto-completed terms. Target fields must be
-        /// included in the specified suggester.
+        /// Gets or sets the list of field names to consider when querying for
+        /// auto-completed terms. Target fields must be included in the
+        /// specified suggester.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public IList<string> SearchFields { get; set; }
