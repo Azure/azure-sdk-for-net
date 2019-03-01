@@ -32,15 +32,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         };
 
-        private static void AssertEqual(ConfigurationSetting expected, ConfigurationSetting actual)
-        {
-            Assert.AreEqual(expected.Key, actual.Key);
-            Assert.AreEqual(expected.Label, actual.Label);
-            Assert.AreEqual(expected.ContentType, actual.ContentType);
-            Assert.AreEqual(expected.Locked, actual.Locked);
-            Assert.IsTrue(TagsEqual(expected.Tags, actual.Tags));
-        }
-
         private static bool TagsEqual(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {
             if (expected == null && actual == null) return true;
@@ -168,7 +159,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Assert.True(response.TryGetHeader("ETag", out string etagHeader));
 
                 ConfigurationSetting setting = response.Result;
-                AssertEqual(s_testSetting, setting);
+                Assert.AreEqual(s_testSetting, setting);
                 response.Dispose();
             }
             finally
@@ -191,7 +182,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Assert.True(response.TryGetHeader("ETag", out string etagHeader));
 
                 ConfigurationSetting setting = response.Result;
-                AssertEqual(s_testSetting, setting);
+                Assert.AreEqual(s_testSetting, setting);
                 response.Dispose();
             }
             finally
@@ -225,7 +216,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
                 ConfigurationSetting responseSetting = await service.UpdateAsync(testSettingUpdate, options, CancellationToken.None);
 
-                AssertEqual(testSettingUpdate, responseSetting);
+                Assert.AreEqual(testSettingUpdate, responseSetting);
             }
             finally
             {
@@ -251,12 +242,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 RequestOptions options = new RequestOptions()
                 {
-                    ETag = new ETagFilter() { IfMatch = new ETag(testSettingDiff.ETag) }
+                    ETag = new ETagFilter() { IfMatch = new ETag(responseGet.ETag) }
                 };
 
                 ConfigurationSetting responseSetting = await service.UpdateAsync(testSettingDiff, options, CancellationToken.None);
 
-                AssertEqual(testSettingDiff, responseSetting);
+                Assert.AreEqual(testSettingDiff, responseSetting);
             }
             finally
             {
@@ -354,14 +345,14 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 testSettingDiff.Tags = settingTags;
                 
                 ConfigurationSetting responseSetting = await service.UpdateAsync(testSettingDiff, options, CancellationToken.None);
-                AssertEqual(testSettingDiff, responseSetting);
+                Assert.AreEqual(testSettingDiff, responseSetting);
 
                 // No tags
                 var testSettingNoTags = responseGet.Clone();
                 testSettingNoTags.Tags = null;
 
                 responseSetting = await service.UpdateAsync(testSettingNoTags, options, CancellationToken.None);
-                AssertEqual(testSettingNoTags, responseSetting);
+                Assert.AreEqual(testSettingNoTags, responseSetting);
             }
             finally
             {
@@ -432,11 +423,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     var value = batch[i];
                     if (value.Label.Contains("update"))
                     {
-                        AssertEqual(value, testSettingUpdate);
+                        Assert.AreEqual(value, testSettingUpdate);
                     }
                     else
                     {
-                        AssertEqual(value, setting);
+                        Assert.AreEqual(value, setting);
                     }
                     resultsReturned++;
                 }
@@ -470,7 +461,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Assert.True(response.TryGetHeader("ETag", out string etagHeader));
 
                 ConfigurationSetting setting = response.Result;
-                AssertEqual(testSettingNoLabel, setting);
+                Assert.AreEqual(testSettingNoLabel, setting);
                 response.Dispose();
             }
             finally
@@ -518,7 +509,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Assert.True(response.TryGetHeader("ETag", out string etagHeader));
 
                 ConfigurationSetting responseSetting = response.Result;
-                AssertEqual(s_testSetting, responseSetting);
+                Assert.AreEqual(s_testSetting, responseSetting);
                 response.Dispose();
             }
             finally
@@ -599,7 +590,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
                 ConfigurationSetting setting = await service.GetAsync(testSettingNoLabel.Key, LabelFilters.Null, CancellationToken.None);
                 
-                AssertEqual(testSettingNoLabel, setting);
+                Assert.AreEqual(testSettingNoLabel, setting);
             }
             finally
             {
@@ -623,7 +614,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 ConfigurationSetting responseLockSetting = await service.LockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
 
                 s_testSetting.Locked = true;
-                AssertEqual(s_testSetting, responseLockSetting);
+                Assert.AreEqual(s_testSetting, responseLockSetting);
                 
                 //Test update
                 var testSettingUpdate = s_testSetting.Clone();
@@ -641,7 +632,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 ConfigurationSetting responseUnlockSetting = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
 
                 s_testSetting.Locked = false;
-                AssertEqual(s_testSetting, responseUnlockSetting);
+                Assert.AreEqual(s_testSetting, responseUnlockSetting);
             }
             finally
             {
@@ -664,7 +655,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 response.TryGetHeader("x-ms-client-request-id", out string requestId);
 
                 ConfigurationSetting setting = response.Result;
-                AssertEqual(s_testSetting, setting);
+                Assert.AreEqual(s_testSetting, setting);
                 Assert.IsNotEmpty(requestId);
                 response.Dispose();
             }
@@ -673,20 +664,52 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 await service.DeleteAsync(key: s_testSetting.Key, options: s_testSetting.Label, CancellationToken.None);
             }
         }
+
+        [Test]
+        public void ConfigurationSettingEquals()
+        {
+            //Case tests
+            var testSettingUpperCase = s_testSetting.Clone();
+            testSettingUpperCase.Key = testSettingUpperCase.Key.ToUpper();
+
+            var testSettingLowerCase = s_testSetting.Clone();
+            testSettingLowerCase.Key = testSettingLowerCase.Key.ToLower();
+            Assert.AreNotEqual(testSettingUpperCase, testSettingLowerCase);
+
+            var testSettingsameCase = s_testSetting.Clone();
+            Assert.AreEqual(testSettingsameCase, s_testSetting);
+
+            //Etag tests
+            var testSettingEtagDiff = testSettingsameCase.Clone();
+            testSettingsameCase.ETag = Guid.NewGuid().ToString();
+            testSettingEtagDiff.ETag = Guid.NewGuid().ToString();
+            Assert.AreNotEqual(testSettingsameCase, testSettingEtagDiff);
+
+            // Different tags
+            var testSettingDiffTags = s_testSetting.Clone();
+            testSettingDiffTags.Tags.Add("tag3", "test_value3");
+            Assert.AreNotEqual(s_testSetting, testSettingDiffTags);
+        }
     }
 
     public static class ConfigurationSettingExtensions
     {
         public static ConfigurationSetting Clone(this ConfigurationSetting setting)
         {
+            Dictionary<string, string> tags = new Dictionary<string, string>();
+            foreach (string key in setting.Tags.Keys)
+            {
+                tags.Add(key, setting.Tags[key]);
+            }
+
             return new ConfigurationSetting(setting.Key, setting.Value)
             {
                 Label = setting.Label,
                 ContentType = setting.ContentType,
                 LastModified = setting.LastModified,
                 Locked = setting.Locked,
-                ETag = setting.ETag,
-                Tags = setting.Tags
+                ETag = null,
+                Tags = tags
             };
         }
     }
