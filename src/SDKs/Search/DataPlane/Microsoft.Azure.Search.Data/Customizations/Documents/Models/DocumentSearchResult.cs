@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Search.Models
         /// Gets the facet query results for the search operation, or null if the query did not include any facet
         /// expressions.
         /// </summary>
-        public FacetResults Facets { get; set; }
+        public IDictionary<string, IList<FacetResult>> Facets { get; set; }
 
         /// <summary>
         /// Gets the sequence of results returned by the query.

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Rest;
     using Microsoft.Spatial;
     using Xunit;
+    using FacetResults = System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Models.FacetResult>>;
+    using HitHighlights = System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>>;
 
     // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
     // the mock recording/playback to work properly.

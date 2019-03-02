@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System.Collections.Generic;
+
 namespace Microsoft.Azure.Search.Models
 {
     /// <summary>
@@ -21,7 +23,7 @@ namespace Microsoft.Azure.Search.Models
         /// Gets text snippets from the document that indicate the matching search terms; null if hit highlighting
         /// was not enabled for the query.
         /// </summary>
-        public HitHighlights Highlights { get; set; }
+        public IDictionary<string, IList<string>> Highlights { get; set; }
 
         /// <summary>
         /// Gets the document found by the search query.

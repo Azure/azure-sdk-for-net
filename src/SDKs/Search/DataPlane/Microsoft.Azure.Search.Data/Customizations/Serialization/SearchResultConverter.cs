@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Search.Serialization
     using Microsoft.Azure.Search.Models;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+    using HitHighlights = System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>>;
 
     /// <summary>
     /// Deserializes SearchResult instances from OData-compliant JSON.
