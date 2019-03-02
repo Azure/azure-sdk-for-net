@@ -6,14 +6,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Search.Models
 {
-    /// <summary>
-    /// Response containing search results from an Azure Search index.
-    /// </summary>
-    /// <typeparam name="T">
-    /// The CLR type that maps to the index schema. Instances of this type can be retrieved as documents
-    /// from the index.
-    /// </typeparam>
-    public class DocumentSearchResult<T>
+    public partial class DocumentSearchResult<T>
     {
         /// <summary>
         /// Initializes a new instance of the DocumentSearchResult class.
@@ -39,33 +32,6 @@ namespace Microsoft.Azure.Search.Models
             Results = results;
             ContinuationToken = continuationToken;
         }
-
-        /// <summary>
-        /// Gets the total count of results found by the search operation, or null if the count was not requested.
-        /// </summary>
-        /// <remarks>
-        /// If present, the count may be greater than the number of results in this response. This can happen if you
-        /// use the <c cref="SearchParameters.Top">Top</c> or <c cref="SearchParameters.Skip">Skip</c> parameters, or
-        /// if Azure Search can't return all the requested documents in a single Search response.
-        /// </remarks>
-        public long? Count { get; }
-
-        /// <summary>
-        /// Gets a value indicating the percentage of the index that was included in the query, or null if
-        /// MinimumCoverage was not set in the <c cref="SearchParameters">SearchParameters</c>.
-        /// </summary>
-        public double? Coverage { get; }
-
-        /// <summary>
-        /// Gets the facet query results for the search operation, or null if the query did not include any facet
-        /// expressions.
-        /// </summary>
-        public IDictionary<string, IList<FacetResult>> Facets { get; }
-
-        /// <summary>
-        /// Gets the sequence of results returned by the query.
-        /// </summary>
-        public IList<SearchResult<T>> Results { get; }
 
         /// <summary>
         /// Gets a continuation token that is used to continue fetching search results. This is necessary when Azure
