@@ -706,7 +706,7 @@ namespace Microsoft.Azure.Search
             public double? Coverage { get; set; }
 
             [JsonProperty("@search.facets")]
-            public FacetResults Facets { get; set; }
+            public IDictionary<string, IList<FacetResult>> Facets { get; set; }
 
             [JsonProperty("value")]
             public List<SearchResult<T>> Documents { get; set; }
