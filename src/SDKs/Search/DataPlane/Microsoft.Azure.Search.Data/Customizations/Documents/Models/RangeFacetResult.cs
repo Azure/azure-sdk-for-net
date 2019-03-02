@@ -17,26 +17,26 @@ namespace Microsoft.Azure.Search.Models
     {
         internal RangeFacetResult(long count, T? from, T? to)
         {
-            this.From = from;
-            this.To = to;
-            this.Count = count;
+            From = from;
+            To = to;
+            Count = count;
         }
 
         /// <summary>
         /// Gets the approximate count of documents falling within the bucket described by this facet.
         /// </summary>
-        public long Count { get; private set; }
+        public long Count { get; }
 
         /// <summary>
         /// Gets a value indicating the inclusive lower bound of the facet's range, or null to indicate that there is
         /// no lower bound (i.e. -- for the first bucket).
         /// </summary>
-        public T? From { get; private set; }
+        public T? From { get; }
 
         /// <summary>
         /// Gets a value indicating the exclusive upper bound of the facet's range, or null to indicate that there is
         /// no upper bound (i.e. -- for the last bucket).
         /// </summary>
-        public T? To { get; private set; }
+        public T? To { get; }
     }
 }

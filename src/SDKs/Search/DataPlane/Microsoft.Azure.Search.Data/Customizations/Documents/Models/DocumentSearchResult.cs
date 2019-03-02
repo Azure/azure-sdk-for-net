@@ -16,6 +16,31 @@ namespace Microsoft.Azure.Search.Models
     public class DocumentSearchResult<T>
     {
         /// <summary>
+        /// Initializes a new instance of the DocumentSearchResult class.
+        /// </summary>
+        /// <param name="results">The sequence of results returned by the query.</param>
+        /// <param name="count">The total count of results found by the search operation, or null if the count was not requested.</param>
+        /// <param name="coverage">A value indicating the percentage of the index that was included in the query, or null if
+        /// MinimumCoverage was not set in the <c cref="SearchParameters">SearchParameters</c>.</param>
+        /// <param name="facets">The facet query results for the search operation, or null if the query did not include any facet
+        /// expressions.</param>
+        /// <param name="continuationToken">A continuation token that is used to continue fetching search results. This is necessary when
+        /// Azure Search cannot fulfill a search request with a single response.</param>
+        public DocumentSearchResult(
+            IList<SearchResult<T>> results, 
+            long? count, 
+            double? coverage, 
+            IDictionary<string, IList<FacetResult>> facets, 
+            SearchContinuationToken continuationToken)
+        {
+            Count = count;
+            Coverage = coverage;
+            Facets = facets;
+            Results = results;
+            ContinuationToken = continuationToken;
+        }
+
+        /// <summary>
         /// Gets the total count of results found by the search operation, or null if the count was not requested.
         /// </summary>
         /// <remarks>
@@ -23,24 +48,24 @@ namespace Microsoft.Azure.Search.Models
         /// use the <c cref="SearchParameters.Top">Top</c> or <c cref="SearchParameters.Skip">Skip</c> parameters, or
         /// if Azure Search can't return all the requested documents in a single Search response.
         /// </remarks>
-        public long? Count { get; set; }
+        public long? Count { get; }
 
         /// <summary>
         /// Gets a value indicating the percentage of the index that was included in the query, or null if
         /// MinimumCoverage was not set in the <c cref="SearchParameters">SearchParameters</c>.
         /// </summary>
-        public double? Coverage { get; set; }
+        public double? Coverage { get; }
 
         /// <summary>
         /// Gets the facet query results for the search operation, or null if the query did not include any facet
         /// expressions.
         /// </summary>
-        public IDictionary<string, IList<FacetResult>> Facets { get; set; }
+        public IDictionary<string, IList<FacetResult>> Facets { get; }
 
         /// <summary>
         /// Gets the sequence of results returned by the query.
         /// </summary>
-        public IList<SearchResult<T>> Results { get; set; }
+        public IList<SearchResult<T>> Results { get; }
 
         /// <summary>
         /// Gets a continuation token that is used to continue fetching search results. This is necessary when Azure
@@ -62,6 +87,6 @@ namespace Microsoft.Azure.Search.Models
         /// search parameters.
         /// </para>
         /// </remarks>
-        public SearchContinuationToken ContinuationToken { get; set; }
+        public SearchContinuationToken ContinuationToken { get; }
     }
 }

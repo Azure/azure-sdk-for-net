@@ -51,12 +51,10 @@ namespace Microsoft.Azure.Search.Serialization
             }
 
             JToken score = propertyBag["@search.score"];
-            return new SearchResult<T>
-            {
-                Score = score.Value<double>(),
-                Highlights = DeserializeHighlights(),
-                Document = DeserializeDocument()
-            };
+            return new SearchResult<T>(
+                document: DeserializeDocument(), 
+                score: score.Value<double>(), 
+                highlights: DeserializeHighlights());
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotImplementedException();

@@ -506,7 +506,6 @@ namespace Microsoft.Azure.Search
             if (statusCode == HttpStatusCode.OK)
             {
                 responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = new DocumentSearchResult<T>();
                 if (string.IsNullOrEmpty(responseContent) == false)
                 {
                     DocumentSearchResponsePayload<T> deserializedResult;
@@ -524,16 +523,25 @@ namespace Microsoft.Azure.Search
                         throw new SerializationException("Unable to deserialize the response.", responseContent, ex);
                     }
 
-                    result.Body.Count = deserializedResult.Count;
-                    result.Body.Coverage = deserializedResult.Coverage;
-                    result.Body.Facets = deserializedResult.Facets;
-                    result.Body.Results = deserializedResult.Documents;
-                    result.Body.ContinuationToken =
+                    SearchContinuationToken CreateContinuationTokenIfNeeded() =>
                         deserializedResult.NextLink != null ?
                             new SearchContinuationToken(
                                 deserializedResult.NextLink,
                                 deserializedResult.NextPageParameters) :
                             null;
+
+                    result.Body =
+                        new DocumentSearchResult<T>(
+                            results: deserializedResult.Documents,
+                            count: deserializedResult.Count,
+                            coverage: deserializedResult.Coverage,
+                            facets: deserializedResult.Facets,
+                            continuationToken: CreateContinuationTokenIfNeeded());
+                }
+                else
+                {
+                    result.Body =
+                        new DocumentSearchResult<T>(results: null, count: null, coverage: null, facets: null, continuationToken: null);
                 }
             }
             if (shouldTrace)
