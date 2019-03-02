@@ -14,49 +14,53 @@ namespace Microsoft.Azure.Search.Models
     public class FacetResult
     {
         /// <summary>
-        /// Initializes a new instance of the Facet class.
+        /// Initializes a new instance of the FacetResult class. This constructor is intended to be used for test purposes, since the
+        /// properties of this class are immutable.
         /// </summary>
-        public FacetResult()
+        /// <param name="from">A value indicating the inclusive lower bound of the facet's range, or null to indicate that there is no
+        /// lower bound (i.e. -- for the first bucket).</param>
+        /// <param name="to">A value indicating the exclusive upper bound of the facet's range, or null to indicate that there is no
+        /// upper bound (i.e. -- for the last bucket).</param>
+        /// <param name="value">The value of the facet, or the inclusive lower bound if it's an interval facet.</param>
+        /// <param name="count">The approximate count of documents falling within the bucket described by this facet.</param>
+        public FacetResult(object from, object to, object value, long? count)
         {
-            // Do nothing.
+            From = from;
+            To = to;
+            Value = value;
+            Count = count;
         }
 
         /// <summary>
         /// Gets a value indicating the type of this facet.
         /// </summary>
-        public FacetType Type
-        {
-            get
-            {
-                return (this.Value != null) ? FacetType.Value : FacetType.Range;
-            }
-        }
+        public FacetType Type => (Value != null) ? FacetType.Value : FacetType.Range;
 
         /// <summary>
         /// Gets a value indicating the inclusive lower bound of the facet's range, or null to indicate that there is
         /// no lower bound (i.e. -- for the first bucket).
         /// </summary>
         [JsonProperty("from")]
-        public object From { get; set; }
+        public object From { get; }
 
         /// <summary>
         /// Gets a value indicating the exclusive upper bound of the facet's range, or null to indicate that there is
         /// no upper bound (i.e. -- for the last bucket).
         /// </summary>
         [JsonProperty("to")]
-        public object To { get; set; }
+        public object To { get; }
 
         /// <summary>
         /// Gets the value of the facet, or the inclusive lower bound if it's an interval facet.
         /// </summary>
         [JsonProperty("value")]
-        public object Value { get; set; }
+        public object Value { get; }
 
         /// <summary>
         /// Gets the approximate count of documents falling within the bucket described by this facet.
         /// </summary>
         [JsonProperty("count")]
-        public long? Count { get; set; }
+        public long? Count { get; }
 
         /// <summary>
         /// Attempts to convert the facet to a range facet of the given type.
@@ -70,12 +74,12 @@ namespace Microsoft.Azure.Search.Models
         /// <exception cref="InvalidCastException">This instance is not a range facet of the given type.</exception>
         public RangeFacetResult<T> AsRangeFacetResult<T>() where T : struct
         {
-            if (this.Type != FacetType.Range)
+            if (Type != FacetType.Range)
             {
                 throw new InvalidCastException();
             }
 
-            return new RangeFacetResult<T>(this.Count.GetValueOrDefault(), (T?)this.From, (T?)this.To);
+            return new RangeFacetResult<T>(Count.GetValueOrDefault(), (T?)From, (T?)To);
         }
 
         /// <summary>
@@ -88,12 +92,12 @@ namespace Microsoft.Azure.Search.Models
         /// <exception cref="InvalidCastException">This instance is not a value facet of the given type.</exception>
         public ValueFacetResult<T> AsValueFacetResult<T>()
         {
-            if (this.Type != FacetType.Value)
+            if (Type != FacetType.Value)
             {
                 throw new InvalidCastException();
             }
 
-            return new ValueFacetResult<T>(this.Count.GetValueOrDefault(), (T)this.Value);
+            return new ValueFacetResult<T>(Count.GetValueOrDefault(), (T)Value);
         }
     }
 }
