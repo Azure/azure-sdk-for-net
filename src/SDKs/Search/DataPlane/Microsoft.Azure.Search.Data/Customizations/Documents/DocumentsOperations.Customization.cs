@@ -261,13 +261,25 @@ namespace Microsoft.Azure.Search
         {
             var deserializerSettings = JsonUtility.CreateDocumentDeserializerSettings(Client.DeserializationSettings);
 
-            return DoSearchWithHttpMessagesAsync<Document>(
-                searchText,
-                searchParameters,
-                searchRequestOptions,
-                customHeaders,
-                cancellationToken,
-                deserializerSettings);
+            if (Client.UseHttpGetForQueries)
+            {
+                return Client.DocumentsProxy.SearchGetWithHttpMessagesAsync<Document>(
+                    searchText ?? "*",
+                    searchParameters,
+                    searchRequestOptions,
+                    EnsureCustomHeaders(customHeaders),
+                    cancellationToken,
+                    responseDeserializerSettings: deserializerSettings);
+            }
+            else
+            {
+                return Client.DocumentsProxy.SearchPostWithHttpMessagesAsync<Document>(
+                    searchParameters.ToRequest(searchText ?? "*"),
+                    searchRequestOptions,
+                    EnsureCustomHeaders(customHeaders),
+                    cancellationToken,
+                    responseDeserializerSettings: deserializerSettings);
+            }
         }
 
         public Task<AzureOperationResponse<DocumentSearchResult<T>>> SearchWithHttpMessagesAsync<T>(
@@ -279,13 +291,25 @@ namespace Microsoft.Azure.Search
         {
             var deserializerSettings = JsonUtility.CreateTypedDeserializerSettings<T>(Client.DeserializationSettings);
 
-            return DoSearchWithHttpMessagesAsync<T>(
-                searchText,
-                searchParameters,
-                searchRequestOptions,
-                customHeaders,
-                cancellationToken,
-                deserializerSettings);
+            if (Client.UseHttpGetForQueries)
+            {
+                return Client.DocumentsProxy.SearchGetWithHttpMessagesAsync<T>(
+                    searchText ?? "*",
+                    searchParameters,
+                    searchRequestOptions,
+                    EnsureCustomHeaders(customHeaders),
+                    cancellationToken,
+                    responseDeserializerSettings: deserializerSettings);
+            }
+            else
+            {
+                return Client.DocumentsProxy.SearchPostWithHttpMessagesAsync<T>(
+                    searchParameters.ToRequest(searchText ?? "*"),
+                    searchRequestOptions,
+                    EnsureCustomHeaders(customHeaders),
+                    cancellationToken,
+                    responseDeserializerSettings: deserializerSettings);
+            }
         }
 
         public Task<AzureOperationResponse<DocumentSuggestResult<Document>>> SuggestWithHttpMessagesAsync(
@@ -543,93 +567,6 @@ namespace Microsoft.Azure.Search
                 result.Dispose();
                 throw exception;
             }
-        }
-
-        private Task<AzureOperationResponse<DocumentSearchResult<T>>> DoSearchWithHttpMessagesAsync<T>(
-            string searchText,
-            SearchParameters searchParameters,
-            SearchRequestOptions searchRequestOptions,
-            Dictionary<string, List<string>> customHeaders,
-            CancellationToken cancellationToken,
-            JsonSerializerSettings deserializerSettings)
-            where T : class
-        {
-            // Validate
-            if (Client.SearchServiceName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
-            }
-            if (Client.SearchDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
-            }
-            if (Client.IndexName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.IndexName");
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-
-            searchText = searchText ?? "*";
-
-            if (searchParameters == null)
-            {
-                throw new ArgumentNullException("searchParameters");
-            }
-
-            Guid? clientRequestId = default(Guid?);
-            if (searchRequestOptions != null)
-            {
-                clientRequestId = searchRequestOptions.ClientRequestId;
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("searchText", searchText);
-                tracingParameters.Add("searchParameters", searchParameters);
-                tracingParameters.Add("clientRequestId", clientRequestId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Search", tracingParameters);
-            }
-
-            // Construct URL
-            bool useGet = Client.UseHttpGetForQueries;
-            var baseUrl = Client.BaseUri;
-            var url = baseUrl + (baseUrl.EndsWith("/") ? "" : "/") + (useGet ? "docs" : "docs/search.post.search");
-            url = url.Replace("{searchServiceName}", Client.SearchServiceName);
-            url = url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
-            url = url.Replace("{indexName}", Client.IndexName);
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (useGet)
-            {
-                queryParameters.Add(string.Format("search={0}", Uri.EscapeDataString(searchText)));
-                queryParameters.Add(searchParameters.ToString());
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-
-            return DoContinueSearchWithHttpMessagesAsync<T>(
-                url,
-                searchParameters.ToRequest(searchText),
-                clientRequestId,
-                customHeaders,
-                useGet,
-                shouldTrace,
-                invocationId,
-                cancellationToken,
-                deserializerSettings);
         }
 
         private bool ValidateAndTraceContinueSearch(
