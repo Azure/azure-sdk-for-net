@@ -123,15 +123,15 @@ namespace Microsoft.Azure.Search
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            string invocationId;
-            Guid? clientRequestId;
+            var deserializerSettings = JsonUtility.CreateDocumentDeserializerSettings(Client.DeserializationSettings);
+
             bool shouldTrace =
                 ValidateAndTraceContinueSearch(
                     continuationToken,
                     searchRequestOptions,
                     cancellationToken,
-                    out invocationId,
-                    out clientRequestId);
+                    out string invocationId,
+                    out Guid? clientRequestId);
 
             return DoContinueSearchWithHttpMessagesAsync<Document>(
                 continuationToken.NextLink,
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Search
                 shouldTrace,
                 invocationId,
                 cancellationToken,
-                DeserializeForSearch);
+                deserializerSettings);
         }
 
         public Task<AzureOperationResponse<DocumentSearchResult<T>>> ContinueSearchWithHttpMessagesAsync<T>(
@@ -151,15 +151,15 @@ namespace Microsoft.Azure.Search
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
-            string invocationId;
-            Guid? clientRequestId;
+            var deserializerSettings = JsonUtility.CreateTypedDeserializerSettings<T>(Client.DeserializationSettings);
+
             bool shouldTrace =
                 ValidateAndTraceContinueSearch(
                     continuationToken,
                     searchRequestOptions,
                     cancellationToken,
-                    out invocationId,
-                    out clientRequestId);
+                    out string invocationId,
+                    out Guid? clientRequestId);
 
             return DoContinueSearchWithHttpMessagesAsync<T>(
                 continuationToken.NextLink,
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Search
                 shouldTrace,
                 invocationId,
                 cancellationToken,
-                DeserializeForSearch<T>);
+                deserializerSettings);
         }
 
         public Task<AzureOperationResponse<Document>> GetWithHttpMessagesAsync(
@@ -259,13 +259,15 @@ namespace Microsoft.Azure.Search
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            return DoSearchWithHttpMessagesAsync(
+            var deserializerSettings = JsonUtility.CreateDocumentDeserializerSettings(Client.DeserializationSettings);
+
+            return DoSearchWithHttpMessagesAsync<Document>(
                 searchText,
                 searchParameters,
                 searchRequestOptions,
                 customHeaders,
                 cancellationToken,
-                DeserializeForSearch);
+                deserializerSettings);
         }
 
         public Task<AzureOperationResponse<DocumentSearchResult<T>>> SearchWithHttpMessagesAsync<T>(
@@ -275,13 +277,15 @@ namespace Microsoft.Azure.Search
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
-            return DoSearchWithHttpMessagesAsync(
+            var deserializerSettings = JsonUtility.CreateTypedDeserializerSettings<T>(Client.DeserializationSettings);
+
+            return DoSearchWithHttpMessagesAsync<T>(
                 searchText,
                 searchParameters,
                 searchRequestOptions,
                 customHeaders,
                 cancellationToken,
-                DeserializeForSearch<T>);
+                deserializerSettings);
         }
 
         public Task<AzureOperationResponse<DocumentSuggestResult<Document>>> SuggestWithHttpMessagesAsync(
@@ -363,20 +367,6 @@ namespace Microsoft.Azure.Search
             return customHeaders;
         }
 
-        private DocumentSearchResponsePayload<T> DeserializeForSearch<T>(string payload) where T : class
-        {
-            return SafeJsonConvert.DeserializeObject<DocumentSearchResponsePayload<T>>(
-                payload,
-                JsonUtility.CreateTypedDeserializerSettings<T>(Client.DeserializationSettings));
-        }
-
-        private DocumentSearchResponsePayload<Document> DeserializeForSearch(string payload)
-        {
-            return SafeJsonConvert.DeserializeObject<DocumentSearchResponsePayload<Document>>(
-                payload,
-                JsonUtility.CreateDocumentDeserializerSettings(Client.DeserializationSettings));
-        }
-
         private async Task<AzureOperationResponse<DocumentSearchResult<T>>> DoContinueSearchWithHttpMessagesAsync<T>(
             string url,
             SearchRequest searchRequest,
@@ -386,7 +376,7 @@ namespace Microsoft.Azure.Search
             bool shouldTrace,
             string invocationId,
             CancellationToken cancellationToken,
-            Func<string, DocumentSearchResponsePayload<T>> deserialize)
+            JsonSerializerSettings deserializerSettings)
             where T : class
         {
             // Create HTTP transport objects
@@ -506,42 +496,18 @@ namespace Microsoft.Azure.Search
             if (statusCode == HttpStatusCode.OK)
             {
                 responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                if (string.IsNullOrEmpty(responseContent) == false)
+                try
                 {
-                    DocumentSearchResponsePayload<T> deserializedResult;
-                    try
-                    {
-                        deserializedResult = deserialize(responseContent);
-                    }
-                    catch (JsonException ex)
-                    {
-                        httpRequest.Dispose();
-                        if (httpResponse != null)
-                        {
-                            httpResponse.Dispose();
-                        }
-                        throw new SerializationException("Unable to deserialize the response.", responseContent, ex);
-                    }
-
-                    SearchContinuationToken CreateContinuationTokenIfNeeded() =>
-                        deserializedResult.NextLink != null ?
-                            new SearchContinuationToken(
-                                deserializedResult.NextLink,
-                                deserializedResult.NextPageParameters) :
-                            null;
-
-                    result.Body =
-                        new DocumentSearchResult<T>(
-                            results: deserializedResult.Documents,
-                            count: deserializedResult.Count,
-                            coverage: deserializedResult.Coverage,
-                            facets: deserializedResult.Facets,
-                            continuationToken: CreateContinuationTokenIfNeeded());
+                    result.Body = SafeJsonConvert.DeserializeObject<DocumentSearchResult<T>>(responseContent, deserializerSettings);
                 }
-                else
+                catch (JsonException ex)
                 {
-                    result.Body =
-                        new DocumentSearchResult<T>(results: null, count: null, coverage: null, facets: null, continuationToken: null);
+                    httpRequest.Dispose();
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", responseContent, ex);
                 }
             }
             if (shouldTrace)
@@ -585,7 +551,7 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions,
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken,
-            Func<string, DocumentSearchResponsePayload<T>> deserialize)
+            JsonSerializerSettings deserializerSettings)
             where T : class
         {
             // Validate
@@ -663,7 +629,7 @@ namespace Microsoft.Azure.Search
                 shouldTrace,
                 invocationId,
                 cancellationToken,
-                deserialize);
+                deserializerSettings);
         }
 
         private bool ValidateAndTraceContinueSearch(
@@ -703,21 +669,6 @@ namespace Microsoft.Azure.Search
             }
 
             return shouldTrace;
-        }
-
-        private class DocumentSearchResponsePayload<T> : SearchContinuationTokenPayload
-        {
-            [JsonProperty("@odata.count")]
-            public long? Count { get; set; }
-
-            [JsonProperty("@search.coverage")]
-            public double? Coverage { get; set; }
-
-            [JsonProperty("@search.facets")]
-            public IDictionary<string, IList<FacetResult>> Facets { get; set; }
-
-            [JsonProperty("value")]
-            public List<SearchResult<T>> Documents { get; set; }
         }
     }
 }

@@ -3,13 +3,15 @@
 // license information.
 
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Microsoft.Azure.Search.Models
 {
     public partial class DocumentSearchResult<T>
     {
         /// <summary>
-        /// Initializes a new instance of the DocumentSearchResult class.
+        /// Initializes a new instance of the DocumentSearchResult class. This constructor is intended to be used for test purposes, since
+        /// the properties of this class are immutable.
         /// </summary>
         /// <param name="results">The sequence of results returned by the query.</param>
         /// <param name="count">The total count of results found by the search operation, or null if the count was not requested.</param>
@@ -53,6 +55,16 @@ namespace Microsoft.Azure.Search.Models
         /// search parameters.
         /// </para>
         /// </remarks>
-        public SearchContinuationToken ContinuationToken { get; }
+        public SearchContinuationToken ContinuationToken { get; private set; }
+
+        partial void CustomInit()
+        {
+            // Ensure ContinuationToken is initialized.
+            ContinuationToken = NextLink != null ? new SearchContinuationToken(NextLink, NextPageParameters) : null;
+        }
+
+        // Without this, CustomInit() won't be called on deserialization because no constructors are called.
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context) => CustomInit();
     }
 }
