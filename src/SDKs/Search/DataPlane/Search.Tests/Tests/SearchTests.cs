@@ -246,13 +246,13 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
-            const string synonymMapName = "names";
-            SynonymMap synonymMap = new SynonymMap(name: synonymMapName, format: SynonymMapFormat.Solr, synonyms: "luxury,fancy");
+            const string SynonymMapName = "names";
+            var synonymMap = new SynonymMap(name: SynonymMapName, format: SynonymMapFormat.Solr, synonyms: "luxury,fancy");
             searchClient.SynonymMaps.Create(synonymMap);
 
             SearchIndexClient client = GetClientForQuery();
             Index index = searchClient.Indexes.Get(client.IndexName);
-            index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new[] { synonymMapName };
+            index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new[] { SynonymMapName };
 
             searchClient.Indexes.CreateOrUpdate(index);
 
