@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Search.Serialization
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            SearchContinuationToken token = (SearchContinuationToken)value;
+            var token = (SearchContinuationToken)value;
 
             var payload = 
                 new SearchContinuationTokenPayload()
