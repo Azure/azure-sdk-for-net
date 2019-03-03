@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Search.Tests
   ""@search.nextPageParameters"": null
 }";
 
-        private SearchContinuationToken _token =
+        private readonly SearchContinuationToken _token =
             new SearchContinuationToken(
                 "https://tempuri.org?api-version=2017-11-11-Preview",
                 new SearchRequest()
@@ -70,10 +70,10 @@ namespace Microsoft.Azure.Search.Tests
                     Top = 10
                 });
 
-        private SearchContinuationToken _tokenWithOnlyLink =
+        private readonly SearchContinuationToken _tokenWithOnlyLink =
             new SearchContinuationToken("https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version=2017-11-11-Preview", null);
 
-        private TokenComparer _tokenComparer = new TokenComparer();
+        private readonly TokenComparer _tokenComparer = new TokenComparer();
 
         [Fact]
         public void CanSerializeToken()
