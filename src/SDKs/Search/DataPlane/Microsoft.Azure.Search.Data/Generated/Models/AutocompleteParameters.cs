@@ -31,8 +31,11 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the AutocompleteParameters class.
         /// </summary>
-        /// <param name="autocompleteMode">Autocomplete mode. Possible values
-        /// include: 'oneTerm', 'twoTerms', 'oneTermWithContext'</param>
+        /// <param name="autocompleteMode">Specifies the mode for Autocomplete.
+        /// The default is 'oneTerm'. Use 'twoTerms' to get shingles and
+        /// 'oneTermWithContext' to use the current context while producing
+        /// auto-completed terms. Possible values include: 'oneTerm',
+        /// 'twoTerms', 'oneTermWithContext'</param>
         /// <param name="useFuzzyMatching">A value indicating whether to use
         /// fuzzy matching for the autocomplete query. Default is false. When
         /// set to true, the query will find terms even if there's a
@@ -56,7 +59,7 @@ namespace Microsoft.Azure.Search.Models
         /// in the specified suggester.</param>
         /// <param name="top">The number of auto-completed terms to retrieve.
         /// This must be a value between 1 and 100. The default is 5.</param>
-        public AutocompleteParameters(AutocompleteMode? autocompleteMode = default(AutocompleteMode?), bool? useFuzzyMatching = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), IList<string> searchFields = default(IList<string>), int? top = default(int?))
+        public AutocompleteParameters(AutocompleteMode autocompleteMode = default(AutocompleteMode), bool? useFuzzyMatching = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), IList<string> searchFields = default(IList<string>), int? top = default(int?))
         {
             AutocompleteMode = autocompleteMode;
             UseFuzzyMatching = useFuzzyMatching;
@@ -74,11 +77,14 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets autocomplete mode. Possible values include: 'oneTerm',
-        /// 'twoTerms', 'oneTermWithContext'
+        /// Gets or sets specifies the mode for Autocomplete. The default is
+        /// 'oneTerm'. Use 'twoTerms' to get shingles and 'oneTermWithContext'
+        /// to use the current context while producing auto-completed terms.
+        /// Possible values include: 'oneTerm', 'twoTerms',
+        /// 'oneTermWithContext'
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
-        public AutocompleteMode? AutocompleteMode { get; set; }
+        public AutocompleteMode AutocompleteMode { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to use fuzzy matching for

@@ -22,12 +22,12 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(parameters.HighlightPreTag, request.HighlightPreTag);
             Assert.Equal(parameters.MinimumCoverage, request.MinimumCoverage);
             Assert.Equal(parameters.OrderBy.ToCommaSeparatedString(), request.OrderBy);
-            Assert.Equal("find me", request.Search);
+            Assert.Equal("find me", request.SearchText);
             Assert.Equal(parameters.SearchFields.ToCommaSeparatedString(), request.SearchFields);
             Assert.Equal(parameters.Select.ToCommaSeparatedString(), request.Select);
             Assert.Equal("mySuggester", request.SuggesterName);
             Assert.Equal(parameters.Top, request.Top);
-            Assert.Equal(parameters.UseFuzzyMatching, request.Fuzzy);
+            Assert.Equal(parameters.UseFuzzyMatching, request.UseFuzzyMatching);
         }
 
         [Fact]
@@ -43,13 +43,13 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Null(request.HighlightPreTag);
             Assert.Null(request.MinimumCoverage);
             Assert.Null(request.OrderBy);
-            Assert.Equal("find me", request.Search);
+            Assert.Equal("find me", request.SearchText);
             Assert.Null(request.SearchFields);
             Assert.Equal("*", request.Select);  // Nothing selected for Suggest means select everything.
             Assert.Equal("mySuggester", request.SuggesterName);
             Assert.Null(request.Top);
-            Assert.True(request.Fuzzy.HasValue);
-            Assert.False(request.Fuzzy.Value);  // Fuzzy is non-nullable in the client-side contract.
+            Assert.True(request.UseFuzzyMatching.HasValue);
+            Assert.False(request.UseFuzzyMatching.Value);  // Fuzzy is non-nullable in the client-side contract.
         }
 
         [Theory]

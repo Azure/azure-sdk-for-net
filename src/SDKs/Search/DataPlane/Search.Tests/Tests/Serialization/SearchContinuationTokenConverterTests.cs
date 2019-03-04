@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Search.Tests
                 "https://tempuri.org?api-version=2017-11-11-Preview",
                 new SearchRequest()
                 {
-                    Count = true,
+                    IncludeTotalResultCount = true,
                     Facets = new[] { "testfacets" },
                     Filter = "testfilter",
-                    Highlight = "testhighlight",
+                    HighlightFields = "testhighlight",
                     HighlightPostTag = "</b>",
                     HighlightPreTag = "<b>",
                     MinimumCoverage = 50,
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Search.Tests
                     QueryType = QueryType.Full,
                     ScoringParameters = new[] { "testscoringparameter" },
                     ScoringProfile = "testscoringprofile",
-                    Search = "some words",
+                    SearchText = "some words",
                     SearchFields = "somefields",
                     SearchMode = SearchMode.All,
                     Select = "*",
@@ -201,10 +201,10 @@ namespace Microsoft.Azure.Search.Tests
                 }
 
                 return
-                    x.Count == y.Count &&
+                    x.IncludeTotalResultCount == y.IncludeTotalResultCount &&
                     ((x.Facets == null && y.Facets == null) || x.Facets.SequenceEqual(y.Facets)) &&
                     x.Filter == y.Filter &&
-                    x.Highlight == y.Highlight &&
+                    x.HighlightFields == y.HighlightFields &&
                     x.HighlightPostTag == y.HighlightPostTag &&
                     x.HighlightPreTag == y.HighlightPreTag &&
                     x.MinimumCoverage == y.MinimumCoverage &&
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Search.Tests
                     ((x.ScoringParameters == null && y.ScoringParameters == null) ||
                       x.ScoringParameters.SequenceEqual(y.ScoringParameters)) &&
                     x.ScoringProfile == y.ScoringProfile &&
-                    x.Search == y.Search &&
+                    x.SearchText == y.SearchText &&
                     x.SearchFields == y.SearchFields &&
                     x.SearchMode == y.SearchMode &&
                     x.Select == y.Select &&

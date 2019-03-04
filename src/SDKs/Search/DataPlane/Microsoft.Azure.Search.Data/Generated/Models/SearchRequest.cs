@@ -32,19 +32,19 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the SearchRequest class.
         /// </summary>
-        /// <param name="count">A value that specifies whether to fetch the
-        /// total count of results. Default is false. Setting this value to
-        /// true may have a performance impact. Note that the count returned is
-        /// an approximation.</param>
+        /// <param name="includeTotalResultCount">A value that specifies
+        /// whether to fetch the total count of results. Default is false.
+        /// Setting this value to true may have a performance impact. Note that
+        /// the count returned is an approximation.</param>
         /// <param name="facets">The list of facet expressions to apply to the
         /// search query. Each facet expression contains a field name,
         /// optionally followed by a comma-separated list of name:value
         /// pairs.</param>
         /// <param name="filter">The OData $filter expression to apply to the
         /// search query.</param>
-        /// <param name="highlight">The comma-separated list of field names to
-        /// use for hit highlights. Only searchable fields can be used for hit
-        /// highlighting.</param>
+        /// <param name="highlightFields">The comma-separated list of field
+        /// names to use for hit highlights. Only searchable fields can be used
+        /// for hit highlighting.</param>
         /// <param name="highlightPostTag">A string tag that is appended to hit
         /// highlights. Must be set with highlightPreTag. Default is
         /// &amp;lt;/em&amp;gt;.</param>
@@ -78,8 +78,8 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="scoringProfile">The name of a scoring profile to
         /// evaluate match scores for matching documents in order to sort the
         /// results.</param>
-        /// <param name="search">A full-text search query expression; Use "*"
-        /// or omit this parameter to match all documents.</param>
+        /// <param name="searchText">A full-text search query expression; Use
+        /// "*" or omit this parameter to match all documents.</param>
         /// <param name="searchFields">The comma-separated list of field names
         /// to include in the full-text search.</param>
         /// <param name="searchMode">A value that specifies whether any or all
@@ -99,12 +99,12 @@ namespace Microsoft.Azure.Search.Models
         /// server-side paging, the response will include a continuation token
         /// that can be used to issue another Search request for the next page
         /// of results.</param>
-        public SearchRequest(bool? count = default(bool?), IList<string> facets = default(IList<string>), string filter = default(string), string highlight = default(string), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string orderBy = default(string), QueryType? queryType = default(QueryType?), IList<string> scoringParameters = default(IList<string>), string scoringProfile = default(string), string search = default(string), string searchFields = default(string), SearchMode? searchMode = default(SearchMode?), string select = default(string), int? skip = default(int?), int? top = default(int?))
+        public SearchRequest(bool? includeTotalResultCount = default(bool?), IList<string> facets = default(IList<string>), string filter = default(string), string highlightFields = default(string), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string orderBy = default(string), QueryType? queryType = default(QueryType?), IList<string> scoringParameters = default(IList<string>), string scoringProfile = default(string), string searchText = default(string), string searchFields = default(string), SearchMode? searchMode = default(SearchMode?), string select = default(string), int? skip = default(int?), int? top = default(int?))
         {
-            Count = count;
+            IncludeTotalResultCount = includeTotalResultCount;
             Facets = facets;
             Filter = filter;
-            Highlight = highlight;
+            HighlightFields = highlightFields;
             HighlightPostTag = highlightPostTag;
             HighlightPreTag = highlightPreTag;
             MinimumCoverage = minimumCoverage;
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Search.Models
             QueryType = queryType;
             ScoringParameters = scoringParameters;
             ScoringProfile = scoringProfile;
-            Search = search;
+            SearchText = searchText;
             SearchFields = searchFields;
             SearchMode = searchMode;
             Select = select;
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Search.Models
         /// approximation.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
-        public bool? Count { get; set; }
+        public bool? IncludeTotalResultCount { get; set; }
 
         /// <summary>
         /// Gets or sets the list of facet expressions to apply to the search
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Search.Models
         /// highlighting.
         /// </summary>
         [JsonProperty(PropertyName = "highlight")]
-        public string Highlight { get; set; }
+        public string HighlightFields { get; set; }
 
         /// <summary>
         /// Gets or sets a string tag that is appended to hit highlights. Must
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Search.Models
         /// this parameter to match all documents.
         /// </summary>
         [JsonProperty(PropertyName = "search")]
-        public string Search { get; set; }
+        public string SearchText { get; set; }
 
         /// <summary>
         /// Gets or sets the comma-separated list of field names to include in

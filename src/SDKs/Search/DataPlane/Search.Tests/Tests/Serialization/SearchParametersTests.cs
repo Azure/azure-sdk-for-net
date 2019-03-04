@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Search.Tests
 
             Assert.True(parameters.Facets.SequenceEqual(request.Facets));
             Assert.Equal(parameters.Filter, request.Filter);
-            Assert.Equal(parameters.HighlightFields.ToCommaSeparatedString(), request.Highlight);
+            Assert.Equal(parameters.HighlightFields.ToCommaSeparatedString(), request.HighlightFields);
             Assert.Equal(parameters.HighlightPostTag, request.HighlightPostTag);
             Assert.Equal(parameters.HighlightPreTag, request.HighlightPreTag);
-            Assert.Equal(parameters.IncludeTotalResultCount, request.Count);
+            Assert.Equal(parameters.IncludeTotalResultCount, request.IncludeTotalResultCount);
             Assert.Equal(parameters.MinimumCoverage, request.MinimumCoverage);
             Assert.Equal(parameters.OrderBy.ToCommaSeparatedString(), request.OrderBy);
             Assert.Equal(parameters.QueryType, request.QueryType);
             Assert.True(parameters.ScoringParameters.Select(p => p.ToString()).SequenceEqual(request.ScoringParameters));
             Assert.Equal(parameters.ScoringProfile, request.ScoringProfile);
-            Assert.Equal("find me", request.Search);
+            Assert.Equal("find me", request.SearchText);
             Assert.Equal(parameters.SearchFields.ToCommaSeparatedString(), request.SearchFields);
             Assert.Equal(parameters.SearchMode, request.SearchMode);
             Assert.Equal(parameters.Select.ToCommaSeparatedString(), request.Select);
@@ -69,12 +69,12 @@ namespace Microsoft.Azure.Search.Tests
             // Search text can never be null.
             SearchRequest request = parameters.ToRequest("*");
 
-            Assert.True(request.Count.HasValue);
-            Assert.False(request.Count.Value);  // IncludeTotalCount is non-nullable in the client contract.
+            Assert.True(request.IncludeTotalResultCount.HasValue);
+            Assert.False(request.IncludeTotalResultCount.Value);  // IncludeTotalCount is non-nullable in the client contract.
             Assert.NotNull(request.Facets);
             Assert.False(request.Facets.Any());
             Assert.Null(request.Filter);
-            Assert.Null(request.Highlight);
+            Assert.Null(request.HighlightFields);
             Assert.Null(request.HighlightPostTag);
             Assert.Null(request.HighlightPreTag);
             Assert.Null(request.MinimumCoverage);
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotNull(request.ScoringParameters);
             Assert.False(request.ScoringParameters.Any());
             Assert.Null(request.ScoringProfile);
-            Assert.Equal("*", request.Search);
+            Assert.Equal("*", request.SearchText);
             Assert.Null(request.SearchFields);
             Assert.True(request.SearchMode.HasValue);
             Assert.Equal(SearchMode.Any, request.SearchMode.Value); // SearchMode is non-nullable in the client contract.

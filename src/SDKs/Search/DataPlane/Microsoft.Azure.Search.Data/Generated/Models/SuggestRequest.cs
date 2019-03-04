@@ -32,13 +32,13 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="filter">An OData expression that filters the documents
         /// considered for suggestions.</param>
-        /// <param name="fuzzy">A value indicating whether to use fuzzy
-        /// matching for the suggestion query. Default is false. When set to
-        /// true, the query will find suggestions even if there's a substituted
-        /// or missing character in the search text. While this provides a
-        /// better experience in some scenarios, it comes at a performance cost
-        /// as fuzzy suggestion searches are slower and consume more
-        /// resources.</param>
+        /// <param name="useFuzzyMatching">A value indicating whether to use
+        /// fuzzy matching for the suggestion query. Default is false. When set
+        /// to true, the query will find suggestions even if there's a
+        /// substituted or missing character in the search text. While this
+        /// provides a better experience in some scenarios, it comes at a
+        /// performance cost as fuzzy suggestion searches are slower and
+        /// consume more resources.</param>
         /// <param name="highlightPostTag">A string tag that is appended to hit
         /// highlights. Must be set with highlightPreTag. If omitted, hit
         /// highlighting of suggestions is disabled.</param>
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Search.Models
         /// documents. If no $orderby is specified, the default sort order is
         /// descending by document match score. There can be at most 32
         /// $orderby clauses.</param>
-        /// <param name="search">The search text to use to suggest documents.
-        /// Must be at least 1 character, and no more than 100
+        /// <param name="searchText">The search text to use to suggest
+        /// documents. Must be at least 1 character, and no more than 100
         /// characters.</param>
         /// <param name="searchFields">The list of comma-separated field names
         /// to search for the specified search text. Target fields must be
@@ -73,15 +73,15 @@ namespace Microsoft.Azure.Search.Models
         /// definition.</param>
         /// <param name="top">The number of suggestions to retrieve. This must
         /// be a value between 1 and 100. The default is 5.</param>
-        public SuggestRequest(string filter = default(string), bool? fuzzy = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string orderBy = default(string), string search = default(string), string searchFields = default(string), string select = default(string), string suggesterName = default(string), int? top = default(int?))
+        public SuggestRequest(string filter = default(string), bool? useFuzzyMatching = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string orderBy = default(string), string searchText = default(string), string searchFields = default(string), string select = default(string), string suggesterName = default(string), int? top = default(int?))
         {
             Filter = filter;
-            Fuzzy = fuzzy;
+            UseFuzzyMatching = useFuzzyMatching;
             HighlightPostTag = highlightPostTag;
             HighlightPreTag = highlightPreTag;
             MinimumCoverage = minimumCoverage;
             OrderBy = orderBy;
-            Search = search;
+            SearchText = searchText;
             SearchFields = searchFields;
             Select = select;
             SuggesterName = suggesterName;
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Search.Models
         /// fuzzy suggestion searches are slower and consume more resources.
         /// </summary>
         [JsonProperty(PropertyName = "fuzzy")]
-        public bool? Fuzzy { get; set; }
+        public bool? UseFuzzyMatching { get; set; }
 
         /// <summary>
         /// Gets or sets a string tag that is appended to hit highlights. Must
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Search.Models
         /// at least 1 character, and no more than 100 characters.
         /// </summary>
         [JsonProperty(PropertyName = "search")]
-        public string Search { get; set; }
+        public string SearchText { get; set; }
 
         /// <summary>
         /// Gets or sets the list of comma-separated field names to search for

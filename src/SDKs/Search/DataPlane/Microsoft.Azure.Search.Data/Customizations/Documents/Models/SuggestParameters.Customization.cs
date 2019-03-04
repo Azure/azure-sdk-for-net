@@ -8,10 +8,6 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
     using Common;
 
-    /// <summary>
-    /// Parameters for filtering, sorting, fuzzy matching, and other
-    /// suggestions query behaviors.
-    /// </summary>
     public partial class SuggestParameters
     {
         internal SuggestParameters EnsureSelect()
@@ -32,12 +28,12 @@ namespace Microsoft.Azure.Search.Models
             new SuggestRequest()
             {
                 Filter = Filter,
-                Fuzzy = UseFuzzyMatching,
+                UseFuzzyMatching = UseFuzzyMatching,
                 HighlightPostTag = HighlightPostTag,
                 HighlightPreTag = HighlightPreTag,
                 MinimumCoverage = MinimumCoverage,
                 OrderBy = OrderBy.ToCommaSeparatedString(),
-                Search = searchText,
+                SearchText = searchText,
                 SearchFields = SearchFields.ToCommaSeparatedString(),
                 Select = EnsureSelect(Select).ToCommaSeparatedString(),
                 SuggesterName = suggesterName,

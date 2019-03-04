@@ -8,31 +8,25 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
     using Common;
 
-    /// <summary>
-    /// Parameters for filtering, sorting, faceting, paging, and other search
-    /// query behaviors.
-    /// </summary>
     public partial class SearchParameters
     {
         private static readonly IList<string> Empty = new string[0];
 
-        private IList<string> ScoringParameterStrings => ScoringParameters?.Select(p => p.ToString())?.ToList() ?? Empty;
-
         internal SearchRequest ToRequest(string searchText) =>
             new SearchRequest()
             {
-                Count = IncludeTotalResultCount,
+                IncludeTotalResultCount = IncludeTotalResultCount,
                 Facets = Facets ?? Empty,
                 Filter = Filter,
-                Highlight = HighlightFields.ToCommaSeparatedString(),
+                HighlightFields = HighlightFields.ToCommaSeparatedString(),
                 HighlightPostTag = HighlightPostTag,
                 HighlightPreTag = HighlightPreTag,
                 MinimumCoverage = MinimumCoverage,
                 OrderBy = OrderBy.ToCommaSeparatedString(),
                 QueryType = QueryType,
-                ScoringParameters = ScoringParameterStrings,
+                ScoringParameters = ScoringParameters?.Select(p => p.ToString())?.ToList() ?? Empty,
                 ScoringProfile = ScoringProfile,
-                Search = searchText,
+                SearchText = searchText,
                 SearchFields = SearchFields.ToCommaSeparatedString(),
                 SearchMode = SearchMode,
                 Select = Select.ToCommaSeparatedString(),
