@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+</Project>

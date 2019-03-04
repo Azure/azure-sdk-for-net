@@ -196,6 +196,7 @@ Buildx86retail.dat
 **/build/**/version.txt
 **/node_modules/
 **/.vscode/
+**/.vs/
 
 # Typescript installed definition files for modules
 **/typings/
