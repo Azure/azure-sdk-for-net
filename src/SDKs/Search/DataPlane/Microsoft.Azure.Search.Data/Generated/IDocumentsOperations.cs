@@ -76,6 +76,9 @@ namespace Microsoft.Azure.Search
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<DocumentSearchResult<T>>> SearchGetWithHttpMessagesAsync<T>(string searchText = default(string), SearchParameters searchParameters = default(SearchParameters), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings responseDeserializerSettings = null);
+
+        Task<AzureOperationResponse<DocumentSearchResult<T>>> ContinueSearchGetWithHttpMessagesAsync<T>(string url, System.Guid? clientRequestId, Dictionary<string, List<string>> customHeaders, bool shouldTrace, string invocationId, CancellationToken cancellationToken, Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings responseDeserializerSettings = null);
+
         /// <summary>
         /// Searches for documents in the Azure Search index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents" />
@@ -102,6 +105,9 @@ namespace Microsoft.Azure.Search
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<DocumentSearchResult<T>>> SearchPostWithHttpMessagesAsync<T>(SearchRequest searchRequest, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings responseDeserializerSettings = null);
+
+        Task<AzureOperationResponse<DocumentSearchResult<T>>> ContinueSearchPostWithHttpMessagesAsync<T>(string url, SearchRequest searchRequest, System.Guid? clientRequestId, Dictionary<string, List<string>> customHeaders, bool shouldTrace, string invocationId, CancellationToken cancellationToken, Newtonsoft.Json.JsonSerializerSettings requestSerializerSettings = null, Newtonsoft.Json.JsonSerializerSettings responseDeserializerSettings = null);
+
         /// <summary>
         /// Retrieves a document from the Azure Search index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document" />

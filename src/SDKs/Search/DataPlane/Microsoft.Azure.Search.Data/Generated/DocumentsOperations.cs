@@ -516,6 +516,11 @@ namespace Microsoft.Azure.Search
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
+            return await ContinueSearchGetWithHttpMessagesAsync<T>(_url, clientRequestId, customHeaders, _shouldTrace, _invocationId, cancellationToken, requestSerializerSettings, responseDeserializerSettings).ConfigureAwait(false);
+        }
+
+        public async Task<AzureOperationResponse<DocumentSearchResult<T>>> ContinueSearchGetWithHttpMessagesAsync<T>(string _url, System.Guid? clientRequestId, Dictionary<string, List<string>> customHeaders, bool _shouldTrace, string _invocationId, CancellationToken cancellationToken, JsonSerializerSettings requestSerializerSettings, JsonSerializerSettings responseDeserializerSettings)
+        {
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -730,6 +735,11 @@ namespace Microsoft.Azure.Search
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
+            return await ContinueSearchPostWithHttpMessagesAsync<T>(_url, searchRequest, clientRequestId, customHeaders, _shouldTrace, _invocationId, cancellationToken, requestSerializerSettings, responseDeserializerSettings);
+        }
+
+        public async Task<AzureOperationResponse<DocumentSearchResult<T>>> ContinueSearchPostWithHttpMessagesAsync<T>(string _url, SearchRequest searchRequest, System.Guid? clientRequestId, Dictionary<string, List<string>> customHeaders, bool _shouldTrace, string _invocationId, CancellationToken cancellationToken, JsonSerializerSettings requestSerializerSettings, JsonSerializerSettings responseDeserializerSettings)
+        {
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
