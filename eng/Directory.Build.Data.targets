@@ -17,10 +17,12 @@
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestHelperLibrary)' == 'true'">
     <IsPackable>false</IsPackable>
-    <SignAssembly>false</SignAssembly>
     <RequiredTargetFrameworks>netcoreapp2.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefaultReferenceTargets>AzSdk.test.reference.targets</DefaultReferenceTargets>
+
+    <!-- Disable signing of test assemblies unless it has been explicitly opted into -->
+    <SignAssembly Condition="'$(AllowTestAssemblySigning)' != 'true'">false</SignAssembly>
 
     <!-- Disable running of tests for test helper libraries -->
     <IsTestProject Condition="'$(IsTestHelperLibrary)' == 'true'">false</IsTestProject>

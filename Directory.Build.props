@@ -1,0 +1,13 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+    <RepoEngPath>$(MSBuildThisFileDirectory)eng</RepoEngPath>
+    <RepoSrcPath>$(RepoRoot)src/SDKs</RepoSrcPath>
+    <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
+    <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == '' and '$(IsClientLibrary)' == 'true'">true</IsDataPlaneProject>
+    <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == '' and $(MSBuildProjectDirectory.Contains('data-plane'))">true</IsDataPlaneProject>
+  </PropertyGroup>
+
+  <Import Project="$(RepoEngPath)\Directory.Build.Mgmt.props" Condition="'$(IsDataPlaneProject)' != 'true'" />
+  <Import Project="$(RepoEngPath)\Directory.Build.Data.props" Condition="'$(IsDataPlaneProject)' == 'true'" />
+</Project>

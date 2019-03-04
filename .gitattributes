@@ -1,0 +1,36 @@
+*.bmp binary
+*.dll binary
+*.gif binary
+*.jpg binary
+*.png binary
+*.snk binary
+*.exe binary
+*.wmv binary
+*.mp4 binary
+*.ismv binary
+*.isma binary
+
+*.ascx text
+*.cmd text
+*.config text
+*.cs text diff=csharp
+*.csproj text merge=union
+*.edmx text
+
+*.htm text
+*.html text
+
+*.js text
+*.json text
+
+*.msbuild text
+*.nuspec text
+
+*.resx text
+*.ruleset text
+*.StyleCop text
+*.targets text
+*.txt text
+*.xml text
+
+*.sln text eol=crlf merge=union
