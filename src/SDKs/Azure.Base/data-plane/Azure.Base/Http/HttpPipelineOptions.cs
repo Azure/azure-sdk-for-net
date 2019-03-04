@@ -3,77 +3,138 @@
 
 using Azure.Base.Http.Pipeline;
 using System;
-using System.Buffers;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace Azure.Base.Http
 {
-    public partial struct HttpPipeline
+    public class HttpPipelineOptions
     {
-        public class Options
-        {
-            static readonly HttpPipelinePolicy s_default = new Default();
+        ServiceContainer _container = new ServiceContainer();
 
-            HttpPipelineTransport _transport;
+        HttpPipelineTransport _transport;
+        List<HttpPipelinePolicy> _perCallPolicies;
+        List<HttpPipelinePolicy> _perRetryPolicies;
 
-            public ArrayPool<byte> Pool { get; set; } = ArrayPool<byte>.Shared;
-
-            public HttpPipelineTransport Transport {
-                get => _transport;
-                set {
-                    if (value == null) throw new ArgumentNullException(nameof(value));
-                    _transport = value;
-                }
+        public HttpPipelineTransport Transport {
+            get => _transport;
+            set {
+                if (value == null) throw new ArgumentNullException(nameof(value));
+                _transport = value;
             }
-
-            public HttpPipelinePolicy TelemetryPolicy { get; set; } = s_default;
-
-            public HttpPipelinePolicy LoggingPolicy { get; set; } = s_default;
-
-            public HttpPipelinePolicy RetryPolicy { get; set; } = s_default;
-
-            public HttpPipelinePolicy[] PerCallPolicies = Array.Empty<HttpPipelinePolicy>();
-
-            public HttpPipelinePolicy[] PerRetryPolicies = Array.Empty<HttpPipelinePolicy>();
-
-            public string ApplicationId { get; set; }
-
-            public int PolicyCount {
-                get {
-                    int numberOfPolicies = 3 + PerCallPolicies.Length + PerRetryPolicies.Length;
-                    if (LoggingPolicy == null) numberOfPolicies--;
-                    if (TelemetryPolicy == null) numberOfPolicies--;
-                    if (RetryPolicy == null) numberOfPolicies--;
-                    return numberOfPolicies;
-                }
-            }
-
-            internal static bool IsDefault(HttpPipelinePolicy policy)
-             => policy == s_default;
-
-            // TODO (pri 3): I am not happy with the design that needs a sentinel policy. 
-            sealed class Default : HttpPipelinePolicy
-            {
-                public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-                {
-                    Debug.Fail("default policy should be removed");
-                    await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
-                }
-            }
-
-            #region nobody wants to see these
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            public override bool Equals(object obj) => base.Equals(obj);
-
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            public override int GetHashCode() => base.GetHashCode();
-
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            public override string ToString() => base.ToString();
-            #endregion
         }
+
+        public HttpPipelinePolicy LoggingPolicy { get; set; }
+
+        public HttpPipelinePolicy RetryPolicy { get; set; }
+
+        public bool DisableTelemetry { get; set; } = false;
+
+        public string ApplicationId { get; set; }
+
+        public HttpPipelineOptions( HttpPipelineTransport transport)
+            => _transport = transport;
+
+        public HttpPipelineOptions() : this( HttpClientTransport.Shared)
+        { }
+
+        public void AddPerCallPolicy(HttpPipelinePolicy policy)
+        {
+            if (policy == null) throw new ArgumentNullException(nameof(policy));
+
+            if (_perCallPolicies == null) _perCallPolicies = new List<HttpPipelinePolicy>();
+            _perCallPolicies.Add(policy);
+        }
+
+        public void AddPerRetryPolicy(HttpPipelinePolicy policy)
+        {
+            if (policy == null) throw new ArgumentNullException(nameof(policy));
+
+            if (_perRetryPolicies == null) _perRetryPolicies = new List<HttpPipelinePolicy>();
+            _perRetryPolicies.Add(policy);
+        }
+
+        public void AddService(object service, Type type = null)
+        {
+            if (service == null) throw new ArgumentNullException(nameof(service));
+
+            if (_container == null) _container = new ServiceContainer();
+            _container.Add(service, type != null ? type : service.GetType());
+        }
+
+        int PolicyCount {
+            get {
+                int numberOfPolicies = 1; // HttpPipelineTransport
+                if (DisableTelemetry == false) numberOfPolicies++; // AddHeadersPolicy
+
+                if (LoggingPolicy != null) numberOfPolicies++;
+                if (RetryPolicy != null) numberOfPolicies++;
+
+                if (_perCallPolicies != null) numberOfPolicies += _perCallPolicies.Count;
+                if (_perRetryPolicies != null) numberOfPolicies += _perRetryPolicies.Count;
+
+                return numberOfPolicies;
+            }
+        }
+
+        public HttpPipeline Build(string componentName, string componentVersion)
+        {
+            HttpPipelinePolicy[] policies = new HttpPipelinePolicy[PolicyCount];
+            int index = 0;
+
+            if (DisableTelemetry == false) {
+                var addHeadersPolicy = new AddHeadersPolicy();
+                policies[index++] = addHeadersPolicy;
+
+                var ua = HttpHeader.Common.CreateUserAgent(componentName, componentVersion, ApplicationId);
+                addHeadersPolicy.AddHeader(ua);
+            }
+            if (_perCallPolicies != null) {
+                foreach (var policy in _perCallPolicies) {
+                    policies[index++] = policy;
+                }
+            }
+            if (RetryPolicy != null) {
+                policies[index++] = RetryPolicy;
+            }
+            if (_perRetryPolicies != null) {
+                foreach (var policy in _perRetryPolicies) {
+                    policies[index++] = policy;
+                }
+            }
+            if (LoggingPolicy != null) {
+                policies[index++] = LoggingPolicy;
+            }
+            policies[index++] = _transport;
+
+            var pipeline = new HttpPipeline(policies, _container);
+            return pipeline;
+        }
+
+        #region nobody wants to see these
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => base.ToString();
+        #endregion
+
+        class ServiceContainer : IServiceProvider
+        {
+            Dictionary<Type, object> _services = new Dictionary<Type, object>();
+
+            public object GetService(Type serviceType)
+            {
+                _services.TryGetValue(serviceType, out var service);
+                return service;
+            }
+
+            internal void Add(object service, Type type)
+                => _services.Add(type, service);
+        }      
     }
 }
 

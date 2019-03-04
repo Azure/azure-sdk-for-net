@@ -8,7 +8,6 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Base.Testing;
-using Azure.Base;
 using Azure.Base.Http;
 using System.Buffers;
 using Azure.Base.Http.Pipeline;
@@ -35,10 +34,9 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private static (ConfigurationClient service, TestPool<byte> pool) CreateTestService(MockHttpClientTransport transport)
         {
-            var options = new HttpPipeline.Options();
+            HttpPipelineOptions options = ConfigurationClient.CreateDefaultPipelineOptions();
             var testPool = new TestPool<byte>();
-            options.Pool = testPool;
-
+            options.AddService(testPool, typeof(ArrayPool<byte>));
             options.Transport = transport;
 
             var service = new ConfigurationClient(connectionString, options);
@@ -207,9 +205,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void ConfiguringTheClient()
         {
-            var options = new HttpPipeline.Options();
+            HttpPipelineOptions options = ConfigurationClient.CreateDefaultPipelineOptions();
+
             options.ApplicationId = "test_application";
-            options.Pool = ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4);
+            options.AddService(ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4));
             options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
             options.RetryPolicy = RetryPolicy.CreateFixed(5, TimeSpan.FromMilliseconds(100), 404);
 
