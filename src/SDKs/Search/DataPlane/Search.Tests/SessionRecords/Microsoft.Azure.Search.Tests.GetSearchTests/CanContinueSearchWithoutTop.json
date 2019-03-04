@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a5f7ceba-63fc-45df-aec3-8e6f25a91791"
+          "88e47080-d9c4-4046-a3c7-f4f0d31eba5b"
         ],
         "accept-language": [
           "en-US"
@@ -24,22 +24,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 03 Mar 2019 08:25:21 GMT"
+          "Mon, 04 Mar 2019 01:27:03 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1183"
+          "1198"
         ],
         "x-ms-request-id": [
-          "ab29278c-a0a7-4f2a-a966-8d80af1b2426"
+          "01211d50-05fb-4ee6-8a09-29eac2e1440b"
         ],
         "x-ms-correlation-request-id": [
-          "ab29278c-a0a7-4f2a-a966-8d80af1b2426"
+          "01211d50-05fb-4ee6-8a09-29eac2e1440b"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190303T082521Z:ab29278c-a0a7-4f2a-a966-8d80af1b2426"
+          "NORTHEUROPE:20190304T012703Z:01211d50-05fb-4ee6-8a09-29eac2e1440b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -61,13 +61,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourcegroups/azsmnet8434?api-version=2016-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ4NDM0P2FwaS12ZXJzaW9uPTIwMTYtMDktMDE=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourcegroups/azsmnet8262?api-version=2016-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ4MjYyP2FwaS12ZXJzaW9uPTIwMTYtMDktMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3ffd2e2c-fa9d-44ad-a1bf-797d7b606d4c"
+          "c805c382-6be0-4714-9fa3-b61e4c971993"
         ],
         "accept-language": [
           "en-US"
@@ -90,22 +90,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 03 Mar 2019 08:25:22 GMT"
+          "Mon, 04 Mar 2019 01:27:03 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1183"
+          "1198"
         ],
         "x-ms-request-id": [
-          "da6ca1fd-600c-4e85-ac79-fe44ada7227d"
+          "dd500a4e-8a44-45cc-8e71-c0c5ab2337fd"
         ],
         "x-ms-correlation-request-id": [
-          "da6ca1fd-600c-4e85-ac79-fe44ada7227d"
+          "dd500a4e-8a44-45cc-8e71-c0c5ab2337fd"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190303T082522Z:da6ca1fd-600c-4e85-ac79-fe44ada7227d"
+          "NORTHEUROPE:20190304T012704Z:dd500a4e-8a44-45cc-8e71-c0c5ab2337fd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,17 +123,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet8434\",\r\n  \"name\": \"azsmnet8434\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet8262\",\r\n  \"name\": \"azsmnet8262\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet8434/providers/Microsoft.Search/searchServices/azs-4938?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ4NDM0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy00OTM4P2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet8262/providers/Microsoft.Search/searchServices/azs-4389?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ4MjYyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy00Mzg5P2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  },\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8fd75170-a91e-4f39-88a9-8592672eb193"
+          "a294181a-2741-49cb-96af-2d83c60f0c86"
         ],
         "accept-language": [
           "en-US"
@@ -156,34 +156,34 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 03 Mar 2019 08:25:25 GMT"
+          "Mon, 04 Mar 2019 01:27:13 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"datetime'2019-03-03T08%3A25%3A24.7425096Z'\""
+          "W/\"datetime'2019-03-04T01%3A27%3A12.6875604Z'\""
         ],
         "x-ms-request-id": [
-          "8fd75170-a91e-4f39-88a9-8592672eb193"
+          "a294181a-2741-49cb-96af-2d83c60f0c86"
         ],
         "request-id": [
-          "8fd75170-a91e-4f39-88a9-8592672eb193"
+          "a294181a-2741-49cb-96af-2d83c60f0c86"
         ],
         "elapsed-time": [
-          "978"
+          "5748"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1185"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "35cee274-3411-45e0-8a2c-c0c1ad79e0c8"
+          "06c5dc06-dc32-4649-8d96-deca76c4e130"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190303T082525Z:35cee274-3411-45e0-8a2c-c0c1ad79e0c8"
+          "NORTHEUROPE:20190304T012713Z:06c5dc06-dc32-4649-8d96-deca76c4e130"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -198,17 +198,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet8434/providers/Microsoft.Search/searchServices/azs-4938\",\r\n  \"name\": \"azs-4938\",\r\n  \"type\": \"Microsoft.Search/searchServices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"replicaCount\": 1,\r\n    \"partitionCount\": 1,\r\n    \"status\": \"running\",\r\n    \"statusDetails\": \"\",\r\n    \"provisioningState\": \"succeeded\",\r\n    \"hostingMode\": \"Default\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet8262/providers/Microsoft.Search/searchServices/azs-4389\",\r\n  \"name\": \"azs-4389\",\r\n  \"type\": \"Microsoft.Search/searchServices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"replicaCount\": 1,\r\n    \"partitionCount\": 1,\r\n    \"status\": \"running\",\r\n    \"statusDetails\": \"\",\r\n    \"provisioningState\": \"succeeded\",\r\n    \"hostingMode\": \"Default\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet8434/providers/Microsoft.Search/searchServices/azs-4938/listAdminKeys?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ4NDM0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy00OTM4L2xpc3RBZG1pbktleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet8262/providers/Microsoft.Search/searchServices/azs-4389/listAdminKeys?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ4MjYyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy00Mzg5L2xpc3RBZG1pbktleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e66c1b5d-fd9f-4a32-9dff-314ee85b96b7"
+          "42b42556-2202-442f-ae32-17f30a3f410c"
         ],
         "accept-language": [
           "en-US"
@@ -225,7 +225,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 03 Mar 2019 08:25:26 GMT"
+          "Mon, 04 Mar 2019 01:27:14 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -234,25 +234,25 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "e66c1b5d-fd9f-4a32-9dff-314ee85b96b7"
+          "42b42556-2202-442f-ae32-17f30a3f410c"
         ],
         "request-id": [
-          "e66c1b5d-fd9f-4a32-9dff-314ee85b96b7"
+          "42b42556-2202-442f-ae32-17f30a3f410c"
         ],
         "elapsed-time": [
-          "150"
+          "118"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1185"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "81b2d194-8353-44f3-83d0-0179c1a5cd8b"
+          "5952c9af-1ff7-4768-bc3f-dd4447118c13"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190303T082526Z:81b2d194-8353-44f3-83d0-0179c1a5cd8b"
+          "NORTHEUROPE:20190304T012714Z:5952c9af-1ff7-4768-bc3f-dd4447118c13"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -267,17 +267,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"13105CAB3D7433F8FF1F6B815573A81B\",\r\n  \"secondaryKey\": \"90A9CF05C3A8421B1520478FD296E089\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"8E0C01456A090E0E2C6E12092B7F2B2C\",\r\n  \"secondaryKey\": \"B2626C6680E146F5969ED7F253270146\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet8434/providers/Microsoft.Search/searchServices/azs-4938/listQueryKeys?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ4NDM0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy00OTM4L2xpc3RRdWVyeUtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet8262/providers/Microsoft.Search/searchServices/azs-4389/listQueryKeys?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ4MjYyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy00Mzg5L2xpc3RRdWVyeUtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f53bf90e-acbb-4024-8829-5c3d922dd56d"
+          "1b64d256-dd5f-4688-8ada-ed89cd8a5a0a"
         ],
         "accept-language": [
           "en-US"
@@ -294,7 +294,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 03 Mar 2019 08:25:27 GMT"
+          "Mon, 04 Mar 2019 01:27:14 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -303,25 +303,25 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "f53bf90e-acbb-4024-8829-5c3d922dd56d"
+          "1b64d256-dd5f-4688-8ada-ed89cd8a5a0a"
         ],
         "request-id": [
-          "f53bf90e-acbb-4024-8829-5c3d922dd56d"
+          "1b64d256-dd5f-4688-8ada-ed89cd8a5a0a"
         ],
         "elapsed-time": [
-          "93"
+          "101"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "a4e79d13-eea4-4c10-8a6e-081613348e71"
+          "ce495e92-eb16-4365-a0b0-c6efe0383e07"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190303T082527Z:a4e79d13-eea4-4c10-8a6e-081613348e71"
+          "NORTHEUROPE:20190304T012715Z:ce495e92-eb16-4365-a0b0-c6efe0383e07"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -336,23 +336,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": null,\r\n      \"key\": \"2BCDBC7E66F2D7078099CBBE7587FE2D\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": null,\r\n      \"key\": \"D7048C830691725C81B97245390E822D\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/indexes?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2luZGV4ZXM/YXBpLXZlcnNpb249MjAxNy0xMS0xMS1QcmV2aWV3",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet5855\",\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"hotelId\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": true,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"baseRate\",\r\n      \"type\": \"Edm.Double\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"description\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"descriptionFr\",\r\n      \"type\": \"Edm.String\",\r\n      \"analyzer\": \"fr.lucene\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"hotelName\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"category\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"tags\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"parkingIncluded\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"smokingAllowed\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"lastRenovationDate\",\r\n      \"type\": \"Edm.DateTimeOffset\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"rating\",\r\n      \"type\": \"Edm.Int32\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"location\",\r\n      \"type\": \"Edm.GeographyPoint\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": false,\r\n      \"retrievable\": true\r\n    }\r\n  ],\r\n  \"scoringProfiles\": [\r\n    {\r\n      \"name\": \"nearest\",\r\n      \"functions\": [\r\n        {\r\n          \"type\": \"distance\",\r\n          \"distance\": {\r\n            \"referencePointParameter\": \"myloc\",\r\n            \"boostingDistance\": 100.0\r\n          },\r\n          \"fieldName\": \"location\",\r\n          \"boost\": 2.0\r\n        }\r\n      ],\r\n      \"functionAggregation\": \"sum\"\r\n    }\r\n  ],\r\n  \"suggesters\": [\r\n    {\r\n      \"name\": \"sg\",\r\n      \"sourceFields\": [\r\n        \"description\",\r\n        \"hotelName\"\r\n      ],\r\n      \"searchMode\": \"analyzingInfixMatching\"\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet4512\",\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"hotelId\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": true,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"baseRate\",\r\n      \"type\": \"Edm.Double\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"description\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"descriptionFr\",\r\n      \"type\": \"Edm.String\",\r\n      \"analyzer\": \"fr.lucene\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"hotelName\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"category\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"tags\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"parkingIncluded\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"smokingAllowed\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"lastRenovationDate\",\r\n      \"type\": \"Edm.DateTimeOffset\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"rating\",\r\n      \"type\": \"Edm.Int32\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"location\",\r\n      \"type\": \"Edm.GeographyPoint\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": false,\r\n      \"retrievable\": true\r\n    }\r\n  ],\r\n  \"scoringProfiles\": [\r\n    {\r\n      \"name\": \"nearest\",\r\n      \"functions\": [\r\n        {\r\n          \"type\": \"distance\",\r\n          \"distance\": {\r\n            \"referencePointParameter\": \"myloc\",\r\n            \"boostingDistance\": 100.0\r\n          },\r\n          \"fieldName\": \"location\",\r\n          \"boost\": 2.0\r\n        }\r\n      ],\r\n      \"functionAggregation\": \"sum\"\r\n    }\r\n  ],\r\n  \"suggesters\": [\r\n    {\r\n      \"name\": \"sg\",\r\n      \"sourceFields\": [\r\n        \"description\",\r\n        \"hotelName\"\r\n      ],\r\n      \"searchMode\": \"analyzingInfixMatching\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "d5d90e71-b5ba-4f2a-bcb3-fe6253242d6c"
+          "6f5b3f6b-9b9f-4873-abf9-5d81d816497a"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "13105CAB3D7433F8FF1F6B815573A81B"
+          "8E0C01456A090E0E2C6E12092B7F2B2C"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -372,22 +372,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 03 Mar 2019 08:25:29 GMT"
+          "Mon, 04 Mar 2019 01:27:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D69FB1CBAEB408\""
+          "W/\"0x8D6A04089CEDDCC\""
         ],
         "Location": [
-          "https://azs-4938.search-dogfood.windows-int.net/indexes('azsmnet5855')?api-version=2017-11-11-Preview"
+          "https://azs-4389.search-dogfood.windows-int.net/indexes('azsmnet4512')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "d5d90e71-b5ba-4f2a-bcb3-fe6253242d6c"
+          "6f5b3f6b-9b9f-4873-abf9-5d81d816497a"
         ],
         "elapsed-time": [
-          "1078"
+          "1096"
         ],
         "OData-Version": [
           "4.0"
@@ -408,17 +408,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-4938.search-dogfood.windows-int.net/$metadata#indexes/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D69FB1CBAEB408\\\"\",\r\n  \"name\": \"azsmnet5855\",\r\n  \"defaultScoringProfile\": null,\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"hotelId\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": true,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"baseRate\",\r\n      \"type\": \"Edm.Double\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"description\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"descriptionFr\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": \"fr.lucene\",\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"hotelName\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"category\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"tags\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"parkingIncluded\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"smokingAllowed\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"lastRenovationDate\",\r\n      \"type\": \"Edm.DateTimeOffset\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"rating\",\r\n      \"type\": \"Edm.Int32\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"location\",\r\n      \"type\": \"Edm.GeographyPoint\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    }\r\n  ],\r\n  \"scoringProfiles\": [\r\n    {\r\n      \"name\": \"nearest\",\r\n      \"functionAggregation\": \"sum\",\r\n      \"text\": null,\r\n      \"functions\": [\r\n        {\r\n          \"fieldName\": \"location\",\r\n          \"interpolation\": \"linear\",\r\n          \"type\": \"distance\",\r\n          \"boost\": 2.0,\r\n          \"freshness\": null,\r\n          \"magnitude\": null,\r\n          \"distance\": {\r\n            \"referencePointParameter\": \"myloc\",\r\n            \"boostingDistance\": 100.0\r\n          },\r\n          \"tag\": null\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"corsOptions\": null,\r\n  \"suggesters\": [\r\n    {\r\n      \"name\": \"sg\",\r\n      \"searchMode\": \"analyzingInfixMatching\",\r\n      \"sourceFields\": [\r\n        \"description\",\r\n        \"hotelName\"\r\n      ]\r\n    }\r\n  ],\r\n  \"analyzers\": [],\r\n  \"tokenizers\": [],\r\n  \"tokenFilters\": [],\r\n  \"charFilters\": []\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-4389.search-dogfood.windows-int.net/$metadata#indexes/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6A04089CEDDCC\\\"\",\r\n  \"name\": \"azsmnet4512\",\r\n  \"defaultScoringProfile\": null,\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"hotelId\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": true,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"baseRate\",\r\n      \"type\": \"Edm.Double\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"description\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"descriptionFr\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": \"fr.lucene\",\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"hotelName\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"category\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"tags\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"parkingIncluded\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"smokingAllowed\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"lastRenovationDate\",\r\n      \"type\": \"Edm.DateTimeOffset\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"rating\",\r\n      \"type\": \"Edm.Int32\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"location\",\r\n      \"type\": \"Edm.GeographyPoint\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    }\r\n  ],\r\n  \"scoringProfiles\": [\r\n    {\r\n      \"name\": \"nearest\",\r\n      \"functionAggregation\": \"sum\",\r\n      \"text\": null,\r\n      \"functions\": [\r\n        {\r\n          \"fieldName\": \"location\",\r\n          \"interpolation\": \"linear\",\r\n          \"type\": \"distance\",\r\n          \"boost\": 2.0,\r\n          \"freshness\": null,\r\n          \"magnitude\": null,\r\n          \"distance\": {\r\n            \"referencePointParameter\": \"myloc\",\r\n            \"boostingDistance\": 100.0\r\n          },\r\n          \"tag\": null\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"corsOptions\": null,\r\n  \"suggesters\": [\r\n    {\r\n      \"name\": \"sg\",\r\n      \"searchMode\": \"analyzingInfixMatching\",\r\n      \"sourceFields\": [\r\n        \"description\",\r\n        \"hotelName\"\r\n      ]\r\n    }\r\n  ],\r\n  \"analyzers\": [],\r\n  \"tokenizers\": [],\r\n  \"tokenFilters\": [],\r\n  \"charFilters\": []\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/indexes('azsmnet5855')/docs/search.index?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ1ODU1JykvZG9jcy9zZWFyY2guaW5kZXg/YXBpLXZlcnNpb249MjAxNy0xMS0xMS1QcmV2aWV3",
+      "RequestUri": "/indexes('azsmnet4512')/docs/search.index?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ0NTEyJykvZG9jcy9zZWFyY2guaW5kZXg/YXBpLXZlcnNpb249MjAxNy0xMS0xMS1QcmV2aWV3",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"value\": [\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"1\",\r\n      \"baseRate\": 199.0,\r\n      \"description\": \"Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.\",\r\n      \"descriptionFr\": \"Meilleur hôtel en ville si vous aimez les hôtels de luxe. Ils ont une magnifique piscine à débordement, un spa et un concierge très utile. L'emplacement est parfait – en plein centre, à proximité de toutes les attractions touristiques. Nous recommandons fortement cet hôtel.\",\r\n      \"hotelName\": \"Fancy Stay\",\r\n      \"category\": \"Luxury\",\r\n      \"tags\": [\r\n        \"pool\",\r\n        \"view\",\r\n        \"wifi\",\r\n        \"concierge\"\r\n      ],\r\n      \"parkingIncluded\": false,\r\n      \"smokingAllowed\": false,\r\n      \"lastRenovationDate\": \"2010-06-26T17:00:00-07:00\",\r\n      \"rating\": 5,\r\n      \"location\": {\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [\r\n          -122.131577,\r\n          47.678581\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"2\",\r\n      \"baseRate\": 79.99,\r\n      \"description\": \"Cheapest hotel in town. Infact, a motel.\",\r\n      \"descriptionFr\": \"Hôtel le moins cher en ville. Infact, un motel.\",\r\n      \"hotelName\": \"Roach Motel\",\r\n      \"category\": \"Budget\",\r\n      \"tags\": [\r\n        \"motel\",\r\n        \"budget\"\r\n      ],\r\n      \"parkingIncluded\": true,\r\n      \"smokingAllowed\": true,\r\n      \"lastRenovationDate\": \"1982-04-27T17:00:00-07:00\",\r\n      \"rating\": 1,\r\n      \"location\": {\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [\r\n          -122.131577,\r\n          49.678581\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"3\",\r\n      \"baseRate\": 129.99,\r\n      \"description\": \"Very popular hotel in town\",\r\n      \"descriptionFr\": \"Hôtel le plus populaire en ville\",\r\n      \"hotelName\": \"EconoStay\",\r\n      \"category\": \"Budget\",\r\n      \"tags\": [\r\n        \"wifi\",\r\n        \"budget\"\r\n      ],\r\n      \"parkingIncluded\": true,\r\n      \"smokingAllowed\": false,\r\n      \"lastRenovationDate\": \"1995-06-30T17:00:00-07:00\",\r\n      \"rating\": 4,\r\n      \"location\": {\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [\r\n          -122.131577,\r\n          46.678581\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"4\",\r\n      \"baseRate\": 129.99,\r\n      \"description\": \"Pretty good hotel\",\r\n      \"descriptionFr\": \"Assez bon hôtel\",\r\n      \"hotelName\": \"Express Rooms\",\r\n      \"category\": \"Budget\",\r\n      \"tags\": [\r\n        \"wifi\",\r\n        \"budget\"\r\n      ],\r\n      \"parkingIncluded\": true,\r\n      \"smokingAllowed\": false,\r\n      \"lastRenovationDate\": \"1995-06-30T17:00:00-07:00\",\r\n      \"rating\": 4,\r\n      \"location\": {\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [\r\n          -122.131577,\r\n          48.678581\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"5\",\r\n      \"baseRate\": 129.99,\r\n      \"description\": \"Another good hotel\",\r\n      \"descriptionFr\": \"Un autre bon hôtel\",\r\n      \"hotelName\": \"Comfy Place\",\r\n      \"category\": \"Budget\",\r\n      \"tags\": [\r\n        \"wifi\",\r\n        \"budget\"\r\n      ],\r\n      \"parkingIncluded\": true,\r\n      \"smokingAllowed\": false,\r\n      \"lastRenovationDate\": \"2012-08-11T17:00:00-07:00\",\r\n      \"rating\": 4,\r\n      \"location\": {\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [\r\n          -122.131577,\r\n          48.678581\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"6\",\r\n      \"baseRate\": 279.99,\r\n      \"description\": \"Surprisingly expensive. Model suites have an ocean-view.\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"7\",\r\n      \"baseRate\": 279.99,\r\n      \"description\": \"Modern architecture, very polite staff and very clean. Also very affordable.\",\r\n      \"descriptionFr\": \"Architecture moderne, personnel poli et très propre. Aussi très abordable.\",\r\n      \"hotelName\": \"Modern Stay\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"8\",\r\n      \"baseRate\": 79.99,\r\n      \"description\": \"Has some road noise and is next to the very police station. Bathrooms had morel coverings.\",\r\n      \"descriptionFr\": \"Il y a du bruit de la route et se trouve à côté de la station de police. Les salles de bain avaient des revêtements de morilles.\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "6e64715a-2575-485d-9abd-7dc34438365d"
+          "9c576ef4-00c7-46c2-a6d2-cfe533d8bbc0"
         ],
         "accept-language": [
           "en-US"
@@ -427,7 +427,7 @@
           "application/json; odata.metadata=none"
         ],
         "api-key": [
-          "13105CAB3D7433F8FF1F6B815573A81B"
+          "8E0C01456A090E0E2C6E12092B7F2B2C"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -447,16 +447,16 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 03 Mar 2019 08:25:50 GMT"
+          "Mon, 04 Mar 2019 01:27:38 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "6e64715a-2575-485d-9abd-7dc34438365d"
+          "9c576ef4-00c7-46c2-a6d2-cfe533d8bbc0"
         ],
         "elapsed-time": [
-          "189"
+          "127"
         ],
         "OData-Version": [
           "4.0"
@@ -481,13 +481,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/indexes('azsmnet5855')/docs/search.index?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ1ODU1JykvZG9jcy9zZWFyY2guaW5kZXg/YXBpLXZlcnNpb249MjAxNy0xMS0xMS1QcmV2aWV3",
+      "RequestUri": "/indexes('azsmnet4512')/docs/search.index?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ0NTEyJykvZG9jcy9zZWFyY2guaW5kZXg/YXBpLXZlcnNpb249MjAxNy0xMS0xMS1QcmV2aWV3",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"value\": [\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"9\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"10\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"11\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"12\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"13\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"14\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"15\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"16\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"17\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"18\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"19\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"20\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"21\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"22\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"23\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"24\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"25\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"26\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"27\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"28\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"29\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"30\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"31\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"32\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"33\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"34\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"35\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"36\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"37\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"38\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"39\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"40\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"41\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"42\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"43\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"44\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"45\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"46\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"47\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"48\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"49\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"50\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"51\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"52\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"53\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"54\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"55\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"56\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"57\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"58\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"59\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"60\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"61\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"62\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"63\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"64\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"65\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"66\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"67\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"68\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"69\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"70\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"71\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"72\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"73\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"74\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"75\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"76\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"77\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"78\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"79\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"80\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"81\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"82\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"83\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"84\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"85\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"86\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"87\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"88\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"89\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"90\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"91\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"92\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"93\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"94\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"95\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"96\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"97\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"98\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"99\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"100\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"101\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"102\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"103\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"104\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"105\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"106\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"107\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"108\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"109\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"110\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"111\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"112\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"113\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"114\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"115\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"116\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"117\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"118\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"119\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"120\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"121\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"122\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"123\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"124\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"125\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"126\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"127\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"128\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"129\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"130\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"131\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"132\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"133\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"134\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"135\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"136\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"137\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"138\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"139\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"140\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"141\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"142\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"143\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"144\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"145\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"146\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"147\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"148\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"149\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"150\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"151\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"152\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"153\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"154\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"155\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"156\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"157\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"158\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"159\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"160\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"161\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"162\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"163\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"164\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"165\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"166\"\r\n    },\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"167\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "cc640a37-fb8e-44a3-9e74-005bbcf9f754"
+          "86f2a366-7c38-4993-82a3-85b04d259467"
         ],
         "accept-language": [
           "en-US"
@@ -496,7 +496,7 @@
           "application/json; odata.metadata=none"
         ],
         "api-key": [
-          "13105CAB3D7433F8FF1F6B815573A81B"
+          "8E0C01456A090E0E2C6E12092B7F2B2C"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -516,16 +516,16 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 03 Mar 2019 08:25:53 GMT"
+          "Mon, 04 Mar 2019 01:27:41 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "cc640a37-fb8e-44a3-9e74-005bbcf9f754"
+          "86f2a366-7c38-4993-82a3-85b04d259467"
         ],
         "elapsed-time": [
-          "96"
+          "167"
         ],
         "OData-Version": [
           "4.0"
@@ -550,13 +550,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/indexes('azsmnet5855')/docs?search=*&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId",
-      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ1ODU1JykvZG9jcz9zZWFyY2g9JTJBJmFwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldyYkY291bnQ9ZmFsc2UmJG9yZGVyYnk9aG90ZWxJZCUyMGFzYyZxdWVyeVR5cGU9c2ltcGxlJnNlYXJjaE1vZGU9YW55JiRzZWxlY3Q9aG90ZWxJZA==",
+      "RequestUri": "/indexes('azsmnet4512')/docs?search=*&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId",
+      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ0NTEyJykvZG9jcz9zZWFyY2g9JTJBJmFwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldyYkY291bnQ9ZmFsc2UmJG9yZGVyYnk9aG90ZWxJZCUyMGFzYyZxdWVyeVR5cGU9c2ltcGxlJnNlYXJjaE1vZGU9YW55JiRzZWxlY3Q9aG90ZWxJZA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "0f501b6d-8353-4bd7-b2d8-bc6e37c2b591"
+          "e7d099c9-8744-4bbe-b472-8ee0b0b3a017"
         ],
         "accept-language": [
           "en-US"
@@ -565,7 +565,7 @@
           "application/json; odata.metadata=none"
         ],
         "api-key": [
-          "13105CAB3D7433F8FF1F6B815573A81B"
+          "8E0C01456A090E0E2C6E12092B7F2B2C"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -579,16 +579,16 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 03 Mar 2019 08:25:55 GMT"
+          "Mon, 04 Mar 2019 01:27:43 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "0f501b6d-8353-4bd7-b2d8-bc6e37c2b591"
+          "e7d099c9-8744-4bbe-b472-8ee0b0b3a017"
         ],
         "elapsed-time": [
-          "38"
+          "23"
         ],
         "OData-Version": [
           "4.0"
@@ -609,15 +609,18 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"1\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"10\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"100\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"101\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"102\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"103\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"104\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"105\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"106\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"107\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"108\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"109\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"11\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"110\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"111\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"112\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"113\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"114\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"115\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"116\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"117\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"118\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"119\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"12\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"120\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"121\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"122\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"123\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"124\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"125\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"126\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"127\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"128\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"129\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"13\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"130\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"131\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"132\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"133\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"134\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"135\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"136\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"137\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"138\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"139\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"14\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"140\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"141\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"142\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"143\"\r\n    }\r\n  ],\r\n  \"@odata.nextLink\": \"https://azs-4938.search-dogfood.windows-int.net/indexes('azsmnet5855')/docs?search=%2A&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId&$skip=50\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"1\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"10\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"100\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"101\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"102\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"103\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"104\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"105\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"106\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"107\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"108\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"109\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"11\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"110\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"111\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"112\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"113\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"114\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"115\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"116\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"117\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"118\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"119\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"12\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"120\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"121\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"122\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"123\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"124\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"125\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"126\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"127\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"128\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"129\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"13\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"130\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"131\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"132\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"133\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"134\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"135\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"136\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"137\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"138\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"139\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"14\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"140\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"141\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"142\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"143\"\r\n    }\r\n  ],\r\n  \"@odata.nextLink\": \"https://azs-4389.search-dogfood.windows-int.net/indexes('azsmnet4512')/docs?search=%2A&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId&$skip=50\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/indexes('azsmnet5855')/docs?search=*&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId&$skip=50",
-      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ1ODU1JykvZG9jcz9zZWFyY2g9JTJBJmFwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldyYkY291bnQ9ZmFsc2UmJG9yZGVyYnk9aG90ZWxJZCUyMGFzYyZxdWVyeVR5cGU9c2ltcGxlJnNlYXJjaE1vZGU9YW55JiRzZWxlY3Q9aG90ZWxJZCYkc2tpcD01MA==",
+      "RequestUri": "/indexes('azsmnet4512')/docs?search=*&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId&$skip=50",
+      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ0NTEyJykvZG9jcz9zZWFyY2g9JTJBJmFwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldyYkY291bnQ9ZmFsc2UmJG9yZGVyYnk9aG90ZWxJZCUyMGFzYyZxdWVyeVR5cGU9c2ltcGxlJnNlYXJjaE1vZGU9YW55JiRzZWxlY3Q9aG90ZWxJZCYkc2tpcD01MA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "client-request-id": [
+          "5b411df8-6a51-4de4-b775-a0e9208a7a2e"
+        ],
         "accept-language": [
           "en-US"
         ],
@@ -625,7 +628,7 @@
           "application/json; odata.metadata=none"
         ],
         "api-key": [
-          "13105CAB3D7433F8FF1F6B815573A81B"
+          "8E0C01456A090E0E2C6E12092B7F2B2C"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -639,16 +642,16 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 03 Mar 2019 08:25:55 GMT"
+          "Mon, 04 Mar 2019 01:27:43 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "7ce2d4b8-9dc2-4bf3-bac0-2be61be715ad"
+          "5b411df8-6a51-4de4-b775-a0e9208a7a2e"
         ],
         "elapsed-time": [
-          "9"
+          "8"
         ],
         "OData-Version": [
           "4.0"
@@ -669,15 +672,18 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"144\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"145\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"146\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"147\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"148\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"149\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"15\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"150\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"151\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"152\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"153\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"154\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"155\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"156\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"157\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"158\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"159\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"16\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"160\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"161\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"162\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"163\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"164\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"165\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"166\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"167\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"17\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"18\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"19\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"2\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"20\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"21\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"22\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"23\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"24\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"25\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"26\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"27\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"28\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"29\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"3\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"30\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"31\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"32\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"33\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"34\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"35\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"36\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"37\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"38\"\r\n    }\r\n  ],\r\n  \"@odata.nextLink\": \"https://azs-4938.search-dogfood.windows-int.net/indexes('azsmnet5855')/docs?search=%2A&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId&$skip=100\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"144\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"145\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"146\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"147\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"148\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"149\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"15\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"150\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"151\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"152\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"153\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"154\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"155\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"156\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"157\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"158\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"159\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"16\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"160\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"161\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"162\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"163\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"164\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"165\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"166\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"167\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"17\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"18\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"19\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"2\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"20\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"21\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"22\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"23\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"24\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"25\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"26\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"27\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"28\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"29\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"3\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"30\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"31\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"32\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"33\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"34\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"35\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"36\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"37\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"38\"\r\n    }\r\n  ],\r\n  \"@odata.nextLink\": \"https://azs-4389.search-dogfood.windows-int.net/indexes('azsmnet4512')/docs?search=%2A&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId&$skip=100\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/indexes('azsmnet5855')/docs?search=*&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId&$skip=100",
-      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ1ODU1JykvZG9jcz9zZWFyY2g9JTJBJmFwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldyYkY291bnQ9ZmFsc2UmJG9yZGVyYnk9aG90ZWxJZCUyMGFzYyZxdWVyeVR5cGU9c2ltcGxlJnNlYXJjaE1vZGU9YW55JiRzZWxlY3Q9aG90ZWxJZCYkc2tpcD0xMDA=",
+      "RequestUri": "/indexes('azsmnet4512')/docs?search=*&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId&$skip=100",
+      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ0NTEyJykvZG9jcz9zZWFyY2g9JTJBJmFwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldyYkY291bnQ9ZmFsc2UmJG9yZGVyYnk9aG90ZWxJZCUyMGFzYyZxdWVyeVR5cGU9c2ltcGxlJnNlYXJjaE1vZGU9YW55JiRzZWxlY3Q9aG90ZWxJZCYkc2tpcD0xMDA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "client-request-id": [
+          "68365645-8fd1-41d2-a575-5c035a639375"
+        ],
         "accept-language": [
           "en-US"
         ],
@@ -685,7 +691,7 @@
           "application/json; odata.metadata=none"
         ],
         "api-key": [
-          "13105CAB3D7433F8FF1F6B815573A81B"
+          "8E0C01456A090E0E2C6E12092B7F2B2C"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -699,13 +705,13 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 03 Mar 2019 08:25:55 GMT"
+          "Mon, 04 Mar 2019 01:27:43 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "3e8d58e7-5280-4065-a467-99392900baba"
+          "68365645-8fd1-41d2-a575-5c035a639375"
         ],
         "elapsed-time": [
           "8"
@@ -729,15 +735,18 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"39\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"4\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"40\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"41\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"42\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"43\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"44\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"45\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"46\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"47\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"48\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"49\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"5\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"50\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"51\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"52\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"53\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"54\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"55\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"56\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"57\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"58\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"59\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"6\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"60\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"61\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"62\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"63\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"64\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"65\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"66\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"67\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"68\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"69\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"7\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"70\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"71\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"72\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"73\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"74\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"75\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"76\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"77\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"78\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"79\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"8\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"80\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"81\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"82\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"83\"\r\n    }\r\n  ],\r\n  \"@odata.nextLink\": \"https://azs-4938.search-dogfood.windows-int.net/indexes('azsmnet5855')/docs?search=%2A&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId&$skip=150\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"39\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"4\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"40\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"41\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"42\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"43\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"44\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"45\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"46\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"47\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"48\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"49\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"5\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"50\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"51\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"52\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"53\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"54\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"55\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"56\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"57\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"58\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"59\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"6\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"60\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"61\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"62\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"63\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"64\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"65\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"66\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"67\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"68\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"69\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"7\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"70\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"71\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"72\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"73\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"74\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"75\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"76\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"77\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"78\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"79\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"8\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"80\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"81\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"82\"\r\n    },\r\n    {\r\n      \"@search.score\": 1.0,\r\n      \"hotelId\": \"83\"\r\n    }\r\n  ],\r\n  \"@odata.nextLink\": \"https://azs-4389.search-dogfood.windows-int.net/indexes('azsmnet4512')/docs?search=%2A&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId&$skip=150\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/indexes('azsmnet5855')/docs?search=*&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId&$skip=150",
-      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ1ODU1JykvZG9jcz9zZWFyY2g9JTJBJmFwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldyYkY291bnQ9ZmFsc2UmJG9yZGVyYnk9aG90ZWxJZCUyMGFzYyZxdWVyeVR5cGU9c2ltcGxlJnNlYXJjaE1vZGU9YW55JiRzZWxlY3Q9aG90ZWxJZCYkc2tpcD0xNTA=",
+      "RequestUri": "/indexes('azsmnet4512')/docs?search=*&api-version=2017-11-11-Preview&$count=false&$orderby=hotelId%20asc&queryType=simple&searchMode=any&$select=hotelId&$skip=150",
+      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ0NTEyJykvZG9jcz9zZWFyY2g9JTJBJmFwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldyYkY291bnQ9ZmFsc2UmJG9yZGVyYnk9aG90ZWxJZCUyMGFzYyZxdWVyeVR5cGU9c2ltcGxlJnNlYXJjaE1vZGU9YW55JiRzZWxlY3Q9aG90ZWxJZCYkc2tpcD0xNTA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "client-request-id": [
+          "67318a2d-ef8d-4365-bda0-1815cd43a499"
+        ],
         "accept-language": [
           "en-US"
         ],
@@ -745,7 +754,7 @@
           "application/json; odata.metadata=none"
         ],
         "api-key": [
-          "13105CAB3D7433F8FF1F6B815573A81B"
+          "8E0C01456A090E0E2C6E12092B7F2B2C"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -759,16 +768,16 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 03 Mar 2019 08:25:55 GMT"
+          "Mon, 04 Mar 2019 01:27:43 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "df250343-7e33-41e5-a630-2f1011f5fd46"
+          "67318a2d-ef8d-4365-bda0-1815cd43a499"
         ],
         "elapsed-time": [
-          "7"
+          "9"
         ],
         "OData-Version": [
           "4.0"
@@ -793,13 +802,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet8434/providers/Microsoft.Search/searchServices/azs-4938?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ4NDM0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy00OTM4P2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet8262/providers/Microsoft.Search/searchServices/azs-4389?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ4MjYyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy00Mzg5P2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7034a55b-a86a-4581-8a6f-0c0408c6bfa9"
+          "49260989-880e-42f5-b67d-db3a30638306"
         ],
         "accept-language": [
           "en-US"
@@ -816,31 +825,31 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 03 Mar 2019 08:25:57 GMT"
+          "Mon, 04 Mar 2019 01:27:45 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "7034a55b-a86a-4581-8a6f-0c0408c6bfa9"
+          "49260989-880e-42f5-b67d-db3a30638306"
         ],
         "request-id": [
-          "7034a55b-a86a-4581-8a6f-0c0408c6bfa9"
+          "49260989-880e-42f5-b67d-db3a30638306"
         ],
         "elapsed-time": [
-          "882"
+          "1129"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14979"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "677af5f4-8eef-4256-ab52-27a94f638345"
+          "ba1903e4-2321-43ae-bcbe-dc7ad366de52"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190303T082558Z:677af5f4-8eef-4256-ab52-27a94f638345"
+          "NORTHEUROPE:20190304T012746Z:ba1903e4-2321-43ae-bcbe-dc7ad366de52"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -858,11 +867,11 @@
   ],
   "Names": {
     "GenerateName": [
-      "azsmnet8434",
-      "azsmnet5855"
+      "azsmnet8262",
+      "azsmnet4512"
     ],
     "GenerateServiceName": [
-      "azs-4938"
+      "azs-4389"
     ]
   },
   "Variables": {
