@@ -1955,7 +1955,7 @@ namespace Microsoft.Azure.Search
             {
                 clientRequestId = searchRequestOptions.ClientRequestId;
             }
-            AutocompleteMode? autocompleteMode = default(AutocompleteMode?);
+            AutocompleteMode autocompleteMode = default(AutocompleteMode);
             if (autocompleteParameters != null)
             {
                 autocompleteMode = autocompleteParameters.AutocompleteMode;
@@ -2029,10 +2029,7 @@ namespace Microsoft.Azure.Search
             {
                 _queryParameters.Add(string.Format("suggesterName={0}", System.Uri.EscapeDataString(suggesterName)));
             }
-            if (autocompleteMode != null)
-            {
-                _queryParameters.Add(string.Format("autocompleteMode={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(autocompleteMode, requestSerializerSettings ?? Client.SerializationSettings).Trim('"'))));
-            }
+            _queryParameters.Add(string.Format("autocompleteMode={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(autocompleteMode, requestSerializerSettings ?? Client.SerializationSettings).Trim('"'))));
             if (useFuzzyMatching != null)
             {
                 _queryParameters.Add(string.Format("fuzzy={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(useFuzzyMatching, requestSerializerSettings ?? Client.SerializationSettings).Trim('"'))));

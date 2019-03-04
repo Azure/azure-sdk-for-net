@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Search
             };
         }
 
-        public async Task<AzureOperationResponse<AutocompleteResult>> AutocompleteWithHttpMessagesAsync(
+        public Task<AzureOperationResponse<AutocompleteResult>> AutocompleteWithHttpMessagesAsync(
             string searchText,
             string suggesterName,
             AutocompleteParameters autocompleteParameters = null,
@@ -66,53 +66,24 @@ namespace Microsoft.Azure.Search
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            AzureOperationResponse<AutocompleteResult> response;
-
             if (Client.UseHttpGetForQueries)
             {
-                response = await Client.DocumentsProxy.AutocompleteGetWithHttpMessagesAsync(
+                return Client.DocumentsProxy.AutocompleteGetWithHttpMessagesAsync(
                     searchText,
                     suggesterName,
                     searchRequestOptions,
                     autocompleteParameters,
                     customHeaders,
-                    cancellationToken).ConfigureAwait(false);
+                    cancellationToken);
             }
             else
             {
-                string searchFieldsStr = null;
-                if (autocompleteParameters?.SearchFields != null)
-                {
-                    searchFieldsStr = string.Join(",", autocompleteParameters?.SearchFields);
-                }
-
-                var request = new AutocompleteRequest()
-                {
-                    AutocompleteMode = autocompleteParameters?.AutocompleteMode,
-                    UseFuzzyMatching = autocompleteParameters?.UseFuzzyMatching,
-                    HighlightPostTag = autocompleteParameters?.HighlightPostTag,
-                    HighlightPreTag = autocompleteParameters?.HighlightPreTag,
-                    MinimumCoverage = autocompleteParameters?.MinimumCoverage,
-                    SearchFields = searchFieldsStr,
-                    SearchText = searchText,
-                    SuggesterName = suggesterName,
-                    Top = autocompleteParameters?.Top
-                };
-
-                response = await Client.DocumentsProxy.AutocompletePostWithHttpMessagesAsync(
-                    request,
+                return Client.DocumentsProxy.AutocompletePostWithHttpMessagesAsync(
+                    autocompleteParameters.ToRequest(searchText, suggesterName),
                     searchRequestOptions,
                     customHeaders,
-                    cancellationToken).ConfigureAwait(false);
+                    cancellationToken);
             }    
-
-            return new AzureOperationResponse<AutocompleteResult>()
-            {
-                Body = response.Body,
-                Request = response.Request,
-                RequestId = response.RequestId,
-                Response = response.Response
-            };
         }
 
         public Task<AzureOperationResponse<DocumentSearchResult<Document>>> ContinueSearchWithHttpMessagesAsync(
@@ -123,7 +94,7 @@ namespace Microsoft.Azure.Search
         {
             var deserializerSettings = JsonUtility.CreateDocumentDeserializerSettings(Client.DeserializationSettings);
 
-            return DoContinueSearchWithHttpMessagesAsync<Document>(
+            return DoContinueSearchAsync<Document>(
                 continuationToken,
                 searchRequestOptions,
                 customHeaders,
@@ -139,7 +110,7 @@ namespace Microsoft.Azure.Search
         {
             var deserializerSettings = JsonUtility.CreateTypedDeserializerSettings<T>(Client.DeserializationSettings);
 
-            return DoContinueSearchWithHttpMessagesAsync<T>(
+            return DoContinueSearchAsync<T>(
                 continuationToken,
                 searchRequestOptions,
                 customHeaders,
@@ -185,7 +156,7 @@ namespace Microsoft.Azure.Search
                 responseDeserializerSettings: jsonSerializerSettings);
         }
 
-        public async Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync(
+        public Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync(
             IndexBatch<Document> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
@@ -193,19 +164,10 @@ namespace Microsoft.Azure.Search
         {
             JsonSerializerSettings jsonSettings = JsonUtility.CreateDocumentSerializerSettings(Client.SerializationSettings);
 
-            var result =
-                await Client.DocumentsProxy.IndexWithHttpMessagesAsync(
-                    batch,
-                    searchRequestOptions,
-                    EnsureCustomHeaders(customHeaders),
-                    cancellationToken,
-                    requestSerializerSettings: jsonSettings).ConfigureAwait(false);
-
-            await ThrowIndexBatchExceptionIfNeeded(result).ConfigureAwait(false);
-            return result;
+            return DoIndexAsync(batch, searchRequestOptions, customHeaders, jsonSettings, cancellationToken);
         }
 
-        public async Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync<T>(
+        public Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync<T>(
             IndexBatch<T> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
@@ -214,16 +176,7 @@ namespace Microsoft.Azure.Search
             bool useCamelCase = SerializePropertyNamesAsCamelCaseAttribute.IsDefinedOnType<T>();
             JsonSerializerSettings jsonSettings = JsonUtility.CreateTypedSerializerSettings<T>(Client.SerializationSettings, useCamelCase);
 
-            var result =
-                await Client.DocumentsProxy.IndexWithHttpMessagesAsync(
-                    batch,
-                    searchRequestOptions,
-                    EnsureCustomHeaders(customHeaders),
-                    cancellationToken,
-                    requestSerializerSettings: jsonSettings).ConfigureAwait(false);
-
-            await ThrowIndexBatchExceptionIfNeeded(result).ConfigureAwait(false);
-            return result;
+            return DoIndexAsync(batch, searchRequestOptions, customHeaders, jsonSettings, cancellationToken);
         }
 
         public Task<AzureOperationResponse<DocumentSearchResult<Document>>> SearchWithHttpMessagesAsync(
@@ -235,25 +188,13 @@ namespace Microsoft.Azure.Search
         {
             var deserializerSettings = JsonUtility.CreateDocumentDeserializerSettings(Client.DeserializationSettings);
 
-            if (Client.UseHttpGetForQueries)
-            {
-                return Client.DocumentsProxy.SearchGetWithHttpMessagesAsync<Document>(
-                    searchText ?? "*",
-                    searchParameters,
-                    searchRequestOptions,
-                    EnsureCustomHeaders(customHeaders),
-                    cancellationToken,
-                    responseDeserializerSettings: deserializerSettings);
-            }
-            else
-            {
-                return Client.DocumentsProxy.SearchPostWithHttpMessagesAsync<Document>(
-                    searchParameters.ToRequest(searchText ?? "*"),
-                    searchRequestOptions,
-                    EnsureCustomHeaders(customHeaders),
-                    cancellationToken,
-                    responseDeserializerSettings: deserializerSettings);
-            }
+            return DoSearchAsync<Document>(
+                searchText,
+                searchParameters,
+                searchRequestOptions,
+                customHeaders,
+                deserializerSettings,
+                cancellationToken);
         }
 
         public Task<AzureOperationResponse<DocumentSearchResult<T>>> SearchWithHttpMessagesAsync<T>(
@@ -265,25 +206,13 @@ namespace Microsoft.Azure.Search
         {
             var deserializerSettings = JsonUtility.CreateTypedDeserializerSettings<T>(Client.DeserializationSettings);
 
-            if (Client.UseHttpGetForQueries)
-            {
-                return Client.DocumentsProxy.SearchGetWithHttpMessagesAsync<T>(
-                    searchText ?? "*",
-                    searchParameters,
-                    searchRequestOptions,
-                    EnsureCustomHeaders(customHeaders),
-                    cancellationToken,
-                    responseDeserializerSettings: deserializerSettings);
-            }
-            else
-            {
-                return Client.DocumentsProxy.SearchPostWithHttpMessagesAsync<T>(
-                    searchParameters.ToRequest(searchText ?? "*"),
-                    searchRequestOptions,
-                    EnsureCustomHeaders(customHeaders),
-                    cancellationToken,
-                    responseDeserializerSettings: deserializerSettings);
-            }
+            return DoSearchAsync<T>(
+                searchText,
+                searchParameters,
+                searchRequestOptions,
+                customHeaders,
+                deserializerSettings,
+                cancellationToken);
         }
 
         public Task<AzureOperationResponse<DocumentSuggestResult<Document>>> SuggestWithHttpMessagesAsync(
@@ -296,26 +225,14 @@ namespace Microsoft.Azure.Search
         {
             var deserializerSettings = JsonUtility.CreateDocumentDeserializerSettings(Client.DeserializationSettings);
 
-            if (Client.UseHttpGetForQueries)
-            {
-                return Client.DocumentsProxy.SuggestGetWithHttpMessagesAsync<Document>(
-                    searchText, 
-                    suggesterName, 
-                    suggestParameters.EnsureSelect(), 
-                    searchRequestOptions, 
-                    EnsureCustomHeaders(customHeaders), 
-                    cancellationToken, 
-                    responseDeserializerSettings: deserializerSettings);
-            }
-            else
-            {
-                return Client.DocumentsProxy.SuggestPostWithHttpMessagesAsync<Document>(
-                    suggestParameters.ToRequest(searchText, suggesterName),
-                    searchRequestOptions,
-                    EnsureCustomHeaders(customHeaders),
-                    cancellationToken,
-                    responseDeserializerSettings: deserializerSettings);
-            }
+            return DoSuggestAsync<Document>(
+                searchText,
+                suggesterName,
+                suggestParameters,
+                searchRequestOptions,
+                customHeaders,
+                deserializerSettings,
+                cancellationToken);
         }
 
         public Task<AzureOperationResponse<DocumentSuggestResult<T>>> SuggestWithHttpMessagesAsync<T>(
@@ -328,26 +245,14 @@ namespace Microsoft.Azure.Search
         {
             var deserializerSettings = JsonUtility.CreateTypedDeserializerSettings<T>(Client.DeserializationSettings);
 
-            if (Client.UseHttpGetForQueries)
-            {
-                return Client.DocumentsProxy.SuggestGetWithHttpMessagesAsync<T>(
-                    searchText,
-                    suggesterName,
-                    suggestParameters.EnsureSelect(),
-                    searchRequestOptions,
-                    EnsureCustomHeaders(customHeaders),
-                    cancellationToken,
-                    responseDeserializerSettings: deserializerSettings);
-            }
-            else
-            {
-                return Client.DocumentsProxy.SuggestPostWithHttpMessagesAsync<T>(
-                    suggestParameters.ToRequest(searchText, suggesterName),
-                    searchRequestOptions,
-                    EnsureCustomHeaders(customHeaders),
-                    cancellationToken,
-                    responseDeserializerSettings: deserializerSettings);
-            }
+            return DoSuggestAsync<T>(
+                searchText, 
+                suggesterName, 
+                suggestParameters, 
+                searchRequestOptions, 
+                customHeaders, 
+                deserializerSettings, 
+                cancellationToken);
         }
 
         private static Dictionary<string, List<string>> EnsureCustomHeaders(Dictionary<string, List<string>> customHeaders)
@@ -365,7 +270,49 @@ namespace Microsoft.Azure.Search
             return customHeaders;
         }
 
-        private Task<AzureOperationResponse<DocumentSearchResult<T>>> DoContinueSearchWithHttpMessagesAsync<T>(
+        private async Task<AzureOperationResponse<DocumentIndexResult>> DoIndexAsync<T>(
+            IndexBatch<T> batch,
+            SearchRequestOptions searchRequestOptions,
+            Dictionary<string, List<string>> customHeaders,
+            JsonSerializerSettings jsonSettings,
+            CancellationToken cancellationToken) where T : class
+        {
+            var result =
+                await Client.DocumentsProxy.IndexWithHttpMessagesAsync(
+                    batch,
+                    searchRequestOptions,
+                    EnsureCustomHeaders(customHeaders),
+                    cancellationToken,
+                    requestSerializerSettings: jsonSettings).ConfigureAwait(false);
+
+            if (result.Response.StatusCode == (HttpStatusCode)207)
+            {
+                HttpRequestMessage httpRequest = result.Request;
+                HttpResponseMessage httpResponse = result.Response;
+
+                string requestContent = await httpRequest.Content.ReadAsStringAsync().ConfigureAwait(false);
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                var exception =
+                    new IndexBatchException(result.Body)
+                    {
+                        Request = new HttpRequestMessageWrapper(httpRequest, requestContent),
+                        Response = new HttpResponseMessageWrapper(httpResponse, responseContent)
+                    };
+
+                if (httpResponse.Headers.Contains("request-id"))
+                {
+                    exception.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+                }
+
+                result.Dispose();
+                throw exception;
+            }
+
+            return result;
+        }
+
+        private Task<AzureOperationResponse<DocumentSearchResult<T>>> DoContinueSearchAsync<T>(
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions,
             Dictionary<string, List<string>> customHeaders,
@@ -425,30 +372,65 @@ namespace Microsoft.Azure.Search
             }
         }
 
-        private static async Task ThrowIndexBatchExceptionIfNeeded(AzureOperationResponse<DocumentIndexResult> result)
+        private Task<AzureOperationResponse<DocumentSearchResult<T>>> DoSearchAsync<T>(
+            string searchText,
+            SearchParameters searchParameters,
+            SearchRequestOptions searchRequestOptions,
+            Dictionary<string, List<string>> customHeaders,
+            JsonSerializerSettings deserializerSettings,
+            CancellationToken cancellationToken) where T : class
         {
-            if (result.Response.StatusCode == (HttpStatusCode)207)
+            searchText = searchText ?? "*";
+
+            if (Client.UseHttpGetForQueries)
             {
-                HttpRequestMessage httpRequest = result.Request;
-                HttpResponseMessage httpResponse = result.Response;
+                return Client.DocumentsProxy.SearchGetWithHttpMessagesAsync<T>(
+                    searchText,
+                    searchParameters,
+                    searchRequestOptions,
+                    EnsureCustomHeaders(customHeaders),
+                    cancellationToken,
+                    responseDeserializerSettings: deserializerSettings);
+            }
+            else
+            {
+                return Client.DocumentsProxy.SearchPostWithHttpMessagesAsync<T>(
+                    searchParameters.ToRequest(searchText),
+                    searchRequestOptions,
+                    EnsureCustomHeaders(customHeaders),
+                    cancellationToken,
+                    responseDeserializerSettings: deserializerSettings);
+            }
+        }
 
-                string requestContent = await httpRequest.Content.ReadAsStringAsync().ConfigureAwait(false);
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                var exception =
-                    new IndexBatchException(result.Body)
-                    {
-                        Request = new HttpRequestMessageWrapper(httpRequest, requestContent),
-                        Response = new HttpResponseMessageWrapper(httpResponse, responseContent)
-                    };
-
-                if (httpResponse.Headers.Contains("request-id"))
-                {
-                    exception.RequestId = httpResponse.Headers.GetValues("request-id").FirstOrDefault();
-                }
-
-                result.Dispose();
-                throw exception;
+        private Task<AzureOperationResponse<DocumentSuggestResult<T>>> DoSuggestAsync<T>(
+            string searchText,
+            string suggesterName,
+            SuggestParameters suggestParameters,
+            SearchRequestOptions searchRequestOptions,
+            Dictionary<string, List<string>> customHeaders,
+            JsonSerializerSettings deserializerSettings,
+            CancellationToken cancellationToken) where T : class
+        {
+            if (Client.UseHttpGetForQueries)
+            {
+                return Client.DocumentsProxy.SuggestGetWithHttpMessagesAsync<T>(
+                    searchText,
+                    suggesterName,
+                    suggestParameters.EnsureSelect(),
+                    searchRequestOptions,
+                    EnsureCustomHeaders(customHeaders),
+                    cancellationToken,
+                    responseDeserializerSettings: deserializerSettings);
+            }
+            else
+            {
+                return Client.DocumentsProxy.SuggestPostWithHttpMessagesAsync<T>(
+                    suggestParameters.ToRequest(searchText, suggesterName),
+                    searchRequestOptions,
+                    EnsureCustomHeaders(customHeaders),
+                    cancellationToken,
+                    responseDeserializerSettings: deserializerSettings);
             }
         }
     }
