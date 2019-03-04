@@ -46,3 +46,6 @@ There are a number of special flags which have meaning in the `BatchProperties.j
  
 Once `BatchProperties.json` is updated with your changes, mark the `ObjectModelCodeGenerator` as your startup project in Visual Studio and run it -- it will regenerate the contents of the `src\Generated` folder.
 
+
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsrc%2FSDKs%2FBatch%2FDataPlane%2FREADME.png)

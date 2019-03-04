@@ -48,3 +48,5 @@ This will enable the project to project references:
 ```
 set UseProjectReferenceToAzureBase=true
 ```
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsrc%2FSDKs%2FAzure.ApplicationModel.Configuration%2Fdata-plane%2FREADME.png)
