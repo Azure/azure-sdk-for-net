@@ -6,6 +6,8 @@
 
 namespace Microsoft.Azure.Management.HybridData
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -21,7 +23,7 @@ namespace Microsoft.Azure.Management.HybridData
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static AvailableProviderOperations List(this IOperations operations)
+            public static IPage<AvailableProviderOperation> List(this IOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -35,9 +37,43 @@ namespace Microsoft.Azure.Management.HybridData
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AvailableProviderOperations> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<AvailableProviderOperation>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// This method gets all the operations.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<AvailableProviderOperation> ListNext(this IOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This method gets all the operations.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AvailableProviderOperation>> ListNextAsync(this IOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -6,6 +6,8 @@
 
 namespace Microsoft.Azure.Management.HybridData
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
 
@@ -29,14 +31,37 @@ namespace Microsoft.Azure.Management.HybridData
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
+        /// Credentials needed for the client to connect to Azure.
+        /// </summary>
+        ServiceClientCredentials Credentials { get; }
+
+        /// <summary>
         /// The API Version
         /// </summary>
-        string ApiVersion { get; set; }
+        string ApiVersion { get; }
 
         /// <summary>
         /// The Subscription Id
         /// </summary>
         string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The preferred language for the response.
+        /// </summary>
+        string AcceptLanguage { get; set; }
+
+        /// <summary>
+        /// The retry timeout in seconds for Long Running Operations. Default
+        /// value is 30.
+        /// </summary>
+        int? LongRunningOperationRetryTimeout { get; set; }
+
+        /// <summary>
+        /// Whether a unique x-ms-client-request-id should be generated. When
+        /// set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
+        /// </summary>
+        bool? GenerateClientRequestId { get; set; }
 
 
         /// <summary>
@@ -45,39 +70,39 @@ namespace Microsoft.Azure.Management.HybridData
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IDataManagers.
+        /// Gets the IDataManagersOperations.
         /// </summary>
-        IDataManagers DataManagers { get; }
+        IDataManagersOperations DataManagers { get; }
 
         /// <summary>
-        /// Gets the IDataServices.
+        /// Gets the IDataServicesOperations.
         /// </summary>
-        IDataServices DataServices { get; }
+        IDataServicesOperations DataServices { get; }
 
         /// <summary>
-        /// Gets the IJobDefinitions.
+        /// Gets the IJobDefinitionsOperations.
         /// </summary>
-        IJobDefinitions JobDefinitions { get; }
+        IJobDefinitionsOperations JobDefinitions { get; }
 
         /// <summary>
-        /// Gets the IJobs.
+        /// Gets the IJobsOperations.
         /// </summary>
-        IJobs Jobs { get; }
+        IJobsOperations Jobs { get; }
 
         /// <summary>
-        /// Gets the IDataStores.
+        /// Gets the IDataStoresOperations.
         /// </summary>
-        IDataStores DataStores { get; }
+        IDataStoresOperations DataStores { get; }
 
         /// <summary>
-        /// Gets the IDataStoreTypes.
+        /// Gets the IDataStoreTypesOperations.
         /// </summary>
-        IDataStoreTypes DataStoreTypes { get; }
+        IDataStoreTypesOperations DataStoreTypes { get; }
 
         /// <summary>
-        /// Gets the IPublicKeys.
+        /// Gets the IPublicKeysOperations.
         /// </summary>
-        IPublicKeys PublicKeys { get; }
+        IPublicKeysOperations PublicKeys { get; }
 
     }
 }

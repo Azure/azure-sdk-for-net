@@ -7,15 +7,17 @@
 namespace Microsoft.Azure.Management.HybridData
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Models;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
 
-    public partial class HybridDataManagementClient : ServiceClient<HybridDataManagementClient>, IHybridDataManagementClient
+    public partial class HybridDataManagementClient : ServiceClient<HybridDataManagementClient>, IHybridDataManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -33,9 +35,14 @@ namespace Microsoft.Azure.Management.HybridData
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
+        /// Credentials needed for the client to connect to Azure.
+        /// </summary>
+        public ServiceClientCredentials Credentials { get; private set; }
+
+        /// <summary>
         /// The API Version
         /// </summary>
-        public string ApiVersion { get; set; }
+        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// The Subscription Id
@@ -43,44 +50,62 @@ namespace Microsoft.Azure.Management.HybridData
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The preferred language for the response.
+        /// </summary>
+        public string AcceptLanguage { get; set; }
+
+        /// <summary>
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
+        /// </summary>
+        public int? LongRunningOperationRetryTimeout { get; set; }
+
+        /// <summary>
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
+        /// </summary>
+        public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IDataManagers.
+        /// Gets the IDataManagersOperations.
         /// </summary>
-        public virtual IDataManagers DataManagers { get; private set; }
+        public virtual IDataManagersOperations DataManagers { get; private set; }
 
         /// <summary>
-        /// Gets the IDataServices.
+        /// Gets the IDataServicesOperations.
         /// </summary>
-        public virtual IDataServices DataServices { get; private set; }
+        public virtual IDataServicesOperations DataServices { get; private set; }
 
         /// <summary>
-        /// Gets the IJobDefinitions.
+        /// Gets the IJobDefinitionsOperations.
         /// </summary>
-        public virtual IJobDefinitions JobDefinitions { get; private set; }
+        public virtual IJobDefinitionsOperations JobDefinitions { get; private set; }
 
         /// <summary>
-        /// Gets the IJobs.
+        /// Gets the IJobsOperations.
         /// </summary>
-        public virtual IJobs Jobs { get; private set; }
+        public virtual IJobsOperations Jobs { get; private set; }
 
         /// <summary>
-        /// Gets the IDataStores.
+        /// Gets the IDataStoresOperations.
         /// </summary>
-        public virtual IDataStores DataStores { get; private set; }
+        public virtual IDataStoresOperations DataStores { get; private set; }
 
         /// <summary>
-        /// Gets the IDataStoreTypes.
+        /// Gets the IDataStoreTypesOperations.
         /// </summary>
-        public virtual IDataStoreTypes DataStoreTypes { get; private set; }
+        public virtual IDataStoreTypesOperations DataStoreTypes { get; private set; }
 
         /// <summary>
-        /// Gets the IPublicKeys.
+        /// Gets the IPublicKeysOperations.
         /// </summary>
-        public virtual IPublicKeys PublicKeys { get; private set; }
+        public virtual IPublicKeysOperations PublicKeys { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the HybridDataManagementClient class.
@@ -90,7 +115,7 @@ namespace Microsoft.Azure.Management.HybridData
         /// </param>
         /// <param name='disposeHttpClient'>
         /// True: will dispose the provided httpClient on calling HybridDataManagementClient.Dispose(). False: will not dispose provided httpClient</param>
-        public HybridDataManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        protected HybridDataManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
@@ -101,7 +126,7 @@ namespace Microsoft.Azure.Management.HybridData
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public HybridDataManagementClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected HybridDataManagementClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
@@ -115,7 +140,7 @@ namespace Microsoft.Azure.Management.HybridData
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public HybridDataManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected HybridDataManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
@@ -132,7 +157,7 @@ namespace Microsoft.Azure.Management.HybridData
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public HybridDataManagementClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected HybridDataManagementClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -156,18 +181,167 @@ namespace Microsoft.Azure.Management.HybridData
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public HybridDataManagementClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected HybridDataManagementClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
                 throw new System.ArgumentNullException("baseUri");
             }
             BaseUri = baseUri;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the HybridDataManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public HybridDataManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the HybridDataManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling HybridDataManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public HybridDataManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the HybridDataManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public HybridDataManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the HybridDataManagementClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public HybridDataManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            BaseUri = baseUri;
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the HybridDataManagementClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public HybridDataManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            BaseUri = baseUri;
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
         }
 
         /// <summary>
         /// An optional partial-method to perform custom initialization.
-        ///</summary>
+        /// </summary>
         partial void CustomInitialize();
         /// <summary>
         /// Initializes client properties.
@@ -175,14 +349,18 @@ namespace Microsoft.Azure.Management.HybridData
         private void Initialize()
         {
             Operations = new Operations(this);
-            DataManagers = new DataManagers(this);
-            DataServices = new DataServices(this);
-            JobDefinitions = new JobDefinitions(this);
-            Jobs = new Jobs(this);
-            DataStores = new DataStores(this);
-            DataStoreTypes = new DataStoreTypes(this);
-            PublicKeys = new PublicKeys(this);
+            DataManagers = new DataManagersOperations(this);
+            DataServices = new DataServicesOperations(this);
+            JobDefinitions = new JobDefinitionsOperations(this);
+            Jobs = new JobsOperations(this);
+            DataStores = new DataStoresOperations(this);
+            DataStoreTypes = new DataStoreTypesOperations(this);
+            PublicKeys = new PublicKeysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2016-06-01";
+            AcceptLanguage = "en-US";
+            LongRunningOperationRetryTimeout = 30;
+            GenerateClientRequestId = true;
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -191,7 +369,7 @@ namespace Microsoft.Azure.Management.HybridData
                 NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new  List<JsonConverter>
+                Converters = new List<JsonConverter>
                     {
                         new Iso8601TimeSpanConverter()
                     }
@@ -209,12 +387,9 @@ namespace Microsoft.Azure.Management.HybridData
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataServiceResult>("queryType"));
-            DeserializationSettings.Converters.Add(new  PolymorphicDeserializeJsonConverter<DataServiceResult>("queryType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataServiceResultQuery>("queryType"));
-            DeserializationSettings.Converters.Add(new  PolymorphicDeserializeJsonConverter<DataServiceResultQuery>("queryType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
+            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }
 }

@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "databox/resource-manager" -AutoRestVersion "latest" -SpecsRepoFork "AzureHybridDataManager"
+Start-AutoRestCodeGeneration -ResourceProvider "hybriddatamanager/resource-manager" -AutoRestVersion "latest" -SpecsRepoFork "AzureHybridDataManager"

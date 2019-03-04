@@ -7,6 +7,7 @@
 namespace Microsoft.Azure.Management.HybridData.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Microsoft.Azure.Management.HybridData.Models
     /// <summary>
     /// Model of the Resource.
     /// </summary>
-    public partial class Resource
+    public partial class Resource : IResource
     {
         /// <summary>
         /// Initializes a new instance of the Resource class.

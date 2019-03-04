@@ -27,15 +27,15 @@ namespace Microsoft.Azure.Management.HybridData.Models
         /// </summary>
         /// <param name="state">The state of the job definition. Possible
         /// values include: 'Disabled', 'Enabled', 'Supported'</param>
-        /// <param name="datasource">The data source associated with the job
+        /// <param name="dataSource">The data source associated with the job
         /// definition</param>
-        /// <param name="lastmodified">The last modified date time of the data
+        /// <param name="lastModified">The last modified date time of the data
         /// source.</param>
-        public JobDefinitionFilter(State state, string datasource = default(string), System.DateTime? lastmodified = default(System.DateTime?))
+        public JobDefinitionFilter(State state, string dataSource = default(string), System.DateTime? lastModified = default(System.DateTime?))
         {
             State = state;
-            Datasource = datasource;
-            Lastmodified = lastmodified;
+            DataSource = dataSource;
+            LastModified = lastModified;
             CustomInit();
         }
 
@@ -54,14 +54,14 @@ namespace Microsoft.Azure.Management.HybridData.Models
         /// <summary>
         /// Gets or sets the data source associated with the job definition
         /// </summary>
-        [JsonProperty(PropertyName = "datasource")]
-        public string Datasource { get; set; }
+        [JsonProperty(PropertyName = "dataSource")]
+        public string DataSource { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified date time of the data source.
         /// </summary>
-        [JsonProperty(PropertyName = "lastmodified")]
-        public System.DateTime? Lastmodified { get; set; }
+        [JsonProperty(PropertyName = "lastModified")]
+        public System.DateTime? LastModified { get; set; }
 
         /// <summary>
         /// Validate the object.
