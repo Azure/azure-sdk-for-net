@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.Security.Models
 {
 
     /// <summary>
-    /// Defines values for SettingKind.
+    /// Defines values for ReportedSeverity.
     /// </summary>
-    public static class SettingKind
+    public static class ReportedSeverity
     {
-        public const string DataExportSetting = "DataExportSetting";
-        public const string AlertSuppressionSetting = "AlertSuppressionSetting";
+        public const string Informational = "Informational";
+        public const string Low = "Low";
+        public const string Medium = "Medium";
+        public const string High = "High";
     }
 }

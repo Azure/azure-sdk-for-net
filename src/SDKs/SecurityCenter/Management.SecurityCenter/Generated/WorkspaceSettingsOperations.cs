@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.Security
         public SecurityCenterClient Client { get; private set; }
 
         /// <summary>
-        /// Settings about where we should store your security data and logs
+        /// Settings about where we should store your security data and logs. If the
+        /// result is empty, it means that no custom-workspace configuration was set
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -234,7 +235,8 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Settings about where we should store your security data and logs
+        /// Settings about where we should store your security data and logs. If the
+        /// result is empty, it means that no custom-workspace configuration was set
         /// </summary>
         /// <param name='workspaceSettingName'>
         /// Name of the security setting
@@ -1038,7 +1040,8 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Settings about where we should store your security data and logs
+        /// Settings about where we should store your security data and logs. If the
+        /// result is empty, it means that no custom-workspace configuration was set
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
