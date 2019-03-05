@@ -175,7 +175,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "6f24f7ec99094c9e8f13f342a3806300"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
