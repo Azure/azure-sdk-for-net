@@ -1796,227 +1796,6 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Gets a Swift Virtual Network connection.
-            /// </summary>
-            /// <remarks>
-            /// Gets a Swift Virtual Network connection.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static SwiftVirtualNetwork GetSwiftVirtualNetworkConnection(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetSwiftVirtualNetworkConnectionAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a Swift Virtual Network connection.
-            /// </summary>
-            /// <remarks>
-            /// Gets a Swift Virtual Network connection.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SwiftVirtualNetwork> GetSwiftVirtualNetworkConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetSwiftVirtualNetworkConnectionWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            public static SwiftVirtualNetwork CreateOrUpdateSwiftVirtualNetworkConnection(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope)
-            {
-                return operations.CreateOrUpdateSwiftVirtualNetworkConnectionAsync(resourceGroupName, name, connectionEnvelope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SwiftVirtualNetwork> CreateOrUpdateSwiftVirtualNetworkConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateSwiftVirtualNetworkConnectionWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Deletes a Swift Virtual Network connection from an app (or deployment
-            /// slot).
-            /// </summary>
-            /// <remarks>
-            /// Deletes a Swift Virtual Network connection from an app (or deployment
-            /// slot).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static void DeleteSwiftVirtualNetwork(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                operations.DeleteSwiftVirtualNetworkAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a Swift Virtual Network connection from an app (or deployment
-            /// slot).
-            /// </summary>
-            /// <remarks>
-            /// Deletes a Swift Virtual Network connection from an app (or deployment
-            /// slot).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteSwiftVirtualNetworkAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteSwiftVirtualNetworkWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            public static SwiftVirtualNetwork UpdateSwiftVirtualNetworkConnection(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope)
-            {
-                return operations.UpdateSwiftVirtualNetworkConnectionAsync(resourceGroupName, name, connectionEnvelope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SwiftVirtualNetwork> UpdateSwiftVirtualNetworkConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateSwiftVirtualNetworkConnectionWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets the configuration of an app, such as platform version and bitness,
             /// default documents, virtual applications, Always On, etc.
             /// </summary>
@@ -5621,6 +5400,227 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets a Swift Virtual Network connection.
+            /// </summary>
+            /// <remarks>
+            /// Gets a Swift Virtual Network connection.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static SwiftVirtualNetwork GetSwiftVirtualNetworkConnection(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetSwiftVirtualNetworkConnectionAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a Swift Virtual Network connection.
+            /// </summary>
+            /// <remarks>
+            /// Gets a Swift Virtual Network connection.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SwiftVirtualNetwork> GetSwiftVirtualNetworkConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSwiftVirtualNetworkConnectionWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            public static SwiftVirtualNetwork CreateOrUpdateSwiftVirtualNetworkConnection(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope)
+            {
+                return operations.CreateOrUpdateSwiftVirtualNetworkConnectionAsync(resourceGroupName, name, connectionEnvelope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SwiftVirtualNetwork> CreateOrUpdateSwiftVirtualNetworkConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateSwiftVirtualNetworkConnectionWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </summary>
+            /// <remarks>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static void DeleteSwiftVirtualNetwork(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                operations.DeleteSwiftVirtualNetworkAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </summary>
+            /// <remarks>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteSwiftVirtualNetworkAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteSwiftVirtualNetworkWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            public static SwiftVirtualNetwork UpdateSwiftVirtualNetworkConnection(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope)
+            {
+                return operations.UpdateSwiftVirtualNetworkConnectionAsync(resourceGroupName, name, connectionEnvelope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SwiftVirtualNetwork> UpdateSwiftVirtualNetworkConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateSwiftVirtualNetworkConnectionWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all network features used by the app (or deployment slot, if
             /// specified).
             /// </summary>
@@ -5677,10 +5677,66 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Start capturing network packets for the site.
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            public static IList<NetworkTrace> GetNetworkTraceOperation(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId)
+            {
+                return operations.GetNetworkTraceOperationAsync(resourceGroupName, name, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> GetNetworkTraceOperationAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNetworkTraceOperationWithHttpMessagesAsync(resourceGroupName, name, operationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Start capturing network packets for the site (To be deprecated).
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site (To be deprecated).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5706,10 +5762,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Start capturing network packets for the site.
+            /// Start capturing network packets for the site (To be deprecated).
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Start capturing network packets for the site (To be deprecated).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5741,6 +5797,70 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            public static IList<NetworkTrace> StartWebSiteNetworkTraceOperation(this IWebAppsOperations operations, string resourceGroupName, string name, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string))
+            {
+                return operations.StartWebSiteNetworkTraceOperationAsync(resourceGroupName, name, durationInSeconds, maxFrameLength, sasUrl).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> StartWebSiteNetworkTraceOperationAsync(this IWebAppsOperations operations, string resourceGroupName, string name, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.StartWebSiteNetworkTraceOperationWithHttpMessagesAsync(resourceGroupName, name, durationInSeconds, maxFrameLength, sasUrl, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Stop ongoing capturing network packets for the site.
             /// </summary>
             /// <remarks>
@@ -5755,9 +5875,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// The name of the web app.
             /// </param>
-            public static string StopWebSiteNetworkTrace(this IWebAppsOperations operations, string resourceGroupName, string name)
+            public static void StopWebSiteNetworkTrace(this IWebAppsOperations operations, string resourceGroupName, string name)
             {
-                return operations.StopWebSiteNetworkTraceAsync(resourceGroupName, name).GetAwaiter().GetResult();
+                operations.StopWebSiteNetworkTraceAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5778,9 +5898,174 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> StopWebSiteNetworkTraceAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task StopWebSiteNetworkTraceAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.StopWebSiteNetworkTraceWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                (await operations.StopWebSiteNetworkTraceWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            public static IList<NetworkTrace> GetNetworkTraces(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId)
+            {
+                return operations.GetNetworkTracesAsync(resourceGroupName, name, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> GetNetworkTracesAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNetworkTracesWithHttpMessagesAsync(resourceGroupName, name, operationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            public static IList<NetworkTrace> GetNetworkTraceOperationV2(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId)
+            {
+                return operations.GetNetworkTraceOperationV2Async(resourceGroupName, name, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> GetNetworkTraceOperationV2Async(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNetworkTraceOperationV2WithHttpMessagesAsync(resourceGroupName, name, operationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            public static IList<NetworkTrace> GetNetworkTracesV2(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId)
+            {
+                return operations.GetNetworkTracesV2Async(resourceGroupName, name, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> GetNetworkTracesV2Async(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNetworkTracesV2WithHttpMessagesAsync(resourceGroupName, name, operationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -9348,259 +9633,6 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<PushSettings> ListSitePushSettingsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSitePushSettingsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets a Swift Virtual Network connection.
-            /// </summary>
-            /// <remarks>
-            /// Gets a Swift Virtual Network connection.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get a
-            /// gateway for the production slot's Virtual Network.
-            /// </param>
-            public static SwiftVirtualNetwork GetSwiftVirtualNetworkConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.GetSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a Swift Virtual Network connection.
-            /// </summary>
-            /// <remarks>
-            /// Gets a Swift Virtual Network connection.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get a
-            /// gateway for the production slot's Virtual Network.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SwiftVirtualNetwork> GetSwiftVirtualNetworkConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will add
-            /// or update connections for the production slot.
-            /// </param>
-            public static SwiftVirtualNetwork CreateOrUpdateSwiftVirtualNetworkConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot)
-            {
-                return operations.CreateOrUpdateSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, connectionEnvelope, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will add
-            /// or update connections for the production slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SwiftVirtualNetwork> CreateOrUpdateSwiftVirtualNetworkConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Deletes a Swift Virtual Network connection from an app (or deployment
-            /// slot).
-            /// </summary>
-            /// <remarks>
-            /// Deletes a Swift Virtual Network connection from an app (or deployment
-            /// slot).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete the connection for the production slot.
-            /// </param>
-            public static void DeleteSwiftVirtualNetworkSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                operations.DeleteSwiftVirtualNetworkSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a Swift Virtual Network connection from an app (or deployment
-            /// slot).
-            /// </summary>
-            /// <remarks>
-            /// Deletes a Swift Virtual Network connection from an app (or deployment
-            /// slot).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete the connection for the production slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteSwiftVirtualNetworkSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteSwiftVirtualNetworkSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will add
-            /// or update connections for the production slot.
-            /// </param>
-            public static SwiftVirtualNetwork UpdateSwiftVirtualNetworkConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot)
-            {
-                return operations.UpdateSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, connectionEnvelope, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </summary>
-            /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
-            /// in use by another App Service Plan other than the one this App is in.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will add
-            /// or update connections for the production slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SwiftVirtualNetwork> UpdateSwiftVirtualNetworkConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -13607,6 +13639,259 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets a Swift Virtual Network connection.
+            /// </summary>
+            /// <remarks>
+            /// Gets a Swift Virtual Network connection.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get a
+            /// gateway for the production slot's Virtual Network.
+            /// </param>
+            public static SwiftVirtualNetwork GetSwiftVirtualNetworkConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a Swift Virtual Network connection.
+            /// </summary>
+            /// <remarks>
+            /// Gets a Swift Virtual Network connection.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get a
+            /// gateway for the production slot's Virtual Network.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SwiftVirtualNetwork> GetSwiftVirtualNetworkConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will add
+            /// or update connections for the production slot.
+            /// </param>
+            public static SwiftVirtualNetwork CreateOrUpdateSwiftVirtualNetworkConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot)
+            {
+                return operations.CreateOrUpdateSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, connectionEnvelope, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will add
+            /// or update connections for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SwiftVirtualNetwork> CreateOrUpdateSwiftVirtualNetworkConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </summary>
+            /// <remarks>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// delete the connection for the production slot.
+            /// </param>
+            public static void DeleteSwiftVirtualNetworkSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                operations.DeleteSwiftVirtualNetworkSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </summary>
+            /// <remarks>
+            /// Deletes a Swift Virtual Network connection from an app (or deployment
+            /// slot).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// delete the connection for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteSwiftVirtualNetworkSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteSwiftVirtualNetworkSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will add
+            /// or update connections for the production slot.
+            /// </param>
+            public static SwiftVirtualNetwork UpdateSwiftVirtualNetworkConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot)
+            {
+                return operations.UpdateSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, connectionEnvelope, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </summary>
+            /// <remarks>
+            /// Integrates this Web App with a Virtual Network. This requires that 1)
+            /// "swiftSupported" is true when doing a GET against this resource, and 2)
+            /// that the target Subnet has already been delegated, and is not
+            /// in use by another App Service Plan other than the one this App is in.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// Properties of the Virtual Network connection. See example.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will add
+            /// or update connections for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SwiftVirtualNetwork> UpdateSwiftVirtualNetworkConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all network features used by the app (or deployment slot, if
             /// specified).
             /// </summary>
@@ -13671,10 +13956,74 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Start capturing network packets for the site.
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// an operation for the production slot.
+            /// </param>
+            public static IList<NetworkTrace> GetNetworkTraceOperationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId, string slot)
+            {
+                return operations.GetNetworkTraceOperationSlotAsync(resourceGroupName, name, operationId, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// an operation for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> GetNetworkTraceOperationSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNetworkTraceOperationSlotWithHttpMessagesAsync(resourceGroupName, name, operationId, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Start capturing network packets for the site (To be deprecated).
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site (To be deprecated).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13703,10 +14052,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Start capturing network packets for the site.
+            /// Start capturing network packets for the site (To be deprecated).
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Start capturing network packets for the site (To be deprecated).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13741,6 +14090,76 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            public static IList<NetworkTrace> StartWebSiteNetworkTraceOperationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string))
+            {
+                return operations.StartWebSiteNetworkTraceOperationSlotAsync(resourceGroupName, name, slot, durationInSeconds, maxFrameLength, sasUrl).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> StartWebSiteNetworkTraceOperationSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.StartWebSiteNetworkTraceOperationSlotWithHttpMessagesAsync(resourceGroupName, name, slot, durationInSeconds, maxFrameLength, sasUrl, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Stop ongoing capturing network packets for the site.
             /// </summary>
             /// <remarks>
@@ -13758,9 +14177,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='slot'>
             /// The name of the slot for this web app.
             /// </param>
-            public static string StopWebSiteNetworkTraceSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            public static void StopWebSiteNetworkTraceSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
             {
-                return operations.StopWebSiteNetworkTraceSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+                operations.StopWebSiteNetworkTraceSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -13784,9 +14203,198 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> StopWebSiteNetworkTraceSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task StopWebSiteNetworkTraceSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.StopWebSiteNetworkTraceSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                (await operations.StopWebSiteNetworkTraceSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// an operation for the production slot.
+            /// </param>
+            public static IList<NetworkTrace> GetNetworkTracesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId, string slot)
+            {
+                return operations.GetNetworkTracesSlotAsync(resourceGroupName, name, operationId, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// an operation for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> GetNetworkTracesSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNetworkTracesSlotWithHttpMessagesAsync(resourceGroupName, name, operationId, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// an operation for the production slot.
+            /// </param>
+            public static IList<NetworkTrace> GetNetworkTraceOperationSlotV2(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId, string slot)
+            {
+                return operations.GetNetworkTraceOperationSlotV2Async(resourceGroupName, name, operationId, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// an operation for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> GetNetworkTraceOperationSlotV2Async(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNetworkTraceOperationSlotV2WithHttpMessagesAsync(resourceGroupName, name, operationId, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// an operation for the production slot.
+            /// </param>
+            public static IList<NetworkTrace> GetNetworkTracesSlotV2(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId, string slot)
+            {
+                return operations.GetNetworkTracesSlotV2Async(resourceGroupName, name, operationId, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </summary>
+            /// <remarks>
+            /// Gets a named operation for a network trace capturing (or deployment slot,
+            /// if specified).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='operationId'>
+            /// GUID of the operation.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// an operation for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> GetNetworkTracesSlotV2Async(this IWebAppsOperations operations, string resourceGroupName, string name, string operationId, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNetworkTracesSlotV2WithHttpMessagesAsync(resourceGroupName, name, operationId, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -15906,6 +16514,58 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </summary>
+            /// <remarks>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Website Name.
+            /// </param>
+            /// <param name='slot'>
+            /// Website Slot.
+            /// </param>
+            public static IPage<Snapshot> ListSnapshotsFromDRSecondarySlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.ListSnapshotsFromDRSecondarySlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </summary>
+            /// <remarks>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Website Name.
+            /// </param>
+            /// <param name='slot'>
+            /// Website Slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Snapshot>> ListSnapshotsFromDRSecondarySlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSnapshotsFromDRSecondarySlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the source control configuration of an app.
             /// </summary>
             /// <remarks>
@@ -16182,6 +16842,76 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            public static IList<NetworkTrace> StartNetworkTraceSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string))
+            {
+                return operations.StartNetworkTraceSlotAsync(resourceGroupName, name, slot, durationInSeconds, maxFrameLength, sasUrl).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> StartNetworkTraceSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.StartNetworkTraceSlotWithHttpMessagesAsync(resourceGroupName, name, slot, durationInSeconds, maxFrameLength, sasUrl, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Stops an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
@@ -16230,6 +16960,55 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task StopSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.StopSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Stop ongoing capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Stop ongoing capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            public static void StopNetworkTraceSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                operations.StopNetworkTraceSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stop ongoing capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Stop ongoing capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task StopNetworkTraceSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.StopNetworkTraceSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -17553,6 +18332,52 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </summary>
+            /// <remarks>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Website Name.
+            /// </param>
+            public static IPage<Snapshot> ListSnapshotsFromDRSecondary(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.ListSnapshotsFromDRSecondaryAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </summary>
+            /// <remarks>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Website Name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Snapshot>> ListSnapshotsFromDRSecondaryAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSnapshotsFromDRSecondaryWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the source control configuration of an app.
             /// </summary>
             /// <remarks>
@@ -17789,6 +18614,70 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            public static IList<NetworkTrace> StartNetworkTrace(this IWebAppsOperations operations, string resourceGroupName, string name, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string))
+            {
+                return operations.StartNetworkTraceAsync(resourceGroupName, name, durationInSeconds, maxFrameLength, sasUrl).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> StartNetworkTraceAsync(this IWebAppsOperations operations, string resourceGroupName, string name, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.StartNetworkTraceWithHttpMessagesAsync(resourceGroupName, name, durationInSeconds, maxFrameLength, sasUrl, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Stops an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
@@ -17829,6 +18718,49 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task StopAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.StopWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Stop ongoing capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Stop ongoing capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            public static void StopNetworkTrace(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                operations.StopNetworkTraceAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stop ongoing capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Stop ongoing capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task StopNetworkTraceAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.StopNetworkTraceWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -19294,6 +20226,70 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            public static IList<NetworkTrace> BeginStartWebSiteNetworkTraceOperation(this IWebAppsOperations operations, string resourceGroupName, string name, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string))
+            {
+                return operations.BeginStartWebSiteNetworkTraceOperationAsync(resourceGroupName, name, durationInSeconds, maxFrameLength, sasUrl).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> BeginStartWebSiteNetworkTraceOperationAsync(this IWebAppsOperations operations, string resourceGroupName, string name, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginStartWebSiteNetworkTraceOperationWithHttpMessagesAsync(resourceGroupName, name, durationInSeconds, maxFrameLength, sasUrl, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
@@ -19874,6 +20870,76 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            public static IList<NetworkTrace> BeginStartWebSiteNetworkTraceOperationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string))
+            {
+                return operations.BeginStartWebSiteNetworkTraceOperationSlotAsync(resourceGroupName, name, slot, durationInSeconds, maxFrameLength, sasUrl).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> BeginStartWebSiteNetworkTraceOperationSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginStartWebSiteNetworkTraceOperationSlotWithHttpMessagesAsync(resourceGroupName, name, slot, durationInSeconds, maxFrameLength, sasUrl, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
@@ -20224,6 +21290,76 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            public static IList<NetworkTrace> BeginStartNetworkTraceSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string))
+            {
+                return operations.BeginStartNetworkTraceSlotAsync(resourceGroupName, name, slot, durationInSeconds, maxFrameLength, sasUrl).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> BeginStartNetworkTraceSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginStartNetworkTraceSlotWithHttpMessagesAsync(resourceGroupName, name, slot, durationInSeconds, maxFrameLength, sasUrl, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Swaps two deployment slots of an app.
             /// </summary>
             /// <remarks>
@@ -20319,6 +21455,70 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<SiteSourceControl> BeginCreateOrUpdateSourceControlAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SiteSourceControl siteSourceControl, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateSourceControlWithHttpMessagesAsync(resourceGroupName, name, siteSourceControl, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            public static IList<NetworkTrace> BeginStartNetworkTrace(this IWebAppsOperations operations, string resourceGroupName, string name, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string))
+            {
+                return operations.BeginStartNetworkTraceAsync(resourceGroupName, name, durationInSeconds, maxFrameLength, sasUrl).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start capturing network packets for the site.
+            /// </summary>
+            /// <remarks>
+            /// Start capturing network packets for the site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app.
+            /// </param>
+            /// <param name='durationInSeconds'>
+            /// The duration to keep capturing in seconds.
+            /// </param>
+            /// <param name='maxFrameLength'>
+            /// The maximum frame length in bytes (Optional).
+            /// </param>
+            /// <param name='sasUrl'>
+            /// The Blob URL to store capture file.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<NetworkTrace>> BeginStartNetworkTraceAsync(this IWebAppsOperations operations, string resourceGroupName, string name, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginStartNetworkTraceWithHttpMessagesAsync(resourceGroupName, name, durationInSeconds, maxFrameLength, sasUrl, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -22181,6 +23381,46 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </summary>
+            /// <remarks>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Snapshot> ListSnapshotsFromDRSecondarySlotNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.ListSnapshotsFromDRSecondarySlotNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </summary>
+            /// <remarks>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Snapshot>> ListSnapshotsFromDRSecondarySlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSnapshotsFromDRSecondarySlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List triggered web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
@@ -22419,6 +23659,46 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IPage<Snapshot>> ListSnapshotsNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSnapshotsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </summary>
+            /// <remarks>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Snapshot> ListSnapshotsFromDRSecondaryNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.ListSnapshotsFromDRSecondaryNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </summary>
+            /// <remarks>
+            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Snapshot>> ListSnapshotsFromDRSecondaryNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSnapshotsFromDRSecondaryNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

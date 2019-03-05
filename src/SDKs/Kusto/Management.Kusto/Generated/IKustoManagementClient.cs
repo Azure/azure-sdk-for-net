@@ -85,9 +85,9 @@ namespace Microsoft.Azure.Management.Kusto
         IDatabasesOperations Databases { get; }
 
         /// <summary>
-        /// Gets the IEventHubConnectionsOperations.
+        /// Gets the IDataConnectionsOperations.
         /// </summary>
-        IEventHubConnectionsOperations EventHubConnections { get; }
+        IDataConnectionsOperations DataConnections { get; }
 
         /// <summary>
         /// Gets the IOperations.

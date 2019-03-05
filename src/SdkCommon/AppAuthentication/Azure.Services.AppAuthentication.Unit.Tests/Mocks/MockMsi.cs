@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             MsiAppServicesUnauthorized,
             MsiAppServicesSuccess,
+            MsiUserAssignedIdentityAppServicesSuccess,
             MsiAppServicesFailure,
             MsiAzureVmSuccess,
             MsiUserAssignedIdentityAzureVmSuccess,
@@ -104,10 +105,19 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     };
                     break;
 
+                case MsiTestType.MsiUserAssignedIdentityAppServicesSuccess:
+                    responseMessage = new HttpResponseMessage
+                    {
+                        Content = new StringContent(TokenHelper.GetManagedIdentityAppServicesTokenResponse(),
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+
                 case MsiTestType.MsiUserAssignedIdentityAzureVmSuccess:
                     responseMessage = new HttpResponseMessage
                     {
-                        Content = new StringContent(TokenHelper.GetManagedIdentityTokenResponse(),
+                        Content = new StringContent(TokenHelper.GetManagedIdentityAzureVmTokenResponse(),
                             Encoding.UTF8,
                             Constants.JsonContentType)
                     };

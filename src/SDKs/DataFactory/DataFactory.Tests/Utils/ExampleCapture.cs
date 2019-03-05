@@ -764,8 +764,11 @@ namespace DataFactory.Tests.Utils
                 { "OutputBlobNameList",  outputBlobNameArray }
             };
 
-            CreateRunResponse rtr = client.Pipelines.CreateRun(secrets.ResourceGroupName, secrets.FactoryName, pipelineName, parameters: arguments);
-            return rtr.RunId;
+            CreateRunResponse rtr1 = client.Pipelines.CreateRun(secrets.ResourceGroupName, secrets.FactoryName, pipelineName, parameters: arguments);
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(120));
+            CreateRunResponse rtr2 = client.Pipelines.CreateRun(secrets.ResourceGroupName, secrets.FactoryName, pipelineName,
+                isRecovery: true, referencePipelineRunId: rtr1.RunId);
+            return rtr2.RunId;
         }
 
         private void CapturePipelineRuns_Cancel()

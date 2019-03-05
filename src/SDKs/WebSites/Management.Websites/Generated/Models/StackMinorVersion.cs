@@ -36,11 +36,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="isDefault">&lt;code&gt;true&lt;/code&gt; if this is
         /// the default minor version; otherwise,
         /// &lt;code&gt;false&lt;/code&gt;.</param>
-        public StackMinorVersion(string displayVersion = default(string), string runtimeVersion = default(string), bool? isDefault = default(bool?))
+        /// <param
+        /// name="isRemoteDebuggingEnabled">&lt;code&gt;true&lt;/code&gt; if
+        /// this supports Remote Debugging, otherwise
+        /// &lt;code&gt;false&lt;/code&gt;.</param>
+        public StackMinorVersion(string displayVersion = default(string), string runtimeVersion = default(string), bool? isDefault = default(bool?), bool? isRemoteDebuggingEnabled = default(bool?))
         {
             DisplayVersion = displayVersion;
             RuntimeVersion = runtimeVersion;
             IsDefault = isDefault;
+            IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
             CustomInit();
         }
 
@@ -68,6 +73,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "isDefault")]
         public bool? IsDefault { get; set; }
+
+        /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if this
+        /// supports Remote Debugging, otherwise
+        /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
+        /// </summary>
+        [JsonProperty(PropertyName = "isRemoteDebuggingEnabled")]
+        public bool? IsRemoteDebuggingEnabled { get; set; }
 
     }
 }

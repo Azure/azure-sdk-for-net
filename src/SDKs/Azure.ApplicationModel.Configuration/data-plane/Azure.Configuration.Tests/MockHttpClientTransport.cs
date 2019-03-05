@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Core.Http;
-using Azure.Core.Http.Pipeline;
+using Azure.Base.Http;
+using Azure.Base.Http.Pipeline;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
@@ -13,7 +13,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.Buffers.Text.Encodings;
 
 namespace Azure.ApplicationModel.Configuration.Test
 {
@@ -176,7 +175,7 @@ namespace Azure.ApplicationModel.Configuration.Test
         }
     }
     
-    abstract class MockHttpClientTransport : HttpPipelineTransport
+    abstract class MockHttpClientTransport : HttpClientTransport
     {
         protected string _responseContent;
         protected HttpMethod _expectedMethod;
@@ -249,7 +248,7 @@ namespace Azure.ApplicationModel.Configuration.Test
         {
             Assert.AreEqual(_expectedMethod, request.Method);
             _expectedUri.Verify(request.RequestUri.ToString());
-            //Assert.AreEqual(new Version(2, 0), request.Version);
+            Assert.AreEqual(new Version(2, 0), request.Version);
         }
 
         void VerifyRequestContent(HttpRequestMessage request)
@@ -268,7 +267,7 @@ namespace Azure.ApplicationModel.Configuration.Test
 
         void VerifyUserAgentHeader(HttpRequestMessage request)
         {
-            var expected = Utf8.ToString(HttpHeader.Common.CreateUserAgent("Azure.Configuration", "1.0.0").Value);
+            var expected = Encoding.UTF8.GetString(HttpHeader.Common.CreateUserAgent("Azure.Configuration", "1.0.0").Value.ToArray());
 
             Assert.True(request.Headers.Contains("User-Agent"));
             var userAgentValues = request.Headers.GetValues("User-Agent");

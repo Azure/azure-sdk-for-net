@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Core;
+using Azure.Base;
 using System;
 using System.ComponentModel;
 
@@ -42,9 +42,7 @@ namespace Azure.ApplicationModel.Configuration
         /// IKeyValue fields that will be retrieved.
         /// </summary>
         public SettingFields Fields { get; set; } = SettingFields.All;
-
-        public Guid RequestId { get; set; }
-
+        
         public static implicit operator RequestOptions(string label) => new RequestOptions() { Label = label };
 
         #region nobody wants to see these

@@ -93,12 +93,18 @@ namespace Azure.ApplicationModel.Configuration
         public bool Equals(ConfigurationSetting other)
         {
             if (other == null) return false;
+            if (ETag != null && other.ETag != null)
+            {
+                if (!string.Equals(ETag, other.ETag, StringComparison.Ordinal)) return false;
+                if (LastModified != other.LastModified) return false;
+            }
+            if (!string.Equals(Key, other.Key, StringComparison.Ordinal)) return false;
             if (!string.Equals(Value, other.Value, StringComparison.Ordinal)) return false;
             if (!string.Equals(Label, other.Label, StringComparison.Ordinal)) return false;
             if (!string.Equals(ContentType, other.ContentType, StringComparison.Ordinal)) return false;
-            if (!LastModified.Equals(other.LastModified)) return false;
+            if (Locked != other.Locked) return false;
             if (!TagsEquals(other.Tags)) return false;
-            // TODO (pri 1): any other fields we should compare?
+            
             return true;
         }
 

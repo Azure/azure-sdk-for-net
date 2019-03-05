@@ -11,7 +11,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
     [Category("Live")]
     public partial class ConfigurationSamples
     {
-        //[Test]
+        [Test]
         public async Task Watcher()
         {
             // Retrieve the connection string from the configuration store. 

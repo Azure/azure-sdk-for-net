@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Core;
-using Azure.Core.Http;
+using Azure.Base;
+using Azure.Base.Http;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -38,30 +38,28 @@ namespace Azure.ApplicationModel.Configuration
         // TODO (pri 3): do all the methods that call this accept revisions?
         static void AddOptionsHeaders(RequestOptions options, HttpMessage message)
         {
-            var requestId = Guid.NewGuid().ToString();
-            if (options != null)
+            if (options == null) return;
+
+            if (options.ETag.IfMatch != default)
             {
-                if (options.ETag.IfMatch != default)
-                {
-                    message.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
-                }
-
-                if (options.ETag.IfNoneMatch != default)
-                {
-                    message.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
-                }
-
-                if (options.Revision.HasValue)
-                {
-                    var dateTime = options.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                    message.AddHeader(AcceptDatetimeHeader, dateTime);
-                }
-                if (options.RequestId != default)
-                {
-                    requestId = options.RequestId.ToString();
-                }
+                message.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
             }
-            message.AddHeader(ClientRequestIdHeader, requestId);
+
+            if (options.ETag.IfNoneMatch != default)
+            {
+                message.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
+            }
+
+            if (options.Revision.HasValue)
+            {
+                var dateTime = options.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
+                message.AddHeader(AcceptDatetimeHeader, dateTime);
+            }
+        }
+
+        static void AddClientRequestID(HttpMessage message)
+        {
+            message.AddHeader(ClientRequestIdHeader, Guid.NewGuid().ToString());
             message.AddHeader(EchoClientRequestId, "true");
         }
 
@@ -210,7 +208,7 @@ namespace Azure.ApplicationModel.Configuration
             return content;
         }
 
-        internal static void AddAuthenticationHeaders(HttpMessage message, Uri uri, PipelineMethod method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
+        internal static void AddAuthenticationHeaders(HttpMessage message, Uri uri, HttpVerb method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
         {
             string contentHash = null;
             using (var alg = SHA256.Create())

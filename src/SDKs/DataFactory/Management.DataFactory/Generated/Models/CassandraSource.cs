@@ -38,6 +38,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="maxConcurrentConnections">The maximum concurrent
+        /// connection count for the source data store. Type: integer (or
+        /// Expression with resultType integer).</param>
         /// <param name="query">Database query. Should be a SQL-92 query
         /// expression or Cassandra Query Language (CQL) command. Type: string
         /// (or Expression with resultType string).</param>
@@ -49,8 +52,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// default value is 'ONE'. It is case-insensitive. Possible values
         /// include: 'ALL', 'EACH_QUORUM', 'QUORUM', 'LOCAL_QUORUM', 'ONE',
         /// 'TWO', 'THREE', 'LOCAL_ONE', 'SERIAL', 'LOCAL_SERIAL'</param>
-        public CassandraSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object query = default(object), string consistencyLevel = default(string))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait)
+        public CassandraSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), string consistencyLevel = default(string))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             Query = query;
             ConsistencyLevel = consistencyLevel;

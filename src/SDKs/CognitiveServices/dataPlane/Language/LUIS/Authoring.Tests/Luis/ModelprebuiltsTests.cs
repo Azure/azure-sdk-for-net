@@ -13,7 +13,7 @@
             UseClientFor(async client =>
             {
                 var version = "0.1";
-                var prebuiltEntities = await client.Model.ListPrebuiltEntitiesAsync(appId, version);
+                var prebuiltEntities = await client.Model.ListPrebuiltEntitiesAsync(GlobalAppId, version);
 
                 Assert.True(prebuiltEntities.Count > 0);
             });
@@ -25,13 +25,13 @@
             UseClientFor(async client =>
             {
                 var version = "0.1";
-                var addedId = (await client.Model.AddPrebuiltAsync(appId, version, new string[]
+                var addedId = (await client.Model.AddPrebuiltAsync(GlobalAppId, version, new string[]
                 {
                     "number"
                 })).First().Id;
 
-                var prebuiltEntities = await client.Model.ListPrebuiltsAsync(appId, version);
-                await client.Model.DeletePrebuiltAsync(appId, version, addedId);
+                var prebuiltEntities = await client.Model.ListPrebuiltsAsync(GlobalAppId, version);
+                await client.Model.DeletePrebuiltAsync(GlobalAppId, version, addedId);
 
                 Assert.True(prebuiltEntities.Count > 0);
                 Assert.All(prebuiltEntities, e => e.ReadableType.Equals("Prebuilt Entity Extractor"));
@@ -49,10 +49,10 @@
                     "number",
                     "ordinal"
                 };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(appId, version, prebuiltEntitiesToAdd);
+                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
                 foreach (var added in prebuiltEntitiesAdded)
                 {
-                    await client.Model.DeletePrebuiltAsync(appId, version, added.Id);
+                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
                 }
 
                 Assert.All(prebuiltEntitiesAdded, e => prebuiltEntitiesToAdd.Contains(e.Name));
@@ -65,13 +65,13 @@
             UseClientFor(async client =>
             {
                 var version = "0.1";
-                var addedId = (await client.Model.AddPrebuiltAsync(appId, version, new string[]
+                var addedId = (await client.Model.AddPrebuiltAsync(GlobalAppId, version, new string[]
                 {
                     "number"
                 })).First().Id;
 
-                var prebuiltEntity = await client.Model.GetPrebuiltAsync(appId, version, addedId);
-                await client.Model.DeletePrebuiltAsync(appId, version, addedId);
+                var prebuiltEntity = await client.Model.GetPrebuiltAsync(GlobalAppId, version, addedId);
+                await client.Model.DeletePrebuiltAsync(GlobalAppId, version, addedId);
 
                 Assert.Equal(addedId, prebuiltEntity.Id);
             });
@@ -83,13 +83,13 @@
             UseClientFor(async client =>
             {
                 var version = "0.1";
-                var addedId = (await client.Model.AddPrebuiltAsync(appId, version, new string[]
+                var addedId = (await client.Model.AddPrebuiltAsync(GlobalAppId, version, new string[]
                 {
                     "number"
                 })).First().Id;
 
-                await client.Model.DeletePrebuiltAsync(appId, version, addedId);
-                var prebuiltEntitiesWithoutDeleted = await client.Model.ListPrebuiltsAsync(appId, version);
+                await client.Model.DeletePrebuiltAsync(GlobalAppId, version, addedId);
+                var prebuiltEntitiesWithoutDeleted = await client.Model.ListPrebuiltsAsync(GlobalAppId, version);
 
                 Assert.DoesNotContain(prebuiltEntitiesWithoutDeleted, e => e.Id.Equals(addedId));
             });

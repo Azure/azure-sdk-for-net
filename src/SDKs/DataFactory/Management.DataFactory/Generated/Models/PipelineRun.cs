@@ -34,6 +34,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="runId">Identifier of a run.</param>
+        /// <param name="runGroupId">Identifier that correlates all the
+        /// recovery runs of a pipeline run.</param>
+        /// <param name="isLatest">Indicates if the recovered pipeline run is
+        /// the latest in its group.</param>
         /// <param name="pipelineName">The pipeline name.</param>
         /// <param name="parameters">The full or partial list of parameter
         /// name, value pair used in the pipeline run.</param>
@@ -48,10 +52,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="durationInMs">The duration of a pipeline run.</param>
         /// <param name="status">The status of a pipeline run.</param>
         /// <param name="message">The message from a pipeline run.</param>
-        public PipelineRun(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string runId = default(string), string pipelineName = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), PipelineRunInvokedBy invokedBy = default(PipelineRunInvokedBy), System.DateTime? lastUpdated = default(System.DateTime?), System.DateTime? runStart = default(System.DateTime?), System.DateTime? runEnd = default(System.DateTime?), int? durationInMs = default(int?), string status = default(string), string message = default(string))
+        public PipelineRun(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string runId = default(string), string runGroupId = default(string), bool? isLatest = default(bool?), string pipelineName = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), PipelineRunInvokedBy invokedBy = default(PipelineRunInvokedBy), System.DateTime? lastUpdated = default(System.DateTime?), System.DateTime? runStart = default(System.DateTime?), System.DateTime? runEnd = default(System.DateTime?), int? durationInMs = default(int?), string status = default(string), string message = default(string))
         {
             AdditionalProperties = additionalProperties;
             RunId = runId;
+            RunGroupId = runGroupId;
+            IsLatest = isLatest;
             PipelineName = pipelineName;
             Parameters = parameters;
             InvokedBy = invokedBy;
@@ -81,6 +87,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "runId")]
         public string RunId { get; private set; }
+
+        /// <summary>
+        /// Gets identifier that correlates all the recovery runs of a pipeline
+        /// run.
+        /// </summary>
+        [JsonProperty(PropertyName = "runGroupId")]
+        public string RunGroupId { get; private set; }
+
+        /// <summary>
+        /// Gets indicates if the recovered pipeline run is the latest in its
+        /// group.
+        /// </summary>
+        [JsonProperty(PropertyName = "isLatest")]
+        public bool? IsLatest { get; private set; }
 
         /// <summary>
         /// Gets the pipeline name.

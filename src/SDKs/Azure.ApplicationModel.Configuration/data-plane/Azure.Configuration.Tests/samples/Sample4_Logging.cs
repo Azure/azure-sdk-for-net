@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Core;
+using Azure.Base;
 using NUnit.Framework;
 using System;
 using System.Diagnostics;
@@ -16,7 +16,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
     {
         // ConfigurationClient logs lots of useful information automatically to .NET's EventSource.
         // This sample illustrate how to control and access the log information.
-        //[Test]
+        [Test]
         public async Task Logging()
         {
             // Retrieve the connection string from the configuration store. 

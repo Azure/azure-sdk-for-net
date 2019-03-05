@@ -12,7 +12,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
     [Category("Live")]
     public partial class ConfigurationSamples
     {
-        //[Test]
+        [Test]
         public async Task HelloWorld()
         {
             // Retrieve the connection string from the configuration store. 

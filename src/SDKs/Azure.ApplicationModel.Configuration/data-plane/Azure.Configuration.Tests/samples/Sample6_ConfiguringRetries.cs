@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Core.Http;
-using Azure.Core.Http.Pipeline;
+using Azure.Base.Http;
+using Azure.Base.Http.Pipeline;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
@@ -13,11 +13,11 @@ namespace Azure.ApplicationModel.Configuration.Samples
     [Category("Live")]
     public partial class ConfigurationSamples
     {
-        //[Test]
+        [Test]
         public async Task ConfiguringRetries()
         {
             // specify retry policy options
-            var options = new PipelineOptions();
+            var options = new HttpPipeline.Options();
             options.RetryPolicy = RetryPolicy.CreateFixed(
                 maxRetries: 10,
                 delay: TimeSpan.FromSeconds(1),

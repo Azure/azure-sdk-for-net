@@ -18,5 +18,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     {
         public const string Basic = "Basic";
         public const string Anonymous = "Anonymous";
+        public const string Windows = "Windows";
+        public const string AadServicePrincipal = "AadServicePrincipal";
+        public const string ManagedServiceIdentity = "ManagedServiceIdentity";
     }
 }
