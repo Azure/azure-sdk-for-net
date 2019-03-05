@@ -1,7 +1,7 @@
 # Overview 
 
 Azure.ApplicationModel.Configuration is a component of the .NET Azure SDK. 
-It provides APIs for Microsoft [Azure's App Configuration Service](https://docs.microsoft.com/en-us/azure/azure-app-configuration/) which is s a managed configuration service that allows to easily store and manage all application settings in one central place that is separated from code.
+It provides APIs for Microsoft [Azure's Application Configuration Service](https://docs.microsoft.com/en-us/azure/azure-app-configuration/) which is a service that allows to easily store and manage all application settings in one central place that is separated from code.
 
 Developers can use this SDK to interact with the [Configuration Store](https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-dotnet-core-app#create-an-app-configuration-store) where the configuration settings are stored.
 
@@ -44,7 +44,7 @@ Properties of a Configuration Setting:
 # Hello World
 The following example demonstrates how to initialize a ConfigurationClient and perform a basic operations in the Configuration Store.
 
-To begin using ConfigurationClient, a connection string must be provided which specifies the configuration store endpoint and credentials to use when sending requests. From that point, the example uses the client to set, retrieve and delete a configuration setting by its name.
+To begin using ConfigurationClient, a connection string must be provided which specifies the configuration store endpoint and credentials to use when sending requests. This conneection string can be retrieved by the Azure Portal or by using the [Azure CLI](https://docs.microsoft.com/en-us/azure/azure-app-configuration/cli-samples). From that point, the example uses the client to set, retrieve and delete a configuration setting by its name.
 
 ```c#
 public async Task HelloWorld()
