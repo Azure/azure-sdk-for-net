@@ -10,7 +10,7 @@ namespace Azure.Base.Http
 {
     public class HttpPipelineOptions
     {
-        ServiceContainer _container = new ServiceContainer();
+        ServiceProvider _container;
 
         HttpPipelineTransport _transport;
         List<HttpPipelinePolicy> _perCallPolicies;
@@ -32,7 +32,7 @@ namespace Azure.Base.Http
 
         public string ApplicationId { get; set; }
 
-        public HttpPipelineOptions( HttpPipelineTransport transport)
+        public HttpPipelineOptions(HttpPipelineTransport transport)
             => _transport = transport;
 
         public HttpPipelineOptions() : this( HttpClientTransport.Shared)
@@ -58,7 +58,7 @@ namespace Azure.Base.Http
         {
             if (service == null) throw new ArgumentNullException(nameof(service));
 
-            if (_container == null) _container = new ServiceContainer();
+            if (_container == null) _container = new ServiceProvider();
             _container.Add(service, type != null ? type : service.GetType());
         }
 
@@ -107,7 +107,8 @@ namespace Azure.Base.Http
             }
             policies[index++] = _transport;
 
-            var pipeline = new HttpPipeline(policies, _container);
+            var container = _container == null ? EmptyServiceProvider.Singleton : _container;
+            var pipeline = new HttpPipeline(policies, container);
             return pipeline;
         }
 
@@ -122,7 +123,7 @@ namespace Azure.Base.Http
         public override string ToString() => base.ToString();
         #endregion
 
-        class ServiceContainer : IServiceProvider
+        sealed class ServiceProvider : IServiceProvider
         {
             Dictionary<Type, object> _services = new Dictionary<Type, object>();
 
@@ -134,7 +135,15 @@ namespace Azure.Base.Http
 
             internal void Add(object service, Type type)
                 => _services.Add(type, service);
-        }      
+        }
+
+        internal sealed class EmptyServiceProvider : IServiceProvider
+        {
+            public static IServiceProvider Singleton { get; } = new EmptyServiceProvider();
+            private EmptyServiceProvider() { }
+
+            public object GetService(Type serviceType) => null;
+        }
     }
 }
 

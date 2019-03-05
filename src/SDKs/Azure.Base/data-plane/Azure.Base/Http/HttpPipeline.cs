@@ -15,21 +15,24 @@ namespace Azure.Base.Http
         readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
         readonly IServiceProvider _services;
 
-        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, IServiceProvider services = default)
+        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, IServiceProvider services = null)
         {
+            if (transport == null) throw new ArgumentNullException(nameof(transport));
             if (policies == null) policies = Array.Empty<HttpPipelinePolicy>();
+
             var all = new HttpPipelinePolicy[policies.Length + 1];
             all[policies.Length] = transport;
             policies.CopyTo(all, 0);
             _pipeline = all;
-            _services = services == null ? EmptyServiceProvider.Singleton:services;
+            _services = services != null ? services: HttpPipelineOptions.EmptyServiceProvider.Singleton;
         }
 
         internal HttpPipeline(HttpPipelinePolicy[] policies, IServiceProvider services = default)
         {
             Debug.Assert(policies[policies.Length-1] is HttpPipelineTransport);
+
+            _services = services != null ? services : HttpPipelineOptions.EmptyServiceProvider.Singleton;
             _pipeline = policies;
-            _services = services == null ? EmptyServiceProvider.Singleton : services;
         }
 
         public HttpMessage CreateMessage(CancellationToken cancellation)
@@ -44,14 +47,6 @@ namespace Azure.Base.Http
 
         HttpPipelineTransport Transport {
             get => (HttpPipelineTransport)_pipeline.Span[_pipeline.Length - 1];
-        }
-
-        sealed class EmptyServiceProvider : IServiceProvider
-        {
-            public static IServiceProvider Singleton { get; } = new EmptyServiceProvider(); 
-            private EmptyServiceProvider() { }
-
-            public object GetService(Type serviceType) => null;
         }
     }
 }
