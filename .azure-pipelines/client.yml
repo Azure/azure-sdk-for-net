@@ -38,7 +38,8 @@ jobs:
 
   - job: 'Analyze'
 
-    dependsOn: 'Build'
+    dependsOn:
+      - 'Build'
 
     pool:
       vmImage: 'vs2017-win2016'
