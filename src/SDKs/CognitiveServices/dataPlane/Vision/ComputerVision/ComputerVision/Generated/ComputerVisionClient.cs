@@ -243,7 +243,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// pornographic in nature (depicts nudity or a sex act).  Sexually suggestive
         /// content is also detected. Objects - detects various objects within an
         /// image, including the approximate location. The Objects argument is only
-        /// available in English.
+        /// available in English. Brands - detects various brands within an image,
+        /// including the approximate location. The Brands argument is only available
+        /// in English.
         /// </param>
         /// <param name='details'>
         /// A string indicating which domain-specific details to return. Multiple
@@ -2246,7 +2248,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// pornographic in nature (depicts nudity or a sex act).  Sexually suggestive
         /// content is also detected. Objects - detects various objects within an
         /// image, including the approximate location. The Objects argument is only
-        /// available in English.
+        /// available in English. Brands - detects various brands within an image,
+        /// including the approximate location. The Brands argument is only available
+        /// in English.
         /// </param>
         /// <param name='details'>
         /// A string indicating which domain-specific details to return. Multiple

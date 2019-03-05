@@ -36,7 +36,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         [EnumMember(Value = "Description")]
         Description,
         [EnumMember(Value = "Objects")]
-        Objects
+        Objects,
+        [EnumMember(Value = "Brands")]
+        Brands
     }
     internal static class VisualFeatureTypesEnumExtension
     {
@@ -65,6 +67,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
                     return "Description";
                 case VisualFeatureTypes.Objects:
                     return "Objects";
+                case VisualFeatureTypes.Brands:
+                    return "Brands";
             }
             return null;
         }
@@ -89,6 +93,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
                     return VisualFeatureTypes.Description;
                 case "Objects":
                     return VisualFeatureTypes.Objects;
+                case "Brands":
+                    return VisualFeatureTypes.Brands;
             }
             return null;
         }
