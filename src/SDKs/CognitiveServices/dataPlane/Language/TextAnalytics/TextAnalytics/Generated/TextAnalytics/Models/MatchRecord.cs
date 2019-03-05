@@ -13,26 +13,34 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class MatchRecordV2dot1
+    public partial class MatchRecord
     {
         /// <summary>
-        /// Initializes a new instance of the MatchRecordV2dot1 class.
+        /// Initializes a new instance of the MatchRecord class.
         /// </summary>
-        public MatchRecordV2dot1()
+        public MatchRecord()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MatchRecordV2dot1 class.
+        /// Initializes a new instance of the MatchRecord class.
         /// </summary>
+        /// <param name="wikipediaScore">(optional) If a well-known item with
+        /// Wikipedia link is recognized, a decimal number denoting the
+        /// confidence level of the Wikipedia info will be returned.</param>
+        /// <param name="entityTypeScore">(optional) If an entity type is
+        /// recognized, a decimal number denoting the confidence level of the
+        /// entity type will be returned.</param>
         /// <param name="text">Entity text as appears in the request.</param>
         /// <param name="offset">Start position (in Unicode characters) for the
         /// entity match text.</param>
         /// <param name="length">Length (in Unicode characters) for the entity
         /// match text.</param>
-        public MatchRecordV2dot1(string text = default(string), int? offset = default(int?), int? length = default(int?))
+        public MatchRecord(double? wikipediaScore = default(double?), double? entityTypeScore = default(double?), string text = default(string), int? offset = default(int?), int? length = default(int?))
         {
+            WikipediaScore = wikipediaScore;
+            EntityTypeScore = entityTypeScore;
             Text = text;
             Offset = offset;
             Length = length;
@@ -43,6 +51,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets (optional) If a well-known item with Wikipedia link is
+        /// recognized, a decimal number denoting the confidence level of the
+        /// Wikipedia info will be returned.
+        /// </summary>
+        [JsonProperty(PropertyName = "wikipediaScore")]
+        public double? WikipediaScore { get; set; }
+
+        /// <summary>
+        /// Gets or sets (optional) If an entity type is recognized, a decimal
+        /// number denoting the confidence level of the entity type will be
+        /// returned.
+        /// </summary>
+        [JsonProperty(PropertyName = "entityTypeScore")]
+        public double? EntityTypeScore { get; set; }
 
         /// <summary>
         /// Gets or sets entity text as appears in the request.

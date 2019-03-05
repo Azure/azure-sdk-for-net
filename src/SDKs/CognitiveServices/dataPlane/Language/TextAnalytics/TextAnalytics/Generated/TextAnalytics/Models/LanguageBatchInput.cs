@@ -15,20 +15,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class BatchInput
+    public partial class LanguageBatchInput
     {
         /// <summary>
-        /// Initializes a new instance of the BatchInput class.
+        /// Initializes a new instance of the LanguageBatchInput class.
         /// </summary>
-        public BatchInput()
+        public LanguageBatchInput()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BatchInput class.
+        /// Initializes a new instance of the LanguageBatchInput class.
         /// </summary>
-        public BatchInput(IList<Input> documents = default(IList<Input>))
+        public LanguageBatchInput(IList<LanguageInput> documents = default(IList<LanguageInput>))
         {
             Documents = documents;
             CustomInit();
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "documents")]
-        public IList<Input> Documents { get; set; }
+        public IList<LanguageInput> Documents { get; set; }
 
     }
 }

@@ -11,27 +11,27 @@
 namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class EntitiesBatchResultV2dot1
+    public partial class LanguageInput
     {
         /// <summary>
-        /// Initializes a new instance of the EntitiesBatchResultV2dot1 class.
+        /// Initializes a new instance of the LanguageInput class.
         /// </summary>
-        public EntitiesBatchResultV2dot1()
+        public LanguageInput()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EntitiesBatchResultV2dot1 class.
+        /// Initializes a new instance of the LanguageInput class.
         /// </summary>
-        public EntitiesBatchResultV2dot1(IList<EntitiesBatchResultItemV2dot1> documents = default(IList<EntitiesBatchResultItemV2dot1>), IList<ErrorRecord> errors = default(IList<ErrorRecord>))
+        /// <param name="id">Unique, non-empty document identifier.</param>
+        public LanguageInput(string countryHint = default(string), string id = default(string), string text = default(string))
         {
-            Documents = documents;
-            Errors = errors;
+            CountryHint = countryHint;
+            Id = id;
+            Text = text;
             CustomInit();
         }
 
@@ -42,13 +42,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "documents")]
-        public IList<EntitiesBatchResultItemV2dot1> Documents { get; private set; }
+        [JsonProperty(PropertyName = "countryHint")]
+        public string CountryHint { get; set; }
+
+        /// <summary>
+        /// Gets or sets unique, non-empty document identifier.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "errors")]
-        public IList<ErrorRecord> Errors { get; private set; }
+        [JsonProperty(PropertyName = "text")]
+        public string Text { get; set; }
 
     }
 }
