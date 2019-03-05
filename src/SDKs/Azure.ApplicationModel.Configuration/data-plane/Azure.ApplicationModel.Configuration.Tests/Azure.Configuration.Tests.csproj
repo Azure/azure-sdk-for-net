@@ -9,7 +9,7 @@
     <PackageReference Include="System.Memory" Version="4.5.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Azure.Configuration\Azure.Configuration.csproj" />
+    <ProjectReference Include="..\Azure.ApplicationModel.Configuration\Azure.Configuration.csproj" />
   </ItemGroup>
 
   <ItemGroup>
