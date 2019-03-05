@@ -35,6 +35,16 @@ namespace Microsoft.Rest
         /// the default retry policy base on Exponential Backoff.
         /// </summary>
         /// <param name="innerHandler">Inner http handler.</param>
+        public RetryDelegatingHandler(DelegatingHandler innerHandler)
+            : this((HttpMessageHandler)innerHandler)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. Sets 
+        /// the default retry policy base on Exponential Backoff.
+        /// </summary>
+        /// <param name="innerHandler">Inner http handler.</param>
         public RetryDelegatingHandler(HttpMessageHandler innerHandler)
             : base(innerHandler)
         {

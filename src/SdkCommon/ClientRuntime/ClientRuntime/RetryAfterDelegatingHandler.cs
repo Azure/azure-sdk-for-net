@@ -27,6 +27,15 @@ namespace Microsoft.Rest
         /// Initializes a new instance of the <see cref="RetryAfterDelegatingHandler"/> class.
         /// </summary>
         /// <param name="innerHandler">Inner http handler.</param>
+        public RetryAfterDelegatingHandler(DelegatingHandler innerHandler)
+            : this((HttpMessageHandler)innerHandler) 
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RetryAfterDelegatingHandler"/> class.
+        /// </summary>
+        /// <param name="innerHandler">Inner http handler.</param>
         public RetryAfterDelegatingHandler(HttpMessageHandler innerHandler)
             : base(innerHandler) 
         {
