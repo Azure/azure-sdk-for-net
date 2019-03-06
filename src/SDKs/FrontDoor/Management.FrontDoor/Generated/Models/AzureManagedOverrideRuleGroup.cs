@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// Initializes a new instance of the AzureManagedOverrideRuleGroup
         /// class.
         /// </summary>
-        /// <param name="ruleGroupOverride">Describes overrideruleGroup.
+        /// <param name="ruleGroupOverride">Describes override rule group.
         /// Possible values include: 'SqlInjection', 'XSS'</param>
         /// <param name="action">Type of Actions. Possible values include:
         /// 'Allow', 'Block', 'Log'</param>
@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets describes overrideruleGroup. Possible values include:
-        /// 'SqlInjection', 'XSS'
+        /// Gets or sets describes override rule group. Possible values
+        /// include: 'SqlInjection', 'XSS'
         /// </summary>
         [JsonProperty(PropertyName = "ruleGroupOverride")]
         public string RuleGroupOverride { get; set; }
