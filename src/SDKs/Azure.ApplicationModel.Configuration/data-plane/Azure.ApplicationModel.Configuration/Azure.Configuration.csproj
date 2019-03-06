@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>This is the implementation of the Azure SDK for Azure Configuration</Description>
-    <AssemblyTitle>Microsoft Azure Configuration</AssemblyTitle>
+    <Description>This is the implementation of the Azure SDK Component for Azure Application Configuration Service</Description>
+    <AssemblyTitle>Microsoft Azure.ApplicationModel.Configuration Component</AssemblyTitle>
     <Version>1.0.0-preview.1</Version>
-    <PackageTags>Microsoft Azure Configuration</PackageTags>
+    <PackageTags>Microsoft Azure Application Configuration</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
       ]]>
@@ -16,6 +16,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>Azure.ApplicationModel.Configuration</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
