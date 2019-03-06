@@ -10,8 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.2.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.3.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -25,13 +27,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 21:58:44 GMT"
+          "Tue, 05 Mar 2019 18:42:03 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/vision/v2.0/textOperations/dc2ec7b5-fb7a-4152-a91a-f005abb9a97f"
+          "https://westus.api.cognitive.microsoft.com/vision/v2.0/textOperations/a17251bc-c749-4f64-95ec-29496e22c552"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -40,7 +42,7 @@
           "ASP.NET"
         ],
         "apim-request-id": [
-          "336fb2ac-796b-48b1-bb29-5a480a0d8d87"
+          "bed61bac-7fa1-4a79-93b2-b00f6e0ba970"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -59,8 +61,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/vision/v2.0/textOperations/dc2ec7b5-fb7a-4152-a91a-f005abb9a97f",
-      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3RleHRPcGVyYXRpb25zL2RjMmVjN2I1LWZiN2EtNDE1Mi1hOTFhLWYwMDVhYmI5YTk3Zg==",
+      "RequestUri": "/vision/v2.0/textOperations/a17251bc-c749-4f64-95ec-29496e22c552",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3RleHRPcGVyYXRpb25zL2ExNzI1MWJjLWM3NDktNGY2NC05NWVjLTI5NDk2ZTIyYzU1Mg==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -68,8 +70,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.2.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.3.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -77,7 +81,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 21:58:44 GMT"
+          "Tue, 05 Mar 2019 18:42:03 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -89,7 +93,7 @@
           "ASP.NET"
         ],
         "apim-request-id": [
-          "7f3cc94b-8067-475c-83db-194b8a16b621"
+          "aa590604-966b-4732-a704-d224627e27c8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -98,7 +102,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "23"
+          "20"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -107,12 +111,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"NotStarted\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/vision/v2.0/textOperations/dc2ec7b5-fb7a-4152-a91a-f005abb9a97f",
-      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3RleHRPcGVyYXRpb25zL2RjMmVjN2I1LWZiN2EtNDE1Mi1hOTFhLWYwMDVhYmI5YTk3Zg==",
+      "RequestUri": "/vision/v2.0/textOperations/a17251bc-c749-4f64-95ec-29496e22c552",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3RleHRPcGVyYXRpb25zL2ExNzI1MWJjLWM3NDktNGY2NC05NWVjLTI5NDk2ZTIyYzU1Mg==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -120,8 +124,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.2.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.3.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -129,7 +135,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 30 Jul 2018 21:58:45 GMT"
+          "Tue, 05 Mar 2019 18:42:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -141,7 +147,7 @@
           "ASP.NET"
         ],
         "apim-request-id": [
-          "f590ae8d-22d0-4cb5-b940-5b52d9f56368"
+          "110b1f84-456a-4e57-925b-22dfe81e23ef"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -150,7 +156,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1067"
+          "20"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -159,7 +165,61 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"recognitionResult\": {\r\n    \"lines\": [\r\n      {\r\n        \"boundingBox\": [\r\n          209,\r\n          281,\r\n          544,\r\n          280,\r\n          545,\r\n          317,\r\n          210,\r\n          318\r\n        ],\r\n        \"text\": \"You must be the change\",\r\n        \"words\": [\r\n          {\r\n            \"boundingBox\": [\r\n              203,\r\n              282,\r\n              267,\r\n              280,\r\n              273,\r\n              327,\r\n              209,\r\n              328\r\n            ],\r\n            \"text\": \"You\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              270,\r\n              280,\r\n              350,\r\n              277,\r\n              356,\r\n              324,\r\n              276,\r\n              326\r\n            ],\r\n            \"text\": \"must\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              340,\r\n              278,\r\n              385,\r\n              276,\r\n              392,\r\n              323,\r\n              347,\r\n              324\r\n            ],\r\n            \"text\": \"be\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              385,\r\n              276,\r\n              443,\r\n              275,\r\n              449,\r\n              321,\r\n              392,\r\n              323\r\n            ],\r\n            \"text\": \"the\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              443,\r\n              275,\r\n              545,\r\n              272,\r\n              551,\r\n              319,\r\n              449,\r\n              321\r\n            ],\r\n            \"text\": \"change\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"boundingBox\": [\r\n          260,\r\n          350,\r\n          686,\r\n          340,\r\n          687,\r\n          383,\r\n          261,\r\n          394\r\n        ],\r\n        \"text\": \"you want to see in the world !\",\r\n        \"words\": [\r\n          {\r\n            \"boundingBox\": [\r\n              241,\r\n              344,\r\n              300,\r\n              344,\r\n              304,\r\n              395,\r\n              245,\r\n              395\r\n            ],\r\n            \"text\": \"you\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              283,\r\n              344,\r\n              372,\r\n              344,\r\n              375,\r\n              395,\r\n              287,\r\n              395\r\n            ],\r\n            \"text\": \"want\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              359,\r\n              344,\r\n              414,\r\n              344,\r\n              417,\r\n              395,\r\n              363,\r\n              395\r\n            ],\r\n            \"text\": \"to\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              418,\r\n              344,\r\n              481,\r\n              343,\r\n              485,\r\n              394,\r\n              422,\r\n              395\r\n            ],\r\n            \"text\": \"see\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              472,\r\n              344,\r\n              527,\r\n              343,\r\n              531,\r\n              394,\r\n              476,\r\n              394\r\n            ],\r\n            \"text\": \"in\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              510,\r\n              343,\r\n              582,\r\n              343,\r\n              585,\r\n              394,\r\n              514,\r\n              394\r\n            ],\r\n            \"text\": \"the\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              569,\r\n              343,\r\n              682,\r\n              343,\r\n              686,\r\n              394,\r\n              573,\r\n              394\r\n            ],\r\n            \"text\": \"world\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              661,\r\n              343,\r\n              703,\r\n              343,\r\n              707,\r\n              394,\r\n              665,\r\n              394\r\n            ],\r\n            \"text\": \"!\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/vision/v2.0/textOperations/a17251bc-c749-4f64-95ec-29496e22c552",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3RleHRPcGVyYXRpb25zL2ExNzI1MWJjLWM3NDktNGY2NC05NWVjLTI5NDk2ZTIyYzU1Mg==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.3.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 05 Mar 2019 18:42:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "apim-request-id": [
+          "88eb229a-2c81-40d0-8d96-2b2053f1d70c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1027"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"recognitionResult\": {\r\n    \"lines\": [\r\n      {\r\n        \"boundingBox\": [\r\n          204,\r\n          281,\r\n          548,\r\n          280,\r\n          549,\r\n          315,\r\n          205,\r\n          316\r\n        ],\r\n        \"text\": \"You must be the change\",\r\n        \"words\": [\r\n          {\r\n            \"boundingBox\": [\r\n              208,\r\n              281,\r\n              271,\r\n              282,\r\n              270,\r\n              317,\r\n              207,\r\n              317\r\n            ],\r\n            \"text\": \"You\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              280,\r\n              283,\r\n              350,\r\n              284,\r\n              349,\r\n              316,\r\n              279,\r\n              317\r\n            ],\r\n            \"text\": \"must\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              350,\r\n              284,\r\n              388,\r\n              284,\r\n              386,\r\n              316,\r\n              349,\r\n              316\r\n            ],\r\n            \"text\": \"be\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              395,\r\n              284,\r\n              446,\r\n              284,\r\n              444,\r\n              315,\r\n              393,\r\n              316\r\n            ],\r\n            \"text\": \"the\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              455,\r\n              284,\r\n              547,\r\n              284,\r\n              544,\r\n              313,\r\n              453,\r\n              315\r\n            ],\r\n            \"text\": \"change\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"boundingBox\": [\r\n          254,\r\n          350,\r\n          693,\r\n          339,\r\n          695,\r\n          378,\r\n          255,\r\n          389\r\n        ],\r\n        \"text\": \"you want to see in the world!!\",\r\n        \"words\": [\r\n          {\r\n            \"boundingBox\": [\r\n              255,\r\n              363,\r\n              289,\r\n              359,\r\n              291,\r\n              382,\r\n              257,\r\n              384\r\n            ],\r\n            \"text\": \"you\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              300,\r\n              358,\r\n              358,\r\n              352,\r\n              360,\r\n              379,\r\n              302,\r\n              382\r\n            ],\r\n            \"text\": \"want\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              377,\r\n              350,\r\n              402,\r\n              349,\r\n              404,\r\n              377,\r\n              378,\r\n              378\r\n            ],\r\n            \"text\": \"to\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              432,\r\n              347,\r\n              470,\r\n              345,\r\n              472,\r\n              376,\r\n              434,\r\n              376\r\n            ],\r\n            \"text\": \"see\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              491,\r\n              344,\r\n              513,\r\n              344,\r\n              514,\r\n              375,\r\n              493,\r\n              375\r\n            ],\r\n            \"text\": \"in\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              528,\r\n              343,\r\n              571,\r\n              343,\r\n              573,\r\n              375,\r\n              530,\r\n              375\r\n            ],\r\n            \"text\": \"the\"\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              588,\r\n              343,\r\n              700,\r\n              346,\r\n              702,\r\n              379,\r\n              590,\r\n              376\r\n            ],\r\n            \"text\": \"world!!\",\r\n            \"confidence\": \"Low\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
