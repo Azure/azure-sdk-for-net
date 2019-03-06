@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Management.DeploymentManager;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.Storage;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,12 @@ namespace Management.DeploymentManager.Tests
         public const string ProviderName = "Microsoft.DeploymentManager";
 
         public const string Location = "Central US";
+
+        public const string StorageAccountResourceGroup = "adm-sdk-tests";
+
+        public const string StorageAccountName = "sdktests";
+
+        public const string ContainerName = "artifacts";
 
         public static readonly Dictionary<string, string> DefaultTags = new Dictionary<string, string>
         {
@@ -44,14 +51,11 @@ namespace Management.DeploymentManager.Tests
             return client;
         }
 
-        public static ResourceGroup CreateResourceGroup(ResourceManagementClient client, string location)
+        public static StorageManagementClient GetStorageManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            return client.ResourceGroups.CreateOrUpdate(
-                TestUtilities.GenerateName("deploymentmanager-sdk-net-test-rg"),
-                new ResourceGroup
-                {
-                    Location = location 
-                });
+            handler.IsPassThrough = true;
+            var client = context.GetServiceClient<StorageManagementClient>(handlers: handler);
+            return client;
         }
 
         public static void ValidateResourceDefaultTags(TrackedResource resource)

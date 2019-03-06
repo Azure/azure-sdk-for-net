@@ -15,7 +15,6 @@ namespace DeploymentManager.Tests
         protected const string updatedArtifactSourceName = "sdk-for-net-topologyv2";
         protected const string artifactSourceType = "AzureStorage";
         protected const string artifactRoot = "builds/1.0.0.0";
-        protected SasAuthentication authentication = new SasAuthentication("https://sdktests.blob.core.windows.net/artifacts?st=2019-02-25T21%3A41%3A01Z&se=2025-02-26T21%3A41%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=ikGqTrRIrRB60SwlmGvwxCByQMGERiRGP4cOjFxUdso%3D");
 
         protected ArtifactSource CreateArtifactSource(
             string artifactSourceName,
@@ -23,6 +22,11 @@ namespace DeploymentManager.Tests
             AzureDeploymentManagerClient deploymentManagerClient, 
             DeploymentManagerClientHelper clientHelper)
         {
+            var authentication = new SasAuthentication()
+            {
+                SasUri = clientHelper.GetBlobContainerSasUri()
+            };
+
             var inputArtifactSource = new ArtifactSource(
                 location: location,
                 sourceType: artifactSourceType,

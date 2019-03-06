@@ -8,7 +8,7 @@ using Xunit;
 
 namespace DeploymentManager.Tests
 {
-    public class ArtifactSourceTests : TestBase
+    public class ArtifactSourceTests : AdmTestBase
     {
         [Fact]
         public void ArtifactSourceCrudTests()
@@ -17,7 +17,6 @@ namespace DeploymentManager.Tests
 
             using (var context = MockContext.Start(typeof(ArtifactSourceTests).FullName))
             {
-                var resourceClient = DeploymentManagerTestUtilities.GetResourceManagementClient(context, handler);
                 var deploymentManagerClient = DeploymentManagerTestUtilities.GetDeploymentManagerClient(context, handler);
 
                 var clientHelper = new DeploymentManagerClientHelper(this, context);
@@ -27,10 +26,10 @@ namespace DeploymentManager.Tests
                 clientHelper.TryCreateResourceGroup(location);
 
                 // Test Create Artifact Source.
-                var artifactSourceName = "sdk-for-net";
-                var artifactSourceType = "AzureStorage";
-                var artifactRoot = "artifactroot";
-                var authentication = new SasAuthentication("https://sdktests.blob.core.windows.net/artifacts?st=2019-02-25T21%3A41%3A01Z&se=2025-02-26T21%3A41%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=ikGqTrRIrRB60SwlmGvwxCByQMGERiRGP4cOjFxUdso%3D");
+                var authentication = new SasAuthentication()
+                {
+                    SasUri = clientHelper.GetBlobContainerSasUri()
+                };
 
                 var inputArtifactSource = new ArtifactSource(
                     location: location,

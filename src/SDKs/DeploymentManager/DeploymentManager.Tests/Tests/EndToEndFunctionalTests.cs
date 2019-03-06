@@ -14,13 +14,12 @@ namespace DeploymentManager.Tests
     public class EndToEndFunctionalTests : AdmTestBase
     {
         [Fact]
-        public void ServiceTopologyCrudTests()
+        public void TopologyAndRolloutScenarioTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (var context = MockContext.Start(typeof(EndToEndFunctionalTests).FullName))
             {
-                var resourceClient = DeploymentManagerTestUtilities.GetResourceManagementClient(context, handler);
                 var deploymentManagerClient = DeploymentManagerTestUtilities.GetDeploymentManagerClient(context, handler);
 
                 var clientHelper = new DeploymentManagerClientHelper(this, context);
@@ -110,7 +109,7 @@ namespace DeploymentManager.Tests
 
             this.ValidateService(inputService, createServiceResponse);
 
-            // Test Get topology.
+            // Test Get service.
             var service = deploymentManagerClient.Services.Get(
                 resourceGroupName: clientHelper.ResourceGroupName,
                 serviceTopologyName: serviceTopologyResource.Name,
@@ -193,7 +192,7 @@ namespace DeploymentManager.Tests
                 deploymentManagerClient,
                 clientHelper);
 
-            // Test Update service.
+            // Test Update service unit.
             serviceUnit.DeploymentMode = DeploymentMode.Complete;
             serviceUnit.Artifacts.ParametersArtifactSourceRelativePath = "Parameters/WebApp.Parameters.Dup.json";
             serviceUnit.Artifacts.TemplateArtifactSourceRelativePath = "Templates/WebApp.Template.Dup.json";
@@ -206,7 +205,7 @@ namespace DeploymentManager.Tests
 
             this.ValidateServiceUnit(serviceUnit, updatedService);
 
-            // Test Delete service.
+            // Test Delete service unit.
             deploymentManagerClient.ServiceUnits.Delete(
                 resourceGroupName: clientHelper.ResourceGroupName,
                 serviceTopologyName: serviceTopologyResource.Name,
@@ -283,7 +282,7 @@ namespace DeploymentManager.Tests
                 deploymentManagerClient,
                 clientHelper);
 
-            // Test cancel rollout.
+            // Test delete rollout.
             deploymentManagerClient.Rollouts.Delete(
                 resourceGroupName: clientHelper.ResourceGroupName,
                 rolloutName: rolloutName);
